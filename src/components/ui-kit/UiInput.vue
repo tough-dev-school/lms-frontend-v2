@@ -7,11 +7,11 @@
 </template>
 <script>
 export default {
-  name: "UiInput",
+  name: 'UiInput',
   props: {
-    label: { type: String, default: "" },
-    bottomText: { type: String, default: "" },
-    value: { type: String, default: "" },
+    label: { type: String, default: '' },
+    bottomText: { type: String, default: '' },
+    value: { type: String, default: '' },
     isInvalid: { type: Boolean, default: false },
     hasAutofocus: { type: Boolean, default: false },
     nativeProps: { type: Object, default: () => ({}) },

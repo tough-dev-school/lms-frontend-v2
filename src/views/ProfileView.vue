@@ -15,13 +15,13 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions } from 'vuex';
 
-import UserDataField from "@/components/Profile/UserDataField";
-import SocialUsernameField from "@/components/Profile/SocialUsernameField";
-import GendeRadioButton from "@/components/Profile/GendeRadioButton.vue";
-import UiButton from "@/components/ui-kit/UiButton.vue";
-import AppContainer from "@/components/AppContainer.vue";
+import UserDataField from '@/components/Profile/UserDataField';
+import SocialUsernameField from '@/components/Profile/SocialUsernameField';
+import GendeRadioButton from '@/components/Profile/GendeRadioButton.vue';
+import UiButton from '@/components/ui-kit/UiButton.vue';
+import AppContainer from '@/components/AppContainer.vue';
 
 export default {
   components: {
@@ -42,7 +42,7 @@ export default {
     this.isUserFetched = true;
   },
   methods: {
-    ...mapActions("user", ["FETCH_USER", "UPDATE_BACKEND"]),
+    ...mapActions('user', ['FETCH_USER', 'UPDATE_BACKEND']),
     async submit() {
       this.isUpdating = true;
       await this.UPDATE_BACKEND();

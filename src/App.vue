@@ -8,17 +8,17 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters } from 'vuex';
 
-import AppHeader from "@/components/AppHeader.vue";
+import AppHeader from '@/components/AppHeader.vue';
 
 export default {
   components: {
     AppHeader,
   },
   computed: {
-    ...mapGetters("auth", ["isAuthenticated"]),
-    ...mapState("auth", ["user"]),
+    ...mapGetters('auth', ['isAuthenticated']),
+    ...mapState('auth', ['user']),
   },
 };
 </script>

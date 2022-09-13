@@ -16,9 +16,9 @@
   </UiPopup>
 </template>
 <script>
-import UiPopup from "@/components/ui-kit/UiPopup.vue";
-import UiButton from "@/components/ui-kit/UiButton.vue";
-import AppHowToFeedbackText from "@/components/AppHowToFeedbackText.vue";
+import UiPopup from '@/components/ui-kit/UiPopup.vue';
+import UiButton from '@/components/ui-kit/UiButton.vue';
+import AppHowToFeedbackText from '@/components/AppHowToFeedbackText.vue';
 
 export default {
   components: {

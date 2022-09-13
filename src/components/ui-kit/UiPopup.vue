@@ -17,11 +17,11 @@ export default {
   watch: {
     isOpen(newVal) {
       if (newVal) {
-        document.addEventListener("keydown", this.handleEscClick);
-        document.body.classList.add("popup-open");
+        document.addEventListener('keydown', this.handleEscClick);
+        document.body.classList.add('popup-open');
       } else {
-        document.removeEventListener("keydown", this.handleEscClick);
-        document.body.classList.remove("popup-open");
+        document.removeEventListener('keydown', this.handleEscClick);
+        document.body.classList.remove('popup-open');
       }
     },
   },
@@ -95,7 +95,7 @@ export default {
 
   &::before,
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 9px;
     left: 1px;

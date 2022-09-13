@@ -6,16 +6,15 @@
     :disabled="isLoading"
     :only-send-button="onlySendButton"
     @submit="submit"
-    @cancel="$emit('cancel')"
-  />
+    @cancel="$emit('cancel')" />
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions } from 'vuex';
 
-import AppAnswerEditor from "@/components/homework/AppAnswerEditor.vue";
+import AppAnswerEditor from '@/components/homework/AppAnswerEditor.vue';
 
-import objectOrNullValidator from "@/utils/objectOrNullValidator.js";
+import objectOrNullValidator from '@/utils/objectOrNullValidator.js';
 
 export default {
   components: {
@@ -36,7 +35,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions("question", ["POST_ANSWER"]),
+    ...mapActions('question', ['POST_ANSWER']),
     async submit({ text, parent }) {
       const question = this.question.slug;
 
@@ -46,7 +45,7 @@ export default {
       });
       this.isLoading = false;
       this.$refs.editor.clear();
-      this.$emit("submitted");
+      this.$emit('submitted');
     },
     focus() {
       this.$refs.editor.focus();

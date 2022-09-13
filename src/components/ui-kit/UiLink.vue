@@ -4,21 +4,20 @@
     v-bind="{ ...$attrs, ...$props }"
     :class="{ 'ui-link--disabled': isDisabled }"
     class="ui-link"
-    v-on="$listeners"
-  >
+    v-on="$listeners">
     <slot />
   </component>
 </template>
 <script>
 export default {
-  name: "UiLink",
+  name: 'UiLink',
   props: {
-    to: { type: [String, Object], default: "" },
+    to: { type: [String, Object], default: '' },
     isDisabled: { type: Boolean, default: false },
   },
   computed: {
     component() {
-      return this.to ? "router-link" : "a";
+      return this.to ? 'router-link' : 'a';
     },
   },
 };

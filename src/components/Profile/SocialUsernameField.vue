@@ -6,14 +6,13 @@
       type: 'text',
     }"
     :label="label"
-    :has-autofocus="hasAutofocus"
-  />
+    :has-autofocus="hasAutofocus" />
 </template>
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations } from 'vuex';
 
-import getSocialUsernameFromURL from "@/utils/getSocialUsernameFromURL.js";
-import UiInput from "@/components/ui-kit/UiInput.vue";
+import getSocialUsernameFromURL from '@/utils/getSocialUsernameFromURL.js';
+import UiInput from '@/components/ui-kit/UiInput.vue';
 
 export default {
   components: {
@@ -25,7 +24,7 @@ export default {
     hasAutofocus: { type: Boolean, default: false },
   },
   computed: {
-    ...mapState("user", ["user"]),
+    ...mapState('user', ['user']),
     model: {
       get() {
         return this.user[this.name];
@@ -37,6 +36,6 @@ export default {
       },
     },
   },
-  methods: mapMutations("user", ["UPDATE_USER"]),
+  methods: mapMutations('user', ['UPDATE_USER']),
 };
 </script>

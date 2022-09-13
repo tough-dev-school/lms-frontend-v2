@@ -7,9 +7,9 @@
 </template>
 
 <script>
-import LoginPasswordless from "@/components/Login/LoginPasswordless.vue";
-import LoginWithCredentials from "@/components/Login/LoginWithCredentials.vue";
-import { mapGetters, mapMutations } from "vuex";
+import LoginPasswordless from '@/components/Login/LoginPasswordless.vue';
+import LoginWithCredentials from '@/components/Login/LoginWithCredentials.vue';
+import { mapGetters, mapMutations } from 'vuex';
 
 export default {
   components: {
@@ -18,23 +18,23 @@ export default {
   },
   data() {
     return {
-      loginType: "passwordless",
+      loginType: 'passwordless',
       isSubmitted: false,
     };
   },
   computed: {
     next() {
       const { redirectAfterLogin } = this.$store.state.auth;
-      return redirectAfterLogin ? redirectAfterLogin : "/";
+      return redirectAfterLogin ? redirectAfterLogin : '/';
     },
     error() {
       const ERRORS = {
-        invalidToken: "Кажется, вы перешли по устаревшей ссылке. Попробуйте заново",
+        invalidToken: 'Кажется, вы перешли по устаревшей ссылке. Попробуйте заново',
       };
       const { error } = this.$route.query;
       return error && error in ERRORS ? ERRORS[error] : null;
     },
-    ...mapGetters("auth", ["isAuthenticated"]),
+    ...mapGetters('auth', ['isAuthenticated']),
   },
   watch: {
     isAuthenticated(isAuthenticated) {
@@ -55,7 +55,7 @@ export default {
 
     this.SET_REDIRECT_AFTER_LOGIN(next);
   },
-  methods: mapMutations("auth", ["SET_REDIRECT_AFTER_LOGIN"]),
+  methods: mapMutations('auth', ['SET_REDIRECT_AFTER_LOGIN']),
 };
 </script>
 

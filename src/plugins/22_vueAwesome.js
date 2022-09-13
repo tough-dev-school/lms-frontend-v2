@@ -1,5 +1,5 @@
-import Icon from "vue-awesome/components/Icon";
+import Icon from 'vue-awesome/components/Icon';
 
 export default ({ Vue }) => {
-  Vue.component("AppIcon", Icon);
+  Vue.component('AppIcon', Icon);
 };

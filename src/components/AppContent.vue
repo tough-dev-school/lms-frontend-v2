@@ -5,7 +5,7 @@
 
 <script>
 /* eslint-disable no-irregular-whitespace */
-import richtypo from "@/utils/richtypo.js";
+import richtypo from '@/utils/richtypo.js';
 
 export default {
   props: {
@@ -37,7 +37,7 @@ export default {
   }
 
   ul {
-    list-style: "— " outside;
+    list-style: '— ' outside;
     padding-left: 2rem;
   }
 
