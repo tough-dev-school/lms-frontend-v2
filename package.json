@@ -1,0 +1,52 @@
+{
+  "name": "student-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "test:unit": "vue-cli-service test:unit",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@sentry/tracing": "^7.0.0",
+    "@sentry/vue": "^7.0.0",
+    "@vue/cli-plugin-babel": "~5.0.8",
+    "@vue/cli-plugin-router": "~5.0.8",
+    "@vue/cli-plugin-vuex": "~5.0.8",
+    "@vue/cli-service": "~5.0.8",
+    "axios": "^0.27.0",
+    "dayjs": "^1.11.0",
+    "js-cookie": "^3.0.0",
+    "jwt-decode": "^3.1.2",
+    "postcss-custom-media": "7.0.8",
+    "postcss-mixins": "6.2.3",
+    "postcss-nested": "4.2.3",
+    "richtypo": "^3.0.0",
+    "richtypo-rules-ru": "^4.0.11",
+    "secure-ls": "^1.2.6",
+    "simplemde": "^1.11.2",
+    "url-polyfill": "^1.1.12",
+    "vue": "^2.7.7",
+    "vue-awesome": "^4.5.0",
+    "vue-notion": "^1.4.3",
+    "vue-router": "^3.5.4",
+    "vue-scrollto": "2.20.0",
+    "vue-template-compiler": "2.6.14",
+    "vuex": "3.6.2",
+    "vuex-persistedstate": "3.2.1"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.12.16",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-plugin-unit-jest": "~5.0.0",
+    "@vue/test-utils": "^1.1.3",
+    "@vue/vue2-jest": "^27.0.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "mockdate": "^3.0.5",
+    "prettier": "^2.4.1"
+  }
+}

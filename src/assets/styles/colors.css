@@ -1,0 +1,13 @@
+:root {
+  --background: #ffffff;
+  --lightest: #c7c7c7;
+  --superlight: #9a9a9a;
+  --light: #3f3f3f;
+  --basic: #000000;
+  --large: #ffb800;
+  --large-hover: #ffa800;
+  --link: #3f5dff;
+  --link-hover: #0024de;
+  --error: #ff0202;
+  --feedback-bcg: #fff9eb;
+}

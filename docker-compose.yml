@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+  backend:
+    image: ghcr.io/f213/education-backend
+    environment:
+      - DEBUG=Off
+      - AXES_ENABLED=Off
+      - DATABASE_URL=postgres://postgres:secret@postgres/postgres
+      - REDISCLOUD_URL=redis://redis
+    ports:
+      - 8000:8000
+    links:
+      - postgres
+      - redis
+
+  postgres:
+    image: ghcr.io/f213/education-dev-db
+
+  redis:
+    image: redis:6-alpine

@@ -1,0 +1,59 @@
+@define-mixin inter-title-default {
+  font-family: Inter;
+  font-weight: 800;
+}
+@define-mixin inter-title-one {
+  @mixin inter-title-default;
+  margin-top: 0;
+  margin-bottom: 24px;
+  letter-spacing: -0.5px;
+  font-size: calc(38 / var(--default-font-size-px) * 1rem);
+  line-height: calc(41 / var(--default-font-size-px) * 1rem);
+  line-height: 1.2;
+  color: var(--basic);
+}
+@define-mixin inter-title-two {
+  @mixin inter-title-default;
+  margin-top: 28px;
+  margin-bottom: 10px;
+  font-size: calc(25 / var(--default-font-size-px) * 1rem);
+  line-height: calc(31 / var(--default-font-size-px) * 1rem);
+  color: var(--basic);
+}
+@define-mixin inter-title-three {
+  @mixin inter-title-default;
+  margin-top: 28px;
+  margin-bottom: 3px;
+  font-size: calc(15 / var(--default-font-size-px) * 1rem);
+  line-height: calc(21 / var(--default-font-size-px) * 1rem);
+  color: var(--basic);
+}
+
+@define-mixin robot-text-default {
+  font-family: "PT Root UI";
+  font-weight: normal;
+}
+@define-mixin robot-text-one {
+  @mixin robot-text-default;
+  margin: 0;
+  margin-bottom: 20px;
+  font-size: calc(20 / var(--default-font-size-px) * 1rem);
+  line-height: calc(28 / var(--default-font-size-px) * 1rem);
+  color: var(--basic);
+}
+@define-mixin robot-text-two {
+  @mixin robot-text-default;
+  margin: 0;
+  margin-bottom: 15px;
+  font-size: calc(16 / var(--default-font-size-px) * 1rem);
+  line-height: calc(22 / var(--default-font-size-px) * 1rem);
+  color: var(--basic);
+}
+@define-mixin robot-text-three {
+  @mixin robot-text-default;
+  margin: 0;
+  margin-bottom: 15px;
+  font-size: calc(14 / var(--default-font-size-px) * 1rem);
+  line-height: calc(18 / var(--default-font-size-px) * 1rem);
+  color: var(--basic);
+}

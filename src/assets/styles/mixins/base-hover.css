@@ -1,0 +1,10 @@
+@define-mixin base-hover {
+  transition: 0.3s;
+  &:not(:disabled) {
+    cursor: pointer;
+  }
+
+  &:hover:not(:active):not(:disabled) {
+    opacity: 0.75;
+  }
+}
