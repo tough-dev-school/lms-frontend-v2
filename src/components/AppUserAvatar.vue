@@ -5,11 +5,11 @@
 </template>
 
 <script>
-import getUserName from "@/utils/getUserName";
+import getUserName from '@/utils/getUserName';
 
 export const AvatarColor = {
-  Primary: "primary",
-  Secondary: "secondary",
+  Primary: 'primary',
+  Secondary: 'secondary',
 };
 
 export default {
@@ -25,7 +25,7 @@ export default {
       return this.name
         .trim()
         .split(/\s+/)
-        .reduce((acc, word) => (acc += word[0]), "")
+        .reduce((acc, word) => (acc += word[0]), '')
         .slice(0, 2)
         .toUpperCase();
     },

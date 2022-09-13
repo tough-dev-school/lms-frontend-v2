@@ -5,7 +5,7 @@ export default (urlWithUsername) => {
   } catch {
     path = urlWithUsername;
   }
-  const parts = path.split("/").filter((i) => i.length && i !== "/");
+  const parts = path.split('/').filter((i) => i.length && i !== '/');
 
   return parts.at(-1);
 };

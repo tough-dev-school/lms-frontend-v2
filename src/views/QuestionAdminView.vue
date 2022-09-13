@@ -14,12 +14,12 @@
   </AppContainer>
 </template>
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapActions, mapGetters, mapState } from 'vuex';
 
-import AppContent from "@/components/AppContent.vue";
-import AppHTTPError from "@/components/AppHTTPError.vue";
-import AppContainer from "@/components/AppContainer.vue";
-import AnswerList from "@/components/homework/AnswerList.vue";
+import AppContent from '@/components/AppContent.vue';
+import AppHTTPError from '@/components/AppHTTPError.vue';
+import AppContainer from '@/components/AppContainer.vue';
+import AnswerList from '@/components/homework/AnswerList.vue';
 
 export default {
   components: {
@@ -35,16 +35,16 @@ export default {
     };
   },
   computed: {
-    ...mapState("question", ["question", "answers"]),
-    ...mapState("auth", ["user"]),
-    ...mapGetters("question", ["getAnswers", "filterAnswers"]),
+    ...mapState('question', ['question', 'answers']),
+    ...mapState('auth', ['user']),
+    ...mapGetters('question', ['getAnswers', 'filterAnswers']),
     answersTitle() {
-      return this.answers.length == 1 ? "Ваш ответ" : "Ответы";
+      return this.answers.length == 1 ? 'Ваш ответ' : 'Ответы';
     },
     particularAnswerId() {
       // slug of the requested answer
       const { hash } = this.$route;
-      return hash ? hash.split("#")[1] : null;
+      return hash ? hash.split('#')[1] : null;
     },
     particularAnswerIsLoaded() {
       const { particularAnswerId } = this;
@@ -66,7 +66,7 @@ export default {
     this.isLoaded = true;
   },
   methods: {
-    ...mapActions("question", ["FETCH_QUESTION", "FETCH_ANSWERS", "FETCH_PARTICULAR_ANSWER"]),
+    ...mapActions('question', ['FETCH_QUESTION', 'FETCH_ANSWERS', 'FETCH_PARTICULAR_ANSWER']),
     async fetchAnswers() {
       return this.FETCH_ANSWERS({ question: this.questionId });
     },

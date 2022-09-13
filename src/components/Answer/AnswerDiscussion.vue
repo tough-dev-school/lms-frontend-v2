@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import AnswerList from "@/components/homework/AnswerList.vue";
+import AnswerList from '@/components/homework/AnswerList.vue';
 
 export default {
   components: { AnswerList },
@@ -19,7 +19,7 @@ export default {
 
   computed: {
     title() {
-      return this.answer.descendants.length > 1 ? "Обсуждение" : "Ваш ответ";
+      return this.answer.descendants.length > 1 ? 'Обсуждение' : 'Ваш ответ';
     },
   },
   methods: {

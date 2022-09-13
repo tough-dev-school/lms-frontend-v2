@@ -11,8 +11,7 @@
       label="Логин"
       class="login-form__input"
       :value="username"
-      @input="handleLoginInput"
-    />
+      @input="handleLoginInput" />
     <UiInput
       :native-props="{
         id: 'password',
@@ -22,8 +21,7 @@
       :value="password"
       label="Пароль"
       class="login-form__input"
-      @input="handlePasswordInput"
-    />
+      @input="handlePasswordInput" />
     <ul class="login-form__nav-list">
       <li>
         <UiButton :disabled="isButtonSendDisabled" size="big" color-type="primary" is-mobile-full-width>Войти</UiButton>
@@ -35,11 +33,11 @@
   </form>
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapActions } from 'vuex';
 
-import UiButton from "@/components/ui-kit/UiButton.vue";
-import UiInput from "@/components/ui-kit/UiInput.vue";
-import UiLink from "@/components/ui-kit/UiLink.vue";
+import UiButton from '@/components/ui-kit/UiButton.vue';
+import UiInput from '@/components/ui-kit/UiInput.vue';
+import UiLink from '@/components/ui-kit/UiLink.vue';
 
 export default {
   components: {
@@ -69,7 +67,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("auth", ["LOGIN_WITH_CREDENTIALS"]),
+    ...mapActions('auth', ['LOGIN_WITH_CREDENTIALS']),
     handleLoginInput({ target }) {
       this.username = target.value;
     },

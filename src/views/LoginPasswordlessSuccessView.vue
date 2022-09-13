@@ -15,10 +15,10 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions } from 'vuex';
 
-import UiButton from "@/components/ui-kit/UiButton.vue";
-import UiLink from "@/components/ui-kit/UiLink.vue";
+import UiButton from '@/components/ui-kit/UiButton.vue';
+import UiLink from '@/components/ui-kit/UiLink.vue';
 
 export default {
   components: {
@@ -34,10 +34,10 @@ export default {
     },
   },
   mounted() {
-    if (!this.email) this.$router.push({ name: "Login" });
+    if (!this.email) this.$router.push({ name: 'Login' });
   },
   methods: {
-    ...mapActions("auth", ["REQUEST_PASSWORDLESS_TOKEN"]),
+    ...mapActions('auth', ['REQUEST_PASSWORDLESS_TOKEN']),
     async handleResend() {
       const { email } = this;
       this.isSending = true;

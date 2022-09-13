@@ -4,25 +4,24 @@
     v-bind="{ ...$attrs, ...$props }"
     :class="[`ui-button--${size}`, `ui-button--${colorType}`, isMobileFullWidth && 'ui-button--mobile-full-width']"
     class="ui-button"
-    v-on="$listeners"
-  >
+    v-on="$listeners">
     <slot />
   </component>
 </template>
 <script>
 const Size = {
-  Big: "big",
-  Small: "small",
+  Big: 'big',
+  Small: 'small',
 };
 const ColorType = {
-  Primary: "primary",
-  White: "white",
+  Primary: 'primary',
+  White: 'white',
 };
 
 export default {
-  name: "UiButton",
+  name: 'UiButton',
   props: {
-    to: { type: [String, Object], default: "" },
+    to: { type: [String, Object], default: '' },
     size: { type: String, required: true, validator: (val) => Object.values(Size).includes(val) },
     colorType: { type: String, required: true, validator: (val) => Object.values(ColorType).includes(val) },
     isFullWidth: { type: Boolean, default: false },
@@ -30,7 +29,7 @@ export default {
   },
   computed: {
     component() {
-      return this.to ? "router-link" : "button";
+      return this.to ? 'router-link' : 'button';
     },
   },
 };

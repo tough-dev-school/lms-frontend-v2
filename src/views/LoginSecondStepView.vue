@@ -1,13 +1,13 @@
 <script>
-import { mapActions, mapGetters, mapMutations } from "vuex";
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 
 export default {
   computed: {
     next() {
       const { redirectAfterLogin } = this.$store.state.auth;
-      return redirectAfterLogin ? redirectAfterLogin : "/";
+      return redirectAfterLogin ? redirectAfterLogin : '/';
     },
-    ...mapGetters("auth", ["isAuthenticated"]),
+    ...mapGetters('auth', ['isAuthenticated']),
   },
   async mounted() {
     if (this.isAuthenticated) {
@@ -21,8 +21,8 @@ export default {
       await this.EXCHANGE_PASSWORDLESS_TOKEN_TO_JWT({ passwordlessToken: token });
     } catch (error) {
       this.$router.push({
-        name: "Login",
-        query: { error: "invalidToken" },
+        name: 'Login',
+        query: { error: 'invalidToken' },
       });
       throw error;
     }
@@ -33,11 +33,11 @@ export default {
     this.SET_REDIRECT_AFTER_LOGIN(null);
   },
   methods: {
-    ...mapActions("auth", ["EXCHANGE_PASSWORDLESS_TOKEN_TO_JWT"]),
-    ...mapMutations("auth", ["SET_REDIRECT_AFTER_LOGIN"]),
+    ...mapActions('auth', ['EXCHANGE_PASSWORDLESS_TOKEN_TO_JWT']),
+    ...mapMutations('auth', ['SET_REDIRECT_AFTER_LOGIN']),
   },
   render() {
-    return "";
+    return '';
   },
 };
 </script>

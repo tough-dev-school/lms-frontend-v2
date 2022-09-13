@@ -12,8 +12,7 @@
           :is-mobile-full-width="onlySendButton"
           size="small"
           color-type="primary"
-          class="login-form__button-enter"
-        >
+          class="login-form__button-enter">
           {{ submitButtonCaption }}
         </UiButton>
       </li>
@@ -24,8 +23,7 @@
           size="small"
           color-type="white"
           class="login-form__button-enter"
-          @click="$emit('cancel')"
-        >
+          @click="$emit('cancel')">
           {{ cancelButtonCaption }}
         </UiButton>
       </li>
@@ -34,14 +32,14 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex';
 
-import AppEditor from "@/components/AppEditor.vue";
-import UiButton from "@/components/ui-kit/UiButton.vue";
-import AppUserAvatar from "@/components/AppUserAvatar";
-import AppUserName from "@/components/AppUserName";
+import AppEditor from '@/components/AppEditor.vue';
+import UiButton from '@/components/ui-kit/UiButton.vue';
+import AppUserAvatar from '@/components/AppUserAvatar';
+import AppUserName from '@/components/AppUserName';
 
-import objectOrNullValidator from "@/utils/objectOrNullValidator.js";
+import objectOrNullValidator from '@/utils/objectOrNullValidator.js';
 
 export default {
   components: {
@@ -54,8 +52,8 @@ export default {
     disabled: { type: Boolean, default: false },
     onlySendButton: { type: Boolean, default: false },
     isShowUserInfo: { type: Boolean, default: false },
-    submitButtonCaption: { type: String, default: "Отправить" },
-    cancelButtonCaption: { type: String, default: "Отменить" },
+    submitButtonCaption: { type: String, default: 'Отправить' },
+    cancelButtonCaption: { type: String, default: 'Отменить' },
     parent: {
       required: false,
       default: null,
@@ -78,8 +76,8 @@ export default {
     };
   },
   computed: {
-    ...mapState("auth", ["user"]),
-    ...mapState("answer", ["answerWaitingForAPI"]),
+    ...mapState('auth', ['user']),
+    ...mapState('answer', ['answerWaitingForAPI']),
     userInputLocator() {
       return `answer-${this.question.slug}-${this.parent?.slug}-${this.initialAnswer?.slug}`;
     },
@@ -102,7 +100,7 @@ export default {
   },
   methods: {
     async submit() {
-      this.$emit("submit", this.newAnswer);
+      this.$emit('submit', this.newAnswer);
     },
     focus() {
       this.$refs.editor.focus();

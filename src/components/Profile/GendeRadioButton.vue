@@ -14,11 +14,11 @@
   </div>
 </template>
 <script>
-import { mapState, mapMutations } from "vuex";
+import { mapState, mapMutations } from 'vuex';
 
 export default {
   computed: {
-    ...mapState("user", ["user"]),
+    ...mapState('user', ['user']),
     gender: {
       get() {
         return this.user.gender;
@@ -28,7 +28,7 @@ export default {
       },
     },
   },
-  methods: mapMutations("user", ["UPDATE_USER"]),
+  methods: mapMutations('user', ['UPDATE_USER']),
 };
 </script>
 <style scoped>

@@ -3,12 +3,12 @@
 </template>
 
 <script>
-import dayjs from "dayjs";
-import "dayjs/locale/ru";
-import relativeTime from "dayjs/plugin/relativeTime";
+import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
+import relativeTime from 'dayjs/plugin/relativeTime';
 
 dayjs.extend(relativeTime);
-dayjs.locale("ru");
+dayjs.locale('ru');
 
 export default {
   props: {

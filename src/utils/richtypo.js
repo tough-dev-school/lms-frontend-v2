@@ -1,4 +1,4 @@
-import richtypo from "richtypo";
+import richtypo from 'richtypo';
 export default (text) => {
-  return richtypo.rich(text, "ru");
+  return richtypo.rich(text, 'ru');
 };

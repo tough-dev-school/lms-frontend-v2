@@ -26,8 +26,7 @@
             only-send-button
             is-show-user-info
             class="answer__answer-editor"
-            @submit="submit"
-          />
+            @submit="submit" />
           <AnswerDiscussion ref="discussion" :answer="answer" :question="question" @deleted="DELETE_ANSWER" />
         </div>
         <div class="answer__column answer__column--feedback">
@@ -44,22 +43,22 @@
 </template>
 
 <script>
-import { mapActions, mapMutations, mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from 'vuex';
 
-import AppContent from "@/components/AppContent.vue";
-import AppHTTPError from "@/components/AppHTTPError.vue";
-import AppCollapsible from "@/components/AppCollapsible.vue";
-import AppUserName from "@/components/AppUserName.vue";
-import AppAnswer from "@/components/homework/AppAnswer.vue";
-import AppAnswerEditor from "@/components/homework/AppAnswerEditor.vue";
-import AnswerDiscussion from "@/components/Answer/AnswerDiscussion.vue";
-import AppContainer from "@/components/AppContainer.vue";
-import PopupFeedbackDescr from "@/components/popup/PopupFeedbackDescr.vue";
-import AppHowToFeedbackText from "@/components/AppHowToFeedbackText.vue";
+import AppContent from '@/components/AppContent.vue';
+import AppHTTPError from '@/components/AppHTTPError.vue';
+import AppCollapsible from '@/components/AppCollapsible.vue';
+import AppUserName from '@/components/AppUserName.vue';
+import AppAnswer from '@/components/homework/AppAnswer.vue';
+import AppAnswerEditor from '@/components/homework/AppAnswerEditor.vue';
+import AnswerDiscussion from '@/components/Answer/AnswerDiscussion.vue';
+import AppContainer from '@/components/AppContainer.vue';
+import PopupFeedbackDescr from '@/components/popup/PopupFeedbackDescr.vue';
+import AppHowToFeedbackText from '@/components/AppHowToFeedbackText.vue';
 
 const COLLAPSE_BUTTON_TITLE = {
-  readTask: "Почитать задание",
-  hide: "Скрыть",
+  readTask: 'Почитать задание',
+  hide: 'Скрыть',
 };
 
 export default {
@@ -84,11 +83,11 @@ export default {
     };
   },
   computed: {
-    ...mapState("answer", ["question", "answer"]),
+    ...mapState('answer', ['question', 'answer']),
     requestedAnswerId() {
       // slug of the requested answer
       const { hash } = this.$route;
-      return hash ? hash.split("#")[1] : null;
+      return hash ? hash.split('#')[1] : null;
     },
   },
   watch: {
@@ -110,8 +109,8 @@ export default {
     this.isLoaded = true;
   },
   methods: {
-    ...mapActions("answer", ["FETCH_ANSWER", "POST_ANSWER"]),
-    ...mapMutations("answer", ["DELETE_ANSWER", "UPDATE_ANSWER"]),
+    ...mapActions('answer', ['FETCH_ANSWER', 'POST_ANSWER']),
+    ...mapMutations('answer', ['DELETE_ANSWER', 'UPDATE_ANSWER']),
     async submit({ text, parent }) {
       const answer = { text, parent, question: this.question.slug };
       this.isLoading = true;
@@ -126,7 +125,7 @@ export default {
     async scrollToAnswer(answerId) {
       const element = document.getElementById(answerId);
       this.$scrollTo(element, 100);
-      element.classList.add("answer--highlighted");
+      element.classList.add('answer--highlighted');
     },
     handleOpened() {
       this.title = COLLAPSE_BUTTON_TITLE.hide;

@@ -6,23 +6,23 @@
   </AppContainer>
 </template>
 <script>
-import { mapMutations, mapState } from "vuex";
+import { mapMutations, mapState } from 'vuex';
 
-import AppHeaderUser from "@/components/AppHeaderUser.vue";
-import AppContainer from "@/components/AppContainer.vue";
+import AppHeaderUser from '@/components/AppHeaderUser.vue';
+import AppContainer from '@/components/AppContainer.vue';
 
 export default {
   components: {
     AppContainer,
     AppHeaderUser,
   },
-  computed: mapState("auth", ["user"]),
+  computed: mapState('auth', ['user']),
   methods: {
-    ...mapMutations("auth", ["RESET"]),
+    ...mapMutations('auth', ['RESET']),
     logout() {
       this.RESET();
       this.$router.push({
-        name: "Login",
+        name: 'Login',
         query: { next: this.$route.fullPath },
       });
     },

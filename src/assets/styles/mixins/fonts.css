@@ -30,7 +30,7 @@
 }
 
 @define-mixin robot-text-default {
-  font-family: "PT Root UI";
+  font-family: 'PT Root UI';
   font-weight: normal;
 }
 @define-mixin robot-text-one {

@@ -19,11 +19,11 @@
   </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 
-import AppUserAvatar from "@/components/AppUserAvatar";
-import AppUserName from "@/components/AppUserName";
-import UiLink from "@/components/ui-kit/UiLink.vue";
+import AppUserAvatar from '@/components/AppUserAvatar';
+import AppUserName from '@/components/AppUserName';
+import UiLink from '@/components/ui-kit/UiLink.vue';
 
 export default {
   components: {
@@ -43,14 +43,14 @@ export default {
     email() {
       return this.user?.email;
     },
-    ...mapGetters("auth", ["purchasedCourses"]),
+    ...mapGetters('auth', ['purchasedCourses']),
   },
   methods: {
     handleLogout() {
-      this.$emit("logout");
+      this.$emit('logout');
     },
     getShortCourseName(longCourseName) {
-      return longCourseName.replace(/\(.*\)$/, ""); // flex scope, sorry
+      return longCourseName.replace(/\(.*\)$/, ''); // flex scope, sorry
     },
   },
 };

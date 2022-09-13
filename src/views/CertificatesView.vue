@@ -16,10 +16,10 @@
   </div>
 </template>
 <script>
-import AppSpinner from "@/components/AppSpinner";
-import UiLink from "@/components/ui-kit/UiLink";
+import AppSpinner from '@/components/AppSpinner';
+import UiLink from '@/components/ui-kit/UiLink';
 
-import axios from "@/api/backend.js";
+import axios from '@/api/backend.js';
 
 export default {
   components: {
@@ -42,7 +42,7 @@ export default {
 
   async created() {
     this.isLoaded = false;
-    const response = await axios.get("/api/v2/diplomas/");
+    const response = await axios.get('/api/v2/diplomas/');
     this.certificates = response.data.results;
     this.isLoaded = true;
   },

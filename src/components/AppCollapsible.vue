@@ -7,14 +7,14 @@
   </div>
 </template>
 <script>
-import UiButtonAsText from "@/components/ui-kit/UiButtonAsText.vue";
+import UiButtonAsText from '@/components/ui-kit/UiButtonAsText.vue';
 
 export default {
   components: {
     UiButtonAsText,
   },
   props: {
-    title: { type: String, required: false, default: "Раскрыть" },
+    title: { type: String, required: false, default: 'Раскрыть' },
   },
   data() {
     return {
@@ -24,9 +24,9 @@ export default {
   watch: {
     isCollapsed(newValue) {
       if (newValue) {
-        this.$emit("closed");
+        this.$emit('closed');
       } else {
-        this.$emit("opened");
+        this.$emit('opened');
       }
     },
   },

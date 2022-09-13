@@ -3,14 +3,14 @@
 </template>
 
 <script>
-import getUserName from "../utils/getUserName";
+import getUserName from '../utils/getUserName';
 export const FontType = {
-  Robot: "robot",
-  Inter: "inter",
+  Robot: 'robot',
+  Inter: 'inter',
 };
 export const ColorType = {
-  Primary: "primary",
-  Secondary: "secondary",
+  Primary: 'primary',
+  Secondary: 'secondary',
 };
 
 export default {

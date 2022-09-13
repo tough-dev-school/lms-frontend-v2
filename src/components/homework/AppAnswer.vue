@@ -20,26 +20,25 @@
         :initial-answer="answer"
         :question="question"
         @cancel="isEditing = false"
-        @submit="updateAnswer"
-      />
+        @submit="updateAnswer" />
     </div>
   </div>
 </template>
 
 <script>
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState } from 'vuex';
 
-import AppAnswerEditor from "@/components/homework/AppAnswerEditor.vue";
-import AppContent from "@/components/AppContent.vue";
-import AppDate from "@/components/AppDate.vue";
-import AppUserAvatar from "@/components/AppUserAvatar";
-import AppUserName from "@/components/AppUserName";
-import UiLink from "@/components/ui-kit/UiLink";
+import AppAnswerEditor from '@/components/homework/AppAnswerEditor.vue';
+import AppContent from '@/components/AppContent.vue';
+import AppDate from '@/components/AppDate.vue';
+import AppUserAvatar from '@/components/AppUserAvatar';
+import AppUserName from '@/components/AppUserName';
+import UiLink from '@/components/ui-kit/UiLink';
 
-import "vue-awesome/icons/edit";
-import "vue-awesome/icons/trash-alt";
+import 'vue-awesome/icons/edit';
+import 'vue-awesome/icons/trash-alt';
 
 export default {
   components: {
@@ -62,42 +61,42 @@ export default {
     };
   },
   computed: {
-    ...mapState("auth", ["user"]),
+    ...mapState('auth', ['user']),
     isEditable() {
       let { created, modified } = this.answer;
 
       created = modified ? modified : created;
 
-      return this.belongsToCurrentUser && dayjs(created).isAfter(dayjs().subtract(30, "minute"));
+      return this.belongsToCurrentUser && dayjs(created).isAfter(dayjs().subtract(30, 'minute'));
     },
     belongsToCurrentUser() {
       return this.user.uuid === this.answer.author.uuid;
     },
     currentColor() {
-      return this.belongsToCurrentUser ? "secondary" : "primary";
+      return this.belongsToCurrentUser ? 'secondary' : 'primary';
     },
     answerUrl() {
       return {
-        name: "Single answer",
+        name: 'Single answer',
         params: { id: this.answer.slug },
       };
     },
   },
   methods: {
-    ...mapActions("answer", ["DELETE_ANSWER", "UPDATE_ANSWER"]),
+    ...mapActions('answer', ['DELETE_ANSWER', 'UPDATE_ANSWER']),
     async deleted() {
-      if (!confirm("Удаляем?")) {
+      if (!confirm('Удаляем?')) {
         return;
       }
       const { answer } = this;
       await this.DELETE_ANSWER(answer);
       this.isDeleted = true;
-      this.$emit("deleted", answer);
+      this.$emit('deleted', answer);
     },
     async updateAnswer(answer) {
       await this.UPDATE_ANSWER(answer);
       this.isEditing = false;
-      this.$emit("updated");
+      this.$emit('updated');
     },
   },
 };

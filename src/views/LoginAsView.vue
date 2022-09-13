@@ -1,10 +1,10 @@
 <script>
-import { mapActions } from "vuex";
+import { mapActions } from 'vuex';
 export default {
   computed: {
     next() {
       const { redirectAfterLogin } = this.$store.state.auth;
-      return redirectAfterLogin ? redirectAfterLogin : "/";
+      return redirectAfterLogin ? redirectAfterLogin : '/';
     },
   },
   async created() {
@@ -12,9 +12,9 @@ export default {
     await this.LOGIN_WITH_USER_ID({ id });
     this.$router.push(this.next);
   },
-  methods: mapActions("auth", ["LOGIN_WITH_USER_ID"]),
+  methods: mapActions('auth', ['LOGIN_WITH_USER_ID']),
   render() {
-    return "";
+    return '';
   },
 };
 </script>

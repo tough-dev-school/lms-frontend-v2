@@ -6,16 +6,15 @@
       :block-map="blocks"
       :map-page-url="mapPageUrl"
       :page-link-options="pageLinkOptions"
-      full-page
-    />
+      full-page />
     <AppSpinner v-else class="notion-page__spinner" />
   </div>
 </template>
 <script>
-import { NotionRenderer } from "vue-notion";
-import AppSpinner from "@/components/AppSpinner";
+import { NotionRenderer } from 'vue-notion';
+import AppSpinner from '@/components/AppSpinner';
 
-import axios from "@/api/backend.js";
+import axios from '@/api/backend.js';
 
 export default {
   components: {
@@ -26,8 +25,8 @@ export default {
     blockMap: null,
     isLoaded: false,
     pageLinkOptions: {
-      component: "router-link",
-      href: "to",
+      component: 'router-link',
+      href: 'to',
     },
   }),
   watch: {

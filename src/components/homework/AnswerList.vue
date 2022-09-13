@@ -7,18 +7,17 @@
         :answers="answer.descendants"
         :question="question"
         class="single-answer__children"
-        v-on="$listeners"
-      />
+        v-on="$listeners" />
     </li>
   </ul>
 </template>
 <script>
-import AppAnswer from "@/components/homework/AppAnswer.vue";
+import AppAnswer from '@/components/homework/AppAnswer.vue';
 
 export default {
   components: {
     AppAnswer,
-    AnswerList: () => import("@/components/homework/AnswerList.vue"),
+    AnswerList: () => import('@/components/homework/AnswerList.vue'),
   },
   props: {
     answers: { type: Array, required: true },

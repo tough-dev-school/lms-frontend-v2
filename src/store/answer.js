@@ -1,5 +1,5 @@
-import axios from "@/api/backend.js";
-import Vue from "vue";
+import axios from '@/api/backend.js';
+import Vue from 'vue';
 
 export default {
   namespaced: true,
@@ -12,30 +12,30 @@ export default {
     async FETCH_ANSWER({ dispatch, commit }, { id }) {
       const result = await axios.get(`/api/v2/homework/answers/${id}/`);
       const { question } = result.data;
-      commit("SET_ANSWER", result.data);
-      return dispatch("FETCH_QUESTION", { id: question });
+      commit('SET_ANSWER', result.data);
+      return dispatch('FETCH_QUESTION', { id: question });
     },
     async FETCH_QUESTION({ commit }, { id }) {
       const response = await axios.get(`/api/v2/homework/questions/${id}/`);
 
-      commit("SET_QUESTION", response.data);
+      commit('SET_QUESTION', response.data);
     },
     async POST_ANSWER({ dispatch, state }, answer) {
-      await axios.post("/api/v2/homework/answers/", answer);
-      await dispatch("FETCH_ANSWER", { id: state.answer.slug });
+      await axios.post('/api/v2/homework/answers/', answer);
+      await dispatch('FETCH_ANSWER', { id: state.answer.slug });
     },
     async UPDATE_ANSWER({ commit }, answer) {
-      commit("SET_ANSWER_WAITING_FOR_API", answer);
+      commit('SET_ANSWER_WAITING_FOR_API', answer);
       const { slug, text } = answer;
       const response = await axios.patch(`/api/v2/homework/answers/${slug}/`, { text });
-      commit("UPDATE_ANSWER", response.data);
-      commit("SET_ANSWER_WAITING_FOR_API", null);
+      commit('UPDATE_ANSWER', response.data);
+      commit('SET_ANSWER_WAITING_FOR_API', null);
     },
     async DELETE_ANSWER({ commit }, answer) {
-      commit("SET_ANSWER_WAITING_FOR_API", answer);
+      commit('SET_ANSWER_WAITING_FOR_API', answer);
       const { slug } = answer;
       await axios.delete(`/api/v2/homework/answers/${slug}/`);
-      commit("SET_ANSWER_WAITING_FOR_API", null);
+      commit('SET_ANSWER_WAITING_FOR_API', null);
     },
   },
   mutations: {

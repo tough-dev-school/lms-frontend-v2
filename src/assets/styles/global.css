@@ -1,5 +1,5 @@
-@import "fonts.css";
-@import "colors.css";
+@import 'fonts.css';
+@import 'colors.css';
 
 :root {
   --default-font-size-px: 16;

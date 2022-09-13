@@ -11,8 +11,7 @@
       has-autofocus
       label="Электронная почта"
       class="login-passwordless__input"
-      @input="handleInput"
-    />
+      @input="handleInput" />
     <ul class="login-passwordless__nav-list">
       <li>
         <UiButton :disabled="isButtonSendDisabled" size="big" color-type="primary" is-mobile-full-width>Получить доступ</UiButton>
@@ -26,11 +25,11 @@
   </form>
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapActions } from 'vuex';
 
-import UiButton from "@/components/ui-kit/UiButton.vue";
-import UiInput from "@/components/ui-kit/UiInput.vue";
-import UiLink from "@/components/ui-kit/UiLink.vue";
+import UiButton from '@/components/ui-kit/UiButton.vue';
+import UiInput from '@/components/ui-kit/UiInput.vue';
+import UiLink from '@/components/ui-kit/UiLink.vue';
 
 export default {
   components: {
@@ -50,7 +49,7 @@ export default {
   },
   computed: {
     inputButtonText() {
-      return this.error ?? "Мы отправим ссылку для входа по этому адресу";
+      return this.error ?? 'Мы отправим ссылку для входа по этому адресу';
     },
     isButtonSendDisabled() {
       const { isSubmitted, isSending, email } = this;
@@ -64,7 +63,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("auth", ["REQUEST_PASSWORDLESS_TOKEN"]),
+    ...mapActions('auth', ['REQUEST_PASSWORDLESS_TOKEN']),
     handleInput({ target }) {
       this.email = target.value;
     },
@@ -72,7 +71,7 @@ export default {
       this.isSending = true;
       const email = this.email.trim();
       try {
-        this.$router.push({ name: "LoginPasswordlessSuccess", query: { email } });
+        this.$router.push({ name: 'LoginPasswordlessSuccess', query: { email } });
         await this.REQUEST_PASSWORDLESS_TOKEN({ email });
       } catch (error) {
         this.isSending = false;
