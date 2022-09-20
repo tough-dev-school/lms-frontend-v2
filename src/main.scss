@@ -1,3 +1,7 @@
+body {
+  @apply font-body;
+}
+
 .Heading {
   &_H1 {
     @apply text-h1;
