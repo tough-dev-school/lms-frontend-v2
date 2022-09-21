@@ -14,7 +14,7 @@
   <button
     class="h-56 min-w-[240px]"
     :class="{
-      'rounded-row bg-yellow text-center text-black hover:bg-yellow-hover':
+      'rounded-row bg-yellow text-center text-black transition-colors hover:bg-yellow-hover':
         type === 'button',
       Link: type === 'link',
     }">
