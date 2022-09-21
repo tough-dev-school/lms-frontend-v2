@@ -1,8 +1,12 @@
 import { beforeEach, describe, test, expect } from 'vitest';
 import Avatar from './Avatar.vue';
 import { shallowMount, VueWrapper } from '@vue/test-utils';
+import { faker } from '@faker-js/faker';
 
-const defaultProps = { name: 'John', surname: 'Doe' };
+const defaultProps = {
+  name: faker.name.firstName(),
+  surname: faker.name.lastName(),
+};
 
 describe('Avatar', () => {
   let wrapper: VueWrapper;
@@ -12,15 +16,17 @@ describe('Avatar', () => {
   });
 
   test('Renders two letter avatar', () => {
-    expect(wrapper.text()).toBe('JD');
+    const { name, surname } = defaultProps;
+
+    expect(wrapper.text()).toBe(`${name[0]}${surname[0]}`);
   });
 
-  test.each([{ name: 'John' }, { surname: 'Doe' }])(
-    'Renders one letter avatar',
-    (props) => {
-      wrapper = shallowMount(Avatar, { propsData: props });
-      if (props.name) expect(wrapper.text()).toBe(props.name[0]);
-      if (props.surname) expect(wrapper.text()).toBe(props.surname[0]);
-    },
-  );
+  test.each([
+    { name: faker.name.firstName() },
+    { surname: faker.name.lastName() },
+  ])('Renders one letter avatar', (props) => {
+    wrapper = shallowMount(Avatar, { propsData: props });
+    if (props.name) expect(wrapper.text()).toBe(props.name[0]);
+    if (props.surname) expect(wrapper.text()).toBe(props.surname[0]);
+  });
 });
