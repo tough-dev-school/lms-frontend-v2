@@ -23,7 +23,7 @@ module.exports = {
     colors: {
       black: { DEFAULT: '#000000' },
       white: { DEFAULT: '#FFFFFF' },
-      yellow: { DEFAULT: '#ffa800', hover: '#ffa800' },
+      yellow: { DEFAULT: '#ffb800', hover: '#ffa800' },
       blue: { DEFAULT: '#3f5dff', hover: '#0024de' },
       gray: { DEFAULT: '#9a9a9a' },
       red: { DEFAULT: 'red' },

@@ -1,0 +1,17 @@
+import { describe, test, beforeEach, expect } from 'vitest';
+import Button from './Button.vue';
+import { shallowMount, VueWrapper } from '@vue/test-utils';
+
+describe('Button', () => {
+  let wrapper: VueWrapper;
+
+  beforeEach(() => {
+    wrapper = shallowMount(Button, { propsData: {} });
+  });
+
+  test('button visual can be link', () => {
+    wrapper = shallowMount(Button, { propsData: { type: 'link' } });
+
+    expect(wrapper.classes('Link')).toBe(true);
+  });
+});
