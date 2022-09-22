@@ -1,15 +1,19 @@
 import { describe, expect, test, beforeEach } from 'vitest';
-import { shallowMount, VueWrapper } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 import TextInput from './TextInput.vue';
 import { faker } from '@faker-js/faker';
 
-const defaultProps = { tip: 'This is a tip', label: 'This is a label' };
+const defaultProps = {
+  tip: 'This is a tip',
+  label: 'This is a label',
+  error: 'This is a error',
+};
 
 describe('TextInput', () => {
-  let wrapper: VueWrapper;
+  let wrapper;
 
   beforeEach(() => {
-    wrapper = shallowMount(TextInput, { propsData: defaultProps });
+    wrapper = shallowMount(TextInput, { props: defaultProps });
   });
 
   const getLabelWrapper = () => {
@@ -18,6 +22,10 @@ describe('TextInput', () => {
 
   const getTipWrapper = () => {
     return wrapper.find('[data-testid="tip"]');
+  };
+
+  const getErrorWrapper = () => {
+    return wrapper.find('[data-testid="error"]');
   };
 
   const getInputWrapper = () => {
@@ -30,7 +38,7 @@ describe('TextInput', () => {
 
   test('has no label if no label is defined', () => {
     wrapper = shallowMount(TextInput, {
-      propsData: { ...defaultProps, label: undefined },
+      props: { ...defaultProps, label: undefined },
     });
 
     expect(getLabelWrapper().exists()).toBeFalsy();
@@ -42,17 +50,29 @@ describe('TextInput', () => {
 
   test('has no tip if no tip is defined', () => {
     wrapper = shallowMount(TextInput, {
-      propsData: { ...defaultProps, tip: undefined },
+      props: { ...defaultProps, tip: undefined },
     });
 
     expect(getTipWrapper().exists()).toBeFalsy();
+  });
+
+  test('has correct error if error is defined', () => {
+    expect(getErrorWrapper().text()).toBe(defaultProps.error);
+  });
+
+  test('has no error if no error is defined', () => {
+    wrapper = shallowMount(TextInput, {
+      props: { ...defaultProps, error: undefined },
+    });
+
+    expect(getErrorWrapper().exists()).toBeFalsy();
   });
 
   test('emits input event on input', async () => {
     const string = faker.internet.email();
     const input = getInputWrapper();
 
-    (input.element as HTMLInputElement).value = string;
+    input.element.value = string;
     await input.trigger('input');
 
     expect(wrapper.emitted()['update:modelValue'][0][0]).toBe(string);

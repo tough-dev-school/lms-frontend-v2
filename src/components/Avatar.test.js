@@ -1,6 +1,6 @@
 import { beforeEach, describe, test, expect } from 'vitest';
 import Avatar from './Avatar.vue';
-import { shallowMount, VueWrapper } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
 
 const defaultProps = {
@@ -9,10 +9,10 @@ const defaultProps = {
 };
 
 describe('Avatar', () => {
-  let wrapper: VueWrapper;
+  let wrapper;
 
   beforeEach(() => {
-    wrapper = shallowMount(Avatar, { propsData: defaultProps });
+    wrapper = shallowMount(Avatar, { props: defaultProps });
   });
 
   test('Renders two letter avatar', () => {
@@ -25,7 +25,7 @@ describe('Avatar', () => {
     { name: faker.name.firstName() },
     { surname: faker.name.lastName() },
   ])('Renders one letter avatar', (props) => {
-    wrapper = shallowMount(Avatar, { propsData: props });
+    wrapper = shallowMount(Avatar, { props });
     if (props.name) expect(wrapper.text()).toBe(props.name[0]);
     if (props.surname) expect(wrapper.text()).toBe(props.surname[0]);
   });
