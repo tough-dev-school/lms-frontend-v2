@@ -1,9 +1,9 @@
 import { describe, test, beforeEach, expect } from 'vitest';
 import Button from './Button.vue';
-import { shallowMount, VueWrapper } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 
 describe('Button', () => {
-  let wrapper: VueWrapper;
+  let wrapper;
 
   beforeEach(() => {
     wrapper = shallowMount(Button, { props: {} });
