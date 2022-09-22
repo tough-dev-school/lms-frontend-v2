@@ -29,7 +29,7 @@ describe('TextInput', () => {
   });
 
   test('has no label if no label is defined', () => {
-    const wrapper = shallowMount(TextInput, {
+    wrapper = shallowMount(TextInput, {
       propsData: { ...defaultProps, label: undefined },
     });
 
@@ -41,7 +41,7 @@ describe('TextInput', () => {
   });
 
   test('has no tip if no tip is defined', () => {
-    const wrapper = shallowMount(TextInput, {
+    wrapper = shallowMount(TextInput, {
       propsData: { ...defaultProps, tip: undefined },
     });
 
