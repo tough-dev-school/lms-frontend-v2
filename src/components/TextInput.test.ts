@@ -3,7 +3,11 @@ import { shallowMount, VueWrapper } from '@vue/test-utils';
 import TextInput from './TextInput.vue';
 import { faker } from '@faker-js/faker';
 
-const defaultProps = { tip: 'This is a tip', label: 'This is a label' };
+const defaultProps = {
+  tip: 'This is a tip',
+  label: 'This is a label',
+  error: 'This is a error',
+};
 
 describe('TextInput', () => {
   let wrapper: VueWrapper;
@@ -18,6 +22,10 @@ describe('TextInput', () => {
 
   const getTipWrapper = () => {
     return wrapper.find('[data-testid="tip"]');
+  };
+
+  const getErrorWrapper = () => {
+    return wrapper.find('[data-testid="error"]');
   };
 
   const getInputWrapper = () => {
@@ -46,6 +54,18 @@ describe('TextInput', () => {
     });
 
     expect(getTipWrapper().exists()).toBeFalsy();
+  });
+
+  test('has correct error if error is defined', () => {
+    expect(getErrorWrapper().text()).toBe(defaultProps.error);
+  });
+
+  test('has no error if no error is defined', () => {
+    wrapper = shallowMount(TextInput, {
+      props: { ...defaultProps, error: undefined },
+    });
+
+    expect(getErrorWrapper().exists()).toBeFalsy();
   });
 
   test('emits input event on input', async () => {
