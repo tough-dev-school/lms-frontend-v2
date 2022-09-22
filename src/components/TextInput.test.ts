@@ -9,7 +9,7 @@ describe('TextInput', () => {
   let wrapper: VueWrapper;
 
   beforeEach(() => {
-    wrapper = shallowMount(TextInput, { propsData: defaultProps });
+    wrapper = shallowMount(TextInput, { props: defaultProps });
   });
 
   const getLabelWrapper = () => {
@@ -30,7 +30,7 @@ describe('TextInput', () => {
 
   test('has no label if no label is defined', () => {
     wrapper = shallowMount(TextInput, {
-      propsData: { ...defaultProps, label: undefined },
+      props: { ...defaultProps, label: undefined },
     });
 
     expect(getLabelWrapper().exists()).toBeFalsy();
@@ -42,7 +42,7 @@ describe('TextInput', () => {
 
   test('has no tip if no tip is defined', () => {
     wrapper = shallowMount(TextInput, {
-      propsData: { ...defaultProps, tip: undefined },
+      props: { ...defaultProps, tip: undefined },
     });
 
     expect(getTipWrapper().exists()).toBeFalsy();

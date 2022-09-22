@@ -6,11 +6,11 @@ describe('Button', () => {
   let wrapper: VueWrapper;
 
   beforeEach(() => {
-    wrapper = shallowMount(Button, { propsData: {} });
+    wrapper = shallowMount(Button, { props: {} });
   });
 
   test('button visual can be link', () => {
-    wrapper = shallowMount(Button, { propsData: { type: 'link' } });
+    wrapper = shallowMount(Button, { props: { type: 'link' } });
 
     expect(wrapper.classes('Link')).toBe(true);
   });
