@@ -4,10 +4,12 @@
   import { ref } from 'vue';
   import { onKeyStroke } from '@vueuse/core';
   import useAuth from '@/stores/auth';
+  import { useRouter } from 'vue-router';
 
   const withPassword = ref(false);
 
   const auth = useAuth();
+  const router = useRouter();
 
   const email = ref('');
 
@@ -26,9 +28,12 @@
     withPassword.value = value;
   };
 
-  const loginWithEmail = () => {};
-  const loginWithCredentials = () => {
-    auth.loginWithCredentials(username.value, password.value);
+  const loginWithEmail = async () => {
+    router.push({ name: 'profile' });
+  };
+  const loginWithCredentials = async () => {
+    await auth.loginWithCredentials(username.value, password.value);
+    router.push({ name: 'profile' });
   };
 
   onKeyStroke('Enter', (e: KeyboardEvent) => {
