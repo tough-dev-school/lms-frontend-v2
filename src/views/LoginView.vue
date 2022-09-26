@@ -3,17 +3,20 @@
   import TextInput from '@/components/TextInput.vue';
   import { ref } from 'vue';
   import { onKeyStroke } from '@vueuse/core';
+  import useAuth from '@/stores/auth';
 
   const withPassword = ref(false);
 
+  const auth = useAuth();
+
   const email = ref('');
 
-  const login = ref('');
+  const username = ref('');
   const password = ref('');
 
   const clearInputs = () => {
     email.value = '';
-    login.value = '';
+    username.value = '';
     password.value = '';
   };
 
@@ -23,11 +26,13 @@
     withPassword.value = value;
   };
 
-  const loginUsingEmail = () => {};
-  const loginUsingCredentials = () => {};
+  const loginWithEmail = () => {};
+  const loginWithCredentials = () => {
+    auth.loginWithCredentials(username.value, password.value);
+  };
 
   onKeyStroke('Enter', (e: KeyboardEvent) => {
-    withPassword.value ? loginUsingCredentials() : loginUsingEmail();
+    withPassword.value ? loginWithCredentials() : loginWithEmail();
 
     e.preventDefault();
   });
@@ -43,7 +48,7 @@
         type="email"
         v-model="email" />
       <div class="mt-32 grid grid-cols-2 gap-8">
-        <Button @click="loginUsingEmail">Получить доступ</Button>
+        <Button @click="loginWithEmail">Получить доступ</Button>
         <Button @click="changeLoginType(true)" type="link">
           Войти через пароль
         </Button>
@@ -51,11 +56,11 @@
     </template>
     <div v-if="withPassword === true">
       <div class="flex flex-col gap-16">
-        <TextInput label="Логин" type="text" v-model="login" />
+        <TextInput label="Логин" type="text" v-model="username" />
         <TextInput label="Пароль" type="password" v-model="password" />
       </div>
       <div class="mt-32 grid grid-cols-2 gap-8">
-        <Button @click="loginUsingCredentials">Войти</Button>
+        <Button @click="loginWithCredentials">Войти</Button>
         <Button type="link" @click="changeLoginType(false)">
           Войти по ссылке
         </Button>
