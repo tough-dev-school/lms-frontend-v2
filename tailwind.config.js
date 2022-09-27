@@ -21,6 +21,7 @@ module.exports = {
       body: 'sans-serif',
     },
     colors: {
+      offwhite: { DEFAULT: '#faf9f8' },
       black: { DEFAULT: '#000000' },
       white: { DEFAULT: '#FFFFFF' },
       yellow: { DEFAULT: '#ffb800', hover: '#ffa800' },
@@ -36,9 +37,16 @@ module.exports = {
       h3: '16px',
     },
     borderRadius: {
+      8: '8px',
+      16: '16px',
       DEFAULT: '16px',
       row: '28px',
       full: '50%',
+    },
+    leading: {
+      1: '1em',
+      1.25: '1.25em',
+      1.5: '1.5em',
     },
     spacing: {
       0: 0,
