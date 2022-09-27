@@ -53,7 +53,9 @@
         type="email"
         v-model="email" />
       <div class="mt-32 grid grid-cols-2 gap-8">
-        <Button @click="loginWithEmail">Получить доступ</Button>
+        <Button @click="loginWithEmail" :disabled="!email"
+          >Получить доступ</Button
+        >
         <Button @click="changeLoginType(true)" type="link">
           Войти через пароль
         </Button>
@@ -65,7 +67,11 @@
         <TextInput label="Пароль" type="password" v-model="password" />
       </div>
       <div class="mt-32 grid grid-cols-2 gap-8">
-        <Button @click="loginWithCredentials">Войти</Button>
+        <Button
+          @click="loginWithCredentials"
+          :disabled="!(username && password)"
+          >Войти</Button
+        >
         <Button type="link" @click="changeLoginType(false)">
           Войти по ссылке
         </Button>
