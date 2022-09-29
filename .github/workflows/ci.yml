@@ -21,6 +21,9 @@ jobs:
           node-version: ${{ matrix.node }}
           check-latest: true
 
+      - name: Install esbuild 🤯
+        run: npm i -D esbuild
+
       - name: Install dependencies 👨🏻‍💻
         run: npm install
 
