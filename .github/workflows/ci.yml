@@ -21,16 +21,11 @@ jobs:
           node-version: ${{ matrix.node }}
           check-latest: true
 
-      - name: Cache node_modules 📦
-        uses: actions/cache@v2.1.4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+      - name: Install esbuild 🤯
+        run: npm i -D esbuild
 
       - name: Install dependencies 👨🏻‍💻
-        run: npm ci --prefer-offline --no-audit
+        run: npm install
 
       - name: Run linter 👀
         run: npm run lint
