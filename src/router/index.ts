@@ -23,7 +23,7 @@ router.beforeEach((to, from, next) => {
   const auth = useAuth();
 
   const isAuthorized = !!auth.token;
-  const isWhitelisted = ['login'].includes(to.name);
+  const isWhitelisted = ['login'].includes(String(to.name));
 
   if (isAuthorized || isWhitelisted) {
     next();
