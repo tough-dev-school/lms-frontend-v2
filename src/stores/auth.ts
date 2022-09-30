@@ -1,10 +1,6 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
-
-const toast = (
-  message: string,
-  type: 'error' | 'success' | 'neutral' = 'neutral',
-) => alert(message);
+import handleError from '@/utils/handleError';
 
 const useAuth = defineStore('auth', {
   state: () => {
@@ -21,8 +17,7 @@ const useAuth = defineStore('auth', {
         });
         this.token = response.data.token;
       } catch (error: any) {
-        const errors = [...error.response.data.non_field_errors];
-        errors.forEach((error) => toast(error, 'error'));
+        handleError(error);
       }
     },
   },
