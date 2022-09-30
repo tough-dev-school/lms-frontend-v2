@@ -3,10 +3,13 @@ import axios from 'axios';
 
 const instance = axios.create();
 
-instance.interceptors.request.use(function (config) {
+instance.interceptors.request.use((request) => {
   const auth = useAuth();
-  config.headers['Authorization'] = `Bearer ${auth.token} `;
-  return config;
+  request.headers = {
+    ...request.headers,
+    Authorization: `Bearer ${auth.token} `,
+  };
+  return request;
 });
 
 export default instance;
