@@ -18,7 +18,7 @@ module.exports = {
   theme: {
     fontFamily: {
       display: 'serif',
-      body: 'sans-serif',
+      body: ['PT Root UI', 'sans-serif'],
     },
     colors: {
       offwhite: { DEFAULT: '#faf9f8' },
