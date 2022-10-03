@@ -21,6 +21,7 @@ const useAuth = defineStore('auth', {
       }
     },
   },
+  persist: true,
 });
 
 export default useAuth;
