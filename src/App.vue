@@ -1,8 +1,5 @@
 <script lang="ts" setup>
   import ToastFeed from '@/components/ToastFeed.vue';
-  import { useTitle } from '@vueuse/core';
-
-  useTitle('Школа Сильных Программистов');
 </script>
 
 <template>
