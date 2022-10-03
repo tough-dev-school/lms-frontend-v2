@@ -28,25 +28,39 @@
   <div class="relative">
     <div
       class="flex cursor-pointer items-center rounded p-8 transition-colors hover:bg-gray hover:bg-opacity-10"
-      @click="isOpen = true">
-      <Avatar :name="first_name" :surname="last_name" class="mr-8" />
+      @click="isOpen = true"
+      data-testid="button">
+      <Avatar
+        :name="first_name"
+        :surname="last_name"
+        class="mr-8"
+        data-testid="avatar" />
       <ul class="text-sub">
-        <li class="leading-tight">{{ name }}</li>
-        <li class="leading-tight text-gray">{{ username }}</li>
+        <li class="leading-tight" data-testid="name">{{ name }}</li>
+        <li class="leading-tight text-gray" data-testid="username">
+          {{ username }}
+        </li>
       </ul>
     </div>
     <nav
       class="absolute left-0 right-0 bg-white shadow"
       v-if="isOpen"
+      data-testid="menu"
       ref="menu">
       <ul>
         <li>
-          <RouterLink to="/profile" class="Link px-8 py-4 leading-tight"
+          <RouterLink
+            data-testid="profile"
+            to="/profile"
+            class="Link px-8 py-4 leading-tight"
             >Профиль</RouterLink
           >
         </li>
         <li>
-          <button @click="logOut" class="Link px-8 py-4 leading-tight">
+          <button
+            @click="logOut"
+            data-testid="logout"
+            class="Link px-8 py-4 leading-tight">
             Выйти
           </button>
         </li>
