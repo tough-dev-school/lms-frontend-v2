@@ -1,10 +1,5 @@
 import useToasts from '@/stores/toasts';
 
-const toast = (
-  message: string,
-  type: 'error' | 'success' | 'neutral' = 'neutral',
-) => console.log(message);
-
 const handleError = (error: any) => {
   const toasts = useToasts();
 
