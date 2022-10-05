@@ -20,6 +20,25 @@ const useAuth = defineStore('auth', {
         handleError(error);
       }
     },
+    async loginWithEmail(email: string) {
+      try {
+        await axios.get(
+          `/api/v2/auth/passwordless-token/request/${email.toLowerCase()}/`,
+        );
+      } catch (error: any) {
+        handleError(error);
+      }
+    },
+    async exchangeTokens(passwordlessToken: string) {
+      try {
+        const response = await axios.get(
+          `/api/v2/auth/passwordless-token/${passwordlessToken}`,
+        );
+        this.token = response.data.token;
+      } catch (error: any) {
+        handleError(error);
+      }
+    },
     resetAuth() {
       this.token = undefined;
     },

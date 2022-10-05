@@ -29,8 +29,10 @@
   };
 
   const loginWithEmail = async () => {
+    await auth.loginWithEmail(email.value);
     if (auth.token) router.push({ name: 'profile' });
   };
+
   const loginWithCredentials = async () => {
     await auth.loginWithCredentials(username.value, password.value);
     if (auth.token) router.push({ name: 'profile' });

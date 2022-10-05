@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import ProfileView from '@/views/ProfileView.vue';
 import LoginView from '@/views/LoginView.vue';
+import LoadingView from '@/views/LoadingView.vue';
 import useAuth from '@/stores/auth';
 import NotionView from '@/views/NotionView.vue';
 import useUser from '@/stores/user';
@@ -17,6 +18,11 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: LoginView,
+    },
+    {
+      path: '/login/:passwordlessToken',
+      name: 'token',
+      component: LoadingView,
     },
     {
       path: '/materials/:id',
@@ -58,6 +64,17 @@ router.beforeEach(async (to, from, next) => {
   }
 
   next();
+});
+
+// Passwordless token
+router.beforeEach(async (to, from, next) => {
+  if (to.name === 'token') {
+    const auth = useAuth();
+    await auth.exchangeTokens(to.params.passwordlessToken);
+    next('/profile');
+  } else {
+    next();
+  }
 });
 
 export default router;
