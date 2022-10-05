@@ -7,7 +7,7 @@ import { nanoid } from 'nanoid';
 const defaultProps = {
   text: faker.lorem.sentence(),
   id: nanoid(),
-  liftime: 1000,
+  lifetime: 1000,
 };
 
 describe('Toast', () => {

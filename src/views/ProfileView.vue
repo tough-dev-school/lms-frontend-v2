@@ -24,6 +24,7 @@
       linkedin_username: linkedin_username.value,
       github_username: github_username.value,
     });
+    await update();
   };
 
   const update = async () => {

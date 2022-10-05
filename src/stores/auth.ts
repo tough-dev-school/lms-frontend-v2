@@ -20,6 +20,9 @@ const useAuth = defineStore('auth', {
         handleError(error);
       }
     },
+    resetAuth() {
+      this.token = undefined;
+    },
   },
   persist: true,
 });
