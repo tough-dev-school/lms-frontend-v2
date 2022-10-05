@@ -52,6 +52,9 @@ describe('ProfileMenu', () => {
   test('Click on profile toggles menu', async () => {
     await getButtonWrapper().trigger('click');
     expect(getMenuWrapper().exists()).toBeTruthy();
+
+    await getButtonWrapper().trigger('click');
+    expect(getMenuWrapper().exists()).toBeFalsy();
   });
 
   test.todo('Click outside profile should close menu');

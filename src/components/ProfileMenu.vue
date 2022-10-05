@@ -25,10 +25,10 @@
 </script>
 
 <template>
-  <div class="relative">
+  <div class="relative" ref="menu">
     <div
-      class="flex cursor-pointer items-center rounded p-8 transition-colors hover:bg-gray hover:bg-opacity-10"
-      @click="isOpen = true"
+      class="flex cursor-pointer items-center rounded-8 p-8 transition-colors hover:bg-gray hover:bg-opacity-10"
+      @click="isOpen = !isOpen"
       data-testid="button">
       <Avatar
         :name="first_name"
