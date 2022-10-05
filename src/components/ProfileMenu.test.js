@@ -1,5 +1,5 @@
 import { describe, expect, test, beforeEach } from 'vitest';
-import { shallowMount } from '@vue/test-utils';
+import { RouterLinkStub, shallowMount } from '@vue/test-utils';
 import ProfileMenu from './ProfileMenu.vue';
 import useUser from '@/stores/user';
 import useAuth from '@/stores/auth';
@@ -9,7 +9,10 @@ import { createTestingPinia } from '@pinia/testing';
 
 const routerPushMock = vi.fn();
 
-vi.mock('vue-router', () => ({
+// vue-router/dist/vue-router.mjs import path is used instead of vue-router because of vue-router issue.
+// We should change path vue-router when it is fixed.
+// https://github.com/vuejs/router/issues/1466
+vi.mock('vue-router/dist/vue-router.mjs', () => ({
   useRouter: () => ({
     push: routerPushMock,
   }),
@@ -28,7 +31,9 @@ describe('ProfileMenu', () => {
             createSpy: vi.fn,
           }),
         ],
-        stubs: ['RouterLink', 'RouterView'],
+        stubs: {
+          RouterLink: RouterLinkStub,
+        },
       },
     });
 
@@ -41,8 +46,9 @@ describe('ProfileMenu', () => {
     auth.token = faker.datatype.uuid();
   });
 
-  const getProfileWrapper = () => {
-    return wrapper.find('[data-testid="profile"]');
+  const getProfileLinkWrapper = () => {
+    const links = wrapper.findAllComponents(RouterLinkStub);
+    return links.find((link) => link.attributes()['data-testid'] === 'profile');
   };
   const getButtonWrapper = () => {
     return wrapper.find('[data-testid="button"]');
@@ -97,10 +103,8 @@ describe('ProfileMenu', () => {
 
   test('Click on profile redirects to profile', async () => {
     await getButtonWrapper().trigger('click');
-    getProfileWrapper().trigger('click');
 
-    expect(routerPushMock).toHaveBeenCalledOnce();
-    expect(routerPushMock).toHaveBeenCalledWith({ name: 'profile' });
+    expect(getProfileLinkWrapper().props().to).toEqual({ name: 'profile' });
   });
 
   test('Click on logout clears token and redirects to /login', async () => {
