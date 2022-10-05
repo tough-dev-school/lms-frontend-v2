@@ -35,4 +35,8 @@
     width: var(--notion-max-width);
     margin: 0 auto;
   }
+
+  .notion {
+    @apply font-body;
+  }
 </style>
