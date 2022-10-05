@@ -18,8 +18,8 @@ const router = createRouter({
       component: LoginView,
     },
     {
-      path: '/material/:id',
-      name: 'material',
+      path: '/materials/:id',
+      name: 'materials',
       component: NotionView,
     },
   ],
