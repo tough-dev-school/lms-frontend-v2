@@ -2,6 +2,14 @@
 
 - `dev` — start dev server
 - `build` — build project
-- `test:unit` — run tests
+- `test` — run tests
 - `lint` — run eslint
 - `storybook` — open storybook
+
+## Backend setup
+
+```bash
+docker compose up
+```
+
+[Login to GitHub Container registry](https://docs.github.com/en/packages/guides/configuring-docker-for-use-with-github-packages#authenticating-with-a-personal-access-token), notice that you should login to ` https://ghcr.io`, not to `https://docker.pkg.github.com`.

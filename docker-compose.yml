@@ -1,0 +1,36 @@
+version: '2'
+
+services:
+  backend:
+    # please login to ghcr.io
+    image: ghcr.io/tough-dev-school/dev-backend
+    command: ["wait-for", "postgres:5432", "--", "/bin/sh", "-c", "python ./manage.py migrate && ./manage.py create_dev_admin_user && uwsgi --master --http :8000 --module app.wsgi --workers 2 --harakiri 50"]
+    environment:
+      - DEBUG=Off
+      - AXES_ENABLED=Off
+      - DISABLE_THROTTLING=On
+      - CELERY_ALWAYS_EAGER=On
+      - DATABASE_URL=postgres://postgres:secret@postgres/postgres
+      - REDISCLOUD_URL=redis://redis
+      - EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
+      - EMAIL_ENABLED=On
+      - FRONTEND_URL=http://localhost:3000/
+
+    ports:
+      - 8000:8000
+    links:
+      - postgres
+      - redis
+
+  postgres:
+    ports:
+      - 5432:5432
+    image: ghcr.io/tough-dev-school/dev-db
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:6-alpine
+
+volumes:
+  db-data:
