@@ -75,6 +75,12 @@ describe('ProfileMenu', () => {
   });
 
   test.todo('Click on profile redirects to profile');
+  test('Click on logout clears token', async () => {
+    await getButtonWrapper().trigger('click');
+    await getLogoutWrapper().trigger('click');
+
+    expect(auth.resetAuth).toHaveBeenCalledOnce();
+  });
 
   test.todo('Click on logout clears token and redirects to /login');
 });
