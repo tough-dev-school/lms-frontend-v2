@@ -17,7 +17,7 @@ module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,vue,jsx,tsx}'],
   theme: {
     fontFamily: {
-      display: 'serif',
+      display: ['PT Root UI', 'sans-serif'],
       body: ['PT Root UI', 'sans-serif'],
     },
     colors: {
