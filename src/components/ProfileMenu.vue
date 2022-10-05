@@ -42,29 +42,48 @@
         </li>
       </ul>
     </div>
-    <nav
-      class="absolute left-0 right-0 bg-white shadow"
-      v-if="isOpen"
-      data-testid="menu"
-      ref="menu">
-      <ul>
-        <li>
-          <RouterLink
-            data-testid="profile"
-            to="/profile"
-            class="Link px-8 py-4 leading-tight"
-            >Профиль</RouterLink
-          >
-        </li>
-        <li>
-          <button
-            @click="logOut"
-            data-testid="logout"
-            class="Link px-8 py-4 leading-tight">
-            Выйти
-          </button>
-        </li>
-      </ul>
-    </nav>
+    <Transition name="fade">
+      <nav
+        class="absolute left-0 right-0 translate-y-8 overflow-hidden rounded-8 bg-white shadow"
+        v-if="isOpen"
+        data-testid="menu">
+        <ul>
+          <li>
+            <RouterLink
+              data-testid="profile"
+              to="/profile"
+              class="ProfileMenu__Item">
+              <span class="Link">Профиль</span>
+            </RouterLink>
+          </li>
+          <li>
+            <button
+              @click="logOut"
+              data-testid="logout"
+              class="ProfileMenu__Item">
+              <span class="Link">Выйти</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </Transition>
   </div>
 </template>
+
+<style lang="scss" scoped>
+  .ProfileMenu__Item {
+    @apply block h-32 w-full cursor-pointer px-8 text-left leading-[32px] hover:bg-gray hover:bg-opacity-10;
+  }
+
+  .fade {
+    &-enter-active,
+    &-leave-active {
+      transition: all 100ms ease;
+    }
+
+    &-enter-from,
+    &-leave-to {
+      opacity: 0;
+    }
+  }
+</style>
