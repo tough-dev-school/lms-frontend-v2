@@ -48,6 +48,9 @@ describe('ProfileMenu', () => {
   const getMenuWrapper = () => {
     return wrapper.find('[data-testid="menu"]');
   };
+  const getLogoutWrapper = () => {
+    return wrapper.find('[data-testid="logout"]');
+  };
 
   test('Click on profile toggles menu', async () => {
     await getButtonWrapper().trigger('click');
