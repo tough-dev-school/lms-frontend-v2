@@ -3,7 +3,7 @@ import useToasts from '../stores/toasts.ts';
 import { faker } from '@faker-js/faker';
 
 export default {
-  title: 'Basic/ToastFeed',
+  title: 'Toasts/ToastFeed',
   component: ToastFeed,
 };
 

@@ -1,7 +1,7 @@
 import Toast from './Toast.vue';
 
 export default {
-  title: 'Basic/Toast',
+  title: 'Toasts/Toast',
   component: Toast,
 };
 
