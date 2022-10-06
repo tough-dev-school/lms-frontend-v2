@@ -4,9 +4,14 @@ const handleError = (error: any) => {
   const toasts = useToasts();
 
   Object.keys(error.response.data).forEach((key) => {
-    error.response.data[key].forEach((error: string) => {
-      toasts.addMessage(error);
-    });
+    const field = error.response.data[key];
+    if (Array.isArray(field)) {
+      field.forEach((error: string) => {
+        toasts.addMessage(error);
+      });
+    } else {
+      toasts.addMessage(field);
+    }
   });
 };
 
