@@ -1,7 +1,7 @@
 import TextInput from './TextInput.vue';
 
 export default {
-  title: 'Basic/TextInput',
+  title: 'Forms/TextInput',
   component: TextInput,
 };
 

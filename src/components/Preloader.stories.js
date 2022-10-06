@@ -1,7 +1,7 @@
 import Preloader from './Preloader.vue';
 
 export default {
-  title: 'Basic/Preloader',
+  title: 'UI/Preloader',
   component: Preloader,
 };
 

@@ -1,7 +1,7 @@
 import Avatar from './Avatar.vue';
 
 export default {
-  title: 'Basic/Avatar',
+  title: 'UI/Avatar',
   component: Avatar,
 };
 
