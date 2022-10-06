@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+  // @ts-ignore
   import { NotionRenderer } from 'vue3-notion';
   import axios from '@/axios';
   import { useRoute } from 'vue-router';
