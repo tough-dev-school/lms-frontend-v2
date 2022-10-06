@@ -12,7 +12,7 @@ const Template = (args) => ({
   setup() {
     const toasts = useToasts();
     toasts.$reset();
-    [...Array(10)].map(() => toasts.addMessage(faker.lorem.sentence()));
+    [...Array(10)].forEach(() => toasts.addMessage(faker.lorem.sentence()));
 
     return { args };
   },
