@@ -29,11 +29,11 @@
   };
 
   const loginWithEmail = async () => {
-    router.push({ name: 'profile' });
+    if (auth.token) router.push({ name: 'profile' });
   };
   const loginWithCredentials = async () => {
     await auth.loginWithCredentials(username.value, password.value);
-    router.push({ name: 'profile' });
+    if (auth.token) router.push({ name: 'profile' });
   };
 
   onKeyStroke('Enter', (e: KeyboardEvent) => {
