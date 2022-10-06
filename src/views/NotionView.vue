@@ -3,6 +3,7 @@
   import axios from '@/axios';
   import { useRoute } from 'vue-router';
   import { onMounted, ref } from 'vue';
+  import Preloader from '../components/Preloader.vue';
 
   const route = useRoute();
   const blocks = ref('');
@@ -19,11 +20,14 @@
 </script>
 
 <template>
-  <NotionRenderer
-    v-if="blocks"
-    :blockMap="blocks"
-    :map-page-url="mapPageUrl"
-    fullPage />
+  <div>
+    <NotionRenderer
+      v-if="blocks"
+      :blockMap="blocks"
+      :map-page-url="mapPageUrl"
+      fullPage />
+    <Preloader v-else />
+  </div>
 </template>
 
 <style lang="scss">
