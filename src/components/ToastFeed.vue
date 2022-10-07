@@ -20,7 +20,8 @@
         :text="message.text"
         :lifetime="message.lifetime"
         :id="message.id"
-        @delete="handleDelete" />
+        @delete="handleDelete"
+        data-testid="toast" />
     </TransitionGroup>
   </div>
 </template>
