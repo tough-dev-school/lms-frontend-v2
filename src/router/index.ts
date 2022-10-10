@@ -41,19 +41,20 @@ router.beforeEach(async (to, from, next) => {
 
   const isAuthorized = !!auth.token;
 
+  // Redirect to exisiting route if route does not exist
   if (!to.name) {
     next('/profile');
   }
 
-  if (isAuthorized || isPublicRoute(String(to.name))) {
-    if (isAuthorized) {
-      await fetchMainUserData();
-      next();
-    } else {
-      next();
-    }
-  } else {
+  // Redirect to /login if unauthorized and route is not public
+  if (!(isAuthorized || isPublicRoute(String(to.name)))) {
     next('/login');
+  }
+
+  // Get main data if authorized
+  if (isAuthorized) {
+    await fetchMainUserData();
+    next();
   }
 });
 
