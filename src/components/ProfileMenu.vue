@@ -18,7 +18,7 @@
 
   const logOut = () => {
     auth.resetAuth();
-    router.push('/login');
+    router.push({ name: 'login' });
   };
 
   const name = computed(() => `${first_name.value} ${last_name.value}`);
@@ -51,7 +51,7 @@
           <li>
             <RouterLink
               data-testid="profile"
-              to="/profile"
+              :to="{ name: 'profile' }"
               class="ProfileMenu__Item">
               <span class="Link">Профиль</span>
             </RouterLink>

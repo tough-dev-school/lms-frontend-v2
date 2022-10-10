@@ -1,11 +1,22 @@
 import { describe, expect, test, beforeEach } from 'vitest';
-import { shallowMount } from '@vue/test-utils';
+import { RouterLinkStub, shallowMount } from '@vue/test-utils';
 import ProfileMenu from './ProfileMenu.vue';
 import useUser from '@/stores/user';
 import useAuth from '@/stores/auth';
 import { faker } from '@faker-js/faker';
 import { vi } from 'vitest';
 import { createTestingPinia } from '@pinia/testing';
+
+const routerPushMock = vi.fn();
+
+// vue-router/dist/vue-router.mjs import path is used instead of vue-router because of vue-router issue.
+// We should change path vue-router when it is fixed.
+// https://github.com/vuejs/router/issues/1466
+vi.mock('vue-router/dist/vue-router.mjs', () => ({
+  useRouter: () => ({
+    push: routerPushMock,
+  }),
+}));
 
 describe('ProfileMenu', () => {
   let wrapper;
@@ -20,7 +31,9 @@ describe('ProfileMenu', () => {
             createSpy: vi.fn,
           }),
         ],
-        stubs: ['RouterLink', 'RouterView'],
+        stubs: {
+          RouterLink: RouterLinkStub,
+        },
       },
     });
 
@@ -33,6 +46,10 @@ describe('ProfileMenu', () => {
     auth.token = faker.datatype.uuid();
   });
 
+  const getProfileLinkWrapper = () => {
+    const links = wrapper.findAllComponents(RouterLinkStub);
+    return links.find((link) => link.attributes()['data-testid'] === 'profile');
+  };
   const getButtonWrapper = () => {
     return wrapper.find('[data-testid="button"]');
   };
@@ -77,7 +94,6 @@ describe('ProfileMenu', () => {
     expect(getUsernameWrapper().text()).toBe(user.username);
   });
 
-  test.todo('Click on profile redirects to profile');
   test('Click on logout clears token', async () => {
     await getButtonWrapper().trigger('click');
     await getLogoutWrapper().trigger('click');
@@ -85,5 +101,17 @@ describe('ProfileMenu', () => {
     expect(auth.resetAuth).toHaveBeenCalledOnce();
   });
 
-  test.todo('Click on logout clears token and redirects to /login');
+  test('Click on profile redirects to profile', async () => {
+    await getButtonWrapper().trigger('click');
+
+    expect(getProfileLinkWrapper().props().to).toEqual({ name: 'profile' });
+  });
+
+  test('Click on logout clears token and redirects to /login', async () => {
+    await getButtonWrapper().trigger('click');
+    await getLogoutWrapper().trigger('click');
+
+    expect(routerPushMock).toHaveBeenCalledOnce();
+    expect(routerPushMock).toHaveBeenCalledWith({ name: 'login' });
+  });
 });
