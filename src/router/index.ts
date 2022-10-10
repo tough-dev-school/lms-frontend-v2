@@ -37,6 +37,10 @@ router.beforeEach(async (to, from, next) => {
   const isAuthorized = !!auth.token;
   const isWhitelisted = ['login'].includes(String(to.name));
 
+  if (!to.name) {
+    next('/profile');
+  }
+
   if (isAuthorized || isWhitelisted) {
     if (isAuthorized) {
       await fetchMainUserData();
