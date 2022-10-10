@@ -40,7 +40,7 @@ describe('ToastFeed', () => {
     return wrapper.findComponent('[data-testid="toast"]');
   };
 
-  test('Click on toast calls delete with correct id', async () => {
+  test('Toast delete event calls removeMessage with correct id', async () => {
     const toasts = useToasts();
 
     await getFirstToast().vm.$emit('delete', toasts.messages[0].id);
