@@ -56,6 +56,8 @@ router.beforeEach(async (to, from, next) => {
     await fetchMainUserData();
     next();
   }
+
+  next();
 });
 
 export default router;
