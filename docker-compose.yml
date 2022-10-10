@@ -6,7 +6,7 @@ services:
     image: ghcr.io/tough-dev-school/dev-backend
     command: ["wait-for", "postgres:5432", "--", "/bin/sh", "-c", "python ./manage.py migrate && ./manage.py create_dev_admin_user && uwsgi --master --http :8000 --module app.wsgi --workers 2 --harakiri 50"]
     environment:
-      - DEBUG=On
+      - DEBUG=Off
       - AXES_ENABLED=Off
       - DISABLE_THROTTLING=On
       - CELERY_ALWAYS_EAGER=On
