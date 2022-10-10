@@ -36,7 +36,7 @@ describe('toasts store', () => {
     expect(!!findMessageByText(text)).toBeTruthy();
   });
 
-  test('removeMessage removes message if there is a message with this id', () => {
+  test('removeMessage removes message if there is a message with given id', () => {
     addThreeMessages();
 
     const targetMessage = findMessageByText(MESSAGE_TWO);
@@ -48,7 +48,7 @@ describe('toasts store', () => {
     expect(!!findMessageByText(MESSAGE_THREE)).toBeTruthy();
   });
 
-  test('removeMessage does nothing if no message with this id', () => {
+  test('removeMessage does nothing if no message with given id', () => {
     addThreeMessages();
 
     toasts.removeMessage('hello world');
