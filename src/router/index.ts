@@ -31,17 +31,21 @@ const fetchMainUserData = async () => {
   await user.getUserData();
 };
 
+const isPublicRoute = (name: string) => {
+  const PUBLIC_ROUTES = ['login', 'token'];
+  return PUBLIC_ROUTES.includes(String(name));
+};
+
 router.beforeEach(async (to, from, next) => {
   const auth = useAuth();
 
   const isAuthorized = !!auth.token;
-  const isWhitelisted = ['login'].includes(String(to.name));
 
   if (!to.name) {
     next('/profile');
   }
 
-  if (isAuthorized || isWhitelisted) {
+  if (isAuthorized || isPublicRoute(String(to.name))) {
     if (isAuthorized) {
       await fetchMainUserData();
       next();
