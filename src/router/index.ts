@@ -75,7 +75,7 @@ router.beforeEach(async (to, from, next) => {
 router.beforeEach(async (to, from, next) => {
   if (to.name === 'token') {
     const auth = useAuth();
-    await auth.exchangeTokens(to.params.passwordlessToken);
+    await auth.exchangeTokens(String(to.params.passwordlessToken));
     next('/profile');
   } else {
     next();
