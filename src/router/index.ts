@@ -20,7 +20,7 @@ const router = createRouter({
       component: LoginView,
     },
     {
-      path: '/login/:passwordlessToken',
+      path: '/auth/passwordless/:passwordlessToken',
       name: 'token',
       component: LoadingView,
     },
