@@ -21,7 +21,17 @@ describe('visual regression test', () => {
   };
 
   test('LoginView', async () => {
-    await goto(`/iframe.html?args=&id=pages-loginview--default&viewMode=story`);
+    await goto(`/iframe.html?args=&id=pages-app--login&viewMode=story#/login`);
+    const image = await page.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+  });
+
+  test('ProfileView', async () => {
+    await goto(
+      `/iframe.html?args=&id=pages-app--profile&viewMode=story#/profile`,
+    );
+
     const image = await page.screenshot();
 
     expect(image).toMatchImageSnapshot();
