@@ -27,5 +27,5 @@ describe('Toast', () => {
     expect(wrapper.emitted()['delete'][0][0]).toBe(defaultProps.id);
   });
 
-  test('emits delete after liftime end');
+  test.todo('emits delete after liftime end');
 });
