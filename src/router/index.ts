@@ -57,6 +57,11 @@ router.beforeEach(async (to, from, next) => {
     next('/login');
   }
 
+  // Restrict auth routes for authorized users
+  if (isAuthorized && (to.name === 'login' || to.name === 'token')) {
+    next('/profile');
+  }
+
   // Get main data if authorized
   if (isAuthorized) {
     await fetchMainUserData();
