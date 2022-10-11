@@ -1,6 +1,6 @@
 import App from './App.vue';
 import vueRouter from 'storybook-vue3-router';
-import { routes, beforeEach } from './router/index';
+import { routes, beforeEach } from './router';
 
 export default {
   title: 'Pages/App',
