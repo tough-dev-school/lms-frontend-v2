@@ -3,7 +3,6 @@ import vueRouter from 'storybook-vue3-router';
 import { routes } from './router';
 import useUser from './stores/user.ts';
 import useToasts from './stores/toasts';
-import { faker } from '@faker-js/faker';
 
 export default {
   title: 'Pages/App',
