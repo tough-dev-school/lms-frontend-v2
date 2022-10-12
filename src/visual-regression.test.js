@@ -4,6 +4,15 @@ import puppeteer from 'puppeteer';
 
 expect.extend({ toMatchImageSnapshot });
 
+const matchConfig = {
+  comparisonMethod: 'ssim',
+  customDiffConfig: {
+    ssim: 'fast',
+  },
+  failureThreshold: 0.01,
+  failureThresholdType: 'percent',
+};
+
 describe('visual regression test', () => {
   let browser;
   let page;
@@ -25,7 +34,7 @@ describe('visual regression test', () => {
 
     const image = await page.screenshot();
 
-    expect(image).toMatchImageSnapshot();
+    expect(image).toMatchImageSnapshot(matchConfig);
   });
 
   test('LoginView — password login', async () => {
@@ -34,7 +43,7 @@ describe('visual regression test', () => {
     await page.click('[data-testid="to-password-mode"]');
     const image = await page.screenshot();
 
-    expect(image).toMatchImageSnapshot();
+    expect(image).toMatchImageSnapshot(matchConfig);
   });
 
   test('ProfileView', async () => {
@@ -44,6 +53,6 @@ describe('visual regression test', () => {
 
     const image = await page.screenshot();
 
-    expect(image).toMatchImageSnapshot();
+    expect(image).toMatchImageSnapshot(matchConfig);
   });
 });
