@@ -4,18 +4,18 @@ import puppeteer from 'puppeteer';
 
 expect.extend({ toMatchImageSnapshot });
 
-const matchConfig = {
+const matchConfig = (threshold) => ({
   comparisonMethod: 'ssim',
   customDiffConfig: {
     ssim: 'fast',
   },
-  failureThreshold: 0.03,
+  failureThreshold: threshold,
   failureThresholdType: 'percent',
-};
+});
 
-const DESKTOP_VIEWPORT = [1440, 900];
-const TABLET_VIEWPORT = [768, 1024];
-const MOBILE_VIEWPORT = [320, 560];
+const DESKTOP_VIEWPORT = { width: 1440, height: 900, threshold: 0.03 };
+const TABLET_VIEWPORT = { width: 768, height: 1024, threshold: 0.05 };
+const MOBILE_VIEWPORT = { width: 320, height: 560, threshold: 0.08 };
 
 class VisualTest {
   constructor(name, path, action = () => {}) {
@@ -53,7 +53,9 @@ describe('visual regression test for', () => {
         `${test.name} — ${viewport[0]}×${viewport[1]}`,
         test.path,
         test.action,
-        ...viewport,
+        viewport.width,
+        viewport.height,
+        viewport.threshold,
       ]);
     });
   });
@@ -69,13 +71,16 @@ describe('visual regression test for', () => {
     });
   };
 
-  test.each(tests)('%s', async (name, route, action, width, height) => {
-    await page.setViewport({ width, height });
-    await goto(route);
+  test.each(tests)(
+    '%s',
+    async (name, route, action, width, height, threshold) => {
+      await page.setViewport({ width, height });
+      await goto(route);
 
-    await action();
-    const image = await page.screenshot();
+      await action();
+      const image = await page.screenshot();
 
-    expect(image).toMatchImageSnapshot(matchConfig);
-  });
+      expect(image).toMatchImageSnapshot(matchConfig(threshold));
+    },
+  );
 });
