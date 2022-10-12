@@ -20,8 +20,18 @@ describe('visual regression test', () => {
     });
   };
 
-  test('LoginView', async () => {
+  test('LoginView — email login', async () => {
     await goto(`/iframe.html?args=&id=pages-app--login&viewMode=story#/login`);
+
+    const image = await page.screenshot();
+
+    expect(image).toMatchImageSnapshot();
+  });
+
+  test('LoginView — password login', async () => {
+    await goto(`/iframe.html?args=&id=pages-app--login&viewMode=story#/login`);
+
+    await page.click('[data-testid="to-password-mode"]');
     const image = await page.screenshot();
 
     expect(image).toMatchImageSnapshot();
