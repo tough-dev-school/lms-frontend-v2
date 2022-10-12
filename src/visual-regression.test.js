@@ -50,7 +50,7 @@ describe('visual regression test for', () => {
   ].forEach((test) => {
     [DESKTOP_VIEWPORT, TABLET_VIEWPORT, MOBILE_VIEWPORT].forEach((viewport) => {
       tests.push([
-        `${test.name} — ${viewport[0]}×${viewport[1]}`,
+        `${test.name} — ${viewport.width}×${viewport.height}`,
         test.path,
         test.action,
         viewport.width,
