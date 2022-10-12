@@ -57,4 +57,8 @@ describe('toasts store', () => {
     expect(!!findMessageByText(MESSAGE_TWO)).toBeTruthy();
     expect(!!findMessageByText(MESSAGE_THREE)).toBeTruthy();
   });
+
+  test.todo('toasts can be disabled');
+
+  test.todo('toasts can be re-enabled');
 });

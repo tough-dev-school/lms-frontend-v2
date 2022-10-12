@@ -58,7 +58,10 @@
         <Button @click="loginWithEmail" :disabled="!email"
           >Получить доступ</Button
         >
-        <Button @click="changeLoginType(true)" type="link">
+        <Button
+          @click="changeLoginType(true)"
+          type="link"
+          data-testid="to-password-mode">
           Войти через пароль
         </Button>
       </div>

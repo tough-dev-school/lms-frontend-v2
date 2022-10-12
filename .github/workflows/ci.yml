@@ -30,8 +30,11 @@ jobs:
       - name: Run linter 👀
         run: npm run lint
 
-      - name: Run tests 🧪
-        run: npm run test
-
       - name: Run typecheck ✅
         run: npm run type-check
+
+      - name: Run unit tests 🧪
+        run: npm run test:unit
+
+      - name: Run visual tests 🖼
+        run: npm run test:visual

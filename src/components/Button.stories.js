@@ -1,7 +1,7 @@
 import Button from './Button.vue';
 
 export default {
-  title: 'Basic/Button',
+  title: 'Forms/Button',
   component: Button,
 };
 

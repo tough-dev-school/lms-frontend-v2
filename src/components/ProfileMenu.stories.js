@@ -3,7 +3,7 @@ import useUser from '../stores/user.ts';
 import { faker } from '@faker-js/faker';
 
 export default {
-  title: 'Basic/ProfileMenu',
+  title: 'UI/ProfileMenu',
   component: ProfileMenu,
 };
 
