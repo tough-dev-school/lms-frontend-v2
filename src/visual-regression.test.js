@@ -9,7 +9,7 @@ const matchConfig = {
   customDiffConfig: {
     ssim: 'fast',
   },
-  failureThreshold: 0.01,
+  failureThreshold: 0.03,
   failureThresholdType: 'percent',
 };
 
