@@ -1,4 +1,5 @@
 const { mergeConfig } = require('vite');
+const path = require('path');
 
 module.exports = {
   stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
@@ -17,7 +18,7 @@ module.exports = {
   async viteFinal(config, { configType }) {
     return mergeConfig(config, {
       resolve: {
-        alias: { '@': '../src/' },
+        alias: { '@': `${path.resolve(__dirname, '/src')}` },
       },
     });
   },
