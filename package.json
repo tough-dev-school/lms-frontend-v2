@@ -6,7 +6,7 @@
     "build": "run-p type-check build-only",
     "preview": "vite preview --port 4173",
     "test:unit": "vitest --config ./tests/unit.config.ts",
-    "test:visual": "vitest --config ./tests/visual.config.ts",
+    "test:visual": "start-storybook -p 3000 & wait-on http://localhost:3000 && vitest --config ./tests/visual.config.ts",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore --max-warnings=0",
@@ -56,12 +56,14 @@
     "prettier-plugin-tailwindcss": "^0.1.13",
     "puppeteer": "^18.2.1",
     "sass": "^1.54.9",
+    "serve": "^14.0.1",
     "storybook-vue3-router": "^2.3.1",
     "tailwindcss": "^3.1.8",
     "typescript": "~4.7.4",
     "vite": "^3.0.9",
     "vitest": "^0.23.0",
     "vue-loader": "^16.8.3",
-    "vue-tsc": "^0.40.7"
+    "vue-tsc": "^0.40.7",
+    "wait-on": "^6.0.1"
   }
 }

@@ -15,7 +15,7 @@ describe('visual regression test', () => {
   });
 
   const goto = (route) => {
-    return page.goto(`http://localhost:6006${route}`, {
+    return page.goto(`http://localhost:3000${route}`, {
       waitUntil: 'networkidle0',
     });
   };
