@@ -10,7 +10,7 @@
   const blocks = ref('');
 
   onMounted(async () => {
-    await getMaterials(route.params.id);
+    const response = await getMaterials(route.params.id);
 
     blocks.value = response.data;
   });
