@@ -38,8 +38,8 @@ module.exports = {
     fontSize: {
       sub: '14px',
       base: '16px',
-      h1: '36px',
-      h2: '24px',
+      h1: 'clamp(24px, 5vw, 36px)',
+      h2: 'clamp(18px, 3.5vw, 24px)',
       h3: '16px',
     },
     borderRadius: {
