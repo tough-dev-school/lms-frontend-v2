@@ -9,15 +9,21 @@ const useAuth = defineStore('auth', {
   },
   actions: {
     async loginWithCredentials(username: string, password: string) {
-      const response = await logInWithCredentials(username, password);
-      this.token = response.data.token;
+      try {
+        const response = await logInWithCredentials(username, password);
+        this.token = response.data.token;
+      } catch (error: any) {}
     },
     async loginWithEmail(email: string) {
-      await sendLoginLink(email);
+      try {
+        await sendLoginLink(email);
+      } catch (error: any) {}
     },
     async exchangeTokens(passwordlessToken: string) {
-      const response = await logInWithLink(passwordlessToken);
-      this.token = response.data.token;
+      try {
+        const response = await logInWithLink(passwordlessToken);
+        this.token = response.data.token;
+      } catch (error: any) {}
     },
     resetAuth() {
       this.token = undefined;

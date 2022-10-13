@@ -19,31 +19,33 @@ const useUser = defineStore('user', {
   },
   actions: {
     async getUserData() {
-      const response = await getUser();
+      try {
+        const response = await getUser();
 
-      const {
-        id,
-        uuid,
-        username,
-        first_name,
-        last_name,
-        first_name_en,
-        last_name_en,
-        gender,
-        linkedin_username,
-        github_username,
-      } = response.data;
+        const {
+          id,
+          uuid,
+          username,
+          first_name,
+          last_name,
+          first_name_en,
+          last_name_en,
+          gender,
+          linkedin_username,
+          github_username,
+        } = response.data;
 
-      this.id = id;
-      this.uuid = uuid;
-      this.username = username;
-      this.first_name = first_name;
-      this.last_name = last_name;
-      this.first_name_en = first_name_en;
-      this.last_name_en = last_name_en;
-      this.gender = gender;
-      this.linkedin_username = linkedin_username;
-      this.github_username = github_username;
+        this.id = id;
+        this.uuid = uuid;
+        this.username = username;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.first_name_en = first_name_en;
+        this.last_name_en = last_name_en;
+        this.gender = gender;
+        this.linkedin_username = linkedin_username;
+        this.github_username = github_username;
+      } catch (error: any) {}
     },
     async setUserData({
       first_name,
@@ -54,37 +56,39 @@ const useUser = defineStore('user', {
       linkedin_username,
       github_username,
     }: EditableUserData) {
-      const data: EditableUserData = {};
+      try {
+        const data: EditableUserData = {};
 
-      if (this.first_name !== first_name) {
-        data.first_name = first_name;
-      }
+        if (this.first_name !== first_name) {
+          data.first_name = first_name;
+        }
 
-      if (this.last_name !== last_name) {
-        data.last_name = last_name;
-      }
+        if (this.last_name !== last_name) {
+          data.last_name = last_name;
+        }
 
-      if (this.first_name_en !== first_name_en) {
-        data.first_name_en = first_name_en;
-      }
+        if (this.first_name_en !== first_name_en) {
+          data.first_name_en = first_name_en;
+        }
 
-      if (this.last_name_en !== last_name_en) {
-        data.last_name_en = last_name_en;
-      }
+        if (this.last_name_en !== last_name_en) {
+          data.last_name_en = last_name_en;
+        }
 
-      if (this.gender !== gender) {
-        data.gender = gender;
-      }
+        if (this.gender !== gender) {
+          data.gender = gender;
+        }
 
-      if (this.linkedin_username !== linkedin_username) {
-        data.linkedin_username = linkedin_username;
-      }
+        if (this.linkedin_username !== linkedin_username) {
+          data.linkedin_username = linkedin_username;
+        }
 
-      if (this.github_username !== github_username) {
-        data.github_username = github_username;
-      }
+        if (this.github_username !== github_username) {
+          data.github_username = github_username;
+        }
 
-      await setUser(data);
+        await setUser(data);
+      } catch (error: any) {}
     },
   },
 });
