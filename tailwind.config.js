@@ -20,6 +20,12 @@ module.exports = {
       display: ['PT Root UI', 'sans-serif'],
       body: ['PT Root UI', 'sans-serif'],
     },
+    container: {
+      center: true,
+      padding: {
+        DEFAULT: '16px',
+      },
+    },
     colors: {
       offwhite: { DEFAULT: '#faf9f8' },
       black: { DEFAULT: '#000000' },

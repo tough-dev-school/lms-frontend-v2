@@ -12,8 +12,8 @@
 </script>
 
 <template>
-  <main class="container mx-auto p-16 pb-128">
-    <header class="flex justify-end px-8 pb-64" v-if="hasHeader">
+  <main class="container pb-128">
+    <header class="flex justify-end pt-16 pb-64" v-if="hasHeader">
       <ProfileMenu />
     </header>
     <RouterView />
