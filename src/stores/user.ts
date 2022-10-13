@@ -1,16 +1,8 @@
 import { defineStore } from 'pinia';
 import axios from '@/axios';
 import handleError from '@/utils/handleError';
-
-interface EditableUserData {
-  first_name?: string;
-  last_name?: string;
-  first_name_en?: string;
-  last_name_en?: string;
-  gender?: string;
-  linkedin_username?: string;
-  github_username?: string;
-}
+import { setUser, getUser } from '@/api/users';
+import type { EditableUserData } from '@/api/users';
 
 const useUser = defineStore('user', {
   state: () => {
@@ -30,7 +22,7 @@ const useUser = defineStore('user', {
   actions: {
     async getUserData() {
       try {
-        const response = await axios.get('/api/v2/users/me/');
+        const response = await getUser();
 
         const {
           id,
@@ -99,7 +91,7 @@ const useUser = defineStore('user', {
           data.github_username = github_username;
         }
 
-        await axios.patch('/api/v2/users/me/', data);
+        await setUser(data);
       } catch (error: any) {
         handleError(error);
       }
