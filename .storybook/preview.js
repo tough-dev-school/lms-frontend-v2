@@ -17,4 +17,29 @@ export const parameters = {
       date: /Date$/,
     },
   },
+  viewport: {
+    viewports: [
+      {
+        name: 'fluid',
+        styles: { width: '100%', height: '100%' },
+        type: 'desktop',
+      },
+      {
+        name: 'desktop',
+        styles: { width: '1440px', height: '100%' },
+        type: 'desktop',
+      },
+      {
+        name: 'tablet',
+        styles: { width: '768px', height: '100%' },
+        type: 'tablet',
+      },
+      {
+        name: 'mobile',
+        styles: { width: '320px', height: '100%' },
+        type: 'mobile',
+      },
+    ],
+    defaultViewport: 'fluid',
+  },
 };
