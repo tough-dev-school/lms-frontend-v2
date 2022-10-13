@@ -45,33 +45,35 @@
 </script>
 
 <template>
-  <div class="flex max-w-prose flex-col items-start gap-24">
-    <h1 class="Heading_H1">Данные для диплома</h1>
-    <TextInput label="Имя" v-model="first_name" />
-    <TextInput label="Фамилия" v-model="last_name" />
-    <TextInput label="Имя (на английском)" v-model="first_name_en" />
-    <TextInput label="Фамилия (на английском)" v-model="last_name_en" />
-    <TextInput label="Ник на GitHub" v-model="github_username" />
-    <TextInput label="Ник на LinkedIn" v-model="linkedin_username" />
-    <fieldset class="flex flex-wrap gap-16">
-      <legend class="Label">Пол</legend>
-      <label class="cursor-pointer"
-        ><input
-          type="radio"
-          name="gender"
-          :checked="gender === 'male'"
-          @click="gender = 'male'" />
-        Мужской</label
-      >
-      <label class="cursor-pointer"
-        ><input
-          type="radio"
-          name="gender"
-          :checked="gender === 'female'"
-          @click="gender = 'female'" />
-        Женский</label
-      >
-    </fieldset>
+  <div class="max-w-prose">
+    <h1 class="Heading_H1 mb-24">Данные для диплома</h1>
+    <div class="flex flex-col items-start gap-16 tablet:gap-24">
+      <TextInput label="Имя" v-model="first_name" />
+      <TextInput label="Фамилия" v-model="last_name" />
+      <TextInput label="Имя (на английском)" v-model="first_name_en" />
+      <TextInput label="Фамилия (на английском)" v-model="last_name_en" />
+      <TextInput label="Ник на GitHub" v-model="github_username" />
+      <TextInput label="Ник на LinkedIn" v-model="linkedin_username" />
+      <fieldset class="flex flex-wrap gap-16">
+        <legend class="Label">Пол</legend>
+        <label class="cursor-pointer"
+          ><input
+            type="radio"
+            name="gender"
+            :checked="gender === 'male'"
+            @click="gender = 'male'" />
+          Мужской</label
+        >
+        <label class="cursor-pointer"
+          ><input
+            type="radio"
+            name="gender"
+            :checked="gender === 'female'"
+            @click="gender = 'female'" />
+          Женский</label
+        >
+      </fieldset>
+    </div>
     <div class="mt-64">
       <Button @click="save">Обновить</Button>
     </div>
