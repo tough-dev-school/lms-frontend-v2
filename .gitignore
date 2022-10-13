@@ -28,3 +28,4 @@ coverage
 *.sw?
 
 storybook-static
+src/__image_snapshots__/__diff_output__
