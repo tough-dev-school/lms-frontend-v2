@@ -54,14 +54,15 @@
         tip="Мы отправим ссылку для входа по этому адресу"
         type="email"
         v-model="email" />
-      <div class="mt-32 grid grid-cols-2 gap-8">
-        <Button @click="loginWithEmail" :disabled="!email"
+      <div class="mt-32 flex flex-wrap gap-8">
+        <Button @click="loginWithEmail" :disabled="!email" class="flex-grow"
           >Получить доступ</Button
         >
         <Button
           @click="changeLoginType(true)"
           type="link"
-          data-testid="to-password-mode">
+          data-testid="to-password-mode"
+          class="flex-grow">
           Войти через пароль
         </Button>
       </div>
@@ -71,13 +72,14 @@
         <TextInput label="Логин" type="text" v-model="username" />
         <TextInput label="Пароль" type="password" v-model="password" />
       </div>
-      <div class="mt-32 grid grid-cols-2 gap-8">
+      <div class="mt-32 flex flex-wrap gap-8">
         <Button
           @click="loginWithCredentials"
           :disabled="!(username && password)"
+          class="flex-grow"
           >Войти</Button
         >
-        <Button type="link" @click="changeLoginType(false)">
+        <Button type="link" @click="changeLoginType(false)" class="flex-grow">
           Войти по ссылке
         </Button>
       </div>
