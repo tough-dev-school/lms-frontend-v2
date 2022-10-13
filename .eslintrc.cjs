@@ -18,5 +18,6 @@ module.exports = {
   },
   rules: {
     'vue/multi-word-component-names': 'off',
+    'no-empty': ['error', { allowEmptyCatch: true }],
   },
 };

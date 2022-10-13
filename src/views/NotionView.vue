@@ -1,18 +1,16 @@
 <script lang="ts" setup>
   // @ts-ignore
   import { NotionRenderer } from 'vue3-notion';
-  import axios from '@/axios';
   import { useRoute } from 'vue-router';
   import { onMounted, ref } from 'vue';
   import Preloader from '../components/Preloader.vue';
+  import { getMaterials } from '@/api/materials';
 
   const route = useRoute();
   const blocks = ref('');
 
   onMounted(async () => {
-    const response = await axios.get(
-      `/api/v2/notion/materials/${route.params.id}/`,
-    );
+    const response = await getMaterials(String(route.params.id));
 
     blocks.value = response.data;
   });
