@@ -20,6 +20,9 @@ module.exports = {
       display: ['PT Root UI', 'sans-serif'],
       body: ['PT Root UI', 'sans-serif'],
     },
+    screens: {
+      tablet: '768px',
+    },
     container: {
       center: true,
       padding: {

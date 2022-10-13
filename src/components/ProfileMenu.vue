@@ -25,7 +25,7 @@
 </script>
 
 <template>
-  <div class="relative min-w-[192px]" ref="menu">
+  <div class="relative" ref="menu">
     <div
       class="flex cursor-pointer items-center rounded-8 p-8 transition-colors hover:bg-gray hover:bg-opacity-10"
       @click="isOpen = !isOpen"
