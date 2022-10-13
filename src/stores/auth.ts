@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 import handleError from '@/utils/handleError';
+import { logInWithCredentials, sendLoginLink, logInWithLink } from '@/api/auth';
 
 const useAuth = defineStore('auth', {
   state: () => {
@@ -11,10 +12,7 @@ const useAuth = defineStore('auth', {
   actions: {
     async loginWithCredentials(username: string, password: string) {
       try {
-        const response = await axios.post('/api/v2/auth/token/', {
-          username,
-          password,
-        });
+        const response = await logInWithCredentials(username, password);
         this.token = response.data.token;
       } catch (error: any) {
         handleError(error);
@@ -22,18 +20,14 @@ const useAuth = defineStore('auth', {
     },
     async loginWithEmail(email: string) {
       try {
-        await axios.get(
-          `/api/v2/auth/passwordless-token/request/${email.toLowerCase()}/`,
-        );
+        await sendLoginLink(email);
       } catch (error: any) {
         handleError(error);
       }
     },
     async exchangeTokens(passwordlessToken: string) {
       try {
-        const response = await axios.get(
-          `/api/v2/auth/passwordless-token/${passwordlessToken}`,
-        );
+        const response = await logInWithLink(passwordlessToken);
         this.token = response.data.token;
       } catch (error: any) {
         handleError(error);
