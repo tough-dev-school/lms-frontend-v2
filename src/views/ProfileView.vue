@@ -45,7 +45,7 @@
 </script>
 
 <template>
-  <div class="max-w-prose">
+  <div>
     <h1 class="Heading_H1 mb-24">Данные для диплома</h1>
     <div class="flex flex-col items-start gap-16 tablet:gap-24">
       <TextInput label="Имя" v-model="first_name" />

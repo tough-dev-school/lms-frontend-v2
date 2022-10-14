@@ -46,7 +46,7 @@
 </script>
 
 <template>
-  <div class="mx-auto max-w-prose pt-128">
+  <div class="max-w-prose pt-[25vh]">
     <h1 class="mb-32 font-display text-h1 font-bold">Вход и регистрация</h1>
     <template v-if="withPassword === false">
       <TextInput
