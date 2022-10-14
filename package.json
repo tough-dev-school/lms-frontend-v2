@@ -7,7 +7,7 @@
     "preview": "vite preview --port 4173",
     "test:unit": "vitest --config ./tests/unit.config.ts",
     "test:visual": "start-storybook -p 3000 & wait-on http://localhost:3000 && vitest --config ./tests/visual.config.ts",
-    "test:visual:update": "start-storybook -p 3000 & wait-on http://localhost:3000 && vitest --updateSnapshot --config ./tests/visual.config.ts",
+    "test:visual:update": "start-storybook -p 3000 & wait-on http://localhost:3000 && vitest --update --config ./tests/visual.config.ts",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore --max-warnings=0",
