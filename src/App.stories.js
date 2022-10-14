@@ -7,6 +7,9 @@ import useToasts from './stores/toasts';
 export default {
   title: 'Pages/App',
   component: App,
+  parameters: {
+    layout: 'fullscreen',
+  },
 };
 
 const Template = (args) => ({

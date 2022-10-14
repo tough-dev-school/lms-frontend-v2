@@ -20,6 +20,15 @@ module.exports = {
       display: ['PT Root UI', 'sans-serif'],
       body: ['PT Root UI', 'sans-serif'],
     },
+    screens: {
+      tablet: '768px',
+    },
+    container: {
+      center: true,
+      padding: {
+        DEFAULT: '16px',
+      },
+    },
     colors: {
       offwhite: { DEFAULT: '#faf9f8' },
       black: { DEFAULT: '#000000' },
@@ -32,8 +41,8 @@ module.exports = {
     fontSize: {
       sub: '14px',
       base: '16px',
-      h1: '36px',
-      h2: '24px',
+      h1: 'clamp(24px, 5vw, 36px)',
+      h2: 'clamp(18px, 3.5vw, 24px)',
       h3: '16px',
     },
     borderRadius: {

@@ -12,9 +12,9 @@
 </script>
 
 <template>
-  <main class="container mx-auto p-16 pb-128">
-    <header class="flex justify-end px-8 pb-64" v-if="hasHeader">
-      <ProfileMenu />
+  <main class="container pb-128">
+    <header class="flex justify-end pt-16 pb-24 tablet:pb-64" v-if="hasHeader">
+      <ProfileMenu class="w-full tablet:w-auto tablet:min-w-[192px]" />
     </header>
     <RouterView />
     <ToastFeed />
