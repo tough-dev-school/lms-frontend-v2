@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { logInWithCredentials, sendLoginLink, logInWithLink } from '@/api/auth';
+import useToasts from './toasts';
 
 const useAuth = defineStore('auth', {
   state: () => {
@@ -17,6 +18,11 @@ const useAuth = defineStore('auth', {
     async loginWithEmail(email: string) {
       try {
         await sendLoginLink(email);
+        const toasts = useToasts();
+        toasts.addMessage(
+          'Письмо с ссылкой для входа отправлено на почту!',
+          'success',
+        );
       } catch (error: any) {}
     },
     async exchangeTokens(passwordlessToken: string) {

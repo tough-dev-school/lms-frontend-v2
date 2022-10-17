@@ -9,10 +9,10 @@ const handleError = (error: any) => {
     const field = error.response.data[key];
     if (Array.isArray(field)) {
       field.forEach((error: string) => {
-        toasts.addMessage(error);
+        toasts.addMessage(error, 'error');
       });
     } else {
-      toasts.addMessage(field);
+      toasts.addMessage(field, 'error');
     }
   });
 };

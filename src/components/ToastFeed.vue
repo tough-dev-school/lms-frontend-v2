@@ -16,10 +16,8 @@
     <TransitionGroup name="toast">
       <Toast
         v-for="message in messages"
+        v-bind="message"
         :key="message.id"
-        :text="message.text"
-        :lifetime="message.lifetime"
-        :id="message.id"
         @delete="handleDelete"
         data-testid="toast" />
     </TransitionGroup>

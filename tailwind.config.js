@@ -36,7 +36,8 @@ module.exports = {
       yellow: { DEFAULT: '#ffb800', hover: '#ffa800' },
       blue: { DEFAULT: '#3f5dff', hover: '#0024de' },
       gray: { DEFAULT: '#9a9a9a' },
-      red: { DEFAULT: 'red' },
+      red: { DEFAULT: '#ff5d29', light: '#FDAA90' },
+      green: { DEFAULT: 'rgb(35, 207, 104)', light: '#8EE4B0' },
     },
     fontSize: {
       sub: '14px',
