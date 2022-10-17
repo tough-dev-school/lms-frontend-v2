@@ -31,7 +31,7 @@ describe('visual regression test for', () => {
 
   let tests = [];
 
-  [
+  const scenarios = [
     new VisualTest(
       'LoginView — email login',
       `/iframe.html?args=&id=pages-app--login&viewMode=story#/login`,
@@ -47,7 +47,9 @@ describe('visual regression test for', () => {
       'ProfileView',
       `/iframe.html?args=&id=pages-app--profile&viewMode=story#/profile`,
     ),
-  ].forEach((test) => {
+  ];
+
+  scenarios.forEach((test) => {
     [DESKTOP_VIEWPORT, TABLET_VIEWPORT, MOBILE_VIEWPORT].forEach((viewport) => {
       tests.push([
         `${test.name} — ${viewport.width}×${viewport.height}`,
