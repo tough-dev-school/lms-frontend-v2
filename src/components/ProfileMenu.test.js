@@ -38,9 +38,16 @@ describe('ProfileMenu', () => {
     });
 
     user = useUser();
-    user.username = faker.internet.email();
-    user.first_name = faker.name.firstName();
-    user.last_name = faker.name.lastName();
+    user.$patch({
+      username: faker.internet.email(),
+      first_name: faker.name.firstName(),
+      last_name: faker.name.lastName(),
+      studies: [...Array(3)].map(() => ({
+        id: faker.random.numeric(),
+        home_page_slug: faker.datatype.uuid(),
+        name: faker.lorem.sentence(),
+      })),
+    });
 
     auth = useAuth();
   });
@@ -79,7 +86,7 @@ describe('ProfileMenu', () => {
   };
 
   const getMaterialWrapper = () => {
-    return wrapper.find('[data-testid="material"]');
+    return wrapper.findComponent('[data-testid="material"]');
   };
 
   test('Click on profile toggles menu', async () => {
@@ -144,5 +151,23 @@ describe('ProfileMenu', () => {
     await getButtonWrapper().trigger('click');
     await getLogoutWrapper().trigger('click');
     expect(getMenuWrapper().exists()).toBeFalsy();
+  });
+
+  test('Has correct number of links to materials', async () => {
+    await getButtonWrapper().trigger('click');
+    const materials = getMaterialsWrapper();
+
+    expect(materials).toHaveLength(user.studies.length);
+  });
+
+  test('Link to material has correct name and route', async () => {
+    await getButtonWrapper().trigger('click');
+    const material = getMaterialWrapper();
+
+    expect(material.text()).toBe(user.studies[0].name);
+    expect(material.props().to).toStrictEqual({
+      name: 'materials',
+      params: { id: user.studies[0].home_page_slug },
+    });
   });
 });
