@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { setUser, getUser } from '@/api/users';
 import type { EditableUserData } from '@/api/users';
+import { getStudies } from '@/api/studies';
 
 const useUser = defineStore('user', {
   state: () => {
@@ -15,9 +16,16 @@ const useUser = defineStore('user', {
       gender: '',
       linkedin_username: '',
       github_username: '',
+      studies: undefined,
     };
   },
   actions: {
+    async getUserStudies() {
+      try {
+        const response = await getStudies();
+        this.studies = response.data.results;
+      } catch (err) {}
+    },
     async getUserData() {
       try {
         const response = await getUser();

@@ -42,6 +42,7 @@ const router = createRouter({
 const fetchMainUserData = async () => {
   const user = useUser();
   await user.getUserData();
+  await user.getUserStudies();
 };
 
 const isPublicRoute = (name: string) => {
