@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { setUser, getUser } from '@/api/users';
 import type { EditableUserData } from '@/api/users';
 import { getStudies } from '@/api/studies';
+import useToasts from '@/stores/toasts';
 
 export type Gender = 'female' | 'male' | undefined;
 
@@ -124,6 +125,8 @@ const useUser = defineStore('user', {
         }
 
         await setUser(data);
+        const toasts = useToasts();
+        toasts.addMessage('Данные сохранены!', 'success');
       } catch (error: any) {}
     },
   },
