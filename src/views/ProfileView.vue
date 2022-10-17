@@ -2,7 +2,9 @@
   import TextInput from '@/components/TextInput.vue';
   import Button from '@/components/Button.vue';
   import { onMounted, ref } from 'vue';
+  import type { Ref } from 'vue';
   import useUser from '@/stores/user';
+  import type { Gender } from '@/stores/user';
 
   const user = useUser();
 
@@ -10,7 +12,7 @@
   const last_name = ref('');
   const first_name_en = ref('');
   const last_name_en = ref('');
-  const gender = ref('');
+  const gender: Ref<Gender> = ref(undefined);
   const linkedin_username = ref('');
   const github_username = ref('');
 

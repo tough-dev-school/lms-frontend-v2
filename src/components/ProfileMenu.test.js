@@ -38,35 +38,55 @@ describe('ProfileMenu', () => {
     });
 
     user = useUser();
-    user.username = faker.internet.email();
-    user.first_name = faker.name.firstName();
-    user.last_name = faker.name.lastName();
+    user.$patch({
+      username: faker.internet.email(),
+      first_name: faker.name.firstName(),
+      last_name: faker.name.lastName(),
+      studies: [...Array(3)].map(() => ({
+        id: faker.random.numeric(),
+        home_page_slug: faker.datatype.uuid(),
+        name: faker.lorem.sentence(),
+      })),
+    });
 
     auth = useAuth();
-    auth.token = faker.datatype.uuid();
   });
 
   const getProfileLinkWrapper = () => {
     const links = wrapper.findAllComponents(RouterLinkStub);
     return links.find((link) => link.attributes()['data-testid'] === 'profile');
   };
+
   const getButtonWrapper = () => {
     return wrapper.find('[data-testid="button"]');
   };
+
   const getAvatarWrapper = () => {
     return wrapper.getComponent('[data-testid="avatar"]');
   };
+
   const getNameWrapper = () => {
     return wrapper.find('[data-testid="name"]');
   };
+
   const getUsernameWrapper = () => {
     return wrapper.find('[data-testid="username"]');
   };
+
   const getMenuWrapper = () => {
     return wrapper.find('[data-testid="menu"]');
   };
+
   const getLogoutWrapper = () => {
     return wrapper.find('[data-testid="logout"]');
+  };
+
+  const getMaterialsWrapper = () => {
+    return wrapper.findAll('[data-testid="material"]');
+  };
+
+  const getMaterialWrapper = () => {
+    return wrapper.findComponent('[data-testid="material"]');
   };
 
   test('Click on profile toggles menu', async () => {
@@ -113,5 +133,41 @@ describe('ProfileMenu', () => {
 
     expect(routerPushMock).toHaveBeenCalledOnce();
     expect(routerPushMock).toHaveBeenCalledWith({ name: 'login' });
+  });
+
+  test('Menu must be closed after click on profile', async () => {
+    await getButtonWrapper().trigger('click');
+    await getProfileLinkWrapper().trigger('click');
+    expect(getMenuWrapper().exists()).toBeFalsy();
+  });
+
+  test('Menu must be closed after click on material', async () => {
+    await getButtonWrapper().trigger('click');
+    await getMaterialWrapper().trigger('click');
+    expect(getMenuWrapper().exists()).toBeFalsy();
+  });
+
+  test('Menu must be closed after click on logout', async () => {
+    await getButtonWrapper().trigger('click');
+    await getLogoutWrapper().trigger('click');
+    expect(getMenuWrapper().exists()).toBeFalsy();
+  });
+
+  test('Has correct number of links to materials', async () => {
+    await getButtonWrapper().trigger('click');
+    const materials = getMaterialsWrapper();
+
+    expect(materials).toHaveLength(user.studies.length);
+  });
+
+  test('Link to material has correct name and route', async () => {
+    await getButtonWrapper().trigger('click');
+    const material = getMaterialWrapper();
+
+    expect(material.text()).toBe(user.studies[0].name);
+    expect(material.props().to).toStrictEqual({
+      name: 'materials',
+      params: { id: user.studies[0].home_page_slug },
+    });
   });
 });

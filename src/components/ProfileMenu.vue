@@ -19,6 +19,7 @@
   const logOut = () => {
     auth.resetAuth();
     router.push({ name: 'login' });
+    isOpen.value = false;
   };
 
   const name = computed(() => `${first_name.value} ${last_name.value}`);
@@ -52,9 +53,19 @@
             <RouterLink
               data-testid="profile"
               :to="{ name: 'profile' }"
-              class="ProfileMenu__Item">
+              class="ProfileMenu__Item"
+              @click="isOpen = false">
               <span class="Link">Профиль</span>
             </RouterLink>
+          </li>
+          <li v-for="study in user.studies" :key="study.id">
+            <RouterLink
+              :to="{ name: 'materials', params: { id: study.home_page_slug } }"
+              class="ProfileMenu__Item"
+              @click="isOpen = false"
+              data-testid="material"
+              ><span class="Link">{{ study.name }}</span></RouterLink
+            >
           </li>
           <li>
             <button
@@ -72,7 +83,7 @@
 
 <style lang="scss" scoped>
   .ProfileMenu__Item {
-    @apply block h-32 w-full cursor-pointer px-8 text-left leading-[32px] hover:bg-gray hover:bg-opacity-10;
+    @apply block flex min-h-[32px] w-full cursor-pointer items-center px-8 text-left hover:bg-gray hover:bg-opacity-10;
   }
 
   .fade {
