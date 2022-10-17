@@ -3,6 +3,8 @@ import { setUser, getUser } from '@/api/users';
 import type { EditableUserData } from '@/api/users';
 import { getStudies } from '@/api/studies';
 
+export type Gender = 'female' | 'male' | undefined;
+
 interface Study {
   id: number;
   slug: string;
@@ -10,19 +12,24 @@ interface Study {
   home_page_slug: string;
 }
 
-interface State {
+export interface User {
   id: string;
   uuid: string;
   username: string;
+}
+
+export interface UserData {
   first_name: string;
   last_name: string;
   first_name_en: string;
   last_name_en: string;
-  gender: boolean | undefined;
+  gender: Gender;
   linkedin_username: string;
   github_username: string;
   studies: Study[];
 }
+
+interface State extends User, UserData {}
 
 const useUser = defineStore('user', {
   state: (): State => {

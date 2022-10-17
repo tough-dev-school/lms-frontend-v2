@@ -1,4 +1,5 @@
 import axios from './axios';
+import type { Gender } from '@/stores/user';
 
 export const getUser = async () => {
   const url = '/api/v2/users/me/';
@@ -11,7 +12,7 @@ export interface EditableUserData {
   last_name?: string;
   first_name_en?: string;
   last_name_en?: string;
-  gender?: string;
+  gender?: Gender;
   linkedin_username?: string;
   github_username?: string;
 }
