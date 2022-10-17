@@ -1,13 +1,21 @@
 import { defineStore } from 'pinia';
 import { nanoid } from 'nanoid';
 
+type ToastType = 'error' | 'success' | undefined;
+
 export class ToastMessage {
   text: string;
   id: string;
   lifetime: number;
+  type: ToastType;
 
-  constructor(text: string, lifetime: number = 5000) {
+  constructor(
+    text: string,
+    type: ToastType = undefined,
+    lifetime: number = 5000,
+  ) {
     this.text = text;
+    this.type = type;
     this.id = nanoid(8);
     this.lifetime = lifetime;
   }
@@ -23,10 +31,9 @@ const useToasts = defineStore('toasts', {
     return { messages: [], disabled: false };
   },
   actions: {
-    addMessage(text: string) {
+    addMessage(text: string, type: ToastType = undefined) {
       if (this.disabled) return;
-      const message = new ToastMessage(text);
-      this.messages = [...this.messages, message];
+      this.messages = [...this.messages, new ToastMessage(text, type)];
     },
     removeMessage(id: String) {
       this.messages = this.messages.filter((message) => message.id !== id);
