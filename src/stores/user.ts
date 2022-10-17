@@ -3,20 +3,41 @@ import { setUser, getUser } from '@/api/users';
 import type { EditableUserData } from '@/api/users';
 import { getStudies } from '@/api/studies';
 
+interface Study {
+  id: number;
+  slug: string;
+  name: string;
+  home_page_slug: string;
+}
+
+interface State {
+  id: string;
+  uuid: string;
+  username: string;
+  first_name: string;
+  last_name: string;
+  first_name_en: string;
+  last_name_en: string;
+  gender: boolean | undefined;
+  linkedin_username: string;
+  github_username: string;
+  studies: Study[];
+}
+
 const useUser = defineStore('user', {
-  state: () => {
+  state: (): State => {
     return {
-      id: undefined,
-      uuid: undefined,
-      username: undefined,
+      id: '',
+      uuid: '',
+      username: '',
       first_name: '',
       last_name: '',
       first_name_en: '',
       last_name_en: '',
-      gender: '',
+      gender: undefined,
       linkedin_username: '',
       github_username: '',
-      studies: undefined,
+      studies: [],
     };
   },
   actions: {
