@@ -1,11 +1,12 @@
 import { describe, expect, test, beforeEach } from 'vitest';
-import { RouterLinkStub, shallowMount } from '@vue/test-utils';
+import { RouterLinkStub, shallowMount, VueWrapper } from '@vue/test-utils';
 import ProfileMenu from './ProfileMenu.vue';
 import useUser from '@/stores/user';
 import useAuth from '@/stores/auth';
 import { faker } from '@faker-js/faker';
 import { vi } from 'vitest';
 import { createTestingPinia } from '@pinia/testing';
+import type { RouterLink } from 'vue-router';
 
 const routerPushMock = vi.fn();
 
@@ -19,9 +20,9 @@ vi.mock('vue-router/dist/vue-router.mjs', () => ({
 }));
 
 describe('ProfileMenu', () => {
-  let wrapper;
-  let user;
-  let auth;
+  let wrapper: VueWrapper;
+  let user: ReturnType<typeof useUser>;
+  let auth: ReturnType<typeof useAuth>;
 
   beforeEach(() => {
     wrapper = shallowMount(ProfileMenu, {
@@ -43,9 +44,10 @@ describe('ProfileMenu', () => {
       first_name: faker.name.firstName(),
       last_name: faker.name.lastName(),
       studies: [...Array(3)].map(() => ({
-        id: faker.random.numeric(),
+        id: faker.datatype.number(),
         home_page_slug: faker.datatype.uuid(),
         name: faker.lorem.sentence(),
+        slug: faker.lorem.word(),
       })),
     });
 
@@ -86,7 +88,7 @@ describe('ProfileMenu', () => {
   };
 
   const getMaterialWrapper = () => {
-    return wrapper.findComponent('[data-testid="material"]');
+    return wrapper.findComponent<typeof RouterLink>('[data-testid="material"]');
   };
 
   test('Click on profile toggles menu', async () => {
