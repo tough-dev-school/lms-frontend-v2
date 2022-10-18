@@ -1,10 +1,14 @@
 import { expect, describe, test, beforeEach } from 'vitest';
-import { toMatchImageSnapshot } from 'jest-image-snapshot';
+import { VIEWPORTS } from './constants/viewports';
+import {
+  toMatchImageSnapshot,
+  type MatchImageSnapshotOptions,
+} from 'jest-image-snapshot';
 import puppeteer from 'puppeteer';
 
 expect.extend({ toMatchImageSnapshot });
 
-const matchConfig = (threshold) => ({
+const matchConfig = (threshold: number): MatchImageSnapshotOptions => ({
   comparisonMethod: 'ssim',
   customDiffConfig: {
     ssim: 'fast',
@@ -13,23 +17,24 @@ const matchConfig = (threshold) => ({
   failureThresholdType: 'percent',
 });
 
-const DESKTOP_VIEWPORT = { width: 1440, height: 900, threshold: 0.03 };
-const TABLET_VIEWPORT = { width: 768, height: 1024, threshold: 0.05 };
-const MOBILE_VIEWPORT = { width: 320, height: 560, threshold: 0.08 };
-
 class VisualTest {
-  constructor(name, path, action = () => {}) {
+  name: string;
+  path: string;
+  action: Function;
+  constructor(name: string, path: string, action = () => {}) {
     this.name = name;
     this.path = path;
     this.action = action;
   }
 }
 
-describe('visual regression test for', () => {
-  let browser;
-  let page;
+type Test = [string, string, Function, number, number, number];
 
-  let tests = [];
+describe('visual regression test for', () => {
+  let browser: puppeteer.Browser;
+  let page: puppeteer.Page;
+
+  let tests: Test[] = [];
 
   const scenarios = [
     new VisualTest(
@@ -50,7 +55,7 @@ describe('visual regression test for', () => {
   ];
 
   scenarios.forEach((test) => {
-    [DESKTOP_VIEWPORT, TABLET_VIEWPORT, MOBILE_VIEWPORT].forEach((viewport) => {
+    VIEWPORTS.forEach((viewport) => {
       tests.push([
         `${test.name} — ${viewport.width}×${viewport.height}`,
         test.path,
@@ -67,7 +72,7 @@ describe('visual regression test for', () => {
     page = await browser.newPage();
   });
 
-  const goto = (route) => {
+  const goto = (route: string) => {
     return page.goto(`http://localhost:3000${route}`, {
       waitUntil: 'networkidle0',
     });

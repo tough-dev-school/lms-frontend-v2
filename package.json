@@ -36,6 +36,7 @@
     "@storybook/builder-vite": "^0.2.2",
     "@storybook/testing-library": "^0.0.13",
     "@storybook/vue3": "^6.5.12",
+    "@types/jest-image-snapshot": "^5.1.0",
     "@types/jsdom": "^20.0.0",
     "@types/node": "^16.11.56",
     "@vitejs/plugin-vue": "^3.0.3",
