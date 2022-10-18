@@ -1,5 +1,5 @@
 import axios from './axios';
-import type { Gender } from '@/stores/user';
+import type { EditableUserProperties } from '@/types/users';
 
 export const getUser = async () => {
   const url = '/api/v2/users/me/';
@@ -7,17 +7,7 @@ export const getUser = async () => {
   return await axios.get(url);
 };
 
-export interface EditableUserData {
-  first_name?: string;
-  last_name?: string;
-  first_name_en?: string;
-  last_name_en?: string;
-  gender?: Gender;
-  linkedin_username?: string;
-  github_username?: string;
-}
-
-export const setUser = async (data: EditableUserData) => {
+export const setUser = async (data: EditableUserProperties) => {
   const url = '/api/v2/users/me/';
 
   return await axios.patch(url, data);

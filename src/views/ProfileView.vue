@@ -4,7 +4,7 @@
   import { onMounted, ref } from 'vue';
   import type { Ref } from 'vue';
   import useUser from '@/stores/user';
-  import type { Gender } from '@/stores/user';
+  import type { Gender } from '@/types/users';
 
   const user = useUser();
 

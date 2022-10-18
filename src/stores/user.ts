@@ -1,39 +1,11 @@
 import { defineStore } from 'pinia';
 import { setUser, getUser } from '@/api/users';
-import type { EditableUserData } from '@/api/users';
+import type { User, EditableUserProperties } from '@/types/users';
 import { getStudies } from '@/api/studies';
 import useToasts from '@/stores/toasts';
 
-export type Gender = 'female' | 'male' | undefined;
-
-interface Study {
-  id: number;
-  slug: string;
-  name: string;
-  home_page_slug: string;
-}
-
-export interface User {
-  id: string;
-  uuid: string;
-  username: string;
-}
-
-export interface UserData {
-  first_name: string;
-  last_name: string;
-  first_name_en: string;
-  last_name_en: string;
-  gender: Gender;
-  linkedin_username: string;
-  github_username: string;
-  studies: Study[];
-}
-
-interface State extends User, UserData {}
-
 const useUser = defineStore('user', {
-  state: (): State => {
+  state: (): User => {
     return {
       id: '',
       uuid: '',
@@ -92,9 +64,9 @@ const useUser = defineStore('user', {
       gender,
       linkedin_username,
       github_username,
-    }: EditableUserData) {
+    }: EditableUserProperties) {
       try {
-        const data: EditableUserData = {};
+        const data: EditableUserProperties = {};
 
         if (this.first_name !== first_name) {
           data.first_name = first_name;
