@@ -33,7 +33,7 @@ module.exports = {
       offwhite: { DEFAULT: '#faf9f8' },
       black: { DEFAULT: '#000000' },
       white: { DEFAULT: '#FFFFFF' },
-      yellow: { DEFAULT: '#ffb800', hover: '#ffa800' },
+      yellow: { DEFAULT: '#ffb800', hover: '#ffa800', light: '#fff9eb' },
       blue: { DEFAULT: '#3f5dff', hover: '#0024de' },
       gray: { DEFAULT: '#9a9a9a' },
       red: { DEFAULT: '#ff5d29', light: '#FDAA90' },
