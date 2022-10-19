@@ -32,8 +32,8 @@
       @click="isOpen = !isOpen"
       data-testid="button">
       <Avatar
-        :name="first_name"
-        :surname="last_name"
+        :first-name="first_name"
+        :last-name="last_name"
         class="mr-8"
         data-testid="avatar" />
       <ul class="text-sub">
