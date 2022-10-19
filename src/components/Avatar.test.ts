@@ -23,14 +23,14 @@ describe('Avatar', () => {
 
   test('Renders one letter avatar if only name defined', () => {
     const props = { name: faker.name.firstName() };
-    wrapper = shallowMount(Avatar, props);
+    wrapper = shallowMount(Avatar, { props });
 
     expect(wrapper.text()).toBe(props.name[0]);
   });
 
   test('Renders one letter avatar if only surname defined', () => {
     const props = { surname: faker.name.lastName() };
-    wrapper = shallowMount(Avatar, props);
+    wrapper = shallowMount(Avatar, { props });
 
     expect(wrapper.text()).toBe(props.surname[0]);
   });
