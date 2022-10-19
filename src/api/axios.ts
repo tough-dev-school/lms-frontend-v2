@@ -8,7 +8,7 @@ const handleError = (error: any) => {
   Object.keys(error.response.data).forEach((key) => {
     const field = error.response.data[key];
     const fields = Array.isArray(field) ? field : [field];
-    field.forEach((error: string) => {
+    fields.forEach((error: string) => {
       toasts.addMessage(error);
     });
   });
