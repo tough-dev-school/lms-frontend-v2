@@ -6,7 +6,7 @@ export default mergeConfig(
   viteConfig,
   defineConfig({
     test: {
-      include: ['./src/visual-regression.test.js'],
+      include: ['./src/visual-regression.test.ts'],
       testTimeout: 10000,
     },
   }),
