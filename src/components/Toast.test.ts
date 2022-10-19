@@ -1,5 +1,5 @@
 import { describe, expect, test, beforeEach } from 'vitest';
-import { shallowMount } from '@vue/test-utils';
+import { shallowMount, VueWrapper } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
 import Toast from './Toast.vue';
 import { nanoid } from 'nanoid';
@@ -11,7 +11,7 @@ const defaultProps = {
 };
 
 describe('Toast', () => {
-  let wrapper;
+  let wrapper: VueWrapper<InstanceType<typeof Toast>>;
 
   beforeEach(() => {
     wrapper = shallowMount(Toast, { props: defaultProps });
@@ -24,7 +24,7 @@ describe('Toast', () => {
   test('emits delete with id on click', async () => {
     await wrapper.trigger('click');
 
-    expect(wrapper.emitted()['delete'][0][0]).toBe(defaultProps.id);
+    expect(wrapper.emitted('delete')).toStrictEqual([[defaultProps.id]]);
   });
 
   test.todo('emits delete after liftime end');

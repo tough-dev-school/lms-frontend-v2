@@ -1,6 +1,6 @@
 import { beforeEach, describe, test, expect } from 'vitest';
 import Avatar from './Avatar.vue';
-import { shallowMount } from '@vue/test-utils';
+import { shallowMount, VueWrapper } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
 
 const defaultProps = {
@@ -9,7 +9,7 @@ const defaultProps = {
 };
 
 describe('Avatar', () => {
-  let wrapper;
+  let wrapper: VueWrapper;
 
   beforeEach(() => {
     wrapper = shallowMount(Avatar, { props: defaultProps });

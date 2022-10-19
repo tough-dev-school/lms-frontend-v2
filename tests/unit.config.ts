@@ -8,7 +8,7 @@ export default mergeConfig(
     test: {
       restoreMocks: true,
       environment: 'jsdom',
-      exclude: [...configDefaults.exclude, './src/visual-regression.test.js'],
+      exclude: [...configDefaults.exclude, './src/visual-regression.test.ts'],
     },
   }),
 );

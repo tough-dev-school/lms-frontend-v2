@@ -1,5 +1,5 @@
 import { describe, expect, test, beforeEach } from 'vitest';
-import { shallowMount } from '@vue/test-utils';
+import { shallowMount, VueWrapper } from '@vue/test-utils';
 import TextInput from './TextInput.vue';
 import { faker } from '@faker-js/faker';
 
@@ -10,7 +10,7 @@ const defaultProps = {
 };
 
 describe('TextInput', () => {
-  let wrapper;
+  let wrapper: VueWrapper<InstanceType<typeof TextInput>>;
 
   beforeEach(() => {
     wrapper = shallowMount(TextInput, { props: defaultProps });
@@ -72,9 +72,9 @@ describe('TextInput', () => {
     const string = faker.internet.email();
     const input = getInputWrapper();
 
-    input.element.value = string;
+    (input.element as HTMLInputElement).value = string;
     await input.trigger('input');
 
-    expect(wrapper.emitted()['update:modelValue'][0][0]).toBe(string);
+    expect(wrapper.emitted('update:modelValue')).toStrictEqual([[string]]);
   });
 });
