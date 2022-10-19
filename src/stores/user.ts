@@ -96,6 +96,7 @@ const useUser = defineStore('user', {
           data.github_username = github_username;
         }
 
+        await setUser(data);
         const toasts = useToasts();
         toasts.addMessage('Данные сохранены!', 'success');
       } catch (error: any) {}
