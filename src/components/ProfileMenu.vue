@@ -12,7 +12,7 @@
   const router = useRouter();
   const user = useUser();
   const auth = useAuth();
-  const { first_name, last_name, username } = storeToRefs(user);
+  const { first_name, last_name, username, name } = storeToRefs(user);
 
   onClickOutside(menu, () => (isOpen.value = false));
 
@@ -21,8 +21,6 @@
     router.push({ name: 'login' });
     isOpen.value = false;
   };
-
-  const name = computed(() => `${first_name.value} ${last_name.value}`);
 </script>
 
 <template>
