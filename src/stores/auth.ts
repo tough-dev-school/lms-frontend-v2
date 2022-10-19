@@ -1,9 +1,14 @@
 import { defineStore } from 'pinia';
+import type { AuthToken } from '@/types/auth';
 import { logInWithCredentials, sendLoginLink, logInWithLink } from '@/api/auth';
 import useToasts from './toasts';
 
+type AuthStoreState = {
+  token: AuthToken | undefined;
+};
+
 const useAuth = defineStore('auth', {
-  state: () => {
+  state: (): AuthStoreState => {
     return {
       token: undefined,
     };
@@ -11,8 +16,8 @@ const useAuth = defineStore('auth', {
   actions: {
     async loginWithCredentials(username: string, password: string) {
       try {
-        const response = await logInWithCredentials(username, password);
-        this.token = response.data.token;
+        const loginResult = await logInWithCredentials(username, password);
+        this.token = loginResult.token;
       } catch (error: any) {}
     },
     async loginWithEmail(email: string) {
@@ -27,8 +32,8 @@ const useAuth = defineStore('auth', {
     },
     async exchangeTokens(passwordlessToken: string) {
       try {
-        const response = await logInWithLink(passwordlessToken);
-        this.token = response.data.token;
+        const loginResult = await logInWithLink(passwordlessToken);
+        this.token = loginResult.token;
       } catch (error: any) {}
     },
     resetAuth() {
