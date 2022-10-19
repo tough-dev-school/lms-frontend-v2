@@ -11,7 +11,7 @@ const defaultProps = {
 };
 
 describe('Toast', () => {
-  let wrapper: VueWrapper;
+  let wrapper: VueWrapper<InstanceType<typeof Toast>>;
 
   beforeEach(() => {
     wrapper = shallowMount(Toast, { props: defaultProps });

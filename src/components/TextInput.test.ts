@@ -10,7 +10,7 @@ const defaultProps = {
 };
 
 describe('TextInput', () => {
-  let wrapper: VueWrapper;
+  let wrapper: VueWrapper<InstanceType<typeof TextInput>>;
 
   beforeEach(() => {
     wrapper = shallowMount(TextInput, { props: defaultProps });
