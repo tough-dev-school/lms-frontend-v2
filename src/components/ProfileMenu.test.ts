@@ -142,19 +142,25 @@ describe('ProfileMenu', () => {
 
   test('Menu must be closed after click on profile', async () => {
     await getButtonWrapper().trigger('click');
+
     await (getProfileLinkWrapper() as VueWrapper).trigger('click');
+
     expect(getMenuWrapper().exists()).toBeFalsy();
   });
 
   test('Menu must be closed after click on material', async () => {
     await getButtonWrapper().trigger('click');
+
     await getMaterialWrapper().trigger('click');
+
     expect(getMenuWrapper().exists()).toBeFalsy();
   });
 
   test('Menu must be closed after click on logout', async () => {
     await getButtonWrapper().trigger('click');
+
     await getLogoutWrapper().trigger('click');
+
     expect(getMenuWrapper().exists()).toBeFalsy();
   });
 
