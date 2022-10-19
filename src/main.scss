@@ -2,26 +2,6 @@ body {
   @apply bg-offwhite font-body;
 }
 
-.Heading {
-  &_H1 {
-    @apply text-h1;
-  }
-
-  &_H2 {
-    @apply text-h2;
-  }
-
-  &_H3 {
-    @apply text-h3;
-  }
-
-  &_H1,
-  &_H2,
-  &_H3 {
-    @apply font-display  font-bold;
-  }
-}
-
 .Label {
   @apply mb-8 w-full text-gray;
 }
