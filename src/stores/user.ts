@@ -24,12 +24,12 @@ const useUser = defineStore('user', {
     async getUserStudies() {
       try {
         const response = await getStudies();
-        this.studies = response.data.results;
+        this.studies = response.results;
       } catch (err) {}
     },
     async getUserData() {
       try {
-        const response = await getUser();
+        const user = await getUser();
 
         const {
           id,
@@ -42,7 +42,7 @@ const useUser = defineStore('user', {
           gender,
           linkedin_username,
           github_username,
-        } = response.data;
+        } = user;
 
         this.id = id;
         this.uuid = uuid;
@@ -96,7 +96,7 @@ const useUser = defineStore('user', {
           data.github_username = github_username;
         }
 
-        await setUser(data);
+        console.log(await setUser(data));
         const toasts = useToasts();
         toasts.addMessage('Данные сохранены!', 'success');
       } catch (error: any) {}
