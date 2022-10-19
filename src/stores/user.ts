@@ -2,9 +2,7 @@ import { defineStore } from 'pinia';
 import { setUser, getUser } from '@/api/users';
 import { getStudies } from '@/api/studies';
 import useToasts from '@/stores/toasts';
-import type { User, UserData, EditableUserData } from '@/types/user';
-
-interface State extends User, UserData {}
+import type { User, EditableUserData } from '@/types/user';
 
 const useUser = defineStore('user', {
   state: (): User => {

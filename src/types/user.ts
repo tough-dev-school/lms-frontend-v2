@@ -11,9 +11,6 @@ export interface User {
   id: string;
   uuid: string;
   username: string;
-}
-
-export interface UserData {
   first_name: string;
   last_name: string;
   first_name_en: string;
@@ -33,6 +30,4 @@ type EditableUserDataProperties =
   | 'linkedin_username'
   | 'github_username';
 
-export type EditableUserData = Partial<
-  Pick<UserData, EditableUserDataProperties>
->;
+export type EditableUserData = Partial<Pick<User, EditableUserDataProperties>>;

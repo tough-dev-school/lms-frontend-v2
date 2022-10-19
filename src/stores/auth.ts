@@ -16,7 +16,7 @@ const useAuth = defineStore('auth', {
   actions: {
     async loginWithCredentials(username: string, password: string) {
       try {
-        const loginResult = await logInWithCredentials(username, password);
+        const loginResult = await loginWithCredentials(username, password);
         this.token = loginResult.token;
       } catch (error: any) {}
     },
@@ -32,7 +32,7 @@ const useAuth = defineStore('auth', {
     },
     async exchangeTokens(passwordlessToken: string) {
       try {
-        const loginResult = await logInWithLink(passwordlessToken);
+        const loginResult = await loginWithLink(passwordlessToken);
         this.token = loginResult.token;
       } catch (error: any) {}
     },
