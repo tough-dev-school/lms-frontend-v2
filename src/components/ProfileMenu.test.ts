@@ -3,6 +3,7 @@ import { RouterLinkStub, shallowMount, VueWrapper } from '@vue/test-utils';
 import ProfileMenu from './ProfileMenu.vue';
 import useUser from '@/stores/user';
 import useAuth from '@/stores/auth';
+import type Avatar from '@/components/Avatar.vue';
 import { faker } from '@faker-js/faker';
 import { vi } from 'vitest';
 import { createTestingPinia } from '@pinia/testing';
@@ -64,7 +65,7 @@ describe('ProfileMenu', () => {
   };
 
   const getAvatarWrapper = () => {
-    return wrapper.getComponent('[data-testid="avatar"]');
+    return wrapper.findComponent<typeof Avatar>('[data-testid="avatar"]');
   };
 
   const getNameWrapper = () => {
@@ -126,7 +127,9 @@ describe('ProfileMenu', () => {
   test('Click on profile redirects to profile', async () => {
     await getButtonWrapper().trigger('click');
 
-    expect(getProfileLinkWrapper().props().to).toEqual({ name: 'profile' });
+    expect((getProfileLinkWrapper() as VueWrapper).props().to).toEqual({
+      name: 'profile',
+    });
   });
 
   test('Click on logout clears token and redirects to /login', async () => {
@@ -139,7 +142,7 @@ describe('ProfileMenu', () => {
 
   test('Menu must be closed after click on profile', async () => {
     await getButtonWrapper().trigger('click');
-    await getProfileLinkWrapper().trigger('click');
+    await (getProfileLinkWrapper() as VueWrapper).trigger('click');
     expect(getMenuWrapper().exists()).toBeFalsy();
   });
 
