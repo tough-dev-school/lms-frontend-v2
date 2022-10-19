@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+  import Heading from '@/components/Heading.vue';
   import Button from '@/components/Button.vue';
   import TextInput from '@/components/TextInput.vue';
   import { ref } from 'vue';
@@ -47,7 +48,7 @@
 
 <template>
   <div class="max-w-prose pt-[25vh]">
-    <h1 class="mb-32 font-display text-h1 font-bold">Вход и регистрация</h1>
+    <Heading level="1" class="mb-32">Вход и регистрация</Heading>
     <template v-if="withPassword === false">
       <TextInput
         label="Электронная почта"
