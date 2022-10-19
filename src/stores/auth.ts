@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import type { AuthToken } from '@/types/auth';
-import { logInWithCredentials, sendLoginLink, logInWithLink } from '@/api/auth';
+import { loginWithCredentials, sendLoginLink, loginWithLink } from '@/api/auth';
 import useToasts from './toasts';
 
 type AuthStoreState = {
