@@ -1,11 +1,12 @@
+import type { Meta, Story } from '@storybook/vue3';
 import FeedbackGuide from './FeedbackGuide.vue';
 
 export default {
   title: 'UI/FeedbackGuide',
   component: FeedbackGuide,
-};
+} as Meta;
 
-const Template = (args) => ({
+const Template: Story = (args) => ({
   components: { FeedbackGuide },
   setup() {
     return { args };

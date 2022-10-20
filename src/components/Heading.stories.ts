@@ -1,11 +1,12 @@
+import type { Meta, Story } from '@storybook/vue3';
 import Heading from './Heading.vue';
 
 export default {
   title: 'Forms/Heading',
   component: Heading,
-};
+} as Meta;
 
-const Template = (args) => ({
+const Template: Story = (args) => ({
   components: { Heading },
   setup() {
     return { args };

@@ -1,11 +1,12 @@
+import type { Meta, Story } from '@storybook/vue3';
 import Button from './Button.vue';
 
 export default {
   title: 'Forms/Button',
   component: Button,
-};
+} as Meta;
 
-const Template = (args) => ({
+const Template: Story = (args) => ({
   components: { Button },
   setup() {
     return { args };

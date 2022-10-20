@@ -1,13 +1,14 @@
+import type { Meta, Story } from '@storybook/vue3';
 import ToastFeed from './ToastFeed.vue';
-import useToasts from '../stores/toasts.ts';
+import useToasts from '@/stores/toasts';
 import { faker } from '@faker-js/faker';
 
 export default {
   title: 'Toasts/ToastFeed',
   component: ToastFeed,
-};
+} as Meta;
 
-const Template = (args) => ({
+const Template: Story = (args) => ({
   components: { ToastFeed },
   setup() {
     const toasts = useToasts();

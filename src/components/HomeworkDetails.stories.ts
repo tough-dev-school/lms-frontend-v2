@@ -1,12 +1,13 @@
+import type { Meta, Story } from '@storybook/vue3';
 import HomeworkDetails from './HomeworkDetails.vue';
 import { faker } from '@faker-js/faker';
 
 export default {
   title: 'UI/HomeworkDetails',
   component: HomeworkDetails,
-};
+} as Meta;
 
-const Template = (args) => ({
+const Template: Story = (args) => ({
   components: { HomeworkDetails },
   setup() {
     return { args };
