@@ -24,17 +24,15 @@
   </div>
 </template>
 
-<style lang="scss">
-  .toast {
-    &-enter-active,
-    &-leave-active {
-      transition: all 300ms ease;
-    }
+<style>
+  .toast-enter-active,
+  .toast-leave-active {
+    transition: all 300ms ease;
+  }
 
-    &-enter-from,
-    &-leave-to {
-      opacity: 0;
-      transform: translateX(100%);
-    }
+  .toast-enter-from,
+  .toast-leave-to {
+    opacity: 0;
+    transform: translateX(100%);
   }
 </style>

@@ -79,20 +79,18 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
   .ProfileMenu__Item {
     @apply block flex min-h-[32px] w-full cursor-pointer items-center px-8 text-left hover:bg-gray hover:bg-opacity-10;
   }
 
-  .fade {
-    &-enter-active,
-    &-leave-active {
-      transition: all 100ms ease;
-    }
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: all 100ms ease;
+  }
 
-    &-enter-from,
-    &-leave-to {
-      opacity: 0;
-    }
+  .fade-enter-from,
+  .fade-leave-to {
+    opacity: 0;
   }
 </style>

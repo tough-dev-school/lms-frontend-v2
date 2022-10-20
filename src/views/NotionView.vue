@@ -31,7 +31,7 @@
   </div>
 </template>
 
-<style lang="scss">
+<style>
   @import 'vue3-notion/dist/style.css';
 
   .notion-page-cover {
