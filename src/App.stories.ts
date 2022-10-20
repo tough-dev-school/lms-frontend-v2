@@ -1,8 +1,9 @@
-import App from './App.vue';
+import type { Meta, Story } from '@storybook/vue3';
+import App from '@/App.vue';
 import vueRouter from 'storybook-vue3-router';
-import { routes } from './router';
-import useUser from './stores/user.ts';
-import useToasts from './stores/toasts';
+import { routes } from '@/router';
+import useUser from '@/stores/user';
+import useToasts from '@/stores/toasts';
 
 export default {
   title: 'Pages/App',
@@ -10,9 +11,9 @@ export default {
   parameters: {
     layout: 'fullscreen',
   },
-};
+} as Meta;
 
-const Template = (args) => ({
+const Template: Story = (args) => ({
   components: { App },
   setup() {
     return { args };
@@ -20,9 +21,9 @@ const Template = (args) => ({
   template: '<App v-bind="args" />',
 });
 
-const decorate = (initialRoute) => {
+const decorate = (initialRoute: string) => {
   return [
-    (story) => {
+    (story: InstanceType<typeof App>) => {
       const user = useUser();
       const toasts = useToasts();
 

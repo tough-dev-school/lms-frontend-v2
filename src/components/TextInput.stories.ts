@@ -1,11 +1,12 @@
+import type { Meta, Story } from '@storybook/vue3';
 import TextInput from './TextInput.vue';
 
 export default {
   title: 'Forms/TextInput',
   component: TextInput,
-};
+} as Meta;
 
-const Template = (args) => ({
+const Template: Story = (args) => ({
   components: { TextInput },
   setup() {
     return { args };

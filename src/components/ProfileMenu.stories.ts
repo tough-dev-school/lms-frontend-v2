@@ -1,13 +1,14 @@
+import type { Meta, Story } from '@storybook/vue3';
 import ProfileMenu from './ProfileMenu.vue';
-import useUser from '../stores/user.ts';
+import useUser from '@/stores/user';
 import { faker } from '@faker-js/faker';
 
 export default {
   title: 'UI/ProfileMenu',
   component: ProfileMenu,
-};
+} as Meta;
 
-const Template = (args) => ({
+const Template: Story = (args) => ({
   components: { ProfileMenu },
   setup() {
     const user = useUser();

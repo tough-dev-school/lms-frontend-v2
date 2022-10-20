@@ -1,12 +1,13 @@
+import type { Meta, Story } from '@storybook/vue3';
 import Post from './Post.vue';
 import { faker } from '@faker-js/faker';
 
 export default {
   title: 'UI/Post',
   component: Post,
-};
+} as Meta;
 
-const Template = (args) => ({
+const Template: Story = (args) => ({
   components: { Post },
   setup() {
     return { args };

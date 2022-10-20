@@ -1,11 +1,12 @@
+import type { Meta, Story } from '@storybook/vue3';
 import Preloader from './Preloader.vue';
 
 export default {
   title: 'UI/Preloader',
   component: Preloader,
-};
+} as Meta;
 
-const Template = (args) => ({
+const Template: Story = (args) => ({
   components: { Preloader },
   setup() {
     return { args };
