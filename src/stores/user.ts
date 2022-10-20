@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { setUser, getUser } from '@/api/users';
 import { getStudies } from '@/api/studies';
 import useToasts from '@/stores/toasts';
-import type { User, EditableUserData } from '@/types/user';
+import type { User, EditableUserData } from '@/types/users';
 import getName from '@/utils/getName';
 
 const useUser = defineStore('user', {
