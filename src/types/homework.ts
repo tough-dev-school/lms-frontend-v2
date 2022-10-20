@@ -13,5 +13,11 @@ export interface Answer {
   text: string;
   src: string;
   parent?: string;
-  descendants: Answers[];
+  descendants: Answer[];
+}
+
+export interface Question {
+  text: string;
+  name: string;
+  slug: string;
 }
