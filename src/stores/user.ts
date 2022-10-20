@@ -3,6 +3,7 @@ import { setUser, getUser } from '@/api/users';
 import { getStudies } from '@/api/studies';
 import useToasts from '@/stores/toasts';
 import type { User, EditableUserData } from '@/types/user';
+import getName from '@/utils/getName';
 
 const useUser = defineStore('user', {
   state: (): User => {
@@ -19,6 +20,11 @@ const useUser = defineStore('user', {
       github_username: '',
       studies: [],
     };
+  },
+  getters: {
+    name(state) {
+      return getName(state.first_name, state.last_name);
+    },
   },
   actions: {
     async getUserStudies() {

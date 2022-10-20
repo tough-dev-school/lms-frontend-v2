@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { ref, computed } from 'vue';
+  import { ref } from 'vue';
   import { onClickOutside } from '@vueuse/core';
   import Avatar from './Avatar.vue';
   import { useRouter } from 'vue-router';
@@ -12,7 +12,7 @@
   const router = useRouter();
   const user = useUser();
   const auth = useAuth();
-  const { first_name, last_name, username } = storeToRefs(user);
+  const { first_name, last_name, username, name } = storeToRefs(user);
 
   onClickOutside(menu, () => (isOpen.value = false));
 
@@ -21,8 +21,6 @@
     router.push({ name: 'login' });
     isOpen.value = false;
   };
-
-  const name = computed(() => `${first_name.value} ${last_name.value}`);
 </script>
 
 <template>
@@ -32,8 +30,8 @@
       @click="isOpen = !isOpen"
       data-testid="button">
       <Avatar
-        :name="first_name"
-        :surname="last_name"
+        :first-name="first_name"
+        :last-name="last_name"
         class="mr-8"
         data-testid="avatar" />
       <ul class="text-sub">

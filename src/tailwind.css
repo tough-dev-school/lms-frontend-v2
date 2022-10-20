@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.prose {
+  @apply prose-zinc;
+  @apply prose-p:my-[0.5em];
+  @apply prose-li:my-[0.25em];
+  @apply prose-ul:my-[0.5em];
+  --tw-prose-bullets: currentColor;
+}

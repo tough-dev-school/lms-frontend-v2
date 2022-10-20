@@ -1,6 +1,7 @@
 <script lang="ts" setup>
   import TextInput from '@/components/TextInput.vue';
   import Button from '@/components/Button.vue';
+  import Heading from '@/components/Heading.vue';
   import { onMounted, ref } from 'vue';
   import type { Ref } from 'vue';
   import useUser from '@/stores/user';
@@ -48,7 +49,7 @@
 
 <template>
   <div>
-    <h1 class="Heading_H1 mb-24">Данные для диплома</h1>
+    <Heading class="mb-24" level="1">Данные для диплома</Heading>
     <div class="flex flex-col items-start gap-16 tablet:gap-24">
       <TextInput label="Имя" v-model="first_name" />
       <TextInput label="Фамилия" v-model="last_name" />

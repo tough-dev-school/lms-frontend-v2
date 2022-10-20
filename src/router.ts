@@ -10,6 +10,7 @@ import LoadingView from '@/views/LoadingView.vue';
 import useAuth from '@/stores/auth';
 import NotionView from '@/views/NotionView.vue';
 import useUser from '@/stores/user';
+import HomeworkView from '@/views/HomeworkView.vue';
 
 export const routes = [
   {
@@ -31,6 +32,11 @@ export const routes = [
     path: '/materials/:id',
     name: 'materials',
     component: NotionView,
+  },
+  {
+    path: '/homework/:id',
+    name: 'homework',
+    component: HomeworkView,
   },
 ];
 

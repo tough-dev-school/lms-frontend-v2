@@ -103,8 +103,8 @@ describe('ProfileMenu', () => {
   test.todo('Click outside profile should close menu');
 
   test('Avatar should have correct props', () => {
-    expect(getAvatarWrapper().props().name).toBe(user.first_name);
-    expect(getAvatarWrapper().props().surname).toBe(user.last_name);
+    expect(getAvatarWrapper().props().firstName).toBe(user.first_name);
+    expect(getAvatarWrapper().props().lastName).toBe(user.last_name);
   });
 
   test('ProfileMenu displays correct name', () => {
