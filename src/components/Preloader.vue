@@ -5,7 +5,7 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style>
   .Preloader {
     position: fixed;
     top: 50%;
