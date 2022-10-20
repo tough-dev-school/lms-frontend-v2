@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { ref, computed } from 'vue';
+  import { ref } from 'vue';
   import { onClickOutside } from '@vueuse/core';
   import Avatar from './Avatar.vue';
   import { useRouter } from 'vue-router';

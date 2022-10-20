@@ -13,11 +13,11 @@
 
 <template>
   <article>
-    <div class="mb-8 flex items-center gap-8">
+    <div class="mb-16 flex items-center gap-8">
       <Avatar :first-name="firstName" :last-name="lastName" />
       <div class="font-bold">{{ getName(firstName, lastName) }}</div>
       <div class="text-gray">{{ relativeDate(date) }}</div>
     </div>
-    <div v-text="content" />
+    <div v-html="content" class="prose" />
   </article>
 </template>
