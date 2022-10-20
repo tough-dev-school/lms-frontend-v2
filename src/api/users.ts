@@ -1,5 +1,5 @@
 import axios from './axios';
-import type { EditableUserData, User } from '@/types/user';
+import type { EditableUserData, User } from '@/types/users';
 
 export const getUser: () => Promise<User> = async () => {
   const url = '/api/v2/users/me/';
@@ -8,7 +8,7 @@ export const getUser: () => Promise<User> = async () => {
   return response.data as User;
 };
 
-export const setUser = async (data: EditableUserData) => {
+export const setUser = async (data: EditableUserData): Promise<User> => {
   const url = '/api/v2/users/me/';
 
   return (await axios.patch(url, data)).data as User;

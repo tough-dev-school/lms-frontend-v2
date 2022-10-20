@@ -24,7 +24,7 @@ export const sendLoginLink = async (email: string): Promise<void> => {
   await axios.get(url);
 };
 
-export const loginWithLink = async (token: string) => {
+export const loginWithLink = async (token: string): Promise<LoginResponse> => {
   const url = `/api/v2/auth/passwordless-token/${token}`;
 
   return (await axios.get(url)).data as LoginResponse;

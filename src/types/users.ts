@@ -1,11 +1,6 @@
-export type Gender = 'female' | 'male' | undefined;
+import type { Study } from '@/types/studies';
 
-export interface Study {
-  id: number;
-  slug: string;
-  name: string;
-  home_page_slug: string;
-}
+export type Gender = 'female' | 'male' | undefined;
 
 export interface User {
   id: string;
