@@ -1,6 +1,11 @@
-import type { Study } from '@/types/studies';
-
 export type Gender = 'female' | 'male' | undefined;
+
+export interface Study {
+  id: number;
+  slug: string;
+  name: string;
+  home_page_slug: string;
+}
 
 export interface User {
   id: string;
@@ -16,7 +21,7 @@ export interface User {
   studies: Study[];
 }
 
-type EditableUserPropertyNames =
+type EditableUserDataProperties =
   | 'first_name'
   | 'last_name'
   | 'first_name_en'
@@ -24,6 +29,5 @@ type EditableUserPropertyNames =
   | 'gender'
   | 'linkedin_username'
   | 'github_username';
-export type EditableUserProperties = Partial<
-  Pick<User, EditableUserPropertyNames>
->;
+
+export type EditableUserData = Partial<Pick<User, EditableUserDataProperties>>;

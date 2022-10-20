@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia';
 import { setUser, getUser } from '@/api/users';
-import type { User, EditableUserProperties } from '@/types/users';
 import { getStudies } from '@/api/studies';
 import useToasts from '@/stores/toasts';
+import type { User, EditableUserData } from '@/types/user';
 
 const useUser = defineStore('user', {
   state: (): User => {
@@ -64,9 +64,9 @@ const useUser = defineStore('user', {
       gender,
       linkedin_username,
       github_username,
-    }: EditableUserProperties) {
+    }: EditableUserData) {
       try {
-        const data: EditableUserProperties = {};
+        const data: EditableUserData = {};
 
         if (this.first_name !== first_name) {
           data.first_name = first_name;

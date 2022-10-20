@@ -1,21 +1,6 @@
 import useAuth from '@/stores/auth';
-import useToasts from '@/stores/toasts';
 import axios from 'axios';
-
-const handleError = (error: any) => {
-  const toasts = useToasts();
-
-  Object.keys(error.response.data).forEach((key) => {
-    const field = error.response.data[key];
-    if (Array.isArray(field)) {
-      field.forEach((error: string) => {
-        toasts.addMessage(error, 'error');
-      });
-    } else {
-      toasts.addMessage(field, 'error');
-    }
-  });
-};
+import handleError from '@/utils/handleError';
 
 const instance = axios.create();
 

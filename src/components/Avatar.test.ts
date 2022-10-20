@@ -21,12 +21,17 @@ describe('Avatar', () => {
     expect(wrapper.text()).toBe(`${name[0]}${surname[0]}`);
   });
 
-  test.each([
-    { name: faker.name.firstName() },
-    { surname: faker.name.lastName() },
-  ])('Renders one letter avatar', (props) => {
+  test('Renders one letter avatar if only name defined', () => {
+    const props = { name: faker.name.firstName() };
     wrapper = shallowMount(Avatar, { props });
-    if (props.name) expect(wrapper.text()).toBe(props.name[0]);
-    if (props.surname) expect(wrapper.text()).toBe(props.surname[0]);
+
+    expect(wrapper.text()).toBe(props.name[0]);
+  });
+
+  test('Renders one letter avatar if only surname defined', () => {
+    const props = { surname: faker.name.lastName() };
+    wrapper = shallowMount(Avatar, { props });
+
+    expect(wrapper.text()).toBe(props.surname[0]);
   });
 });
