@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import { setUser, getUser } from '@/api/users';
-import { getStudies } from '@/api/studies';
 import useToasts from '@/stores/toasts';
 import type { User, EditableUserData } from '@/types/users';
 import getName from '@/utils/getName';
@@ -18,7 +17,6 @@ const useUser = defineStore('user', {
       gender: undefined,
       linkedin_username: '',
       github_username: '',
-      studies: [],
     };
   },
   getters: {
@@ -27,13 +25,7 @@ const useUser = defineStore('user', {
     },
   },
   actions: {
-    async getUserStudies() {
-      try {
-        const response = await getStudies();
-        this.studies = response.results;
-      } catch (err) {}
-    },
-    async getUserData() {
+    async getData() {
       try {
         const user = await getUser();
 
@@ -62,7 +54,7 @@ const useUser = defineStore('user', {
         this.github_username = github_username;
       } catch (error: any) {}
     },
-    async setUserData({
+    async setData({
       first_name,
       last_name,
       first_name_en,

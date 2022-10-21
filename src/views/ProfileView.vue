@@ -18,7 +18,7 @@
   const github_username = ref('');
 
   const save = async () => {
-    await user.setUserData({
+    await user.setData({
       first_name: first_name.value,
       last_name: last_name.value,
       first_name_en: first_name_en.value,
@@ -31,7 +31,7 @@
   };
 
   const update = async () => {
-    await user.getUserData();
+    await user.getData();
 
     first_name.value = user.first_name;
     last_name.value = user.last_name;

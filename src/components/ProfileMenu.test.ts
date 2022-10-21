@@ -8,6 +8,7 @@ import { faker } from '@faker-js/faker';
 import { vi } from 'vitest';
 import { createTestingPinia } from '@pinia/testing';
 import type { RouterLink } from 'vue-router';
+import useStudies from '@/stores/studies';
 
 const routerPushMock = vi.fn();
 
@@ -24,6 +25,7 @@ describe('ProfileMenu', () => {
   let wrapper: VueWrapper;
   let user: ReturnType<typeof useUser>;
   let auth: ReturnType<typeof useAuth>;
+  let studies: ReturnType<typeof useStudies>;
 
   beforeEach(() => {
     wrapper = shallowMount(ProfileMenu, {
@@ -44,7 +46,11 @@ describe('ProfileMenu', () => {
       username: faker.internet.email(),
       first_name: faker.name.firstName(),
       last_name: faker.name.lastName(),
-      studies: [...Array(3)].map(() => ({
+    });
+
+    studies = useStudies();
+    studies.$patch({
+      items: [...Array(3)].map(() => ({
         id: faker.datatype.number(),
         home_page_slug: faker.datatype.uuid(),
         name: faker.lorem.sentence(),
@@ -168,17 +174,17 @@ describe('ProfileMenu', () => {
     await getButtonWrapper().trigger('click');
     const materials = getMaterialsWrapper();
 
-    expect(materials).toHaveLength(user.studies.length);
+    expect(materials).toHaveLength(studies.items.length);
   });
 
   test('Link to material has correct name and route', async () => {
     await getButtonWrapper().trigger('click');
     const material = getMaterialWrapper();
 
-    expect(material.text()).toBe(user.studies[0].name);
+    expect(material.text()).toBe(studies.items[0].name);
     expect(material.props().to).toStrictEqual({
       name: 'materials',
-      params: { id: user.studies[0].home_page_slug },
+      params: { id: studies.items[0].home_page_slug },
     });
   });
 });

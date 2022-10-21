@@ -1,5 +1,3 @@
-import type { Study } from '@/types/studies';
-
 export type Gender = 'female' | 'male' | undefined;
 
 export interface User {
@@ -13,7 +11,6 @@ export interface User {
   gender: Gender;
   linkedin_username: string;
   github_username: string;
-  studies: Study[];
 }
 
 type EditableUserDataProperties =
