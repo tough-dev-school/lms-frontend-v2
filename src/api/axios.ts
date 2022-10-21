@@ -8,8 +8,10 @@ instance.interceptors.request.use((request) => {
   const auth = useAuth();
   request.headers = {
     ...request.headers,
-    Authorization: `Bearer ${auth.token} `,
   };
+
+  if (auth.token) request.headers.Authorization = `Bearer ${auth.token}`;
+
   return request;
 });
 
