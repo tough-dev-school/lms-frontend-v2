@@ -4,22 +4,22 @@ export interface User {
   id: string;
   uuid: string;
   username: string;
-  first_name: string;
-  last_name: string;
-  first_name_en: string;
-  last_name_en: string;
+  firstName: string;
+  lastName: string;
+  firstNameEn: string;
+  lastNameEn: string;
   gender: Gender;
-  linkedin_username: string;
-  github_username: string;
+  linkedinUsername: string;
+  githubUsername: string;
 }
 
 type EditableUserDataProperties =
-  | 'first_name'
-  | 'last_name'
-  | 'first_name_en'
-  | 'last_name_en'
+  | 'firstName'
+  | 'lastName'
+  | 'firstNameEn'
+  | 'lastNameEn'
   | 'gender'
-  | 'linkedin_username'
-  | 'github_username';
+  | 'linkedinUsername'
+  | 'githubUsername';
 
 export type EditableUserData = Partial<Pick<User, EditableUserDataProperties>>;

@@ -10,18 +10,18 @@ const useUser = defineStore('user', {
       id: '',
       uuid: '',
       username: '',
-      first_name: '',
-      last_name: '',
-      first_name_en: '',
-      last_name_en: '',
+      firstName: '',
+      lastName: '',
+      firstNameEn: '',
+      lastNameEn: '',
       gender: undefined,
-      linkedin_username: '',
-      github_username: '',
+      linkedinUsername: '',
+      githubUsername: '',
     };
   },
   getters: {
     name(state) {
-      return getName(state.first_name, state.last_name);
+      return getName(state.firstName, state.lastName);
     },
   },
   actions: {
@@ -33,68 +33,69 @@ const useUser = defineStore('user', {
           id,
           uuid,
           username,
-          first_name,
-          last_name,
-          first_name_en,
-          last_name_en,
+          firstName,
+          lastName,
+          firstNameEn,
+          lastNameEn,
           gender,
-          linkedin_username,
-          github_username,
+          linkedinUsername,
+          githubUsername,
         } = user;
 
         this.id = id;
         this.uuid = uuid;
         this.username = username;
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.first_name_en = first_name_en;
-        this.last_name_en = last_name_en;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.firstNameEn = firstNameEn;
+        this.lastNameEn = lastNameEn;
         this.gender = gender;
-        this.linkedin_username = linkedin_username;
-        this.github_username = github_username;
+        this.linkedinUsername = linkedinUsername;
+        this.githubUsername = githubUsername;
       } catch (error: any) {}
     },
     async setData({
-      first_name,
-      last_name,
-      first_name_en,
-      last_name_en,
+      firstName,
+      lastName,
+      firstNameEn,
+      lastNameEn,
       gender,
-      linkedin_username,
-      github_username,
+      linkedinUsername,
+      githubUsername,
     }: EditableUserData) {
       try {
         const data: EditableUserData = {};
 
-        if (this.first_name !== first_name) {
-          data.first_name = first_name;
+        if (this.firstName !== firstName) {
+          data.firstName = firstName;
         }
 
-        if (this.last_name !== last_name) {
-          data.last_name = last_name;
+        if (this.lastName !== lastName) {
+          data.lastName = lastName;
         }
 
-        if (this.first_name_en !== first_name_en) {
-          data.first_name_en = first_name_en;
+        if (this.firstNameEn !== firstNameEn) {
+          data.firstNameEn = firstNameEn;
         }
 
-        if (this.last_name_en !== last_name_en) {
-          data.last_name_en = last_name_en;
+        if (this.lastNameEn !== lastNameEn) {
+          data.lastNameEn = lastNameEn;
         }
 
         if (this.gender !== gender) {
           data.gender = gender;
         }
 
-        if (this.linkedin_username !== linkedin_username) {
-          data.linkedin_username = linkedin_username;
+        if (this.linkedinUsername !== linkedinUsername) {
+          data.linkedinUsername = linkedinUsername;
         }
 
-        if (this.github_username !== github_username) {
-          data.github_username = github_username;
+        if (this.githubUsername !== githubUsername) {
+          data.githubUsername = githubUsername;
         }
 
         await setUser(data);
+
         const toasts = useToasts();
         toasts.addMessage('Данные сохранены!', 'success');
       } catch (error: any) {}

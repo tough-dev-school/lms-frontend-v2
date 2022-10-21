@@ -44,8 +44,8 @@ describe('ProfileMenu', () => {
     user = useUser();
     user.$patch({
       username: faker.internet.email(),
-      first_name: faker.name.firstName(),
-      last_name: faker.name.lastName(),
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
     });
 
     studies = useStudies();
@@ -109,14 +109,12 @@ describe('ProfileMenu', () => {
   test.todo('Click outside profile should close menu');
 
   test('Avatar should have correct props', () => {
-    expect(getAvatarWrapper().props().firstName).toBe(user.first_name);
-    expect(getAvatarWrapper().props().lastName).toBe(user.last_name);
+    expect(getAvatarWrapper().props().firstName).toBe(user.firstName);
+    expect(getAvatarWrapper().props().lastName).toBe(user.lastName);
   });
 
   test('ProfileMenu displays correct name', () => {
-    expect(getNameWrapper().text()).toBe(
-      `${user.first_name} ${user.last_name}`,
-    );
+    expect(getNameWrapper().text()).toBe(`${user.firstName} ${user.lastName}`);
   });
 
   test('ProfileMenu displays correct username', () => {
@@ -184,7 +182,7 @@ describe('ProfileMenu', () => {
     expect(material.text()).toBe(studies.items[0].name);
     expect(material.props().to).toStrictEqual({
       name: 'materials',
-      params: { id: studies.items[0].home_page_slug },
+      params: { id: studies.items[0].homePageSlug },
     });
   });
 });

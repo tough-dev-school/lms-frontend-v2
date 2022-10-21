@@ -14,7 +14,7 @@
   const user = useUser();
   const auth = useAuth();
   const studies = useStudies();
-  const { first_name, last_name, username, name } = storeToRefs(user);
+  const { firstName, lastName, username, name } = storeToRefs(user);
 
   onClickOutside(menu, () => (isOpen.value = false));
 
@@ -32,8 +32,8 @@
       @click="isOpen = !isOpen"
       data-testid="button">
       <Avatar
-        :first-name="first_name"
-        :last-name="last_name"
+        :first-name="firstName"
+        :last-name="lastName"
         class="mr-8"
         data-testid="avatar" />
       <ul class="text-sub">
@@ -60,7 +60,7 @@
           </li>
           <li v-for="study in studies.items" :key="study.id">
             <RouterLink
-              :to="{ name: 'materials', params: { id: study.home_page_slug } }"
+              :to="{ name: 'materials', params: { id: study.homePageSlug } }"
               class="ProfileMenu__Item"
               @click="isOpen = false"
               data-testid="material"

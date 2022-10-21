@@ -33,13 +33,13 @@ const decorate = (initialRoute: string) => {
         id: '',
         uuid: '',
         username: 'johndoe@demo.com',
-        first_name: 'Иван',
-        last_name: 'Иванов',
-        first_name_en: 'John',
-        last_name_en: 'Doe',
+        firstName: 'Иван',
+        lastName: 'Иванов',
+        firstNameEn: 'John',
+        lastNameEn: 'Doe',
         gender: 'male',
-        linkedin_username: 'johndoe',
-        github_username: 'johndoe',
+        linkedinUsername: 'johndoe',
+        githubUsername: 'johndoe',
       });
 
       return {

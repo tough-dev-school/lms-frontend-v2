@@ -17,6 +17,7 @@
   "dependencies": {
     "@vueuse/core": "^9.2.0",
     "axios": "^0.27.2",
+    "axios-case-converter": "^0.11.1",
     "dayjs": "^1.11.5",
     "nanoid": "^4.0.0",
     "pinia": "^2.0.21",
