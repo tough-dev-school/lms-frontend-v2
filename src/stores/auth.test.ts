@@ -43,7 +43,9 @@ describe('toasts store', () => {
   });
 
   test('loginWithCredentials sets token', async () => {
-    loginWithCredentials.mockResolvedValue({ token });
+    (loginWithCredentials as ReturnType<typeof vi.fn>).mockResolvedValue({
+      token,
+    });
     await auth.loginWithCredentials(username, password);
 
     expect(auth.token).toBe(token);
@@ -63,7 +65,7 @@ describe('toasts store', () => {
   });
 
   test('loginWithEmail does not show toast on fail', async () => {
-    sendLoginLink.mockRejectedValue();
+    (sendLoginLink as ReturnType<typeof vi.fn>).mockRejectedValue({});
     await auth.loginWithEmail(email);
 
     expect(toasts.addMessage).toHaveBeenCalledTimes(0);
@@ -77,7 +79,7 @@ describe('toasts store', () => {
   });
 
   test('exchangeTokens sets token', async () => {
-    loginWithLink.mockResolvedValue({ token });
+    (loginWithLink as ReturnType<typeof vi.fn>).mockResolvedValue({ token });
     await auth.exchangeTokens(passwordlessToken);
 
     expect(auth.token).toBe(token);
