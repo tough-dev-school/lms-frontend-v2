@@ -6,7 +6,9 @@
     modelValue: { type: String, default: '' },
   });
 
-  const emit = defineEmits(['update:modelValue']);
+  const emit = defineEmits<{ 
+    (e: 'update:modelValue', value: string): void 
+  }>()
 
   const handleInput = (e: Event) => {
     const value = (e.target as HTMLInputElement).value;

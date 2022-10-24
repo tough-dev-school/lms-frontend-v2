@@ -8,7 +8,9 @@
     type: { type: String, required: false },
   });
 
-  const emit = defineEmits(['delete']);
+  const emit = defineEmits<{ 
+    (e: 'delete', id: string): void 
+  }>()
   let timeout: ReturnType<typeof setTimeout>;
 
   onMounted(() => {
