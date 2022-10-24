@@ -23,9 +23,8 @@ describe('user store', () => {
   let toasts: ReturnType<typeof useToasts>;
   let user: ReturnType<typeof useUser>;
 
-  const app = createApp({});
-
   beforeEach(() => {
+    const app = createApp({});
     const pinia = createTestingPinia({ createSpy: vi.fn, stubActions: false });
     app.use(pinia);
     setActivePinia(pinia);

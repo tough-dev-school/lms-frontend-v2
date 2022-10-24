@@ -15,10 +15,10 @@ const createError = (data: object = {}) => {
 };
 
 describe('handleError', () => {
-  const app = createApp({});
   let toasts: ReturnType<typeof useToasts>;
 
   beforeEach(() => {
+    const app = createApp({});
     const pinia = createTestingPinia({ createSpy: vi.fn });
     app.use(pinia);
     setActivePinia(pinia);

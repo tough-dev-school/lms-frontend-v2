@@ -24,9 +24,9 @@ vi.mock('@/api/auth', () => {
 describe('toasts store', () => {
   let auth: ReturnType<typeof useAuth>;
   let toasts: ReturnType<typeof useToasts>;
-  const app = createApp({});
 
   beforeEach(() => {
+    const app = createApp({});
     const pinia = createTestingPinia({ createSpy: vi.fn, stubActions: false });
     app.use(pinia);
     setActivePinia(pinia);
