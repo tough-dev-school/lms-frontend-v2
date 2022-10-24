@@ -9,37 +9,37 @@
 
   const user = useUser();
 
-  const first_name = ref('');
-  const last_name = ref('');
-  const first_name_en = ref('');
-  const last_name_en = ref('');
+  const firstName = ref('');
+  const lastName = ref('');
+  const firstNameEn = ref('');
+  const lastNameEn = ref('');
   const gender: Ref<Gender> = ref(undefined);
-  const linkedin_username = ref('');
-  const github_username = ref('');
+  const linkedinUsername = ref('');
+  const githubUsername = ref('');
 
   const save = async () => {
-    await user.setUserData({
-      first_name: first_name.value,
-      last_name: last_name.value,
-      first_name_en: first_name_en.value,
-      last_name_en: last_name_en.value,
+    await user.setData({
+      firstName: firstName.value,
+      lastName: lastName.value,
+      firstNameEn: firstNameEn.value,
+      lastNameEn: lastNameEn.value,
       gender: gender.value,
-      linkedin_username: linkedin_username.value,
-      github_username: github_username.value,
+      linkedinUsername: linkedinUsername.value,
+      githubUsername: githubUsername.value,
     });
     await update();
   };
 
   const update = async () => {
-    await user.getUserData();
+    await user.getData();
 
-    first_name.value = user.first_name;
-    last_name.value = user.last_name;
-    first_name_en.value = user.first_name_en;
-    last_name_en.value = user.last_name_en;
+    firstName.value = user.firstName;
+    lastName.value = user.lastName;
+    firstNameEn.value = user.firstNameEn;
+    lastNameEn.value = user.lastNameEn;
     gender.value = user.gender;
-    linkedin_username.value = user.linkedin_username;
-    github_username.value = user.github_username;
+    linkedinUsername.value = user.linkedinUsername;
+    githubUsername.value = user.githubUsername;
   };
 
   onMounted(async () => {
@@ -51,12 +51,12 @@
   <div>
     <Heading class="mb-24" level="1">Данные для диплома</Heading>
     <div class="flex flex-col items-start gap-16 tablet:gap-24">
-      <TextInput label="Имя" v-model="first_name" />
-      <TextInput label="Фамилия" v-model="last_name" />
-      <TextInput label="Имя (на английском)" v-model="first_name_en" />
-      <TextInput label="Фамилия (на английском)" v-model="last_name_en" />
-      <TextInput label="Ник на GitHub" v-model="github_username" />
-      <TextInput label="Ник на LinkedIn" v-model="linkedin_username" />
+      <TextInput label="Имя" v-model="firstName" />
+      <TextInput label="Фамилия" v-model="lastName" />
+      <TextInput label="Имя (на английском)" v-model="firstNameEn" />
+      <TextInput label="Фамилия (на английском)" v-model="lastNameEn" />
+      <TextInput label="Ник на GitHub" v-model="githubUsername" />
+      <TextInput label="Ник на LinkedIn" v-model="linkedinUsername" />
       <fieldset class="flex flex-wrap gap-16">
         <legend class="Label">Пол</legend>
         <label class="cursor-pointer"

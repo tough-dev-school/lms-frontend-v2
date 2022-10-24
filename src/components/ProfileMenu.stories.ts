@@ -14,8 +14,8 @@ const Template: Story = (args) => ({
     const user = useUser();
     user.$patch({
       username: faker.internet.email(),
-      first_name: faker.name.firstName(),
-      last_name: faker.name.lastName(),
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
     });
     return { args };
   },

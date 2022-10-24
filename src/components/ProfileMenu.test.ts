@@ -8,6 +8,7 @@ import { faker } from '@faker-js/faker';
 import { vi } from 'vitest';
 import { createTestingPinia } from '@pinia/testing';
 import type { RouterLink } from 'vue-router';
+import useStudies from '@/stores/studies';
 
 const routerPushMock = vi.fn();
 
@@ -24,6 +25,7 @@ describe('ProfileMenu', () => {
   let wrapper: VueWrapper;
   let user: ReturnType<typeof useUser>;
   let auth: ReturnType<typeof useAuth>;
+  let studies: ReturnType<typeof useStudies>;
 
   beforeEach(() => {
     wrapper = shallowMount(ProfileMenu, {
@@ -42,9 +44,13 @@ describe('ProfileMenu', () => {
     user = useUser();
     user.$patch({
       username: faker.internet.email(),
-      first_name: faker.name.firstName(),
-      last_name: faker.name.lastName(),
-      studies: [...Array(3)].map(() => ({
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
+    });
+
+    studies = useStudies();
+    studies.$patch({
+      items: [...Array(3)].map(() => ({
         id: faker.datatype.number(),
         home_page_slug: faker.datatype.uuid(),
         name: faker.lorem.sentence(),
@@ -103,14 +109,12 @@ describe('ProfileMenu', () => {
   test.todo('Click outside profile should close menu');
 
   test('Avatar should have correct props', () => {
-    expect(getAvatarWrapper().props().firstName).toBe(user.first_name);
-    expect(getAvatarWrapper().props().lastName).toBe(user.last_name);
+    expect(getAvatarWrapper().props().firstName).toBe(user.firstName);
+    expect(getAvatarWrapper().props().lastName).toBe(user.lastName);
   });
 
   test('ProfileMenu displays correct name', () => {
-    expect(getNameWrapper().text()).toBe(
-      `${user.first_name} ${user.last_name}`,
-    );
+    expect(getNameWrapper().text()).toBe(`${user.firstName} ${user.lastName}`);
   });
 
   test('ProfileMenu displays correct username', () => {
@@ -168,17 +172,17 @@ describe('ProfileMenu', () => {
     await getButtonWrapper().trigger('click');
     const materials = getMaterialsWrapper();
 
-    expect(materials).toHaveLength(user.studies.length);
+    expect(materials).toHaveLength(studies.items.length);
   });
 
   test('Link to material has correct name and route', async () => {
     await getButtonWrapper().trigger('click');
     const material = getMaterialWrapper();
 
-    expect(material.text()).toBe(user.studies[0].name);
+    expect(material.text()).toBe(studies.items[0].name);
     expect(material.props().to).toStrictEqual({
       name: 'materials',
-      params: { id: user.studies[0].home_page_slug },
+      params: { id: studies.items[0].homePageSlug },
     });
   });
 });

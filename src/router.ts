@@ -7,10 +7,11 @@ import {
 import ProfileView from '@/views/ProfileView.vue';
 import LoginView from '@/views/LoginView.vue';
 import LoadingView from '@/views/LoadingView.vue';
-import useAuth from '@/stores/auth';
 import NotionView from '@/views/NotionView.vue';
-import useUser from '@/stores/user';
 import HomeworkView from '@/views/HomeworkView.vue';
+import useAuth from '@/stores/auth';
+import useUser from '@/stores/user';
+import useStudies from '@/stores/studies';
 
 export const routes = [
   {
@@ -47,8 +48,9 @@ const router = createRouter({
 
 const fetchMainUserData = async () => {
   const user = useUser();
-  await user.getUserData();
-  await user.getUserStudies();
+  const studies = useStudies();
+  await user.getData();
+  await studies.getData();
 };
 
 const isPublicRoute = (name: string) => {

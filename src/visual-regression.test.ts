@@ -34,7 +34,7 @@ describe('visual regression test for', () => {
   let browser: puppeteer.Browser;
   let page: puppeteer.Page;
 
-  let tests: Test[] = [];
+  const tests: Test[] = [];
 
   const scenarios = [
     new VisualTest(

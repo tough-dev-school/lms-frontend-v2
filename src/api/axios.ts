@@ -1,15 +1,18 @@
 import useAuth from '@/stores/auth';
 import axios from 'axios';
 import handleError from '@/utils/handleError';
+import applyCaseMiddleware from 'axios-case-converter';
 
-const instance = axios.create();
+const instance = applyCaseMiddleware(axios.create());
 
 instance.interceptors.request.use((request) => {
   const auth = useAuth();
   request.headers = {
     ...request.headers,
-    Authorization: `Bearer ${auth.token} `,
   };
+
+  if (auth.token) request.headers.Authorization = `Bearer ${auth.token}`;
+
   return request;
 });
 

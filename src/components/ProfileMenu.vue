@@ -5,6 +5,7 @@
   import { useRouter } from 'vue-router';
   import useUser from '@/stores/user';
   import useAuth from '@/stores/auth';
+  import useStudies from '@/stores/studies';
   import { storeToRefs } from 'pinia';
 
   const isOpen = ref(false);
@@ -12,7 +13,8 @@
   const router = useRouter();
   const user = useUser();
   const auth = useAuth();
-  const { first_name, last_name, username, name } = storeToRefs(user);
+  const studies = useStudies();
+  const { firstName, lastName, username, name } = storeToRefs(user);
 
   onClickOutside(menu, () => (isOpen.value = false));
 
@@ -30,8 +32,8 @@
       @click="isOpen = !isOpen"
       data-testid="button">
       <Avatar
-        :first-name="first_name"
-        :last-name="last_name"
+        :first-name="firstName"
+        :last-name="lastName"
         class="mr-8"
         data-testid="avatar" />
       <ul class="text-sub">
@@ -56,9 +58,9 @@
               <span class="Link">Профиль</span>
             </RouterLink>
           </li>
-          <li v-for="study in user.studies" :key="study.id">
+          <li v-for="study in studies.items" :key="study.id">
             <RouterLink
-              :to="{ name: 'materials', params: { id: study.home_page_slug } }"
+              :to="{ name: 'materials', params: { id: study.homePageSlug } }"
               class="ProfileMenu__Item"
               @click="isOpen = false"
               data-testid="material"
