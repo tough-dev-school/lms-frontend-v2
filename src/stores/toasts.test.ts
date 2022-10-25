@@ -8,6 +8,8 @@ const MESSAGE_ONE = faker.datatype.uuid();
 const MESSAGE_TWO = faker.datatype.uuid();
 const MESSAGE_THREE = faker.datatype.uuid();
 
+const MESSAGES = [MESSAGE_ONE, MESSAGE_TWO, MESSAGE_THREE];
+
 describe('toasts store', () => {
   let toasts: ReturnType<typeof useToasts>;
 
@@ -16,11 +18,11 @@ describe('toasts store', () => {
     toasts = useToasts();
   });
 
-  const addThreeMessages = () => {
-    toasts.addMessage(MESSAGE_ONE);
-    toasts.addMessage(MESSAGE_TWO);
-    toasts.addMessage(MESSAGE_THREE);
+  const addDefaultMessages = () => {
+    MESSAGES.forEach((message) => toasts.addMessage(message));
   };
+
+  const getTexts = () => toasts.messages.map((message) => message.text);
 
   const findMessageByText = (text: string) =>
     toasts.messages.find((message: ToastMessage) => message.text === text);
@@ -34,32 +36,50 @@ describe('toasts store', () => {
 
     toasts.addMessage(text);
 
-    expect(!!findMessageByText(text)).toBeTruthy();
+    expect(getTexts()).toContain(text);
   });
 
   test('removeMessage removes message if there is a message with given id', () => {
-    addThreeMessages();
+    addDefaultMessages();
 
     const targetMessage = findMessageByText(MESSAGE_TWO);
 
     toasts.removeMessage((targetMessage as ToastMessage).id); //# FIXME
 
-    expect(!!findMessageByText(MESSAGE_ONE)).toBeTruthy();
-    expect(!!findMessageByText(MESSAGE_TWO)).toBeFalsy();
-    expect(!!findMessageByText(MESSAGE_THREE)).toBeTruthy();
+    expect(getTexts()).toContain(MESSAGE_ONE);
+    expect(getTexts()).not.toContain(MESSAGE_TWO);
+    expect(getTexts()).toContain(MESSAGE_THREE);
   });
 
   test('removeMessage does nothing if no message with given id', () => {
-    addThreeMessages();
+    addDefaultMessages();
 
     toasts.removeMessage('hello world');
 
-    expect(!!findMessageByText(MESSAGE_ONE)).toBeTruthy();
-    expect(!!findMessageByText(MESSAGE_TWO)).toBeTruthy();
-    expect(!!findMessageByText(MESSAGE_THREE)).toBeTruthy();
+    expect(getTexts()).toContain(MESSAGE_ONE);
+    expect(getTexts()).toContain(MESSAGE_TWO);
+    expect(getTexts()).toContain(MESSAGE_THREE);
   });
 
-  test.todo('toasts can be disabled');
+  test('toasts can be disabled', () => {
+    toasts.disable();
 
-  test.todo('toasts can be re-enabled');
+    expect(toasts.disabled).toBe(true);
+  });
+
+  test('addMessage does nothing if disabled', () => {
+    const text = faker.datatype.uuid();
+
+    toasts.disable();
+    toasts.addMessage(text);
+
+    expect(getTexts()).not.toContain(text);
+  });
+
+  test('toasts can be re-enabled', () => {
+    toasts.disable();
+    toasts.enable();
+
+    expect(toasts.disabled).toBe(false);
+  });
 });

@@ -100,10 +100,10 @@ describe('ProfileMenu', () => {
 
   test('Click on profile toggles menu', async () => {
     await getButtonWrapper().trigger('click');
-    expect(getMenuWrapper().exists()).toBeTruthy();
+    expect(getMenuWrapper().exists()).toBe(true);
 
     await getButtonWrapper().trigger('click');
-    expect(getMenuWrapper().exists()).toBeFalsy();
+    expect(getMenuWrapper().exists()).toBe(false);
   });
 
   test.todo('Click outside profile should close menu');
@@ -149,7 +149,7 @@ describe('ProfileMenu', () => {
 
     await (getProfileLinkWrapper() as VueWrapper).trigger('click');
 
-    expect(getMenuWrapper().exists()).toBeFalsy();
+    expect(getMenuWrapper().exists()).toBe(false);
   });
 
   test('Menu must be closed after click on material', async () => {
@@ -157,7 +157,7 @@ describe('ProfileMenu', () => {
 
     await getMaterialWrapper().trigger('click');
 
-    expect(getMenuWrapper().exists()).toBeFalsy();
+    expect(getMenuWrapper().exists()).toBe(false);
   });
 
   test('Menu must be closed after click on logout', async () => {
@@ -165,7 +165,7 @@ describe('ProfileMenu', () => {
 
     await getLogoutWrapper().trigger('click');
 
-    expect(getMenuWrapper().exists()).toBeFalsy();
+    expect(getMenuWrapper().exists()).toBe(false);
   });
 
   test('Has correct number of links to materials', async () => {
