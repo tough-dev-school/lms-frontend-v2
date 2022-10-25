@@ -66,6 +66,8 @@ const useUser = defineStore('user', {
 
         const toasts = useToasts();
         toasts.addMessage('Данные сохранены!', 'success');
+
+        await this.getData();
       } catch (error: any) {}
     },
   },

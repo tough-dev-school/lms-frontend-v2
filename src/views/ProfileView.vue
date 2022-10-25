@@ -31,8 +31,6 @@
   };
 
   const update = async () => {
-    await user.getData();
-
     firstName.value = user.firstName;
     lastName.value = user.lastName;
     firstNameEn.value = user.firstNameEn;
