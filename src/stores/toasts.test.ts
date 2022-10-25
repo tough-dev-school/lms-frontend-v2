@@ -8,6 +8,8 @@ const MESSAGE_ONE = faker.datatype.uuid();
 const MESSAGE_TWO = faker.datatype.uuid();
 const MESSAGE_THREE = faker.datatype.uuid();
 
+const MESSAGES = [MESSAGE_ONE, MESSAGE_TWO, MESSAGE_THREE];
+
 describe('toasts store', () => {
   let toasts: ReturnType<typeof useToasts>;
 
@@ -16,10 +18,8 @@ describe('toasts store', () => {
     toasts = useToasts();
   });
 
-  const addThreeMessages = () => {
-    toasts.addMessage(MESSAGE_ONE);
-    toasts.addMessage(MESSAGE_TWO);
-    toasts.addMessage(MESSAGE_THREE);
+  const addDefaultMessages = () => {
+    MESSAGES.forEach((message) => toasts.addMessage(message));
   };
 
   const findMessageByText = (text: string) =>
@@ -38,7 +38,7 @@ describe('toasts store', () => {
   });
 
   test('removeMessage removes message if there is a message with given id', () => {
-    addThreeMessages();
+    addDefaultMessages();
 
     const targetMessage = findMessageByText(MESSAGE_TWO);
 
@@ -50,7 +50,7 @@ describe('toasts store', () => {
   });
 
   test('removeMessage does nothing if no message with given id', () => {
-    addThreeMessages();
+    addDefaultMessages();
 
     toasts.removeMessage('hello world');
 
