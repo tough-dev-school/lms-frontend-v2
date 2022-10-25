@@ -22,6 +22,8 @@ describe('toasts store', () => {
     MESSAGES.forEach((message) => toasts.addMessage(message));
   };
 
+  const getTexts = () => toasts.messages.map((message) => message.text);
+
   const findMessageByText = (text: string) =>
     toasts.messages.find((message: ToastMessage) => message.text === text);
 
@@ -34,7 +36,7 @@ describe('toasts store', () => {
 
     toasts.addMessage(text);
 
-    expect(!!findMessageByText(text)).toBe(true);
+    expect(getTexts()).toContain(text);
   });
 
   test('removeMessage removes message if there is a message with given id', () => {
@@ -44,9 +46,9 @@ describe('toasts store', () => {
 
     toasts.removeMessage((targetMessage as ToastMessage).id); //# FIXME
 
-    expect(!!findMessageByText(MESSAGE_ONE)).toBe(true);
-    expect(!!findMessageByText(MESSAGE_TWO)).toBe(false);
-    expect(!!findMessageByText(MESSAGE_THREE)).toBe(true);
+    expect(getTexts()).toContain(MESSAGE_ONE);
+    expect(getTexts()).not.toContain(MESSAGE_TWO);
+    expect(getTexts()).toContain(MESSAGE_THREE);
   });
 
   test('removeMessage does nothing if no message with given id', () => {
@@ -54,12 +56,30 @@ describe('toasts store', () => {
 
     toasts.removeMessage('hello world');
 
-    expect(!!findMessageByText(MESSAGE_ONE)).toBe(true);
-    expect(!!findMessageByText(MESSAGE_TWO)).toBe(true);
-    expect(!!findMessageByText(MESSAGE_THREE)).toBe(true);
+    expect(getTexts()).toContain(MESSAGE_ONE);
+    expect(getTexts()).toContain(MESSAGE_TWO);
+    expect(getTexts()).toContain(MESSAGE_THREE);
   });
 
-  test.todo('toasts can be disabled');
+  test('toasts can be disabled', () => {
+    toasts.disable();
 
-  test.todo('toasts can be re-enabled');
+    expect(toasts.disabled).toBe(true);
+  });
+
+  test('addMessage does nothing if disabled', () => {
+    const text = faker.datatype.uuid();
+
+    toasts.disable();
+    toasts.addMessage(text);
+
+    expect(getTexts()).not.toContain(text);
+  });
+
+  test('toasts can be re-enabled', () => {
+    toasts.disable();
+    toasts.enable();
+
+    expect(toasts.disabled).toBe(false);
+  });
 });
