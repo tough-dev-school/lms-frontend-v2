@@ -3,6 +3,8 @@ import { setUser, getUser } from '@/api/users';
 import useToasts from '@/stores/toasts';
 import type { User, EditableUserData } from '@/types/users';
 import getName from '@/utils/getName';
+import type { Dictionary } from '@/utils/filterDictionary';
+import filterDictionary from '@/utils/filterDictionary';
 
 const useUser = defineStore('user', {
   state: (): User => {
@@ -54,50 +56,18 @@ const useUser = defineStore('user', {
         this.githubUsername = githubUsername;
       } catch (error: any) {}
     },
-    async setData({
-      firstName,
-      lastName,
-      firstNameEn,
-      lastNameEn,
-      gender,
-      linkedinUsername,
-      githubUsername,
-    }: EditableUserData) {
+    async setData(updates: EditableUserData) {
       try {
-        const data: EditableUserData = {};
-
-        if (this.firstName !== firstName) {
-          data.firstName = firstName;
-        }
-
-        if (this.lastName !== lastName) {
-          data.lastName = lastName;
-        }
-
-        if (this.firstNameEn !== firstNameEn) {
-          data.firstNameEn = firstNameEn;
-        }
-
-        if (this.lastNameEn !== lastNameEn) {
-          data.lastNameEn = lastNameEn;
-        }
-
-        if (this.gender !== gender) {
-          data.gender = gender;
-        }
-
-        if (this.linkedinUsername !== linkedinUsername) {
-          data.linkedinUsername = linkedinUsername;
-        }
-
-        if (this.githubUsername !== githubUsername) {
-          data.githubUsername = githubUsername;
-        }
+        const data = filterDictionary(updates, (value, key) => {
+          return (this as Dictionary<any>)[key] !== value;
+        });
 
         await setUser(data);
 
         const toasts = useToasts();
         toasts.addMessage('Данные сохранены!', 'success');
+
+        await this.getData();
       } catch (error: any) {}
     },
   },
