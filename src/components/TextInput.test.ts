@@ -41,7 +41,7 @@ describe('TextInput', () => {
       props: { ...defaultProps, label: undefined },
     });
 
-    expect(getLabelWrapper().exists()).toBeFalsy();
+    expect(getLabelWrapper().exists()).toBe(false);
   });
 
   test('has correct tip if tip is defined', () => {
@@ -53,7 +53,7 @@ describe('TextInput', () => {
       props: { ...defaultProps, tip: undefined },
     });
 
-    expect(getTipWrapper().exists()).toBeFalsy();
+    expect(getTipWrapper().exists()).toBe(false);
   });
 
   test('has correct error if error is defined', () => {
@@ -65,7 +65,7 @@ describe('TextInput', () => {
       props: { ...defaultProps, error: undefined },
     });
 
-    expect(getErrorWrapper().exists()).toBeFalsy();
+    expect(getErrorWrapper().exists()).toBe(false);
   });
 
   test('emits input event on input', async () => {

@@ -34,7 +34,7 @@ describe('toasts store', () => {
 
     toasts.addMessage(text);
 
-    expect(!!findMessageByText(text)).toBeTruthy();
+    expect(!!findMessageByText(text)).toBe(true);
   });
 
   test('removeMessage removes message if there is a message with given id', () => {
@@ -44,9 +44,9 @@ describe('toasts store', () => {
 
     toasts.removeMessage((targetMessage as ToastMessage).id); //# FIXME
 
-    expect(!!findMessageByText(MESSAGE_ONE)).toBeTruthy();
-    expect(!!findMessageByText(MESSAGE_TWO)).toBeFalsy();
-    expect(!!findMessageByText(MESSAGE_THREE)).toBeTruthy();
+    expect(!!findMessageByText(MESSAGE_ONE)).toBe(true);
+    expect(!!findMessageByText(MESSAGE_TWO)).toBe(false);
+    expect(!!findMessageByText(MESSAGE_THREE)).toBe(true);
   });
 
   test('removeMessage does nothing if no message with given id', () => {
@@ -54,9 +54,9 @@ describe('toasts store', () => {
 
     toasts.removeMessage('hello world');
 
-    expect(!!findMessageByText(MESSAGE_ONE)).toBeTruthy();
-    expect(!!findMessageByText(MESSAGE_TWO)).toBeTruthy();
-    expect(!!findMessageByText(MESSAGE_THREE)).toBeTruthy();
+    expect(!!findMessageByText(MESSAGE_ONE)).toBe(true);
+    expect(!!findMessageByText(MESSAGE_TWO)).toBe(true);
+    expect(!!findMessageByText(MESSAGE_THREE)).toBe(true);
   });
 
   test.todo('toasts can be disabled');
