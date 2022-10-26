@@ -25,6 +25,38 @@
       emit('update', editor.getMarkdown());
     },
   });
+
+  const toggleHeading1 = () => {
+    editor.chain().focus().toggleHeading({ level: 1 }).run();
+  };
+
+  const toggleHeading2 = () => {
+    editor.chain().focus().toggleHeading({ level: 2 }).run();
+  };
+
+  const toggleHeading3 = () => {
+    editor.chain().focus().toggleHeading({ level: 3 }).run();
+  };
+
+  const toggleBold = () => {
+    editor.chain().focus().toggleBold().run();
+  };
+
+  const toggleItalic = () => {
+    editor.chain().focus().toggleItalic().run();
+  };
+
+  const toggleBlockquote = () => {
+    editor.chain().focus().toggleBlockquote().run();
+  };
+
+  const toggleOrderedList = () => {
+    editor.chain().focus().toggleOrderedList().run();
+  };
+
+  const toggleUnorderedList = () => {
+    editor.chain().focus().toggleBulletList().run();
+  };
 </script>
 
 <template>
@@ -35,44 +67,28 @@
       :tippy-options="{ duration: 100 }"
       v-if="editor"
       class="flex rounded bg-white shadow">
-      <button
-        @click="editor.chain().focus().toggleHeading({ level: 1 }).run()"
-        class="bubble-button">
+      <button @click="toggleHeading1" class="bubble-button">
         <H1Icon />
       </button>
-      <button
-        @click="editor.chain().focus().toggleHeading({ level: 2 }).run()"
-        class="bubble-button">
+      <button @click="toggleHeading2" class="bubble-button">
         <H2Icon />
       </button>
-      <button
-        @click="editor.chain().focus().toggleHeading({ level: 3 }).run()"
-        class="bubble-button">
+      <button @click="toggleHeading3" class="bubble-button">
         <H3Icon />
       </button>
-      <button
-        @click="editor.chain().focus().toggleBold().run()"
-        class="bubble-button">
+      <button @click="toggleBold" class="bubble-button">
         <BoldIcon />
       </button>
-      <button
-        @click="editor.chain().focus().toggleItalic().run()"
-        class="bubble-button">
+      <button @click="toggleItalic" class="bubble-button">
         <ItalicIcon />
       </button>
-      <button
-        @click="editor.chain().focus().toggleBlockquote().run()"
-        class="bubble-button">
+      <button @click="toggleBlockquote" class="bubble-button">
         <BlockquoteIcon />
       </button>
-      <button
-        @click="editor.chain().focus().toggleOrderedList().run()"
-        class="bubble-button">
+      <button @click="toggleOrderedList" class="bubble-button">
         <ListNumbersIcon />
       </button>
-      <button
-        @click="editor.chain().focus().toggleBulletList().run()"
-        class="bubble-button">
+      <button @click="toggleUnorderedList" class="bubble-button">
         <ListIcon />
       </button>
     </BubbleMenu>
