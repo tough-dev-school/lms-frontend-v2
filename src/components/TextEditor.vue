@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
   import { EditorContent, BubbleMenu, Editor } from '@tiptap/vue-3';
   import StarterKit from '@tiptap/starter-kit';
   import {
