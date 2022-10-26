@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { EditorContent, BubbleMenu, Editor } from '@tiptap/vue-3';
+  import { EditorContent, Editor } from '@tiptap/vue-3';
   import StarterKit from '@tiptap/starter-kit';
   import {
     BoldIcon,
@@ -12,19 +12,21 @@
     ListIcon,
   } from 'vue-tabler-icons';
   import { createMarkdownEditor } from 'tiptap-markdown';
+  import type { MarkdownEditor } from 'tiptap-markdown';
   import { defineEmits } from 'vue';
 
-  const MarkdownEditor = createMarkdownEditor(Editor);
+  const MdEditor = createMarkdownEditor(Editor);
 
   const emit = defineEmits(['update']);
 
-  const editor = new MarkdownEditor({
+  const editor = new MdEditor({
     content: '',
-    extensions: [StarterKit, BubbleMenu],
-    onUpdate({ editor }) {
-      emit('update', editor.getMarkdown());
-    },
+    extensions: [StarterKit],
   });
+
+  editor.on('update', ({ editor }) =>
+    emit('update', (editor as MarkdownEditor).getMarkdown()),
+  );
 
   const toggleHeading1 = () => {
     editor.chain().focus().toggleHeading({ level: 1 }).run();
@@ -60,13 +62,8 @@
 </script>
 
 <template>
-  <div>
-    <EditorContent :editor="editor" class="prose" />
-    <BubbleMenu
-      :editor="editor"
-      :tippy-options="{ duration: 100 }"
-      v-if="editor"
-      class="flex rounded bg-white shadow">
+  <div class="bg-white">
+    <header class="flex gap-8">
       <button @click="toggleHeading1" class="bubble-button">
         <H1Icon />
       </button>
@@ -91,7 +88,8 @@
       <button @click="toggleUnorderedList" class="bubble-button">
         <ListIcon />
       </button>
-    </BubbleMenu>
+    </header>
+    <EditorContent :editor="editor" class="prose" />
   </div>
 </template>
 
