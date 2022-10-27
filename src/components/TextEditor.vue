@@ -11,22 +11,23 @@
     ListNumbersIcon,
     ListIcon,
   } from 'vue-tabler-icons';
-  import { createMarkdownEditor } from 'tiptap-markdown';
-  import type { MarkdownEditor } from 'tiptap-markdown';
   import { defineEmits } from 'vue';
-
-  const MdEditor = createMarkdownEditor(Editor);
+  import TurndownService from 'turndown';
 
   const emit = defineEmits(['update']);
 
-  const editor = new MdEditor({
+  const editor = new Editor({
     content: '',
     extensions: [StarterKit],
   });
 
-  editor.on('update', ({ editor }) =>
-    emit('update', (editor as MarkdownEditor).getMarkdown()),
-  );
+  const turndownService = new TurndownService();
+
+  editor.on('update', ({ editor }) => {
+    const html = editor.getHTML();
+    const markdown = turndownService.turndown(html);
+    emit('update', markdown);
+  });
 
   const toggleHeading1 = () => {
     editor.chain().focus().toggleHeading({ level: 1 }).run();
