@@ -15,6 +15,8 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "@tiptap/starter-kit": "^2.0.0-beta.199",
+    "@tiptap/vue-3": "^2.0.0-beta.199",
     "@vueuse/core": "^9.2.0",
     "axios": "^0.27.2",
     "axios-case-converter": "^0.11.1",
@@ -22,8 +24,10 @@
     "nanoid": "^4.0.0",
     "pinia": "^2.0.21",
     "pinia-plugin-persistedstate": "^2.2.0",
+    "turndown": "^7.1.1",
     "vue": "^3.2.38",
     "vue-router": "^4.1.5",
+    "vue-tabler-icons": "^2.15.0",
     "vue3-notion": "^0.1.36"
   },
   "devDependencies": {
@@ -42,6 +46,7 @@
     "@types/jest-image-snapshot": "^5.1.0",
     "@types/jsdom": "^20.0.0",
     "@types/node": "^16.11.56",
+    "@types/turndown": "^5.0.1",
     "@vitejs/plugin-vue": "^3.0.3",
     "@vitejs/plugin-vue-jsx": "^2.0.1",
     "@vue/eslint-config-prettier": "^7.0.0",
