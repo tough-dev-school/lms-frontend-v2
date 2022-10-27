@@ -24,8 +24,8 @@
       <Heading level="1" class="mb-24">{{ question.name }}</Heading>
       <HomeworkDetails :task="question.text" class="mb-32" />
       <Post
-        :firstName="answer.author.first_name"
-        :lastName="answer.author.last_name"
+        :firstName="answer.author.firstName"
+        :lastName="answer.author.lastName"
         :content="answer.text"
         :date="answer.created" />
     </section>
@@ -36,8 +36,8 @@
         <Post
           v-for="comment in answer.descendants"
           :key="comment.slug"
-          :firstName="comment.author.first_name"
-          :lastName="comment.author.last_name"
+          :firstName="comment.author.firstName"
+          :lastName="comment.author.lastName"
           :content="comment.text"
           :date="comment.created" />
       </div>
