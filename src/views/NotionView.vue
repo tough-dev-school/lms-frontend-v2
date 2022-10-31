@@ -2,7 +2,7 @@
   // @ts-ignore
   import { NotionRenderer } from 'vue3-notion';
   import { useRoute } from 'vue-router';
-  import { onMounted, onUpdated, ref, watch } from 'vue';
+  import { onMounted, ref, watch } from 'vue';
   import type { MaterialContentBlocks } from '@/types/materials';
 
   import Preloader from '../components/Preloader.vue';
