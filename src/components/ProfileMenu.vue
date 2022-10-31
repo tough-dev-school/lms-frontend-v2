@@ -45,7 +45,7 @@
     </div>
     <Transition name="fade">
       <nav
-        class="absolute left-0 right-0 translate-y-8 overflow-hidden rounded-8 bg-white shadow"
+        class="absolute left-0 right-0 z-10 translate-y-8 overflow-hidden rounded-8 bg-white shadow"
         v-if="isOpen"
         data-testid="menu">
         <ul>
