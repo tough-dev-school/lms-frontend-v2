@@ -59,9 +59,6 @@ export const Profile = Template.bind({});
 Profile.args = {};
 Profile.decorators = decorate('/profile');
 
-export const Homework = Template.bind({});
-Homework.args = {};
-Homework.decorators = decorate('/homework');
 export const HomeworkAnswerView = Template.bind({});
 HomeworkAnswerView.args = {};
 HomeworkAnswerView.decorators = decorate('/homework');
