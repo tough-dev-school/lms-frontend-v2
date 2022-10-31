@@ -2,7 +2,7 @@
   // @ts-ignore
   import { NotionRenderer } from 'vue3-notion';
   import { useRoute } from 'vue-router';
-  import { onMounted, ref } from 'vue';
+  import { onMounted, onUpdated, ref } from 'vue';
   import type { MaterialContentBlocks } from '@/types/materials';
 
   import Preloader from '../components/Preloader.vue';
@@ -12,9 +12,11 @@
   const blocks = ref<MaterialContentBlocks | undefined>(undefined);
 
   onMounted(async () => {
-    const newBlocks = await getMaterialById(String(route.params.id));
+    blocks.value = await getMaterialById(String(route.params.id));
+  });
 
-    blocks.value = newBlocks;
+  onUpdated(async () => {
+    blocks.value = await getMaterialById(String(route.params.id));
   });
 
   const mapPageUrl = (id: string) => `/materials/${id}`;
