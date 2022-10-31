@@ -18,6 +18,11 @@
 
   onClickOutside(menu, () => (isOpen.value = false));
 
+  const clearStudyName = (name: string) => {
+    const reg = /\(.*\)/;
+    return name.replace(reg, '').trim();
+  };
+
   const logOut = () => {
     auth.resetAuth();
     router.push({ name: 'login' });
@@ -45,7 +50,7 @@
     </div>
     <Transition name="fade">
       <nav
-        class="absolute left-0 right-0 translate-y-8 overflow-hidden rounded-8 bg-white shadow"
+        class="absolute right-0 z-10 translate-y-8 overflow-hidden rounded-8 bg-white shadow"
         v-if="isOpen"
         data-testid="menu">
         <ul>
@@ -64,7 +69,9 @@
               class="ProfileMenu__Item"
               @click="isOpen = false"
               data-testid="material"
-              ><span class="Link">{{ study.name }}</span></RouterLink
+              ><span class="Link">{{
+                clearStudyName(study.name)
+              }}</span></RouterLink
             >
           </li>
           <li>
@@ -83,7 +90,7 @@
 
 <style scoped>
   .ProfileMenu__Item {
-    @apply block flex min-h-[32px] w-full cursor-pointer items-center px-8 text-left hover:bg-gray hover:bg-opacity-10;
+    @apply block flex min-h-[32px] w-full cursor-pointer items-center whitespace-nowrap px-8 text-left hover:bg-gray hover:bg-opacity-10;
   }
 
   .fade-enter-active,
