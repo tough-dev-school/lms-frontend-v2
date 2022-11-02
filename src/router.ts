@@ -37,17 +37,17 @@ export const routes = [
     component: NotionView,
   },
   {
-    path: '/homework/questions/:id',
+    path: '/homework/questions/:questionId',
     name: 'homework-question',
     component: HomeworkQuestionView,
   },
   {
-    path: '/homework/question-admin/:id',
+    path: '/homework/question-admin/:questionId',
     name: 'homework-expert',
     component: HomeworkExpertView,
   },
   {
-    path: '/homework/answers/:id',
+    path: '/homework/answers/:answerId',
     name: 'homework-answer',
     component: HomeworkAnswerView,
   },
