@@ -90,7 +90,7 @@
         <ListIcon />
       </button>
     </header>
-    <EditorContent :editor="editor" class="prose" />
+    <EditorContent :editor="editor" class="EditorContent prose max-w-none" />
   </div>
 </template>
 

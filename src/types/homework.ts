@@ -16,6 +16,12 @@ export interface Answer {
   descendants: Answer[];
 }
 
+export interface Post {
+  text: string;
+  parent: string | null;
+  question: string;
+}
+
 export interface Question {
   text: string;
   name: string;
