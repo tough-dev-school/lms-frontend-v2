@@ -14,13 +14,17 @@
   const route = useRoute();
 
   onMounted(async () => {
-    await homework.getData(String(route.params.id));
+    const { answerId } = route.params;
+    await homework.getAnswers(String(answerId));
+
+    const questionId = homework.answer.question;
+    await homework.getQuestion(questionId);
   });
 </script>
 
 <template>
   <div v-if="question !== undefined && answer !== undefined">
-    <section>
+    <section class="mb-64">
       <Heading level="1" class="mb-24">{{ question.name }}</Heading>
       <details>
         <summary>Показать задание</summary>
@@ -32,7 +36,7 @@
         :content="answer.text"
         :date="answer.created" />
     </section>
-    <section class="mt-64">
+    <section>
       <Heading level="2" class="mb-24">Обсуждение</Heading>
       <FeedbackGuide class="mb-24" />
       <div class="grid gap-24">
