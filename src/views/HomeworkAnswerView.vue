@@ -1,13 +1,13 @@
 <script lang="ts" setup>
   import Heading from '@/components/Heading.vue';
   import Post from '@/components/Post.vue';
-  import HomeworkDetails from '@/components/HomeworkDetails.vue';
   import FeedbackGuide from '@/components/FeedbackGuide.vue';
   import { onMounted } from 'vue';
   import useHomework from '@/stores/homework';
   import { useRoute } from 'vue-router';
   import { storeToRefs } from 'pinia';
   import Preloader from '@/components/Preloader.vue';
+  import HtmlContent from '@/components/HtmlContent.vue';
 
   const homework = useHomework();
   const { question, answer } = storeToRefs(homework);
@@ -22,7 +22,10 @@
   <div v-if="question !== undefined && answer !== undefined">
     <section>
       <Heading level="1" class="mb-24">{{ question.name }}</Heading>
-      <HomeworkDetails :task="question.text" class="mb-32" />
+      <details>
+        <summary>Показать задание</summary>
+        <HtmlContent :content="question.text" class="mt-8" />
+      </details>
       <Post
         :firstName="answer.author.firstName"
         :lastName="answer.author.lastName"
