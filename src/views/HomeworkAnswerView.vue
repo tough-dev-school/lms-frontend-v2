@@ -15,7 +15,7 @@
 
   onMounted(async () => {
     const { answerId } = route.params;
-    await homework.getAnswers(String(answerId));
+    await homework.getAnswer(String(answerId));
     if (!answer.value) return;
     const questionId = answer.value.question;
     await homework.getQuestion(questionId);
