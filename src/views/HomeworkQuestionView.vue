@@ -12,6 +12,7 @@
   import { getAnswers } from '@/api/homework';
   import useUser from '@/stores/user';
   import type { Answer } from '@/types/homework';
+  import AnswerActions from '@/components/AnswerActions.vue';
 
   const route = useRoute();
   const homework = useHomework();
@@ -36,6 +37,13 @@
 
   const hasAnswer = ref(false);
 
+  const handleDelete = () => {
+    alert('handleDelete');
+  };
+  const handleEdit = () => {
+    alert('handleEdit');
+  };
+
   onMounted(async () => {
     questionId.value = String(route.params.questionId);
     await homework.getQuestion(questionId.value);
@@ -47,7 +55,8 @@
 
     answer.value = answers.results.find(
       (answer) => answer.author.uuid === user.uuid,
-    );
+    ) as Answer;
+
     hasAnswer.value = !!answers.count;
   });
 </script>
@@ -62,6 +71,10 @@
       <Heading level="2" class="mb-24">Ответ</Heading>
       <template v-if="hasAnswer">
         <HtmlContent :content="(answer as Answer).text" />
+        <AnswerActions
+          @delete="handleDelete"
+          @edit="handleEdit"
+          :date-added="answer.created" />
       </template>
       <template v-else>
         <TextEditor
