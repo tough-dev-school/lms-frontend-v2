@@ -4,7 +4,7 @@
   import Button from '@/components/Button.vue';
   import useHomework from '@/stores/homework';
   import { useRoute } from 'vue-router';
-  import { onMounted, ref } from 'vue';
+  import { computed, onMounted, ref } from 'vue';
   import { storeToRefs } from 'pinia';
   import Heading from '@/components/Heading.vue';
   import Preloader from '@/components/Preloader.vue';
@@ -26,6 +26,8 @@
     text.value = value;
   };
 
+  const hasText = computed(() => !!text.value);
+
   const sendAnswer = async () => {
     await homework.postQuestionAnswer(text.value, questionId.value);
   };
@@ -40,7 +42,7 @@
     <section>
       <Heading level="2" class="mb-24">Ответ</Heading>
       <TextEditor @update="setText" class="mb-16 rounded border border-gray" />
-      <Button @click="sendAnswer">Отправить</Button>
+      <Button @click="sendAnswer" :disabled="!hasText">Отправить</Button>
     </section>
   </div>
   <Preloader v-else />
