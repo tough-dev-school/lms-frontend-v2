@@ -15,10 +15,14 @@ const useHomework = defineStore('homework', {
     };
   },
   actions: {
-    async getData(id: string) {
+    async getQuestion(id: string) {
+      try {
+        this.question = await getQuestion(id);
+      } catch (error: any) {}
+    },
+    async getAnswers(id: string) {
       try {
         this.answer = await getAnswers(id);
-        this.question = await getQuestion(this.answer.question);
       } catch (error: any) {}
     },
   },

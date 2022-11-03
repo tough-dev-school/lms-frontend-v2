@@ -8,7 +8,9 @@ import ProfileView from '@/views/ProfileView.vue';
 import LoginView from '@/views/LoginView.vue';
 import LoadingView from '@/views/LoadingView.vue';
 import NotionView from '@/views/NotionView.vue';
-import HomeworkView from '@/views/HomeworkView.vue';
+import HomeworkQuestionView from '@/views/HomeworkQuestionView.vue';
+import HomeworkExpertView from '@/views/HomeworkExpertView.vue';
+import HomeworkAnswerView from '@/views/HomeworkAnswerView.vue';
 import useAuth from '@/stores/auth';
 import useUser from '@/stores/user';
 import useStudies from '@/stores/studies';
@@ -35,9 +37,19 @@ export const routes = [
     component: NotionView,
   },
   {
-    path: '/homework/:id',
-    name: 'homework',
-    component: HomeworkView,
+    path: '/homework/questions/:questionId',
+    name: 'homework-question',
+    component: HomeworkQuestionView,
+  },
+  {
+    path: '/homework/question-admin/:questionId',
+    name: 'homework-expert',
+    component: HomeworkExpertView,
+  },
+  {
+    path: '/homework/answers/:answerId',
+    name: 'homework-answer',
+    component: HomeworkAnswerView,
   },
 ];
 
