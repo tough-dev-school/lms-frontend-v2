@@ -1,5 +1,7 @@
 <script lang="ts" setup>
   import HtmlContent from '@/components/HtmlContent.vue';
+  import TextEditor from '@/components/TextEditor.vue';
+  import Button from '@/components/Button.vue';
   import useHomework from '@/stores/homework';
   import { useRoute } from 'vue-router';
   import { onMounted, ref } from 'vue';
@@ -17,6 +19,16 @@
     questionId.value = String(route.params.questionId);
     await homework.getQuestion(questionId.value);
   });
+
+  const text = ref('');
+
+  const setText = (value: string) => {
+    text.value = value;
+  };
+
+  const sendAnswer = async () => {
+    await homework.postQuestionAnswer(text.value, questionId.value);
+  };
 </script>
 
 <template>
@@ -24,6 +36,11 @@
     <section class="mb-64">
       <Heading level="1" class="mb-24">{{ question.name }}</Heading>
       <HtmlContent :content="question.text" />
+    </section>
+    <section>
+      <Heading level="2" class="mb-24">Ответ</Heading>
+      <TextEditor @update="setText" class="mb-16 rounded border border-gray" />
+      <Button @click="sendAnswer">Отправить</Button>
     </section>
   </div>
   <Preloader v-else />

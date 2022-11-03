@@ -12,3 +12,15 @@ export const getAnswers = async (id: string) => {
 
   return (await axios.get(url)).data as Answer;
 };
+
+export const postAnswer = async (
+  text: string,
+  questionId: string,
+  parentId: string | null,
+) => {
+  const url = '/api/v2/homework/answers/';
+
+  return (
+    await axios.post(url, { text, question: questionId, parent: parentId })
+  ).data;
+};

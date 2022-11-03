@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { getQuestion, getAnswers } from '@/api/homework';
+import { getQuestion, getAnswers, postAnswer } from '@/api/homework';
 import type { Answer, Question } from '@/types/homework';
 
 interface State {
@@ -23,6 +23,11 @@ const useHomework = defineStore('homework', {
     async getAnswers(id: string) {
       try {
         this.answer = await getAnswers(id);
+      } catch (error: any) {}
+    },
+    async postQuestionAnswer(text: string, questionId: string) {
+      try {
+        await postAnswer(text, questionId, null);
       } catch (error: any) {}
     },
   },
