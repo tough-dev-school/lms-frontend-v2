@@ -9,7 +9,7 @@
     },
   });
 
-  defineEmits(['delete', 'edit']);
+  const emit = defineEmits(['delete', 'edit']);
 
   const DELETE_TIMEOUT_MINUTES = 10;
   const EDIT_TIMEOUT_MINUTES = 30;

@@ -9,7 +9,7 @@
   import { storeToRefs } from 'pinia';
   import Heading from '@/components/Heading.vue';
   import Preloader from '@/components/Preloader.vue';
-  import { getAnswers } from '@/api/homework';
+  import { deleteAnswer, getAnswers, updateAnswer } from '@/api/homework';
   import useUser from '@/stores/user';
   import type { Answer } from '@/types/homework';
   import AnswerActions from '@/components/AnswerActions.vue';
@@ -20,6 +20,7 @@
 
   const { question } = storeToRefs(homework);
   const questionId = ref('');
+  const editMode = ref(false);
 
   const text = ref('');
 
@@ -29,19 +30,23 @@
 
   const hasText = computed(() => !!text.value);
 
-  const sendAnswer = async () => {
-    await homework.postQuestionAnswer(text.value, questionId.value);
+  const saveAnswer = async () => {
+    if (answer.value) {
+      await updateAnswer(answer.value.slug, text.value);
+      editMode.value = false;
+    } else {
+      await homework.postQuestionAnswer(text.value, questionId.value);
+    }
   };
 
   const answer: Ref<Answer | undefined> = ref(undefined);
 
-  const hasAnswer = ref(false);
-
-  const handleDelete = () => {
-    alert('handleDelete');
+  const handleDelete = async () => {
+    if (answer.value) await deleteAnswer(answer.value.slug);
   };
-  const handleEdit = () => {
-    alert('handleEdit');
+
+  const handleEdit = async () => {
+    editMode.value = true;
   };
 
   onMounted(async () => {
@@ -55,9 +60,7 @@
 
     answer.value = answers.results.find(
       (answer) => answer.author.uuid === user.uuid,
-    ) as Answer;
-
-    hasAnswer.value = !!answers.count;
+    );
   });
 </script>
 
@@ -69,8 +72,8 @@
     </section>
     <section>
       <Heading level="2" class="mb-24">Ответ</Heading>
-      <template v-if="hasAnswer">
-        <HtmlContent :content="(answer as Answer).text" />
+      <template v-if="answer && !editMode">
+        <HtmlContent :content="answer.text" />
         <AnswerActions
           @delete="handleDelete"
           @edit="handleEdit"
@@ -80,7 +83,7 @@
         <TextEditor
           @update="setText"
           class="mb-16 rounded border border-gray" />
-        <Button @click="sendAnswer" :disabled="!hasText">Отправить</Button>
+        <Button @click="saveAnswer" :disabled="!hasText">Отправить</Button>
       </template>
     </section>
   </div>

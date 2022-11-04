@@ -53,3 +53,15 @@ export const postAnswer = async (
     await axios.post(url, { text, question: questionId, parent: parentId })
   ).data;
 };
+
+export const deleteAnswer = async (answerId: string) => {
+  const url = `/api/v2/homework/answers/${answerId}/`;
+
+  await axios.delete(url);
+};
+
+export const updateAnswer = async (answerId: string, text: string) => {
+  const url = `/api/v2/homework/answers/${answerId}/`;
+
+  await axios.patch(url, { text });
+};
