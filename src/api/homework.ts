@@ -2,14 +2,14 @@ import axios from './axios';
 import type { Answer, Question } from '@/types/homework';
 import type { PaginantedCollection } from '@/types/api-utility';
 
-export const getQuestion = async (id: string) => {
-  const url = `/api/v2/homework/questions/${id}/`;
+export const getQuestion = async (questionId: string) => {
+  const url = `/api/v2/homework/questions/${questionId}/`;
 
   return (await axios.get(url)).data as Question;
 };
 
-export const getAnswer = async (id: string) => {
-  const url = `/api/v2/homework/answers/${id}/`;
+export const getAnswer = async (answerId: string) => {
+  const url = `/api/v2/homework/answers/${answerId}/`;
 
   return (await axios.get(url)).data as Answer;
 };
