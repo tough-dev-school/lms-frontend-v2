@@ -11,6 +11,7 @@
   import Preloader from '@/components/Preloader.vue';
   import useUser from '@/stores/user';
   import AnswerActions from '@/components/AnswerActions.vue';
+  import htmlToMarkdown from '@/utils/htmlToMarkdown';
 
   const route = useRoute();
   const homework = useHomework();
@@ -31,16 +32,21 @@
     if (answer.value) {
       await homework.updateAnswer(answer.value.slug, text.value);
       editMode.value = false;
-    } else {
+    } else if (questionId.value) {
       await homework.postAnswer(text.value, questionId.value);
     }
   };
 
   const handleDelete = async () => {
-    if (answer.value) await homework.deleteAnswer(answer.value.slug);
+    if (!answer.value) return;
+    if (confirm('Удалить ответ?')) {
+      await homework.deleteAnswer(answer.value.slug);
+    }
   };
 
   const handleEdit = async () => {
+    if (!answer.value) return;
+    handleEditorUpdate(htmlToMarkdown(answer.value.text));
     editMode.value = true;
   };
 
@@ -69,6 +75,7 @@
       <div v-else data-testid="editor">
         <TextEditor
           @update="handleEditorUpdate"
+          :value="text"
           class="mb-16 rounded border border-gray" />
         <Button @click="saveAnswer" :disabled="!text">Отправить</Button>
       </div>
