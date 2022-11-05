@@ -4,51 +4,56 @@
   import Button from '@/components/Button.vue';
   import useHomework from '@/stores/homework';
   import { useRoute } from 'vue-router';
-  import { computed, onMounted, ref } from 'vue';
+  import { onMounted, ref } from 'vue';
   import type { Ref } from 'vue';
   import { storeToRefs } from 'pinia';
   import Heading from '@/components/Heading.vue';
   import Preloader from '@/components/Preloader.vue';
-  import { getAnswers } from '@/api/homework';
   import useUser from '@/stores/user';
-  import type { Answer } from '@/types/homework';
+  import AnswerActions from '@/components/AnswerActions.vue';
+  import htmlToMarkdown from '@/utils/htmlToMarkdown';
 
   const route = useRoute();
   const homework = useHomework();
   const user = useUser();
 
-  const { question } = storeToRefs(homework);
-  const questionId = ref('');
+  const { question, answer } = storeToRefs(homework);
+  const questionId: Ref<string | undefined> = ref(undefined);
+
+  const editMode = ref(false);
 
   const text = ref('');
 
-  const setText = (value: string) => {
+  const handleEditorUpdate = (value: string) => {
     text.value = value;
   };
 
-  const hasText = computed(() => !!text.value);
-
-  const sendAnswer = async () => {
-    await homework.postQuestionAnswer(text.value, questionId.value);
+  const saveAnswer = async () => {
+    if (answer.value) {
+      await homework.updateAnswer(answer.value.slug, text.value);
+      editMode.value = false;
+    } else if (questionId.value) {
+      await homework.postAnswer(text.value, questionId.value);
+    }
   };
 
-  const answer: Ref<Answer | undefined> = ref(undefined);
+  const handleDelete = async () => {
+    if (!answer.value) return;
+    if (confirm('Удалить ответ?')) {
+      await homework.deleteAnswer(answer.value.slug);
+    }
+  };
 
-  const hasAnswer = ref(false);
+  const handleEdit = async () => {
+    if (!answer.value) return;
+    handleEditorUpdate(htmlToMarkdown(answer.value.text));
+    editMode.value = true;
+  };
 
   onMounted(async () => {
     questionId.value = String(route.params.questionId);
     await homework.getQuestion(questionId.value);
-
-    const answers = await getAnswers({
-      questionId: questionId.value,
-      authorId: user.uuid,
-    });
-
-    answer.value = answers.results.find(
-      (answer) => answer.author.uuid === user.uuid,
-    );
-    hasAnswer.value = !!answers.count;
+    await homework.findAnswer(questionId.value, user.uuid);
   });
 </script>
 
@@ -60,15 +65,20 @@
     </section>
     <section>
       <Heading level="2" class="mb-24">Ответ</Heading>
-      <template v-if="hasAnswer">
-        <HtmlContent :content="(answer as Answer).text" />
-      </template>
-      <template v-else>
+      <div v-if="answer && !editMode" data-testid="answer">
+        <HtmlContent :content="answer.text" />
+        <AnswerActions
+          @delete="handleDelete"
+          @edit="handleEdit"
+          :date-added="answer.created" />
+      </div>
+      <div v-else data-testid="editor">
         <TextEditor
-          @update="setText"
+          @update="handleEditorUpdate"
+          :value="text"
           class="mb-16 rounded border border-gray" />
-        <Button @click="sendAnswer" :disabled="!hasText">Отправить</Button>
-      </template>
+        <Button @click="saveAnswer" :disabled="!text">Отправить</Button>
+      </div>
     </section>
   </div>
   <Preloader v-else />

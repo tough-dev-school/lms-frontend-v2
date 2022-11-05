@@ -11,22 +11,23 @@
     ListNumbersIcon,
     ListIcon,
   } from 'vue-tabler-icons';
+  import htmlToMarkdown from '@/utils/htmlToMarkdown';
   import { defineEmits } from 'vue';
-  import TurndownService from 'turndown';
+
+  const props = defineProps({
+    value: { type: String, default: '' },
+  });
 
   const emit = defineEmits(['update']);
 
   const editor = new Editor({
-    content: '',
+    content: props.value,
     extensions: [StarterKit],
   });
 
-  const turndownService = new TurndownService();
-
   editor.on('update', ({ editor }) => {
     const html = editor.getHTML();
-    const markdown = turndownService.turndown(html);
-    emit('update', markdown);
+    emit('update', htmlToMarkdown(html));
   });
 
   const toggleHeading1 = () => {
