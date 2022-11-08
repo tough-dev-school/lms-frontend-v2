@@ -1,5 +1,5 @@
 import { beforeEach, describe, test, expect } from 'vitest';
-import Avatar from './Avatar.vue';
+import VAvatar from '@/components/VAvatar.vue';
 import { shallowMount, VueWrapper } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
 
@@ -8,11 +8,11 @@ const defaultProps = {
   lastName: faker.name.lastName(),
 };
 
-describe('Avatar', () => {
+describe('VAvatar', () => {
   let wrapper: VueWrapper;
 
   beforeEach(() => {
-    wrapper = shallowMount(Avatar, { props: defaultProps });
+    wrapper = shallowMount(VAvatar, { props: defaultProps });
   });
 
   test('Renders two letter avatar', () => {
@@ -23,14 +23,14 @@ describe('Avatar', () => {
 
   test('Renders one letter avatar if only name defined', () => {
     const props = { firstName: faker.name.firstName() };
-    wrapper = shallowMount(Avatar, { props });
+    wrapper = shallowMount(VAvatar, { props });
 
     expect(wrapper.text()).toBe(props.firstName[0]);
   });
 
   test('Renders one letter avatar if only surname defined', () => {
     const props = { lastName: faker.name.lastName() };
-    wrapper = shallowMount(Avatar, { props });
+    wrapper = shallowMount(VAvatar, { props });
 
     expect(wrapper.text()).toBe(props.lastName[0]);
   });

@@ -1,6 +1,6 @@
 import { describe, expect, test, beforeEach } from 'vitest';
 import { shallowMount, VueWrapper } from '@vue/test-utils';
-import TextInput from './TextInput.vue';
+import VTextInput from '@/components/VTextInput.vue';
 import { faker } from '@faker-js/faker';
 
 const defaultProps = {
@@ -9,11 +9,11 @@ const defaultProps = {
   error: 'This is a error',
 };
 
-describe('TextInput', () => {
-  let wrapper: VueWrapper<InstanceType<typeof TextInput>>;
+describe('VTextInput', () => {
+  let wrapper: VueWrapper<InstanceType<typeof VTextInput>>;
 
   beforeEach(() => {
-    wrapper = shallowMount(TextInput, { props: defaultProps });
+    wrapper = shallowMount(VTextInput, { props: defaultProps });
   });
 
   const getLabelWrapper = () => {
@@ -37,7 +37,7 @@ describe('TextInput', () => {
   });
 
   test('has no label if no label is defined', () => {
-    wrapper = shallowMount(TextInput, {
+    wrapper = shallowMount(VTextInput, {
       props: { ...defaultProps, label: undefined },
     });
 
@@ -49,7 +49,7 @@ describe('TextInput', () => {
   });
 
   test('has no tip if no tip is defined', () => {
-    wrapper = shallowMount(TextInput, {
+    wrapper = shallowMount(VTextInput, {
       props: { ...defaultProps, tip: undefined },
     });
 
@@ -61,7 +61,7 @@ describe('TextInput', () => {
   });
 
   test('has no error if no error is defined', () => {
-    wrapper = shallowMount(TextInput, {
+    wrapper = shallowMount(VTextInput, {
       props: { ...defaultProps, error: undefined },
     });
 

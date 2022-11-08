@@ -2,7 +2,7 @@ import { describe, test, beforeEach, expect } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
 import useToasts from './toasts';
 import { faker } from '@faker-js/faker';
-import type { ToastMessage } from './toasts';
+import type { VToastMessage } from './toasts';
 
 const MESSAGE_ONE = faker.datatype.uuid();
 const MESSAGE_TWO = faker.datatype.uuid();
@@ -25,7 +25,7 @@ describe('toasts store', () => {
   const getTexts = () => toasts.messages.map((message) => message.text);
 
   const findMessageByText = (text: string) =>
-    toasts.messages.find((message: ToastMessage) => message.text === text);
+    toasts.messages.find((message: VToastMessage) => message.text === text);
 
   test('no toasts at start', () => {
     expect(toasts.messages).toHaveLength(0);
@@ -44,7 +44,7 @@ describe('toasts store', () => {
 
     const targetMessage = findMessageByText(MESSAGE_TWO);
 
-    toasts.removeMessage((targetMessage as ToastMessage).id); //# FIXME
+    toasts.removeMessage((targetMessage as VToastMessage).id); //# FIXME
 
     expect(getTexts()).toContain(MESSAGE_ONE);
     expect(getTexts()).not.toContain(MESSAGE_TWO);

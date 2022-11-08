@@ -1,15 +1,15 @@
 import type { Meta, Story } from '@storybook/vue3';
-import ProfileMenu from './ProfileMenu.vue';
+import VProfileMenu from '@/components/VProfileMenu.vue';
 import useUser from '@/stores/user';
 import { faker } from '@faker-js/faker';
 
 export default {
-  title: 'UI/ProfileMenu',
-  component: ProfileMenu,
+  title: 'UI/VProfileMenu',
+  component: VProfileMenu,
 } as Meta;
 
 const Template: Story = (args) => ({
-  components: { ProfileMenu },
+  components: { VProfileMenu },
   setup() {
     const user = useUser();
     user.$patch({
@@ -19,7 +19,7 @@ const Template: Story = (args) => ({
     });
     return { args };
   },
-  template: '<ProfileMenu v-bind="args" />',
+  template: '<VProfileMenu v-bind="args" />',
 });
 
 export const Default = Template.bind({});

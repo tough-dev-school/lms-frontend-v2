@@ -1,16 +1,16 @@
 <script lang="ts" setup>
-  import HtmlContent from '@/components/HtmlContent.vue';
-  import TextEditor from '@/components/TextEditor.vue';
-  import Button from '@/components/Button.vue';
+  import VHtmlContent from '@/components/VHtmlContent.vue';
+  import VTextEditor from '@/components/VTextEditor.vue';
+  import VButton from '@/components/VButton.vue';
   import useHomework from '@/stores/homework';
   import { useRoute } from 'vue-router';
   import { onMounted, ref } from 'vue';
   import type { Ref } from 'vue';
   import { storeToRefs } from 'pinia';
-  import Heading from '@/components/Heading.vue';
-  import Preloader from '@/components/Preloader.vue';
+  import VHeading from '@/components/VHeading.vue';
+  import VPreloader from '@/components/VPreloader.vue';
   import useUser from '@/stores/user';
-  import AnswerActions from '@/components/AnswerActions.vue';
+  import VAnswerActions from '@/components/VAnswerActions.vue';
   import htmlToMarkdown from '@/utils/htmlToMarkdown';
 
   const route = useRoute();
@@ -60,26 +60,26 @@
 <template>
   <div v-if="question !== undefined">
     <section class="mb-64">
-      <Heading level="1" class="mb-24">{{ question.name }}</Heading>
-      <HtmlContent :content="question.text" />
+      <VHeading level="1" class="mb-24">{{ question.name }}</VHeading>
+      <VHtmlContent :content="question.text" />
     </section>
     <section>
-      <Heading level="2" class="mb-24">Ответ</Heading>
+      <VHeading level="2" class="mb-24">Ответ</VHeading>
       <div v-if="answer && !editMode" data-testid="answer">
-        <HtmlContent :content="answer.text" />
-        <AnswerActions
+        <VHtmlContent :content="answer.text" />
+        <VAnswerActions
           @delete="handleDelete"
           @edit="handleEdit"
           :date-added="answer.created" />
       </div>
       <div v-else data-testid="editor">
-        <TextEditor
+        <VTextEditor
           @update="handleEditorUpdate"
           :value="text"
           class="mb-16 rounded border border-gray" />
-        <Button @click="saveAnswer" :disabled="!text">Отправить</Button>
+        <VButton @click="saveAnswer" :disabled="!text">Отправить</VButton>
       </div>
     </section>
   </div>
-  <Preloader v-else />
+  <VPreloader v-else />
 </template>

@@ -1,17 +1,17 @@
 import type { Meta, Story } from '@storybook/vue3';
-import Preloader from './Preloader.vue';
+import VPreloader from '@/components/VPreloader.vue';
 
 export default {
-  title: 'UI/Preloader',
-  component: Preloader,
+  title: 'UI/VPreloader',
+  component: VPreloader,
 } as Meta;
 
 const Template: Story = (args) => ({
-  components: { Preloader },
+  components: { VPreloader },
   setup() {
     return { args };
   },
-  template: '<Preloader v-bind="args" />',
+  template: '<VPreloader v-bind="args" />',
 });
 
 export const Default = Template.bind({});

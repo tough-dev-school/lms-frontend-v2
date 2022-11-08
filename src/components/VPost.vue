@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import Avatar from '@/components/Avatar.vue';
+  import VAvatar from '@/components/VAvatar.vue';
   import { relativeDate } from '@/utils/date';
   import getName from '@/utils/getName';
 
@@ -14,7 +14,7 @@
 <template>
   <article>
     <div class="mb-16 flex items-center gap-8">
-      <Avatar :first-name="firstName" :last-name="lastName" />
+      <VAvatar :first-name="firstName" :last-name="lastName" />
       <div class="font-bold">{{ getName(firstName, lastName) }}</div>
       <div class="text-gray">{{ relativeDate(date) }}</div>
     </div>

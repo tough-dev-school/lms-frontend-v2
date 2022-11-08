@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-  import Heading from '@/components/Heading.vue';
-  import Post from '@/components/Post.vue';
-  import FeedbackGuide from '@/components/FeedbackGuide.vue';
+  import VHeading from '@/components/VHeading.vue';
+  import VPost from '@/components/VPost.vue';
+  import VFeedbackGuide from '@/components/VFeedbackGuide.vue';
   import { onMounted } from 'vue';
   import useHomework from '@/stores/homework';
   import { useRoute } from 'vue-router';
   import { storeToRefs } from 'pinia';
-  import Preloader from '@/components/Preloader.vue';
-  import HtmlContent from '@/components/HtmlContent.vue';
+  import VPreloader from '@/components/VPreloader.vue';
+  import VHtmlContent from '@/components/VHtmlContent.vue';
 
   const homework = useHomework();
   const { question, answer } = storeToRefs(homework);
@@ -25,22 +25,22 @@
 <template>
   <div v-if="question !== undefined && answer !== undefined">
     <section class="mb-64">
-      <Heading level="1" class="mb-24">{{ question.name }}</Heading>
+      <VHeading level="1" class="mb-24">{{ question.name }}</VHeading>
       <details>
         <summary>Показать задание</summary>
-        <HtmlContent :content="question.text" class="mt-8" />
+        <VHtmlContent :content="question.text" class="mt-8" />
       </details>
-      <Post
+      <VPost
         :firstName="answer.author.firstName"
         :lastName="answer.author.lastName"
         :content="answer.text"
         :date="answer.created" />
     </section>
     <section>
-      <Heading level="2" class="mb-24">Обсуждение</Heading>
-      <FeedbackGuide class="mb-24" />
+      <VHeading level="2" class="mb-24">Обсуждение</VHeading>
+      <VFeedbackGuide class="mb-24" />
       <div class="grid gap-24">
-        <Post
+        <VPost
           v-for="comment in answer.descendants"
           :key="comment.slug"
           :firstName="comment.author.firstName"
@@ -50,5 +50,5 @@
       </div>
     </section>
   </div>
-  <Preloader v-else />
+  <VPreloader v-else />
 </template>

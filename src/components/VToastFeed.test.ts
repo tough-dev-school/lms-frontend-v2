@@ -1,23 +1,23 @@
 import { describe, expect, test, beforeEach } from 'vitest';
 import { shallowMount, VueWrapper } from '@vue/test-utils';
-import ToastFeed from './ToastFeed.vue';
+import VToastFeed from '@/components/VToastFeed.vue';
 import { faker } from '@faker-js/faker';
-import useToasts, { ToastMessage } from '@/stores/toasts';
-import type Toast from '@/components/Toast.vue';
+import useToasts, { VToastMessage } from '@/stores/toasts';
+import type VToast from '@/components/VToast.vue';
 import { createTestingPinia } from '@pinia/testing';
 import { vi } from 'vitest';
 
 const MESSAGES = 10;
 
-describe('ToastFeed', () => {
+describe('VToastFeed', () => {
   let wrapper: VueWrapper;
 
   beforeEach(async () => {
     const messages = [...Array(MESSAGES)].map(() => {
-      return new ToastMessage(faker.lorem.sentence(), 'success', 10000);
+      return new VToastMessage(faker.lorem.sentence(), 'success', 10000);
     });
 
-    wrapper = shallowMount(ToastFeed, {
+    wrapper = shallowMount(VToastFeed, {
       global: {
         plugins: [
           createTestingPinia({
@@ -38,10 +38,10 @@ describe('ToastFeed', () => {
   };
 
   const getFirstToast = () => {
-    return wrapper.findComponent<typeof Toast>('[data-testid="toast"]');
+    return wrapper.findComponent<typeof VToast>('[data-testid="toast"]');
   };
 
-  test('Toast delete event calls removeMessage with correct id', async () => {
+  test('VToast delete event calls removeMessage with correct id', async () => {
     const toasts = useToasts();
 
     ((await getFirstToast()) as VueWrapper).vm.$emit(

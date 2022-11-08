@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-  import ProfileMenu from '@/components/ProfileMenu.vue';
-  import ToastFeed from '@/components/ToastFeed.vue';
+  import VProfileMenu from '@/components/VProfileMenu.vue';
+  import VToastFeed from '@/components/VToastFeed.vue';
   import { useRoute } from 'vue-router';
   import { computed } from 'vue';
 
@@ -14,9 +14,9 @@
 <template>
   <main class="container pb-128">
     <header class="flex justify-end pt-16 pb-24 tablet:pb-64" v-if="hasHeader">
-      <ProfileMenu class="w-full tablet:w-auto tablet:min-w-[192px]" />
+      <VProfileMenu class="w-full tablet:w-auto tablet:min-w-[192px]" />
     </header>
     <RouterView />
-    <ToastFeed />
+    <VToastFeed />
   </main>
 </template>

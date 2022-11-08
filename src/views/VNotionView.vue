@@ -5,7 +5,7 @@
   import { onMounted, ref, watch } from 'vue';
   import type { MaterialContentBlocks } from '@/types/materials';
 
-  import Preloader from '../components/Preloader.vue';
+  import VPreloader from '../components/VPreloader.vue';
   import { getMaterialById } from '@/api/materials';
 
   const route = useRoute();
@@ -34,7 +34,7 @@
       :blockMap="blocks"
       :map-page-url="mapPageUrl"
       fullPage />
-    <Preloader v-else />
+    <VPreloader v-else />
   </div>
 </template>
 

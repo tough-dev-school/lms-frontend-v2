@@ -1,17 +1,17 @@
 import type { Meta, Story } from '@storybook/vue3';
-import TextInput from './TextInput.vue';
+import VTextInput from '@/components/VTextInput.vue';
 
 export default {
-  title: 'Forms/TextInput',
-  component: TextInput,
+  title: 'Forms/VTextInput',
+  component: VTextInput,
 } as Meta;
 
 const Template: Story = (args) => ({
-  components: { TextInput },
+  components: { VTextInput },
   setup() {
     return { args };
   },
-  template: '<TextInput placeholder="Enter some text…" v-bind="args" />',
+  template: '<VTextInput placeholder="Enter some text…" v-bind="args" />',
 });
 
 export const Default = Template.bind({});

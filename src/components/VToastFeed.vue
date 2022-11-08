@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import Toast from '@/components/Toast.vue';
+  import VToast from '@/components/VToast.vue';
   import useToasts from '@/stores/toasts';
   import { storeToRefs } from 'pinia';
 
@@ -14,7 +14,7 @@
 <template>
   <div class="fixed right-16 bottom-16 flex flex-col gap-8">
     <TransitionGroup name="toast">
-      <Toast
+      <VToast
         v-for="message in messages"
         v-bind="message"
         :key="message.id"

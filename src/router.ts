@@ -4,13 +4,13 @@ import {
   type NavigationGuardNext,
   type RouteLocationNormalized,
 } from 'vue-router';
-import ProfileView from '@/views/ProfileView.vue';
-import LoginView from '@/views/LoginView.vue';
-import LoadingView from '@/views/LoadingView.vue';
-import NotionView from '@/views/NotionView.vue';
-import HomeworkQuestionView from '@/views/HomeworkQuestionView.vue';
-import HomeworkExpertView from '@/views/HomeworkExpertView.vue';
-import HomeworkAnswerView from '@/views/HomeworkAnswerView.vue';
+import VProfileView from '@/views/VProfileView.vue';
+import VLoginView from '@/views/VLoginView.vue';
+import VLoadingView from '@/views/VLoadingView.vue';
+import VNotionView from '@/views/VNotionView.vue';
+import VHomeworkQuestionView from '@/views/VHomeworkQuestionView.vue';
+import VHomeworkExpertView from '@/views/VHomeworkExpertView.vue';
+import VHomeworkAnswerView from '@/views/VHomeworkAnswerView.vue';
 import useAuth from '@/stores/auth';
 import useUser from '@/stores/user';
 import useStudies from '@/stores/studies';
@@ -19,37 +19,37 @@ export const routes = [
   {
     path: '/profile',
     name: 'profile',
-    component: ProfileView,
+    component: VProfileView,
   },
   {
     path: '/login',
     name: 'login',
-    component: LoginView,
+    component: VLoginView,
   },
   {
     path: '/auth/passwordless/:passwordlessToken',
     name: 'token',
-    component: LoadingView,
+    component: VLoadingView,
   },
   {
     path: '/materials/:id',
     name: 'materials',
-    component: NotionView,
+    component: VNotionView,
   },
   {
     path: '/homework/questions/:questionId',
     name: 'homework-question',
-    component: HomeworkQuestionView,
+    component: VHomeworkQuestionView,
   },
   {
     path: '/homework/question-admin/:questionId',
     name: 'homework-expert',
-    component: HomeworkExpertView,
+    component: VHomeworkExpertView,
   },
   {
     path: '/homework/answers/:answerId',
     name: 'homework-answer',
-    component: HomeworkAnswerView,
+    component: VHomeworkAnswerView,
   },
 ];
 
