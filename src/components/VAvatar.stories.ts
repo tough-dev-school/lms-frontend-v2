@@ -3,16 +3,16 @@ import type { Meta, Story } from '@storybook/vue3';
 import VAvatar from '@/components/VAvatar.vue';
 
 export default {
-  title: 'UI/Avatar',
-  component: Avatar,
+  title: 'UI/VAvatar',
+  component: VAvatar,
 } as Meta;
 
 const Template: Story = (args) => ({
-  components: { Avatar },
+  components: { VAvatar },
   setup() {
     return { args };
   },
-  template: '<Avatar v-bind="args" />',
+  template: '<VAvatar v-bind="args" />',
 });
 
 export const Default = Template.bind({});

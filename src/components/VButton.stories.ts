@@ -2,16 +2,16 @@ import type { Meta, Story } from '@storybook/vue3';
 import VButton from '@/components/VButton.vue';
 
 export default {
-  title: 'Forms/Button',
-  component: Button,
+  title: 'Forms/VButton',
+  component: VButton,
 } as Meta;
 
 const Template: Story = (args) => ({
-  components: { Button },
+  components: { VButton },
   setup() {
     return { args };
   },
-  template: '<Button v-bind="args">Press me</Button>',
+  template: '<VButton v-bind="args">Press me</VButton>',
 });
 
 export const Default = Template.bind({});
