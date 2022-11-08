@@ -1,6 +1,6 @@
 import { describe, expect, test, beforeEach } from 'vitest';
 import { shallowMount, VueWrapper } from '@vue/test-utils';
-import TextInput from './TextInput.vue';
+import TextInput from '@/components/TextInput.vue';
 import { faker } from '@faker-js/faker';
 
 const defaultProps = {

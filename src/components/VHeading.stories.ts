@@ -1,5 +1,5 @@
 import type { Meta, Story } from '@storybook/vue3';
-import Heading from './Heading.vue';
+import Heading from '@/components/Heading.vue';
 
 export default {
   title: 'Forms/Heading',

@@ -1,5 +1,5 @@
 import type { Meta, Story } from '@storybook/vue3';
-import TextEditor from './TextEditor.vue';
+import TextEditor from '@/components/TextEditor.vue';
 
 export default {
   title: 'Forms/TextEditor',

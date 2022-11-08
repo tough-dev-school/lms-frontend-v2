@@ -1,6 +1,6 @@
 import { describe, expect, test, beforeEach } from 'vitest';
 import { shallowMount, VueWrapper } from '@vue/test-utils';
-import ToastFeed from './ToastFeed.vue';
+import ToastFeed from '@/components/ToastFeed.vue';
 import { faker } from '@faker-js/faker';
 import useToasts, { ToastMessage } from '@/stores/toasts';
 import type Toast from '@/components/Toast.vue';

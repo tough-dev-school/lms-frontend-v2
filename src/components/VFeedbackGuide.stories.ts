@@ -1,5 +1,5 @@
 import type { Meta, Story } from '@storybook/vue3';
-import FeedbackGuide from './FeedbackGuide.vue';
+import FeedbackGuide from '@/components/FeedbackGuide.vue';
 
 export default {
   title: 'UI/FeedbackGuide',

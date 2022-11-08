@@ -1,6 +1,6 @@
 import { describe, expect, test, beforeEach } from 'vitest';
 import { RouterLinkStub, shallowMount, VueWrapper } from '@vue/test-utils';
-import ProfileMenu from './ProfileMenu.vue';
+import ProfileMenu from '@/components/ProfileMenu.vue';
 import useUser from '@/stores/user';
 import useAuth from '@/stores/auth';
 import type Avatar from '@/components/Avatar.vue';

@@ -1,5 +1,5 @@
 import type { Meta, Story } from '@storybook/vue3';
-import Preloader from './Preloader.vue';
+import Preloader from '@/components/Preloader.vue';
 
 export default {
   title: 'UI/Preloader',
