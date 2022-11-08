@@ -1,4 +1,4 @@
-name: ci
+name: Unit tests
 
 on: [push]
 
@@ -27,14 +27,5 @@ jobs:
       - name: Install dependencies 👨🏻‍💻
         run: npm install
 
-      - name: Run linter 👀
-        run: npm run lint
-
-      - name: Run typecheck ✅
-        run: npm run type-check
-
       - name: Run unit tests 🧪
         run: npm run test:unit
-
-      - name: Run visual tests 🖼
-        run: npm run test:visual
