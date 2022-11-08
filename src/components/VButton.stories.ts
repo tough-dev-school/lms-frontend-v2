@@ -1,5 +1,5 @@
 import type { Meta, Story } from '@storybook/vue3';
-import Button from '@/components/Button.vue';
+import Button from '@/components/VButton.vue';
 
 export default {
   title: 'Forms/Button',

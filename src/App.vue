@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-  import ProfileMenu from '@/components/ProfileMenu.vue';
-  import ToastFeed from '@/components/ToastFeed.vue';
+  import ProfileMenu from '@/components/VProfileMenu.vue';
+  import ToastFeed from '@/components/VToastFeed.vue';
   import { useRoute } from 'vue-router';
   import { computed } from 'vue';
 

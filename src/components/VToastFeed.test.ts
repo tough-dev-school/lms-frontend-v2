@@ -1,9 +1,9 @@
 import { describe, expect, test, beforeEach } from 'vitest';
 import { shallowMount, VueWrapper } from '@vue/test-utils';
-import ToastFeed from '@/components/ToastFeed.vue';
+import ToastFeed from '@/components/VToastFeed.vue';
 import { faker } from '@faker-js/faker';
 import useToasts, { ToastMessage } from '@/stores/toasts';
-import type Toast from '@/components/Toast.vue';
+import type Toast from '@/components/VToast.vue';
 import { createTestingPinia } from '@pinia/testing';
 import { vi } from 'vitest';
 

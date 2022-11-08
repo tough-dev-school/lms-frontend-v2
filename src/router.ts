@@ -4,13 +4,13 @@ import {
   type NavigationGuardNext,
   type RouteLocationNormalized,
 } from 'vue-router';
-import ProfileView from '@/views/ProfileView.vue';
-import LoginView from '@/views/LoginView.vue';
-import LoadingView from '@/views/LoadingView.vue';
-import NotionView from '@/views/NotionView.vue';
-import HomeworkQuestionView from '@/views/HomeworkQuestionView.vue';
-import HomeworkExpertView from '@/views/HomeworkExpertView.vue';
-import HomeworkAnswerView from '@/views/HomeworkAnswerView.vue';
+import ProfileView from '@/views/VProfileView.vue';
+import LoginView from '@/views/VLoginView.vue';
+import LoadingView from '@/views/VLoadingView.vue';
+import NotionView from '@/views/VNotionView.vue';
+import HomeworkQuestionView from '@/views/VHomeworkQuestionView.vue';
+import HomeworkExpertView from '@/views/VHomeworkExpertView.vue';
+import HomeworkAnswerView from '@/views/VHomeworkAnswerView.vue';
 import useAuth from '@/stores/auth';
 import useUser from '@/stores/user';
 import useStudies from '@/stores/studies';

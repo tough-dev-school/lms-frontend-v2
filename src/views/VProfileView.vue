@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-  import TextInput from '@/components/TextInput.vue';
-  import Button from '@/components/Button.vue';
-  import Heading from '@/components/Heading.vue';
+  import TextInput from '@/components/VTextInput.vue';
+  import Button from '@/components/VButton.vue';
+  import Heading from '@/components/VHeading.vue';
   import { onMounted, ref } from 'vue';
   import type { Ref } from 'vue';
   import useUser from '@/stores/user';

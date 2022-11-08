@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import Toast from '@/components/Toast.vue';
+  import Toast from '@/components/VToast.vue';
   import useToasts from '@/stores/toasts';
   import { storeToRefs } from 'pinia';
 

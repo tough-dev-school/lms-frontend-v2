@@ -1,5 +1,5 @@
 import { beforeEach, describe, test, expect } from 'vitest';
-import Avatar from '@/components/Avatar.vue';
+import Avatar from '@/components/VAvatar.vue';
 import { shallowMount, VueWrapper } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
 

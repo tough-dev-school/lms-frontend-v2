@@ -1,5 +1,5 @@
 import type { Meta, Story } from '@storybook/vue3';
-import HomeworkDetails from '@/components/HomeworkDetails.vue';
+import HomeworkDetails from '@/components/VHomeworkDetails.vue';
 import { faker } from '@faker-js/faker';
 
 export default {

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-  import Heading from '@/components/Heading.vue';
-  import Button from '@/components/Button.vue';
-  import TextInput from '@/components/TextInput.vue';
+  import Heading from '@/components/VHeading.vue';
+  import Button from '@/components/VButton.vue';
+  import TextInput from '@/components/VTextInput.vue';
   import { ref } from 'vue';
   import { onKeyStroke } from '@vueuse/core';
   import useAuth from '@/stores/auth';

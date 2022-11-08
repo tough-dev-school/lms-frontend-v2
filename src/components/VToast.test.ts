@@ -1,7 +1,7 @@
 import { describe, expect, test, beforeEach } from 'vitest';
 import { shallowMount, VueWrapper } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
-import Toast from '@/components/Toast.vue';
+import Toast from '@/components/VToast.vue';
 import { nanoid } from 'nanoid';
 
 const defaultProps = {
