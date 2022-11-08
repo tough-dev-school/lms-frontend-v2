@@ -19,37 +19,37 @@ export const routes = [
   {
     path: '/profile',
     name: 'profile',
-    component: ProfileView,
+    component: VProfileView,
   },
   {
     path: '/login',
     name: 'login',
-    component: LoginView,
+    component: VLoginView,
   },
   {
     path: '/auth/passwordless/:passwordlessToken',
     name: 'token',
-    component: LoadingView,
+    component: VLoadingView,
   },
   {
     path: '/materials/:id',
     name: 'materials',
-    component: NotionView,
+    component: VNotionView,
   },
   {
     path: '/homework/questions/:questionId',
     name: 'homework-question',
-    component: HomeworkQuestionView,
+    component: VHomeworkQuestionView,
   },
   {
     path: '/homework/question-admin/:questionId',
     name: 'homework-expert',
-    component: HomeworkExpertView,
+    component: VHomeworkExpertView,
   },
   {
     path: '/homework/answers/:answerId',
     name: 'homework-answer',
-    component: HomeworkAnswerView,
+    component: VHomeworkAnswerView,
   },
 ];
 
