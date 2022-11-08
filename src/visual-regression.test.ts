@@ -33,7 +33,6 @@ type Test = [string, string, Function, number, number, number];
 describe('visual regression test for', () => {
   let browser: playwright.Browser;
   let page: playwright.Page;
-  let context: playwright.BrowserContext;
 
   const tests: Test[] = [];
 
@@ -70,7 +69,6 @@ describe('visual regression test for', () => {
 
   beforeEach(async () => {
     browser = await playwright.chromium.launch();
-    context = await browser.newContext();
     page = await browser.newPage();
   });
 
