@@ -54,9 +54,14 @@
         label="Электронная почта"
         tip="Мы отправим ссылку для входа по этому адресу"
         type="email"
+        data-testid="email"
         v-model="email" />
       <div class="mt-32 flex flex-wrap gap-8">
-        <VButton @click="loginWithEmail" :disabled="!email" class="flex-grow"
+        <VButton
+          @click="loginWithEmail"
+          :disabled="!email"
+          class="flex-grow"
+          data-testid="send"
           >Получить доступ</VButton
         >
         <VButton
@@ -70,14 +75,23 @@
     </template>
     <div v-if="withPassword === true">
       <div class="flex flex-col gap-16">
-        <VTextInput label="Логин" type="text" v-model="username" />
-        <VTextInput label="Пароль" type="password" v-model="password" />
+        <VTextInput
+          label="Логин"
+          type="text"
+          v-model="username"
+          data-testid="username" />
+        <VTextInput
+          label="Пароль"
+          type="password"
+          v-model="password"
+          data-testid="password" />
       </div>
       <div class="mt-32 flex flex-wrap gap-8">
         <VButton
           @click="loginWithCredentials"
           :disabled="!(username && password)"
           class="flex-grow"
+          data-testid="login"
           >Войти</VButton
         >
         <VButton type="link" @click="changeLoginType(false)" class="flex-grow">
