@@ -3,16 +3,16 @@ import VHomeworkDetails from '@/components/VHomeworkDetails.vue';
 import { faker } from '@faker-js/faker';
 
 export default {
-  title: 'UI/HomeworkDetails',
-  component: HomeworkDetails,
+  title: 'UI/VHomeworkDetails',
+  component: VHomeworkDetails,
 } as Meta;
 
 const Template: Story = (args) => ({
-  components: { HomeworkDetails },
+  components: { VHomeworkDetails },
   setup() {
     return { args };
   },
-  template: '<HomeworkDetails v-bind="args" />',
+  template: '<VHomeworkDetails v-bind="args" />',
 });
 
 export const Default = Template.bind({});

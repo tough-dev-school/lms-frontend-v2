@@ -47,14 +47,14 @@
 
 <template>
   <div>
-    <Heading class="mb-24" level="1">Данные для диплома</Heading>
+    <VHeading class="mb-24" level="1">Данные для диплома</VHeading>
     <div class="flex flex-col items-start gap-16 tablet:gap-24">
-      <TextInput label="Имя" v-model="firstName" />
-      <TextInput label="Фамилия" v-model="lastName" />
-      <TextInput label="Имя (на английском)" v-model="firstNameEn" />
-      <TextInput label="Фамилия (на английском)" v-model="lastNameEn" />
-      <TextInput label="Ник на GitHub" v-model="githubUsername" />
-      <TextInput label="Ник на LinkedIn" v-model="linkedinUsername" />
+      <VTextInput label="Имя" v-model="firstName" />
+      <VTextInput label="Фамилия" v-model="lastName" />
+      <VTextInput label="Имя (на английском)" v-model="firstNameEn" />
+      <VTextInput label="Фамилия (на английском)" v-model="lastNameEn" />
+      <VTextInput label="Ник на GitHub" v-model="githubUsername" />
+      <VTextInput label="Ник на LinkedIn" v-model="linkedinUsername" />
       <fieldset class="flex flex-wrap gap-16">
         <legend class="Label">Пол</legend>
         <label class="cursor-pointer"
@@ -76,7 +76,7 @@
       </fieldset>
     </div>
     <div class="mt-64">
-      <Button @click="save">Обновить</Button>
+      <VButton @click="save">Обновить</VButton>
     </div>
   </div>
 </template>

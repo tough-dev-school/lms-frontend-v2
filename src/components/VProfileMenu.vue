@@ -36,7 +36,7 @@
       class="flex cursor-pointer items-center rounded-8 p-8 transition-colors hover:bg-gray hover:bg-opacity-10"
       @click="isOpen = !isOpen"
       data-testid="button">
-      <Avatar
+      <VAvatar
         :first-name="firstName"
         :last-name="lastName"
         class="mr-8"
@@ -58,7 +58,7 @@
             <RouterLink
               data-testid="profile"
               :to="{ name: 'profile' }"
-              class="ProfileMenu__Item"
+              class="VProfileMenu__Item"
               @click="isOpen = false">
               <span class="Link">Профиль</span>
             </RouterLink>
@@ -66,7 +66,7 @@
           <li v-for="study in studies.items" :key="study.id">
             <RouterLink
               :to="{ name: 'materials', params: { id: study.homePageSlug } }"
-              class="ProfileMenu__Item"
+              class="VProfileMenu__Item"
               @click="isOpen = false"
               data-testid="material"
               ><span class="Link">{{
@@ -78,7 +78,7 @@
             <button
               @click="logOut"
               data-testid="logout"
-              class="ProfileMenu__Item">
+              class="VProfileMenu__Item">
               <span class="Link">Выйти</span>
             </button>
           </li>
@@ -89,7 +89,7 @@
 </template>
 
 <style scoped>
-  .ProfileMenu__Item {
+  .VProfileMenu__Item {
     @apply block flex min-h-[32px] w-full cursor-pointer items-center whitespace-nowrap px-8 text-left hover:bg-gray hover:bg-opacity-10;
   }
 

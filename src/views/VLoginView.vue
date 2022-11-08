@@ -48,41 +48,41 @@
 
 <template>
   <div class="max-w-prose pt-[25vh]">
-    <Heading level="1" class="mb-32">Вход и регистрация</Heading>
+    <VHeading level="1" class="mb-32">Вход и регистрация</VHeading>
     <template v-if="withPassword === false">
-      <TextInput
+      <VTextInput
         label="Электронная почта"
         tip="Мы отправим ссылку для входа по этому адресу"
         type="email"
         v-model="email" />
       <div class="mt-32 flex flex-wrap gap-8">
-        <Button @click="loginWithEmail" :disabled="!email" class="flex-grow"
-          >Получить доступ</Button
+        <VButton @click="loginWithEmail" :disabled="!email" class="flex-grow"
+          >Получить доступ</VButton
         >
-        <Button
+        <VButton
           @click="changeLoginType(true)"
           type="link"
           data-testid="to-password-mode"
           class="flex-grow">
           Войти через пароль
-        </Button>
+        </VButton>
       </div>
     </template>
     <div v-if="withPassword === true">
       <div class="flex flex-col gap-16">
-        <TextInput label="Логин" type="text" v-model="username" />
-        <TextInput label="Пароль" type="password" v-model="password" />
+        <VTextInput label="Логин" type="text" v-model="username" />
+        <VTextInput label="Пароль" type="password" v-model="password" />
       </div>
       <div class="mt-32 flex flex-wrap gap-8">
-        <Button
+        <VButton
           @click="loginWithCredentials"
           :disabled="!(username && password)"
           class="flex-grow"
-          >Войти</Button
+          >Войти</VButton
         >
-        <Button type="link" @click="changeLoginType(false)" class="flex-grow">
+        <VButton type="link" @click="changeLoginType(false)" class="flex-grow">
           Войти по ссылке
-        </Button>
+        </VButton>
       </div>
     </div>
   </div>

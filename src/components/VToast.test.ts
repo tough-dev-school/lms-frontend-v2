@@ -10,11 +10,11 @@ const defaultProps = {
   lifetime: 1000,
 };
 
-describe('Toast', () => {
-  let wrapper: VueWrapper<InstanceType<typeof Toast>>;
+describe('VToast', () => {
+  let wrapper: VueWrapper<InstanceType<typeof VToast>>;
 
   beforeEach(() => {
-    wrapper = shallowMount(Toast, { props: defaultProps });
+    wrapper = shallowMount(VToast, { props: defaultProps });
   });
 
   test('displays correct message', () => {

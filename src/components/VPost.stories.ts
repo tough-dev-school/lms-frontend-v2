@@ -3,16 +3,16 @@ import VPost from '@/components/VPost.vue';
 import { faker } from '@faker-js/faker';
 
 export default {
-  title: 'UI/Post',
-  component: Post,
+  title: 'UI/VPost',
+  component: VPost,
 } as Meta;
 
 const Template: Story = (args) => ({
-  components: { Post },
+  components: { VPost },
   setup() {
     return { args };
   },
-  template: '<Post v-bind="args" />',
+  template: '<VPost v-bind="args" />',
 });
 
 export const Default = Template.bind({});

@@ -2,16 +2,16 @@ import type { Meta, Story } from '@storybook/vue3';
 import VToast from '@/components/VToast.vue';
 
 export default {
-  title: 'Toasts/Toast',
-  component: Toast,
+  title: 'VToasts/VToast',
+  component: VToast,
 } as Meta;
 
 const Template: Story = (args) => ({
-  components: { Toast },
+  components: { VToast },
   setup() {
     return { args };
   },
-  template: '<Toast v-bind="args" />',
+  template: '<VToast v-bind="args" />',
 });
 
 export const Default = Template.bind({});

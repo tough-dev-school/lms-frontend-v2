@@ -4,12 +4,12 @@ import useToasts from '@/stores/toasts';
 import { faker } from '@faker-js/faker';
 
 export default {
-  title: 'Toasts/ToastFeed',
-  component: ToastFeed,
+  title: 'VToasts/VToastFeed',
+  component: VToastFeed,
 } as Meta;
 
 const Template: Story = (args) => ({
-  components: { ToastFeed },
+  components: { VToastFeed },
   setup() {
     const toasts = useToasts();
     toasts.$reset();
@@ -17,7 +17,7 @@ const Template: Story = (args) => ({
 
     return { args };
   },
-  template: '<ToastFeed v-bind="args" />',
+  template: '<VToastFeed v-bind="args" />',
 });
 
 export const Default = Template.bind({});

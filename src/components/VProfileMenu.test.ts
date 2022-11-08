@@ -3,7 +3,7 @@ import { RouterLinkStub, shallowMount, VueWrapper } from '@vue/test-utils';
 import VProfileMenu from '@/components/VProfileMenu.vue';
 import useUser from '@/stores/user';
 import useAuth from '@/stores/auth';
-import type Avatar from '@/components/VAvatar.vue';
+import type VAvatar from '@/components/VAvatar.vue';
 import { faker } from '@faker-js/faker';
 import { vi } from 'vitest';
 import { createTestingPinia } from '@pinia/testing';
@@ -21,14 +21,14 @@ vi.mock('vue-router/dist/vue-router.mjs', () => ({
   }),
 }));
 
-describe('ProfileMenu', () => {
+describe('VProfileMenu', () => {
   let wrapper: VueWrapper;
   let user: ReturnType<typeof useUser>;
   let auth: ReturnType<typeof useAuth>;
   let studies: ReturnType<typeof useStudies>;
 
   beforeEach(() => {
-    wrapper = shallowMount(ProfileMenu, {
+    wrapper = shallowMount(VProfileMenu, {
       global: {
         plugins: [
           createTestingPinia({
@@ -71,7 +71,7 @@ describe('ProfileMenu', () => {
   };
 
   const getAvatarWrapper = () => {
-    return wrapper.findComponent<typeof Avatar>('[data-testid="avatar"]');
+    return wrapper.findComponent<typeof VAvatar>('[data-testid="avatar"]');
   };
 
   const getNameWrapper = () => {
@@ -108,16 +108,16 @@ describe('ProfileMenu', () => {
 
   test.todo('Click outside profile should close menu');
 
-  test('Avatar should have correct props', () => {
+  test('VAvatar should have correct props', () => {
     expect(getAvatarWrapper().props().firstName).toBe(user.firstName);
     expect(getAvatarWrapper().props().lastName).toBe(user.lastName);
   });
 
-  test('ProfileMenu displays correct name', () => {
+  test('VProfileMenu displays correct name', () => {
     expect(getNameWrapper().text()).toBe(`${user.firstName} ${user.lastName}`);
   });
 
-  test('ProfileMenu displays correct username', () => {
+  test('VProfileMenu displays correct username', () => {
     expect(getUsernameWrapper().text()).toBe(user.username);
   });
 

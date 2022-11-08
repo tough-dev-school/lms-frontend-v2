@@ -2,32 +2,32 @@ import type { Meta, Story } from '@storybook/vue3';
 import VHeading from '@/components/VHeading.vue';
 
 export default {
-  title: 'Forms/Heading',
-  component: Heading,
+  title: 'Forms/VHeading',
+  component: VHeading,
 } as Meta;
 
 const Template: Story = (args) => ({
-  components: { Heading },
+  components: { VHeading },
   setup() {
     return { args };
   },
-  template: '<Heading v-bind="args">Heading</Heading>',
+  template: '<VHeading v-bind="args">VHeading</VHeading>',
 });
 
 export const Default = Template.bind({});
 Default.args = {};
 
-export const Heading1 = Template.bind({});
-Heading1.args = {
+export const VHeading1 = Template.bind({});
+VHeading1.args = {
   level: 1,
 };
 
-export const Heading2 = Template.bind({});
-Heading2.args = {
+export const VHeading2 = Template.bind({});
+VHeading2.args = {
   level: 2,
 };
 
-export const Heading3 = Template.bind({});
-Heading3.args = {
+export const VHeading3 = Template.bind({});
+VHeading3.args = {
   level: 3,
 };

@@ -2,16 +2,16 @@ import type { Meta, Story } from '@storybook/vue3';
 import VFeedbackGuide from '@/components/VFeedbackGuide.vue';
 
 export default {
-  title: 'UI/FeedbackGuide',
-  component: FeedbackGuide,
+  title: 'UI/VFeedbackGuide',
+  component: VFeedbackGuide,
 } as Meta;
 
 const Template: Story = (args) => ({
-  components: { FeedbackGuide },
+  components: { VFeedbackGuide },
   setup() {
     return { args };
   },
-  template: '<FeedbackGuide v-bind="args" />',
+  template: '<VFeedbackGuide v-bind="args" />',
 });
 
 export const Default = Template.bind({});

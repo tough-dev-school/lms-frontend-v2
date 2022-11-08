@@ -1,17 +1,17 @@
 import { defineStore } from 'pinia';
 import { nanoid } from 'nanoid';
 
-type ToastType = 'error' | 'success' | undefined;
+type VToastType = 'error' | 'success' | undefined;
 
-export class ToastMessage {
+export class VToastMessage {
   text: string;
   id: string;
   lifetime: number;
-  type: ToastType;
+  type: VToastType;
 
   constructor(
     text: string,
-    type: ToastType = undefined,
+    type: VToastType = undefined,
     lifetime: number = 5000,
   ) {
     this.text = text;
@@ -22,7 +22,7 @@ export class ToastMessage {
 }
 
 interface State {
-  messages: ToastMessage[];
+  messages: VToastMessage[];
   disabled: boolean;
 }
 
@@ -31,9 +31,9 @@ const useToasts = defineStore('toasts', {
     return { messages: [], disabled: false };
   },
   actions: {
-    addMessage(text: string, type: ToastType = undefined) {
+    addMessage(text: string, type: VToastType = undefined) {
       if (this.disabled) return;
-      this.messages = [...this.messages, new ToastMessage(text, type)];
+      this.messages = [...this.messages, new VToastMessage(text, type)];
     },
     removeMessage(id: String) {
       this.messages = this.messages.filter((message) => message.id !== id);

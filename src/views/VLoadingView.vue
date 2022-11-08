@@ -3,5 +3,5 @@
 </script>
 
 <template>
-  <Preloader />
+  <VPreloader />
 </template>
