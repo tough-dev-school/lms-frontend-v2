@@ -1,5 +1,5 @@
 import { describe, test, beforeEach, expect } from 'vitest';
-import Button from '@/components/VButton.vue';
+import VButton from '@/components/VButton.vue';
 import { shallowMount, VueWrapper } from '@vue/test-utils';
 
 describe('Button', () => {

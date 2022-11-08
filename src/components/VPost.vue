@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import Avatar from '@/components/VAvatar.vue';
+  import VAvatar from '@/components/VAvatar.vue';
   import { relativeDate } from '@/utils/date';
   import getName from '@/utils/getName';
 

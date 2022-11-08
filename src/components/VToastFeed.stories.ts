@@ -1,5 +1,5 @@
 import type { Meta, Story } from '@storybook/vue3';
-import ToastFeed from '@/components/VToastFeed.vue';
+import VToastFeed from '@/components/VToastFeed.vue';
 import useToasts from '@/stores/toasts';
 import { faker } from '@faker-js/faker';
 

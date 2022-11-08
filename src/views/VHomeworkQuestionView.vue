@@ -1,16 +1,16 @@
 <script lang="ts" setup>
-  import HtmlContent from '@/components/VHtmlContent.vue';
-  import TextEditor from '@/components/VTextEditor.vue';
-  import Button from '@/components/VButton.vue';
+  import VHtmlContent from '@/components/VHtmlContent.vue';
+  import VTextEditor from '@/components/VTextEditor.vue';
+  import VButton from '@/components/VButton.vue';
   import useHomework from '@/stores/homework';
   import { useRoute } from 'vue-router';
   import { onMounted, ref } from 'vue';
   import type { Ref } from 'vue';
   import { storeToRefs } from 'pinia';
-  import Heading from '@/components/VHeading.vue';
-  import Preloader from '@/components/VPreloader.vue';
+  import VHeading from '@/components/VHeading.vue';
+  import VPreloader from '@/components/VPreloader.vue';
   import useUser from '@/stores/user';
-  import AnswerActions from '@/components/VAnswerActions.vue';
+  import VAnswerActions from '@/components/VAnswerActions.vue';
   import htmlToMarkdown from '@/utils/htmlToMarkdown';
 
   const route = useRoute();

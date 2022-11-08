@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import Preloader from '@/components/VPreloader.vue';
+  import VPreloader from '@/components/VPreloader.vue';
 </script>
 
 <template>

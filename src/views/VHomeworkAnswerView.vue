@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-  import Heading from '@/components/VHeading.vue';
-  import Post from '@/components/VPost.vue';
-  import FeedbackGuide from '@/components/VFeedbackGuide.vue';
+  import VHeading from '@/components/VHeading.vue';
+  import VPost from '@/components/VPost.vue';
+  import VFeedbackGuide from '@/components/VFeedbackGuide.vue';
   import { onMounted } from 'vue';
   import useHomework from '@/stores/homework';
   import { useRoute } from 'vue-router';
   import { storeToRefs } from 'pinia';
-  import Preloader from '@/components/VPreloader.vue';
-  import HtmlContent from '@/components/VHtmlContent.vue';
+  import VPreloader from '@/components/VPreloader.vue';
+  import VHtmlContent from '@/components/VHtmlContent.vue';
 
   const homework = useHomework();
   const { question, answer } = storeToRefs(homework);

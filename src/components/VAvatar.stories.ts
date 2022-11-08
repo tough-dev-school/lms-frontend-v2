@@ -1,6 +1,6 @@
 import type { Meta, Story } from '@storybook/vue3';
 
-import Avatar from '@/components/VAvatar.vue';
+import VAvatar from '@/components/VAvatar.vue';
 
 export default {
   title: 'UI/Avatar',

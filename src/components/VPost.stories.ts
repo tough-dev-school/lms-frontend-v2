@@ -1,5 +1,5 @@
 import type { Meta, Story } from '@storybook/vue3';
-import Post from '@/components/VPost.vue';
+import VPost from '@/components/VPost.vue';
 import { faker } from '@faker-js/faker';
 
 export default {
