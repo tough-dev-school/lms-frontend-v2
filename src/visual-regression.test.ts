@@ -4,7 +4,7 @@ import {
   toMatchImageSnapshot,
   type MatchImageSnapshotOptions,
 } from 'jest-image-snapshot';
-import puppeteer from 'puppeteer';
+import playwright from 'playwright';
 
 expect.extend({ toMatchImageSnapshot });
 
@@ -31,8 +31,9 @@ class VisualTest {
 type Test = [string, string, Function, number, number, number];
 
 describe('visual regression test for', () => {
-  let browser: puppeteer.Browser;
-  let page: puppeteer.Page;
+  let browser: playwright.Browser;
+  let page: playwright.Page;
+  let context: playwright.BrowserContext;
 
   const tests: Test[] = [];
 
@@ -68,20 +69,21 @@ describe('visual regression test for', () => {
   });
 
   beforeEach(async () => {
-    browser = await puppeteer.launch();
+    browser = await playwright.chromium.launch();
+    context = await browser.newContext();
     page = await browser.newPage();
   });
 
   const goto = (route: string) => {
     return page.goto(`http://localhost:3000${route}`, {
-      waitUntil: 'networkidle0',
+      waitUntil: 'networkidle',
     });
   };
 
   test.each(tests)(
     '%s',
     async (name, route, action, width, height, threshold) => {
-      await page.setViewport({ width, height });
+      await page.setViewportSize({ width, height });
       await goto(route);
 
       await action();
