@@ -24,6 +24,13 @@ export const createCustomAxiosInstance = ({ useCaseMiddleware = true }) => {
       return response;
     },
     (error) => {
+      const auth = useAuth();
+
+      if (error.response.status === 401) {
+        auth.resetAuth();
+        window.location.href = window.origin;
+      }
+
       handleError(error);
       return Promise.reject(error);
     },
