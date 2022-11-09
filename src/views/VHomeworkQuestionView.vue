@@ -4,7 +4,7 @@
   import VButton from '@/components/VButton.vue';
   import useHomework from '@/stores/homework';
   import { useRoute } from 'vue-router';
-  import { onMounted, ref } from 'vue';
+  import { computed, onMounted, ref } from 'vue';
   import type { Ref } from 'vue';
   import { storeToRefs } from 'pinia';
   import VHeading from '@/components/VHeading.vue';
@@ -17,8 +17,12 @@
   const homework = useHomework();
   const user = useUser();
 
-  const { question, answer } = storeToRefs(homework);
+  const { question, answers } = storeToRefs(homework);
   const questionId: Ref<string | undefined> = ref(undefined);
+
+  const answer = computed(() => {
+    return answers.value.at(-1);
+  });
 
   const editMode = ref(false);
 
@@ -31,16 +35,18 @@
   const saveAnswer = async () => {
     if (answer.value) {
       await homework.updateAnswer(answer.value.slug, text.value);
-      editMode.value = false;
     } else if (questionId.value) {
       await homework.postAnswer(text.value, questionId.value);
     }
+    await getData();
+    editMode.value = false;
   };
 
   const handleDelete = async () => {
     if (!answer.value) return;
     if (confirm('Удалить ответ?')) {
       await homework.deleteAnswer(answer.value.slug);
+      await getData();
     }
   };
 
@@ -50,10 +56,17 @@
     editMode.value = true;
   };
 
-  onMounted(async () => {
+  const getData = async () => {
     questionId.value = String(route.params.questionId);
     await homework.getQuestion(questionId.value);
-    await homework.findAnswer(questionId.value, user.uuid);
+    await homework.getAnswers({
+      questionId: questionId.value,
+      authorId: user.uuid,
+    });
+  };
+
+  onMounted(async () => {
+    await getData();
   });
 </script>
 

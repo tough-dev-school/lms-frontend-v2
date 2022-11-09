@@ -8,4 +8,5 @@
   @apply prose-li:my-[0.25em];
   @apply prose-ul:my-[0.5em];
   --tw-prose-bullets: currentColor;
+  max-width: 100%;
 }

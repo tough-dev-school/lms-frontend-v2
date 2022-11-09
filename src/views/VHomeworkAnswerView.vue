@@ -2,7 +2,7 @@
   import VHeading from '@/components/VHeading.vue';
   import VPost from '@/components/VPost.vue';
   import VFeedbackGuide from '@/components/VFeedbackGuide.vue';
-  import { onMounted } from 'vue';
+  import { computed, watch } from 'vue';
   import useHomework from '@/stores/homework';
   import { useRoute } from 'vue-router';
   import { storeToRefs } from 'pinia';
@@ -10,16 +10,28 @@
   import VHtmlContent from '@/components/VHtmlContent.vue';
 
   const homework = useHomework();
-  const { question, answer } = storeToRefs(homework);
+  const { question, answers } = storeToRefs(homework);
   const route = useRoute();
 
-  onMounted(async () => {
+  const answer = computed(() => {
+    return answers.value.at(-1);
+  });
+
+  const getData = async () => {
     const { answerId } = route.params;
-    await homework.getAnswer(String(answerId));
+    await homework.getAnswerById(String(answerId));
     if (!answer.value) return;
     const questionId = answer.value.question;
     await homework.getQuestion(questionId);
-  });
+  };
+
+  watch(
+    () => route.params,
+    async () => {
+      await getData();
+    },
+    { immediate: true },
+  );
 </script>
 
 <template>
@@ -46,6 +58,7 @@
           :firstName="comment.author.firstName"
           :lastName="comment.author.lastName"
           :content="comment.text"
+          :slug="comment.slug"
           :date="comment.created" />
       </div>
     </section>

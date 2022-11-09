@@ -8,6 +8,7 @@
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     date: { type: String, required: true },
+    slug: { type: String },
   });
 </script>
 
@@ -17,6 +18,16 @@
       <VAvatar :first-name="firstName" :last-name="lastName" />
       <div class="font-bold">{{ getName(firstName, lastName) }}</div>
       <div class="text-gray">{{ relativeDate(date) }}</div>
+      <div class="flex-grow"></div>
+      <RouterLink
+        v-if="slug"
+        class="Link"
+        :to="{
+          name: 'homework-answer',
+          params: { answerId: slug },
+        }"
+        >К ответу</RouterLink
+      >
     </div>
     <div v-html="content" class="prose" />
   </article>
