@@ -31,8 +31,8 @@ const useHomework = defineStore('homework', {
       questionId,
       authorId,
     }: {
-      questionId: string;
-      authorId: string;
+      questionId?: string;
+      authorId?: string;
     }) {
       try {
         this.answers = (
