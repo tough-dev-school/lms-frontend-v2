@@ -2,7 +2,7 @@
   import VHeading from '@/components/VHeading.vue';
   import VPost from '@/components/VPost.vue';
   import VFeedbackGuide from '@/components/VFeedbackGuide.vue';
-  import { computed, onMounted } from 'vue';
+  import { computed, watch } from 'vue';
   import useHomework from '@/stores/homework';
   import { useRoute } from 'vue-router';
   import { storeToRefs } from 'pinia';
@@ -25,9 +25,13 @@
     await homework.getQuestion(questionId);
   };
 
-  onMounted(async () => {
-    await getData();
-  });
+  watch(
+    () => route.params,
+    async () => {
+      await getData();
+    },
+    { immediate: true },
+  );
 </script>
 
 <template>
@@ -54,6 +58,7 @@
           :firstName="comment.author.firstName"
           :lastName="comment.author.lastName"
           :content="comment.text"
+          :slug="comment.slug"
           :date="comment.created" />
       </div>
     </section>
