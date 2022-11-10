@@ -13,7 +13,7 @@
 </script>
 
 <template>
-  <article>
+  <article class="w-full">
     <div class="mb-16 flex items-center gap-8">
       <VAvatar :first-name="firstName" :last-name="lastName" />
       <div class="font-bold">{{ getName(firstName, lastName) }}</div>

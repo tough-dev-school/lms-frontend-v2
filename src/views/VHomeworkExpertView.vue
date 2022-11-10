@@ -39,7 +39,7 @@
     </section>
     <section>
       <VHeading level="2" class="mb-24">Ответы</VHeading>
-      <div class="grid gap-24">
+      <div class="flex flex-col gap-24">
         <VPost
           v-for="answer in answers"
           :key="answer.slug"
