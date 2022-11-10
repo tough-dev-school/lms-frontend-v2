@@ -66,7 +66,7 @@
     <VTextEditor
       @update="handleEditorUpdate"
       :value="reply.text"
-      class="mb-16 rounded border border-gray" />
+      class="mb-16 rounded shadow" />
     <VButton @click="saveAnswer" v-if="!hasReply">Отправить</VButton>
     <VButton @click="updateAnswer" v-else>Сохранить</VButton>
   </div>

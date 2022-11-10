@@ -100,8 +100,12 @@
     @apply rounded bg-white py-8 px-16 outline-none;
   }
 
+  .ProseMirror-focused {
+    @apply focus:outline-none;
+  }
+
   .bubble-button {
-    @apply inline-flex items-center justify-center px-8  py-[2px] text-gray  transition-colors hover:text-black;
+    @apply inline-flex items-center justify-center p-8 text-gray  transition-colors hover:text-black;
   }
 
   .bubble-button:first-child {
