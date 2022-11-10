@@ -58,7 +58,7 @@
 </script>
 
 <template>
-  <div v-if="hasReply && editMode === false">
+  <div v-if="hasReply && !editMode">
     <VHtmlContent :content="reply.text" />
     <VAnswerActions
       @delete="handleDelete"
@@ -70,7 +70,7 @@
       @update="handleEditorUpdate"
       :value="reply.text"
       class="mb-16 rounded border border-gray" />
-    <VButton @click="saveAnswer" v-if="!reply.slug">Отправить</VButton>
+    <VButton @click="saveAnswer" v-if="!hasReply">Отправить</VButton>
     <VButton @click="updateAnswer" v-else>Сохранить</VButton>
   </div>
 </template>
