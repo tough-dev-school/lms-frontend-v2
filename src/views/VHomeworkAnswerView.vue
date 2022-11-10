@@ -42,11 +42,7 @@
         <summary>Показать задание</summary>
         <VHtmlContent :content="question.text" class="mt-8" />
       </details>
-      <VPost
-        :firstName="answer.author.firstName"
-        :lastName="answer.author.lastName"
-        :content="answer.text"
-        :date="answer.created" />
+      <VPost :answer="answer" />
     </section>
     <section>
       <VHeading level="2" class="mb-24">Обсуждение</VHeading>
@@ -55,11 +51,7 @@
         <VPost
           v-for="comment in answer.descendants"
           :key="comment.slug"
-          :firstName="comment.author.firstName"
-          :lastName="comment.author.lastName"
-          :content="comment.text"
-          :slug="comment.slug"
-          :date="comment.created" />
+          :answer="comment" />
       </div>
     </section>
   </div>

@@ -39,15 +39,8 @@
     </section>
     <section>
       <VHeading level="2" class="mb-24">Ответы</VHeading>
-      <div class="grid gap-24">
-        <VPost
-          v-for="answer in answers"
-          :key="answer.slug"
-          :firstName="answer.author.firstName"
-          :lastName="answer.author.lastName"
-          :content="answer.text"
-          :slug="answer.slug"
-          :date="answer.created" />
+      <div class="flex flex-col gap-24">
+        <VPost v-for="answer in answers" :key="answer.slug" :answer="answer" />
       </div>
     </section>
   </div>
