@@ -5,6 +5,7 @@
   import useHomework from '@/stores/homework';
   import { ref, computed } from 'vue';
   import VAnswerActions from '@/components/VAnswerActions.vue';
+  import VPost from '@/components/VPost.vue';
   import htmlToMarkdown from '@/utils/htmlToMarkdown';
 
   const homework = useHomework();
@@ -59,11 +60,7 @@
 
 <template>
   <div v-if="hasReply && !editMode">
-    <VHtmlContent :content="reply.text" />
-    <VAnswerActions
-      @delete="handleDelete"
-      @edit="handleEdit"
-      :date-added="reply.created" />
+    <VPost :answer="reply" @edit="handleEdit" @delete="handleDelete" />
   </div>
   <div v-else>
     <VTextEditor
