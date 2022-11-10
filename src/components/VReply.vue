@@ -3,7 +3,7 @@
   import VTextEditor from '@/components/VTextEditor.vue';
   import VButton from '@/components/VButton.vue';
   import useHomework from '@/stores/homework';
-  import { ref } from 'vue';
+  import { ref, computed } from 'vue';
   import VAnswerActions from '@/components/VAnswerActions.vue';
   import htmlToMarkdown from '@/utils/htmlToMarkdown';
 
@@ -53,10 +53,12 @@
     handleEditorUpdate(htmlToMarkdown(props.reply.text));
     editMode.value = true;
   };
+
+  const hasReply = computed(() => !!props.reply.slug);
 </script>
 
 <template>
-  <div v-if="reply.slug && editMode === false">
+  <div v-if="hasReply && editMode === false">
     <VHtmlContent :content="reply.text" />
     <VAnswerActions
       @delete="handleDelete"
@@ -68,7 +70,7 @@
       @update="handleEditorUpdate"
       :value="reply.text"
       class="mb-16 rounded border border-gray" />
-    <VButton @click="saveAnswer" v-if="!reply">Отправить</VButton>
+    <VButton @click="saveAnswer" v-if="!reply.slug">Отправить</VButton>
     <VButton @click="updateAnswer" v-else>Сохранить</VButton>
   </div>
 </template>
