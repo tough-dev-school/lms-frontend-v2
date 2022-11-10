@@ -2,22 +2,26 @@
   import VTextEditor from '@/components/VTextEditor.vue';
   import VButton from '@/components/VButton.vue';
   import useHomework from '@/stores/homework';
-  import { ref, computed } from 'vue';
+  import { ref, computed, withDefaults } from 'vue';
   import VPost from '@/components/VPost.vue';
   import htmlToMarkdown from '@/utils/htmlToMarkdown';
+  import type { Answer } from '@/types/homework';
+
+  export type DraftAnswer = Partial<Answer>;
+
+  export interface Props {
+    reply?: Answer | DraftAnswer;
+    questionId: string;
+  }
 
   const homework = useHomework();
 
-  const emit = defineEmits('update');
+  const emit = defineEmits(['update']);
 
-  const props = defineProps({
-    reply: {
-      type: Object,
-      default() {
-        return {};
-      },
+  const props = withDefaults(defineProps<Props>(), {
+    reply: (): DraftAnswer => {
+      return {};
     },
-    questionId: { type: String, required: true },
   });
 
   const editMode = ref(false);
@@ -34,13 +38,14 @@
   };
 
   const updateAnswer = async () => {
+    if (!props.reply.slug) return;
     await homework.updateAnswer(props.reply.slug, text.value);
     emit('update');
     editMode.value = false;
   };
 
   const handleDelete = async () => {
-    if (!props.reply.text) return;
+    if (!props.reply.slug) return;
     if (confirm('Удалить ответ?')) {
       await homework.deleteAnswer(props.reply.slug);
       emit('update');
@@ -58,7 +63,10 @@
 
 <template>
   <div v-if="hasReply && !editMode">
-    <VPost :answer="reply" @edit="handleEdit" @delete="handleDelete" />
+    <VPost
+      :answer="reply as Answer"
+      @edit="handleEdit"
+      @delete="handleDelete" />
   </div>
   <div v-else>
     <VTextEditor

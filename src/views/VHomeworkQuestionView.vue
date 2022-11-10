@@ -36,7 +36,7 @@
 </script>
 
 <template>
-  <div v-if="question !== undefined">
+  <div v-if="question !== undefined && questionId">
     <section class="mb-64">
       <VHeading level="1" class="mb-24">{{ question.name }}</VHeading>
       <VHtmlContent :content="question.text" />

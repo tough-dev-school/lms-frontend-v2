@@ -6,10 +6,15 @@
   import { computed, ref } from 'vue';
   import useUser from '@/stores/user';
   import { formatDate } from '@/utils/date';
+  import type { Answer } from '@/types/homework';
+
+  export interface Props {
+    answer: Answer;
+  }
 
   const user = useUser();
 
-  const props = defineProps({ answer: { type: Object } });
+  const props = defineProps<Props>();
 
   const emit = defineEmits(['delete', 'edit']);
 
