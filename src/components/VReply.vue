@@ -1,10 +1,8 @@
 <script lang="ts" setup>
-  import VHtmlContent from '@/components/VHtmlContent.vue';
   import VTextEditor from '@/components/VTextEditor.vue';
   import VButton from '@/components/VButton.vue';
   import useHomework from '@/stores/homework';
   import { ref, computed } from 'vue';
-  import VAnswerActions from '@/components/VAnswerActions.vue';
   import VPost from '@/components/VPost.vue';
   import htmlToMarkdown from '@/utils/htmlToMarkdown';
 
