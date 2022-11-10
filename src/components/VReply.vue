@@ -30,12 +30,12 @@
   };
 
   const saveAnswer = async () => {
-    console.log(text.value);
-    if (props.reply.slug) {
-      await homework.updateAnswer(props.reply.slug, text.value);
-    } else if (props.questionId) {
-      await homework.postAnswer(text.value, props.questionId);
-    }
+    await homework.postAnswer(text.value, props.questionId);
+    emit('update');
+  };
+
+  const updateAnswer = async () => {
+    await homework.updateAnswer(props.reply.slug, text.value);
     emit('update');
     editMode.value = false;
   };
@@ -68,6 +68,7 @@
       @update="handleEditorUpdate"
       :value="reply.text"
       class="mb-16 rounded border border-gray" />
-    <VButton @click="saveAnswer">Отправить</VButton>
+    <VButton @click="saveAnswer" v-if="!reply">Отправить</VButton>
+    <VButton @click="updateAnswer" v-else>Сохранить</VButton>
   </div>
 </template>
