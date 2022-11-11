@@ -7,7 +7,7 @@ const handleError = (error: any) => {
     const field = error.response.data[key];
     const fields = Array.isArray(field) ? field : [field];
     fields.forEach((error: string) => {
-      toasts.addMessage(error);
+      toasts.addMessage(error, 'error');
     });
   });
 };

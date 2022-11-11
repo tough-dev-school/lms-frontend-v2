@@ -2,7 +2,7 @@ import type { Meta, Story } from '@storybook/vue3';
 import VToast from '@/components/VToast.vue';
 
 export default {
-  title: 'VToasts/VToast',
+  title: 'Toasts/VToast',
   component: VToast,
 } as Meta;
 

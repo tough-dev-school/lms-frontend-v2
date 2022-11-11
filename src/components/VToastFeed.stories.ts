@@ -4,7 +4,7 @@ import useToasts from '@/stores/toasts';
 import { faker } from '@faker-js/faker';
 
 export default {
-  title: 'VToasts/VToastFeed',
+  title: 'Toasts/VToastFeed',
   component: VToastFeed,
 } as Meta;
 
