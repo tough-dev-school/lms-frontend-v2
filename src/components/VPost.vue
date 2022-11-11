@@ -7,6 +7,7 @@
   import useUser from '@/stores/user';
   import { formatDate } from '@/utils/date';
   import type { Answer } from '@/types/homework';
+  import VCard from '@/components/VCard.vue';
 
   export interface Props {
     answer: Answer;
@@ -38,7 +39,7 @@
 </script>
 
 <template>
-  <article class="w-full">
+  <VCard>
     <div class="mb-16 flex items-center gap-8">
       <VAvatar
         :first-name="answer.author.firstName"
@@ -58,5 +59,5 @@
       <RouterLink v-if="answer.slug" class="Link" :to="to">К ответу</RouterLink>
     </div>
     <div v-html="answer.text" class="prose" />
-  </article>
+  </VCard>
 </template>

@@ -4,8 +4,8 @@
   import { useRoute } from 'vue-router';
   import { onMounted, ref, watch } from 'vue';
   import type { MaterialContentBlocks } from '@/types/materials';
-
-  import VPreloader from '../components/VPreloader.vue';
+  import VCard from '@/components/VCard.vue';
+  import VPreloader from '@/components/VPreloader.vue';
   import { getMaterialById } from '@/api/materials';
 
   const route = useRoute();
@@ -28,14 +28,14 @@
 </script>
 
 <template>
-  <div>
+  <VCard class="pt-32">
     <NotionRenderer
       v-if="blocks"
       :blockMap="blocks"
       :map-page-url="mapPageUrl"
       fullPage />
     <VPreloader v-else />
-  </div>
+  </VCard>
 </template>
 
 <style>

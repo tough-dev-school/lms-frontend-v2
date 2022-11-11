@@ -1,5 +1,9 @@
+<script setup lang="ts">
+  import VCard from '@/components/VCard.vue';
+</script>
+
 <template>
-  <details class="bg-yellow-light p-16">
+  <VCard tag="details" class="bg-yellow-light">
     <summary>
       <h3 class="mb-16 inline font-bold">Как давать обратную связь?</h3>
     </summary>
@@ -31,5 +35,5 @@
       <h3>Шаг 3</h3>
       <p>Можно отправлять.</p>
     </div>
-  </details>
+  </VCard>
 </template>

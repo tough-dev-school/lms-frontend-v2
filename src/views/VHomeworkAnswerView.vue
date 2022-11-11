@@ -8,6 +8,7 @@
   import { storeToRefs } from 'pinia';
   import VPreloader from '@/components/VPreloader.vue';
   import VHtmlContent from '@/components/VHtmlContent.vue';
+  import VCard from '@/components/VCard.vue';
 
   const homework = useHomework();
   const { question, answers } = storeToRefs(homework);
@@ -36,23 +37,21 @@
 
 <template>
   <div v-if="question !== undefined && answer !== undefined">
-    <section class="mb-64">
-      <VHeading level="1" class="mb-24">{{ question.name }}</VHeading>
-      <details>
+    <section class="mb-64 flex flex-col gap-24">
+      <VHeading level="1">{{ question.name }}</VHeading>
+      <VCard tag="details">
         <summary>Показать задание</summary>
         <VHtmlContent :content="question.text" class="mt-8" />
-      </details>
+      </VCard>
       <VPost :answer="answer" />
     </section>
-    <section>
-      <VHeading level="2" class="mb-24">Обсуждение</VHeading>
-      <VFeedbackGuide class="mb-24" />
-      <div class="grid gap-24">
-        <VPost
-          v-for="comment in answer.descendants"
-          :key="comment.slug"
-          :answer="comment" />
-      </div>
+    <section class="flex flex-col gap-24">
+      <VHeading level="2">Обсуждение</VHeading>
+      <VFeedbackGuide />
+      <VPost
+        v-for="comment in answer.descendants"
+        :key="comment.slug"
+        :answer="comment" />
     </section>
   </div>
   <VPreloader v-else />
