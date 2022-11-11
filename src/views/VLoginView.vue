@@ -47,7 +47,7 @@
 </script>
 
 <template>
-  <div class="max-w-prose pt-[25vh]">
+  <div class="max-w-prose px-16 pt-[25vh] tablet:px-32">
     <VHeading level="1" class="mb-32">Вход и регистрация</VHeading>
     <template v-if="withPassword === false">
       <VTextInput

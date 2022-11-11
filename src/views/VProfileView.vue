@@ -46,7 +46,7 @@
 </script>
 
 <template>
-  <div>
+  <div class="px-16 tablet:px-32">
     <VHeading class="mb-24" level="1">Данные для диплома</VHeading>
     <div class="flex flex-col items-start gap-16 tablet:gap-24">
       <VTextInput label="Имя" v-model="firstName" />
