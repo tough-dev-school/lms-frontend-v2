@@ -42,13 +42,25 @@
   @import 'vue3-notion/dist/style.css';
 
   .notion-page-cover {
-    padding-left: calc(min(12px, 8vw));
-    padding-right: calc(min(12px, 8vw));
     width: var(--notion-max-width);
     margin: 0 auto;
   }
 
+  .notion-page,
+  .notion-page-cover {
+    @apply p-0;
+  }
+
+  .notion-page-cover,
+  .notion-image-inset,
+  .notion-callout {
+    @apply rounded-[12px];
+  }
+
   .notion {
     @apply font-body;
+  }
+  .notion-link {
+    @apply border-blue text-blue opacity-100 hover:border-red hover:text-red;
   }
 </style>
