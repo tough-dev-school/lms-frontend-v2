@@ -56,6 +56,20 @@
   .notion {
     @apply font-body;
   }
+
+  .notion-title,
+  .notion-h1 {
+    @apply text-h1;
+  }
+
+  .notion-h2 {
+    @apply text-h2;
+  }
+
+  .notion-h3 {
+    @apply text-h3;
+  }
+
   .notion-link {
     @apply border-blue text-blue opacity-100 hover:border-red hover:text-red;
   }

@@ -10,7 +10,9 @@
 </script>
 
 <template>
-  <component :is="tag" class="w-full rounded bg-white px-32 py-16 shadow">
+  <component
+    :is="tag"
+    class="w-full overflow-hidden bg-white px-16 py-16 shadow tablet:rounded tablet:px-32">
     <slot />
   </component>
 </template>

@@ -25,9 +25,6 @@ module.exports = {
     },
     container: {
       center: true,
-      padding: {
-        DEFAULT: '16px',
-      },
     },
     colors: {
       offwhite: { DEFAULT: '#faf9f8' },
