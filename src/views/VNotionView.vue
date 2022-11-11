@@ -28,14 +28,10 @@
 </script>
 
 <template>
-  <VCard class="pt-32">
-    <NotionRenderer
-      v-if="blocks"
-      :blockMap="blocks"
-      :map-page-url="mapPageUrl"
-      fullPage />
-    <VPreloader v-else />
+  <VCard class="pt-32" v-if="blocks">
+    <NotionRenderer :blockMap="blocks" :map-page-url="mapPageUrl" fullPage />
   </VCard>
+  <VPreloader v-else />
 </template>
 
 <style>
