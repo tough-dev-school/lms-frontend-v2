@@ -40,6 +40,7 @@
       questionId: props.questionId,
       parentId: props.parentId,
     });
+    text.value = '';
     emit('update');
   };
 

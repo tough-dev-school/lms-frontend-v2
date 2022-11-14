@@ -17,6 +17,11 @@
     replyMode.value = !replyMode.value;
   };
 
+  const handleUpdate = () => {
+    replyMode.value = false;
+    emit('update');
+  };
+
   defineProps<Props>();
 
   const target = ref(null);
@@ -47,7 +52,7 @@
         class="mt-16 ml-32"
         :questionId="originalPost.question"
         :parentId="originalPost.slug"
-        @update="emit('update')" />
+        @update="handleUpdate" />
     </div>
     <div
       class="mt-16 flex flex-col gap-16 pl-16"
