@@ -49,9 +49,17 @@ const useHomework = defineStore('homework', {
         this.answers = [answer];
       } catch (error: any) {}
     },
-    async postAnswer(text: string, questionId: string) {
+    async postAnswer({
+      text,
+      questionId,
+      parentId,
+    }: {
+      text: string;
+      questionId: string;
+      parentId?: string;
+    }) {
       try {
-        await postAnswer(text, questionId, null);
+        await postAnswer({ text, questionId, parentId });
       } catch (error: any) {}
     },
     async deleteAnswer(answerId: string) {

@@ -12,6 +12,7 @@
   export interface Props {
     reply?: Answer | DraftAnswer;
     questionId: string;
+    parentId?: string;
   }
 
   const homework = useHomework();
@@ -33,7 +34,11 @@
   };
 
   const saveAnswer = async () => {
-    await homework.postAnswer(text.value, props.questionId);
+    await homework.postAnswer({
+      text: text.value,
+      questionId: props.questionId,
+      parentId: props.parentId,
+    });
     emit('update');
   };
 

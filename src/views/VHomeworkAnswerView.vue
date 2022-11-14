@@ -1,6 +1,7 @@
 <script lang="ts" setup>
   import VHeading from '@/components/VHeading.vue';
   import VPost from '@/components/VPost.vue';
+  import VReply from '@/components/VReply.vue';
   import VFeedbackGuide from '@/components/VFeedbackGuide.vue';
   import { computed, watch } from 'vue';
   import useHomework from '@/stores/homework';
@@ -48,7 +49,10 @@
     <section class="flex flex-col gap-24">
       <VHeading level="2">Обсуждение</VHeading>
       <VFeedbackGuide />
-      <VPost
+      <VReply
+        :questionId="question.slug"
+        :parentId="answer.slug"
+        @update="getData" />
         v-for="comment in answer.descendants"
         :key="comment.slug"
         :answer="comment" />
