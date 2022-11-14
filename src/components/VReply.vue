@@ -70,10 +70,11 @@
 
 <template>
   <div v-if="hasReply && !editMode">
-    <VPost
-      :answer="reply as Answer"
-      @edit="handleEdit"
-      @delete="handleDelete" />
+    <VPost :answer="reply as Answer" @edit="handleEdit" @delete="handleDelete">
+      <template #footer>
+        <slot name="post-footer" />
+      </template>
+    </VPost>
   </div>
   <VCard v-else class="px-0 pt-0 tablet:px-0">
     <VTextEditor

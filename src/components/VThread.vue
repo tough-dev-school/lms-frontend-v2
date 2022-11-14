@@ -1,11 +1,10 @@
 <script lang="ts" setup>
   import type { Answer } from '@/types/homework';
-  import VPost from '@/components/VPost.vue';
   import VReply from '@/components/VReply.vue';
   import { ref } from 'vue';
   import { onClickOutside } from '@vueuse/core';
 
-  interface Props {
+  export interface Props {
     originalPost: Answer;
   }
 
@@ -34,8 +33,11 @@
 <template>
   <div>
     <div class="group" ref="target">
-      <VPost :answer="originalPost">
-        <template #footer>
+      <VReply
+        :reply="originalPost"
+        :question-id="originalPost.question"
+        @update="emit('update')">
+        <template #post-footer>
           <button
             class="text-sub text-gray"
             :class="{
@@ -46,7 +48,7 @@
             {{ replyMode ? 'Не отвечать' : 'Ответить' }}
           </button>
         </template>
-      </VPost>
+      </VReply>
       <VReply
         v-if="replyMode"
         class="mt-16 ml-32"
