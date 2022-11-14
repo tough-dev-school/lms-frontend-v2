@@ -4,6 +4,7 @@
   import useHomework from '@/stores/homework';
   import { ref, computed, withDefaults } from 'vue';
   import VPost from '@/components/VPost.vue';
+  import VCard from '@/components/VCard.vue';
   import htmlToMarkdown from '@/utils/htmlToMarkdown';
   import type { Answer } from '@/types/homework';
 
@@ -73,12 +74,19 @@
       @edit="handleEdit"
       @delete="handleDelete" />
   </div>
-  <div v-else>
+  <VCard v-else class="px-0 pt-0 tablet:px-0">
     <VTextEditor
       @update="handleEditorUpdate"
       :value="reply.text"
-      class="mb-16 rounded shadow" />
-    <VButton @click="saveAnswer" v-if="!hasReply">Отправить</VButton>
-    <VButton @click="updateAnswer" v-else>Сохранить</VButton>
-  </div>
+      class="mb-16 rounded-t border-b border-offwhite" />
+    <div class="flex flex-row-reverse px-32">
+      <VButton
+        @click="saveAnswer"
+        v-if="!hasReply"
+        class="max-h-32 min-w-0 px-24"
+        >Отправить</VButton
+      >
+      <VButton @click="updateAnswer" v-else class="h-32">Сохранить</VButton>
+    </div>
+  </VCard>
 </template>
