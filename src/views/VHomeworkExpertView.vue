@@ -40,7 +40,11 @@
     <section>
       <VHeading level="2" class="mb-24">Ответы</VHeading>
       <div class="flex flex-col gap-24">
-        <VPost v-for="answer in answers" :key="answer.slug" :answer="answer" />
+        <VPost
+          v-for="answer in answers"
+          :show-go-to-answer="true"
+          :key="answer.slug"
+          :answer="answer" />
       </div>
     </section>
   </div>
