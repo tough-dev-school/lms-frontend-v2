@@ -1,6 +1,7 @@
 <script lang="ts" setup>
   import VHeading from '@/components/VHeading.vue';
   import VPost from '@/components/VPost.vue';
+  import VThread from '@/components/VThread.vue';
   import VReply from '@/components/VReply.vue';
   import VFeedbackGuide from '@/components/VFeedbackGuide.vue';
   import { computed, watch } from 'vue';
@@ -53,9 +54,11 @@
         :questionId="question.slug"
         :parentId="answer.slug"
         @update="getData" />
+      <VThread
         v-for="comment in answer.descendants"
         :key="comment.slug"
-        :answer="comment" />
+        @update="getData"
+        :originalPost="comment" />
     </section>
   </div>
   <VPreloader v-else />

@@ -62,5 +62,8 @@
       >
     </div>
     <div v-html="answer.text" class="prose" />
+    <div class="flex flex-row-reverse empty:appearance-none">
+      <slot name="footer" />
+    </div>
   </VCard>
 </template>
