@@ -8,6 +8,7 @@
   import VHeading from '@/components/VHeading.vue';
   import VPreloader from '@/components/VPreloader.vue';
   import VReply from '@/components/VReply.vue';
+  import VCard from '@/components/VCard.vue';
   import useUser from '@/stores/user';
 
   const route = useRoute();
@@ -37,10 +38,10 @@
 
 <template>
   <div v-if="question !== undefined && questionId">
-    <section class="mb-64">
+    <vCard class="mb-64">
       <VHeading level="1" class="mb-24">{{ question.name }}</VHeading>
       <VHtmlContent :content="question.text" />
-    </section>
+    </vCard>
     <section>
       <VHeading level="2" class="mb-24">Ответ</VHeading>
       <VReply

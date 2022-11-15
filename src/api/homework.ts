@@ -42,16 +42,25 @@ export const getAnswers = async ({
     .data as PaginantedCollection<Answer>;
 };
 
-export const postAnswer = async (
-  text: string,
-  questionId: string,
-  parentId: string | null,
-) => {
+export const postAnswer = async ({
+  text,
+  questionId,
+  parentId,
+}: {
+  text: string;
+  questionId: string;
+  parentId?: string;
+}) => {
   const url = '/api/v2/homework/answers/';
 
-  return (
-    await axios.post(url, { text, question: questionId, parent: parentId })
-  ).data;
+  const data: { text: string; question: string; parent?: string } = {
+    text,
+    question: questionId,
+  };
+
+  if (parentId) data.parent = parentId;
+
+  return (await axios.post(url, data)).data;
 };
 
 export const deleteAnswer = async (answerId: string) => {

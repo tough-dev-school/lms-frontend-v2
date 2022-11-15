@@ -8,6 +8,7 @@ import {
   getAnswer,
 } from '@/api/homework';
 import type { Answer, Question } from '@/types/homework';
+import useToasts from '@/stores/toasts';
 
 interface State {
   question: Question | undefined;
@@ -49,19 +50,33 @@ const useHomework = defineStore('homework', {
         this.answers = [answer];
       } catch (error: any) {}
     },
-    async postAnswer(text: string, questionId: string) {
+    async postAnswer({
+      text,
+      questionId,
+      parentId,
+    }: {
+      text: string;
+      questionId: string;
+      parentId?: string;
+    }) {
+      const toasts = useToasts();
       try {
-        await postAnswer(text, questionId, null);
+        await postAnswer({ text, questionId, parentId });
+        toasts.addMessage('Сообщение добавлено', 'success');
       } catch (error: any) {}
     },
     async deleteAnswer(answerId: string) {
+      const toasts = useToasts();
       try {
         await deleteAnswer(answerId);
+        toasts.addMessage('Сообщение удалено', 'success');
       } catch (error: any) {}
     },
     async updateAnswer(answerId: string, text: string) {
+      const toasts = useToasts();
       try {
         await updateAnswer(answerId, text);
+        toasts.addMessage('Сообщение отправлено', 'success');
       } catch (error: any) {}
     },
   },

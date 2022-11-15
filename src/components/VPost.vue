@@ -3,7 +3,7 @@
   import VAnswerAction from '@/components/VAnswerActions.vue';
   import { relativeDate } from '@/utils/date';
   import getName from '@/utils/getName';
-  import { computed, ref } from 'vue';
+  import { computed, ref, withDefaults } from 'vue';
   import useUser from '@/stores/user';
   import { formatDate } from '@/utils/date';
   import type { Answer } from '@/types/homework';
@@ -11,11 +11,12 @@
 
   export interface Props {
     answer: Answer;
+    showGoToAnswer: boolean;
   }
 
   const user = useUser();
 
-  const props = defineProps<Props>();
+  const props = withDefaults(defineProps<Props>(), { showGoToAnswer: false });
 
   const emit = defineEmits(['delete', 'edit']);
 
@@ -56,8 +57,13 @@
         :delete-time="deleteTime"
         @edit="emit('edit')"
         @delete="emit('delete')" />
-      <RouterLink v-if="answer.slug" class="Link" :to="to">К ответу</RouterLink>
+      <RouterLink v-if="answer.slug && showGoToAnswer" class="Link" :to="to"
+        >К ответу</RouterLink
+      >
     </div>
     <div v-html="answer.text" class="prose" />
+    <div class="flex flex-row-reverse empty:appearance-none">
+      <slot name="footer" />
+    </div>
   </VCard>
 </template>
