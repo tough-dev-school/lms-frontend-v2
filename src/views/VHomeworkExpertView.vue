@@ -17,7 +17,6 @@
     const questionId = String(route.params.questionId);
     await homework.getQuestion(questionId);
     await homework.getAnswers({ questionId });
-    console.log(answers.value);
   };
 
   watch(
