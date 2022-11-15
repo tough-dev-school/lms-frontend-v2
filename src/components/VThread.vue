@@ -8,7 +8,7 @@
     originalPost: Answer;
   }
 
-  const emit = defineEmits(['emit']);
+  const emit = defineEmits(['update']);
 
   const replyMode = ref(false);
 
