@@ -6,6 +6,7 @@
   import type { Ref } from 'vue';
   import useUser from '@/stores/user';
   import type { Gender } from '@/types/users';
+  import VCard from '@/components/VCard.vue';
 
   const user = useUser();
 
@@ -46,7 +47,7 @@
 </script>
 
 <template>
-  <div class="px-16 tablet:px-32">
+  <VCard>
     <VHeading class="mb-24" level="1">Данные для диплома</VHeading>
     <div class="flex flex-col items-start gap-16 tablet:gap-24">
       <VTextInput label="Имя" v-model="firstName" />
@@ -78,5 +79,5 @@
     <div class="mt-64">
       <VButton @click="save">Обновить</VButton>
     </div>
-  </div>
+  </VCard>
 </template>

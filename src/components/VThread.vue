@@ -41,7 +41,7 @@
           <button
             class="text-sub text-gray"
             :class="{
-              'opacity-0 transition-opacity group-hover:opacity-100':
+              'transition-opacity group-hover:opacity-100 tablet:opacity-0':
                 !replyMode,
             }"
             @click="toggleReplyMode">
@@ -51,7 +51,7 @@
       </VReply>
       <VReply
         v-if="replyMode"
-        class="mt-16 ml-32"
+        class="mt-16 ml-16"
         :questionId="originalPost.question"
         :parentId="originalPost.slug"
         @update="handleUpdate" />

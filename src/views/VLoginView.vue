@@ -1,6 +1,7 @@
 <script lang="ts" setup>
   import VHeading from '@/components/VHeading.vue';
   import VButton from '@/components/VButton.vue';
+  import VCard from '@/components/VCard.vue';
   import VTextInput from '@/components/VTextInput.vue';
   import { ref } from 'vue';
   import { onKeyStroke } from '@vueuse/core';
@@ -47,7 +48,7 @@
 </script>
 
 <template>
-  <div class="max-w-prose px-16 pt-[25vh] tablet:px-32">
+  <vCard class="mt-[25vh] pb-32">
     <VHeading level="1" class="mb-32">Вход и регистрация</VHeading>
     <template v-if="withPassword === false">
       <VTextInput
@@ -68,7 +69,7 @@
         </VButton>
       </div>
     </template>
-    <div v-if="withPassword === true">
+    <template v-if="withPassword === true">
       <div class="flex flex-col gap-16">
         <VTextInput label="Логин" type="text" v-model="username" />
         <VTextInput label="Пароль" type="password" v-model="password" />
@@ -84,6 +85,6 @@
           Войти по ссылке
         </VButton>
       </div>
-    </div>
-  </div>
+    </template>
+  </vCard>
 </template>
