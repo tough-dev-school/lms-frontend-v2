@@ -1,12 +1,13 @@
 import useAuth from '@/stores/auth';
 import axios from 'axios';
 import handleError from '@/utils/handleError';
-import applyCaseMiddleware from 'axios-case-converter';
+import convertKeysToCamelCase from '@/utils/convertKeysToCamelCase';
 
 export const createCustomAxiosInstance = ({ useCaseMiddleware = true }) => {
-  const instance = useCaseMiddleware
-    ? applyCaseMiddleware(axios.create())
-    : axios.create();
+  const instance = axios.create();
+  const modifyData = useCaseMiddleware
+    ? convertKeysToCamelCase
+    : (data: Object) => data;
 
   instance.interceptors.request.use((request) => {
     const auth = useAuth();
@@ -21,6 +22,7 @@ export const createCustomAxiosInstance = ({ useCaseMiddleware = true }) => {
 
   instance.interceptors.response.use(
     (response) => {
+      response.data = modifyData(response.data);
       return response;
     },
     (error) => {
@@ -30,6 +32,8 @@ export const createCustomAxiosInstance = ({ useCaseMiddleware = true }) => {
         auth.resetAuth();
         window.location.href = window.origin;
       }
+
+      error.response.data = modifyData(error.response.data);
 
       handleError(error);
       return Promise.reject(error);
