@@ -4,8 +4,6 @@
   import { relativeDate } from '@/utils/date';
   import getName from '@/utils/getName';
   import { computed, ref, withDefaults } from 'vue';
-  import useUser from '@/stores/user';
-  import { formatDate } from '@/utils/date';
   import type { Answer } from '@/types/homework';
   import VCard from '@/components/VCard.vue';
 
@@ -13,8 +11,6 @@
     answer: Answer;
     showGoToAnswer: boolean;
   }
-
-  const user = useUser();
 
   const props = withDefaults(defineProps<Props>(), { showGoToAnswer: false });
 
