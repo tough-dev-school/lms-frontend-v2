@@ -4,6 +4,13 @@ import vueRouter from 'storybook-vue3-router';
 import { routes } from '@/router';
 import useUser from '@/stores/user';
 import useToasts from '@/stores/toasts';
+import useHomework from './stores/homework';
+import {
+  getAnswerData,
+  getQuestionData,
+  getAnswersData,
+} from './mocks/homework';
+import { getAnswers } from './api/homework';
 
 export default {
   title: 'Pages/App',
@@ -21,26 +28,44 @@ const Template: Story = (args) => ({
   template: '<App v-bind="args" />',
 });
 
-const decorate = (initialRoute: string) => {
+const setUser = () => {
+  const user = useUser();
+
+  user.$patch({
+    id: '',
+    uuid: '',
+    username: 'johndoe@demo.com',
+    firstName: 'Иван',
+    lastName: 'Иванов',
+    firstNameEn: 'John',
+    lastNameEn: 'Doe',
+    gender: 'male',
+    linkedinUsername: 'johndoe',
+    githubUsername: 'johndoe',
+  });
+};
+
+const setQuestion = () => {
+  const homework = useHomework();
+
+  homework.$patch({
+    question: getQuestionData(),
+  });
+};
+
+const decorate = (
+  initialRoute: string,
+  callback: Function = () => {
+    setUser();
+  },
+) => {
   return [
     (story: InstanceType<typeof App>) => {
-      const user = useUser();
       const toasts = useToasts();
 
       toasts.disable();
 
-      user.$patch({
-        id: '',
-        uuid: '',
-        username: 'johndoe@demo.com',
-        firstName: 'Иван',
-        lastName: 'Иванов',
-        firstNameEn: 'John',
-        lastNameEn: 'Doe',
-        gender: 'male',
-        linkedinUsername: 'johndoe',
-        githubUsername: 'johndoe',
-      });
+      callback();
 
       return {
         components: { story },
@@ -61,12 +86,49 @@ Profile.decorators = decorate('/profile');
 
 export const HomeworkAnswerView = Template.bind({});
 HomeworkAnswerView.args = {};
-HomeworkAnswerView.decorators = decorate('/homework');
+HomeworkAnswerView.decorators = decorate('/homework/answers/1234567890', () => {
+  setUser();
+  setQuestion();
+
+  const homework = useHomework();
+  const answers = [getAnswerData()];
+  answers[0].descendants = getAnswersData(3);
+  answers[0].descendants[0].descendants = getAnswersData(2);
+  answers[0].descendants[0].descendants[0].descendants = getAnswersData(1);
+  homework.$patch({
+    answers: answers,
+  });
+});
 
 export const HomeworkExpertView = Template.bind({});
 HomeworkExpertView.args = {};
-HomeworkExpertView.decorators = decorate('/homework');
+HomeworkExpertView.decorators = decorate(
+  '/homework/question-admin/1234567890',
+  () => {
+    setUser();
+    setQuestion();
+
+    const homework = useHomework();
+    const answers = getAnswersData(3);
+    homework.$patch({
+      answers: answers,
+    });
+  },
+);
 
 export const HomeworkQuestionView = Template.bind({});
 HomeworkQuestionView.args = {};
-HomeworkQuestionView.decorators = decorate('/homework');
+HomeworkQuestionView.decorators = decorate(
+  '/homework/questions/1234567890',
+  () => {
+    setUser();
+    setQuestion();
+
+    const homework = useHomework();
+    const answers = [getAnswerData()];
+
+    homework.$patch({
+      answers: answers,
+    });
+  },
+);
