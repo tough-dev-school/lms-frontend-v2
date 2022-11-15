@@ -65,7 +65,7 @@
 
 <template>
   <div class="bg-white">
-    <header class="flex gap-8">
+    <header class="flex">
       <button @click="toggleHeading1" class="bubble-button">
         <H1Icon />
       </button>
@@ -105,14 +105,6 @@
   }
 
   .bubble-button {
-    @apply inline-flex items-center justify-center p-8 text-gray  transition-colors hover:text-black;
-  }
-
-  .bubble-button:first-child {
-    @apply pl-16;
-  }
-
-  .bubble-button:last-child {
-    @apply pr-16;
+    @apply inline-flex flex-grow items-center justify-center py-4 text-gray transition-colors hover:bg-offwhite hover:bg-opacity-75 hover:text-black;
   }
 </style>
