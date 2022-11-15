@@ -49,16 +49,15 @@
           </button>
         </template>
       </VReply>
-      <VReply
-        v-if="replyMode"
-        class="mt-16 ml-16"
-        :questionId="originalPost.question"
-        :parentId="originalPost.slug"
-        @update="handleUpdate" />
+      <div class="thread-ruler" :class="{ 'mt-16': replyMode }">
+        <VReply
+          v-if="replyMode"
+          :questionId="originalPost.question"
+          :parentId="originalPost.slug"
+          @update="handleUpdate" />
+      </div>
     </div>
-    <div
-      class="mt-16 flex flex-col gap-16 pl-16"
-      v-if="originalPost.descendants.length > 0">
+    <div class="thread-ruler mt-16" v-if="originalPost.descendants.length > 0">
       <VThread
         v-for="reply in originalPost.descendants"
         :originalPost="reply"
@@ -67,3 +66,9 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+  .thread-ruler {
+    @apply flex flex-col gap-16 border-l border-gray border-opacity-10 pl-8 transition-colors hover:border-opacity-25 tablet:pl-16;
+  }
+</style>
