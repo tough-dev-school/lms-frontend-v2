@@ -6,7 +6,7 @@
     "build": "run-p type-check build-only",
     "preview": "vite preview --port 4173",
     "test:unit": "vitest --config ./tests/unit.config.ts",
-    "test:visual": "concurrently --success first --kill-others \"start-storybook -p 3000\" \"wait-on http://localhost:3000 && vitest --run --config ./tests/visual.config.ts\"",
+    "test:visual": "concurrently --success first --kill-others \"start-storybook -p 3000\" \"wait-on http://localhost:3000 && vitest --config ./tests/visual.config.ts\"",
     "test:visual:update": "concurrently --success first --kill-others \"start-storybook -p 3000\" \"wait-on http://localhost:3000 && vitest --update --config ./tests/visual.config.ts\"",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
