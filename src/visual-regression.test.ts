@@ -9,10 +9,7 @@ import playwright from 'playwright';
 expect.extend({ toMatchImageSnapshot });
 
 const matchConfig = (threshold: number): MatchImageSnapshotOptions => ({
-  comparisonMethod: 'ssim',
-  customDiffConfig: {
-    ssim: 'fast',
-  },
+  comparisonMethod: 'pixelmatch',
   failureThreshold: threshold,
   failureThresholdType: 'percent',
   blur: 1,
