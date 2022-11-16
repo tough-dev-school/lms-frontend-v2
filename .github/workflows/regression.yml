@@ -29,3 +29,10 @@ jobs:
 
       - name: Run visual tests 🖼
         run: npm run test:visual
+
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v3
+        with:
+          name: diff
+          path: src/__image_snapshots__/__diff_output__
+          retention-days: 14
