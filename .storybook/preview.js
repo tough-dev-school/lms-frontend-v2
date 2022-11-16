@@ -4,9 +4,12 @@ import '../src/tailwind.css';
 
 import { app } from '@storybook/vue3';
 import { createPinia } from 'pinia';
+import FloatingVue from 'floating-vue';
+import 'floating-vue/dist/style.css';
 
 const pinia = createPinia();
 
+app.use(FloatingVue);
 app.use(pinia);
 
 export const parameters = {
