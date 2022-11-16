@@ -15,6 +15,7 @@ const matchConfig = (threshold: number): MatchImageSnapshotOptions => ({
   },
   failureThreshold: threshold,
   failureThresholdType: 'percent',
+  diffDirection: 'vertical',
 });
 
 class VisualTest {
