@@ -10,7 +10,6 @@ import {
   getQuestionData,
   getAnswersData,
 } from './mocks/homework';
-import { getAnswers } from './api/homework';
 
 export default {
   title: 'Pages/App',
