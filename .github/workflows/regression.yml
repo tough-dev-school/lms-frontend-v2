@@ -30,7 +30,7 @@ jobs:
       - name: Run visual tests 🖼
         run: npm run test:visual
 
-      - name: Archive code coverage results
+      - name: Saving test results 📥
         uses: actions/upload-artifact@v3
         with:
           name: diff
