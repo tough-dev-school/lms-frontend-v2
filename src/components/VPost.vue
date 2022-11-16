@@ -4,8 +4,6 @@
   import { relativeDate } from '@/utils/date';
   import getName from '@/utils/getName';
   import { computed, ref, withDefaults } from 'vue';
-  import useUser from '@/stores/user';
-  import { formatDate } from '@/utils/date';
   import type { Answer } from '@/types/homework';
   import VCard from '@/components/VCard.vue';
 
@@ -13,8 +11,6 @@
     answer: Answer;
     showGoToAnswer: boolean;
   }
-
-  const user = useUser();
 
   const props = withDefaults(defineProps<Props>(), { showGoToAnswer: false });
 
@@ -29,14 +25,6 @@
       params: { answerId: props.answer.slug },
     };
   });
-
-  const isOwn = computed(() => {
-    return user.uuid === props.answer.author.uuid;
-  });
-
-  const ownDate = computed(() => {
-    return formatDate(props.answer.created, 'HH:mm');
-  });
 </script>
 
 <template>
@@ -45,11 +33,14 @@
       <VAvatar
         :first-name="answer.author.firstName"
         :last-name="answer.author.lastName" />
-      <div class="font-bold">
-        {{ getName(answer.author.firstName, answer.author.lastName) }}
+      <div class="">
+        <div class="font-bold">
+          {{ getName(answer.author.firstName, answer.author.lastName) }}
+        </div>
+        <div class="text-sub leading-tight text-gray">
+          {{ relativeDate(answer.created) }}
+        </div>
       </div>
-      <div class="text-gray" v-if="isOwn">{{ ownDate }}</div>
-      <div class="text-gray" v-else>{{ relativeDate(answer.created) }}</div>
       <div class="flex-grow"></div>
       <VAnswerAction
         :created="answer.created"

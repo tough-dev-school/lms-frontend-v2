@@ -6,9 +6,9 @@
     modelValue: { type: String, default: '' },
   });
 
-  const emit = defineEmits<{ 
-    (e: 'update:modelValue', value: string): void 
-  }>()
+  const emit = defineEmits<{
+    (e: 'update:modelValue', value: string): void;
+  }>();
 
   const handleInput = (e: Event) => {
     const value = (e.target as HTMLInputElement).value;
@@ -24,7 +24,7 @@
     <input
       v-bind="$attrs"
       :class="{
-        'block h-56 w-full rounded border border-gray bg-white p-16 text-black placeholder:text-gray focus:border-blue focus:outline-none': true,
+        'block h-56 w-full rounded border border-gray bg-offwhite p-16 text-black placeholder:text-gray focus:border-blue focus:outline-none': true,
         'border-red': error,
       }"
       data-testid="input"

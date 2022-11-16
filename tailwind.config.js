@@ -25,6 +25,10 @@ module.exports = {
     },
     container: {
       center: true,
+      padding: {
+        DEFAULT: '8px',
+        tablet: '16px',
+      },
     },
     colors: {
       offwhite: { DEFAULT: '#faf9f8' },
@@ -56,6 +60,7 @@ module.exports = {
       1.5: '1.5em',
     },
     spacing: {
+      inherit: 'inherit',
       0: 0,
       4: 4,
       ...spacing(8, 512),

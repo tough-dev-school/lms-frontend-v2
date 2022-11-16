@@ -5,6 +5,7 @@ import convertKeysToCamelCase from '@/utils/convertKeysToCamelCase';
 
 export const createCustomAxiosInstance = ({ useCaseMiddleware = true }) => {
   const instance = axios.create();
+
   const modifyData = useCaseMiddleware
     ? convertKeysToCamelCase
     : (data: Object) => data;
