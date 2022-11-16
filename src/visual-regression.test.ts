@@ -52,6 +52,18 @@ describe('visual regression test for', () => {
       'ProfileView',
       `/iframe.html?args=&id=pages-app--profile&viewMode=story#/profile`,
     ),
+    new VisualTest(
+      'HomeworkAnswers',
+      `/iframe.html?args=&id=pages-app--homework-answer-view&viewMode=story#/homework/answers/1234567890`,
+    ),
+    new VisualTest(
+      'HomeworkExpert',
+      '/iframe.html?args=&id=pages-app--homework-expert-view&viewMode=story#/homework/question-admin/1234567890',
+    ),
+    new VisualTest(
+      'HomeworkQuestion',
+      '/iframe.html?args=&id=pages-app--homework-question-view&viewMode=story#/homework/questions/1234567890',
+    ),
   ];
 
   scenarios.forEach((test) => {
