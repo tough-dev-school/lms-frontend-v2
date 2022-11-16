@@ -31,6 +31,7 @@ jobs:
         run: npm run test:visual
 
       - name: Saving test results 📥
+        if: failure()
         uses: actions/upload-artifact@v3
         with:
           name: diff
