@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@master
 
       - name: Setup node env 🏗
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
           check-latest: true
@@ -30,7 +30,8 @@ jobs:
       - name: Run visual tests 🖼
         run: npm run test:visual
 
-      - name: Archive code coverage results
+      - name: Saving test results 📥
+        if: failure()
         uses: actions/upload-artifact@v3
         with:
           name: diff
