@@ -31,7 +31,7 @@
 <template>
   <div v-if="question !== undefined && answers.length > 0">
     <VCard class="mb-64">
-      <VHeading level="1" class="mb-24">{{ question.name }}</VHeading>
+      <VHeading level="1" class="mb-24">Hello</VHeading>
       <VHtmlContent :content="question.text" class="mt-8" />
     </VCard>
     <section>
