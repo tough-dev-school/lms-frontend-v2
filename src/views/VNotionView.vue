@@ -2,34 +2,30 @@
   // @ts-ignore
   import { NotionRenderer } from 'vue3-notion';
   import { useRoute } from 'vue-router';
-  import { onMounted, ref, watch } from 'vue';
-  import type { MaterialContentBlocks } from '@/types/materials';
+  import { onMounted, watch } from 'vue';
   import VCard from '@/components/VCard.vue';
   import VPreloader from '@/components/VPreloader.vue';
-  import { getMaterialById } from '@/api/materials';
+  import useMaterials from '@/stores/materials';
+  import { storeToRefs } from 'pinia';
 
   const route = useRoute();
-  const blocks = ref<MaterialContentBlocks | undefined>(undefined);
-
-  const update = async () => {
-    blocks.value = undefined;
-    blocks.value = await getMaterialById(String(route.params.id));
-  };
+  const materials = useMaterials();
+  const { material } = storeToRefs(materials);
 
   watch(route, async () => {
-    await update();
+    await materials.getData(String(route.params.id));
   });
 
   onMounted(async () => {
-    await update();
+    await materials.getData(String(route.params.id));
   });
 
   const mapPageUrl = (id: string) => `/materials/${id}`;
 </script>
 
 <template>
-  <VCard class="pt-32" v-if="blocks">
-    <NotionRenderer :blockMap="blocks" :map-page-url="mapPageUrl" fullPage />
+  <VCard class="pt-32" v-if="material">
+    <NotionRenderer :blockMap="material" :map-page-url="mapPageUrl" fullPage />
   </VCard>
   <VPreloader v-else />
 </template>
