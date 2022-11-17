@@ -8,6 +8,7 @@ services:
     environment:
       - DEBUG=Off
       - AXES_ENABLED=Off
+      - NO_CACHE=On
       - DISABLE_THROTTLING=On
       - CELERY_ALWAYS_EAGER=On
       - DATABASE_URL=postgres://postgres:secret@postgres/postgres
