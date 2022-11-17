@@ -10,6 +10,8 @@ import {
   getQuestionData,
   getAnswersData,
 } from './mocks/homework';
+import useMaterials from './stores/materials';
+import { getMaterial } from './mocks/materials';
 
 export default {
   title: 'Pages/App',
@@ -61,10 +63,13 @@ const decorate = (
   return [
     (story: InstanceType<typeof App>) => {
       const toasts = useToasts();
+      const materials = useMaterials();
 
       toasts.disable();
 
       callback();
+
+      materials.$patch({ material: getMaterial() });
 
       return {
         components: { story },
@@ -82,6 +87,10 @@ Login.decorators = decorate('/login');
 export const Profile = Template.bind({});
 Profile.args = {};
 Profile.decorators = decorate('/profile');
+
+export const NotionView = Template.bind({});
+NotionView.args = {};
+NotionView.decorators = decorate('/materials/1234567890');
 
 export const HomeworkAnswerView = Template.bind({});
 HomeworkAnswerView.args = {};
