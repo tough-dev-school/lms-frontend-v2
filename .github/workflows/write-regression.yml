@@ -28,7 +28,7 @@ jobs:
         run: npm install
 
       - name: Run visual tests 🖼
-        run: npm run test:visual
+        run: npm run test:visual:update
 
       - name: Update screenshots
         uses: stefanzweifel/git-auto-commit-action@v4
