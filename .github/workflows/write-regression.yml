@@ -1,4 +1,4 @@
-name: Update visual regression tests screenshots
+name: Update visual regression test screenshots
 
 on: [workflow_dispatch]
 
@@ -27,10 +27,17 @@ jobs:
       - name: Install dependencies 👨🏻‍💻
         run: npm install
 
-      - name: Run visual tests 🖼
+      - name: Updating screenshots 🖼
         run: npm run test:visual:update
 
-      - name: Update screenshots
+      - name: Saving screenshots for preview 📥
+        uses: actions/upload-artifact@v3
+        with:
+          name: diff
+          path: src/__image_snapshots__
+          retention-days: 14
+
+      - name: Creating branch with updates 🦑
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Update screenshots
