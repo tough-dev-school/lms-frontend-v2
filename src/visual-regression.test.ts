@@ -8,14 +8,14 @@ import playwright from 'playwright';
 
 expect.extend({ toMatchImageSnapshot });
 
-const matchConfig = (threshold: number): MatchImageSnapshotOptions => ({
+const matchConfig: MatchImageSnapshotOptions = {
   comparisonMethod: 'ssim',
   customDiffConfig: {
     ssim: 'fast',
   },
-  failureThreshold: threshold,
-  failureThresholdType: 'percent',
-});
+  failureThreshold: 16 * 16,
+  failureThresholdType: 'pixel',
+};
 
 class VisualTest {
   name: string;
@@ -28,7 +28,7 @@ class VisualTest {
   }
 }
 
-type Test = [string, string, Function, number, number, number];
+type Test = [string, string, Function, number, number];
 
 describe('visual regression test for', () => {
   let browser: playwright.Browser;
@@ -74,7 +74,6 @@ describe('visual regression test for', () => {
         test.action,
         viewport.width,
         viewport.height,
-        viewport.threshold,
       ]);
     });
   });
@@ -90,16 +89,13 @@ describe('visual regression test for', () => {
     });
   };
 
-  test.each(tests)(
-    '%s',
-    async (name, route, action, width, height, threshold) => {
-      await page.setViewportSize({ width, height });
-      await goto(route);
+  test.each(tests)('%s', async (name, route, action, width, height) => {
+    await page.setViewportSize({ width, height });
+    await goto(route);
 
-      await action();
-      const image = await page.screenshot({ fullPage: true });
+    await action();
+    const image = await page.screenshot({ fullPage: true });
 
-      expect(image).toMatchImageSnapshot(matchConfig(threshold));
-    },
-  );
+    expect(image).toMatchImageSnapshot(matchConfig);
+  });
 });
