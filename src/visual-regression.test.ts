@@ -97,7 +97,7 @@ describe('visual regression test for', () => {
       await goto(route);
 
       await action();
-      const image = await page.screenshot({ fullPage: true });
+      const image = await page.screenshot();
 
       expect(image).toMatchImageSnapshot(matchConfig(threshold));
     },
