@@ -13,8 +13,8 @@ const matchConfig: MatchImageSnapshotOptions = {
   customDiffConfig: {
     ssim: 'fast',
   },
-  failureThreshold: 16 * 16,
-  failureThresholdType: 'pixel',
+  failureThreshold: 0.02,
+  failureThresholdType: 'percent',
 };
 
 class VisualTest {
