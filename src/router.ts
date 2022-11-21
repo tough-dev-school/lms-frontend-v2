@@ -93,7 +93,7 @@ export const beforeEach = async (
 
   // Redirect to /login if unauthorized and route is not public
   if (!(isAuthorized || isPublicRoute(String(to.name)))) {
-    next('/login');
+    next(`/login?next=${encodeURIComponent(to.fullPath)}`);
   }
 
   // Restrict auth routes for authorized users
