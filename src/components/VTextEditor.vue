@@ -20,7 +20,9 @@
 
   const props = withDefaults(defineProps<Props>(), { modelValue: '' });
 
-  const emit = defineEmits(['update:modelValue']);
+  const emit = defineEmits<{
+    (e: 'update:modelValue', value: string): void;
+  }>();
 
   const editor = new Editor({
     content: props.modelValue,

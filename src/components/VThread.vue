@@ -12,8 +12,10 @@
     originalPost: Answer;
   }
 
-  const emit = defineEmits(['update']);
   const user = useUser();
+  const emit = defineEmits<{
+    (e: 'update'): void;
+  }>();
   const replyMode = ref(false);
 
   const handleUpdate = () => {
