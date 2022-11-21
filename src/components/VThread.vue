@@ -1,6 +1,7 @@
 <script lang="ts" setup>
   import type { Answer } from '@/types/homework';
   import VReply from '@/components/VReply.vue';
+  import VNewPost from '@/components/VNewPost.vue';
   import { ref } from 'vue';
   import { onClickOutside } from '@vueuse/core';
 
@@ -50,7 +51,7 @@
         </template>
       </VReply>
       <div class="thread-ruler" :class="{ 'mt-16': replyMode }">
-        <VReply
+        <VNewPost
           v-if="replyMode"
           :questionId="originalPost.question"
           :parentId="originalPost.slug"
