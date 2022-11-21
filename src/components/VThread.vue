@@ -1,16 +1,18 @@
 <script lang="ts" setup>
   import type { Answer } from '@/types/homework';
   import VReply from '@/components/VReply.vue';
+  import VPost from '@/components/VPost.vue';
   import VNewPost from '@/components/VNewPost.vue';
   import { ref } from 'vue';
   import { onClickOutside } from '@vueuse/core';
+  import useUser from '@/stores/user';
 
   export interface Props {
     originalPost: Answer;
   }
 
   const emit = defineEmits(['update']);
-
+  const user = useUser();
   const replyMode = ref(false);
 
   const toggleReplyMode = () => {
@@ -34,7 +36,11 @@
 <template>
   <div>
     <div class="group" ref="target">
+      <VPost
+        :answer="originalPost"
+        v-if="originalPost.author.uuid !== user.uuid" />
       <VReply
+        v-else
         :reply="originalPost"
         :question-id="originalPost.question"
         @update="emit('update')">
