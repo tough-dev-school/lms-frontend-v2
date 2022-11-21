@@ -1,9 +1,15 @@
 <script lang="ts" setup>
-  defineProps({
-    label: { type: String, default: null },
-    tip: { type: String, default: null },
-    error: { type: [String, Boolean], default: null },
-    modelValue: { type: String, default: '' },
+  import { withDefaults } from 'vue';
+
+  export interface Props {
+    label?: string;
+    tip?: string;
+    error?: boolean | string;
+    modelValue: string;
+  }
+
+  withDefaults(defineProps<Props>(), {
+    modelValue: '',
   });
 
   const emit = defineEmits<{

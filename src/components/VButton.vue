@@ -1,12 +1,14 @@
 <script lang="ts" setup>
-  defineProps({
-    type: {
-      type: String,
-      default: 'button',
-      validator(value: string) {
-        return ['button', 'link'].includes(value);
-      },
-    },
+  import { withDefaults } from 'vue';
+
+  export type AllowedTags = 'button' | 'link';
+
+  export interface Props {
+    type: AllowedTags;
+  }
+
+  withDefaults(defineProps<Props>(), {
+    type: 'button',
   });
 </script>
 

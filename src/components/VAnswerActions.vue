@@ -2,14 +2,13 @@
   import dayjs from 'dayjs';
   import VFloat from '@/components/VFloat.vue';
 
-  const props = defineProps({
-    created: {
-      type: String,
-      required: true,
-    },
-    deleteTime: { type: Number, required: true },
-    editTime: { type: Number, required: true },
-  });
+  export interface Props {
+    created: string;
+    deleteTime: number;
+    editTime: number;
+  }
+
+  const props = defineProps<Props>();
 
   const emit = defineEmits(['delete', 'edit']);
 

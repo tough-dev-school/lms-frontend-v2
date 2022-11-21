@@ -1,16 +1,21 @@
 <script lang="ts" setup>
-  import { onMounted, onUnmounted } from 'vue';
+  import { onMounted, onUnmounted, withDefaults } from 'vue';
 
-  const props = defineProps({
-    text: { type: String, default: 'Ошибка!' },
-    id: { type: String, required: true },
-    lifetime: { type: Number, required: true },
-    type: { type: String, required: false },
-  });
+  export type ToastTypes = 'error' | 'success';
 
-  const emit = defineEmits<{ 
-    (e: 'delete', id: string): void 
-  }>()
+  export interface Props {
+    text: string;
+    id: string;
+    lifetime: number;
+    type?: ToastTypes;
+  }
+
+  const props = withDefaults(defineProps<Props>(), { text: 'Ошибка!' });
+
+  const emit = defineEmits<{
+    (e: 'delete', id: string): void;
+  }>();
+
   let timeout: ReturnType<typeof setTimeout>;
 
   onMounted(() => {

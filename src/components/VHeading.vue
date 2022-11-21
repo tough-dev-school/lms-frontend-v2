@@ -1,8 +1,12 @@
 <script lang="ts" setup>
-  import { computed, defineProps, ref } from 'vue';
+  import { computed, defineProps, ref, withDefaults } from 'vue';
 
-  const props = defineProps({
-    level: { type: [Number, String], default: 2 },
+  export interface Props {
+    level: number | string;
+  }
+
+  const props = withDefaults(defineProps<Props>(), {
+    level: 2,
   });
 
   const level = ref(String(props.level));
