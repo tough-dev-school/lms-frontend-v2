@@ -1,11 +1,13 @@
 <script lang="ts" setup>
   import { onMounted, onUnmounted, withDefaults } from 'vue';
 
+  export type ToastTypes = 'error' | 'success';
+
   export interface Props {
     text: string;
     id: string;
     lifetime: number;
-    type: string;
+    type?: ToastTypes;
   }
 
   const props = withDefaults(defineProps<Props>(), { text: 'Ошибка!' });
