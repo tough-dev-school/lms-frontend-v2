@@ -50,7 +50,6 @@
     "@types/node": "^16.11.56",
     "@types/turndown": "^5.0.1",
     "@vitejs/plugin-vue": "^3.0.3",
-    "@vitejs/plugin-vue-jsx": "^2.0.1",
     "@vitest/coverage-c8": "^0.25.2",
     "@vue/eslint-config-prettier": "^7.0.0",
     "@vue/eslint-config-typescript": "^11.0.0",
