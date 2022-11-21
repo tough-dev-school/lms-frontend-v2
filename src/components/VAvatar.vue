@@ -1,8 +1,10 @@
 <script lang="ts" setup>
-  defineProps({
-    firstName: { type: String, default: '' },
-    lastName: { type: String, default: '' },
-  });
+  export interface Props {
+    firstName: string;
+    lastName: string;
+  }
+
+  withDefaults(defineProps<Props>(), { firstName: '', lastName: '' });
 </script>
 
 <template>

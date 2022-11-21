@@ -12,11 +12,13 @@
     ListIcon,
   } from 'vue-tabler-icons';
   import htmlToMarkdown from '@/utils/htmlToMarkdown';
-  import { defineEmits } from 'vue';
+  import { withDefaults } from 'vue';
 
-  const props = defineProps({
-    value: { type: String, default: '' },
-  });
+  export interface Props {
+    value: string;
+  }
+
+  const props = withDefaults(defineProps<Props>(), { value: '' });
 
   const emit = defineEmits(['update']);
 

@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-  defineProps({
-    content: {
-      type: String,
-    },
-  });
+  export interface Props {
+    content: string;
+  }
+
+  defineProps<Props>();
 </script>
 
 <template>
