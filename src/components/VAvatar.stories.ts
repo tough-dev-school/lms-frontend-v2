@@ -17,6 +17,6 @@ const Template: Story = (args) => ({
 
 export const Default = Template.bind({});
 Default.args = {
-  name: 'John',
-  surname: 'Doe',
+  firstName: 'John',
+  lastName: 'Doe',
 };
