@@ -1,6 +1,7 @@
 <script lang="ts" setup>
   import type { Answer } from '@/types/homework';
   import VOwnAnswer from '@/components/VOwnAnswer.vue';
+  import VReplyToggle from '@/components/VReplyToggle.vue';
   import VAnswer from '@/components/VAnswer.vue';
   import VNewAnswer from '@/components/VNewAnswer.vue';
   import { ref } from 'vue';
@@ -38,22 +39,18 @@
     <div class="group" ref="target">
       <VAnswer
         :answer="originalPost"
-        v-if="originalPost.author.uuid !== user.uuid" />
+        v-if="originalPost.author.uuid !== user.uuid">
+        <template #footer>
+          <VReplyToggle v-model="replyMode" />
+        </template>
+      </VAnswer>
       <VOwnAnswer
         v-else
         :answer="originalPost"
         :question-id="originalPost.question"
         @update="emit('update')">
         <template #answer-footer>
-          <button
-            class="text-sub text-gray"
-            :class="{
-              'transition-opacity group-hover:opacity-100 tablet:opacity-0':
-                !replyMode,
-            }"
-            @click="toggleReplyMode">
-            {{ replyMode ? 'Не отвечать' : 'Ответить' }}
-          </button>
+          <VReplyToggle v-model="replyMode" />
         </template>
       </VOwnAnswer>
       <div class="thread-ruler" :class="{ 'mt-16': replyMode }">
