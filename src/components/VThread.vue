@@ -41,7 +41,7 @@
         v-if="originalPost.author.uuid !== user.uuid" />
       <VOwnAnswer
         v-else
-        :reply="originalPost"
+        :answer="originalPost"
         :question-id="originalPost.question"
         @update="emit('update')">
         <template #post-footer>

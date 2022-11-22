@@ -9,7 +9,7 @@
   import type { Answer } from '@/types/homework';
 
   export interface Props {
-    reply: Answer;
+    answer: Answer;
     questionId: string;
     parentId?: string;
   }
@@ -21,20 +21,20 @@
   const text = ref('');
 
   const updateAnswer = async () => {
-    await homework.updateAnswer(props.reply.slug, text.value);
+    await homework.updateAnswer(props.answer.slug, text.value);
     emit('update');
     editMode.value = false;
   };
 
   const handleDelete = async () => {
     if (confirm('Удалить ответ?')) {
-      await homework.deleteAnswer(props.reply.slug);
+      await homework.deleteAnswer(props.answer.slug);
       emit('update');
     }
   };
 
   const handleEdit = async () => {
-    text.value = htmlToMarkdown(props.reply.text);
+    text.value = htmlToMarkdown(props.answer.text);
     editMode.value = true;
   };
 </script>
@@ -42,7 +42,7 @@
 <template>
   <div v-if="!editMode">
     <VAnswer
-      :answer="reply as Answer"
+      :answer="answer as Answer"
       @edit="handleEdit"
       @delete="handleDelete">
       <template #footer>
