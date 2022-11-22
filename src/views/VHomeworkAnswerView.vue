@@ -1,8 +1,7 @@
 <script lang="ts" setup>
   import VHeading from '@/components/VHeading.vue';
-  import VPost from '@/components/VPost.vue';
+  import VAnswer from '@/components/VAnswer.vue';
   import VThread from '@/components/VThread.vue';
-  import VReply from '@/components/VReply.vue';
   import VFeedbackGuide from '@/components/VFeedbackGuide.vue';
   import { computed, watch } from 'vue';
   import useHomework from '@/stores/homework';
@@ -11,6 +10,7 @@
   import VPreloader from '@/components/VPreloader.vue';
   import VHtmlContent from '@/components/VHtmlContent.vue';
   import VCard from '@/components/VCard.vue';
+  import VNewAnswer from '@/components/VNewAnswer.vue';
 
   const homework = useHomework();
   const { question, answers } = storeToRefs(homework);
@@ -45,12 +45,12 @@
         <summary>Показать задание</summary>
         <VHtmlContent :content="question.text" class="mt-8" />
       </VCard>
-      <VPost :answer="answer" />
+      <VAnswer :answer="answer" />
     </section>
     <section class="flex flex-col gap-24">
       <VHeading level="2">Обсуждение</VHeading>
       <VFeedbackGuide />
-      <VReply
+      <VNewAnswer
         :questionId="question.slug"
         :parentId="answer.slug"
         @update="getData" />

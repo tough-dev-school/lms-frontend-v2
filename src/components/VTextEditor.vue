@@ -12,25 +12,39 @@
     ListIcon,
   } from 'vue-tabler-icons';
   import htmlToMarkdown from '@/utils/htmlToMarkdown';
-  import { withDefaults } from 'vue';
+  import { watch, withDefaults } from 'vue';
 
   export interface Props {
-    value: string;
+    modelValue: string;
   }
 
-  const props = withDefaults(defineProps<Props>(), { value: '' });
+  const props = withDefaults(defineProps<Props>(), { modelValue: '' });
 
-  const emit = defineEmits(['update']);
+  const emit = defineEmits(['update:modelValue']);
 
   const editor = new Editor({
-    content: props.value,
+    content: props.modelValue,
     extensions: [StarterKit],
   });
 
   editor.on('update', ({ editor }) => {
     const html = editor.getHTML();
-    emit('update', htmlToMarkdown(html));
+    emit('update:modelValue', htmlToMarkdown(html));
   });
+
+  watch(
+    props,
+    (props) => {
+      const { modelValue } = props;
+      const isSame =
+        JSON.stringify(editor.getJSON()) === JSON.stringify(modelValue);
+
+      if (isSame) return;
+
+      editor.commands.setContent(modelValue, false);
+    },
+    { deep: true },
+  );
 
   const toggleHeading1 = () => {
     editor.chain().focus().toggleHeading({ level: 1 }).run();

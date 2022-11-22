@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import VHeading from '@/components/VHeading.vue';
-  import VPost from '@/components/VPost.vue';
+  import VAnswer from '@/components/VAnswer.vue';
   import VCard from '@/components/VCard.vue';
   import { watch } from 'vue';
   import useHomework from '@/stores/homework';
@@ -37,11 +37,21 @@
     <section>
       <VHeading level="2" class="mb-24">Ответы</VHeading>
       <div class="flex flex-col gap-24">
-        <VPost
+        <VAnswer
           v-for="answer in answers"
           :show-go-to-answer="true"
           :key="answer.slug"
-          :answer="answer" />
+          :answer="answer">
+          <RouterLink
+            v-if="answer.slug"
+            class="Link"
+            :to="{
+              name: 'homework-answer',
+              params: { answerId: answer.slug },
+            }"
+            >К ответу</RouterLink
+          >
+        </VAnswer>
       </div>
     </section>
   </div>

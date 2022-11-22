@@ -7,7 +7,8 @@
   import { storeToRefs } from 'pinia';
   import VHeading from '@/components/VHeading.vue';
   import VPreloader from '@/components/VPreloader.vue';
-  import VReply from '@/components/VReply.vue';
+  import VOwnAnswer from '@/components/VOwnAnswer.vue';
+  import VNewAnswer from '@/components/VNewAnswer.vue';
   import VCard from '@/components/VCard.vue';
   import useUser from '@/stores/user';
 
@@ -44,12 +45,12 @@
     </vCard>
     <section>
       <VHeading level="2" class="mb-24">Ответ</VHeading>
-      <VReply
-        :reply="answer"
+      <VOwnAnswer
+        :answer="answer"
         v-if="answer"
         @update="getData"
         :questionId="questionId" />
-      <VReply v-else @update="getData" :questionId="questionId" />
+      <VNewAnswer v-else @update="getData" :questionId="questionId" />
     </section>
   </div>
   <VPreloader v-else />

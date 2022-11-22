@@ -1,20 +1,20 @@
 <script lang="ts" setup>
   import type { Answer } from '@/types/homework';
-  import VReply from '@/components/VReply.vue';
+  import VOwnAnswer from '@/components/VOwnAnswer.vue';
+  import VReplyToggle from '@/components/VReplyToggle.vue';
+  import VAnswer from '@/components/VAnswer.vue';
+  import VNewAnswer from '@/components/VNewAnswer.vue';
   import { ref } from 'vue';
   import { onClickOutside } from '@vueuse/core';
+  import useUser from '@/stores/user';
 
   export interface Props {
     originalPost: Answer;
   }
 
   const emit = defineEmits(['update']);
-
+  const user = useUser();
   const replyMode = ref(false);
-
-  const toggleReplyMode = () => {
-    replyMode.value = !replyMode.value;
-  };
 
   const handleUpdate = () => {
     replyMode.value = false;
@@ -33,24 +33,24 @@
 <template>
   <div>
     <div class="group" ref="target">
-      <VReply
-        :reply="originalPost"
+      <VAnswer
+        :answer="originalPost"
+        v-if="originalPost.author.uuid !== user.uuid">
+        <template #footer>
+          <VReplyToggle v-model="replyMode" />
+        </template>
+      </VAnswer>
+      <VOwnAnswer
+        v-else
+        :answer="originalPost"
         :question-id="originalPost.question"
         @update="emit('update')">
-        <template #post-footer>
-          <button
-            class="text-sub text-gray"
-            :class="{
-              'transition-opacity group-hover:opacity-100 tablet:opacity-0':
-                !replyMode,
-            }"
-            @click="toggleReplyMode">
-            {{ replyMode ? 'Не отвечать' : 'Ответить' }}
-          </button>
+        <template #answer-footer>
+          <VReplyToggle v-model="replyMode" />
         </template>
-      </VReply>
+      </VOwnAnswer>
       <div class="thread-ruler" :class="{ 'mt-16': replyMode }">
-        <VReply
+        <VNewAnswer
           v-if="replyMode"
           :questionId="originalPost.question"
           :parentId="originalPost.slug"
