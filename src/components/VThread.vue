@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import type { Answer } from '@/types/homework';
   import VOwnPost from '@/components/VOwnPost.vue';
-  import VPost from '@/components/VPost.vue';
+  import VAnswer from '@/components/VAnswer.vue';
   import VNewPost from '@/components/VNewPost.vue';
   import { ref } from 'vue';
   import { onClickOutside } from '@vueuse/core';
@@ -36,7 +36,7 @@
 <template>
   <div>
     <div class="group" ref="target">
-      <VPost
+      <VAnswer
         :answer="originalPost"
         v-if="originalPost.author.uuid !== user.uuid" />
       <VOwnPost

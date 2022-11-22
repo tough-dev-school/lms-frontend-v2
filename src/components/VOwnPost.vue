@@ -3,7 +3,7 @@
   import VButton from '@/components/VButton.vue';
   import useHomework from '@/stores/homework';
   import { ref } from 'vue';
-  import VPost from '@/components/VPost.vue';
+  import VAnswer from '@/components/VAnswer.vue';
   import VCard from '@/components/VCard.vue';
   import htmlToMarkdown from '@/utils/htmlToMarkdown';
   import type { Answer } from '@/types/homework';
@@ -41,11 +41,14 @@
 
 <template>
   <div v-if="!editMode">
-    <VPost :answer="reply as Answer" @edit="handleEdit" @delete="handleDelete">
+    <VAnswer
+      :answer="reply as Answer"
+      @edit="handleEdit"
+      @delete="handleDelete">
       <template #footer>
         <slot name="post-footer" />
       </template>
-    </VPost>
+    </VAnswer>
   </div>
   <VCard v-else class="px-0 pt-0 tablet:px-0">
     <VTextEditor

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import VHeading from '@/components/VHeading.vue';
-  import VPost from '@/components/VPost.vue';
+  import VAnswer from '@/components/VAnswer.vue';
   import VThread from '@/components/VThread.vue';
   import VFeedbackGuide from '@/components/VFeedbackGuide.vue';
   import { computed, watch } from 'vue';
@@ -45,7 +45,7 @@
         <summary>Показать задание</summary>
         <VHtmlContent :content="question.text" class="mt-8" />
       </VCard>
-      <VPost :answer="answer" />
+      <VAnswer :answer="answer" />
     </section>
     <section class="flex flex-col gap-24">
       <VHeading level="2">Обсуждение</VHeading>

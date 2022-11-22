@@ -1,18 +1,18 @@
 import type { Meta, Story } from '@storybook/vue3';
-import VPost from '@/components/VPost.vue';
+import VAnswer from '@/components/VAnswer.vue';
 import { faker } from '@faker-js/faker';
 
 export default {
-  title: 'UI/VPost',
-  component: VPost,
+  title: 'UI/VAnswer',
+  component: VAnswer,
 } as Meta;
 
 const Template: Story = (args) => ({
-  components: { VPost },
+  components: { VAnswer },
   setup() {
     return { args };
   },
-  template: '<VPost v-bind="args" />',
+  template: '<VAnswer v-bind="args" />',
 });
 
 export const Default = Template.bind({});
