@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+  import VAnswerActions from '@/components/VAnswerActions.vue';
   import VTextEditor from '@/components/VTextEditor.vue';
   import VButton from '@/components/VButton.vue';
   import useHomework from '@/stores/homework';
@@ -15,10 +16,12 @@
   }
 
   const homework = useHomework();
-  const emit = defineEmits(['update']);
+  const emit = defineEmits(['update', 'delete', 'edit']);
   const props = defineProps<Props>();
   const editMode = ref(false);
   const text = ref('');
+  const editTime = ref(30);
+  const deleteTime = ref(10);
 
   const updateAnswer = async () => {
     await homework.updateAnswer(props.answer.slug, text.value);
@@ -45,8 +48,16 @@
       :answer="answer as Answer"
       @edit="handleEdit"
       @delete="handleDelete">
+      <template #header>
+        <VAnswerActions
+          :created="answer.created"
+          :edit-time="editTime"
+          :delete-time="deleteTime"
+          @edit="emit('edit')"
+          @delete="emit('delete')" />
+      </template>
       <template #footer>
-        <slot name="post-footer" />
+        <slot name="answer-footer" />
       </template>
     </VAnswer>
   </div>

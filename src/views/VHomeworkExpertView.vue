@@ -41,7 +41,17 @@
           v-for="answer in answers"
           :show-go-to-answer="true"
           :key="answer.slug"
-          :answer="answer" />
+          :answer="answer">
+          <RouterLink
+            v-if="answer.slug"
+            class="Link"
+            :to="{
+              name: 'homework-answer',
+              params: { answerId: answer.slug },
+            }"
+            >К ответу</RouterLink
+          >
+        </VAnswer>
       </div>
     </section>
   </div>

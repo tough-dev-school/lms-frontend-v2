@@ -44,7 +44,7 @@
         :answer="originalPost"
         :question-id="originalPost.question"
         @update="emit('update')">
-        <template #post-footer>
+        <template #answer-footer>
           <button
             class="text-sub text-gray"
             :class="{
