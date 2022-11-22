@@ -17,17 +17,17 @@ const Template: Story = (args) => ({
 export const Default = Template.bind({});
 Default.args = {};
 
-export const VHeading1 = Template.bind({});
-VHeading1.args = {
+export const Level1 = Template.bind({});
+Level1.args = {
   level: 1,
 };
 
-export const VHeading2 = Template.bind({});
-VHeading2.args = {
+export const Level2 = Template.bind({});
+Level2.args = {
   level: 2,
 };
 
-export const VHeading3 = Template.bind({});
-VHeading3.args = {
+export const Level3 = Template.bind({});
+Level3.args = {
   level: 3,
 };
