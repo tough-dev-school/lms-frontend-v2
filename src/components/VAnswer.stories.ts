@@ -1,9 +1,9 @@
 import type { Meta, Story } from '@storybook/vue3';
 import VAnswer from '@/components/VAnswer.vue';
-import { faker } from '@faker-js/faker';
+import { getAnswerData } from '@/mocks/homework';
 
 export default {
-  title: 'UI/VAnswer',
+  title: 'Answer/VAnswer',
   component: VAnswer,
 } as Meta;
 
@@ -17,8 +17,5 @@ const Template: Story = (args) => ({
 
 export const Default = Template.bind({});
 Default.args = {
-  content: faker.lorem.paragraphs(),
-  firstName: faker.name.firstName(),
-  lastName: faker.name.lastName(),
-  date: faker.date.past(),
+  answer: getAnswerData(),
 };
