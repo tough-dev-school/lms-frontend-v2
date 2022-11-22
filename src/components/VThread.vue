@@ -2,7 +2,7 @@
   import type { Answer } from '@/types/homework';
   import VOwnAnswer from '@/components/VOwnAnswer.vue';
   import VAnswer from '@/components/VAnswer.vue';
-  import VNewPost from '@/components/VNewPost.vue';
+  import VNewAnswer from '@/components/VNewAnswer.vue';
   import { ref } from 'vue';
   import { onClickOutside } from '@vueuse/core';
   import useUser from '@/stores/user';
@@ -57,7 +57,7 @@
         </template>
       </VOwnAnswer>
       <div class="thread-ruler" :class="{ 'mt-16': replyMode }">
-        <VNewPost
+        <VNewAnswer
           v-if="replyMode"
           :questionId="originalPost.question"
           :parentId="originalPost.slug"

@@ -10,7 +10,7 @@
   import VPreloader from '@/components/VPreloader.vue';
   import VHtmlContent from '@/components/VHtmlContent.vue';
   import VCard from '@/components/VCard.vue';
-  import VNewPost from '@/components/VNewPost.vue';
+  import VNewAnswer from '@/components/VNewAnswer.vue';
 
   const homework = useHomework();
   const { question, answers } = storeToRefs(homework);
@@ -50,7 +50,7 @@
     <section class="flex flex-col gap-24">
       <VHeading level="2">Обсуждение</VHeading>
       <VFeedbackGuide />
-      <VNewPost
+      <VNewAnswer
         :questionId="question.slug"
         :parentId="answer.slug"
         @update="getData" />
