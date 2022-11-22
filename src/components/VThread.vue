@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import type { Answer } from '@/types/homework';
-  import VOwnPost from '@/components/VOwnPost.vue';
+  import VOwnAnswer from '@/components/VOwnAnswer.vue';
   import VAnswer from '@/components/VAnswer.vue';
   import VNewPost from '@/components/VNewPost.vue';
   import { ref } from 'vue';
@@ -39,7 +39,7 @@
       <VAnswer
         :answer="originalPost"
         v-if="originalPost.author.uuid !== user.uuid" />
-      <VOwnPost
+      <VOwnAnswer
         v-else
         :reply="originalPost"
         :question-id="originalPost.question"
@@ -55,7 +55,7 @@
             {{ replyMode ? 'Не отвечать' : 'Ответить' }}
           </button>
         </template>
-      </VOwnPost>
+      </VOwnAnswer>
       <div class="thread-ruler" :class="{ 'mt-16': replyMode }">
         <VNewPost
           v-if="replyMode"
