@@ -7,7 +7,7 @@ const defaultProps = {
 };
 
 describe('VReplyToggle', () => {
-  let wrapper: VueWrapper;
+  let wrapper: VueWrapper<InstanceType<typeof VReplyToggle>>;
 
   beforeEach(() => {
     wrapper = shallowMount(VReplyToggle, { props: defaultProps });

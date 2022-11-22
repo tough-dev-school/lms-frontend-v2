@@ -16,10 +16,6 @@
   const user = useUser();
   const replyMode = ref(false);
 
-  const toggleReplyMode = () => {
-    replyMode.value = !replyMode.value;
-  };
-
   const handleUpdate = () => {
     replyMode.value = false;
     emit('update');
