@@ -4,6 +4,7 @@
   import getName from '@/utils/getName';
   import type { Answer } from '@/types/homework';
   import VCard from '@/components/VCard.vue';
+  import VHtmlContent from '@/components/VHtmlContent.vue';
 
   export interface Props {
     answer: Answer;
@@ -29,7 +30,7 @@
       <div class="flex-grow"></div>
       <slot name="header"></slot>
     </div>
-    <div v-html="answer.text" class="prose" />
+    <VHtmlContent :content="answer.text" />
     <div class="flex flex-row-reverse empty:appearance-none">
       <slot name="footer" />
     </div>
