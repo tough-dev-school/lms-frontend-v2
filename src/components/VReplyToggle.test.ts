@@ -15,18 +15,23 @@ describe('VReplyToggle', () => {
 
   test('emits update:modelValue on click', async () => {
     await wrapper.trigger('click');
+
     expect(wrapper.emitted('update:modelValue')).toBeDefined();
   });
 
   test('when modelValue is true update:modelValue emits false', async () => {
     wrapper = shallowMount(VReplyToggle, { props: { modelValue: false } });
+
     await wrapper.trigger('click');
+
     expect(wrapper.emitted('update:modelValue')).toStrictEqual([[true]]);
   });
 
   test('when modelValue is true update:modelValue emits false', async () => {
     wrapper = shallowMount(VReplyToggle, { props: { modelValue: true } });
+
     await wrapper.trigger('click');
+
     expect(wrapper.emitted('update:modelValue')).toStrictEqual([[false]]);
   });
 });
