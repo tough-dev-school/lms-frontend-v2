@@ -20,10 +20,6 @@
   const editMode = ref(false);
   const text = ref('');
 
-  const handleEditorUpdate = (value: string) => {
-    text.value = value;
-  };
-
   const updateAnswer = async () => {
     await homework.updateAnswer(props.reply.slug, text.value);
     emit('update');
@@ -38,7 +34,7 @@
   };
 
   const handleEdit = async () => {
-    handleEditorUpdate(htmlToMarkdown(props.reply.text));
+    text.value = htmlToMarkdown(props.reply.text);
     editMode.value = true;
   };
 </script>
@@ -53,8 +49,7 @@
   </div>
   <VCard v-else class="px-0 pt-0 tablet:px-0">
     <VTextEditor
-      @update:modelValue="handleEditorUpdate"
-      :modelValue="reply.text"
+      v-model="text"
       class="mb-16 rounded-t border-b border-offwhite" />
     <div class="flex flex-row-reverse px-32">
       <VButton @click="updateAnswer" class="h-32">Сохранить</VButton>
