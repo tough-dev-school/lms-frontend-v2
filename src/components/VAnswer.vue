@@ -17,20 +17,21 @@
   <VCard>
     <div class="mb-16 flex items-center gap-8">
       <VAvatar
+        data-testid="avatar"
         :first-name="answer.author.firstName"
         :last-name="answer.author.lastName" />
-      <div class="">
-        <div class="font-bold">
+      <div>
+        <div class="font-bold" data-testid="name">
           {{ getName(answer.author.firstName, answer.author.lastName) }}
         </div>
-        <div class="text-sub leading-tight text-gray">
+        <div class="text-sub leading-tight text-gray" data-testid="date">
           {{ relativeDate(answer.created) }}
         </div>
       </div>
       <div class="flex-grow"></div>
       <slot name="header"></slot>
     </div>
-    <VHtmlContent :content="answer.text" />
+    <VHtmlContent :content="answer.text" data-testid="content" />
     <div class="flex flex-row-reverse empty:appearance-none">
       <slot name="footer" />
     </div>
