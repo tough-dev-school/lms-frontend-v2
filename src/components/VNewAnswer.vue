@@ -11,7 +11,9 @@
   }
 
   const props = defineProps<Props>();
-  const emit = defineEmits(['update']);
+  const emit = defineEmits<{
+    (e: 'update'): void;
+  }>();
   const homework = useHomework();
   const text = ref('');
 
