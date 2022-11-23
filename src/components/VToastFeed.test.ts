@@ -1,11 +1,10 @@
-import { describe, expect, test, beforeEach } from 'vitest';
+import { describe, expect, test, beforeEach, vi } from 'vitest';
 import { shallowMount, VueWrapper } from '@vue/test-utils';
 import VToastFeed from '@/components/VToastFeed.vue';
 import { faker } from '@faker-js/faker';
 import useToasts, { VToastMessage } from '@/stores/toasts';
 import type VToast from '@/components/VToast.vue';
 import { createTestingPinia } from '@pinia/testing';
-import { vi } from 'vitest';
 
 const MESSAGES = 10;
 

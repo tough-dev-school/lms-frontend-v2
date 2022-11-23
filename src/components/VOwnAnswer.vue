@@ -66,7 +66,9 @@
       v-model="text"
       class="mb-16 rounded-t border-b border-offwhite" />
     <div class="flex flex-row-reverse px-32">
-      <VButton @click="updateAnswer" class="h-32">Сохранить</VButton>
+      <VButton @click="updateAnswer" :disabled="!(text.length > 0)" class="h-32"
+        >Сохранить</VButton
+      >
     </div>
   </VCard>
 </template>

@@ -16,10 +16,10 @@ const Template: Story = (args) => ({
 
 export const Default = Template.bind({});
 Default.args = {
-  type: 'button',
+  tag: 'button',
 };
 
 export const Link = Template.bind({});
 Link.args = {
-  type: 'link',
+  tag: 'link',
 };

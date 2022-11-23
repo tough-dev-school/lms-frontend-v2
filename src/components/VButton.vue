@@ -4,11 +4,11 @@
   export type AllowedTags = 'button' | 'link';
 
   export interface Props {
-    type: AllowedTags;
+    tag?: AllowedTags;
   }
 
   withDefaults(defineProps<Props>(), {
-    type: 'button',
+    tag: 'button',
   });
 </script>
 
@@ -17,8 +17,8 @@
     class="h-56 min-w-[240px]"
     :class="{
       'rounded-row bg-yellow text-center text-black transition-opacity transition-colors hover:bg-yellow-hover disabled:opacity-25':
-        type === 'button',
-      Link: type === 'link',
+        tag === 'button',
+      Link: tag === 'link',
     }">
     <slot />
   </button>

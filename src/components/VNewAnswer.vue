@@ -32,7 +32,10 @@
       v-model="text"
       class="mb-16 rounded-t border-b border-offwhite" />
     <div class="flex flex-row-reverse px-32">
-      <VButton @click="sendPost" class="max-h-32 min-w-0 px-24"
+      <VButton
+        @click="sendPost"
+        :disabled="!(text.length > 0)"
+        class="max-h-32 min-w-0 px-24"
         >Отправить</VButton
       >
     </div>

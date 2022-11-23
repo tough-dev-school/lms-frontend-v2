@@ -7,6 +7,7 @@ const defaultProps = {
   tip: 'This is a tip',
   label: 'This is a label',
   error: 'This is a error',
+  modelValue: '',
 };
 
 describe('VTextInput', () => {

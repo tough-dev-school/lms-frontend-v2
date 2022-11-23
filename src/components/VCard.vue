@@ -3,7 +3,7 @@
 
   export type CardTags = 'div' | 'article' | 'section' | 'details' | 'aside';
   export interface Props {
-    tag: CardTags;
+    tag?: CardTags;
   }
 
   withDefaults(defineProps<Props>(), { tag: 'div' });

@@ -71,7 +71,7 @@
         >
         <VButton
           @click="changeLoginType(true)"
-          type="link"
+          tag="link"
           data-testid="to-password-mode"
           class="flex-grow">
           Войти через пароль
@@ -90,7 +90,7 @@
           class="flex-grow"
           >Войти</VButton
         >
-        <VButton type="link" @click="changeLoginType(false)" class="flex-grow">
+        <VButton tag="link" @click="changeLoginType(false)" class="flex-grow">
           Войти по ссылке
         </VButton>
       </div>
