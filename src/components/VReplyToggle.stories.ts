@@ -11,7 +11,7 @@ const Template: Story = (args) => ({
   setup() {
     return { args };
   },
-  template: '<VReplyToggle v-bind="args" />',
+  template: '<div class="group"><VReplyToggle v-bind="args" /></div>',
 });
 
 export const Show = Template.bind({});
