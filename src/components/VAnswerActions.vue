@@ -10,7 +10,10 @@
 
   const props = defineProps<Props>();
 
-  const emit = defineEmits(['delete', 'edit']);
+  const emit = defineEmits<{
+    (e: 'delete'): void;
+    (e: 'edit'): void;
+  }>();
 
   const checkIsAvailable = (timeout: number) => {
     return +dayjs() < +dayjs(props.created).add(timeout, 'minutes');

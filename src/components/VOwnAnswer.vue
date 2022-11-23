@@ -16,7 +16,11 @@
   }
 
   const homework = useHomework();
-  const emit = defineEmits(['update', 'delete', 'edit']);
+  const emit = defineEmits<{
+    (e: 'update'): void;
+    (e: 'delete'): void;
+    (e: 'edit'): void;
+  }>();
   const props = defineProps<Props>();
   const editMode = ref(false);
   const text = ref('');
