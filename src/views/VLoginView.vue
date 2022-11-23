@@ -71,7 +71,7 @@
         >
         <VButton
           @click="changeLoginType(true)"
-          type="link"
+          tag="link"
           data-testid="to-password-mode"
           class="flex-grow">
           Войти через пароль

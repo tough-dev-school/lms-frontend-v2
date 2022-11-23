@@ -10,7 +10,7 @@ describe('VButton', () => {
   });
 
   test('button visual can be link', () => {
-    wrapper = shallowMount(VButton, { props: { type: 'link' } });
+    wrapper = shallowMount(VButton, { props: { tag: 'link' } });
 
     expect(wrapper.classes('Link')).toBe(true);
   });
