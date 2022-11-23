@@ -58,7 +58,6 @@ describe('VAnswer', () => {
     defaultProps.answer.created = dayjs()
       .subtract(years, 'years')
       .toISOString();
-
     wrapper = mount(VAnswer, {
       props,
       shallow: true,
