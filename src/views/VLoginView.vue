@@ -90,7 +90,7 @@
           class="flex-grow"
           >Войти</VButton
         >
-        <VButton type="link" @click="changeLoginType(false)" class="flex-grow">
+        <VButton tag="link" @click="changeLoginType(false)" class="flex-grow">
           Войти по ссылке
         </VButton>
       </div>
