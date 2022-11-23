@@ -1,5 +1,5 @@
 import { describe, expect, test, beforeEach } from 'vitest';
-import { shallowMount, VueWrapper, mount } from '@vue/test-utils';
+import { VueWrapper, mount } from '@vue/test-utils';
 import VAnswer from '@/components/VAnswer.vue';
 import getName from '@/utils/getName';
 import { getAnswerData } from '@/mocks/homework';
