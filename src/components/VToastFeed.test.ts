@@ -1,5 +1,5 @@
 import { describe, expect, test, beforeEach, vi } from 'vitest';
-import { shallowMount, VueWrapper } from '@vue/test-utils';
+import { mount, VueWrapper } from '@vue/test-utils';
 import VToastFeed from '@/components/VToastFeed.vue';
 import { faker } from '@faker-js/faker';
 import useToasts, { VToastMessage } from '@/stores/toasts';
@@ -16,7 +16,8 @@ describe('VToastFeed', () => {
       return new VToastMessage(faker.lorem.sentence(), 'success', 10000);
     });
 
-    wrapper = shallowMount(VToastFeed, {
+    wrapper = mount(VToastFeed, {
+      shallow: true,
       global: {
         plugins: [
           createTestingPinia({
