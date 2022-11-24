@@ -1,5 +1,5 @@
 import { describe, expect, test, beforeEach } from 'vitest';
-import { RouterLinkStub, shallowMount, VueWrapper } from '@vue/test-utils';
+import { RouterLinkStub, mount, VueWrapper } from '@vue/test-utils';
 import VProfileMenu from '@/components/VProfileMenu.vue';
 import useUser from '@/stores/user';
 import useAuth from '@/stores/auth';
@@ -28,7 +28,8 @@ describe('VProfileMenu', () => {
   let studies: ReturnType<typeof useStudies>;
 
   beforeEach(() => {
-    wrapper = shallowMount(VProfileMenu, {
+    wrapper = mount(VProfileMenu, {
+      shallow: true,
       global: {
         plugins: [
           createTestingPinia({

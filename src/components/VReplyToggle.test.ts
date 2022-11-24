@@ -1,5 +1,5 @@
 import { describe, expect, test, beforeEach } from 'vitest';
-import { shallowMount, VueWrapper } from '@vue/test-utils';
+import { mount, VueWrapper } from '@vue/test-utils';
 import VReplyToggle from './VReplyToggle.vue';
 
 const defaultProps = {
@@ -10,7 +10,7 @@ describe('VReplyToggle', () => {
   let wrapper: VueWrapper<InstanceType<typeof VReplyToggle>>;
 
   beforeEach(() => {
-    wrapper = shallowMount(VReplyToggle, { props: defaultProps });
+    wrapper = mount(VReplyToggle, { shallow: true, props: defaultProps });
   });
 
   test('emits update:modelValue on click', async () => {
@@ -20,7 +20,10 @@ describe('VReplyToggle', () => {
   });
 
   test('when modelValue is true update:modelValue emits false', async () => {
-    wrapper = shallowMount(VReplyToggle, { props: { modelValue: false } });
+    wrapper = mount(VReplyToggle, {
+      shallow: true,
+      props: { modelValue: false },
+    });
 
     await wrapper.trigger('click');
 
@@ -28,7 +31,10 @@ describe('VReplyToggle', () => {
   });
 
   test('when modelValue is true update:modelValue emits false', async () => {
-    wrapper = shallowMount(VReplyToggle, { props: { modelValue: true } });
+    wrapper = mount(VReplyToggle, {
+      shallow: true,
+      props: { modelValue: true },
+    });
 
     await wrapper.trigger('click');
 

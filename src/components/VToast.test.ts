@@ -1,5 +1,5 @@
 import { describe, expect, test, beforeEach } from 'vitest';
-import { shallowMount, VueWrapper } from '@vue/test-utils';
+import { mount, VueWrapper } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
 import VToast from '@/components/VToast.vue';
 import { nanoid } from 'nanoid';
@@ -14,7 +14,7 @@ describe('VToast', () => {
   let wrapper: VueWrapper<InstanceType<typeof VToast>>;
 
   beforeEach(() => {
-    wrapper = shallowMount(VToast, { props: defaultProps });
+    wrapper = mount(VToast, { shallow: true, props: defaultProps });
   });
 
   test('displays correct message', () => {

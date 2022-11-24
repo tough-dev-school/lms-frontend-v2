@@ -1,16 +1,16 @@
 import { describe, test, beforeEach, expect } from 'vitest';
 import VButton from '@/components/VButton.vue';
-import { shallowMount, VueWrapper } from '@vue/test-utils';
+import { mount, VueWrapper } from '@vue/test-utils';
 
 describe('VButton', () => {
   let wrapper: VueWrapper;
 
   beforeEach(() => {
-    wrapper = shallowMount(VButton, { props: {} });
+    wrapper = mount(VButton, { shallow: true, props: {} });
   });
 
   test('button visual can be link', () => {
-    wrapper = shallowMount(VButton, { props: { tag: 'link' } });
+    wrapper = mount(VButton, { shallow: true, props: { tag: 'link' } });
 
     expect(wrapper.classes('Link')).toBe(true);
   });
