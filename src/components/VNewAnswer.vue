@@ -32,12 +32,14 @@
   <VCard class="px-0 pt-0 tablet:px-0">
     <VTextEditor
       v-model="text"
-      class="mb-16 rounded-t border-b border-offwhite" />
+      class="mb-16 rounded-t border-b border-offwhite"
+      data-testid="editor" />
     <div class="flex flex-row-reverse px-32">
       <VButton
         @click="sendPost"
         :disabled="!(text.length > 0)"
         class="max-h-32 min-w-0 px-24"
+        data-testid="button"
         >Отправить</VButton
       >
     </div>
