@@ -4,16 +4,16 @@ import {
   type NavigationGuardNext,
   type RouteLocationNormalized,
 } from 'vue-router';
-import VProfileView from '@/views/VProfileView.vue';
-import VLoginView from '@/views/VLoginView.vue';
-import VLoadingView from '@/views/VLoadingView.vue';
-import VNotionView from '@/views/VNotionView.vue';
-import VHomeworkQuestionView from '@/views/VHomeworkQuestionView.vue';
-import VHomeworkExpertView from '@/views/VHomeworkExpertView.vue';
-import VHomeworkAnswerView from '@/views/VHomeworkAnswerView.vue';
 import useAuth from '@/stores/auth';
 import useUser from '@/stores/user';
 import useStudies from '@/stores/studies';
+const VProfileView = () => import('@/views/VProfileView.vue');
+const VLoginView = () => import('@/views/VLoginView.vue');
+const VLoadingView = () => import('@/views/VLoadingView.vue');
+const VNotionView = () => import('@/views/VNotionView.vue');
+const VHomeworkQuestionView = () => import('@/views/VHomeworkQuestionView.vue');
+const VHomeworkExpertView = () => import('@/views/VHomeworkExpertView.vue');
+const VHomeworkAnswerView = () => import('@/views/VHomeworkAnswerView.vue');
 
 export const routes = [
   {
