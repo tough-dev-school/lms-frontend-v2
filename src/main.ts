@@ -10,7 +10,6 @@ import 'floating-vue/dist/style.css';
 
 import './fonts.css';
 import './tailwind.css';
-import './main.css';
 
 const app = createApp(App);
 app.use(FloatingVue);

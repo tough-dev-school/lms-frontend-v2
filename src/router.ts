@@ -1,12 +1,12 @@
 import {
   createRouter,
   createWebHistory,
-  type NavigationGuardNext,
   type RouteLocationNormalized,
 } from 'vue-router';
 import useAuth from '@/stores/auth';
 import useUser from '@/stores/user';
 import useStudies from '@/stores/studies';
+const VShopView = () => import('@/views/VShopView.vue');
 const VProfileView = () => import('@/views/VProfileView.vue');
 const VLoginView = () => import('@/views/VLoginView.vue');
 const VLoadingView = () => import('@/views/VLoadingView.vue');
@@ -15,7 +15,39 @@ const VHomeworkQuestionView = () => import('@/views/VHomeworkQuestionView.vue');
 const VHomeworkExpertView = () => import('@/views/VHomeworkExpertView.vue');
 const VHomeworkAnswerView = () => import('@/views/VHomeworkAnswerView.vue');
 
+const isAuthorized = () => {
+  const auth = useAuth();
+
+  return !!auth.token;
+};
+
+const isPublicRoute = (name: string) => {
+  const PUBLIC_ROUTES = ['login', 'token'];
+  return PUBLIC_ROUTES.includes(String(name));
+};
+
+const fetchMainUserData = async () => {
+  const user = useUser();
+  const studies = useStudies();
+  await user.getData();
+  await studies.getData();
+};
+
 export const routes = [
+  {
+    path: '/',
+    name: 'home',
+    component: VLoadingView,
+    beforeEnter: async () => {
+      const studies = useStudies();
+      if (studies.items.length > 0) {
+        const id = studies.items[0].homePageSlug;
+        return { name: 'materials', params: { id } };
+      } else {
+        return { name: 'shop' };
+      }
+    },
+  },
   {
     path: '/profile',
     name: 'profile',
@@ -25,11 +57,33 @@ export const routes = [
     path: '/login',
     name: 'login',
     component: VLoginView,
+    beforeEnter: () => {
+      if (isAuthorized()) {
+        return { name: 'profile' };
+      }
+    },
   },
   {
     path: '/auth/passwordless/:passwordlessToken',
     name: 'token',
     component: VLoadingView,
+    beforeEnter: async (to: RouteLocationNormalized) => {
+      const auth = useAuth();
+      await auth.exchangeTokens(String(to.params.passwordlessToken));
+      return { name: 'profile' };
+    },
+  },
+  {
+    path: '/shop',
+    name: 'shop',
+    component: VShopView,
+    beforeEnter: async () => {
+      const studies = useStudies();
+      if (studies.items.length > 0) {
+        const id = studies.items[0].homePageSlug;
+        return { name: 'materials', params: { id } };
+      }
+    },
   },
   {
     path: '/materials/:id',
@@ -58,58 +112,24 @@ const router = createRouter({
   routes,
 });
 
-const fetchMainUserData = async () => {
-  const user = useUser();
-  const studies = useStudies();
-  await user.getData();
-  await studies.getData();
-};
-
-const isPublicRoute = (name: string) => {
-  const PUBLIC_ROUTES = ['login', 'token'];
-  return PUBLIC_ROUTES.includes(String(name));
-};
-
-export const beforeEach = async (
-  to: RouteLocationNormalized,
-  from: RouteLocationNormalized,
-  next: NavigationGuardNext,
-) => {
-  const auth = useAuth();
-
-  const isAuthorized = !!auth.token;
+router.beforeEach(async (to: RouteLocationNormalized) => {
+  // Get main data if authorized
+  if (isAuthorized()) {
+    await fetchMainUserData();
+  }
 
   // Redirect to exisiting route if route does not exist
   if (!to.name) {
-    next('/profile');
-  }
-
-  // Passwordless token
-  if (to.name === 'token') {
-    const auth = useAuth();
-    await auth.exchangeTokens(String(to.params.passwordlessToken));
-    next('/profile');
+    return { name: 'profile' };
   }
 
   // Redirect to /login if unauthorized and route is not public
-  if (!(isAuthorized || isPublicRoute(String(to.name)))) {
-    next(`/login?next=${encodeURIComponent(to.fullPath)}`);
+  if (!(isAuthorized() || isPublicRoute(String(to.name)))) {
+    return {
+      name: 'login',
+      query: { next: encodeURIComponent(to.fullPath) },
+    };
   }
-
-  // Restrict auth routes for authorized users
-  if (isAuthorized && (to.name === 'login' || to.name === 'token')) {
-    next('/profile');
-  }
-
-  // Get main data if authorized
-  if (isAuthorized) {
-    await fetchMainUserData();
-    next();
-  }
-
-  next();
-};
-
-router.beforeEach(beforeEach);
+});
 
 export default router;

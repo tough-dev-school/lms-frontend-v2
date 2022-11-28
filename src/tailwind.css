@@ -2,11 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-.prose {
-  @apply prose-zinc;
-  @apply prose-p:my-[0.5em];
-  @apply prose-li:my-[0.25em];
-  @apply prose-ul:my-[0.5em];
-  --tw-prose-bullets: currentColor;
-  max-width: 100%;
+@layer base {
+  body {
+    @apply bg-offwhite font-body;
+  }
+}
+
+@layer components {
+  .center {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .prose {
+    @apply prose-zinc;
+    @apply prose-p:my-[0.5em];
+    @apply prose-li:my-[0.25em];
+    @apply prose-ul:my-[0.5em];
+    --tw-prose-bullets: currentColor;
+    max-width: 100%;
+  }
+
+  .label {
+    @apply mb-8 w-full text-gray;
+  }
+
+  .link {
+    @apply cursor-pointer text-blue transition-colors hover:text-blue-hover;
+  }
 }

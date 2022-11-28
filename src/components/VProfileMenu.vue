@@ -60,7 +60,7 @@
               :to="{ name: 'profile' }"
               class="VProfileMenu__Item"
               @click="isOpen = false">
-              <span class="Link">Профиль</span>
+              <span class="link">Профиль</span>
             </RouterLink>
           </li>
           <li v-for="study in studies.items" :key="study.id">
@@ -69,7 +69,7 @@
               class="VProfileMenu__Item"
               @click="isOpen = false"
               data-testid="material"
-              ><span class="Link">{{
+              ><span class="link">{{
                 clearStudyName(study.name)
               }}</span></RouterLink
             >
@@ -79,7 +79,7 @@
               @click="logOut"
               data-testid="logout"
               class="VProfileMenu__Item">
-              <span class="Link">Выйти</span>
+              <span class="link">Выйти</span>
             </button>
           </li>
         </ul>

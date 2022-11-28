@@ -72,6 +72,10 @@ describe('visual regression test for', () => {
       'HomeworkQuestion',
       '/iframe.html?args=&id=pages-app--homework-question-view&viewMode=story#/homework/questions/1234567890',
     ),
+    new VisualTest(
+      'Shop',
+      '/iframe.html?args=&id=pages-app--shop&viewMode=story#/shop',
+    ),
   ];
 
   scenarios.forEach((test) => {

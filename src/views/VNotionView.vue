@@ -39,23 +39,18 @@
   </VCard>
   <div
     v-else-if="isLoaded && !material"
-    class="not-found flex flex-col text-center">
+    class="center flex flex-col text-center">
     <p>Материал не найден :(</p>
     <p>Если кажется что здесь какая-то ошибка — напишите в чат в углу экрана</p>
-    <VButton tag="link" @click="router.push({ path: '/' })">На главную</VButton>
+    <VButton tag="link" @click="router.push({ name: 'home' })"
+      >На главную</VButton
+    >
   </div>
   <VPreloader v-else />
 </template>
 
 <style>
   @import 'vue3-notion/dist/style.css';
-
-  .not-found {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
 
   .notion-page-cover {
     width: var(--notion-max-width);

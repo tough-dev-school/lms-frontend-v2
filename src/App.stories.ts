@@ -76,6 +76,10 @@ export const Profile = Template.bind({});
 Profile.args = {};
 Profile.decorators = decorate('/profile');
 
+export const Shop = Template.bind({});
+Shop.args = {};
+Shop.decorators = decorate('/shop');
+
 export const NotionView = Template.bind({});
 NotionView.args = {};
 NotionView.decorators = decorate('/materials/1234567890');

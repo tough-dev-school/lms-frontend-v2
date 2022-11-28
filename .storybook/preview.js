@@ -1,5 +1,4 @@
 import '../src/fonts.css';
-import '../src/main.css';
 import '../src/tailwind.css';
 
 import { app } from '@storybook/vue3';
