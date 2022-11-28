@@ -36,12 +36,10 @@ const useHomework = defineStore('homework', {
       authorId?: string;
     }) {
       try {
-        this.answers = (
-          await getAnswers({
-            questionId,
-            authorId,
-          })
-        ).results;
+        this.answers = await getAnswers({
+          questionId,
+          authorId,
+        });
       } catch (error: any) {}
     },
     async getAnswerById(answerId: string) {

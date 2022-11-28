@@ -1,6 +1,5 @@
 import axios from './axios';
 import type { Answer, Question } from '@/types/homework';
-import type { PaginantedCollection } from '@/types/api-utility';
 
 export const getQuestion = async (questionId: string) => {
   const url = `/api/v2/homework/questions/${questionId}/`;
@@ -38,8 +37,9 @@ export const getAnswers = async ({
     params.author = authorId;
   }
 
-  return (await axios.get(url, { params }))
-    .data as PaginantedCollection<Answer>;
+  return (
+    await axios.get(url, { params: { ...params, disable_pagination: true } })
+  ).data as Answer[];
 };
 
 export const postAnswer = async ({
