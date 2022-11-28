@@ -2,7 +2,7 @@
   // @ts-ignore
   import { NotionRenderer } from 'vue3-notion';
   import { useRoute, useRouter } from 'vue-router';
-  import { onMounted, watch, ref } from 'vue';
+  import { watch, ref } from 'vue';
   import VCard from '@/components/VCard.vue';
   import VButton from '@/components/VButton.vue';
   import VPreloader from '@/components/VPreloader.vue';
@@ -22,13 +22,13 @@
 
   const isLoaded = ref(false);
 
-  watch(route, async () => {
-    await getData();
-  });
-
-  onMounted(async () => {
-    await getData();
-  });
+  watch(
+    route,
+    async () => {
+      await getData();
+    },
+    { immediate: true },
+  );
 
   const mapPageUrl = (id: string) => `/materials/${id}`;
 </script>

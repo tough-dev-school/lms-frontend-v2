@@ -63,13 +63,10 @@ const decorate = (
   return [
     (story: InstanceType<typeof App>) => {
       const toasts = useToasts();
-      const materials = useMaterials();
 
       toasts.disable();
 
       callback();
-
-      materials.$patch({ material: getMaterial() });
 
       return {
         components: { story },
@@ -90,7 +87,17 @@ Profile.decorators = decorate('/profile');
 
 export const NotionView = Template.bind({});
 NotionView.args = {};
-NotionView.decorators = decorate('/materials/1234567890');
+NotionView.decorators = decorate('/materials/1234567890', () => {
+  const materials = useMaterials();
+  materials.$patch({ material: getMaterial() });
+});
+
+export const NotionViewMissing = Template.bind({});
+NotionViewMissing.args = {};
+NotionViewMissing.decorators = decorate('/materials/1234567890', () => {
+  const materials = useMaterials();
+  materials.$patch({ material: undefined });
+});
 
 export const HomeworkAnswerView = Template.bind({});
 HomeworkAnswerView.args = {};
