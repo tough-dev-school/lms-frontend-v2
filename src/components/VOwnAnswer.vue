@@ -48,17 +48,14 @@
 
 <template>
   <div v-if="!editMode">
-    <VAnswer
-      :answer="answer as Answer"
-      @edit="handleEdit"
-      @delete="handleDelete">
+    <VAnswer :answer="answer as Answer">
       <template #header>
         <VAnswerActions
           :created="answer.created"
           :edit-time="editTime"
           :delete-time="deleteTime"
-          @edit="emit('edit')"
-          @delete="emit('delete')" />
+          @edit="handleEdit"
+          @delete="handleDelete" />
       </template>
       <template #footer>
         <slot name="answer-footer" />
