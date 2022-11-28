@@ -38,10 +38,7 @@ export const routes = [
     path: '/',
     name: 'home',
     component: VLoadingView,
-    beforeEnter: async (
-      to: RouteLocationNormalized,
-      from: RouteLocationNormalized,
-    ) => {
+    beforeEnter: async () => {
       const studies = useStudies();
       if (studies.items.length > 0) {
         const id = studies.items[0].homePageSlug;
@@ -60,10 +57,7 @@ export const routes = [
     path: '/login',
     name: 'login',
     component: VLoginView,
-    beforeEnter: (
-      to: RouteLocationNormalized,
-      from: RouteLocationNormalized,
-    ) => {
+    beforeEnter: () => {
       if (isAuthorized()) {
         return { name: 'profile' };
       }
@@ -73,10 +67,7 @@ export const routes = [
     path: '/auth/passwordless/:passwordlessToken',
     name: 'token',
     component: VLoadingView,
-    beforeEnter: async (
-      to: RouteLocationNormalized,
-      from: RouteLocationNormalized,
-    ) => {
+    beforeEnter: async (to: RouteLocationNormalized) => {
       const auth = useAuth();
       await auth.exchangeTokens(String(to.params.passwordlessToken));
       return { name: 'profile' };
@@ -86,10 +77,7 @@ export const routes = [
     path: '/shop',
     name: 'shop',
     component: VShopView,
-    beforeEnter: async (
-      to: RouteLocationNormalized,
-      from: RouteLocationNormalized,
-    ) => {
+    beforeEnter: async () => {
       const studies = useStudies();
       if (studies.items.length > 0) {
         const id = studies.items[0].homePageSlug;
@@ -124,26 +112,24 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach(
-  async (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
-    // Get main data if authorized
-    if (isAuthorized()) {
-      await fetchMainUserData();
-    }
+router.beforeEach(async (to: RouteLocationNormalized) => {
+  // Get main data if authorized
+  if (isAuthorized()) {
+    await fetchMainUserData();
+  }
 
-    // Redirect to exisiting route if route does not exist
-    if (!to.name) {
-      return { name: 'profile' };
-    }
+  // Redirect to exisiting route if route does not exist
+  if (!to.name) {
+    return { name: 'profile' };
+  }
 
-    // Redirect to /login if unauthorized and route is not public
-    if (!(isAuthorized() || isPublicRoute(String(to.name)))) {
-      return {
-        name: 'login',
-        query: { next: encodeURIComponent(to.fullPath) },
-      };
-    }
-  },
-);
+  // Redirect to /login if unauthorized and route is not public
+  if (!(isAuthorized() || isPublicRoute(String(to.name)))) {
+    return {
+      name: 'login',
+      query: { next: encodeURIComponent(to.fullPath) },
+    };
+  }
+});
 
 export default router;
