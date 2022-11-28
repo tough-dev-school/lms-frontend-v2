@@ -45,7 +45,7 @@
           <template #header>
             <RouterLink
               v-if="answer.slug"
-              class="Link"
+              class="link"
               :to="{
                 name: 'homework-answer',
                 params: { answerId: answer.slug },

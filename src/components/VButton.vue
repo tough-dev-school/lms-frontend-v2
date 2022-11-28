@@ -18,7 +18,7 @@
     :class="{
       'rounded-row bg-yellow text-center text-black transition-opacity transition-colors hover:bg-yellow-hover disabled:opacity-25':
         tag === 'button',
-      Link: tag === 'link',
+      link: tag === 'link',
     }">
     <slot />
   </button>
