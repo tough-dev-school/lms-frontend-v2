@@ -54,17 +54,13 @@ const setQuestion = () => {
   });
 };
 
-const decorate = (
-  initialRoute: string,
-  callback: Function = () => {
-    setUser();
-  },
-) => {
+const decorate = (initialRoute: string, callback: Function = () => {}) => {
   return [
     (story: InstanceType<typeof App>) => {
       const toasts = useToasts();
-
       toasts.disable();
+
+      setUser();
 
       callback();
 
@@ -102,7 +98,6 @@ NotionViewMissing.decorators = decorate('/materials/1234567890', () => {
 export const HomeworkAnswerView = Template.bind({});
 HomeworkAnswerView.args = {};
 HomeworkAnswerView.decorators = decorate('/homework/answers/1234567890', () => {
-  setUser();
   setQuestion();
 
   const homework = useHomework();
@@ -120,7 +115,6 @@ HomeworkExpertView.args = {};
 HomeworkExpertView.decorators = decorate(
   '/homework/question-admin/1234567890',
   () => {
-    setUser();
     setQuestion();
 
     const homework = useHomework();
@@ -136,7 +130,6 @@ HomeworkQuestionView.args = {};
 HomeworkQuestionView.decorators = decorate(
   '/homework/questions/1234567890',
   () => {
-    setUser();
     setQuestion();
 
     const homework = useHomework();
