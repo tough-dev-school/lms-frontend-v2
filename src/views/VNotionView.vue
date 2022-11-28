@@ -42,7 +42,9 @@
     class="center flex flex-col text-center">
     <p>Материал не найден :(</p>
     <p>Если кажется что здесь какая-то ошибка — напишите в чат в углу экрана</p>
-    <VButton tag="link" @click="router.push({ path: '/' })">На главную</VButton>
+    <VButton tag="link" @click="router.push({ name: 'home' })"
+      >На главную</VButton
+    >
   </div>
   <VPreloader v-else />
 </template>

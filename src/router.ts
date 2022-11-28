@@ -6,6 +6,7 @@ import {
 import useAuth from '@/stores/auth';
 import useUser from '@/stores/user';
 import useStudies from '@/stores/studies';
+const VShopView = () => import('@/views/VShopView.vue');
 const VProfileView = () => import('@/views/VProfileView.vue');
 const VLoginView = () => import('@/views/VLoginView.vue');
 const VLoadingView = () => import('@/views/VLoadingView.vue');
@@ -33,6 +34,23 @@ const fetchMainUserData = async () => {
 };
 
 export const routes = [
+  {
+    path: '/',
+    name: 'home',
+    component: VLoadingView,
+    beforeEnter: async (
+      to: RouteLocationNormalized,
+      from: RouteLocationNormalized,
+    ) => {
+      const studies = useStudies();
+      if (studies.items.length > 0) {
+        const id = studies.items[0].homePageSlug;
+        return { name: 'materials', params: { id } };
+      } else {
+        return { name: 'shop' };
+      }
+    },
+  },
   {
     path: '/profile',
     name: 'profile',
@@ -62,6 +80,21 @@ export const routes = [
       const auth = useAuth();
       await auth.exchangeTokens(String(to.params.passwordlessToken));
       return { name: 'profile' };
+    },
+  },
+  {
+    path: '/shop',
+    name: 'shop',
+    component: VShopView,
+    beforeEnter: async (
+      to: RouteLocationNormalized,
+      from: RouteLocationNormalized,
+    ) => {
+      const studies = useStudies();
+      if (studies.items.length > 0) {
+        const id = studies.items[0].homePageSlug;
+        return { name: 'materials', params: { id } };
+      }
     },
   },
   {
