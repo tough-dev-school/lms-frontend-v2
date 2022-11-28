@@ -14,6 +14,24 @@ const VHomeworkQuestionView = () => import('@/views/VHomeworkQuestionView.vue');
 const VHomeworkExpertView = () => import('@/views/VHomeworkExpertView.vue');
 const VHomeworkAnswerView = () => import('@/views/VHomeworkAnswerView.vue');
 
+const isAuthorized = () => {
+  const auth = useAuth();
+
+  return !!auth.token;
+};
+
+const isPublicRoute = (name: string) => {
+  const PUBLIC_ROUTES = ['login', 'token'];
+  return PUBLIC_ROUTES.includes(String(name));
+};
+
+const fetchMainUserData = async () => {
+  const user = useUser();
+  const studies = useStudies();
+  await user.getData();
+  await studies.getData();
+};
+
 export const routes = [
   {
     path: '/profile',
@@ -24,11 +42,27 @@ export const routes = [
     path: '/login',
     name: 'login',
     component: VLoginView,
+    beforeEnter: (
+      to: RouteLocationNormalized,
+      from: RouteLocationNormalized,
+    ) => {
+      if (isAuthorized()) {
+        return { name: 'profile' };
+      }
+    },
   },
   {
     path: '/auth/passwordless/:passwordlessToken',
     name: 'token',
     component: VLoadingView,
+    beforeEnter: async (
+      to: RouteLocationNormalized,
+      from: RouteLocationNormalized,
+    ) => {
+      const auth = useAuth();
+      await auth.exchangeTokens(String(to.params.passwordlessToken));
+      return { name: 'profile' };
+    },
   },
   {
     path: '/materials/:id',
@@ -57,54 +91,26 @@ const router = createRouter({
   routes,
 });
 
-const fetchMainUserData = async () => {
-  const user = useUser();
-  const studies = useStudies();
-  await user.getData();
-  await studies.getData();
-};
+router.beforeEach(
+  async (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
+    // Get main data if authorized
+    if (isAuthorized()) {
+      await fetchMainUserData();
+    }
 
-const isPublicRoute = (name: string) => {
-  const PUBLIC_ROUTES = ['login', 'token'];
-  return PUBLIC_ROUTES.includes(String(name));
-};
+    // Redirect to exisiting route if route does not exist
+    if (!to.name) {
+      return { name: 'profile' };
+    }
 
-export const beforeEach = async (
-  to: RouteLocationNormalized,
-  from: RouteLocationNormalized,
-) => {
-  const auth = useAuth();
-
-  const isAuthorized = !!auth.token;
-
-  // Redirect to exisiting route if route does not exist
-  if (!to.name) {
-    return { name: 'profile' };
-  }
-
-  // Passwordless token
-  if (to.name === 'token') {
-    const auth = useAuth();
-    await auth.exchangeTokens(String(to.params.passwordlessToken));
-    return { name: 'profile' };
-  }
-
-  // Redirect to /login if unauthorized and route is not public
-  if (!(isAuthorized || isPublicRoute(String(to.name)))) {
-    return { name: 'login', query: { next: encodeURIComponent(to.fullPath) } };
-  }
-
-  // Restrict auth routes for authorized users
-  if (isAuthorized && (to.name === 'login' || to.name === 'token')) {
-    return { name: 'profile' };
-  }
-
-  // Get main data if authorized
-  if (isAuthorized) {
-    await fetchMainUserData();
-  }
-};
-
-router.beforeEach(beforeEach);
+    // Redirect to /login if unauthorized and route is not public
+    if (!(isAuthorized() || isPublicRoute(String(to.name)))) {
+      return {
+        name: 'login',
+        query: { next: encodeURIComponent(to.fullPath) },
+      };
+    }
+  },
+);
 
 export default router;
