@@ -57,6 +57,10 @@ describe('visual regression test for', () => {
       '/iframe.html?args=&id=pages-app--notion-view&viewMode=story#/materials/1234567890',
     ),
     new VisualTest(
+      'Materials Missing',
+      '/iframe.html?id=pages-app--notion-view-missing&viewMode=story#/materials/1234567890',
+    ),
+    new VisualTest(
       'HomeworkAnswers',
       `/iframe.html?args=&id=pages-app--homework-answer-view&viewMode=story#/homework/answers/1234567890`,
     ),

@@ -1,37 +1,61 @@
 <script lang="ts" setup>
   // @ts-ignore
   import { NotionRenderer } from 'vue3-notion';
-  import { useRoute } from 'vue-router';
-  import { onMounted, watch } from 'vue';
+  import { useRoute, useRouter } from 'vue-router';
+  import { watch, ref } from 'vue';
   import VCard from '@/components/VCard.vue';
+  import VButton from '@/components/VButton.vue';
   import VPreloader from '@/components/VPreloader.vue';
   import useMaterials from '@/stores/materials';
   import { storeToRefs } from 'pinia';
 
   const route = useRoute();
+  const router = useRouter();
   const materials = useMaterials();
   const { material } = storeToRefs(materials);
 
-  watch(route, async () => {
+  const getData = async () => {
+    isLoaded.value = false;
     await materials.getData(String(route.params.id));
-  });
+    isLoaded.value = true;
+  };
 
-  onMounted(async () => {
-    await materials.getData(String(route.params.id));
-  });
+  const isLoaded = ref(false);
+
+  watch(
+    route,
+    async () => {
+      await getData();
+    },
+    { immediate: true },
+  );
 
   const mapPageUrl = (id: string) => `/materials/${id}`;
 </script>
 
 <template>
-  <VCard class="pt-32" v-if="material">
+  <VCard class="pt-32" v-if="isLoaded && material">
     <NotionRenderer :blockMap="material" :map-page-url="mapPageUrl" fullPage />
   </VCard>
+  <div
+    v-else-if="isLoaded && !material"
+    class="not-found flex flex-col text-center">
+    <p>Материал не найден :(</p>
+    <p>Если кажется что здесь какая-то ошибка — напишите в чат в углу экрана</p>
+    <VButton tag="link" @click="router.push({ path: '/' })">На главную</VButton>
+  </div>
   <VPreloader v-else />
 </template>
 
 <style>
   @import 'vue3-notion/dist/style.css';
+
+  .not-found {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 
   .notion-page-cover {
     width: var(--notion-max-width);

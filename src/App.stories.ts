@@ -29,47 +29,35 @@ const Template: Story = (args) => ({
   template: '<App v-bind="args" />',
 });
 
-const setUser = () => {
-  const user = useUser();
-
-  user.$patch({
-    id: '',
-    uuid: '',
-    username: 'johndoe@demo.com',
-    firstName: 'Иван',
-    lastName: 'Иванов',
-    firstNameEn: 'John',
-    lastNameEn: 'Doe',
-    gender: 'male',
-    linkedinUsername: 'johndoe',
-    githubUsername: 'johndoe',
-  });
-};
-
-const setQuestion = () => {
-  const homework = useHomework();
-
-  homework.$patch({
-    question: getQuestionData(),
-  });
-};
-
-const decorate = (
-  initialRoute: string,
-  callback: Function = () => {
-    setUser();
-  },
-) => {
+const decorate = (initialRoute: string, callback: Function = () => {}) => {
   return [
     (story: InstanceType<typeof App>) => {
       const toasts = useToasts();
-      const materials = useMaterials();
-
       toasts.disable();
 
-      callback();
+      const user = useUser();
+      user.$patch({
+        id: '',
+        uuid: '',
+        username: 'johndoe@demo.com',
+        firstName: 'Иван',
+        lastName: 'Иванов',
+        firstNameEn: 'John',
+        lastNameEn: 'Doe',
+        gender: 'male',
+        linkedinUsername: 'johndoe',
+        githubUsername: 'johndoe',
+      });
 
+      const homework = useHomework();
+      homework.$patch({
+        question: getQuestionData(),
+      });
+
+      const materials = useMaterials();
       materials.$patch({ material: getMaterial() });
+
+      callback();
 
       return {
         components: { story },
@@ -92,12 +80,16 @@ export const NotionView = Template.bind({});
 NotionView.args = {};
 NotionView.decorators = decorate('/materials/1234567890');
 
+export const NotionViewMissing = Template.bind({});
+NotionViewMissing.args = {};
+NotionViewMissing.decorators = decorate('/materials/1234567890', () => {
+  const materials = useMaterials();
+  materials.$patch({ material: undefined });
+});
+
 export const HomeworkAnswerView = Template.bind({});
 HomeworkAnswerView.args = {};
 HomeworkAnswerView.decorators = decorate('/homework/answers/1234567890', () => {
-  setUser();
-  setQuestion();
-
   const homework = useHomework();
   const answers = [getAnswerData()];
   answers[0].descendants = getAnswersData(3);
@@ -113,9 +105,6 @@ HomeworkExpertView.args = {};
 HomeworkExpertView.decorators = decorate(
   '/homework/question-admin/1234567890',
   () => {
-    setUser();
-    setQuestion();
-
     const homework = useHomework();
     const answers = getAnswersData(3);
     homework.$patch({
@@ -129,12 +118,8 @@ HomeworkQuestionView.args = {};
 HomeworkQuestionView.decorators = decorate(
   '/homework/questions/1234567890',
   () => {
-    setUser();
-    setQuestion();
-
     const homework = useHomework();
     const answers = [getAnswerData()];
-
     homework.$patch({
       answers: answers,
     });
