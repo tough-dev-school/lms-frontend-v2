@@ -10,6 +10,9 @@
 
   const user = useUser();
 
+  const newPassword1 = ref('');
+  const newPassword2 = ref('');
+
   const firstName = ref('');
   const lastName = ref('');
   const firstNameEn = ref('');
@@ -47,37 +50,48 @@
 </script>
 
 <template>
-  <VCard>
-    <VHeading class="mb-24" tag="h1">Данные для диплома</VHeading>
-    <div class="flex flex-col items-start gap-16 tablet:gap-24">
-      <VTextInput label="Имя" v-model="firstName" />
-      <VTextInput label="Фамилия" v-model="lastName" />
-      <VTextInput label="Имя (на английском)" v-model="firstNameEn" />
-      <VTextInput label="Фамилия (на английском)" v-model="lastNameEn" />
-      <VTextInput label="Ник на GitHub" v-model="githubUsername" />
-      <VTextInput label="Ник на LinkedIn" v-model="linkedinUsername" />
-      <fieldset class="flex flex-wrap gap-16">
-        <legend class="Label">Пол</legend>
-        <label class="cursor-pointer"
-          ><input
-            type="radio"
-            name="gender"
-            :checked="gender === 'male'"
-            @click="gender = 'male'" />
-          Мужской</label
-        >
-        <label class="cursor-pointer"
-          ><input
-            type="radio"
-            name="gender"
-            :checked="gender === 'female'"
-            @click="gender = 'female'" />
-          Женский</label
-        >
-      </fieldset>
-    </div>
-    <div class="mt-64">
-      <VButton @click="save">Обновить</VButton>
-    </div>
-  </VCard>
+  <div class="flex flex-col gap-32">
+    <VHeading tag="h1">Настройки</VHeading>
+    <VCard>
+      <VHeading class="mb-24" tag="h2">Пароль</VHeading>
+      <div class="flex flex-col items-start gap-16 tablet:gap-24">
+        <VTextInput label="Новый пароль" v-model="newPassword1" />
+        <VTextInput label="Повторите пароль" v-model="newPassword2" />
+        <VButton>Сохранить</VButton>
+      </div>
+    </VCard>
+    <VCard>
+      <VHeading class="mb-24" tag="h2">Данные для диплома</VHeading>
+      <div class="flex flex-col items-start gap-16 tablet:gap-24">
+        <VTextInput label="Имя" v-model="firstName" />
+        <VTextInput label="Фамилия" v-model="lastName" />
+        <VTextInput label="Имя (на английском)" v-model="firstNameEn" />
+        <VTextInput label="Фамилия (на английском)" v-model="lastNameEn" />
+        <VTextInput label="Ник на GitHub" v-model="githubUsername" />
+        <VTextInput label="Ник на LinkedIn" v-model="linkedinUsername" />
+        <fieldset class="flex flex-wrap gap-16">
+          <legend class="Label">Пол</legend>
+          <label class="cursor-pointer"
+            ><input
+              type="radio"
+              name="gender"
+              :checked="gender === 'male'"
+              @click="gender = 'male'" />
+            Мужской</label
+          >
+          <label class="cursor-pointer"
+            ><input
+              type="radio"
+              name="gender"
+              :checked="gender === 'female'"
+              @click="gender = 'female'" />
+            Женский</label
+          >
+        </fieldset>
+      </div>
+      <div class="mt-64">
+        <VButton @click="save">Обновить</VButton>
+      </div>
+    </VCard>
+  </div>
 </template>
