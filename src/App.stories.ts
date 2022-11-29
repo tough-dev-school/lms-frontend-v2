@@ -72,9 +72,9 @@ export const Login = Template.bind({});
 Login.args = {};
 Login.decorators = decorate('/login');
 
-export const Profile = Template.bind({});
-Profile.args = {};
-Profile.decorators = decorate('/profile');
+export const Settings = Template.bind({});
+Settings.args = {};
+Settings.decorators = decorate('/settings');
 
 export const Shop = Template.bind({});
 Shop.args = {};

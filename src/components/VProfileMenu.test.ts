@@ -64,7 +64,9 @@ describe('VProfileMenu', () => {
 
   const getProfileLinkWrapper = () => {
     const links = wrapper.findAllComponents(RouterLinkStub);
-    return links.find((link) => link.attributes()['data-testid'] === 'profile');
+    return links.find(
+      (link) => link.attributes()['data-testid'] === 'settings',
+    );
   };
 
   const getButtonWrapper = () => {
@@ -133,7 +135,7 @@ describe('VProfileMenu', () => {
     await getButtonWrapper().trigger('click');
 
     expect((getProfileLinkWrapper() as VueWrapper).props().to).toEqual({
-      name: 'profile',
+      name: 'settings',
     });
   });
 

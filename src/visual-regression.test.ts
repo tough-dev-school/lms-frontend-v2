@@ -38,19 +38,19 @@ describe('visual regression test for', () => {
 
   const scenarios = [
     new VisualTest(
-      'LoginView — email login',
+      'Login — email login',
       `/iframe.html?args=&id=pages-app--login&viewMode=story#/login`,
     ),
     new VisualTest(
-      'LoginView — password login',
+      'Login — password login',
       `/iframe.html?args=&id=pages-app--login&viewMode=story#/login`,
       async () => {
         await page.click('[data-testid="to-password-mode"]');
       },
     ),
     new VisualTest(
-      'ProfileView',
-      `/iframe.html?args=&id=pages-app--profile&viewMode=story#/profile`,
+      'Settings',
+      `/iframe.html?args=&id=pages-app--settings&viewMode=story#/settings`,
     ),
     new VisualTest(
       'Materials',

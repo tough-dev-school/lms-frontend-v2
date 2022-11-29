@@ -56,11 +56,11 @@
         <ul>
           <li>
             <RouterLink
-              data-testid="profile"
-              :to="{ name: 'profile' }"
+              data-testid="settings"
+              :to="{ name: 'settings' }"
               class="VProfileMenu__Item"
               @click="isOpen = false">
-              <span class="link">Профиль</span>
+              <span class="link">Настройки</span>
             </RouterLink>
           </li>
           <li v-for="study in studies.items" :key="study.id">

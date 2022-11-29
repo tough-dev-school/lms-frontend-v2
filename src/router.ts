@@ -7,7 +7,7 @@ import useAuth from '@/stores/auth';
 import useUser from '@/stores/user';
 import useStudies from '@/stores/studies';
 const VShopView = () => import('@/views/VShopView.vue');
-const VProfileView = () => import('@/views/VProfileView.vue');
+const VSettingsView = () => import('@/views/VSettingsView.vue');
 const VLoginView = () => import('@/views/VLoginView.vue');
 const VLoadingView = () => import('@/views/VLoadingView.vue');
 const VNotionView = () => import('@/views/VNotionView.vue');
@@ -49,9 +49,9 @@ export const routes = [
     },
   },
   {
-    path: '/profile',
-    name: 'profile',
-    component: VProfileView,
+    path: '/settings',
+    name: 'settings',
+    component: VSettingsView,
   },
   {
     path: '/login',
@@ -59,7 +59,7 @@ export const routes = [
     component: VLoginView,
     beforeEnter: () => {
       if (isAuthorized()) {
-        return { name: 'profile' };
+        return { name: 'settings' };
       }
     },
   },
@@ -70,7 +70,7 @@ export const routes = [
     beforeEnter: async (to: RouteLocationNormalized) => {
       const auth = useAuth();
       await auth.exchangeTokens(String(to.params.passwordlessToken));
-      return { name: 'profile' };
+      return { name: 'settings' };
     },
   },
   {
@@ -131,7 +131,7 @@ router.beforeEach(async (to: RouteLocationNormalized) => {
 
   // Redirect to exisiting route if route does not exist
   if (!to.name) {
-    return { name: 'profile' };
+    return { name: 'settings' };
   }
 
   // Redirect to /login if unauthorized and route is not public
