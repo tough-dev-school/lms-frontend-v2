@@ -74,6 +74,17 @@ export const routes = [
     },
   },
   {
+    path: '/auth/as/:userId',
+    name: 'auth-as',
+    component: VLoadingView,
+    beforeEnter: async (to: RouteLocationNormalized) => {
+      const auth = useAuth();
+
+      await auth.loginWithUserId(String(to.params.userId));
+      return { name: 'home' };
+    },
+  },
+  {
     path: '/shop',
     name: 'shop',
     component: VShopView,

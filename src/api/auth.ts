@@ -29,3 +29,9 @@ export const loginWithLink = async (token: string): Promise<LoginResponse> => {
 
   return (await axios.get(url)).data as LoginResponse;
 };
+
+export const loginWithUserId = async (userId: string) => {
+  const url = `/api/v2/auth/as/${userId}/`;
+
+  return (await axios.get(url)).data as LoginResponse;
+};

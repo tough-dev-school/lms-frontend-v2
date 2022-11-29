@@ -1,6 +1,11 @@
 import { defineStore } from 'pinia';
 import type { AuthToken } from '@/types/auth';
-import { loginWithCredentials, sendLoginLink, loginWithLink } from '@/api/auth';
+import {
+  loginWithCredentials,
+  sendLoginLink,
+  loginWithLink,
+  loginWithUserId,
+} from '@/api/auth';
 import useToasts from './toasts';
 
 type AuthStoreState = {
@@ -33,6 +38,12 @@ const useAuth = defineStore('auth', {
     async exchangeTokens(passwordlessToken: string) {
       try {
         const loginResult = await loginWithLink(passwordlessToken);
+        this.token = loginResult.token;
+      } catch (error: any) {}
+    },
+    async loginWithUserId(userId: string) {
+      try {
+        const loginResult = await loginWithUserId(userId);
         this.token = loginResult.token;
       } catch (error: any) {}
     },
