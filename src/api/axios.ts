@@ -36,7 +36,15 @@ export const createCustomAxiosInstance = ({ useCaseMiddleware = true }) => {
 
       error.response.data = modifyData(error.response.data);
 
-      handleError(error);
+      if (
+        error.response.headers['content-type'] ===
+        'application/json; charset=utf-8'
+      ) {
+        handleError(error);
+      } else {
+        handleError('Ошибка!');
+      }
+
       return Promise.reject(error);
     },
   );
