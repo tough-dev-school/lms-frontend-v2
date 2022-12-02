@@ -19,6 +19,10 @@
     if (auth.token) router.push({ name: 'home' });
   };
 
+  const emit = defineEmits<{
+    (e: 'change', value: 'password' | 'reset'): void;
+  }>();
+
   onKeyStroke('Enter', (e: KeyboardEvent) => {
     loginWithCredentials();
 
@@ -35,8 +39,8 @@
         <template #label
           >Пароль
           <span class="text-sub">
-            (<RouterLink class="underline" :to="{ name: 'home' }"
-              >Не помню пароль</RouterLink
+            (<button class="underline" @click="emit('change', 'reset')">
+              Не помню пароль</button
             >)
           </span></template
         >
@@ -49,7 +53,7 @@
         class="flex-grow"
         >Войти</VButton
       >
-      <VButton tag="link" @click="changeLoginType(false)" class="flex-grow">
+      <VButton tag="link" @click="emit('change', 'link')" class="flex-grow">
         Войти по ссылке
       </VButton>
     </div>

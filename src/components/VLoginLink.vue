@@ -18,6 +18,8 @@
     if (auth.token) router.push({ name: 'home' });
   };
 
+  const emit = defineEmits<{ (e: 'change', value: 'password'): void }>();
+
   onKeyStroke('Enter', (e: KeyboardEvent) => {
     loginWithEmail();
 
@@ -38,7 +40,7 @@
         >Получить доступ</VButton
       >
       <VButton
-        @click="changeLoginType(true)"
+        @click="emit('change', 'password')"
         tag="link"
         data-testid="to-password-mode"
         class="flex-grow">
