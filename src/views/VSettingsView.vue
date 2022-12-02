@@ -7,18 +7,7 @@
   import useUser from '@/stores/user';
   import type { Gender } from '@/types/users';
   import VCard from '@/components/VCard.vue';
-  import useAuth from '@/stores/auth';
-
-  const auth = useAuth();
-
-  const newPassword1 = ref('');
-  const newPassword2 = ref('');
-
-  const savePassword = async () => {
-    await auth.changePassword(newPassword1.value, newPassword2.value);
-    newPassword1.value = '';
-    newPassword2.value = '';
-  };
+  import VLoginChange from '@/components/VLoginChange.vue';
 
   const user = useUser();
   const firstName = ref('');
@@ -60,20 +49,7 @@
 <template>
   <div class="flex flex-col gap-32">
     <VHeading tag="h1">Настройки</VHeading>
-    <VCard>
-      <VHeading class="mb-24" tag="h2">Пароль</VHeading>
-      <div class="flex flex-col items-start gap-16 tablet:gap-24">
-        <VTextInput
-          type="password"
-          label="Новый пароль"
-          v-model="newPassword1" />
-        <VTextInput
-          type="password"
-          label="Повторите пароль"
-          v-model="newPassword2" />
-        <VButton @click="savePassword">Сохранить</VButton>
-      </div>
-    </VCard>
+    <VLoginChange />
     <VCard>
       <VHeading class="mb-24" tag="h2">Данные для диплома</VHeading>
       <div class="flex flex-col items-start gap-16 tablet:gap-24">

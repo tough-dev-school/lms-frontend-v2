@@ -1,0 +1,57 @@
+<script lang="ts" setup>
+  import VHeading from '@/components/VHeading.vue';
+  import VButton from '@/components/VButton.vue';
+  import VCard from '@/components/VCard.vue';
+  import VTextInput from '@/components/VTextInput.vue';
+  import { ref } from 'vue';
+  import { onKeyStroke } from '@vueuse/core';
+  import useAuth from '@/stores/auth';
+  import { useRouter } from 'vue-router';
+
+  const auth = useAuth();
+  const router = useRouter();
+
+  const username = ref('');
+  const password = ref('');
+
+  const loginWithCredentials = async () => {
+    await auth.loginWithCredentials(username.value, password.value);
+    if (auth.token) router.push({ name: 'home' });
+  };
+
+  onKeyStroke('Enter', (e: KeyboardEvent) => {
+    loginWithCredentials();
+
+    e.preventDefault();
+  });
+</script>
+
+<template>
+  <VCard>
+    <VHeading level="1" class="mb-32">Вход и регистрация</VHeading>
+    <div class="flex flex-col gap-16">
+      <VTextInput label="Логин" type="text" v-model="username" />
+      <VTextInput type="password" v-model="password">
+        <template #label
+          >Пароль
+          <span class="text-sub">
+            (<RouterLink class="underline" :to="{ name: 'home' }"
+              >Не помню пароль</RouterLink
+            >)
+          </span></template
+        >
+      </VTextInput>
+    </div>
+    <div class="mt-32 flex flex-wrap gap-8">
+      <VButton
+        @click="loginWithCredentials"
+        :disabled="!(username && password)"
+        class="flex-grow"
+        >Войти</VButton
+      >
+      <VButton tag="link" @click="changeLoginType(false)" class="flex-grow">
+        Войти по ссылке
+      </VButton>
+    </div>
+  </VCard>
+</template>
