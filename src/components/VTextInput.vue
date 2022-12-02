@@ -39,8 +39,10 @@
 
 <template>
   <label class="w-full">
-    <div v-if="label" class="mb-8 text-gray" data-testid="label">
-      {{ label }}
+    <div class="mb-8 text-gray empty:hidden" data-testid="label">
+      <slot name="label">
+        {{ label }}
+      </slot>
     </div>
     <input
       :type="type"

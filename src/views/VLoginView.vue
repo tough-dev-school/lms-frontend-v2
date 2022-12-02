@@ -81,7 +81,16 @@
     <template v-if="withPassword === true">
       <div class="flex flex-col gap-16">
         <VTextInput label="Логин" type="text" v-model="username" />
-        <VTextInput label="Пароль" type="password" v-model="password" />
+        <VTextInput type="password" v-model="password">
+          <template #label
+            >Пароль
+            <span class="text-sub">
+              (<RouterLink class="underline" :to="{ name: 'home' }"
+                >Не помню пароль</RouterLink
+              >)
+            </span></template
+          >
+        </VTextInput>
       </div>
       <div class="mt-32 flex flex-wrap gap-8">
         <VButton
