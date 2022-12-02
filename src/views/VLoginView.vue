@@ -45,7 +45,7 @@
     if (route.query.next) {
       router.push(String(route.query.next));
     } else {
-      router.push({ name: 'settings' });
+      router.push({ name: 'home' });
     }
   };
 
