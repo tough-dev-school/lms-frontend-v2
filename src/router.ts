@@ -70,11 +70,21 @@ export const routes = [
     path: '/login/reset',
     name: 'login-reset',
     component: VLoginResetView,
+    beforeEnter: () => {
+      if (isAuthorized()) {
+        return { name: 'settings' };
+      }
+    },
   },
   {
-    path: '/login/change',
+    path: '/auth/password/reset/:uid/:token/',
     name: 'login-change',
     component: VLoginChangeView,
+    beforeEnter: () => {
+      if (isAuthorized()) {
+        return { name: 'settings' };
+      }
+    },
   },
   {
     path: '/auth/passwordless/:passwordlessToken',

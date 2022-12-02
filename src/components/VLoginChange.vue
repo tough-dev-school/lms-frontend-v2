@@ -5,15 +5,28 @@
   import VCard from '@/components/VCard.vue';
   import VTextInput from '@/components/VTextInput.vue';
   import useAuth from '@/stores/auth';
+
+  export interface Props {
+    uid: string;
+    token: string;
+  }
+
   const auth = useAuth();
 
   const newPassword1 = ref('');
   const newPassword2 = ref('');
 
+  const props = defineProps<Props>();
+  const emit = defineEmits<{ (e: 'save'): void }>();
+
   const savePassword = async () => {
-    await auth.changePassword(newPassword1.value, newPassword2.value);
-    newPassword1.value = '';
-    newPassword2.value = '';
+    await auth.changePassword(
+      newPassword1.value,
+      newPassword2.value,
+      props.uid,
+      props.token,
+    );
+    emit('save');
   };
 </script>
 

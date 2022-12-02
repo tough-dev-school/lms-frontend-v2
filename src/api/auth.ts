@@ -53,3 +53,19 @@ export const requestReset = async (email: string) => {
 
   return await axios.post(url, { email });
 };
+
+export const resetPassword = async (
+  newPassword1: string,
+  newPassword2: string,
+  uid: string,
+  token: string,
+) => {
+  const url = `/api/v2/auth/password/reset/confirm/`;
+
+  return await axios.post(url, {
+    new_password1: newPassword1,
+    new_password2: newPassword2,
+    uid: uid,
+    token: token,
+  });
+};

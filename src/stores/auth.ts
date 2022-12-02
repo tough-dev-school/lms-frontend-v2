@@ -7,6 +7,7 @@ import {
   loginWithUserId,
   changePassword,
   requestReset,
+  resetPassword,
 } from '@/api/auth';
 import useToasts from './toasts';
 
@@ -49,12 +50,25 @@ const useAuth = defineStore('auth', {
         this.token = loginResult.token;
       } catch (error: any) {}
     },
-    async changePassword(newPassword1: string, newPassword2: string) {
-      try {
-        await changePassword(newPassword1, newPassword2);
-        const toasts = useToasts();
-        toasts.addMessage('Новый пароль сохранен', 'success');
-      } catch (error: any) {}
+    async changePassword(
+      newPassword1: string,
+      newPassword2: string,
+      uid?: string,
+      token?: string,
+    ) {
+      if (uid && token) {
+        try {
+          await changePassword(newPassword1, newPassword2);
+          const toasts = useToasts();
+          toasts.addMessage('Новый пароль сохранен', 'success');
+        } catch (error: any) {}
+      } else {
+        try {
+          await resetPassword(newPassword1, newPassword2, uid, token);
+          const toasts = useToasts();
+          toasts.addMessage('Новый пароль сохранен', 'success');
+        } catch (error: any) {}
+      }
     },
     async requestReset(email: string) {
       try {
