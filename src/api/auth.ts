@@ -35,3 +35,15 @@ export const loginWithUserId = async (userId: string) => {
 
   return (await axios.get(url)).data as LoginResponse;
 };
+
+export const changePassword = async (
+  newPassword1: string,
+  newPassword2: string,
+) => {
+  const url = `/api/v2/auth/password/change/`;
+
+  return await axios.post(url, {
+    new_password1: newPassword1,
+    new_password2: newPassword2,
+  });
+};

@@ -1,15 +1,30 @@
 <script lang="ts" setup>
   import { withDefaults } from 'vue';
 
+  export type AllowedTags =
+    | 'text'
+    | 'date'
+    | 'datetime-local'
+    | 'email'
+    | 'month'
+    | 'number'
+    | 'password'
+    | 'search'
+    | 'tel'
+    | 'url'
+    | 'week';
+
   export interface Props {
     label?: string;
     tip?: string;
     error?: boolean | string;
     modelValue: string;
+    type?: AllowedTags;
   }
 
   withDefaults(defineProps<Props>(), {
     modelValue: '',
+    tags: 'text',
   });
 
   const emit = defineEmits<{
@@ -28,6 +43,7 @@
       {{ label }}
     </div>
     <input
+      :type="type"
       v-bind="$attrs"
       :class="{
         'block h-56 w-full rounded border border-gray bg-offwhite p-16 text-black placeholder:text-gray focus:border-blue focus:outline-none': true,
@@ -47,3 +63,10 @@
     </div>
   </label>
 </template>
+
+<style>
+  input[type='password'] {
+    font-family: Verdana;
+    letter-spacing: 0.125em;
+  }
+</style>

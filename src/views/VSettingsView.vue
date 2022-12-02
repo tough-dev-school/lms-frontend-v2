@@ -7,12 +7,20 @@
   import useUser from '@/stores/user';
   import type { Gender } from '@/types/users';
   import VCard from '@/components/VCard.vue';
+  import useAuth from '@/stores/auth';
 
-  const user = useUser();
+  const auth = useAuth();
 
   const newPassword1 = ref('');
   const newPassword2 = ref('');
 
+  const savePassword = async () => {
+    await auth.changePassword(newPassword1.value, newPassword2.value);
+    newPassword1.value = '';
+    newPassword2.value = '';
+  };
+
+  const user = useUser();
   const firstName = ref('');
   const lastName = ref('');
   const firstNameEn = ref('');
@@ -55,9 +63,15 @@
     <VCard>
       <VHeading class="mb-24" tag="h2">Пароль</VHeading>
       <div class="flex flex-col items-start gap-16 tablet:gap-24">
-        <VTextInput label="Новый пароль" v-model="newPassword1" />
-        <VTextInput label="Повторите пароль" v-model="newPassword2" />
-        <VButton>Сохранить</VButton>
+        <VTextInput
+          type="password"
+          label="Новый пароль"
+          v-model="newPassword1" />
+        <VTextInput
+          type="password"
+          label="Повторите пароль"
+          v-model="newPassword2" />
+        <VButton @click="savePassword">Сохранить</VButton>
       </div>
     </VCard>
     <VCard>
