@@ -20,7 +20,7 @@
   };
 
   const emit = defineEmits<{
-    (e: 'change', value: 'password' | 'reset'): void;
+    (e: 'change', value: 'link'): void;
   }>();
 
   onKeyStroke('Enter', (e: KeyboardEvent) => {
@@ -39,7 +39,9 @@
         <template #label
           >Пароль
           <span class="text-sub">
-            (<button class="underline" @click="emit('change', 'reset')">
+            (<button
+              class="underline"
+              @click="router.push({ name: 'login-reset' })">
               Не помню пароль</button
             >)
           </span></template

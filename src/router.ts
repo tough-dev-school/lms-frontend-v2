@@ -14,6 +14,8 @@ const VNotionView = () => import('@/views/VNotionView.vue');
 const VHomeworkQuestionView = () => import('@/views/VHomeworkQuestionView.vue');
 const VHomeworkExpertView = () => import('@/views/VHomeworkExpertView.vue');
 const VHomeworkAnswerView = () => import('@/views/VHomeworkAnswerView.vue');
+const VLoginResetView = () => import('@/views/VLoginResetView.vue');
+const VLoginChangeView = () => import('@/views/VLoginChangeView.vue');
 
 const isAuthorized = () => {
   const auth = useAuth();
@@ -21,8 +23,9 @@ const isAuthorized = () => {
   return !!auth.token;
 };
 
+export const PUBLIC_ROUTES = ['login', 'token', 'login-reset', 'login-change'];
+
 const isPublicRoute = (name: string) => {
-  const PUBLIC_ROUTES = ['login', 'token'];
   return PUBLIC_ROUTES.includes(String(name));
 };
 
@@ -62,6 +65,16 @@ export const routes = [
         return { name: 'settings' };
       }
     },
+  },
+  {
+    path: '/login/reset',
+    name: 'login-reset',
+    component: VLoginResetView,
+  },
+  {
+    path: '/login/change',
+    name: 'login-change',
+    component: VLoginChangeView,
   },
   {
     path: '/auth/passwordless/:passwordlessToken',

@@ -3,11 +3,12 @@
   import VToastFeed from '@/components/VToastFeed.vue';
   import { useRoute } from 'vue-router';
   import { computed } from 'vue';
+  import { PUBLIC_ROUTES } from './router';
 
   const route = useRoute();
 
   const hasHeader = computed(() => {
-    return route.name !== 'login';
+    return !PUBLIC_ROUTES.includes(String(route.name));
   });
 </script>
 
