@@ -18,6 +18,10 @@
     if (auth.token) router.push({ name: 'home' });
   };
 
+  const handleResetRequest = async () => {
+    await auth.requestReset(email.value);
+  };
+
   onKeyStroke('Enter', (e: KeyboardEvent) => {
     loginWithEmail();
 
@@ -34,7 +38,7 @@
       type="email"
       v-model="email" />
     <div class="mt-32 flex flex-wrap gap-8">
-      <VButton @click="loginWithEmail" :disabled="!email" class="flex-grow"
+      <VButton @click="handleResetRequest" :disabled="!email" class="flex-grow"
         >Отправить письмо</VButton
       >
       <VButton

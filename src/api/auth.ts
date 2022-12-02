@@ -47,3 +47,9 @@ export const changePassword = async (
     new_password2: newPassword2,
   });
 };
+
+export const requestReset = async (email: string) => {
+  const url = `/api/v2/auth/password/reset/`;
+
+  return await axios.post(url, { email });
+};
