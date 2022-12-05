@@ -32,7 +32,7 @@
 
 <template>
   <VCard>
-    <VHeading level="1" class="mb-32">Вход и регистрация</VHeading>
+    <VHeading tag="h1" class="mb-32">Вход и регистрация</VHeading>
     <div class="flex flex-col gap-16">
       <VTextInput label="Логин" type="text" v-model="username" />
       <VTextInput type="password" v-model="password">

@@ -29,7 +29,7 @@
 
 <template>
   <VCard>
-    <VHeading level="1" class="mb-32">Вход и регистрация</VHeading>
+    <VHeading tag="h1" class="mb-32">Вход и регистрация</VHeading>
     <VTextInput
       label="Электронная почта"
       tip="Мы отправим ссылку для входа по этому адресу"

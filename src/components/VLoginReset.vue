@@ -29,7 +29,7 @@
 
 <template>
   <VCard>
-    <VHeading level="1" class="mb-32">Сброс пароля</VHeading>
+    <VHeading tag="h1" class="mb-32">Сброс пароля</VHeading>
     <VTextInput
       label="Электронная почта"
       tip="Мы отправим ссылку для сброса пароля по этому адресу"
