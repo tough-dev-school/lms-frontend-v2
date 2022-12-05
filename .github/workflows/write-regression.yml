@@ -45,3 +45,9 @@ jobs:
           file_pattern: '*.png'
           repository: .
           create_branch: true
+
+      - name: Create Pull Request ✅
+        uses: peter-evans/create-pull-request@v4
+        with:
+          branch: update-screenshots
+          delete-branch: true
