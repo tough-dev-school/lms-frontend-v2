@@ -48,7 +48,7 @@
 
 <template>
   <VCard>
-    <VHeading class="mb-24" level="1">Данные для диплома</VHeading>
+    <VHeading class="mb-24" tag="h1">Данные для диплома</VHeading>
     <div class="flex flex-col items-start gap-16 tablet:gap-24">
       <VTextInput label="Имя" v-model="firstName" />
       <VTextInput label="Фамилия" v-model="lastName" />

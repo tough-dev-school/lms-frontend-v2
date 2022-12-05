@@ -40,7 +40,7 @@
 <template>
   <div v-if="question !== undefined && answer !== undefined">
     <section class="mb-64 flex flex-col gap-24">
-      <VHeading level="1">{{ question.name }}</VHeading>
+      <VHeading tag="h1">{{ question.name }}</VHeading>
       <VCard tag="details">
         <summary>Показать задание</summary>
         <VHtmlContent :content="question.text" class="mt-8" />
@@ -48,7 +48,7 @@
       <VAnswer :answer="answer" />
     </section>
     <section class="flex flex-col gap-24">
-      <VHeading level="2">Обсуждение</VHeading>
+      <VHeading tag="h2">Обсуждение</VHeading>
       <VFeedbackGuide />
       <VNewAnswer
         :questionId="question.slug"
