@@ -51,3 +51,5 @@ jobs:
         with:
           branch: update-screenshots
           delete-branch: true
+          title: update regression screenshots
+          body: regression screenshots were updated by github action
