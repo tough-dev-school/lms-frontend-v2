@@ -80,13 +80,13 @@ export const Shop = Template.bind({});
 Shop.args = {};
 Shop.decorators = decorate('/shop');
 
-export const NotionView = Template.bind({});
-NotionView.args = {};
-NotionView.decorators = decorate('/materials/1234567890');
+export const MaterialView = Template.bind({});
+MaterialView.args = {};
+MaterialView.decorators = decorate('/materials/1234567890');
 
-export const NotionViewMissing = Template.bind({});
-NotionViewMissing.args = {};
-NotionViewMissing.decorators = decorate('/materials/1234567890', () => {
+export const MaterialViewMissing = Template.bind({});
+MaterialViewMissing.args = {};
+MaterialViewMissing.decorators = decorate('/materials/1234567890', () => {
   const materials = useMaterials();
   materials.$patch({ material: undefined });
 });

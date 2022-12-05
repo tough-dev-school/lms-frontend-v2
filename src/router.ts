@@ -10,7 +10,7 @@ const VShopView = () => import('@/views/VShopView.vue');
 const VProfileView = () => import('@/views/VProfileView.vue');
 const VLoginView = () => import('@/views/VLoginView.vue');
 const VLoadingView = () => import('@/views/VLoadingView.vue');
-const VNotionView = () => import('@/views/VNotionView.vue');
+const VMaterialView = () => import('@/views/VMaterialView.vue');
 const VHomeworkQuestionView = () => import('@/views/VHomeworkQuestionView.vue');
 const VHomeworkExpertView = () => import('@/views/VHomeworkExpertView.vue');
 const VHomeworkAnswerView = () => import('@/views/VHomeworkAnswerView.vue');
@@ -99,7 +99,7 @@ export const routes = [
   {
     path: '/materials/:id',
     name: 'materials',
-    component: VNotionView,
+    component: VMaterialView,
   },
   {
     path: '/homework/questions/:questionId',
