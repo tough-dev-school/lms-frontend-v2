@@ -31,11 +31,11 @@
 <template>
   <div v-if="question !== undefined && answers.length > 0">
     <VCard class="mb-64">
-      <VHeading level="1" class="mb-24">{{ question.name }}</VHeading>
+      <VHeading tag="h1" class="mb-24">{{ question.name }}</VHeading>
       <VHtmlContent :content="question.text" class="mt-8" />
     </VCard>
     <section>
-      <VHeading level="2" class="mb-24">Ответы</VHeading>
+      <VHeading tag="h2" class="mb-24">Ответы</VHeading>
       <div class="flex flex-col gap-24">
         <VAnswer
           v-for="answer in answers"

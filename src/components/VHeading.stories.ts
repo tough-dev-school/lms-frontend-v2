@@ -17,17 +17,17 @@ const Template: Story = (args) => ({
 export const Default = Template.bind({});
 Default.args = {};
 
-export const Level1 = Template.bind({});
-Level1.args = {
-  level: 1,
+export const H1 = Template.bind({});
+H1.args = {
+  tag: 'h1',
 };
 
-export const Level2 = Template.bind({});
-Level2.args = {
-  level: 2,
+export const H2 = Template.bind({});
+H2.args = {
+  tag: 'h2',
 };
 
-export const Level3 = Template.bind({});
-Level3.args = {
-  level: 3,
+export const H3 = Template.bind({});
+H3.args = {
+  tag: 'h3',
 };

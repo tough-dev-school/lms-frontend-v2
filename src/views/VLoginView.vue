@@ -58,7 +58,7 @@
 
 <template>
   <vCard class="mt-[25vh] pb-32">
-    <VHeading level="1" class="mb-32">Вход и регистрация</VHeading>
+    <VHeading tag="h1" class="mb-32">Вход и регистрация</VHeading>
     <template v-if="withPassword === false">
       <VTextInput
         label="Электронная почта"
