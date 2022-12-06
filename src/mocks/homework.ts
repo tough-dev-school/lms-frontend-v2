@@ -1,11 +1,16 @@
 import type { Answer, Question } from '@/types/homework';
 import convertKeysToCamelCase from '@/utils/convertKeysToCamelCase';
+import htmlToMarkdown from '@/utils/htmlToMarkdown';
+
+export const contentHtml =
+  '<h1>Heading 1</h1><h2>Heading 2</h2><h3>Heading 3</h3><p><strong>Lorem</strong><em>ipsum</em><s>dolor</s><u>sit</u><a target="_blank" rel="noopener noreferrer nofollow" href="https://beau.to">amet</a>, consectetur adipiscing elit. Suspendisse ut varius justo, vitae accumsan ipsum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Curabitur felis metus, laoreet in scelerisque ac, faucibus at nulla. Sed sit amet vulputate urna. Praesent euismod non diam in luctus. Duis volutpat massa sed est auctor, at tincidunt odio facilisis. Integer placerat libero sit amet consectetur consectetur. Suspendisse ultrices nec erat eu porta. Pellentesque sed augue congue, tempus erat vitae, feugiat orci. Ut faucibus massa sollicitudin diam scelerisque efficitur. Suspendisse eget sapien vel purus scelerisque varius nec non sem. Ut ornare lobortis ultricies. Morbi ut iaculis orci. Phasellus sed massa vitae massa tincidunt mattis. Ut posuere facilisis lorem, rhoncus varius orci malesuada eu.</p><blockquote><p>Suspendisse eget sapien vel purus scelerisque varius nec non sem. Ut ornare lobortis ultricies. Morbi ut iaculis orci. Phasellus sed massa vitae massa tincidunt mattis. Ut posuere facilisis lorem, rhoncus varius orci malesuada eu.</p></blockquote><ol><li><p>Option 1</p></li><li><p>Option 2</p></li><li><p>Option 3</p></li></ol><ul><li><p>Option 1</p></li><li><p>Option 2</p></li><li><p>Option 3</p></li></ul>';
+export const contentMarkdown = htmlToMarkdown(contentHtml);
 
 export const getQuestionData = (): Question => {
   return convertKeysToCamelCase({
     slug: '5cc7df02-4549-4236-b6d1-1e10d9622334',
     name: 'Вторая домашка',
-    text: '<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean at pellentesque metus. Duis nec elementum nunc. Nunc quis interdum massa, non blandit sem. Suspendisse ullamcorper risus elit, in consequat justo porttitor vel. Nulla posuere velit libero, nec faucibus sapien fermentum sit amet. Aliquam tincidunt mi ac mauris vestibulum, vitae auctor enim interdum. Mauris faucibus erat et sagittis posuere. Sed ultricies, nulla ac sollicitudin tincidunt, nunc quam dapibus lectus, sed ullamcorper eros magna eu orci. Sed laoreet nunc mollis convallis tincidunt. Fusce eu magna mi. In pulvinar consequat eros in porta. Vivamus eget aliquet tortor. Integer volutpat id justo eget pulvinar. Vivamus in facilisis odio. Aliquam orci ligula, tincidunt et nisi et, posuere aliquet urna. </p>',
+    text: contentHtml,
   });
 };
 
@@ -20,8 +25,8 @@ export const getAnswerData = (): Answer => {
       first_name: 'John',
       last_name: 'Doe',
     },
-    text: '<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean at pellentesque metus. Duis nec elementum nunc. Nunc quis interdum massa, non blandit sem. Suspendisse ullamcorper risus elit, in consequat justo porttitor vel. Nulla posuere velit libero, nec faucibus sapien fermentum sit amet. Aliquam tincidunt mi ac mauris vestibulum, vitae auctor enim interdum. Mauris faucibus erat et sagittis posuere. Sed ultricies, nulla ac sollicitudin tincidunt, nunc quam dapibus lectus, sed ullamcorper eros magna eu orci. Sed laoreet nunc mollis convallis tincidunt. Fusce eu magna mi. In pulvinar consequat eros in porta. Vivamus eget aliquet tortor. Integer volutpat id justo eget pulvinar. Vivamus in facilisis odio. Aliquam orci ligula, tincidunt et nisi et, posuere aliquet urna. </p>',
-    src: ' Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean at pellentesque metus. Duis nec elementum nunc. Nunc quis interdum massa, non blandit sem. Suspendisse ullamcorper risus elit, in consequat justo porttitor vel. Nulla posuere velit libero, nec faucibus sapien fermentum sit amet. Aliquam tincidunt mi ac mauris vestibulum, vitae auctor enim interdum. Mauris faucibus erat et sagittis posuere. Sed ultricies, nulla ac sollicitudin tincidunt, nunc quam dapibus lectus, sed ullamcorper eros magna eu orci. Sed laoreet nunc mollis convallis tincidunt. Fusce eu magna mi. In pulvinar consequat eros in porta. Vivamus eget aliquet tortor. Integer volutpat id justo eget pulvinar. Vivamus in facilisis odio. Aliquam orci ligula, tincidunt et nisi et, posuere aliquet urna. ',
+    text: contentHtml,
+    src: contentMarkdown,
     descendants: [],
   });
 };
