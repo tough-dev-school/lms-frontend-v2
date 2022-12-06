@@ -49,6 +49,14 @@ describe('visual regression test for', () => {
       },
     ),
     new VisualTest(
+      'Login — reset password',
+      `/iframe.html?args=&id=pages-app--reset-password&viewMode=story#/login/reset`,
+    ),
+    new VisualTest(
+      'Login — change password',
+      `/iframe.html?args=&id=pages-app--change-password&viewMode=story#/auth/password/reset/1234567890/1234567890`,
+    ),
+    new VisualTest(
       'Settings',
       `/iframe.html?args=&id=pages-app--settings&viewMode=story#/settings`,
     ),
