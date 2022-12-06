@@ -35,3 +35,37 @@ export const loginWithUserId = async (userId: string) => {
 
   return (await axios.get(url)).data as LoginResponse;
 };
+
+export const changePassword = async (
+  newPassword1: string,
+  newPassword2: string,
+) => {
+  const url = `/api/v2/auth/password/change/`;
+
+  return await axios.post(url, {
+    new_password1: newPassword1,
+    new_password2: newPassword2,
+  });
+};
+
+export const requestReset = async (email: string) => {
+  const url = `/api/v2/auth/password/reset/`;
+
+  return await axios.post(url, { email });
+};
+
+export const resetPassword = async (
+  newPassword1: string,
+  newPassword2: string,
+  uid: string,
+  token: string,
+) => {
+  const url = `/api/v2/auth/password/reset/confirm/`;
+
+  return await axios.post(url, {
+    new_password1: newPassword1,
+    new_password2: newPassword2,
+    uid: uid,
+    token: token,
+  });
+};

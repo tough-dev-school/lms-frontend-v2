@@ -72,9 +72,19 @@ export const Login = Template.bind({});
 Login.args = {};
 Login.decorators = decorate('/login');
 
-export const Profile = Template.bind({});
-Profile.args = {};
-Profile.decorators = decorate('/profile');
+export const Settings = Template.bind({});
+Settings.args = {};
+Settings.decorators = decorate('/settings');
+
+export const ResetPassword = Template.bind({});
+ResetPassword.args = {};
+ResetPassword.decorators = decorate('/login/reset');
+
+export const ChangePassword = Template.bind({});
+ChangePassword.args = {};
+ChangePassword.decorators = decorate(
+  '/auth/password/reset/1234567890/1234567890',
+);
 
 export const Shop = Template.bind({});
 Shop.args = {};

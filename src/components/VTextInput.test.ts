@@ -33,17 +33,25 @@ describe('VTextInput', () => {
     return wrapper.find('[data-testid="input"]');
   };
 
-  test('has correct label if label is defined', () => {
-    expect(getLabelWrapper().text()).toBe(defaultProps.label);
-  });
-
-  test('has no label if no label is defined', () => {
+  test('label can be set by prop', () => {
+    const label = faker.finance.accountName();
     wrapper = mount(VTextInput, {
       shallow: true,
-      props: { ...defaultProps, label: undefined },
+      props: { ...defaultProps, label },
     });
 
-    expect(getLabelWrapper().exists()).toBe(false);
+    expect(getLabelWrapper().text()).toBe(label);
+  });
+
+  test('label can be set by slot', () => {
+    const label = faker.finance.accountName();
+    wrapper = mount(VTextInput, {
+      shallow: true,
+      slots: { label },
+      props: defaultProps,
+    });
+
+    expect(getLabelWrapper().text()).toBe(label);
   });
 
   test('has correct tip if tip is defined', () => {

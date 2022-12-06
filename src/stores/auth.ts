@@ -5,6 +5,9 @@ import {
   sendLoginLink,
   loginWithLink,
   loginWithUserId,
+  changePassword,
+  requestReset,
+  resetPassword,
 } from '@/api/auth';
 import useToasts from './toasts';
 
@@ -45,6 +48,39 @@ const useAuth = defineStore('auth', {
       try {
         const loginResult = await loginWithUserId(userId);
         this.token = loginResult.token;
+      } catch (error: any) {}
+    },
+    async changePassword(
+      newPassword1: string,
+      newPassword2: string,
+      uid?: string,
+      token?: string,
+    ) {
+      const savedToast = () =>
+        useToasts().addMessage('Новый пароль сохранен', 'success');
+      if (uid && token) {
+        try {
+          await resetPassword(newPassword1, newPassword2, uid, token);
+          savedToast();
+          return Promise.resolve();
+        } catch (error: any) {
+          return Promise.reject();
+        }
+      } else {
+        try {
+          await changePassword(newPassword1, newPassword2);
+          savedToast();
+          return Promise.resolve();
+        } catch (error: any) {
+          return Promise.reject();
+        }
+      }
+    },
+    async requestReset(email: string) {
+      try {
+        await requestReset(email);
+        const toasts = useToasts();
+        toasts.addMessage('Письмо отправлено!', 'success');
       } catch (error: any) {}
     },
     resetAuth() {

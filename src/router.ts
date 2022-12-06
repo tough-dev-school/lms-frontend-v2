@@ -7,13 +7,15 @@ import useAuth from '@/stores/auth';
 import useUser from '@/stores/user';
 import useStudies from '@/stores/studies';
 const VShopView = () => import('@/views/VShopView.vue');
-const VProfileView = () => import('@/views/VProfileView.vue');
+const VSettingsView = () => import('@/views/VSettingsView.vue');
 const VLoginView = () => import('@/views/VLoginView.vue');
 const VLoadingView = () => import('@/views/VLoadingView.vue');
 const VNotionView = () => import('@/views/VNotionView.vue');
 const VHomeworkQuestionView = () => import('@/views/VHomeworkQuestionView.vue');
 const VHomeworkExpertView = () => import('@/views/VHomeworkExpertView.vue');
 const VHomeworkAnswerView = () => import('@/views/VHomeworkAnswerView.vue');
+const VLoginResetView = () => import('@/views/VLoginResetView.vue');
+const VLoginChangeView = () => import('@/views/VLoginChangeView.vue');
 
 const isAuthorized = () => {
   const auth = useAuth();
@@ -21,8 +23,9 @@ const isAuthorized = () => {
   return !!auth.token;
 };
 
+export const PUBLIC_ROUTES = ['login', 'token', 'login-reset', 'login-change'];
+
 const isPublicRoute = (name: string) => {
-  const PUBLIC_ROUTES = ['login', 'token'];
   return PUBLIC_ROUTES.includes(String(name));
 };
 
@@ -49,9 +52,9 @@ export const routes = [
     },
   },
   {
-    path: '/profile',
-    name: 'profile',
-    component: VProfileView,
+    path: '/settings',
+    name: 'settings',
+    component: VSettingsView,
   },
   {
     path: '/login',
@@ -59,7 +62,27 @@ export const routes = [
     component: VLoginView,
     beforeEnter: () => {
       if (isAuthorized()) {
-        return { name: 'profile' };
+        return { name: 'settings' };
+      }
+    },
+  },
+  {
+    path: '/login/reset',
+    name: 'login-reset',
+    component: VLoginResetView,
+    beforeEnter: () => {
+      if (isAuthorized()) {
+        return { name: 'settings' };
+      }
+    },
+  },
+  {
+    path: '/auth/password/reset/:uid/:token/',
+    name: 'login-change',
+    component: VLoginChangeView,
+    beforeEnter: () => {
+      if (isAuthorized()) {
+        return { name: 'settings' };
       }
     },
   },
@@ -70,7 +93,7 @@ export const routes = [
     beforeEnter: async (to: RouteLocationNormalized) => {
       const auth = useAuth();
       await auth.exchangeTokens(String(to.params.passwordlessToken));
-      return { name: 'profile' };
+      return { name: 'settings' };
     },
   },
   {
@@ -131,7 +154,7 @@ router.beforeEach(async (to: RouteLocationNormalized) => {
 
   // Redirect to exisiting route if route does not exist
   if (!to.name) {
-    return { name: 'profile' };
+    return { name: 'settings' };
   }
 
   // Redirect to /login if unauthorized and route is not public

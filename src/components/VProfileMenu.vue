@@ -54,15 +54,6 @@
         v-if="isOpen"
         data-testid="menu">
         <ul>
-          <li>
-            <RouterLink
-              data-testid="profile"
-              :to="{ name: 'profile' }"
-              class="VProfileMenu__Item"
-              @click="isOpen = false">
-              <span class="link">Профиль</span>
-            </RouterLink>
-          </li>
           <li v-for="study in studies.items" :key="study.id">
             <RouterLink
               :to="{ name: 'materials', params: { id: study.homePageSlug } }"
@@ -73,6 +64,15 @@
                 clearStudyName(study.name)
               }}</span></RouterLink
             >
+          </li>
+          <li>
+            <RouterLink
+              data-testid="settings"
+              :to="{ name: 'settings' }"
+              class="VProfileMenu__Item"
+              @click="isOpen = false">
+              <span class="link">Настройки</span>
+            </RouterLink>
           </li>
           <li>
             <button
