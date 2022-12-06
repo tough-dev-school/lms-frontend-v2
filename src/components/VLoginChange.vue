@@ -20,13 +20,17 @@
   const emit = defineEmits<{ (e: 'save'): void }>();
 
   const savePassword = async () => {
-    await auth.changePassword(
-      newPassword1.value,
-      newPassword2.value,
-      props.uid,
-      props.token,
-    );
-    emit('save');
+    auth
+      .changePassword(
+        newPassword1.value,
+        newPassword2.value,
+        props.uid,
+        props.token,
+      )
+      .then(() => {
+        emit('save');
+      })
+      .catch(() => {});
   };
 </script>
 

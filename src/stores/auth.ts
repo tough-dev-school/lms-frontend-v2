@@ -56,18 +56,24 @@ const useAuth = defineStore('auth', {
       uid?: string,
       token?: string,
     ) {
+      const savedToast = () =>
+        useToasts().addMessage('Новый пароль сохранен', 'success');
       if (uid && token) {
         try {
-          await changePassword(newPassword1, newPassword2);
-          const toasts = useToasts();
-          toasts.addMessage('Новый пароль сохранен', 'success');
-        } catch (error: any) {}
+          await resetPassword(newPassword1, newPassword2, uid, token);
+          savedToast();
+          return Promise.resolve();
+        } catch (error: any) {
+          return Promise.reject();
+        }
       } else {
         try {
-          await resetPassword(newPassword1, newPassword2, uid, token);
-          const toasts = useToasts();
-          toasts.addMessage('Новый пароль сохранен', 'success');
-        } catch (error: any) {}
+          await changePassword(newPassword1, newPassword2);
+          savedToast();
+          return Promise.resolve();
+        } catch (error: any) {
+          return Promise.reject();
+        }
       }
     },
     async requestReset(email: string) {

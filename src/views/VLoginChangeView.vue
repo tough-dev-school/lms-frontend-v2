@@ -9,7 +9,7 @@
 <template>
   <VLoginChange
     class="mt-[25vh] pb-32"
-    :uid="String(route.params.id)"
+    :uid="String(route.params.uid)"
     :token="String(route.params.token)"
     @save="router.push({ name: 'login' })" />
 </template>
