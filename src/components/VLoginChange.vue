@@ -7,8 +7,8 @@
   import useAuth from '@/stores/auth';
 
   export interface Props {
-    uid: string;
-    token: string;
+    uid?: string;
+    token?: string;
   }
 
   const auth = useAuth();
