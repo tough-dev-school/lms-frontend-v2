@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import { getMaterial } from '@/api/materials';
-// import useToasts from '@/stores/toasts';
 import type { MaterialContentBlocks } from '@/types/materials';
 
 interface State {
