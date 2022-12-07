@@ -24,16 +24,18 @@ describe('studies store', () => {
 
   test('expect getData to call get studies', async () => {
     await studies.getData();
+
     expect(getStudies).toHaveBeenCalledOnce();
   });
 
   test('expect getData to set items', async () => {
     const studiesData = getStudiesData();
-
     (getStudies as ReturnType<typeof vi.fn>).mockResolvedValue({
       results: studiesData,
     });
+
     await studies.getData();
+
     expect(studies.items).toStrictEqual(studiesData);
   });
 });

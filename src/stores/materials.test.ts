@@ -25,13 +25,16 @@ describe('materials store', () => {
 
   test('expect getData to call get materials', async () => {
     await materials.getData(faker.datatype.uuid());
+
     expect(getMaterial).toHaveBeenCalledOnce();
   });
 
   test('expect getData to set material', async () => {
     const materialsData = getMaterialsData();
     (getMaterial as ReturnType<typeof vi.fn>).mockResolvedValue(materialsData);
+
     await materials.getData(faker.datatype.uuid());
+
     expect(materials.material).toStrictEqual(materialsData);
   });
 });
