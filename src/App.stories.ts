@@ -11,7 +11,7 @@ import {
   getAnswersData,
 } from './mocks/homework';
 import useMaterials from './stores/materials';
-import { getMaterial } from './mocks/materials';
+import { getMaterialsData } from './mocks/materials';
 
 export default {
   title: 'Pages/App',
@@ -55,7 +55,7 @@ const decorate = (initialRoute: string, callback: Function = () => {}) => {
       });
 
       const materials = useMaterials();
-      materials.$patch({ material: getMaterial() });
+      materials.$patch({ material: getMaterialsData() });
 
       callback();
 

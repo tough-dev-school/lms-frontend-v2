@@ -15,8 +15,8 @@ const useStudies = defineStore('studies', {
   actions: {
     async getData() {
       try {
-        const response = await getStudies();
-        this.items = response.results;
+        const { results: items } = await getStudies();
+        this.items = items;
       } catch (err) {}
     },
   },
