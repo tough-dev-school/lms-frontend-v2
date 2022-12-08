@@ -2,7 +2,7 @@ import type { Meta, Story } from '@storybook/vue3';
 import VHeading from '@/components/VHeading.vue';
 
 export default {
-  title: 'Forms/VHeading',
+  title: 'UI/VHeading',
   component: VHeading,
 } as Meta;
 
