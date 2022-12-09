@@ -40,6 +40,8 @@ module.exports = {
       gray: { DEFAULT: '#9a9a9a' },
       red: { DEFAULT: '#ff5d29', light: '#FDAA90' },
       green: { DEFAULT: 'rgb(35, 207, 104)', light: '#8EE4B0' },
+      'dark-black': { DEFAULT: '#1C1B22' },
+      'dark-gray': { DEFAULT: '#2B2A33' },
     },
     fontSize: {
       sub: '14px',

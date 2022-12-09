@@ -97,7 +97,7 @@
 </script>
 
 <template>
-  <div class="bg-white">
+  <div class="bg-white dark:bg-dark-gray">
     <BubbleMenu
       class="bubble-menu"
       :editor="editor"
@@ -179,7 +179,7 @@
   }
 
   .ProseMirror {
-    @apply rounded bg-white py-8 px-16 outline-none;
+    @apply rounded bg-white py-8 px-16 outline-none dark:bg-dark-gray;
   }
 
   .ProseMirror-focused {
