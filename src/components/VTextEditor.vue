@@ -81,7 +81,7 @@
 </script>
 
 <template>
-  <div class="bg-white">
+  <div class="bg-white dark:bg-dark-gray">
     <header class="flex">
       <button @click="toggleHeading1" class="bubble-button">
         <H1Icon />
@@ -114,7 +114,7 @@
 
 <style>
   .ProseMirror {
-    @apply rounded bg-white py-8 px-16 outline-none;
+    @apply rounded bg-white py-8 px-16 outline-none dark:bg-dark-gray;
   }
 
   .ProseMirror-focused {

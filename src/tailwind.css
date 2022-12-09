@@ -14,7 +14,7 @@
 
 @layer base {
   body {
-    @apply bg-offwhite font-body;
+    @apply bg-offwhite font-body text-black dark:bg-dark-black dark:text-white;
   }
 }
 
@@ -32,6 +32,7 @@
     @apply prose-li:my-[0.25em];
     @apply prose-ul:my-[0.5em];
     @apply prose-h2:mt-[1.5em];
+    @apply text-black dark:text-white;
     --tw-prose-bullets: currentColor;
     max-width: 100%;
   }

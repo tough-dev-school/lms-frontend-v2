@@ -50,7 +50,7 @@
     </div>
     <Transition name="fade">
       <nav
-        class="absolute right-0 z-10 translate-y-8 overflow-hidden rounded-8 bg-white shadow"
+        class="absolute right-0 z-10 translate-y-8 overflow-hidden rounded-8 bg-white shadow dark:bg-dark-gray"
         v-if="isOpen"
         data-testid="menu">
         <ul>

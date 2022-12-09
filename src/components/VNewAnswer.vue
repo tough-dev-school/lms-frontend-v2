@@ -32,7 +32,7 @@
   <VCard class="px-0 pt-0 tablet:px-0">
     <VTextEditor
       v-model="text"
-      class="mb-16 rounded-t border-b border-offwhite"
+      class="mb-16 rounded-t border-b border-offwhite dark:border-dark-black"
       data-testid="editor" />
     <div class="flex flex-row-reverse px-32">
       <VButton

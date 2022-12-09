@@ -12,7 +12,7 @@
 <template>
   <component
     :is="tag"
-    class="overflow-hidden rounded bg-white px-16 py-16 shadow tablet:px-32">
+    class="overflow-hidden rounded bg-white px-16 py-16 shadow dark:bg-dark-gray tablet:px-32">
     <slot />
   </component>
 </template>

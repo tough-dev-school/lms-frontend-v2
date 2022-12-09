@@ -60,6 +60,14 @@ support@tough-dev.school">
 <style>
   @import 'vue3-notion/dist/style.css';
 
+  .notion {
+    @apply text-black dark:text-white;
+  }
+
+  .notion-gray_background {
+    @apply dark:bg-dark-black;
+  }
+
   .notion-page-cover {
     width: var(--notion-max-width);
     margin: 0 auto;
