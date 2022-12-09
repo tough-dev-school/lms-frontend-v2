@@ -6,14 +6,20 @@ import {
   updateAnswer,
   getAnswers,
   getAnswer,
+  getComments,
 } from '@/api/homework';
-import type { Answer, Question } from '@/types/homework';
+import type { Answer, Comments, Question, Thread } from '@/types/homework';
 import useToasts from '@/stores/toasts';
 
 interface State {
   question: Question | undefined;
-  answers: Answer[];
+  answers: Answer[] | Thread[];
 }
+
+const getCommentsBySlug = (commentsData: Comments[], slug: string) => {
+  const comments = commentsData.find((comments) => comments.slug === slug);
+  return comments ? comments.descendants : [];
+};
 
 const useHomework = defineStore('homework', {
   state: (): State => {
@@ -31,21 +37,50 @@ const useHomework = defineStore('homework', {
     async getAnswers({
       questionId,
       authorId,
+      threads = false,
     }: {
       questionId?: string;
       authorId?: string;
+      threads: boolean;
     }) {
       try {
-        this.answers = await getAnswers({
+        const answers = await getAnswers({
           questionId,
           authorId,
         });
+
+        if (threads) {
+          const answerIds = answers.map((answer) => answer.slug);
+          const commentsData = await getComments(answerIds);
+          const threads = answers.map((answer) => {
+            return {
+              ...answer,
+              descendants: getCommentsBySlug(commentsData, answer.slug),
+            };
+          });
+
+          this.answers = threads;
+        } else {
+          this.answers = answers;
+        }
       } catch (error: any) {}
     },
-    async getAnswerById(answerId: string) {
+    async getAnswerById(answerId: string, threads: boolean = false) {
       try {
         const answer = await getAnswer(answerId);
-        this.answers = [answer];
+
+        if (threads) {
+          const commentsData = await getComments([answer.slug]);
+
+          const thread: Thread = {
+            ...answer,
+            descendants: getCommentsBySlug(commentsData, answer.slug),
+          };
+
+          this.answers = [thread];
+        } else {
+          this.answers = [answer];
+        }
       } catch (error: any) {}
     },
     async postAnswer({

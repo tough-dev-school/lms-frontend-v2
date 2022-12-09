@@ -12,12 +12,23 @@ export interface Answer {
   author: Author;
   text: string;
   src: string;
+}
+
+export interface Thread extends Answer {
+  descendants?: Comment[];
+}
+
+export interface Comment extends Answer, Thread {
   parent?: string;
-  descendants: Answer[];
 }
 
 export interface Question {
   text: string;
   name: string;
   slug: string;
+}
+
+export interface Comments {
+  slug: string;
+  descendants: Comment[];
 }
