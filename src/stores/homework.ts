@@ -37,11 +37,11 @@ const useHomework = defineStore('homework', {
     async getAnswers({
       questionId,
       authorId,
-      threads = false,
+      threads,
     }: {
       questionId?: string;
       authorId?: string;
-      threads: boolean;
+      threads?: boolean;
     }) {
       try {
         const answers = await getAnswers({

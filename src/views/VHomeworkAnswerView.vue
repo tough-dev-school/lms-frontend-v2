@@ -22,7 +22,7 @@
 
   const getData = async () => {
     const { answerId } = route.params;
-    await homework.getAnswerById(String(answerId));
+    await homework.getAnswerById(String(answerId), true);
     if (!answer.value) return;
     const questionId = answer.value.question;
     await homework.getQuestion(questionId);
