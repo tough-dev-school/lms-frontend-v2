@@ -49,7 +49,8 @@
         :answer="answer"
         v-if="answer"
         @update="getData"
-        :questionId="questionId" />
+        :questionId="questionId"
+        :showGoToAnswer="true" />
       <VNewAnswer v-else @update="getData" :questionId="questionId" />
     </section>
   </div>

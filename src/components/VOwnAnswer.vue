@@ -13,6 +13,7 @@
     answer: Answer;
     questionId: string;
     parentId?: string;
+    showGoToAnswer?: boolean;
   }
 
   const homework = useHomework();
@@ -21,7 +22,7 @@
     (e: 'delete'): void;
     (e: 'edit'): void;
   }>();
-  const props = defineProps<Props>();
+  const props = withDefaults(defineProps<Props>(), { showGoToAnswer: false });
   const editMode = ref(false);
   const text = ref('');
   const editTime = ref(30);
@@ -48,7 +49,7 @@
 
 <template>
   <div v-if="!editMode">
-    <VAnswer :answer="answer as Answer">
+    <VAnswer :answer="answer as Answer" :showGoToAnswer="showGoToAnswer">
       <template #header>
         <VAnswerActions
           :created="answer.created"

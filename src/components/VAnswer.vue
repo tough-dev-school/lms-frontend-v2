@@ -8,9 +8,12 @@
 
   export interface Props {
     answer: Answer;
+    showGoToAnswer?: boolean;
   }
 
-  defineProps<Props>();
+  withDefaults(defineProps<Props>(), {
+    showGoToAnswer: false,
+  });
 </script>
 
 <template>
@@ -30,6 +33,15 @@
       </div>
       <div class="flex-grow"></div>
       <slot name="header"></slot>
+      <RouterLink
+        v-if="showGoToAnswer"
+        class="link"
+        :to="{
+          name: 'homework-answer',
+          params: { answerId: answer.slug },
+        }"
+        >К ответу</RouterLink
+      >
     </div>
     <VHtmlContent :content="answer.text" data-testid="content" />
     <div class="flex flex-row-reverse empty:appearance-none">
