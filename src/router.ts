@@ -23,12 +23,6 @@ const isAuthorized = () => {
   return !!auth.token;
 };
 
-export const PUBLIC_ROUTES = ['login', 'token', 'login-reset', 'login-change'];
-
-const isPublicRoute = (name: string) => {
-  return PUBLIC_ROUTES.includes(String(name));
-};
-
 const fetchMainUserData = async () => {
   const user = useUser();
   const studies = useStudies();
@@ -65,6 +59,9 @@ export const routes = [
         return { name: 'settings' };
       }
     },
+    meta: {
+      isPublic: true,
+    },
   },
   {
     path: '/login/reset',
@@ -74,6 +71,9 @@ export const routes = [
       if (isAuthorized()) {
         return { name: 'settings' };
       }
+    },
+    meta: {
+      isPublic: true,
     },
   },
   {
@@ -85,6 +85,9 @@ export const routes = [
         return { name: 'settings' };
       }
     },
+    meta: {
+      isPublic: true,
+    },
   },
   {
     path: '/auth/passwordless/:passwordlessToken',
@@ -94,6 +97,9 @@ export const routes = [
       const auth = useAuth();
       await auth.exchangeTokens(String(to.params.passwordlessToken));
       return { name: 'settings' };
+    },
+    meta: {
+      isPublic: true,
     },
   },
   {
@@ -158,7 +164,7 @@ router.beforeEach(async (to: RouteLocationNormalized) => {
   }
 
   // Redirect to /login if unauthorized and route is not public
-  if (!(isAuthorized() || isPublicRoute(String(to.name)))) {
+  if (!(isAuthorized() || to.meta.isPublic)) {
     return {
       name: 'login',
       query: { next: encodeURIComponent(to.fullPath) },
