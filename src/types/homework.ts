@@ -15,11 +15,11 @@ export interface Answer {
 }
 
 export interface Thread extends Answer {
-  descendants?: Comment[];
+  descendants: Comment[];
 }
 
 export interface Comment extends Answer, Thread {
-  parent?: string;
+  parent: string;
 }
 
 export interface Question {
