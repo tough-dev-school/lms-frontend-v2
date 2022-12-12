@@ -43,6 +43,13 @@ export const getCommentData = (parent: Thread | Comment): Comment => {
   });
 };
 
+export const getCommentsData = (
+  parent: Thread | Comment,
+  length: number = 1,
+): Comment[] => {
+  return [...Array(length)].map(() => getCommentData(parent));
+};
+
 export const getAnswersData = (length: number = 1): Answer[] => {
   return [...Array(length)].map(() => getAnswerData());
 };

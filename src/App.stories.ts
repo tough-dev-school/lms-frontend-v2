@@ -10,7 +10,7 @@ import {
   getQuestionData,
   getAnswersData,
   getThreadData,
-  getCommentData,
+  getCommentsData,
 } from './mocks/homework';
 import useMaterials from './stores/materials';
 import { getMaterialsData } from './mocks/materials';
@@ -109,13 +109,13 @@ HomeworkAnswerView.decorators = decorate('/homework/answers/1234567890', () => {
   const homework = useHomework();
   const answers = [getThreadData()];
 
-  answers[0].descendants = [getCommentData(answers[0])];
-  answers[0].descendants[0].descendants = [
-    getCommentData(answers[0].descendants[0]),
-  ];
-  answers[0].descendants[0].descendants[0].descendants = [
-    getCommentData(answers[0].descendants[0].descendants[0]),
-  ];
+  answers[0].descendants = getCommentsData(answers[0]);
+  answers[0].descendants[0].descendants = getCommentsData(
+    answers[0].descendants[0],
+  );
+  answers[0].descendants[0].descendants[0].descendants = getCommentsData(
+    answers[0].descendants[0].descendants[0],
+  );
   homework.$patch({
     answers: answers,
   });
