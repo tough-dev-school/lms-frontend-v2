@@ -9,6 +9,8 @@ import {
   getAnswerData,
   getQuestionData,
   getAnswersData,
+  getThreadData,
+  getCommentsData,
 } from './mocks/homework';
 import useMaterials from './stores/materials';
 import { getMaterialsData } from './mocks/materials';
@@ -105,10 +107,16 @@ export const HomeworkAnswerView = Template.bind({});
 HomeworkAnswerView.args = {};
 HomeworkAnswerView.decorators = decorate('/homework/answers/1234567890', () => {
   const homework = useHomework();
-  const answers = [getAnswerData()];
-  answers[0].descendants = getAnswersData(3);
-  answers[0].descendants[0].descendants = getAnswersData(2);
-  answers[0].descendants[0].descendants[0].descendants = getAnswersData(1);
+  const answers = [getThreadData()];
+
+  answers[0].descendants = getCommentsData(answers[0], 3);
+  answers[0].descendants[0].descendants = getCommentsData(
+    answers[0].descendants[0],
+    2,
+  );
+  answers[0].descendants[0].descendants[0].descendants = getCommentsData(
+    answers[0].descendants[0].descendants[0],
+  );
   homework.$patch({
     answers: answers,
   });

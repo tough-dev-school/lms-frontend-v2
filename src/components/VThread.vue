@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import type { Answer } from '@/types/homework';
+  import type { Thread } from '@/types/homework';
   import VOwnAnswer from '@/components/VOwnAnswer.vue';
   import VReplyToggle from '@/components/VReplyToggle.vue';
   import VAnswer from '@/components/VAnswer.vue';
@@ -9,7 +9,7 @@
   import useUser from '@/stores/user';
 
   export interface Props {
-    originalPost: Answer;
+    originalPost: Thread;
   }
 
   const user = useUser();

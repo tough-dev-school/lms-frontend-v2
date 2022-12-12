@@ -1,4 +1,4 @@
-import type { Answer, Question } from '@/types/homework';
+import type { Answer, Comment, Question, Thread } from '@/types/homework';
 import convertKeysToCamelCase from '@/utils/convertKeysToCamelCase';
 import htmlToMarkdown from '@/utils/htmlToMarkdown';
 
@@ -27,8 +27,27 @@ export const getAnswerData = (): Answer => {
     },
     text: contentHtml,
     src: contentMarkdown,
+  });
+};
+
+export const getThreadData = (answer: Answer = getAnswerData()): Thread => {
+  return convertKeysToCamelCase({ ...answer, descendants: [] });
+};
+
+export const getCommentData = (parent: Thread | Comment): Comment => {
+  return convertKeysToCamelCase({
+    ...parent,
+    parent: parent.slug,
+    question: parent.question,
     descendants: [],
   });
+};
+
+export const getCommentsData = (
+  parent: Thread | Comment,
+  length: number = 1,
+): Comment[] => {
+  return [...Array(length)].map(() => getCommentData(parent));
 };
 
 export const getAnswersData = (length: number = 1): Answer[] => {

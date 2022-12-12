@@ -11,18 +11,19 @@
   import VHtmlContent from '@/components/VHtmlContent.vue';
   import VCard from '@/components/VCard.vue';
   import VNewAnswer from '@/components/VNewAnswer.vue';
+  import type { Thread } from '@/types/homework';
 
   const homework = useHomework();
   const { question, answers } = storeToRefs(homework);
   const route = useRoute();
 
   const answer = computed(() => {
-    return answers.value.at(-1);
+    return answers.value.at(-1) as Thread;
   });
 
   const getData = async () => {
     const { answerId } = route.params;
-    await homework.getAnswerById(String(answerId));
+    await homework.getAnswerById(String(answerId), true);
     if (!answer.value) return;
     const questionId = answer.value.question;
     await homework.getQuestion(questionId);

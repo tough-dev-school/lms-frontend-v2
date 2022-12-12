@@ -1,14 +1,14 @@
 import type { Meta, Story } from '@storybook/vue3';
 import VThread from '@/components/VThread.vue';
-import { getAnswerData, getAnswersData } from '@/mocks/homework';
+import { getCommentsData, getThreadData } from '@/mocks/homework';
 import dayjs from 'dayjs';
 import { faker } from '@faker-js/faker';
 import useUser from '@/stores/user';
 
-const originalPost = getAnswerData();
+const originalPost = getThreadData();
 originalPost.created = dayjs().toISOString();
-originalPost.descendants = getAnswersData(3);
-originalPost.descendants[1].descendants = getAnswersData();
+originalPost.descendants = getCommentsData(originalPost, 3);
+originalPost.descendants[1].descendants = getCommentsData(originalPost);
 
 const userId = faker.datatype.uuid();
 

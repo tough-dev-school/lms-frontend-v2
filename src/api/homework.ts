@@ -1,5 +1,5 @@
 import axios from './axios';
-import type { Answer, Question } from '@/types/homework';
+import type { Answer, Comments, Question } from '@/types/homework';
 
 export const getQuestion = async (questionId: string) => {
   const url = `/api/v2/homework/questions/${questionId}/`;
@@ -40,6 +40,12 @@ export const getAnswers = async ({
   return (
     await axios.get(url, { params: { ...params, disable_pagination: true } })
   ).data as Answer[];
+};
+
+export const getComments = async (answerIds: string[]) => {
+  const url = `/api/v2/homework/comments/?answer=` + [...answerIds].join(',');
+
+  return (await axios.get(url)).data as Comments[];
 };
 
 export const postAnswer = async ({
