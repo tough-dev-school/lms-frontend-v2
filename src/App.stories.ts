@@ -109,9 +109,10 @@ HomeworkAnswerView.decorators = decorate('/homework/answers/1234567890', () => {
   const homework = useHomework();
   const answers = [getThreadData()];
 
-  answers[0].descendants = getCommentsData(answers[0]);
+  answers[0].descendants = getCommentsData(answers[0], 3);
   answers[0].descendants[0].descendants = getCommentsData(
     answers[0].descendants[0],
+    2,
   );
   answers[0].descendants[0].descendants[0].descendants = getCommentsData(
     answers[0].descendants[0].descendants[0],
