@@ -16,9 +16,22 @@ interface State {
   answers: Answer[] | Thread[];
 }
 
-const getCommentsBySlug = (commentsData: Comments[], slug: string) => {
+export const getCommentsBySlug = (commentsData: Comments[], slug: string) => {
   const comments = commentsData.find((comments) => comments.slug === slug);
   return comments ? comments.descendants : [];
+};
+
+export const getThreads = async (answers: Answer[]) => {
+  const answerIds = answers.map((answer) => answer.slug);
+  const commentsData = await getComments(answerIds);
+  const threads: Thread[] = answers.map((answer) => {
+    return {
+      ...answer,
+      descendants: getCommentsBySlug(commentsData, answer.slug),
+    };
+  });
+
+  return threads;
 };
 
 const useHomework = defineStore('homework', {
@@ -50,16 +63,7 @@ const useHomework = defineStore('homework', {
         });
 
         if (threads) {
-          const answerIds = answers.map((answer) => answer.slug);
-          const commentsData = await getComments(answerIds);
-          const threads = answers.map((answer) => {
-            return {
-              ...answer,
-              descendants: getCommentsBySlug(commentsData, answer.slug),
-            };
-          });
-
-          this.answers = threads;
+          this.answers = await getThreads(answers);
         } else {
           this.answers = answers;
         }
@@ -70,14 +74,7 @@ const useHomework = defineStore('homework', {
         const answer = await getAnswer(answerId);
 
         if (threads) {
-          const commentsData = await getComments([answer.slug]);
-
-          const thread: Thread = {
-            ...answer,
-            descendants: getCommentsBySlug(commentsData, answer.slug),
-          };
-
-          this.answers = [thread];
+          this.answers = await getThreads([answer]);
         } else {
           this.answers = [answer];
         }
