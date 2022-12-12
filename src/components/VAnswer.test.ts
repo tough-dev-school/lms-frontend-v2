@@ -1,5 +1,5 @@
 import { describe, expect, test, beforeEach } from 'vitest';
-import { VueWrapper, mount } from '@vue/test-utils';
+import { VueWrapper, mount, RouterLinkStub } from '@vue/test-utils';
 import VAnswer from '@/components/VAnswer.vue';
 import getName from '@/utils/getName';
 import { getAnswerData } from '@/mocks/homework';
@@ -11,17 +11,22 @@ const defaultProps = {
   answer: getAnswerData(),
 };
 
+const defaultMountOptions = {
+  props: defaultProps,
+  shallow: true,
+  global: {
+    stubs: {
+      VCard: false,
+      RouterLink: RouterLinkStub,
+    },
+  },
+};
+
 describe('VAnswer', () => {
   let wrapper: VueWrapper<InstanceType<typeof VAnswer>>;
 
   beforeEach(() => {
-    wrapper = mount(VAnswer, {
-      props: defaultProps,
-      shallow: true,
-      global: {
-        stubs: { VCard: false },
-      },
-    });
+    wrapper = mount(VAnswer, defaultMountOptions);
   });
 
   const getNameWrapper = () => {
@@ -58,13 +63,7 @@ describe('VAnswer', () => {
     defaultProps.answer.created = dayjs()
       .subtract(years, 'years')
       .toISOString();
-    wrapper = mount(VAnswer, {
-      props,
-      shallow: true,
-      global: {
-        stubs: { VCard: false },
-      },
-    });
+    wrapper = mount(VAnswer, { ...defaultMountOptions, props });
 
     expect(getDateWrapper().text()).toContain(years);
   });
