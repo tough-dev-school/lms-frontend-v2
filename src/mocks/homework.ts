@@ -1,5 +1,5 @@
 import type { Answer, Comment, Question, Thread } from '@/types/homework';
-import convertKeysToCamelCase from '@/utils/convertKeysToCamelCase';
+import { convertKeysToCamelCase } from '@/utils/convertKeys';
 import htmlToMarkdown from '@/utils/htmlToMarkdown';
 
 export const contentHtml =

@@ -1,7 +1,7 @@
 import useAuth from '@/stores/auth';
 import axios from 'axios';
 import handleError from '@/utils/handleError';
-import convertKeysToCamelCase from '@/utils/convertKeysToCamelCase';
+import { convertKeysToCamelCase } from '@/utils/convertKeys';
 
 export const createCustomAxiosInstance = ({ useCaseMiddleware = true }) => {
   const instance = axios.create();
