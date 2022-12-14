@@ -37,8 +37,15 @@ export const createCustomAxiosInstance = (
       ...request.headers,
     };
 
-    if (auth.token) request.headers.Authorization = `Bearer ${auth.token}`;
-    if (request.data) request.data = requestCaseMiddleware(request.data);
+    // Manage authorization via pinia
+    if (auth.token) {
+      request.headers.Authorization = `Bearer ${auth.token}`;
+    }
+
+    // Convert data keys to target case
+    if (request.data) {
+      request.data = requestCaseMiddleware(request.data);
+    }
 
     return request;
   });
@@ -53,7 +60,11 @@ export const createCustomAxiosInstance = (
 
   instance.interceptors.response.use(
     (response) => {
-      response.data = responseCaseMiddleware(response.data);
+      // Convert data keys to target case
+      if (response.data) {
+        response.data = responseCaseMiddleware(response.data);
+      }
+
       return response;
     },
     (error) => {
@@ -64,16 +75,17 @@ export const createCustomAxiosInstance = (
         window.location.href = window.origin;
       }
 
-      error.response.data = responseCaseMiddleware(error.response.data);
-
-      if (
-        error.response.headers['content-type'] ===
-        'application/json; charset=utf-8'
-      ) {
-        handleError(error);
-      } else {
-        handleError('Ошибка!');
+      // Convert data keys to target case
+      if (error.response.data) {
+        error.response.data = responseCaseMiddleware(error.response.data);
       }
+
+      const isJson =
+        error.response.headers['content-type'] ===
+        'application/json; charset=utf-8';
+
+      // handle error with default or custom message
+      isJson ? handleError(error) : handleError();
 
       return Promise.reject(error);
     },
