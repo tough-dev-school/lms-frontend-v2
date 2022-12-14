@@ -1,18 +1,8 @@
-import { isPlainObject, mapKeys, camelCase, snakeCase } from 'lodash';
+import camelcaseKeys from 'camelcase-keys';
+import decamelizeKeys from 'decamelize-keys';
 
-export const convertKeys = (
-  object: Object,
-  transformer: Function = (string: string) => string,
-) => {
-  return JSON.parse(JSON.stringify(object), (key, value) =>
-    isPlainObject(value)
-      ? mapKeys(value, (_value, _key) => transformer(_key))
-      : value,
-  );
-};
+export const convertKeysToCamelCase = (input: object | object[]) =>
+  camelcaseKeys(input, { deep: true });
 
-export const convertKeysToCamelCase = (object: Object) =>
-  convertKeys(object, camelCase);
-
-export const convertKeysToSnakeCase = (object: Object) =>
-  convertKeys(object, snakeCase);
+export const convertKeysToSnakeCase = (input: object | object[]) =>
+  decamelizeKeys(input, { deep: true });
