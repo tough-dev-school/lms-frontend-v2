@@ -25,6 +25,15 @@ describe('handleError', () => {
     toasts = useToasts();
   });
 
+  test('calls toast for text error', () => {
+    const message = faker.lorem.sentence();
+
+    handleError(message);
+
+    expect(toasts.addMessage).toHaveBeenCalledOnce();
+    expect(toasts.addMessage).toHaveBeenCalledWith(message, 'error');
+  });
+
   test('calls toast for error', () => {
     const message = faker.lorem.sentence();
     const error = createError({
