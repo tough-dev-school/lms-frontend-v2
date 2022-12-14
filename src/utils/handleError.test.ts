@@ -26,14 +26,15 @@ describe('handleError', () => {
   });
 
   test('calls toast for error', () => {
-    const messages = faker.lorem.sentence();
+    const message = faker.lorem.sentence();
     const error = createError({
-      details: messages,
+      details: message,
     });
 
     handleError(error);
 
-    expect(toasts.addMessage).toBeCalledTimes(1);
+    expect(toasts.addMessage).toHaveBeenCalledOnce();
+    expect(toasts.addMessage).toHaveBeenCalledWith(message, 'error');
   });
 
   test('calls toast for each error in array', () => {
