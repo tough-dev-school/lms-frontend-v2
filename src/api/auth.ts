@@ -43,8 +43,8 @@ export const changePassword = async (
   const url = `/api/v2/auth/password/change/`;
 
   return await axios.post(url, {
-    new_password1: newPassword1,
-    new_password2: newPassword2,
+    newPassword1,
+    newPassword2,
   });
 };
 
@@ -63,8 +63,8 @@ export const resetPassword = async (
   const url = `/api/v2/auth/password/reset/confirm/`;
 
   return await axios.post(url, {
-    new_password1: newPassword1,
-    new_password2: newPassword2,
+    newPassword1,
+    newPassword2,
     uid: uid,
     token: token,
   });

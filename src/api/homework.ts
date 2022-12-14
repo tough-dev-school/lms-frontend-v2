@@ -38,7 +38,7 @@ export const getAnswers = async ({
   }
 
   return (
-    await axios.get(url, { params: { ...params, disable_pagination: true } })
+    await axios.get(url, { params: { ...params, disablePagination: true } })
   ).data as Answer[];
 };
 
