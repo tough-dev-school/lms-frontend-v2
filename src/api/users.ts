@@ -1,4 +1,4 @@
-import axios from './axios';
+import axios from '@/utils/axios';
 import type { EditableUserData, User } from '@/types/users';
 
 export const getUser: () => Promise<User> = async () => {
