@@ -1,13 +1,34 @@
 import useAuth from '@/stores/auth';
 import axios from 'axios';
 import handleError from '@/utils/handleError';
-import convertKeysToCamelCase from '@/utils/convertKeysToCamelCase';
+import {
+  convertKeysToCamelCase,
+  convertKeysToSnakeCase,
+} from '@/utils/convertKeys';
 
-export const createCustomAxiosInstance = ({ useCaseMiddleware = true }) => {
+interface CustomAxiosInstanceConfig {
+  useResponseCaseMiddleware?: boolean;
+  useRequestCaseMiddleware?: boolean;
+}
+
+export const createCustomAxiosInstance = (
+  config: CustomAxiosInstanceConfig = {},
+) => {
+  const defaultConfig = {
+    useResponseCaseMiddleware: true,
+    useRequestCaseMiddleware: true,
+  };
+
+  config = Object.assign({}, defaultConfig, config);
+
   const instance = axios.create();
 
-  const modifyData = useCaseMiddleware
-    ? convertKeysToCamelCase
+  const { useResponseCaseMiddleware, useRequestCaseMiddleware } = config;
+
+  // Request
+
+  const requestCaseMiddleware = useRequestCaseMiddleware
+    ? convertKeysToSnakeCase
     : (data: Object) => data;
 
   instance.interceptors.request.use((request) => {
@@ -17,13 +38,22 @@ export const createCustomAxiosInstance = ({ useCaseMiddleware = true }) => {
     };
 
     if (auth.token) request.headers.Authorization = `Bearer ${auth.token}`;
+    if (request.data) request.data = requestCaseMiddleware(request.data);
 
     return request;
   });
 
+  // ---
+
+  // Response
+
+  const responseCaseMiddleware = useResponseCaseMiddleware
+    ? convertKeysToCamelCase
+    : (data: Object) => data;
+
   instance.interceptors.response.use(
     (response) => {
-      response.data = modifyData(response.data);
+      response.data = responseCaseMiddleware(response.data);
       return response;
     },
     (error) => {
@@ -34,7 +64,7 @@ export const createCustomAxiosInstance = ({ useCaseMiddleware = true }) => {
         window.location.href = window.origin;
       }
 
-      error.response.data = modifyData(error.response.data);
+      error.response.data = responseCaseMiddleware(error.response.data);
 
       if (
         error.response.headers['content-type'] ===
@@ -49,7 +79,9 @@ export const createCustomAxiosInstance = ({ useCaseMiddleware = true }) => {
     },
   );
 
+  // ---
+
   return instance;
 };
 
-export default createCustomAxiosInstance({ useCaseMiddleware: true });
+export default createCustomAxiosInstance();
