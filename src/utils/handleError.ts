@@ -1,7 +1,9 @@
 import useToasts from '@/stores/toasts';
 import { isString } from 'lodash';
 
-const handleError = (error: any) => {
+export const DEFAULT_ERROR_MESSAGE = 'Ошибка!';
+
+const handleError = (error: any = DEFAULT_ERROR_MESSAGE) => {
   const toasts = useToasts();
 
   if (typeof error === 'string') {
