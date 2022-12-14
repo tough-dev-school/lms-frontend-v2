@@ -4,7 +4,7 @@
   export type AllowedTags = 'h1' | 'h2' | 'h3';
 
   export interface Props {
-    tag: AllowedTags;
+    tag?: AllowedTags;
   }
 
   withDefaults(defineProps<Props>(), {
