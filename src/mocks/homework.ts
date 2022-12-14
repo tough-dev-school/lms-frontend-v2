@@ -6,15 +6,15 @@ export const contentHtml =
   '<h1>Heading 1</h1><h2>Heading 2</h2><h3>Heading 3</h3><p> <strong>Lorem</strong> <em>ipsum</em> <s>dolor</s> <u>sit</u> <a target="_blank" rel="noopener noreferrer nofollow" href="https://example.com">amet</a>, consectetur adipiscing elit. Suspendisse ut varius justo, vitae accumsan ipsum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Curabitur felis metus, laoreet in scelerisque ac, faucibus at nulla. Sed sit amet vulputate urna. Praesent euismod non diam in luctus. Duis volutpat massa sed est auctor, at tincidunt odio facilisis. Integer placerat libero sit amet consectetur consectetur. Suspendisse ultrices nec erat eu porta. Pellentesque sed augue congue, tempus erat vitae, feugiat orci. Ut faucibus massa sollicitudin diam scelerisque efficitur. Suspendisse eget sapien vel purus scelerisque varius nec non sem. Ut ornare lobortis ultricies. Morbi ut iaculis orci. Phasellus sed massa vitae massa tincidunt mattis. Ut posuere facilisis lorem, rhoncus varius orci malesuada eu.</p><blockquote><p>Suspendisse eget sapien vel purus scelerisque varius nec non sem. Ut ornare lobortis ultricies. Morbi ut iaculis orci. Phasellus sed massa vitae massa tincidunt mattis. Ut posuere facilisis lorem, rhoncus varius orci malesuada eu.</p></blockquote><ol><li><p>Option 1</p></li><li><p>Option 2</p></li><li><p>Option 3</p></li></ol><ul><li><p>Option 1</p></li><li><p>Option 2</p></li><li><p>Option 3</p></li></ul>';
 export const contentMarkdown = htmlToMarkdown(contentHtml);
 
-export const getQuestionData = (): Question => {
+export const getQuestionData = () => {
   return convertKeysToCamelCase({
     slug: '5cc7df02-4549-4236-b6d1-1e10d9622334',
     name: 'Вторая домашка',
     text: contentHtml,
-  });
+  }) as Question;
 };
 
-export const getAnswerData = (): Answer => {
+export const getAnswerData = () => {
   return convertKeysToCamelCase({
     created: '2020-07-25T19:43:00.750026',
     modified: '2020-07-25T19:43:00.750057',
@@ -27,29 +27,29 @@ export const getAnswerData = (): Answer => {
     },
     text: contentHtml,
     src: contentMarkdown,
-  });
+  }) as Answer;
 };
 
-export const getThreadData = (answer: Answer = getAnswerData()): Thread => {
-  return convertKeysToCamelCase({ ...answer, descendants: [] });
+export const getThreadData = (answer: Answer = getAnswerData()) => {
+  return convertKeysToCamelCase({ ...answer, descendants: [] }) as Thread;
 };
 
-export const getCommentData = (parent: Thread | Comment): Comment => {
+export const getCommentData = (parent: Thread | Comment) => {
   return convertKeysToCamelCase({
     ...parent,
     parent: parent.slug,
     question: parent.question,
     descendants: [],
-  });
+  }) as Comment;
 };
 
 export const getCommentsData = (
   parent: Thread | Comment,
   length: number = 1,
-): Comment[] => {
-  return [...Array(length)].map(() => getCommentData(parent));
+) => {
+  return [...Array(length)].map(() => getCommentData(parent)) as Comment[];
 };
 
-export const getAnswersData = (length: number = 1): Answer[] => {
-  return [...Array(length)].map(() => getAnswerData());
+export const getAnswersData = (length: number = 1) => {
+  return [...Array(length)].map(() => getAnswerData()) as Answer[];
 };
