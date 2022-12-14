@@ -1,7 +1,7 @@
 import { createCustomAxiosInstance } from './axios';
 import type { MaterialContentBlocks } from '@/types/materials';
 
-const axios = createCustomAxiosInstance({ useCaseMiddleware: false });
+const axios = createCustomAxiosInstance({ useResponseCaseMiddleware: false });
 
 export const getMaterial: (
   materialId: string,
