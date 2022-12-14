@@ -1,4 +1,4 @@
-import { createCustomAxiosInstance } from './axios';
+import { createCustomAxiosInstance } from '@/utils/axios';
 import type { MaterialContentBlocks } from '@/types/materials';
 
 const axios = createCustomAxiosInstance({ useResponseCaseMiddleware: false });

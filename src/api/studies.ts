@@ -1,4 +1,4 @@
-import axios from './axios';
+import axios from '@/utils/axios';
 import type { Study } from '@/types/studies';
 import type { PaginantedCollection } from '@/types/api-utility';
 

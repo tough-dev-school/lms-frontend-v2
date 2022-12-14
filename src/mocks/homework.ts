@@ -1,5 +1,5 @@
 import type { Answer, Comment, Question, Thread } from '@/types/homework';
-import { convertKeysToCamelCase } from '@/utils/convertKeys';
+import responseCaseMiddleware from '@/utils/axios/responseCaseMiddleware';
 import htmlToMarkdown from '@/utils/htmlToMarkdown';
 
 export const contentHtml =
@@ -7,7 +7,7 @@ export const contentHtml =
 export const contentMarkdown = htmlToMarkdown(contentHtml);
 
 export const getQuestionData = () => {
-  return convertKeysToCamelCase({
+  return responseCaseMiddleware({
     slug: '5cc7df02-4549-4236-b6d1-1e10d9622334',
     name: 'Вторая домашка',
     text: contentHtml,
@@ -15,7 +15,7 @@ export const getQuestionData = () => {
 };
 
 export const getAnswerData = () => {
-  return convertKeysToCamelCase({
+  return responseCaseMiddleware({
     created: '2020-07-25T19:43:00.750026',
     modified: '2020-07-25T19:43:00.750057',
     slug: '25dc5a1f-c3a9-42fa-abvg-51c313fcec47',
@@ -31,11 +31,11 @@ export const getAnswerData = () => {
 };
 
 export const getThreadData = (answer: Answer = getAnswerData()) => {
-  return convertKeysToCamelCase({ ...answer, descendants: [] }) as Thread;
+  return responseCaseMiddleware({ ...answer, descendants: [] }) as Thread;
 };
 
 export const getCommentData = (parent: Thread | Comment) => {
-  return convertKeysToCamelCase({
+  return responseCaseMiddleware({
     ...parent,
     parent: parent.slug,
     question: parent.question,
