@@ -12,10 +12,13 @@
   import VCard from '@/components/VCard.vue';
   import VNewAnswer from '@/components/VNewAnswer.vue';
   import type { Thread } from '@/types/homework';
+  import useToasts from '@/stores/toasts';
+  import { ClipboardCopyIcon } from 'vue-tabler-icons';
 
   const homework = useHomework();
   const { question, answers } = storeToRefs(homework);
   const route = useRoute();
+  const toast = useToasts();
 
   const answer = computed(() => {
     return answers.value.at(-1) as Thread;
@@ -27,6 +30,11 @@
     if (!answer.value) return;
     const questionId = answer.value.question;
     await homework.getQuestion(questionId);
+  };
+
+  const copyLink = () => {
+    navigator.clipboard.writeText(window.location.href);
+    toast.addMessage('Ссылка скопирована', 'success');
   };
 
   watch(
@@ -46,7 +54,16 @@
         <summary>Показать задание</summary>
         <VHtmlContent :content="question.text" class="mt-8" />
       </VCard>
-      <VAnswer :answer="answer" />
+      <VAnswer :answer="answer">
+        <template #header>
+          <button
+            class="cursor-pointer text-gray transition-colors hover:text-black"
+            @click="copyLink">
+            <span class="hidden tablet:block">Скопировать ссылку</span>
+            <ClipboardCopyIcon class="tablet:hidden" />
+          </button>
+        </template>
+      </VAnswer>
     </section>
     <section class="flex flex-col gap-24">
       <VHeading tag="h2">Обсуждение</VHeading>
