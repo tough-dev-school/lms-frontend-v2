@@ -11,7 +11,6 @@
     ListNumbersIcon,
     ListIcon,
   } from 'vue-tabler-icons';
-  import htmlToMarkdown from '@/utils/htmlToMarkdown';
   import { watch, withDefaults } from 'vue';
 
   export interface Props {
@@ -31,7 +30,7 @@
 
   editor.on('update', ({ editor }) => {
     const html = editor.getHTML();
-    emit('update:modelValue', htmlToMarkdown(html));
+    emit('update:modelValue', html);
   });
 
   watch(
