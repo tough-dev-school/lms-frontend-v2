@@ -13,7 +13,7 @@
   import VNewAnswer from '@/components/VNewAnswer.vue';
   import type { Thread } from '@/types/homework';
   import useToasts from '@/stores/toasts';
-  import { ClipboardCopyIcon } from 'vue-tabler-icons';
+  import { LinkIcon } from 'vue-tabler-icons';
 
   const homework = useHomework();
   const { question, answers } = storeToRefs(homework);
@@ -60,7 +60,7 @@
             class="cursor-pointer text-gray transition-colors hover:text-black"
             @click="copyLink">
             <span class="hidden tablet:block">Скопировать ссылку</span>
-            <ClipboardCopyIcon class="tablet:hidden" />
+            <LinkIcon class="tablet:hidden" />
           </button>
         </template>
       </VAnswer>
