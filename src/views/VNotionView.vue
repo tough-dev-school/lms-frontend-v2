@@ -39,9 +39,17 @@
   </VCard>
   <div
     v-else-if="isLoaded && !material"
-    class="center flex flex-col text-center">
+    class="center flex max-w-[400px] flex-col text-center">
     <p>Материал не найден :(</p>
-    <p>Если кажется что здесь какая-то ошибка — напишите в чат в углу экрана</p>
+    <p>
+      Если кажется что здесь какая-то ошибка напишите в чат в углу экрана или на
+      <a
+        class="link"
+        href="mailto:
+support@tough-dev.school">
+        support@tough-dev.school</a
+      >
+    </p>
     <VButton tag="link" @click="router.push({ name: 'home' })"
       >На главную</VButton
     >
