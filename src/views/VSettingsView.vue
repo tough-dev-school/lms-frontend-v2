@@ -52,6 +52,12 @@
     <VLoginChange />
     <VCard>
       <VHeading class="mb-24" tag="h2">Данные для диплома</VHeading>
+      <div class="mb-16 rounded bg-yellow bg-opacity-30 p-16">
+        Будьте внимательнее, когда заполняете поля имени и фамилии на двух
+        языках. Именно в таком виде они отобразятся в сертификате. И если вы
+        ошибитесь — придется заново запускать генерацию сертификата. Хотелось бы
+        этого избежать.
+      </div>
       <div class="flex flex-col items-start gap-16 tablet:gap-24">
         <VTextInput label="Имя" v-model="firstName" />
         <VTextInput label="Фамилия" v-model="lastName" />
