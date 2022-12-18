@@ -1,4 +1,4 @@
-import axios from '@/utils/axios';
+import axios from '@/axios';
 import type { AuthToken } from '@/types/auth';
 
 type LoginResponse = {

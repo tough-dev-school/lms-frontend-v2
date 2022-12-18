@@ -1,5 +1,5 @@
 import type { Answer, Comment, Question, Thread } from '@/types/homework';
-import responseCaseMiddleware from '@/utils/axios/responseCaseMiddleware';
+import responseCaseMiddleware from '@/axios/responseCaseMiddleware';
 import htmlToMarkdown from '@/utils/htmlToMarkdown';
 
 export const contentHtml =
