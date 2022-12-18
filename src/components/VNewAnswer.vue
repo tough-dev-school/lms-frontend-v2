@@ -38,7 +38,6 @@
       <VButton
         @click="sendPost"
         :disabled="!(text.length > 0)"
-        class="max-h-32 min-w-0 px-24"
         data-testid="button"
         >Отправить</VButton
       >
