@@ -16,7 +16,7 @@
   <button
     class="h-module w-full min-w-[240px]"
     :class="{
-      'rounded-row bg-yellow p-module text-center leading-1.5 text-black transition-opacity transition-colors hover:bg-yellow-hover disabled:opacity-25':
+      'leading-1.5 rounded bg-yellow p-module text-center text-black transition-opacity transition-colors hover:bg-yellow-hover disabled:opacity-25':
         tag === 'button',
       link: tag === 'link',
     }">
