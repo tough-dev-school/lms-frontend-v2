@@ -10,7 +10,12 @@ export default mergeConfig(
       environment: 'jsdom',
       exclude: [...configDefaults.exclude, './src/visual-regression.test.ts'],
       coverage: {
-        provider: 'c8',
+        provider: 'istanbul',
+        extension: ['.ts', '.js', '.vue'],
+        include: ['**/*.ts', '**/*.vue'],
+        exclude: ['**/*.stories.ts'],
+        all: true,
+        reporter: 'lcov',
       },
     },
   }),
