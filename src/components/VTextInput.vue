@@ -39,7 +39,7 @@
 
 <template>
   <label class="w-full">
-    <div class="mb-8 text-gray empty:hidden" data-testid="label">
+    <div class="mb-4 text-gray empty:hidden tablet:mb-8" data-testid="label">
       <slot name="label">
         {{ label }}
       </slot>
