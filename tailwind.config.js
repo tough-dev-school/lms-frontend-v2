@@ -65,7 +65,10 @@ module.exports = {
       4: 4,
       ...spacing(8, 512),
     },
-    extend: {},
+    extend: {
+      height: { module: 'var(--module)' },
+      padding: { module: 'calc((var(--module) - 1.5em) / 2)' },
+    },
   },
   plugins: [require('@tailwindcss/typography')],
 };
