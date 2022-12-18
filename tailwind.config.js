@@ -54,18 +54,16 @@ module.exports = {
       row: '28px',
       full: '50%',
     },
-    leading: {
-      1: '1em',
-      1.25: '1.25em',
-      1.5: '1.5em',
-    },
     spacing: {
       inherit: 'inherit',
       0: 0,
       4: 4,
       ...spacing(8, 512),
     },
-    extend: {},
+    extend: {
+      height: { module: 'var(--module)' },
+      padding: { module: 'calc((var(--module) - 1.5em) / 2)' },
+    },
   },
   plugins: [require('@tailwindcss/typography')],
 };
