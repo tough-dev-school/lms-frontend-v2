@@ -47,8 +47,8 @@
     <input
       :type="type"
       v-bind="$attrs"
+      class="block h-module w-full rounded border border-gray bg-offwhite p-module px-16 leading-1.5 text-black placeholder:text-gray focus:border-blue focus:outline-none"
       :class="{
-        'block h-56 w-full rounded border border-gray bg-offwhite p-16 text-black placeholder:text-gray focus:border-blue focus:outline-none': true,
         'border-red': error,
       }"
       data-testid="input"
