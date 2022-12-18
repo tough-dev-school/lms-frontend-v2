@@ -54,7 +54,7 @@ module.exports = {
       row: '28px',
       full: '50%',
     },
-    leading: {
+    lineHeight: {
       1: '1em',
       1.25: '1.25em',
       1.5: '1.5em',
