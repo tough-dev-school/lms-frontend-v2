@@ -24,8 +24,6 @@ const generateTests = (scenarios: TestScenario[]) => {
   const tests: Test[] = [];
 
   scenarios.forEach((scenario) => {
-    const colorSchemes: ColorScheme[] = ['light', 'dark'];
-
     viewports.forEach((viewport) => {
       colorSchemes.forEach((colorScheme) => {
         const name = `${test.name} — ${viewport[0]}×${viewport[1]} ${colorScheme}`;
