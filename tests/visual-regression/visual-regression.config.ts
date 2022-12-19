@@ -1,12 +1,12 @@
 import { mergeConfig } from 'vite';
 import { defineConfig } from 'vitest/config';
-import viteConfig from '../vite.config';
+import viteConfig from '../../vite.config';
 
 export default mergeConfig(
   viteConfig,
   defineConfig({
     test: {
-      include: ['./visual-regression/visual-regression.test.ts'],
+      include: ['./tests/visual-regression/visual-regression.test.ts'],
       testTimeout: 180000,
     },
   }),
