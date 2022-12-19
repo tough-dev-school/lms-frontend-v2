@@ -1,10 +1,9 @@
 <script lang="ts" setup>
   import type { Thread } from '@/types/homework';
   import VOwnAnswer from '@/components/VOwnAnswer.vue';
-  import VReplyToggle from '@/components/VReplyToggle.vue';
   import VAnswer from '@/components/VAnswer.vue';
   import VNewAnswer from '@/components/VNewAnswer.vue';
-  import { ref } from 'vue';
+  import { computed, ref } from 'vue';
   import { onClickOutside } from '@vueuse/core';
   import useUser from '@/stores/user';
 
@@ -23,34 +22,41 @@
     emit('update');
   };
 
-  defineProps<Props>();
+  const props = defineProps<Props>();
 
   const target = ref(null);
 
   onClickOutside(target, () => {
     replyMode.value = false;
   });
+
+  const getRootComponent = computed(() => {
+    const rootComponent: any = { answer: props.originalPost };
+
+    rootComponent.is =
+      props.originalPost.author.uuid !== user.uuid ? VAnswer : VOwnAnswer;
+
+    rootComponent.questionId = props.originalPost.question;
+
+    return rootComponent;
+  });
 </script>
 
 <template>
   <div>
     <div class="group" ref="target">
-      <VAnswer
-        :answer="originalPost"
-        v-if="originalPost.author.uuid !== user.uuid">
+      <component :is="getRootComponent.is" v-bind="getRootComponent">
         <template #footer>
-          <VReplyToggle v-model="replyMode" />
+          <button
+            :class="{
+              'transition-opacity group-hover:opacity-100 tablet:opacity-0':
+                !replyMode,
+            }"
+            @click="replyMode = !replyMode">
+            {{ replyMode ? 'Не отвечать' : 'Ответить' }}
+          </button>
         </template>
-      </VAnswer>
-      <VOwnAnswer
-        v-else
-        :answer="originalPost"
-        :question-id="originalPost.question"
-        @update="emit('update')">
-        <template #answer-footer>
-          <VReplyToggle v-model="replyMode" />
-        </template>
-      </VOwnAnswer>
+      </component>
       <div class="thread-ruler" :class="{ 'mt-16': replyMode }">
         <VNewAnswer
           v-if="replyMode"
