@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import VHeading from '@/components/VHeading.vue';
-  import VAnswer from '@/components/VAnswer.vue';
+  import VLazyThread from '@/components/VLazyThread.vue';
   import VCard from '@/components/VCard.vue';
   import { watch } from 'vue';
   import useHomework from '@/stores/homework';
@@ -37,12 +37,12 @@
     <section>
       <VHeading tag="h2" class="mb-24">Ответы</VHeading>
       <div class="flex flex-col gap-24">
-        <VAnswer
+        <VLazyThread
           v-for="answer in answers"
           :show-go-to-answer="true"
           :key="answer.slug"
-          :answer="answer">
-        </VAnswer>
+          :originalPost="answer">
+        </VLazyThread>
       </div>
     </section>
   </div>
