@@ -1,5 +1,4 @@
 import { expect, describe, test, beforeEach } from 'vitest';
-import { VIEWPORTS } from './constants/viewports';
 import {
   toMatchImageSnapshot,
   type MatchImageSnapshotOptions,
@@ -17,89 +16,64 @@ const matchConfig: MatchImageSnapshotOptions = {
   failureThresholdType: 'pixel',
 };
 
-class VisualTest {
+interface TestScenario {
   name: string;
   path: string;
-  action: Function;
-  constructor(name: string, path: string, action = () => {}) {
-    this.name = name;
-    this.path = path;
-    this.action = action;
-  }
+  action?: () => Promise<void>;
 }
 
-type Test = [string, string, Function, number, number, boolean];
+type Name = string;
+type ColorScheme = null | 'light' | 'dark' | 'no-preference';
 
-describe('visual regression test for', () => {
-  let browser: playwright.Browser;
-  let page: playwright.Page;
+interface TestOptions {
+  path: string;
+  action: () => Promise<void>;
+  width: number;
+  height: number;
+  colorScheme: ColorScheme;
+}
 
+type Test = [Name, TestOptions];
+
+const generateTests = (scenarios: TestScenario[]) => {
   const tests: Test[] = [];
 
-  const scenarios = [
-    new VisualTest(
-      'Login — email login',
-      `/iframe.html?args=&id=pages-app--login&viewMode=story#/login`,
-    ),
-    new VisualTest(
-      'Login — password login',
-      `/iframe.html?args=&id=pages-app--login&viewMode=story#/login`,
-      async () => {
-        await page.click('[data-testid="to-password-mode"]');
-      },
-    ),
-    new VisualTest(
-      'Login — reset password',
-      `/iframe.html?args=&id=pages-app--reset-password&viewMode=story#/login/reset`,
-    ),
-    new VisualTest(
-      'Login — change password',
-      `/iframe.html?args=&id=pages-app--change-password&viewMode=story#/auth/password/reset/1234567890/1234567890`,
-    ),
-    new VisualTest(
-      'Settings',
-      `/iframe.html?args=&id=pages-app--settings&viewMode=story#/settings`,
-    ),
-    new VisualTest(
-      'Materials',
-      '/iframe.html?args=&id=pages-app--notion-view&viewMode=story#/materials/1234567890',
-    ),
-    new VisualTest(
-      'Materials Missing',
-      '/iframe.html?id=pages-app--notion-view-missing&viewMode=story#/materials/1234567890',
-    ),
-    new VisualTest(
-      'HomeworkAnswers',
-      `/iframe.html?args=&id=pages-app--homework-answer-view&viewMode=story#/homework/answers/1234567890`,
-    ),
-    new VisualTest(
-      'HomeworkExpert',
-      '/iframe.html?args=&id=pages-app--homework-expert-view&viewMode=story#/homework/question-admin/1234567890',
-    ),
-    new VisualTest(
-      'HomeworkQuestion',
-      '/iframe.html?args=&id=pages-app--homework-question-view&viewMode=story#/homework/questions/1234567890',
-    ),
-    new VisualTest(
-      'Shop',
-      '/iframe.html?args=&id=pages-app--shop&viewMode=story#/shop',
-    ),
-  ];
+  scenarios.forEach((scenario) => {
+    const viewports = [
+      [1440, 900],
+      [768, 1024],
+      [320, 560],
+    ];
 
-  scenarios.forEach((test) => {
-    VIEWPORTS.forEach((viewport) => {
-      [true, false].forEach((isDarkmode) => {
+    const colorSchemes: ColorScheme[] = ['light', 'dark'];
+
+    viewports.forEach((viewport) => {
+      colorSchemes.forEach((colorScheme) => {
+        const name = `${test.name} — ${viewport[0]}×${viewport[1]} ${colorScheme}`;
+        const { path } = scenario;
+        let { action } = scenario;
+        action = action ? action : async () => {};
+        const [width, height] = viewport;
         tests.push([
-          `${test.name} — ${viewport.width}×${viewport.height}`,
-          test.path,
-          test.action,
-          viewport.width,
-          viewport.height,
-          isDarkmode,
+          name,
+          {
+            path,
+            action,
+            width,
+            height,
+            colorScheme,
+          },
         ]);
       });
     });
   });
+
+  return tests;
+};
+
+describe('visual regression test for', () => {
+  let browser: playwright.Browser;
+  let page: playwright.Page;
 
   beforeEach(async () => {
     browser = await playwright.chromium.launch();
@@ -112,19 +86,67 @@ describe('visual regression test for', () => {
     });
   };
 
-  test.each(tests)(
-    '%s',
-    async (name, route, action, width, height, isDarkmode) => {
-      await page.emulateMedia(
-        isDarkmode ? { colorScheme: 'dark' } : { colorScheme: 'light' },
-      );
-      await page.setViewportSize({ width, height });
-      await goto(route);
-
-      await action();
-      const image = await page.screenshot({ fullPage: true });
-
-      expect(image).toMatchImageSnapshot(matchConfig);
+  const scenarios = [
+    {
+      name: 'Login — email login',
+      path: `/iframe.html?args=&id=pages-app--login&viewMode=story#/login`,
     },
-  );
+    {
+      name: 'Login — password login',
+      path: `/iframe.html?args=&id=pages-app--login&viewMode=story#/login`,
+      action: async () => {
+        await page.click('[data-testid="to-password-mode"]');
+      },
+    },
+    {
+      name: 'Login — reset password',
+      path: `/iframe.html?args=&id=pages-app--reset-password&viewMode=story#/login/reset`,
+    },
+    {
+      name: 'Login — change password',
+      path: `/iframe.html?args=&id=pages-app--change-password&viewMode=story#/auth/password/reset/1234567890/1234567890`,
+    },
+    {
+      name: 'Settings',
+      path: `/iframe.html?args=&id=pages-app--settings&viewMode=story#/settings`,
+    },
+    {
+      name: 'Materials',
+      path: '/iframe.html?args=&id=pages-app--notion-view&viewMode=story#/materials/1234567890',
+    },
+    {
+      name: 'Materials Missing',
+      path: '/iframe.html?id=pages-app--notion-view-missing&viewMode=story#/materials/1234567890',
+    },
+    {
+      name: 'HomeworkAnswers',
+      path: `/iframe.html?args=&id=pages-app--homework-answer-view&viewMode=story#/homework/answers/1234567890`,
+    },
+    {
+      name: 'HomeworkExpert',
+      path: '/iframe.html?args=&id=pages-app--homework-expert-view&viewMode=story#/homework/question-admin/1234567890',
+    },
+    {
+      name: 'HomeworkQuestion',
+      path: '/iframe.html?args=&id=pages-app--homework-question-view&viewMode=story#/homework/questions/1234567890',
+    },
+    {
+      name: 'Shop',
+      path: '/iframe.html?args=&id=pages-app--shop&viewMode=story#/shop',
+    },
+  ];
+
+  const tests = generateTests(scenarios);
+
+  test.each(tests)('%s', async (name, options) => {
+    const { path, action, width, height, colorScheme } = options;
+    await page.emulateMedia({ colorScheme });
+    await page.setViewportSize({ width, height });
+    await goto(path);
+
+    await action();
+    const image = await page.screenshot({ fullPage: true });
+
+    expect(image).toMatchImageSnapshot(matchConfig);
+  });
 });
