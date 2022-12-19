@@ -28,7 +28,7 @@ class VisualTest {
   }
 }
 
-type Test = [string, string, Function, number, number];
+type Test = [string, string, Function, number, number, boolean];
 
 describe('visual regression test for', () => {
   let browser: playwright.Browser;
@@ -88,13 +88,16 @@ describe('visual regression test for', () => {
 
   scenarios.forEach((test) => {
     VIEWPORTS.forEach((viewport) => {
-      tests.push([
-        `${test.name} — ${viewport.width}×${viewport.height}`,
-        test.path,
-        test.action,
-        viewport.width,
-        viewport.height,
-      ]);
+      [true, false].forEach((isDarkmode) => {
+        tests.push([
+          `${test.name} — ${viewport.width}×${viewport.height}`,
+          test.path,
+          test.action,
+          viewport.width,
+          viewport.height,
+          isDarkmode,
+        ]);
+      });
     });
   });
 
@@ -109,13 +112,19 @@ describe('visual regression test for', () => {
     });
   };
 
-  test.each(tests)('%s', async (name, route, action, width, height) => {
-    await page.setViewportSize({ width, height });
-    await goto(route);
+  test.each(tests)(
+    '%s',
+    async (name, route, action, width, height, isDarkmode) => {
+      await page.emulateMedia(
+        isDarkmode ? { colorScheme: 'dark' } : { colorScheme: 'light' },
+      );
+      await page.setViewportSize({ width, height });
+      await goto(route);
 
-    await action();
-    const image = await page.screenshot({ fullPage: true });
+      await action();
+      const image = await page.screenshot({ fullPage: true });
 
-    expect(image).toMatchImageSnapshot(matchConfig);
-  });
+      expect(image).toMatchImageSnapshot(matchConfig);
+    },
+  );
 });
