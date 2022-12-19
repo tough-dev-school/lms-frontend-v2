@@ -10,11 +10,8 @@
   }
 
   const props = defineProps<Props>();
-
   const descendants = ref([]);
-
   const replyMode = ref(false);
-
   const isLoading = ref(false);
 
   const fetchComments = async () => {
@@ -27,9 +24,7 @@
 
   watch(replyMode, async (value) => {
     if (value) await fetchComments();
-    else {
-      descendants.value = [];
-    }
+    else descendants.value = [];
   });
 </script>
 
