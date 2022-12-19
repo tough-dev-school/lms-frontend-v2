@@ -3,17 +3,19 @@
   import VOwnAnswer from '@/components/VOwnAnswer.vue';
   import VAnswer from '@/components/VAnswer.vue';
   import VNewAnswer from '@/components/VNewAnswer.vue';
-  import { computed, ref } from 'vue';
+  import { computed, ref, withDefaults, watch } from 'vue';
   import { onClickOutside } from '@vueuse/core';
   import useUser from '@/stores/user';
 
   export interface Props {
     originalPost: Thread;
+    unfoldLabel?: [string, string];
   }
 
   const user = useUser();
   const emit = defineEmits<{
     (e: 'update'): void;
+    (e: 'reply', value: boolean): void;
   }>();
   const replyMode = ref(false);
 
@@ -22,12 +24,18 @@
     emit('update');
   };
 
-  const props = defineProps<Props>();
+  const props = withDefaults(defineProps<Props>(), {
+    unfoldLabel: () => ['Не отвечать', 'Ответить'],
+  });
 
   const target = ref(null);
 
   onClickOutside(target, () => {
     replyMode.value = false;
+  });
+
+  watch(replyMode, () => {
+    emit('reply', replyMode.value);
   });
 
   const getRootComponent = computed(() => {
@@ -53,7 +61,7 @@
                 !replyMode,
             }"
             @click="replyMode = !replyMode">
-            {{ replyMode ? 'Не отвечать' : 'Ответить' }}
+            {{ replyMode ? unfoldLabel[0] : unfoldLabel[1] }}
           </button>
         </template>
       </component>
