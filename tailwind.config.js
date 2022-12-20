@@ -21,8 +21,8 @@ module.exports = {
       body: ['PT Root UI', 'sans-serif'],
     },
     screens: {
-      tablet: '768px',
       phone: '560px',
+      tablet: '768px',
     },
     container: {
       center: true,
