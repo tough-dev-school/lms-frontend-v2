@@ -29,7 +29,7 @@
 </script>
 
 <template>
-  <VCard class="px-0 pt-0 tablet:px-0">
+  <VCard class="pt-0">
     <VTextEditor
       v-model="text"
       class="-mb-32 rounded-t border-offwhite"
