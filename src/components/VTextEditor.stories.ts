@@ -16,3 +16,8 @@ const Template: Story = (args) => ({
 
 export const Default = Template.bind({});
 Default.args = {};
+
+export const Placeholder = Template.bind({});
+Placeholder.args = {
+  placeholder: 'You can change placeholder text',
+};

@@ -32,8 +32,9 @@
   <VCard class="px-0 pt-0 tablet:px-0">
     <VTextEditor
       v-model="text"
-      class="rounded-t border-offwhite"
-      data-testid="editor" />
+      class="-mb-32 rounded-t border-offwhite"
+      data-testid="editor"
+      placeholder="Напишите ответ здесь" />
     <template #footer>
       <VButton
         @click="sendPost"

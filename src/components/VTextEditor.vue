@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import Placeholder from '@tiptap/extension-placeholder';
   import { EditorContent, Editor } from '@tiptap/vue-3';
   import StarterKit from '@tiptap/starter-kit';
   import {
@@ -15,9 +16,13 @@
 
   export interface Props {
     modelValue: string;
+    placeholder?: string;
   }
 
-  const props = withDefaults(defineProps<Props>(), { modelValue: '' });
+  const props = withDefaults(defineProps<Props>(), {
+    modelValue: '',
+    placeholder: '',
+  });
 
   const emit = defineEmits<{
     (e: 'update:modelValue', value: string): void;
@@ -25,7 +30,12 @@
 
   const editor = new Editor({
     content: props.modelValue,
-    extensions: [StarterKit],
+    extensions: [
+      StarterKit,
+      Placeholder.configure({
+        placeholder: props.placeholder,
+      }),
+    ],
     onUpdate: () => {
       const html = editor.getHTML();
       emit('update:modelValue', html);
@@ -125,5 +135,9 @@
 
   .bubble-button {
     @apply inline-flex flex-grow items-center justify-center py-4 text-gray transition-colors hover:bg-offwhite hover:bg-opacity-75 hover:text-black;
+  }
+  .ProseMirror p.is-editor-empty:first-child::before {
+    content: attr(data-placeholder);
+    @apply pointer-events-none float-left h-0 text-gray;
   }
 </style>
