@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import Placeholder from '@tiptap/extension-placeholder';
-  import { EditorContent, Editor } from '@tiptap/vue-3';
+  import { BubbleMenu, EditorContent, Editor } from '@tiptap/vue-3';
   import StarterKit from '@tiptap/starter-kit';
   import {
     BoldIcon,
@@ -108,12 +108,6 @@
       <button @click="toggleHeading3" class="bubble-button">
         <H3Icon />
       </button>
-      <button @click="toggleBold" class="bubble-button">
-        <BoldIcon />
-      </button>
-      <button @click="toggleItalic" class="bubble-button">
-        <ItalicIcon />
-      </button>
       <button @click="toggleBlockquote" class="bubble-button">
         <BlockquoteIcon />
       </button>
@@ -124,6 +118,24 @@
         <ListIcon />
       </button>
     </header>
+    <BubbleMenu
+      class="flex h-32 rounded bg-black text-white"
+      :editor="editor"
+      :tippy-options="{ duration: 100 }"
+      v-if="editor">
+      <button
+        @click="toggleBold"
+        class="bubble-button"
+        :class="{ 'bg-white bg-opacity-20': editor.isActive('bold') }">
+        <BoldIcon />
+      </button>
+      <button
+        @click="toggleItalic"
+        class="bubble-button"
+        :class="{ 'bg-white bg-opacity-20': editor.isActive('italic') }">
+        <ItalicIcon />
+      </button>
+    </BubbleMenu>
     <EditorContent
       :editor="editor"
       class="prose max-w-none pb-24"
@@ -132,6 +144,10 @@
 </template>
 
 <style>
+  .bubble-button {
+    @apply flex items-center justify-center px-8 first:pl-16 last:pr-16 hover:bg-white hover:bg-opacity-20;
+  }
+
   .ProseMirror {
     @apply rounded bg-white py-8 px-16 outline-none;
   }
@@ -140,9 +156,6 @@
     @apply focus:outline-none;
   }
 
-  .bubble-button {
-    @apply inline-flex flex-grow items-center justify-center py-4 text-gray transition-colors hover:bg-offwhite hover:bg-opacity-75 hover:text-black;
-  }
   .ProseMirror p.is-editor-empty:first-child::before {
     content: attr(data-placeholder);
     @apply pointer-events-none float-left h-0 text-gray;

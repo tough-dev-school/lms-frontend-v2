@@ -18,6 +18,7 @@
   "dependencies": {
     "@sentry/tracing": "^7.22.0",
     "@sentry/vue": "^7.22.0",
+    "@tiptap/extension-bubble-menu": "^2.0.0-beta.209",
     "@tiptap/extension-placeholder": "^2.0.0-beta.209",
     "@tiptap/starter-kit": "^2.0.0-beta.199",
     "@tiptap/vue-3": "^2.0.0-beta.199",
