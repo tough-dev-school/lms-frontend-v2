@@ -11,7 +11,7 @@
     ListNumbersIcon,
     ListIcon,
   } from 'vue-tabler-icons';
-  import { watch, withDefaults } from 'vue';
+  import { onBeforeUnmount, watch, withDefaults } from 'vue';
 
   export interface Props {
     modelValue: string;
@@ -26,19 +26,17 @@
   const editor = new Editor({
     content: props.modelValue,
     extensions: [StarterKit],
-  });
-
-  editor.on('update', ({ editor }) => {
-    const html = editor.getHTML();
-    emit('update:modelValue', html);
+    onUpdate: () => {
+      const html = editor.getHTML();
+      emit('update:modelValue', html);
+    },
   });
 
   watch(
     props,
     (props) => {
       const { modelValue } = props;
-      const isSame =
-        JSON.stringify(editor.getJSON()) === JSON.stringify(modelValue);
+      const isSame = editor.getHTML() === modelValue;
 
       if (isSame) return;
 
@@ -78,6 +76,10 @@
   const toggleUnorderedList = () => {
     editor.chain().focus().toggleBulletList().run();
   };
+
+  onBeforeUnmount(() => {
+    editor.destroy();
+  });
 </script>
 
 <template>
