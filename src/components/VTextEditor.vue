@@ -1,11 +1,6 @@
 <script setup lang="ts">
   import Placeholder from '@tiptap/extension-placeholder';
-  import {
-    FloatingMenu,
-    BubbleMenu,
-    EditorContent,
-    Editor,
-  } from '@tiptap/vue-3';
+  import { BubbleMenu, EditorContent, Editor } from '@tiptap/vue-3';
   import StarterKit from '@tiptap/starter-kit';
   import {
     BoldIcon,
@@ -111,40 +106,58 @@
       <button
         @click="toggleBold"
         class="bubble-button"
-        :class="{ 'bg-white bg-opacity-20': editor.isActive('bold') }">
+        :class="{ 'bubble-button_active': editor.isActive('bold') }">
         <BoldIcon />
       </button>
       <button
         @click="toggleItalic"
         class="bubble-button"
-        :class="{ 'bg-white bg-opacity-20': editor.isActive('italic') }">
+        :class="{ 'bubble-button_active': editor.isActive('italic') }">
         <ItalicIcon />
       </button>
-    </BubbleMenu>
-    <FloatingMenu
-      class="bubble-menu"
-      :editor="editor"
-      :tippy-options="{ duration: 100 }"
-      v-if="editor">
-      <button @click="toggleHeading1" class="bubble-button">
+      <button
+        @click="toggleHeading1"
+        class="bubble-button"
+        :class="{
+          'bubble-button_active': editor.isActive('heading', { level: 1 }),
+        }">
         <H1Icon />
       </button>
-      <button @click="toggleHeading2" class="bubble-button">
+      <button
+        @click="toggleHeading2"
+        class="bubble-button"
+        :class="{
+          'bubble-button_active': editor.isActive('heading', { level: 2 }),
+        }">
         <H2Icon />
       </button>
-      <button @click="toggleHeading3" class="bubble-button">
+      <button
+        @click="toggleHeading3"
+        class="bubble-button"
+        :class="{
+          'bubble-button_active': editor.isActive('heading', { level: 3 }),
+        }">
         <H3Icon />
       </button>
-      <button @click="toggleBlockquote" class="bubble-button">
+      <button
+        @click="toggleBlockquote"
+        class="bubble-button"
+        :class="{ 'bubble-button_active': editor.isActive('blockquote') }">
         <BlockquoteIcon />
       </button>
-      <button @click="toggleOrderedList" class="bubble-button">
+      <button
+        @click="toggleOrderedList"
+        class="bubble-button"
+        :class="{ 'bubble-button_active': editor.isActive('orderedList') }">
         <ListNumbersIcon />
       </button>
-      <button @click="toggleUnorderedList" class="bubble-button">
+      <button
+        @click="toggleUnorderedList"
+        class="bubble-button"
+        :class="{ 'bubble-button_active': editor.isActive('bulletList') }">
         <ListIcon />
       </button>
-    </FloatingMenu>
+    </BubbleMenu>
     <EditorContent
       :editor="editor"
       class="prose max-w-none py-24"
@@ -154,11 +167,15 @@
 
 <style>
   .bubble-menu {
-    @apply flex h-32 rounded bg-black text-white;
+    @apply flex rounded bg-black text-white;
   }
 
   .bubble-button {
-    @apply flex items-center justify-center px-8 first:pl-16 last:pr-16 hover:bg-white hover:bg-opacity-20;
+    @apply flex h-32 items-center justify-center px-8 first:pl-16 last:pr-16 hover:bg-white hover:bg-opacity-20;
+  }
+
+  .bubble-button_active {
+    @apply bg-white bg-opacity-20;
   }
 
   .ProseMirror {
