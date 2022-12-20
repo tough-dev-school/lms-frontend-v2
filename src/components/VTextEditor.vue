@@ -1,6 +1,11 @@
 <script setup lang="ts">
   import Placeholder from '@tiptap/extension-placeholder';
-  import { BubbleMenu, EditorContent, Editor } from '@tiptap/vue-3';
+  import {
+    FloatingMenu,
+    BubbleMenu,
+    EditorContent,
+    Editor,
+  } from '@tiptap/vue-3';
   import StarterKit from '@tiptap/starter-kit';
   import {
     BoldIcon,
@@ -98,7 +103,29 @@
 
 <template>
   <div class="bg-white">
-    <header class="flex">
+    <BubbleMenu
+      class="bubble-menu"
+      :editor="editor"
+      :tippy-options="{ duration: 100 }"
+      v-if="editor">
+      <button
+        @click="toggleBold"
+        class="bubble-button"
+        :class="{ 'bg-white bg-opacity-20': editor.isActive('bold') }">
+        <BoldIcon />
+      </button>
+      <button
+        @click="toggleItalic"
+        class="bubble-button"
+        :class="{ 'bg-white bg-opacity-20': editor.isActive('italic') }">
+        <ItalicIcon />
+      </button>
+    </BubbleMenu>
+    <FloatingMenu
+      class="bubble-menu"
+      :editor="editor"
+      :tippy-options="{ duration: 100 }"
+      v-if="editor">
       <button @click="toggleHeading1" class="bubble-button">
         <H1Icon />
       </button>
@@ -117,33 +144,19 @@
       <button @click="toggleUnorderedList" class="bubble-button">
         <ListIcon />
       </button>
-    </header>
-    <BubbleMenu
-      class="flex h-32 rounded bg-black text-white"
-      :editor="editor"
-      :tippy-options="{ duration: 100 }"
-      v-if="editor">
-      <button
-        @click="toggleBold"
-        class="bubble-button"
-        :class="{ 'bg-white bg-opacity-20': editor.isActive('bold') }">
-        <BoldIcon />
-      </button>
-      <button
-        @click="toggleItalic"
-        class="bubble-button"
-        :class="{ 'bg-white bg-opacity-20': editor.isActive('italic') }">
-        <ItalicIcon />
-      </button>
-    </BubbleMenu>
+    </FloatingMenu>
     <EditorContent
       :editor="editor"
-      class="prose max-w-none pb-24"
+      class="prose max-w-none py-24"
       @click="focus" />
   </div>
 </template>
 
 <style>
+  .bubble-menu {
+    @apply flex h-32 rounded bg-black text-white;
+  }
+
   .bubble-button {
     @apply flex items-center justify-center px-8 first:pl-16 last:pr-16 hover:bg-white hover:bg-opacity-20;
   }
