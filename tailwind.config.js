@@ -22,6 +22,7 @@ module.exports = {
     },
     screens: {
       tablet: '768px',
+      phone: '560px',
     },
     container: {
       center: true,

@@ -52,7 +52,7 @@
       <VHeading tag="h1">{{ question.name }}</VHeading>
       <VCard tag="details">
         <summary>Показать задание</summary>
-        <VHtmlContent :content="question.text" class="mt-8" />
+        <VHtmlContent :content="question.text" class="mt-16" />
       </VCard>
       <VAnswer :answer="answer">
         <template #header>

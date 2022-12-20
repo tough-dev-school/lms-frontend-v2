@@ -48,7 +48,7 @@
         >
       </VTextInput>
     </div>
-    <div class="mt-32 flex flex-wrap gap-8">
+    <template #footer>
       <VButton
         @click="loginWithCredentials"
         :disabled="!(username && password)"
@@ -58,6 +58,6 @@
       <VButton tag="link" @click="emit('change', 'link')" class="flex-grow">
         Войти по ссылке
       </VButton>
-    </div>
+    </template>
   </VCard>
 </template>
