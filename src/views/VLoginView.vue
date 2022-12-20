@@ -14,11 +14,11 @@
 
 <template>
   <VLoginLink
-    class="mt-[25vh] pb-32"
+    class="mt-[25vh]"
     v-if="mode === 'link'"
     @change="handleModeChange" />
   <VLoginPassword
-    class="mt-[25vh] pb-32"
+    class="mt-[25vh]"
     v-else-if="mode === 'password'"
     @change="handleModeChange" />
 </template>

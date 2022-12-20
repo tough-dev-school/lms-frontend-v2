@@ -30,14 +30,14 @@
 </script>
 
 <template>
-  <VCard class="mt-[25vh] pb-32">
+  <VCard class="mt-[25vh]">
     <VHeading tag="h1" class="mb-32">Сброс пароля</VHeading>
     <VTextInput
       label="Электронная почта"
       tip="Мы отправим ссылку для сброса пароля по этому адресу"
       type="email"
       v-model="email" />
-    <div class="mt-32 flex flex-wrap gap-8">
+    <template #footer>
       <VButton @click="handleResetRequest" :disabled="!email" class="flex-grow"
         >Отправить письмо</VButton
       >
@@ -47,6 +47,6 @@
         class="flex-grow">
         Войти по паролю
       </VButton>
-    </div>
+    </template>
   </VCard>
 </template>

@@ -44,7 +44,9 @@
         type="password"
         label="Повторите пароль"
         v-model="newPassword2" />
-      <VButton @click="savePassword">Сохранить</VButton>
     </div>
+    <template #footer>
+      <VButton @click="savePassword">Сохранить</VButton>
+    </template>
   </VCard>
 </template>

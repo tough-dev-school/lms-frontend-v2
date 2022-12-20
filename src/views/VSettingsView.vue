@@ -85,9 +85,9 @@
           >
         </fieldset>
       </div>
-      <div class="mt-64">
+      <template #footer>
         <VButton @click="save">Обновить</VButton>
-      </div>
+      </template>
     </VCard>
   </div>
 </template>

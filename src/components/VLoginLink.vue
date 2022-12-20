@@ -35,7 +35,7 @@
       tip="Мы отправим ссылку для входа по этому адресу"
       type="email"
       v-model="email" />
-    <div class="mt-32 flex flex-wrap gap-8">
+    <template #footer>
       <VButton @click="loginWithEmail" :disabled="!email" class="flex-grow"
         >Получить доступ</VButton
       >
@@ -46,6 +46,6 @@
         class="flex-grow">
         Войти через пароль
       </VButton>
-    </div>
+    </template>
   </VCard>
 </template>
