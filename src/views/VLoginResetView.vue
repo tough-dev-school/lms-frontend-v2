@@ -30,7 +30,7 @@
 </script>
 
 <template>
-  <VCard class="mt-[25vh] pb-32">
+  <VCard class="mt-[25vh]">
     <VHeading tag="h1" class="mb-32">Сброс пароля</VHeading>
     <VTextInput
       label="Электронная почта"
