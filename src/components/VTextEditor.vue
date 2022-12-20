@@ -87,6 +87,10 @@
     editor.chain().focus().toggleBulletList().run();
   };
 
+  const focus = () => {
+    editor.chain().focus();
+  };
+
   onBeforeUnmount(() => {
     editor.destroy();
   });
@@ -120,7 +124,10 @@
         <ListIcon />
       </button>
     </header>
-    <EditorContent :editor="editor" class="prose max-w-none" />
+    <EditorContent
+      :editor="editor"
+      class="prose max-w-none pb-24"
+      @click="focus" />
   </div>
 </template>
 
