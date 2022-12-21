@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { ref, computed } from 'vue';
   import { onClickOutside } from '@vueuse/core';
   import VAvatar from '@/components/VAvatar.vue';
   import { useRouter } from 'vue-router';
@@ -7,6 +7,13 @@
   import useAuth from '@/stores/auth';
   import useStudies from '@/stores/studies';
   import { storeToRefs } from 'pinia';
+
+  export interface ProfileMenuItem {
+    label: string;
+    action: () => void;
+    isHidden?: boolean;
+    id: string;
+  }
 
   const isOpen = ref(false);
   const menu = ref(null);
@@ -18,16 +25,60 @@
 
   onClickOutside(menu, () => (isOpen.value = false));
 
-  const clearStudyName = (name: string) => {
-    const reg = /\(.*\)/;
-    return name.replace(reg, '').trim();
-  };
+  const hasCertificateData = computed(
+    () =>
+      !!user.firstName &&
+      !!user.lastName &&
+      !!user.firstNameEn &&
+      !!user.lastNameEn,
+  );
 
-  const logOut = () => {
-    auth.resetAuth();
-    router.push({ name: 'login' });
+  const studiesAsMenuItems = computed<ProfileMenuItem[]>(() => {
+    return studies.items.map((study) => {
+      return {
+        label: study.name.replace(/\(.*\)/, '').trim(),
+        action: () => {
+          router.push({
+            name: 'materials',
+            params: { id: study.homePageSlug },
+          });
+        },
+        id: `material-${study.id}`,
+      };
+    });
+  });
+
+  const handleItemClick = (action: () => void) => {
+    action();
     isOpen.value = false;
   };
+
+  const defaultMenuItems = computed<ProfileMenuItem[]>(() => [
+    {
+      label: 'Настройки',
+      action: () => {
+        router.push({ name: 'settings' });
+      },
+      id: 'settings',
+    },
+    {
+      label: 'Добавьте данные для диплома',
+      action: () => {
+        router.push({ name: 'settings', hash: '#certificate' });
+      },
+      isHidden: hasCertificateData.value,
+      id: 'certificate',
+    },
+    {
+      label: 'Выйти',
+      action: () => {
+        auth.resetAuth();
+        router.push({ name: 'login' });
+        isOpen.value = false;
+      },
+      id: 'logout',
+    },
+  ]);
 </script>
 
 <template>
@@ -54,32 +105,16 @@
         v-if="isOpen"
         data-testid="menu">
         <ul>
-          <li v-for="study in studies.items" :key="study.id">
-            <RouterLink
-              :to="{ name: 'materials', params: { id: study.homePageSlug } }"
-              class="VProfileMenu__Item"
-              @click="isOpen = false"
-              data-testid="material"
-              ><span class="link">{{
-                clearStudyName(study.name)
-              }}</span></RouterLink
-            >
-          </li>
-          <li>
-            <RouterLink
-              data-testid="settings"
-              :to="{ name: 'settings' }"
-              class="VProfileMenu__Item"
-              @click="isOpen = false">
-              <span class="link">Настройки</span>
-            </RouterLink>
-          </li>
-          <li>
+          <li
+            v-for="item in [...studiesAsMenuItems, ...defaultMenuItems].filter(
+              (item) => !item.isHidden,
+            )"
+            :key="item.id">
             <button
-              @click="logOut"
-              data-testid="logout"
-              class="VProfileMenu__Item">
-              <span class="link">Выйти</span>
+              class="VProfileMenu__Item"
+              @click="handleItemClick(item.action)"
+              :data-testid="item.id">
+              <span class="link">{{ item.label }}</span>
             </button>
           </li>
         </ul>
