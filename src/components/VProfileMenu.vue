@@ -8,6 +8,12 @@
   import useStudies from '@/stores/studies';
   import { storeToRefs } from 'pinia';
 
+  export interface ProfileMenuItem {
+    label: string;
+    action: () => void;
+    isHidden?: boolean;
+  }
+
   const isOpen = ref(false);
   const menu = ref(null);
   const router = useRouter();
@@ -18,17 +24,6 @@
 
   onClickOutside(menu, () => (isOpen.value = false));
 
-  const clearStudyName = (name: string) => {
-    const reg = /\(.*\)/;
-    return name.replace(reg, '').trim();
-  };
-
-  const logOut = () => {
-    auth.resetAuth();
-    router.push({ name: 'login' });
-    isOpen.value = false;
-  };
-
   const isCertificateDataMissing = computed(() => {
     return !(
       user.firstName &&
@@ -37,6 +32,54 @@
       user.lastNameEn
     );
   });
+
+  const studiesAsMenuItems = computed<ProfileMenuItem[]>(() => {
+    return studies.items.map((study) => {
+      return {
+        label: study.name.replace(/\(.*\)/, '').trim(),
+        action: () => {
+          router.push({
+            name: 'materials',
+            params: { id: study.homePageSlug },
+          });
+        },
+      };
+    });
+  });
+
+  const handleItemClick = (action: () => void) => {
+    action();
+    isOpen.value = false;
+  };
+
+  const defaultMenuItems = ref<ProfileMenuItem[]>([
+    {
+      label: 'Настройки',
+      action: () => {
+        router.push({ name: 'settings' });
+      },
+    },
+    {
+      label: 'Добавьте данные для диплома',
+      action: () => {
+        router.push({ name: 'settings', hash: '#certificate' });
+      },
+      isHidden: !isCertificateDataMissing.value,
+    },
+    {
+      label: 'Выйти',
+      action: () => {
+        auth.resetAuth();
+        router.push({ name: 'login' });
+        isOpen.value = false;
+      },
+    },
+  ]);
+
+  const menuItems = ref([
+    ...studiesAsMenuItems.value,
+    ...defaultMenuItems.value,
+  ]);
 </script>
 
 <template>
@@ -63,42 +106,11 @@
         v-if="isOpen"
         data-testid="menu">
         <ul>
-          <li v-for="study in studies.items" :key="study.id">
-            <RouterLink
-              :to="{ name: 'materials', params: { id: study.homePageSlug } }"
-              class="VProfileMenu__Item"
-              @click="isOpen = false"
-              data-testid="material"
-              ><span class="link">{{
-                clearStudyName(study.name)
-              }}</span></RouterLink
-            >
-          </li>
-          <li>
-            <RouterLink
-              data-testid="settings"
-              :to="{ name: 'settings' }"
-              class="VProfileMenu__Item"
-              @click="isOpen = false">
-              <span class="link">Настройки</span>
-            </RouterLink>
-          </li>
-          <li>
-            <RouterLink
-              data-testid="settings"
-              :to="{ name: 'settings', hash: '#certificate' }"
-              class="VProfileMenu__Item"
-              v-if="isCertificateDataMissing"
-              @click="isOpen = false">
-              <span class="link">Добавьте данные для диплома</span>
-            </RouterLink>
-          </li>
-          <li>
-            <button
-              @click="logOut"
-              data-testid="logout"
-              class="VProfileMenu__Item">
-              <span class="link">Выйти</span>
+          <li v-for="(item, index) in menuItems" :key="index">
+            <button class="VProfileMenu__Item">
+              <span class="link" @click="handleItemClick(item.action)">{{
+                item.label
+              }}</span>
             </button>
           </li>
         </ul>
