@@ -18,13 +18,19 @@
   const linkedinUsername = ref('');
   const githubUsername = ref('');
 
-  const save = async () => {
+  const saveCertificate = async () => {
     await user.setData({
       firstName: firstName.value,
       lastName: lastName.value,
       firstNameEn: firstNameEn.value,
       lastNameEn: lastNameEn.value,
       gender: gender.value,
+    });
+    await update();
+  };
+
+  const saveProfile = async () => {
+    await user.setData({
       linkedinUsername: linkedinUsername.value,
       githubUsername: githubUsername.value,
     });
@@ -49,8 +55,39 @@
 <template>
   <div class="flex flex-col gap-32">
     <VHeading tag="h1">Настройки</VHeading>
-    <VLoginChange />
     <VCard>
+      <ul>
+        <li>
+          <RouterLink class="link" :to="{ name: 'settings', hash: '#links' }"
+            >Ссылки</RouterLink
+          >
+        </li>
+        <li>
+          <RouterLink class="link" :to="{ name: 'settings', hash: '#password' }"
+            >Пароль</RouterLink
+          >
+        </li>
+        <li>
+          <RouterLink
+            class="link"
+            :to="{ name: 'settings', hash: '#certificate' }"
+            >Данные для диплома</RouterLink
+          >
+        </li>
+      </ul>
+    </VCard>
+    <VCard id="links">
+      <VHeading class="mb-24" tag="h2">Ссылки</VHeading>
+      <div class="flex flex-col items-start gap-16 tablet:gap-24">
+        <VTextInput label="Ссылка на GitHub" v-model="githubUsername" />
+        <VTextInput label="Ссылка на LinkedIn" v-model="linkedinUsername" />
+      </div>
+      <template #footer>
+        <VButton @click="saveProfile">Сохранить</VButton>
+      </template>
+    </VCard>
+    <VLoginChange id="password" />
+    <VCard id="certificate">
       <VHeading class="mb-24" tag="h2">Данные для диплома</VHeading>
       <div class="mb-16 rounded bg-yellow bg-opacity-30 p-16">
         Будьте внимательнее, когда заполняете поля имени и фамилии на двух
@@ -63,8 +100,6 @@
         <VTextInput label="Фамилия" v-model="lastName" />
         <VTextInput label="Имя (на английском)" v-model="firstNameEn" />
         <VTextInput label="Фамилия (на английском)" v-model="lastNameEn" />
-        <VTextInput label="Ссылка на GitHub" v-model="githubUsername" />
-        <VTextInput label="Ссылка на LinkedIn" v-model="linkedinUsername" />
         <fieldset class="flex flex-wrap gap-16">
           <legend class="Label">Пол</legend>
           <label class="cursor-pointer"
@@ -86,7 +121,7 @@
         </fieldset>
       </div>
       <template #footer>
-        <VButton @click="save">Обновить</VButton>
+        <VButton @click="saveCertificate">Сохранить</VButton>
       </template>
     </VCard>
   </div>
