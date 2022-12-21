@@ -53,7 +53,7 @@ describe('VProfileMenu', () => {
     studies.$patch({
       items: [...Array(3)].map(() => ({
         id: faker.datatype.number(),
-        home_page_slug: faker.datatype.uuid(),
+        homePageSlug: faker.datatype.uuid(),
         name: faker.lorem.sentence(),
         slug: faker.lorem.word(),
       })),
@@ -62,11 +62,8 @@ describe('VProfileMenu', () => {
     auth = useAuth();
   });
 
-  const getProfileLinkWrapper = () => {
-    const links = wrapper.findAllComponents(RouterLinkStub);
-    return links.find(
-      (link) => link.attributes()['data-testid'] === 'settings',
-    );
+  const getSettingsWrapper = () => {
+    return wrapper.find('[data-testid*="settings"]');
   };
 
   const getButtonWrapper = () => {
@@ -93,12 +90,16 @@ describe('VProfileMenu', () => {
     return wrapper.find('[data-testid="logout"]');
   };
 
+  const getCertificateWrapper = () => {
+    return wrapper.find('[data-testid="certificate"]');
+  };
+
   const getMaterialsWrapper = () => {
-    return wrapper.findAll('[data-testid="material"]');
+    return wrapper.findAll('[data-testid*="material"]');
   };
 
   const getMaterialWrapper = () => {
-    return wrapper.findComponent<typeof RouterLink>('[data-testid="material"]');
+    return wrapper.find('[data-testid*="material"]');
   };
 
   test('Click on profile toggles menu', async () => {
@@ -116,12 +117,21 @@ describe('VProfileMenu', () => {
     expect(getAvatarWrapper().props().lastName).toBe(user.lastName);
   });
 
-  test('VProfileMenu displays correct name', () => {
-    expect(getNameWrapper().text()).toBe(`${user.firstName} ${user.lastName}`);
+  test('Displays correct name', () => {
+    expect(getNameWrapper().text()).toBe(user.name);
   });
 
-  test('VProfileMenu displays correct username', () => {
+  test('Displays correct username', () => {
     expect(getUsernameWrapper().text()).toBe(user.username);
+  });
+
+  test('Click on settings opens settings', async () => {
+    await getButtonWrapper().trigger('click');
+
+    await getSettingsWrapper().trigger('click');
+
+    expect(routerPushMock).toHaveBeenCalledOnce();
+    expect(routerPushMock).toHaveBeenCalledWith({ name: 'settings' });
   });
 
   test('Click on logout clears token', async () => {
@@ -131,15 +141,7 @@ describe('VProfileMenu', () => {
     expect(auth.resetAuth).toHaveBeenCalledOnce();
   });
 
-  test('Click on profile redirects to profile', async () => {
-    await getButtonWrapper().trigger('click');
-
-    expect((getProfileLinkWrapper() as VueWrapper).props().to).toEqual({
-      name: 'settings',
-    });
-  });
-
-  test('Click on logout clears token and redirects to /login', async () => {
+  test('Click on logout opens login', async () => {
     await getButtonWrapper().trigger('click');
     await getLogoutWrapper().trigger('click');
 
@@ -147,43 +149,60 @@ describe('VProfileMenu', () => {
     expect(routerPushMock).toHaveBeenCalledWith({ name: 'login' });
   });
 
-  test('Menu must be closed after click on profile', async () => {
+  test('Menu must be closed after click on item', async () => {
     await getButtonWrapper().trigger('click');
-
-    await (getProfileLinkWrapper() as VueWrapper).trigger('click');
-
-    expect(getMenuWrapper().exists()).toBe(false);
   });
 
-  test('Menu must be closed after click on material', async () => {
+  test('Has link to certificates if no needed data', async () => {
     await getButtonWrapper().trigger('click');
 
-    await getMaterialWrapper().trigger('click');
+    user.$patch({
+      firstName: undefined,
+      firstNameEn: undefined,
+      lastName: undefined,
+      lastNameEn: undefined,
+    });
 
-    expect(getMenuWrapper().exists()).toBe(false);
+    expect(getCertificateWrapper().exists()).toBe(true);
   });
 
-  test('Menu must be closed after click on logout', async () => {
+  test('Has no link to certificates if has needed data', async () => {
+    user.$patch({
+      firstName: faker.name.firstName(),
+      firstNameEn: faker.name.lastName(),
+      lastName: faker.name.firstName(),
+      lastNameEn: faker.name.lastName(),
+    });
     await getButtonWrapper().trigger('click');
 
-    await getLogoutWrapper().trigger('click');
-
-    expect(getMenuWrapper().exists()).toBe(false);
+    expect(getCertificateWrapper().exists()).toBe(false);
   });
 
-  test('Has correct number of links to materials', async () => {
+  test('Link to certificates opens certificates', async () => {
+    await getButtonWrapper().trigger('click');
+
+    await getCertificateWrapper().trigger('click');
+
+    expect(routerPushMock).toHaveBeenCalledOnce();
+    expect(routerPushMock).toHaveBeenCalledWith({
+      name: 'settings',
+      hash: '#certificate',
+    });
+  });
+
+  test('Has correct number of materials', async () => {
     await getButtonWrapper().trigger('click');
     const materials = getMaterialsWrapper();
 
     expect(materials).toHaveLength(studies.items.length);
   });
 
-  test('Link to material has correct name and route', async () => {
+  test('Click on material opens material', async () => {
     await getButtonWrapper().trigger('click');
-    const material = getMaterialWrapper();
+    await getMaterialWrapper().trigger('click');
 
-    expect(material.text()).toBe(studies.items[0].name);
-    expect(material.props().to).toStrictEqual({
+    expect(routerPushMock).toHaveBeenCalledOnce();
+    expect(routerPushMock).toHaveBeenCalledWith({
       name: 'materials',
       params: { id: studies.items[0].homePageSlug },
     });

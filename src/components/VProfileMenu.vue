@@ -12,6 +12,7 @@
     label: string;
     action: () => void;
     isHidden?: boolean;
+    id: string;
   }
 
   const isOpen = ref(false);
@@ -24,14 +25,13 @@
 
   onClickOutside(menu, () => (isOpen.value = false));
 
-  const isCertificateDataMissing = computed(() => {
-    return !(
-      user.firstName &&
-      user.lastName &&
-      user.firstNameEn &&
-      user.lastNameEn
-    );
-  });
+  const hasCertificateData = computed(
+    () =>
+      !!user.firstName &&
+      !!user.lastName &&
+      !!user.firstNameEn &&
+      !!user.lastNameEn,
+  );
 
   const studiesAsMenuItems = computed<ProfileMenuItem[]>(() => {
     return studies.items.map((study) => {
@@ -43,6 +43,7 @@
             params: { id: study.homePageSlug },
           });
         },
+        id: `material-${study.id}`,
       };
     });
   });
@@ -52,19 +53,21 @@
     isOpen.value = false;
   };
 
-  const defaultMenuItems = ref<ProfileMenuItem[]>([
+  const defaultMenuItems = computed<ProfileMenuItem[]>(() => [
     {
       label: 'Настройки',
       action: () => {
         router.push({ name: 'settings' });
       },
+      id: 'settings',
     },
     {
       label: 'Добавьте данные для диплома',
       action: () => {
         router.push({ name: 'settings', hash: '#certificate' });
       },
-      isHidden: !isCertificateDataMissing.value,
+      isHidden: hasCertificateData.value,
+      id: 'certificate',
     },
     {
       label: 'Выйти',
@@ -73,12 +76,8 @@
         router.push({ name: 'login' });
         isOpen.value = false;
       },
+      id: 'logout',
     },
-  ]);
-
-  const menuItems = ref([
-    ...studiesAsMenuItems.value,
-    ...defaultMenuItems.value,
   ]);
 </script>
 
@@ -106,11 +105,16 @@
         v-if="isOpen"
         data-testid="menu">
         <ul>
-          <li v-for="(item, index) in menuItems" :key="index">
-            <button class="VProfileMenu__Item">
-              <span class="link" @click="handleItemClick(item.action)">{{
-                item.label
-              }}</span>
+          <li
+            v-for="item in [...studiesAsMenuItems, ...defaultMenuItems].filter(
+              (item) => !item.isHidden,
+            )"
+            :key="item.id">
+            <button
+              class="VProfileMenu__Item"
+              @click="handleItemClick(item.action)"
+              :data-testid="item.id">
+              <span class="link">{{ item.label }}</span>
             </button>
           </li>
         </ul>
