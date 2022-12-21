@@ -7,7 +7,6 @@ import type VAvatar from '@/components/VAvatar.vue';
 import { faker } from '@faker-js/faker';
 import { vi } from 'vitest';
 import { createTestingPinia } from '@pinia/testing';
-import type { RouterLink } from 'vue-router';
 import useStudies from '@/stores/studies';
 
 const routerPushMock = vi.fn();
