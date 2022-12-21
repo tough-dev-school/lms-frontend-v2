@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { ref, computed } from 'vue';
   import { onClickOutside } from '@vueuse/core';
   import VAvatar from '@/components/VAvatar.vue';
   import { useRouter } from 'vue-router';
@@ -28,6 +28,15 @@
     router.push({ name: 'login' });
     isOpen.value = false;
   };
+
+  const isCertificateDataMissing = computed(() => {
+    return !(
+      user.firstName &&
+      user.lastName &&
+      user.firstNameEn &&
+      user.lastNameEn
+    );
+  });
 </script>
 
 <template>
@@ -72,6 +81,16 @@
               class="VProfileMenu__Item"
               @click="isOpen = false">
               <span class="link">Настройки</span>
+            </RouterLink>
+          </li>
+          <li>
+            <RouterLink
+              data-testid="settings"
+              :to="{ name: 'settings', hash: '#certificate' }"
+              class="VProfileMenu__Item"
+              v-if="isCertificateDataMissing"
+              @click="isOpen = false">
+              <span class="link">Добавьте данные для диплома</span>
             </RouterLink>
           </li>
           <li>
