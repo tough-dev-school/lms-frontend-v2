@@ -20,15 +20,15 @@ const matchConfig: MatchImageSnapshotOptions = {
 class VisualTest {
   name: string;
   path: string;
-  action: Function;
-  constructor(name: string, path: string, action = () => {}) {
+  action: () => Promise<void>;
+  constructor(name: string, path: string, action = async () => {}) {
     this.name = name;
     this.path = path;
     this.action = action;
   }
 }
 
-type Test = [string, string, Function, number, number];
+type Test = [string, string, () => Promise<void>, number, number];
 
 describe('visual regression test for', () => {
   let browser: playwright.Browser;
