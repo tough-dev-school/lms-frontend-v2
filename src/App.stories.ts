@@ -88,9 +88,9 @@ ChangePassword.decorators = decorate(
   '/auth/password/reset/1234567890/1234567890',
 );
 
-export const Shop = Template.bind({});
-Shop.args = {};
-Shop.decorators = decorate('/shop');
+export const Homepage = Template.bind({});
+Homepage.args = {};
+Homepage.decorators = decorate('/homepage');
 
 export const NotionView = Template.bind({});
 NotionView.args = {};

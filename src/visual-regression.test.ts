@@ -79,6 +79,10 @@ describe('visual regression test for', () => {
       name: 'Shop',
       path: '/iframe.html?args=&id=pages-app--shop&viewMode=story#/shop',
     },
+    {
+      name: 'Homepage',
+      path: '/iframe.html?args=&id=pages-app--shop&viewMode=story#/',
+    }
   ];
 
   scenarios.forEach((test) => {
