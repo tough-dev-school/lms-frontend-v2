@@ -9,25 +9,27 @@ const onResponseRejected = (
 ) => {
   const auth = useAuth();
 
-  if (error.response.status === 401) {
-    auth.resetAuth();
-    window.location.href = window.origin;
+  if (error.response) {
+    if (error.response.status === 401) {
+      auth.resetAuth();
+      window.location.href = window.origin;
+    }
+
+    // Convert data keys to target case
+    if (error.response.data) {
+      error.response.data = responseCaseMiddleware(
+        error.response.data as any,
+        enableCaseMiddleware,
+      );
+    }
+
+    // Handle error with default or custom message
+    const isJson =
+      error.response.headers['content-type'] ===
+      'application/json; charset=utf-8';
+
+    isJson ? handleError(error) : handleError();
   }
-
-  // Convert data keys to target case
-  if (error.response.data) {
-    error.response.data = responseCaseMiddleware(
-      error.response.data,
-      enableCaseMiddleware,
-    );
-  }
-
-  const isJson =
-    error.response.headers['content-type'] ===
-    'application/json; charset=utf-8';
-
-  // handle error with default or custom message
-  isJson ? handleError(error) : handleError();
 
   return Promise.reject(error);
 };
