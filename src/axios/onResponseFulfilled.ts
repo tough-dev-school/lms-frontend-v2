@@ -1,7 +1,7 @@
 import type { AxiosResponse } from 'axios';
 import responseCaseMiddleware from './responseCaseMiddleware';
 
-const onResponseFullfilled = (
+const onResponseFulfilled = (
   response: AxiosResponse,
   enableCaseMiddleware: boolean,
 ) => {
@@ -13,4 +13,4 @@ const onResponseFullfilled = (
   return response;
 };
 
-export default onResponseFullfilled;
+export default onResponseFulfilled;

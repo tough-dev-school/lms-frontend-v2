@@ -1,6 +1,6 @@
 import axios from 'axios';
-import onRequestFullfilled from './onRequestFullfilled';
-import onResponseFullfilled from './onResponseFullfilled';
+import onRequestFulfilled from './onRequestFulfilled';
+import onResponseFulfilled from './onResponseFulfilled';
 import onResponseRejected from './onResponseRejected';
 
 interface CustomAxiosInstanceConfig {
@@ -23,11 +23,11 @@ export const createCustomAxiosInstance = (
   const { useResponseCaseMiddleware, useRequestCaseMiddleware } = config;
 
   instance.interceptors.request.use((value) =>
-    onRequestFullfilled(value, useRequestCaseMiddleware),
+    onRequestFulfilled(value, useRequestCaseMiddleware),
   );
 
   instance.interceptors.response.use(
-    (value) => onResponseFullfilled(value, useResponseCaseMiddleware),
+    (value) => onResponseFulfilled(value, useResponseCaseMiddleware),
     (value) => onResponseRejected(value, useResponseCaseMiddleware),
   );
 

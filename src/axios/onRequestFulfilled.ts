@@ -2,14 +2,15 @@ import useAuth from '@/stores/auth';
 import type { AxiosRequestConfig } from 'axios';
 import requestCaseMiddleware from './requestCaseMiddleware';
 
-const onRequestFullfilled = (
+const onRequestFulfilled = (
   request: AxiosRequestConfig,
-  enableCaseMiddleware: boolean,
+  enableCaseMiddleware: boolean = true,
 ) => {
   const auth = useAuth();
   request.headers = {
     ...request.headers,
   };
+
 
   // Manage authorization via pinia
   if (auth.token) {
@@ -24,4 +25,4 @@ const onRequestFullfilled = (
   return request;
 };
 
-export default onRequestFullfilled;
+export default onRequestFulfilled;
