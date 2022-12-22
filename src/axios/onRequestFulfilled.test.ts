@@ -1,6 +1,6 @@
 import { test, describe } from 'vitest';
 
-describe('onRequestFullfilled', () => {
+describe('onRequestFulfilled', () => {
   test.todo('request data is converted to snake_case', () => {});
   test.todo('request data coversion can be disabled', () => {});
 

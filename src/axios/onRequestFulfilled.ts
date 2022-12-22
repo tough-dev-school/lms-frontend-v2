@@ -11,7 +11,6 @@ const onRequestFulfilled = (
     ...request.headers,
   };
 
-
   // Manage authorization via pinia
   if (auth.token) {
     request.headers.Authorization = `Bearer ${auth.token}`;
