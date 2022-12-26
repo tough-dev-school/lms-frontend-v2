@@ -27,7 +27,12 @@ jobs:
       - name: Install dependencies 👨🏻‍💻
         run: npm install
 
-      - name: Updating screenshots 🖼
+      - name: Updating light mode screenshots 🌞
+        run: npm run test:visual:update
+
+      - name: Updating dark mode screenshots 🌚
+        env:
+          COLOR_SCHEME: dark
         run: npm run test:visual:update
 
       - name: Saving screenshots for preview 📥
