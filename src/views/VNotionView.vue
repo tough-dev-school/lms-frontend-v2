@@ -74,6 +74,10 @@ support@tough-dev.school">
     @apply underline dark:text-white dark:decoration-white;
   }
 
+  .notion-image-caption {
+    @apply dark:text-white;
+  }
+
   .notion-bookmark div {
     @apply dark:text-white;
   }
