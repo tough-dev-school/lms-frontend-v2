@@ -2,22 +2,21 @@ import { expect, describe, test, beforeEach } from 'vitest';
 import { VIEWPORTS } from './constants/viewports';
 import { toMatchImageSnapshot } from 'jest-image-snapshot';
 import playwright from 'playwright';
-
 expect.extend({ toMatchImageSnapshot });
 
-interface VisualTest {
+interface Scenario {
   name: string;
   path: string;
   action?: () => Promise<void>;
 }
 
-type colorScheme = 'light' | 'dark';
+type ColorScheme = 'light' | 'dark';
+
+type Test = [string, string, () => Promise<void>, number, number];
 
 const colorScheme = (
   process.env.COLOR_SCHEME ? process.env.COLOR_SCHEME : 'light'
-) as colorScheme;
-
-type Test = [string, string, () => Promise<void>, number, number];
+) as ColorScheme;
 
 describe('visual regression test for', () => {
   let browser: playwright.Browser;
@@ -25,7 +24,7 @@ describe('visual regression test for', () => {
 
   const tests: Test[] = [];
 
-  const scenarios: VisualTest[] = [
+  const scenarios: Scenario[] = [
     {
       name: 'Login — email login',
       path: `/iframe.html?args=&id=pages-app--login&viewMode=story#/login`,
