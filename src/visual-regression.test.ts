@@ -30,7 +30,11 @@ class VisualTest {
 
 type colorScheme = 'light' | 'dark';
 
-type Test = [string, string, () => Promise<void>, number, number, colorScheme];
+const colorScheme = (
+  process.env.COLOR_SCHEME ? process.env.COLOR_SCHEME : 'light'
+) as colorScheme;
+
+type Test = [string, string, () => Promise<void>, number, number];
 
 describe('visual regression test for', () => {
   let browser: playwright.Browser;
@@ -88,20 +92,15 @@ describe('visual regression test for', () => {
     ),
   ];
 
-  const COLOR_SCHEMES: colorScheme[] = ['light', 'dark'];
-
   scenarios.forEach((test) => {
     VIEWPORTS.forEach((viewport) => {
-      COLOR_SCHEMES.forEach((colorScheme) => {
-        tests.push([
-          `${test.name} — ${viewport.width}×${viewport.height} ${colorScheme}`,
-          test.path,
-          test.action,
-          viewport.width,
-          viewport.height,
-          colorScheme,
-        ]);
-      });
+      tests.push([
+        `${test.name} — ${viewport.width}×${viewport.height} ${colorScheme}`,
+        test.path,
+        test.action,
+        viewport.width,
+        viewport.height,
+      ]);
     });
   });
 
@@ -116,17 +115,14 @@ describe('visual regression test for', () => {
     });
   };
 
-  test.each(tests)(
-    '%s',
-    async (name, route, action, width, height, colorScheme) => {
-      await page.emulateMedia({ colorScheme });
-      await page.setViewportSize({ width, height });
-      await goto(route);
+  test.each(tests)('%s', async (name, route, action, width, height) => {
+    await page.emulateMedia({ colorScheme });
+    await page.setViewportSize({ width, height });
+    await goto(route);
 
-      await action();
-      const image = await page.screenshot({ fullPage: true });
+    await action();
+    const image = await page.screenshot({ fullPage: true });
 
-      expect(image).toMatchImageSnapshot(matchConfig);
-    },
-  );
+    expect(image).toMatchImageSnapshot(matchConfig);
+  });
 });
