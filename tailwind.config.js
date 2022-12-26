@@ -37,9 +37,12 @@ module.exports = {
       white: { DEFAULT: '#FFFFFF' },
       yellow: { DEFAULT: '#ffb800', hover: '#ffa800', light: '#fff9eb' },
       blue: { DEFAULT: '#3f5dff', hover: '#0024de' },
+      lightblue: { DEFAULT: '#ADD8E6', hover: '#0024de' },
       gray: { DEFAULT: '#9a9a9a' },
       red: { DEFAULT: '#ff5d29', light: '#FDAA90' },
       green: { DEFAULT: 'rgb(35, 207, 104)', light: '#8EE4B0' },
+      'dark-black': { DEFAULT: '#1C1B22' },
+      'dark-gray': { DEFAULT: '#2B2A33' },
     },
     fontSize: {
       sub: '14px',

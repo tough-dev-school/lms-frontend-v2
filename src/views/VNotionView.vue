@@ -60,6 +60,28 @@ support@tough-dev.school">
 <style>
   @import 'vue3-notion/dist/style.css';
 
+  .notion {
+    @apply text-black dark:text-white;
+  }
+
+  .notion-gray_background,
+  .notion-bookmark,
+  .notion-code {
+    @apply dark:bg-dark-black;
+  }
+
+  .notion-table-of-contents-item {
+    @apply underline dark:text-white dark:decoration-white;
+  }
+
+  .notion-bookmark div {
+    @apply dark:text-white;
+  }
+
+  .notion-callout {
+    @apply dark:border-0;
+  }
+
   .notion-page-cover {
     width: var(--notion-max-width);
     margin: 0 auto;
@@ -91,9 +113,5 @@ support@tough-dev.school">
 
   .notion-h3 {
     @apply text-h3;
-  }
-
-  .notion-link {
-    @apply border-blue text-blue opacity-100 hover:border-red hover:text-red;
   }
 </style>

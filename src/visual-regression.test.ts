@@ -28,6 +28,12 @@ class VisualTest {
   }
 }
 
+type colorScheme = 'light' | 'dark';
+
+const colorScheme = (
+  process.env.COLOR_SCHEME ? process.env.COLOR_SCHEME : 'light'
+) as colorScheme;
+
 type Test = [string, string, () => Promise<void>, number, number];
 
 describe('visual regression test for', () => {
@@ -89,7 +95,7 @@ describe('visual regression test for', () => {
   scenarios.forEach((test) => {
     VIEWPORTS.forEach((viewport) => {
       tests.push([
-        `${test.name} — ${viewport.width}×${viewport.height}`,
+        `${test.name} — ${viewport.width}×${viewport.height} ${colorScheme}`,
         test.path,
         test.action,
         viewport.width,
@@ -110,6 +116,7 @@ describe('visual regression test for', () => {
   };
 
   test.each(tests)('%s', async (name, route, action, width, height) => {
+    await page.emulateMedia({ colorScheme });
     await page.setViewportSize({ width, height });
     await goto(route);
 

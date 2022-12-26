@@ -32,7 +32,7 @@
   <VCard class="pt-0">
     <VTextEditor
       v-model="text"
-      class="-mb-32 rounded-t border-offwhite"
+      class="-mb-32 rounded-t border-offwhite dark:border-dark-black"
       data-testid="editor"
       placeholder="Напишите ответ здесь" />
     <template #footer>

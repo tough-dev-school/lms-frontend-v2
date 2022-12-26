@@ -7,7 +7,7 @@
     <summary>
       <h3 class="mb-16 inline font-bold">Как давать обратную связь?</h3>
     </summary>
-    <div class="prose mt-8 prose-h3:mt-16 prose-h3:text-base">
+    <div class="prose mt-8 prose-h3:mt-16 prose-h3:text-base dark:prose-invert">
       <h3>Шаг 1</h3>
       <p>Напишите обратную связь по формату:</p>
       <ul>
