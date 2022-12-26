@@ -51,6 +51,7 @@ describe('user store', () => {
       gender: faker.name.sex(),
       linkedinUsername: faker.internet.userName(),
       githubUsername: faker.internet.userName(),
+      telegramUsername: faker.internet.userName(),
     };
     (getUser as ReturnType<typeof vi.fn>).mockResolvedValue(data);
 
@@ -66,6 +67,7 @@ describe('user store', () => {
     expect(user.gender).toBe(data.gender);
     expect(user.linkedinUsername).toBe(data.linkedinUsername);
     expect(user.githubUsername).toBe(data.githubUsername);
+    expect(user.telegramUsername).toBe(data.telegramUsername);
   });
 
   test('setData calls api with data', async () => {
@@ -76,6 +78,7 @@ describe('user store', () => {
     const gender = faker.name.sex() as Gender;
     const linkedinUsername = faker.internet.userName();
     const githubUsername = faker.internet.userName();
+    const telegramUsername = faker.internet.userName();
 
     await user.setData({
       firstName,
@@ -85,6 +88,7 @@ describe('user store', () => {
       gender,
       linkedinUsername,
       githubUsername,
+      telegramUsername,
     });
 
     expect(setUser).toHaveBeenCalledTimes(1);
@@ -96,6 +100,7 @@ describe('user store', () => {
       gender,
       linkedinUsername,
       githubUsername,
+      telegramUsername,
     });
   });
 

@@ -51,6 +51,7 @@ const decorate = (initialRoute: string, callback: Function = () => {}) => {
         gender: 'male',
         linkedinUsername: 'johndoe',
         githubUsername: 'johndoe',
+        telegramUsername: 'johndoe',
       });
 
       const homework = useHomework();
