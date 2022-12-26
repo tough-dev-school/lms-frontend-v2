@@ -1,21 +1,9 @@
 import { expect, describe, test, beforeEach } from 'vitest';
 import { VIEWPORTS } from './constants/viewports';
-import {
-  toMatchImageSnapshot,
-  type MatchImageSnapshotOptions,
-} from 'jest-image-snapshot';
+import { toMatchImageSnapshot } from 'jest-image-snapshot';
 import playwright from 'playwright';
 
 expect.extend({ toMatchImageSnapshot });
-
-const matchConfig: MatchImageSnapshotOptions = {
-  comparisonMethod: 'ssim',
-  customDiffConfig: {
-    ssim: 'fast',
-  },
-  failureThreshold: Math.pow(16, 2),
-  failureThresholdType: 'pixel',
-};
 
 interface VisualTest {
   name: string;
@@ -118,6 +106,13 @@ describe('visual regression test for', () => {
     await action();
     const image = await page.screenshot({ fullPage: true });
 
-    expect(image).toMatchImageSnapshot(matchConfig);
+    expect(image).toMatchImageSnapshot({
+      comparisonMethod: 'ssim',
+      customDiffConfig: {
+        ssim: 'fast',
+      },
+      failureThreshold: Math.pow(16, 2),
+      failureThresholdType: 'pixel',
+    });
   });
 });
