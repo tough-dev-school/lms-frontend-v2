@@ -1,5 +1,4 @@
 import { expect, describe, test, beforeEach } from 'vitest';
-import { VIEWPORTS } from './constants/viewports';
 import { toMatchImageSnapshot } from 'jest-image-snapshot';
 import playwright from 'playwright';
 expect.extend({ toMatchImageSnapshot });
@@ -14,7 +13,15 @@ type ColorScheme = 'light' | 'dark';
 
 type Test = [string, string, () => Promise<void>, number, number];
 
-const colorScheme = (
+type Viewport = [number, number];
+
+const VIEWPORTS: Viewport[] = [
+  [1440, 900],
+  [768, 1024],
+  [320, 560],
+];
+
+const COLOR_SCHEME = (
   process.env.COLOR_SCHEME ? process.env.COLOR_SCHEME : 'light'
 ) as ColorScheme;
 
@@ -77,11 +84,11 @@ describe('visual regression test for', () => {
   scenarios.forEach((test) => {
     VIEWPORTS.forEach((viewport) => {
       tests.push([
-        `${test.name} — ${viewport.width}×${viewport.height} ${colorScheme}`,
+        `${test.name} — ${viewport[0]}×${viewport[1]} ${COLOR_SCHEME}`,
         test.path,
         test.action ? test.action : async () => {},
-        viewport.width,
-        viewport.height,
+        viewport[0],
+        viewport[1],
       ]);
     });
   });
@@ -98,7 +105,7 @@ describe('visual regression test for', () => {
   };
 
   test.each(tests)('%s', async (name, route, action, width, height) => {
-    await page.emulateMedia({ colorScheme });
+    await page.emulateMedia({ colorScheme: COLOR_SCHEME });
     await page.setViewportSize({ width, height });
     await goto(route);
 
