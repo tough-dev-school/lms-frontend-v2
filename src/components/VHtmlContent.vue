@@ -7,5 +7,5 @@
 </script>
 
 <template>
-  <article v-html="content" class="prose" />
+  <article v-html="content" class="prose dark:prose-invert" />
 </template>

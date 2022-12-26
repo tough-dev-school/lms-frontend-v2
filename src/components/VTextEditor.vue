@@ -160,7 +160,7 @@
     </BubbleMenu>
     <EditorContent
       :editor="editor"
-      class="prose max-w-none py-24"
+      class="prose max-w-none py-24 dark:prose-invert"
       @click="focus" />
   </div>
 </template>

@@ -27,7 +27,6 @@
   }
 
   .prose {
-    @apply prose-zinc;
     @apply prose-p:my-[0.5em];
     @apply prose-li:my-[0.25em];
     @apply prose-ul:my-[0.5em];
@@ -41,7 +40,8 @@
     @apply mb-8 w-full text-gray;
   }
 
-  .link {
-    @apply cursor-pointer text-blue transition-colors hover:text-blue-hover;
+  .link,
+  .notion-link {
+    @apply border-blue text-blue opacity-100 transition-colors hover:border-red hover:text-red dark:border-lightblue dark:text-lightblue;
   }
 }
