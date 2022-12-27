@@ -34,7 +34,7 @@
   );
 
   const studiesAsMenuItems = computed<ProfileMenuItem[]>(() => {
-    return studies.items.map((study) => {
+    return studies.items.slice(0, 3).map((study) => {
       return {
         label: study.name.replace(/\(.*\)/, '').trim(),
         action: () => {
