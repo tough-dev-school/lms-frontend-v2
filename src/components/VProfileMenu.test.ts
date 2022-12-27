@@ -109,6 +109,14 @@ describe('VProfileMenu', () => {
     expect(getMenuWrapper().exists()).toBe(false);
   });
 
+  test('Profile is highlighted when opened', async () => {
+    await getButtonWrapper().trigger('click');
+
+    expect(getButtonWrapper().classes('VProfileMenu__Button_Active')).toBe(
+      true,
+    );
+  });
+
   test.todo('Click outside profile should close menu');
 
   test('VAvatar should have correct props', () => {

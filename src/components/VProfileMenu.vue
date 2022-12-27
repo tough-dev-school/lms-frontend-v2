@@ -85,6 +85,7 @@
   <div class="relative" ref="menu">
     <div
       class="flex cursor-pointer items-center rounded-8 p-8 transition-colors hover:bg-gray hover:bg-opacity-10"
+      :class="{ VProfileMenu__Button_Active: isOpen }"
       @click="isOpen = !isOpen"
       data-testid="button">
       <VAvatar
@@ -124,6 +125,9 @@
 </template>
 
 <style scoped>
+  .VProfileMenu__Button_Active {
+    @apply bg-gray bg-opacity-10;
+  }
   .VProfileMenu__Item {
     @apply block flex min-h-[32px] w-full cursor-pointer items-center whitespace-nowrap px-8 text-left hover:bg-gray hover:bg-opacity-10;
   }
