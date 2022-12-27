@@ -14,6 +14,8 @@ import {
 } from './mocks/homework';
 import useMaterials from './stores/materials';
 import { getMaterialsData } from './mocks/materials';
+import useStudies from './stores/studies';
+import { getStudiesData } from './mocks/studies';
 
 export default {
   title: 'Pages/App',
@@ -56,6 +58,9 @@ const decorate = (initialRoute: string, callback: Function = () => {}) => {
         question: getQuestionData(),
       });
 
+      const studies = useStudies();
+      studies.$patch({ items: getStudiesData(5, true) });
+
       const materials = useMaterials();
       materials.$patch({ material: getMaterialsData() });
 
@@ -88,9 +93,9 @@ ChangePassword.decorators = decorate(
   '/auth/password/reset/1234567890/1234567890',
 );
 
-export const Shop = Template.bind({});
-Shop.args = {};
-Shop.decorators = decorate('/shop');
+export const Homepage = Template.bind({});
+Homepage.args = {};
+Homepage.decorators = decorate('/');
 
 export const NotionView = Template.bind({});
 NotionView.args = {};

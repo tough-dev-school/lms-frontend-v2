@@ -6,7 +6,7 @@ import {
 import useAuth from '@/stores/auth';
 import useUser from '@/stores/user';
 import useStudies from '@/stores/studies';
-const VShopView = () => import('@/views/VShopView.vue');
+const VHomeView = () => import('@/views/VHomeView.vue');
 const VSettingsView = () => import('@/views/VSettingsView.vue');
 const VLoginView = () => import('@/views/VLoginView.vue');
 const VLoadingView = () => import('@/views/VLoadingView.vue');
@@ -34,16 +34,7 @@ export const routes = [
   {
     path: '/',
     name: 'home',
-    component: VLoadingView,
-    beforeEnter: async () => {
-      const studies = useStudies();
-      if (studies.items.length > 0) {
-        const id = studies.items[0].homePageSlug;
-        return { name: 'materials', params: { id } };
-      } else {
-        return { name: 'shop' };
-      }
-    },
+    component: VHomeView,
   },
   {
     path: '/settings',
@@ -111,18 +102,6 @@ export const routes = [
 
       await auth.loginWithUserId(String(to.params.userId));
       return { name: 'home' };
-    },
-  },
-  {
-    path: '/shop',
-    name: 'shop',
-    component: VShopView,
-    beforeEnter: async () => {
-      const studies = useStudies();
-      if (studies.items.length > 0) {
-        const id = studies.items[0].homePageSlug;
-        return { name: 'materials', params: { id } };
-      }
     },
   },
   {

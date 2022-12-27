@@ -76,8 +76,8 @@ describe('visual regression test for', () => {
       path: '/iframe.html?args=&id=pages-app--homework-question-view&viewMode=story#/homework/questions/1234567890',
     },
     {
-      name: 'Shop',
-      path: '/iframe.html?args=&id=pages-app--shop&viewMode=story#/shop',
+      name: 'Homepage',
+      path: '/iframe.html?args=&id=pages-app--homepage&viewMode=story#/',
     },
   ];
 

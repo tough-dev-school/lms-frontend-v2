@@ -34,7 +34,7 @@
   );
 
   const studiesAsMenuItems = computed<ProfileMenuItem[]>(() => {
-    return studies.items.map((study) => {
+    return studies.items.slice(0, 3).map((study) => {
       return {
         label: study.name.replace(/\(.*\)/, '').trim(),
         action: () => {
@@ -53,7 +53,15 @@
     isOpen.value = false;
   };
 
-  const defaultMenuItems = computed<ProfileMenuItem[]>(() => [
+  const menuItems = computed<ProfileMenuItem[]>(() => [
+    {
+      label: 'На главную',
+      action: () => {
+        router.push({ name: 'home' });
+      },
+      id: 'home',
+    },
+    ...studiesAsMenuItems.value,
     {
       label: 'Настройки',
       action: () => {
@@ -85,6 +93,7 @@
   <div class="relative" ref="menu">
     <div
       class="flex cursor-pointer items-center rounded-8 p-8 transition-colors hover:bg-gray hover:bg-opacity-10"
+      :class="{ VProfileMenu__Button_Active: isOpen }"
       @click="isOpen = !isOpen"
       data-testid="button">
       <VAvatar
@@ -106,9 +115,7 @@
         data-testid="menu">
         <ul>
           <li
-            v-for="item in [...studiesAsMenuItems, ...defaultMenuItems].filter(
-              (item) => !item.isHidden,
-            )"
+            v-for="item in menuItems.filter((item) => !item.isHidden)"
             :key="item.id">
             <button
               class="VProfileMenu__Item"
@@ -124,6 +131,9 @@
 </template>
 
 <style scoped>
+  .VProfileMenu__Button_Active {
+    @apply bg-gray bg-opacity-10;
+  }
   .VProfileMenu__Item {
     @apply block flex min-h-[32px] w-full cursor-pointer items-center whitespace-nowrap px-8 text-left hover:bg-gray hover:bg-opacity-10;
   }

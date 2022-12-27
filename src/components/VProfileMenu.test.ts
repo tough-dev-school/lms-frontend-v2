@@ -8,6 +8,7 @@ import { faker } from '@faker-js/faker';
 import { vi } from 'vitest';
 import { createTestingPinia } from '@pinia/testing';
 import useStudies from '@/stores/studies';
+import { getStudiesData } from '@/mocks/studies';
 
 const routerPushMock = vi.fn();
 
@@ -50,12 +51,7 @@ describe('VProfileMenu', () => {
 
     studies = useStudies();
     studies.$patch({
-      items: [...Array(3)].map(() => ({
-        id: faker.datatype.number(),
-        homePageSlug: faker.datatype.uuid(),
-        name: faker.lorem.sentence(),
-        slug: faker.lorem.word(),
-      })),
+      items: getStudiesData(3),
     });
 
     auth = useAuth();
@@ -63,6 +59,10 @@ describe('VProfileMenu', () => {
 
   const getSettingsWrapper = () => {
     return wrapper.find('[data-testid*="settings"]');
+  };
+
+  const getHomeWrapper = () => {
+    return wrapper.find('[data-testid="home"]');
   };
 
   const getButtonWrapper = () => {
@@ -109,6 +109,14 @@ describe('VProfileMenu', () => {
     expect(getMenuWrapper().exists()).toBe(false);
   });
 
+  test('Profile is highlighted when opened', async () => {
+    await getButtonWrapper().trigger('click');
+
+    expect(getButtonWrapper().classes('VProfileMenu__Button_Active')).toBe(
+      true,
+    );
+  });
+
   test.todo('Click outside profile should close menu');
 
   test('VAvatar should have correct props', () => {
@@ -122,6 +130,15 @@ describe('VProfileMenu', () => {
 
   test('Displays correct username', () => {
     expect(getUsernameWrapper().text()).toBe(user.username);
+  });
+
+  test('Click on home opens home', async () => {
+    await getButtonWrapper().trigger('click');
+
+    await getHomeWrapper().trigger('click');
+
+    expect(routerPushMock).toHaveBeenCalledOnce();
+    expect(routerPushMock).toHaveBeenCalledWith({ name: 'home' });
   });
 
   test('Click on settings opens settings', async () => {
@@ -190,10 +207,25 @@ describe('VProfileMenu', () => {
   });
 
   test('Has correct number of materials', async () => {
+    const NUMBER_OF_MATERIALS = 2;
+
+    studies.$patch({
+      items: getStudiesData(NUMBER_OF_MATERIALS),
+    });
+
     await getButtonWrapper().trigger('click');
     const materials = getMaterialsWrapper();
 
-    expect(materials).toHaveLength(studies.items.length);
+    expect(materials).toHaveLength(NUMBER_OF_MATERIALS);
+  });
+
+  test('Has max of 3 materials', async () => {
+    studies.$patch({ items: getStudiesData(10) });
+
+    await getButtonWrapper().trigger('click');
+    const materials = getMaterialsWrapper();
+
+    expect(materials).toHaveLength(3);
   });
 
   test('Click on material opens material', async () => {
