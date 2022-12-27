@@ -1,13 +1,14 @@
 <script lang="ts" setup>
   import VHeading from '@/components/VHeading.vue';
+  import VCard from '@/components/VCard.vue';
   import useStudies from '@/stores/studies';
 
   const studies = useStudies();
 </script>
 
 <template>
-  <VHeading>Ваши курсы</VHeading>
-  <ul>
+  <VHeading tag="h1" class="mb-32">Ваши курсы</VHeading>
+  <ul class="flex flex-col gap-16">
     <li v-for="(study, index) in studies.items" :key="index">
       <RouterLink
         class="link"
@@ -15,11 +16,13 @@
           name: 'materials',
           params: { id: study.homePageSlug },
         }">
-        <p>{{ study.name }}</p>
+        <VCard>
+          <p>{{ study.name }}</p>
+        </VCard>
       </RouterLink>
     </li>
   </ul>
-  <div class="my-16 block text-center">
+  <div class="mt-32 block text-center">
     <p v-if="studies.items.length === 0">Нет доступных курсов.</p>
     <p>
       Доступ к курсам можно купить на
