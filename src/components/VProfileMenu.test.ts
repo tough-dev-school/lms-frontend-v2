@@ -65,6 +65,10 @@ describe('VProfileMenu', () => {
     return wrapper.find('[data-testid*="settings"]');
   };
 
+  const getHomeWrapper = () => {
+    return wrapper.find('[data-testid="home"]');
+  };
+
   const getButtonWrapper = () => {
     return wrapper.find('[data-testid="button"]');
   };
@@ -130,6 +134,15 @@ describe('VProfileMenu', () => {
 
   test('Displays correct username', () => {
     expect(getUsernameWrapper().text()).toBe(user.username);
+  });
+
+  test('Click on home opens home', async () => {
+    await getButtonWrapper().trigger('click');
+
+    await getHomeWrapper().trigger('click');
+
+    expect(routerPushMock).toHaveBeenCalledOnce();
+    expect(routerPushMock).toHaveBeenCalledWith({ name: 'home' });
   });
 
   test('Click on settings opens settings', async () => {

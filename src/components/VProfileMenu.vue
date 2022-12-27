@@ -53,7 +53,15 @@
     isOpen.value = false;
   };
 
-  const defaultMenuItems = computed<ProfileMenuItem[]>(() => [
+  const menuItems = computed<ProfileMenuItem[]>(() => [
+    {
+      label: 'На главную',
+      action: () => {
+        router.push({ name: 'home' });
+      },
+      id: 'home',
+    },
+    ...studiesAsMenuItems.value,
     {
       label: 'Настройки',
       action: () => {
@@ -107,9 +115,7 @@
         data-testid="menu">
         <ul>
           <li
-            v-for="item in [...studiesAsMenuItems, ...defaultMenuItems].filter(
-              (item) => !item.isHidden,
-            )"
+            v-for="item in menuItems.filter((item) => !item.isHidden)"
             :key="item.id">
             <button
               class="VProfileMenu__Item"
