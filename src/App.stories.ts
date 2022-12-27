@@ -59,7 +59,7 @@ const decorate = (initialRoute: string, callback: Function = () => {}) => {
       });
 
       const studies = useStudies();
-      studies.$patch({ items: getStudiesData(5) });
+      studies.$patch({ items: getStudiesData(5, true) });
 
       const materials = useMaterials();
       materials.$patch({ material: getMaterialsData() });

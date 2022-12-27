@@ -1,12 +1,21 @@
 import { faker } from '@faker-js/faker';
 
-export const getStudiesData = (n = 1) => {
-  return [...Array(n)].map(() => {
-    return {
-      id: faker.datatype.number(),
-      slug: faker.datatype.string(),
-      name: faker.finance.accountName(),
-      homePageSlug: faker.datatype.uuid(),
-    };
-  });
+const generateStudy = () => {
+  return {
+    id: faker.datatype.number(),
+    slug: faker.datatype.string(),
+    name: faker.finance.accountName(),
+    homePageSlug: faker.datatype.uuid(),
+  };
+};
+
+const staticStudy = {
+  id: 32,
+  slug: 'popug-4-vip',
+  name: 'Асинхронная архитектура (всё включено)',
+  homePageSlug: '23fe5823cd0c44e5a56fc7aa2e2439a4',
+};
+
+export const getStudiesData = (n = 1, isStatic = false) => {
+  return [...Array(n)].map(() => (isStatic ? staticStudy : generateStudy()));
 };
