@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import type { Answer } from '@/types/homework';
+  import type { Answer, Comment } from '@/types/homework';
   import VThread from '@/components/VThread.vue';
   import VPreloader from '@/components/VPreloader.vue';
   import { getComments } from '@/api/homework';
@@ -10,14 +10,13 @@
   }
 
   const props = defineProps<Props>();
-  const descendants = ref([]);
+  const descendants = ref<Comment[]>([]);
   const isLoading = ref(false);
 
   const fetchComments = async () => {
     isLoading.value = true;
-    descendants.value = (await getComments([props.originalPost.slug])).at(
-      -1,
-    ).descendants;
+    const comments = (await getComments([props.originalPost.slug])).at(-1);
+    descendants.value = comments ? comments.descendants : descendants.value;
     isLoading.value = false;
   };
 
