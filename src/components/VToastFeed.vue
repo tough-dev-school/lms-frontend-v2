@@ -12,7 +12,8 @@
 </script>
 
 <template>
-  <div class="fixed right-16 bottom-16 flex flex-col gap-8">
+  <div
+    class="container fixed right-0 top-16 left-0 flex flex-col items-center gap-8">
     <TransitionGroup name="toast">
       <VToast
         v-for="message in messages"
