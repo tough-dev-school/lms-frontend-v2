@@ -144,7 +144,7 @@ router.beforeEach(async (to: RouteLocationNormalized) => {
 
   // Redirect to exisiting route if route does not exist
   if (!to.name) {
-    return { name: 'settings' };
+    return { name: 'home' };
   }
 
   // Redirect to /login if unauthorized and route is not public
