@@ -17,6 +17,7 @@
   const gender: Ref<Gender> = ref(undefined);
   const linkedinUsername = ref('');
   const githubUsername = ref('');
+  const telegramUsername = ref('');
 
   const saveCertificate = async () => {
     await user.setData({
@@ -33,6 +34,7 @@
     await user.setData({
       linkedinUsername: linkedinUsername.value,
       githubUsername: githubUsername.value,
+      telegramUsername: telegramUsername.value,
     });
     await update();
   };
@@ -45,6 +47,7 @@
     gender.value = user.gender;
     linkedinUsername.value = user.linkedinUsername;
     githubUsername.value = user.githubUsername;
+    telegramUsername.value = user.telegramUsername;
   };
 
   onMounted(async () => {
@@ -81,6 +84,7 @@
       <div class="flex flex-col items-start gap-16 tablet:gap-24">
         <VTextInput label="Ссылка на GitHub" v-model="githubUsername" />
         <VTextInput label="Ссылка на LinkedIn" v-model="linkedinUsername" />
+        <VTextInput label="Ссылка на Telegram" v-model="telegramUsername" />
       </div>
       <template #footer>
         <VButton @click="saveProfile">Сохранить</VButton>

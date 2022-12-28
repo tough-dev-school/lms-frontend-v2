@@ -11,6 +11,7 @@ export interface User {
   gender: Gender;
   linkedinUsername: string;
   githubUsername: string;
+  telegramUsername: string;
 }
 
 type EditableUserDataProperties =
@@ -20,6 +21,7 @@ type EditableUserDataProperties =
   | 'lastNameEn'
   | 'gender'
   | 'linkedinUsername'
-  | 'githubUsername';
+  | 'githubUsername'
+  | 'telegramUsername';
 
 export type EditableUserData = Partial<Pick<User, EditableUserDataProperties>>;

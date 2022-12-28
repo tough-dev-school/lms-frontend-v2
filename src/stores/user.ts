@@ -19,6 +19,7 @@ const useUser = defineStore('user', {
       gender: undefined,
       linkedinUsername: '',
       githubUsername: '',
+      telegramUsername: '',
     };
   },
   getters: {
@@ -42,6 +43,7 @@ const useUser = defineStore('user', {
           gender,
           linkedinUsername,
           githubUsername,
+          telegramUsername,
         } = user;
 
         this.id = id;
@@ -54,6 +56,7 @@ const useUser = defineStore('user', {
         this.gender = gender;
         this.linkedinUsername = linkedinUsername;
         this.githubUsername = githubUsername;
+        this.telegramUsername = telegramUsername;
       } catch (error: any) {}
     },
     async setData(updates: EditableUserData) {

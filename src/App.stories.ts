@@ -33,7 +33,7 @@ const Template: Story = (args) => ({
   template: '<App v-bind="args" />',
 });
 
-const decorate = (initialRoute: string, callback: Function = () => {}) => {
+const decorate = (initialRoute: string, callback: () => void = () => {}) => {
   return [
     (story: InstanceType<typeof App>) => {
       const toasts = useToasts();
@@ -51,6 +51,7 @@ const decorate = (initialRoute: string, callback: Function = () => {}) => {
         gender: 'male',
         linkedinUsername: 'johndoe',
         githubUsername: 'johndoe',
+        telegramUsername: 'johndoe',
       });
 
       const homework = useHomework();
