@@ -53,7 +53,10 @@
 <template>
   <div>
     <div class="group" ref="target">
-      <component :is="getRootComponent.is" v-bind="getRootComponent">
+      <component
+        :is="getRootComponent.is"
+        v-bind="getRootComponent"
+        @update="emit('update')">
         <template #footer>
           <button
             :class="{
