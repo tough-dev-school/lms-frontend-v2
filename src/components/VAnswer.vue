@@ -44,7 +44,7 @@
       >
     </div>
     <VHtmlContent :content="answer.text" data-testid="content" />
-    <div class="flex flex-row-reverse empty:appearance-none">
+    <div class="flex flex-row-reverse text-sub text-gray empty:appearance-none">
       <slot name="footer" />
     </div>
   </VCard>

@@ -39,10 +39,10 @@
 
 <template>
   <div v-if="question !== undefined && questionId">
-    <vCard class="mb-64">
+    <VCard class="mb-64">
       <VHeading tag="h1" class="mb-24">{{ question.name }}</VHeading>
       <VHtmlContent :content="question.text" />
-    </vCard>
+    </VCard>
     <section>
       <VHeading tag="h2" class="mb-24">Ответ</VHeading>
       <VOwnAnswer

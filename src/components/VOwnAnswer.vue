@@ -59,7 +59,7 @@
           @delete="handleDelete" />
       </template>
       <template #footer>
-        <slot name="answer-footer" />
+        <slot name="footer" />
       </template>
     </VAnswer>
   </div>

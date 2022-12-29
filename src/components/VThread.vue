@@ -1,20 +1,21 @@
 <script lang="ts" setup>
   import type { Thread } from '@/types/homework';
   import VOwnAnswer from '@/components/VOwnAnswer.vue';
-  import VReplyToggle from '@/components/VReplyToggle.vue';
   import VAnswer from '@/components/VAnswer.vue';
   import VNewAnswer from '@/components/VNewAnswer.vue';
-  import { ref } from 'vue';
+  import { computed, ref, withDefaults, watch } from 'vue';
   import { onClickOutside } from '@vueuse/core';
   import useUser from '@/stores/user';
 
   export interface Props {
     originalPost: Thread;
+    unfoldLabel?: [string, string];
   }
 
   const user = useUser();
   const emit = defineEmits<{
     (e: 'update'): void;
+    (e: 'reply', value: boolean): void;
   }>();
   const replyMode = ref(false);
 
@@ -23,34 +24,51 @@
     emit('update');
   };
 
-  defineProps<Props>();
+  const props = withDefaults(defineProps<Props>(), {
+    unfoldLabel: () => ['Не отвечать', 'Ответить'],
+  });
 
   const target = ref(null);
 
   onClickOutside(target, () => {
     replyMode.value = false;
   });
+
+  watch(replyMode, () => {
+    emit('reply', replyMode.value);
+  });
+
+  const getRootComponent = computed(() => {
+    const rootComponent: any = { answer: props.originalPost };
+
+    rootComponent.is =
+      props.originalPost.author.uuid !== user.uuid ? VAnswer : VOwnAnswer;
+
+    rootComponent.questionId = props.originalPost.question;
+
+    return rootComponent;
+  });
 </script>
 
 <template>
   <div>
     <div class="group" ref="target">
-      <VAnswer
-        :answer="originalPost"
-        v-if="originalPost.author.uuid !== user.uuid">
-        <template #footer>
-          <VReplyToggle v-model="replyMode" />
-        </template>
-      </VAnswer>
-      <VOwnAnswer
-        v-else
-        :answer="originalPost"
-        :question-id="originalPost.question"
+      <component
+        :is="getRootComponent.is"
+        v-bind="getRootComponent"
         @update="emit('update')">
-        <template #answer-footer>
-          <VReplyToggle v-model="replyMode" />
+        <template #footer>
+          <button
+            class="secondary-action"
+            :class="{
+              ' transition-opacity group-hover:opacity-100 tablet:opacity-0':
+                !replyMode,
+            }"
+            @click="replyMode = !replyMode">
+            {{ replyMode ? unfoldLabel[0] : unfoldLabel[1] }}
+          </button>
         </template>
-      </VOwnAnswer>
+      </component>
       <div class="thread-ruler" :class="{ 'mt-16': replyMode }">
         <VNewAnswer
           v-if="replyMode"
