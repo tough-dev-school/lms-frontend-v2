@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import VHeading from '@/components/VHeading.vue';
   import VCard from '@/components/VCard.vue';
-  import VLoginChange from '@/components/VLoginChange.vue';
+  import VPasswordSettings from '@/components/VPasswordSettings.vue';
   import VLinksSettigns from '@/components/VLinksSettings.vue';
   import VCertificateSettings from '@/components/VCertificateSettings.vue';
 </script>
@@ -31,7 +31,7 @@
       </ul>
     </VCard>
     <VLinksSettigns id="links" />
-    <VLoginChange id="password" />
+    <VPasswordSettings id="password" />
     <VCertificateSettings id="certificate" />
   </div>
 </template>
