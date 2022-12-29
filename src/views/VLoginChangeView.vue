@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import VLoginChange from '@/components/VLoginChange.vue';
+  import VPasswordSettings from '@/components/VPasswordSettings.vue';
   import { useRoute, useRouter } from 'vue-router';
 
   const route = useRoute();
@@ -7,7 +7,7 @@
 </script>
 
 <template>
-  <VLoginChange
+  <VPasswordSettings
     class="mt-[25vh]"
     :uid="String(route.params.uid)"
     :token="String(route.params.token)"
