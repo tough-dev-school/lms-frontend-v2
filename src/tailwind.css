@@ -48,4 +48,9 @@
   .float-card {
     @apply overflow-hidden rounded-8 bg-white shadow dark:bg-dark-gray;
   }
+
+  .secondary-action {
+    @apply text-black text-opacity-50 transition-colors hover:text-opacity-75;
+    @apply dark:text-white dark:text-opacity-50;
+  }
 }

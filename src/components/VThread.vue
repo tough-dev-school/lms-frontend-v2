@@ -59,8 +59,9 @@
         @update="emit('update')">
         <template #footer>
           <button
+            class="secondary-action"
             :class="{
-              'transition-opacity group-hover:opacity-100 tablet:opacity-0':
+              ' transition-opacity group-hover:opacity-100 tablet:opacity-0':
                 !replyMode,
             }"
             @click="replyMode = !replyMode">
