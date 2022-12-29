@@ -42,7 +42,7 @@
       <ul>
         <li class="text-base">
           <button
-            class="h-32 w-full px-8 text-left text-gray transition-colors hover:text-black"
+            class="link h-32 w-full px-8 text-left"
             v-if="checkIsAvailable(props.deleteTime)"
             @click="emit('delete')">
             Удалить <sup>{{ `<${deleteTime} мин` }}</sup>
@@ -50,7 +50,7 @@
         </li>
         <li class="text-base">
           <button
-            class="h-32 w-full px-8 text-left text-gray transition-colors hover:text-black"
+            class="link h-32 w-full px-8 text-left"
             v-if="checkIsAvailable(props.editTime)"
             @click="emit('edit')">
             Редактировать <sup>{{ `<${editTime} мин` }}</sup>

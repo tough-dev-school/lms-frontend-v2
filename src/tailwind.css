@@ -44,4 +44,8 @@
   .notion-link {
     @apply border-blue text-blue opacity-100 transition-colors hover:border-red hover:text-red dark:border-lightblue dark:text-lightblue;
   }
+
+  .float-card {
+    @apply overflow-hidden rounded-8 bg-white shadow dark:bg-dark-gray;
+  }
 }
