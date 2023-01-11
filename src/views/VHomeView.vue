@@ -1,6 +1,7 @@
 <script lang="ts" setup>
   import VHeading from '@/components/VHeading.vue';
   import VCard from '@/components/VCard.vue';
+  import VCover from '@/components/VCover.vue';
   import useStudies from '@/stores/studies';
 
   const studies = useStudies();
@@ -17,8 +18,9 @@
           name: 'materials',
           params: { id: study.homePageSlug },
         }">
-        <VCard>
-          <p>{{ study.name }}</p>
+        <VCard class="relative p-0 px-0 phone:px-0 tablet:px-0">
+          <VCover :name="study.name" :image="study.cover" />
+          <p class="p-16">{{ study.name }}</p>
         </VCard>
       </RouterLink>
     </li>

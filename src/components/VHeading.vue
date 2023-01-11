@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import { defineProps, withDefaults } from 'vue';
 
-  export type AllowedTags = 'h1' | 'h2' | 'h3';
+  export type AllowedTags = 'h1' | 'h2' | 'h3' | 'div';
 
   export interface Props {
     tag?: AllowedTags;
