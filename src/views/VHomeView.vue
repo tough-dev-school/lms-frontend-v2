@@ -17,8 +17,12 @@
           name: 'materials',
           params: { id: study.homePageSlug },
         }">
-        <VCard>
-          <p>{{ study.name }}</p>
+        <VCard class="relative p-0 px-0 phone:px-0 tablet:px-0">
+          <div class="w-full">
+            <div class="pb-[40%]"></div>
+          </div>
+          <img :src="study.cover" class="absolute top-0 left-0 right-0" />
+          <p class="p-16">{{ study.name }}</p>
         </VCard>
       </RouterLink>
     </li>

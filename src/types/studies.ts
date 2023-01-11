@@ -3,4 +3,5 @@ export type Study = {
   slug: string;
   name: string;
   homePageSlug: string;
+  cover: string;
 };
