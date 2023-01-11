@@ -2,7 +2,7 @@
   import VHeading from '@/components/VHeading.vue';
   import { computed } from 'vue';
 
-  interface Props {
+  export interface Props {
     name: string;
     image?: string;
   }
@@ -26,9 +26,21 @@
   <div class="relative">
     <div class="flex w-full items-center justify-center bg-black">
       <div class="pb-[40%]"></div>
-      <VHeading tag="div" class="text-h1 text-white" data-testid="auto-cover">{{
-        clearName
-      }}</VHeading>
+      <svg
+        class="absolute top-0 left-0 right-0 h-full w-full"
+        viewBox="0 0 750 300">
+        <foreignObject width="750" height="300">
+          <div
+            class="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center">
+            <VHeading
+              tag="div"
+              class="text-center text-h1 text-white"
+              data-testid="auto-cover"
+              >{{ clearName }}</VHeading
+            >
+          </div>
+        </foreignObject>
+      </svg>
     </div>
     <img
       :src="image"
