@@ -4,6 +4,18 @@
   import useStudies from '@/stores/studies';
 
   const studies = useStudies();
+
+  const getClearName = (studyName: string) => {
+    const additionalInfoStart = studyName
+      .split('')
+      .findIndex((item) => item === '(');
+
+    if (additionalInfoStart) {
+      return studyName.slice(0, additionalInfoStart).trim();
+    }
+
+    return studyName;
+  };
 </script>
 
 <template>
@@ -18,8 +30,11 @@
           params: { id: study.homePageSlug },
         }">
         <VCard class="relative p-0 px-0 phone:px-0 tablet:px-0">
-          <div class="w-full">
+          <div class="flex w-full items-center justify-center bg-black">
             <div class="pb-[40%]"></div>
+            <VHeading tag="div" class="text-h1 text-white">{{
+              getClearName(study.name)
+            }}</VHeading>
           </div>
           <img :src="study.cover" class="absolute top-0 left-0 right-0" />
           <p class="p-16">{{ study.name }}</p>
