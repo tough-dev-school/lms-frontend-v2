@@ -34,8 +34,8 @@
     class="cursor-pointer rounded-8 p-16 shadow"
     :class="{
       'bg-white': !type,
-      'bg-red-light bg-opacity-50': type === 'error',
-      'bg-green-light bg-opacity-50': type === 'success',
+      'bg-red': type === 'error',
+      'bg-green': type === 'success',
     }"
     @click="emit('delete', id)">
     {{ text }}
