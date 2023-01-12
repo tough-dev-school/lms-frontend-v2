@@ -31,6 +31,10 @@ const fetchMainUserData = async () => {
   await studies.getData();
 };
 
+const disallowAuthorized = () => {
+  if (isAuthorized()) return { name: 'home' };
+};
+
 export const routes = [
   {
     path: '/',
@@ -46,11 +50,7 @@ export const routes = [
     path: '/login',
     name: 'login',
     component: VLoginView,
-    beforeEnter: () => {
-      if (isAuthorized()) {
-        return { name: 'home' };
-      }
-    },
+    beforeEnter: disallowAuthorized,
     meta: {
       isPublic: true,
     },
@@ -59,11 +59,7 @@ export const routes = [
     path: '/login/mail-sent',
     name: 'mail-sent',
     component: VMailSentView,
-    beforeEnter: () => {
-      if (isAuthorized()) {
-        return { name: 'home' };
-      }
-    },
+    beforeEnter: disallowAuthorized,
     meta: {
       isPublic: true,
     },
@@ -72,11 +68,7 @@ export const routes = [
     path: '/login/reset',
     name: 'login-reset',
     component: VLoginResetView,
-    beforeEnter: () => {
-      if (isAuthorized()) {
-        return { name: 'home' };
-      }
-    },
+    beforeEnter: disallowAuthorized,
     meta: {
       isPublic: true,
     },
@@ -85,11 +77,7 @@ export const routes = [
     path: '/auth/password/reset/:uid/:token/',
     name: 'login-change',
     component: VLoginChangeView,
-    beforeEnter: () => {
-      if (isAuthorized()) {
-        return { name: 'home' };
-      }
-    },
+    beforeEnter: disallowAuthorized,
     meta: {
       isPublic: true,
     },
