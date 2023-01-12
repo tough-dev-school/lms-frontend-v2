@@ -20,7 +20,7 @@
   };
 
   const emit = defineEmits<{
-    (e: 'change', value: 'link'): void;
+    (e: 'change'): void;
   }>();
 
   onKeyStroke('Enter', (e: KeyboardEvent) => {
@@ -55,10 +55,7 @@
         class="flex-grow"
         >Войти</VButton
       >
-      <VButton
-        appearance="link"
-        @click="emit('change', 'link')"
-        class="flex-grow">
+      <VButton appearance="link" @click="emit('change')" class="flex-grow">
         Войти по ссылке
       </VButton>
     </template>

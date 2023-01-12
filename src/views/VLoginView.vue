@@ -6,19 +6,17 @@
   export type Mode = 'link' | 'password';
 
   const mode = ref<Mode>('link');
-
-  const handleModeChange = (newMode: Mode) => {
-    mode.value = newMode;
-  };
 </script>
 
 <template>
   <VLoginLink
     class="mt-[25vh]"
     v-if="mode === 'link'"
-    @change="handleModeChange" />
+    data-testid="login-link"
+    @change="mode = 'password'" />
   <VLoginPassword
     class="mt-[25vh]"
+    data-testid="login-password"
     v-else-if="mode === 'password'"
-    @change="handleModeChange" />
+    @change="mode = 'link'" />
 </template>

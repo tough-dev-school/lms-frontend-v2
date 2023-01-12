@@ -18,7 +18,7 @@
     router.push({ name: 'mail-sent', query: { email: email.value } });
   };
 
-  const emit = defineEmits<{ (e: 'change', value: 'password'): void }>();
+  const emit = defineEmits<{ (e: 'change'): void }>();
 
   onKeyStroke('Enter', (e: KeyboardEvent) => {
     loginWithEmail();
@@ -40,7 +40,7 @@
         >Получить доступ</VButton
       >
       <VButton
-        @click="emit('change', 'password')"
+        @click="emit('change')"
         appearance="link"
         data-testid="to-password-mode"
         class="flex-grow">
