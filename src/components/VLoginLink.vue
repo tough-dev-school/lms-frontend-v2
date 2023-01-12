@@ -15,7 +15,7 @@
 
   const loginWithEmail = async () => {
     await auth.loginWithEmail(email.value);
-    if (auth.token) router.push({ name: 'home' });
+    router.push({ name: 'mail-sent', query: { email: email.value } });
   };
 
   const emit = defineEmits<{ (e: 'change', value: 'password'): void }>();
@@ -41,7 +41,7 @@
       >
       <VButton
         @click="emit('change', 'password')"
-        tag="link"
+        appearance="link"
         data-testid="to-password-mode"
         class="flex-grow">
         Войти через пароль

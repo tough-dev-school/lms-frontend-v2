@@ -55,7 +55,10 @@
         class="flex-grow"
         >Войти</VButton
       >
-      <VButton tag="link" @click="emit('change', 'link')" class="flex-grow">
+      <VButton
+        appearance="link"
+        @click="emit('change', 'link')"
+        class="flex-grow">
         Войти по ссылке
       </VButton>
     </template>

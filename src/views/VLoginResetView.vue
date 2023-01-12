@@ -42,7 +42,7 @@
         >Отправить письмо</VButton
       >
       <VButton
-        tag="link"
+        appearance="link"
         @click="router.push({ name: 'login' })"
         class="flex-grow">
         Войти по паролю

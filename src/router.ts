@@ -7,6 +7,7 @@ import useAuth from '@/stores/auth';
 import useUser from '@/stores/user';
 import useStudies from '@/stores/studies';
 const VHomeView = () => import('@/views/VHomeView.vue');
+const VMailSentView = () => import('@/views/VMailSentView.vue');
 const VSettingsView = () => import('@/views/VSettingsView.vue');
 const VLoginView = () => import('@/views/VLoginView.vue');
 const VLoadingView = () => import('@/views/VLoadingView.vue');
@@ -30,6 +31,10 @@ const fetchMainUserData = async () => {
   await studies.getData();
 };
 
+const disallowAuthorized = () => {
+  if (isAuthorized()) return { name: 'home' };
+};
+
 export const routes = [
   {
     path: '/',
@@ -45,11 +50,16 @@ export const routes = [
     path: '/login',
     name: 'login',
     component: VLoginView,
-    beforeEnter: () => {
-      if (isAuthorized()) {
-        return { name: 'settings' };
-      }
+    beforeEnter: disallowAuthorized,
+    meta: {
+      isPublic: true,
     },
+  },
+  {
+    path: '/login/mail-sent',
+    name: 'mail-sent',
+    component: VMailSentView,
+    beforeEnter: disallowAuthorized,
     meta: {
       isPublic: true,
     },
@@ -58,11 +68,7 @@ export const routes = [
     path: '/login/reset',
     name: 'login-reset',
     component: VLoginResetView,
-    beforeEnter: () => {
-      if (isAuthorized()) {
-        return { name: 'settings' };
-      }
-    },
+    beforeEnter: disallowAuthorized,
     meta: {
       isPublic: true,
     },
@@ -71,11 +77,7 @@ export const routes = [
     path: '/auth/password/reset/:uid/:token/',
     name: 'login-change',
     component: VLoginChangeView,
-    beforeEnter: () => {
-      if (isAuthorized()) {
-        return { name: 'settings' };
-      }
-    },
+    beforeEnter: disallowAuthorized,
     meta: {
       isPublic: true,
     },
@@ -87,7 +89,7 @@ export const routes = [
     beforeEnter: async (to: RouteLocationNormalized) => {
       const auth = useAuth();
       await auth.exchangeTokens(String(to.params.passwordlessToken));
-      return { name: 'settings' };
+      return { name: 'home' };
     },
     meta: {
       isPublic: true,

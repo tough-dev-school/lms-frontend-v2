@@ -58,12 +58,6 @@ describe('toasts store', () => {
     expect(sendLoginLink).toHaveBeenCalledWith(email);
   });
 
-  test('loginWithEmail shows toast on success', async () => {
-    await auth.loginWithEmail(email);
-
-    expect(toasts.addMessage).toHaveBeenCalledTimes(1);
-  });
-
   test('loginWithEmail does not show toast on fail', async () => {
     (sendLoginLink as ReturnType<typeof vi.fn>).mockRejectedValue({});
     await auth.loginWithEmail(email);
