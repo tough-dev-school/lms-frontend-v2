@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { defineProps, withDefaults } from 'vue';
+  import { withDefaults } from 'vue';
 
   export type AllowedTags = 'h1' | 'h2' | 'h3' | 'div';
 
