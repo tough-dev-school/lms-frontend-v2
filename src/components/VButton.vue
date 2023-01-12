@@ -1,14 +1,14 @@
 <script lang="ts" setup>
   import { withDefaults } from 'vue';
 
-  export type AllowedTags = 'button' | 'link';
+  export type Appearance = 'button' | 'link';
 
   export interface Props {
-    tag?: AllowedTags;
+    appearance?: Appearance;
   }
 
   withDefaults(defineProps<Props>(), {
-    tag: 'button',
+    appearance: 'button',
   });
 </script>
 
@@ -17,8 +17,8 @@
     class="h-module min-w-[240px]"
     :class="{
       'leading-1.5 rounded bg-yellow p-module text-center text-black transition-opacity transition-colors hover:bg-yellow-hover disabled:opacity-25':
-        tag === 'button',
-      link: tag === 'link',
+        appearance === 'button',
+      link: appearance === 'link',
     }">
     <slot />
   </button>

@@ -41,7 +41,7 @@
       >
       <VButton
         @click="emit('change', 'password')"
-        tag="link"
+        appearance="link"
         data-testid="to-password-mode"
         class="flex-grow">
         Войти через пароль

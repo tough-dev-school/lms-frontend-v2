@@ -39,7 +39,10 @@
       <VButton @click="loginWithEmail" :disabled="!email" class="flex-grow"
         >Отправить письмо</VButton
       >
-      <VButton tag="link" @click="emit('change', 'password')" class="flex-grow">
+      <VButton
+        appearance="link"
+        @click="emit('change', 'password')"
+        class="flex-grow">
         Войти по паролю
       </VButton>
     </div>
