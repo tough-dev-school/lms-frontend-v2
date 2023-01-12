@@ -25,9 +25,7 @@
 <template>
   <VCard class="mt-[25vh] flex flex-col gap-16">
     <VHeading tag="h1">Ссылка отправлена</VHeading>
-    <p class="pb-32" data-testid="message">
-      Мы отправили ссылку по адресу {{ email }}
-    </p>
+    <p data-testid="message">Мы отправили ссылку по адресу {{ email }}</p>
     <template #footer>
       <VButton class="flex-grow" @click="resendEmail" data-testid="resend"
         >Отправить ещё раз</VButton
