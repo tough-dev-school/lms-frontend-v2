@@ -48,7 +48,7 @@ export const routes = [
     component: VLoginView,
     beforeEnter: () => {
       if (isAuthorized()) {
-        return { name: 'settings' };
+        return { name: 'home' };
       }
     },
     meta: {
@@ -59,6 +59,11 @@ export const routes = [
     path: '/login/mail-sent',
     name: 'mail-sent',
     component: VMailSentView,
+    beforeEnter: () => {
+      if (isAuthorized()) {
+        return { name: 'home' };
+      }
+    },
     meta: {
       isPublic: true,
     },
@@ -69,7 +74,7 @@ export const routes = [
     component: VLoginResetView,
     beforeEnter: () => {
       if (isAuthorized()) {
-        return { name: 'settings' };
+        return { name: 'home' };
       }
     },
     meta: {
@@ -82,7 +87,7 @@ export const routes = [
     component: VLoginChangeView,
     beforeEnter: () => {
       if (isAuthorized()) {
-        return { name: 'settings' };
+        return { name: 'home' };
       }
     },
     meta: {
@@ -96,7 +101,7 @@ export const routes = [
     beforeEnter: async (to: RouteLocationNormalized) => {
       const auth = useAuth();
       await auth.exchangeTokens(String(to.params.passwordlessToken));
-      return { name: 'settings' };
+      return { name: 'home' };
     },
     meta: {
       isPublic: true,
