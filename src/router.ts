@@ -7,6 +7,7 @@ import useAuth from '@/stores/auth';
 import useUser from '@/stores/user';
 import useStudies from '@/stores/studies';
 const VHomeView = () => import('@/views/VHomeView.vue');
+const VMailSentView = () => import('@/views/VMailSentView.vue');
 const VSettingsView = () => import('@/views/VSettingsView.vue');
 const VLoginView = () => import('@/views/VLoginView.vue');
 const VLoadingView = () => import('@/views/VLoadingView.vue');
@@ -50,6 +51,14 @@ export const routes = [
         return { name: 'settings' };
       }
     },
+    meta: {
+      isPublic: true,
+    },
+  },
+  {
+    path: '/login/mail-sent',
+    name: 'mail-sent',
+    component: VMailSentView,
     meta: {
       isPublic: true,
     },
