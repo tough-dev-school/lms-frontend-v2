@@ -39,14 +39,18 @@
   });
 
   const getRootComponent = computed(() => {
-    const rootComponent: any = { answer: props.originalPost };
-
-    rootComponent.is =
+    const rootComponent =
       props.originalPost.author.uuid !== user.uuid ? VAnswer : VOwnAnswer;
 
-    rootComponent.questionId = props.originalPost.question;
-
     return rootComponent;
+  });
+
+  const getRootComponentProps = computed(() => {
+    const rootComponentProps: any = { answer: props.originalPost };
+
+    rootComponentProps.questionId = props.originalPost.question;
+
+    return rootComponentProps;
   });
 </script>
 
@@ -54,8 +58,9 @@
   <div>
     <div class="group" ref="target">
       <component
-        :is="getRootComponent.is"
-        v-bind="getRootComponent"
+        :is="getRootComponent"
+        v-bind="getRootComponentProps"
+        :id="getRootComponentProps.answer.slug"
         @update="emit('update')">
         <template #footer>
           <button
