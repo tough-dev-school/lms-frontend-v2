@@ -50,7 +50,7 @@ support@tough-dev.school">
         support@tough-dev.school</a
       >
     </p>
-    <VButton tag="link" @click="router.push({ name: 'home' })"
+    <VButton appearance="link" @click="router.push({ name: 'home' })"
       >На главную</VButton
     >
   </div>
