@@ -52,6 +52,10 @@ describe('visual regression test for', () => {
       path: `/iframe.html?args=&id=pages-app--change-password&viewMode=story#/auth/password/reset/1234567890/1234567890`,
     },
     {
+      name: 'Login — mail sent',
+      path: '/iframe.html?args=&id=pages-app--mail-sent&viewMode=story#/login/mail-sent?email=demo@mail.com',
+    },
+    {
       name: 'Settings',
       path: `/iframe.html?args=&id=pages-app--settings&viewMode=story#/settings`,
     },
