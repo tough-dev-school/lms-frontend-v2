@@ -1,5 +1,4 @@
 import useToasts from '@/stores/toasts';
-import { isString } from 'lodash';
 
 export const DEFAULT_ERROR_MESSAGE = 'Ошибка!';
 
