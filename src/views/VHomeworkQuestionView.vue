@@ -32,6 +32,12 @@
     });
   };
 
+  const answerLink = computed(() => {
+    return answer.value
+      ? `${window.location.origin}/homework/answers/${answer.value?.slug}`
+      : undefined;
+  });
+
   onMounted(async () => {
     await getData();
   });
@@ -45,12 +51,26 @@
     </VCard>
     <section>
       <VHeading tag="h2" class="mb-24">Ответ</VHeading>
+
+      <VCard class="mb-16 bg-yellow-light" v-if="answer">
+        <VHeading tag="h3" class="mb-8">Ссылка на обсуждение</VHeading>
+        <RouterLink
+          class="link block"
+          :to="{
+            name: 'homework-answer',
+            params: {
+              answerId: answer.slug,
+            },
+          }"
+          >{{ answerLink }}</RouterLink
+        >
+      </VCard>
+
       <VOwnAnswer
         :answer="answer"
         v-if="answer"
         @update="getData"
-        :questionId="questionId"
-        :showGoToAnswer="true" />
+        :questionId="questionId" />
       <VNewAnswer v-else @update="getData" :questionId="questionId" />
     </section>
   </div>
