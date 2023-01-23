@@ -15,7 +15,7 @@
   const lastNameEn = ref('');
   const gender = ref<Gender>(undefined);
 
-  const update = async () => {
+  const update = () => {
     firstName.value = user.firstName;
     lastName.value = user.lastName;
     firstNameEn.value = user.firstNameEn;
@@ -31,11 +31,11 @@
       lastNameEn: lastNameEn.value,
       gender: gender.value,
     });
-    await update();
+    update();
   };
 
   onMounted(async () => {
-    await update();
+    update();
   });
 </script>
 
@@ -49,16 +49,23 @@
       избежать.
     </div>
     <div class="flex flex-col items-start gap-16 tablet:gap-24">
-      <VTextInput label="Имя" v-model="firstName" />
-      <VTextInput label="Фамилия" v-model="lastName" />
-      <VTextInput label="Имя (на английском)" v-model="firstNameEn" />
-      <VTextInput label="Фамилия (на английском)" v-model="lastNameEn" />
+      <VTextInput data-testid="firstName" label="Имя" v-model="firstName" />
+      <VTextInput data-testid="lastName" label="Фамилия" v-model="lastName" />
+      <VTextInput
+        data-testid="firstNameEn"
+        label="Имя (на английском)"
+        v-model="firstNameEn" />
+      <VTextInput
+        data-testid="lastNameEn"
+        label="Фамилия (на английском)"
+        v-model="lastNameEn" />
       <fieldset class="flex flex-wrap gap-16">
         <legend class="Label">Пол</legend>
         <label class="cursor-pointer"
           ><input
             type="radio"
             name="gender"
+            data-testid="gender-male"
             :checked="gender === 'male'"
             @click="gender = 'male'" />
           Мужской</label
@@ -67,6 +74,7 @@
           ><input
             type="radio"
             name="gender"
+            data-testid="gender-female"
             :checked="gender === 'female'"
             @click="gender = 'female'" />
           Женский</label
@@ -74,7 +82,7 @@
       </fieldset>
     </div>
     <template #footer>
-      <VButton @click="saveCertificate">Сохранить</VButton>
+      <VButton @click="saveCertificate" data-testid="save">Сохранить</VButton>
     </template>
   </VCard>
 </template>
