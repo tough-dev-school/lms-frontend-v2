@@ -11,7 +11,7 @@
   const telegramUsername = ref('');
   const user = useUser();
 
-  const update = async () => {
+  const update = () => {
     linkedinUsername.value = user.linkedinUsername;
     githubUsername.value = user.githubUsername;
     telegramUsername.value = user.telegramUsername;
@@ -23,11 +23,11 @@
       githubUsername: githubUsername.value,
       telegramUsername: telegramUsername.value,
     });
-    await update();
+    update();
   };
 
-  onMounted(async () => {
-    await update();
+  onMounted(() => {
+    update();
   });
 </script>
 
@@ -35,12 +35,21 @@
   <VCard>
     <VHeading class="mb-24" tag="h2">Ссылки</VHeading>
     <div class="flex flex-col items-start gap-16 tablet:gap-24">
-      <VTextInput label="Ссылка на GitHub" v-model="githubUsername" />
-      <VTextInput label="Ссылка на LinkedIn" v-model="linkedinUsername" />
-      <VTextInput label="Ссылка на Telegram" v-model="telegramUsername" />
+      <VTextInput
+        label="Ссылка на GitHub"
+        v-model="githubUsername"
+        data-testid="github" />
+      <VTextInput
+        label="Ссылка на LinkedIn"
+        v-model="linkedinUsername"
+        data-testid="linkedin" />
+      <VTextInput
+        label="Ссылка на Telegram"
+        v-model="telegramUsername"
+        data-testid="telegram" />
     </div>
     <template #footer>
-      <VButton @click="saveProfile">Сохранить</VButton>
+      <VButton @click="saveProfile" data-testid="save">Сохранить</VButton>
     </template>
   </VCard>
 </template>
