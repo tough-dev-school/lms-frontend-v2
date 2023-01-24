@@ -1,0 +1,40 @@
+<script lang="ts" setup>
+  import VFloat from '@/components/VFloat.vue';
+
+  export interface Props {
+    allowDelete: boolean;
+    allowEdit: boolean;
+    deleteTime: number;
+    editTime: number;
+  }
+
+  defineProps<Props>();
+
+  const emit = defineEmits<{
+    (e: 'delete'): void;
+    (e: 'edit'): void;
+  }>();
+</script>
+
+<template>
+  <VFloat class="block" v-if="allowDelete || allowEdit">
+    <ul>
+      <li class="text-base">
+        <button
+          class="link h-32 w-full px-8 text-left"
+          v-if="allowDelete"
+          @click="emit('delete')">
+          Удалить <sup>{{ `<${deleteTime} мин` }}</sup>
+        </button>
+      </li>
+      <li class="text-base">
+        <button
+          class="link h-32 w-full px-8 text-left"
+          v-if="allowEdit"
+          @click="emit('edit')">
+          Редактировать <sup>{{ `<${editTime} мин` }}</sup>
+        </button>
+      </li>
+    </ul>
+  </VFloat>
+</template>

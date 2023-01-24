@@ -1,6 +1,8 @@
 <script lang="ts" setup>
   import dayjs from 'dayjs';
-  import VFloat from '@/components/VFloat.vue';
+  import { computed } from 'vue';
+  import VAnswerActionsDesktop from '@/components/VAnswerActionsDesktop.vue';
+  import VAnswerActionsMobile from '@/components/VAnswerActionsMobile.vue';
 
   export interface Props {
     created: string;
@@ -18,51 +20,28 @@
   const checkIsAvailable = (timeout: number) => {
     return +dayjs() < +dayjs(props.created).add(timeout, 'minutes');
   };
+
+  const allowDelete = computed(() => checkIsAvailable(props.deleteTime));
+  const allowEdit = computed(() => checkIsAvailable(props.editTime));
 </script>
 
 <template>
   <div class="flex gap-8">
-    <button
-      class="secondary-action VAnswerActions__ActionButton"
-      v-if="checkIsAvailable(props.deleteTime)"
-      @click="emit('delete')">
-      Удалить <sup>{{ `<${deleteTime} мин` }}</sup>
-    </button>
-    <button
-      class="secondary-action VAnswerActions__ActionButton"
-      v-if="checkIsAvailable(props.editTime)"
-      @click="emit('edit')">
-      Редактировать <sup>{{ `<${editTime} мин` }}</sup>
-    </button>
-    <VFloat
-      class="block tablet:hidden"
-      v-if="
-        checkIsAvailable(props.deleteTime) || checkIsAvailable(props.editTime)
-      ">
-      <ul>
-        <li class="text-base">
-          <button
-            class="link h-32 w-full px-8 text-left"
-            v-if="checkIsAvailable(props.deleteTime)"
-            @click="emit('delete')">
-            Удалить <sup>{{ `<${deleteTime} мин` }}</sup>
-          </button>
-        </li>
-        <li class="text-base">
-          <button
-            class="link h-32 w-full px-8 text-left"
-            v-if="checkIsAvailable(props.editTime)"
-            @click="emit('edit')">
-            Редактировать <sup>{{ `<${editTime} мин` }}</sup>
-          </button>
-        </li>
-      </ul>
-    </VFloat>
+    <VAnswerActionsDesktop
+      class="hidden tablet:block"
+      :deleteTime="deleteTime"
+      :editTime="editTime"
+      :allowDelete="allowDelete"
+      :allowEdit="allowEdit"
+      @edit="emit('edit')"
+      @delete="emit('delete')" />
+    <VAnswerActionsMobile
+      class="tablet:hidden"
+      :deleteTime="deleteTime"
+      :editTime="editTime"
+      :allowDelete="allowDelete"
+      :allowEdit="allowEdit"
+      @edit="emit('edit')"
+      @delete="emit('delete')" />
   </div>
 </template>
-
-<style>
-  .VAnswerActions__ActionButton {
-    @apply hidden tablet:block;
-  }
-</style>
