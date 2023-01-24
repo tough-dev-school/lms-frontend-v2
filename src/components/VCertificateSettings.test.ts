@@ -6,6 +6,7 @@ import type VTextInput from './VTextInput.vue';
 import useUser from '@/stores/user';
 import { createTestingPinia } from '@pinia/testing';
 import { faker } from '@faker-js/faker';
+import type { VueNode } from '@vue/test-utils/dist/types';
 
 const defaultData = {
   firstName: faker.name.firstName(),
@@ -63,7 +64,9 @@ describe('VCertificateSettings', () => {
     expect(getLastNameEnWrapper().props().modelValue).toBe(
       defaultData.lastNameEn,
     );
-    expect(getGenderFemaleWrapper().element.checked).toBe(true);
+    expect(
+      (getGenderFemaleWrapper().element as VueNode<HTMLInputElement>).checked,
+    ).toBe(true);
   });
 
   test('fills fields with actual data on save', async () => {
@@ -87,7 +90,9 @@ describe('VCertificateSettings', () => {
     expect(getLastNameWrapper().props().modelValue).toBe(lastName);
     expect(getFirstNameEnWrapper().props().modelValue).toBe(firstNameEn);
     expect(getLastNameEnWrapper().props().modelValue).toBe(lastNameEn);
-    expect(getGenderFemaleWrapper().element.checked).toBe(true);
+    expect(
+      (getGenderFemaleWrapper().element as VueNode<HTMLInputElement>).checked,
+    ).toBe(true);
   });
 
   test('sends data on save', async () => {
