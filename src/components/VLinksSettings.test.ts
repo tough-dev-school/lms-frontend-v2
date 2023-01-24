@@ -6,7 +6,6 @@ import type VTextInput from './VTextInput.vue';
 import useUser from '@/stores/user';
 import { createTestingPinia } from '@pinia/testing';
 import { faker } from '@faker-js/faker';
-import { nextTick } from 'vue';
 
 const defaultData = {
   linkedinUsername: faker.internet.userName(),

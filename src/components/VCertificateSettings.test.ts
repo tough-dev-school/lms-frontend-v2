@@ -48,8 +48,6 @@ describe('VCertificateSettings', () => {
     wrapper.findComponent<typeof VTextInput>('[data-testid="firstNameEn"]');
   const getLastNameEnWrapper = () =>
     wrapper.findComponent<typeof VTextInput>('[data-testid="lastNameEn"]');
-  const getGenderMaleWrapper = () =>
-    wrapper.find('[data-testid="gender-male"]');
   const getGenderFemaleWrapper = () =>
     wrapper.find('[data-testid="gender-female"]');
   const getSaveWrapper = () => wrapper.find('[data-testid="save"]');
