@@ -45,12 +45,17 @@ const useAuth = defineStore('auth', {
         this.token = loginResult.token;
       } catch (error: any) {}
     },
-    async changePassword(
-      newPassword1: string,
-      newPassword2: string,
-      uid?: string,
-      token?: string,
-    ) {
+    async changePassword({
+      newPassword1,
+      newPassword2,
+      uid,
+      token,
+    }: {
+      newPassword1: string;
+      newPassword2: string;
+      uid?: string;
+      token?: string;
+    }) {
       const savedToast = () =>
         useToasts().addMessage('Новый пароль сохранен', 'success');
       if (uid && token) {

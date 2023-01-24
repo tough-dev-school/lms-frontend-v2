@@ -20,33 +20,43 @@
   const emit = defineEmits<{ (e: 'save'): void }>();
 
   const savePassword = async () => {
-    auth
-      .changePassword(
-        newPassword1.value,
-        newPassword2.value,
-        props.uid,
-        props.token,
-      )
-      .then(() => {
-        emit('save');
-      })
-      .catch(() => {});
+    await auth.changePassword({
+      newPassword1: newPassword1.value,
+      newPassword2: newPassword2.value,
+      uid: props.uid,
+      token: props.token,
+    });
+
+    emit('save');
   };
 </script>
 
 <template>
   <VCard>
-    <VHeading class="mb-24" level="1" v-if="!auth.token">Сброс пароля</VHeading>
-    <VHeading class="mb-24" level="2" v-else>Пароль</VHeading>
+    <VHeading
+      class="mb-24"
+      level="1"
+      v-if="!auth.token"
+      data-testid="reset-heading"
+      >Сброс пароля</VHeading
+    >
+    <VHeading class="mb-24" level="2" v-else data-testid="change-heading"
+      >Пароль</VHeading
+    >
     <div class="flex flex-col items-start gap-16 tablet:gap-24">
-      <VTextInput type="password" label="Новый пароль" v-model="newPassword1" />
+      <VTextInput
+        type="password"
+        label="Новый пароль"
+        data-testid="password1"
+        v-model="newPassword1" />
       <VTextInput
         type="password"
         label="Повторите пароль"
+        data-testid="password2"
         v-model="newPassword2" />
     </div>
     <template #footer>
-      <VButton @click="savePassword">Сохранить</VButton>
+      <VButton data-testid="save" @click="savePassword">Сохранить</VButton>
     </template>
   </VCard>
 </template>
