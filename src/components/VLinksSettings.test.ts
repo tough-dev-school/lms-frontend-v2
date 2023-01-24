@@ -25,6 +25,9 @@ describe('VLinksSettings', () => {
         plugins: [
           createTestingPinia({
             createSpy: vi.fn,
+            initialState: {
+              user: { ...defaultData },
+            },
           }),
         ],
         stubs: {
@@ -34,7 +37,6 @@ describe('VLinksSettings', () => {
     });
 
     user = useUser();
-    user.$patch(defaultData);
   });
 
   const getGithubWrapper = () =>
@@ -45,7 +47,7 @@ describe('VLinksSettings', () => {
     wrapper.findComponent<typeof VTextInput>('[data-testid="telegram"]');
   const getSaveWrapper = () => wrapper.find('[data-testid="save"]');
 
-  test('fills fields with actual data on mount', () => {
+  test('fills fields with actual data on mount', async () => {
     expect(getGithubWrapper().props().modelValue).toBe(
       defaultData.githubUsername,
     );

@@ -25,6 +25,9 @@ describe('VCertificateSettings', () => {
       global: {
         plugins: [
           createTestingPinia({
+            initialState: {
+              user: { ...defaultData },
+            },
             createSpy: vi.fn,
           }),
         ],
@@ -35,7 +38,6 @@ describe('VCertificateSettings', () => {
     });
 
     user = useUser();
-    user.$patch(defaultData);
   });
 
   const getFirstNameWrapper = () =>
