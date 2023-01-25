@@ -17,13 +17,14 @@
 </script>
 
 <template>
-  <VFloat class="block" v-if="allowDelete || allowEdit">
+  <VFloat data-testid="menu" class="block" v-if="allowDelete || allowEdit">
     <ul>
       <li class="text-base">
         <button
           class="link h-32 w-full px-8 text-left"
           v-if="allowDelete"
-          @click="emit('delete')">
+          @click="emit('delete')"
+          data-testid="delete">
           Удалить <sup>{{ `<${deleteTime} мин` }}</sup>
         </button>
       </li>
@@ -31,7 +32,8 @@
         <button
           class="link h-32 w-full px-8 text-left"
           v-if="allowEdit"
-          @click="emit('edit')">
+          @click="emit('edit')"
+          data-testid="edit">
           Редактировать <sup>{{ `<${editTime} мин` }}</sup>
         </button>
       </li>

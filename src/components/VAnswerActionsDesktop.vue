@@ -15,10 +15,18 @@
 </script>
 
 <template>
-  <button class="secondary-action" v-if="allowDelete" @click="emit('delete')">
+  <button
+    class="secondary-action"
+    data-testid="delete"
+    v-if="allowDelete"
+    @click="emit('delete')">
     Удалить <sup>{{ `<${deleteTime} мин` }}</sup>
   </button>
-  <button class="secondary-action" v-if="allowEdit" @click="emit('edit')">
+  <button
+    class="secondary-action"
+    data-testid="edit"
+    v-if="allowEdit"
+    @click="emit('edit')">
     Редактировать <sup>{{ `<${editTime} мин` }}</sup>
   </button>
 </template>

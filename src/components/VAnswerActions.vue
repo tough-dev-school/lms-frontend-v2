@@ -33,6 +33,7 @@
       :editTime="editTime"
       :allowDelete="allowDelete"
       :allowEdit="allowEdit"
+      data-testid="desktop"
       @edit="emit('edit')"
       @delete="emit('delete')" />
     <VAnswerActionsMobile
@@ -41,6 +42,7 @@
       :editTime="editTime"
       :allowDelete="allowDelete"
       :allowEdit="allowEdit"
+      data-testid="mobile"
       @edit="emit('edit')"
       @delete="emit('delete')" />
   </div>
