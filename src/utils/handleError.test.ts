@@ -1,5 +1,5 @@
 import { describe, beforeEach, expect, test, vi } from 'vitest';
-import handleError from '@/utils/handleError';
+import handleError, { DEFAULT_ERROR_MESSAGE } from '@/utils/handleError';
 import { faker } from '@faker-js/faker';
 import { createApp } from 'vue';
 import { setActivePinia } from 'pinia';
@@ -25,15 +25,35 @@ describe('handleError', () => {
     toasts = useToasts();
   });
 
+  test('calls toast with default message for empty error', () => {
+    handleError();
+
+    expect(toasts.addMessage).toHaveBeenCalledOnce();
+    expect(toasts.addMessage).toHaveBeenCalledWith(
+      DEFAULT_ERROR_MESSAGE,
+      'error',
+    );
+  });
+
+  test('calls toast for text error', () => {
+    const message = faker.lorem.sentence();
+
+    handleError(message);
+
+    expect(toasts.addMessage).toHaveBeenCalledOnce();
+    expect(toasts.addMessage).toHaveBeenCalledWith(message, 'error');
+  });
+
   test('calls toast for error', () => {
-    const messages = faker.lorem.sentence();
+    const message = faker.lorem.sentence();
     const error = createError({
-      details: messages,
+      details: message,
     });
 
     handleError(error);
 
-    expect(toasts.addMessage).toBeCalledTimes(1);
+    expect(toasts.addMessage).toHaveBeenCalledOnce();
+    expect(toasts.addMessage).toHaveBeenCalledWith(message, 'error');
   });
 
   test('calls toast for each error in array', () => {
