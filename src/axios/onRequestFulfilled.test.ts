@@ -10,7 +10,7 @@ import useAuth from '@/stores/auth';
 
 vi.mock('./requestCaseMiddleware');
 
-const input = { data: {} } as AxiosRequestConfig;
+const input = { data: {}, headers: {} } as AxiosRequestConfig;
 
 describe('onRequestFulfilled', () => {
   let authStore: any;
@@ -43,7 +43,7 @@ describe('onRequestFulfilled', () => {
 
     const request = onRequestFulfilled(input, true);
 
-    expect(request.headers.Authorization).toBe(`Bearer ${authStore.token}`);
+    expect(request?.headers?.Authorization).toBe(`Bearer ${authStore.token}`);
   });
 
   test('auth token is not added to request headers if not exist', () => {
@@ -51,6 +51,6 @@ describe('onRequestFulfilled', () => {
 
     const request = onRequestFulfilled(input, true);
 
-    expect(request.headers.Authorization).toBe(undefined);
+    expect(request?.headers?.Authorization).toBe(undefined);
   });
 });
