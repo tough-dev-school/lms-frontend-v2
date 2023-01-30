@@ -44,7 +44,7 @@ jobs:
 
   unittest:
     runs-on: ubuntu-latest
-    needs: lint
+    needs: build
 
     steps:
       - name: Checkout 🛎
@@ -67,7 +67,7 @@ jobs:
         run: npm run test:unit
 
   build-docker-image:
-    needs: build
+    needs: unittest
     runs-on: ubuntu-latest
     #if: ${{ github.ref == 'refs/heads/main' }}
     steps:
