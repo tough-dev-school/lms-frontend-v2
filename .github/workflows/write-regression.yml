@@ -14,10 +14,16 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: '.node-version'
-          cache: 'npm'
 
-      - name: Install dependencies 👨🏻‍💻
-        run: npm ci --no-audit --include=dev
+      - name: Restore cache
+        uses: actions/cache@v3
+        id: cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-v1-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('.node-version') }}
+
+      - name: Install playwright browsers 😈
+        run: npx playwright install
 
       - name: Updating light mode screenshots 🌞
         run: npm run test:visual:update
