@@ -39,7 +39,6 @@
   <VThread
     :originalPost="{ ...originalPost, descendants }"
     :customActions="customActions"
-    @action="(name) => name === 'fetch' ?? fetchComments"
     @update="fetchComments" />
   <div v-if="isLoading" class="relative h-256">
     <VPreloader class="absolute" />
