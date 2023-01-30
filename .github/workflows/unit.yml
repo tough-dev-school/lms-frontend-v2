@@ -3,29 +3,21 @@ name: Unit tests
 on: [push]
 
 jobs:
-  ci:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node: [16]
+  unit:
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout 🛎
-        uses: actions/checkout@master
+        uses: actions/checkout@v3
 
       - name: Setup node env 🏗
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node }}
-          check-latest: true
-
-      - name: Install esbuild 🤯
-        run: npm i -D esbuild
+          node-version-file: '.node-version'
+          cache: 'npm'
 
       - name: Install dependencies 👨🏻‍💻
-        run: npm install
+        run: npm ci --no-audit --include=dev
 
       - name: Run unit tests 🧪
         run: npm run test:unit
