@@ -15,7 +15,6 @@
 
   export interface Props {
     originalPost: Thread;
-    defaultActions: boolean;
     customActions: Actions[];
   }
 
@@ -26,12 +25,11 @@
   const replyMode = ref(false);
 
   const props = withDefaults(defineProps<Props>(), {
-    defaultActions: true,
     customActions: () => [],
   });
 
   const actions = computed<Actions[]>(() => {
-    const defaultActions = [
+    return [
       {
         name: 'Ответить',
         handle: () => {
@@ -46,9 +44,8 @@
         },
         show: replyMode.value === true,
       },
+      ...props.customActions,
     ];
-
-    return [...defaultActions, ...props.customActions];
   });
 
   const handleUpdate = () => {
