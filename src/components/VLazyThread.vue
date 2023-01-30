@@ -20,17 +20,11 @@
     isLoading.value = false;
   };
 
-  const unfoldLabel = [...Array(2)].map(() => 'Загрузить коментарии') as [
-    string,
-    string,
-  ];
-
   const customActions = computed(() => [
     {
       name: 'Загрузить коментарии',
       handle: fetchComments,
       show: descendants.value.length === 0,
-      label: unfoldLabel,
     },
   ]);
 </script>
