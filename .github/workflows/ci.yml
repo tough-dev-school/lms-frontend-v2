@@ -21,7 +21,7 @@ jobs:
         id: cache
         with:
           path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('.node-version') }}
+          key: ${{ runner.os }}-v1-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('.node-version') }}
 
       - name: Install dependencies 👨🏻‍💻
         if: steps.cache.outputs.cache-hit != 'true'
@@ -41,7 +41,6 @@ jobs:
       - name: Checkout 🛎
         uses: actions/checkout@v3
 
-
       - name: Setup node env 🏗
         uses: actions/setup-node@v3
         with:
@@ -52,7 +51,7 @@ jobs:
         id: cache
         with:
           path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('.node-version') }}
+          key: ${{ runner.os }}-v1-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('.node-version') }}
       - name: Run unit tests 🧪
         run: npm run test:unit
 
@@ -74,10 +73,11 @@ jobs:
         id: cache
         with:
           path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('.node-version') }}
+          key: ${{ runner.os }}-v1-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('.node-version') }}
 
-      - name: Run unit tests 🧪
-        run: npm run test:unit
+      - name: Install playwright browsers 😈
+        run: npx playwright install
+
       - name: Run visual tests for light mode 🌞
         run: npm run test:visual
 
