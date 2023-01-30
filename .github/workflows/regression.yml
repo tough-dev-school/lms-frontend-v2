@@ -1,0 +1,45 @@
+name: Regression tests
+on: [push]
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@master
+
+      - name: Setup node env 🏗
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.node-version'
+
+      - name: Restore cache
+        uses: actions/cache@v3
+        id: cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-v1-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('.node-version') }}
+
+      - name: Install dependencies 👨🏻‍💻
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci --no-audit --include=dev
+
+      - name: Install playwright browsers 😈
+        run: npx playwright install
+
+      - name: Run visual tests for light mode 🌞
+        run: npm run test:visual
+
+      - name: Run visual test for dark mode 🌑
+        env:
+          COLOR_SCHEME: dark
+        run: npm run test:visual
+
+      - name: Saving test results 📥
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: diff
+          path: src/__image_snapshots__/__diff_output__
+          retention-days: 14
