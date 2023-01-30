@@ -12,11 +12,19 @@ jobs:
 
       - name: Setup node env 🏗
         uses: actions/setup-node@v3
+        id: setup-node
         with:
           node-version-file: '.node-version'
-          cache: 'npm'
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        id: cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('.node-version') }}
 
       - name: Install dependencies 👨🏻‍💻
+        if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci --no-audit --include=dev
 
       - name: Run linter 👀
@@ -33,15 +41,18 @@ jobs:
       - name: Checkout 🛎
         uses: actions/checkout@v3
 
+
       - name: Setup node env 🏗
         uses: actions/setup-node@v3
         with:
           node-version-file: '.node-version'
-          cache: 'npm'
 
-      - name: Install dependencies 👨🏻‍💻
-        run: npm ci --no-audit --include=dev
-
+      - name: Restore cache
+        uses: actions/cache@v3
+        id: cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('.node-version') }}
       - name: Run unit tests 🧪
         run: npm run test:unit
 
@@ -57,11 +68,16 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: '.node-version'
-          cache: 'npm'
 
-      - name: Install dependencies 👨🏻‍💻
-        run: npm ci --no-audit --include=dev
+      - name: Restore cache
+        uses: actions/cache@v3
+        id: cache
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('.node-version') }}
 
+      - name: Run unit tests 🧪
+        run: npm run test:unit
       - name: Run visual tests for light mode 🌞
         run: npm run test:visual
 
