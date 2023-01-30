@@ -11,9 +11,9 @@ const useDiplomas = defineStore('diplomas', {
     items: [],
   }),
   actions: {
-    async getData(materialId: string) {
+    async getData() {
       try {
-        this.items = (await getDiplomas()).results;
+        this.items = await getDiplomas();
       } catch (error: any) {}
     },
   },
