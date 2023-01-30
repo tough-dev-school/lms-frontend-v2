@@ -47,9 +47,10 @@ jobs:
           node-version-file: '.node-version'
 
       - name: Restore cache
-        uses: actions/cache@v3
+        uses: actions/cache/restore@v3
         id: cache
         with:
+          fail-on-cache-miss: true
           path: node_modules
           key: ${{ runner.os }}-v1-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('.node-version') }}
       - name: Run unit tests 🧪
