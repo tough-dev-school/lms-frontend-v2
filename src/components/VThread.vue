@@ -3,39 +3,63 @@
   import VOwnAnswer from '@/components/VOwnAnswer.vue';
   import VAnswer from '@/components/VAnswer.vue';
   import VNewAnswer from '@/components/VNewAnswer.vue';
-  import { computed, ref, withDefaults, watch } from 'vue';
+  import { computed, ref } from 'vue';
   import { onClickOutside } from '@vueuse/core';
   import useUser from '@/stores/user';
 
+  export interface Actions {
+    name: string;
+    handle: () => void;
+    show: boolean;
+  }
+
   export interface Props {
     originalPost: Thread;
-    unfoldLabel?: [string, string];
+    defaultActions: boolean;
+    customActions: Actions[];
   }
 
   const user = useUser();
   const emit = defineEmits<{
     (e: 'update'): void;
-    (e: 'reply', value: boolean): void;
   }>();
   const replyMode = ref(false);
+
+  const props = withDefaults(defineProps<Props>(), {
+    defaultActions: true,
+    customActions: () => [],
+  });
+
+  const actions = computed<Actions[]>(() => {
+    const defaultActions = [
+      {
+        name: 'Ответить',
+        handle: () => {
+          replyMode.value = true;
+        },
+        show: replyMode.value === false,
+      },
+      {
+        name: 'Не отвечать',
+        handle: () => {
+          replyMode.value = false;
+        },
+        show: replyMode.value === true,
+      },
+    ];
+
+    return [...defaultActions, ...props.customActions];
+  });
 
   const handleUpdate = () => {
     replyMode.value = false;
     emit('update');
   };
 
-  const props = withDefaults(defineProps<Props>(), {
-    unfoldLabel: () => ['Не отвечать', 'Ответить'],
-  });
-
   const target = ref(null);
 
   onClickOutside(target, () => {
     replyMode.value = false;
-  });
-
-  watch(replyMode, () => {
-    emit('reply', replyMode.value);
   });
 
   const getRootComponent = computed(() => {
@@ -64,13 +88,10 @@
         @update="emit('update')">
         <template #footer>
           <button
-            class="secondary-action"
-            :class="{
-              ' transition-opacity group-hover:opacity-100 tablet:opacity-0':
-                !replyMode,
-            }"
-            @click="replyMode = !replyMode">
-            {{ replyMode ? unfoldLabel[0] : unfoldLabel[1] }}
+            v-for="(action, index) in actions.filter((action) => action.show)"
+            :key="index"
+            @click="action.handle">
+            {{ action.name }}
           </button>
         </template>
       </component>

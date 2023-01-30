@@ -3,7 +3,7 @@
   import VThread from '@/components/VThread.vue';
   import VPreloader from '@/components/VPreloader.vue';
   import { getComments } from '@/api/homework';
-  import { ref } from 'vue';
+  import { ref, computed } from 'vue';
 
   export interface Props {
     originalPost: Answer;
@@ -24,18 +24,23 @@
     string,
     string,
   ];
+
+  const customActions = computed(() => [
+    {
+      name: 'Загрузить коментарии',
+      handle: fetchComments,
+      show: descendants.value.length === 0,
+      label: unfoldLabel,
+    },
+  ]);
 </script>
 
 <template>
   <VThread
     :originalPost="{ ...originalPost, descendants }"
-    @reply="fetchComments"
-    :unfoldLabel="unfoldLabel"
-    v-if="descendants.length === 0" />
-  <VThread
-    :originalPost="{ ...originalPost, descendants }"
-    @update="fetchComments"
-    v-else />
+    :customActions="customActions"
+    @action="(name) => name === 'fetch' ?? fetchComments"
+    @update="fetchComments" />
   <div v-if="isLoading" class="relative h-256">
     <VPreloader class="absolute" />
   </div>
