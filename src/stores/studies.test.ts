@@ -30,9 +30,7 @@ describe('studies store', () => {
 
   test('getData sets items', async () => {
     const studiesData = getStudiesData();
-    (getStudies as ReturnType<typeof vi.fn>).mockResolvedValue({
-      results: studiesData,
-    });
+    (getStudies as ReturnType<typeof vi.fn>).mockResolvedValue(studiesData);
 
     await studies.getData();
 
