@@ -118,4 +118,9 @@ support@tough-dev.school">
   .notion-h3 {
     @apply text-h3;
   }
+
+  .notion-simple-table-wrapper,
+  .notion-simple-table {
+    width: 100%;
+  }
 </style>
