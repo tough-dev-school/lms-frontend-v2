@@ -127,4 +127,10 @@ support@tough-dev.school">
   .notion-toggle {
     width: 100%;
   }
+
+  .notion-hr {
+    height: 1px;
+    background-color: var(--fg-color-0);
+    border: none;
+  }
 </style>
