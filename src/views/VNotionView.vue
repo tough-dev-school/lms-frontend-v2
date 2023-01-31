@@ -119,7 +119,12 @@ support@tough-dev.school">
     @apply text-h3;
   }
 
-  .notion-simple-table-wrapper,
+  .notion-simple-table-wrapper {
+    overflow: scroll;
+    max-width: 100%;
+    width: 100%;
+  }
+
   .notion-simple-table {
     width: 100%;
   }
