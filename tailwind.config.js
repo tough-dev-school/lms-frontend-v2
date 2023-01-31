@@ -47,9 +47,9 @@ module.exports = {
     fontSize: {
       sub: '14px',
       base: '16px',
-      h1: 'clamp(28px, 5vw, 36px)',
-      h2: 'clamp(20px, 3.5vw, 28px)',
-      h3: '16px',
+      h1: 'clamp(1.875rem, 5vw, 36px)',
+      h2: 'clamp(1.3rem, 3.5vw, 28px)',
+      h3: '1.25rem',
     },
     borderRadius: {
       8: '8px',

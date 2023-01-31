@@ -74,6 +74,10 @@ support@tough-dev.school">
     @apply underline dark:text-white dark:decoration-white;
   }
 
+  .notion-page-link {
+    @apply dark:text-white dark:text-opacity-70;
+  }
+
   .notion-image-caption {
     @apply dark:text-white;
   }
@@ -117,5 +121,25 @@ support@tough-dev.school">
 
   .notion-h3 {
     @apply text-h3;
+  }
+
+  .notion-simple-table-wrapper {
+    overflow: scroll;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .notion-simple-table {
+    width: 100%;
+  }
+
+  .notion-toggle {
+    width: 100%;
+  }
+
+  .notion-hr {
+    height: 1px;
+    background-color: var(--fg-color-0);
+    border: none;
   }
 </style>
