@@ -41,11 +41,11 @@
           </div>
         </foreignObject>
       </svg>
+      <img
+        :src="image"
+        v-if="image"
+        class="absolute top-0 left-0 right-0 h-full w-full object-fill"
+        data-testid="image-cover" />
     </div>
-    <img
-      :src="image"
-      v-if="image"
-      class="absolute top-0 left-0 right-0"
-      data-testid="image-cover" />
   </div>
 </template>
