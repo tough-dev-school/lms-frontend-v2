@@ -123,4 +123,8 @@ support@tough-dev.school">
   .notion-simple-table {
     width: 100%;
   }
+
+  .notion-toggle {
+    width: 100%;
+  }
 </style>
