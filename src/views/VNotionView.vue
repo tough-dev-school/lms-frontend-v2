@@ -74,6 +74,10 @@ support@tough-dev.school">
     @apply underline dark:text-white dark:decoration-white;
   }
 
+  .notion-page-link {
+    @apply dark:text-white dark:text-opacity-70;
+  }
+
   .notion-image-caption {
     @apply dark:text-white;
   }
