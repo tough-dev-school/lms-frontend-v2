@@ -3,11 +3,12 @@
   import VTextEditor from '@/components/VTextEditor.vue';
   import VButton from '@/components/VButton.vue';
   import useHomework from '@/stores/homework';
-  import { ref } from 'vue';
+  import { ref, onMounted } from 'vue';
   import VAnswer from '@/components/VAnswer.vue';
   import VCard from '@/components/VCard.vue';
   import htmlToMarkdown from '@/utils/htmlToMarkdown';
   import type { Answer } from '@/types/homework';
+  import { useRoute, useRouter } from 'vue-router';
 
   export interface Props {
     answer: Answer;
@@ -27,6 +28,8 @@
   const text = ref('');
   const editTime = ref(30);
   const deleteTime = ref(10);
+  const route = useRoute();
+  const router = useRouter();
 
   const updateAnswer = async () => {
     await homework.updateAnswer(props.answer.slug, text.value);
@@ -45,6 +48,12 @@
     text.value = htmlToMarkdown(props.answer.text);
     editMode.value = true;
   };
+
+  onMounted(() => {
+    if (route.hash === `#${props.answer.slug}`) {
+      if (route.name) router.push({ name: route.name, hash: route.hash });
+    }
+  });
 </script>
 
 <template>

@@ -12,19 +12,20 @@
 
   const props = defineProps<Props>();
   const emit = defineEmits<{
-    (e: 'update'): void;
+    (e: 'update', slug: string): void;
   }>();
   const homework = useHomework();
   const text = ref('');
 
   const sendPost = async () => {
-    await homework.postAnswer({
+    const answer = await homework.postAnswer({
       text: text.value,
       questionId: props.questionId,
       parentId: props.parentId,
     });
+    console.log(answer);
     text.value = '';
-    emit('update');
+    emit('update', answer.slug);
   };
 </script>
 

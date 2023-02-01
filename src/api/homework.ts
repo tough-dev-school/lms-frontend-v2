@@ -67,7 +67,7 @@ export const postAnswer = async ({
 
   if (parentId) data.parent = parentId;
 
-  return (await axios.post(url, data)).data;
+  return (await axios.post(url, data)).data as Answer | Comment;
 };
 
 export const deleteAnswer = async (answerId: string) => {

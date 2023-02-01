@@ -3,9 +3,10 @@
   import VOwnAnswer from '@/components/VOwnAnswer.vue';
   import VAnswer from '@/components/VAnswer.vue';
   import VNewAnswer from '@/components/VNewAnswer.vue';
-  import { computed, ref } from 'vue';
+  import { computed, ref, nextTick } from 'vue';
   import { onClickOutside } from '@vueuse/core';
   import useUser from '@/stores/user';
+  import { useRoute, useRouter } from 'vue-router';
 
   export interface Actions {
     name: string;
@@ -17,6 +18,9 @@
     originalPost: Thread;
     customActions: Actions[];
   }
+
+  const route = useRoute();
+  const router = useRouter();
 
   const user = useUser();
   const emit = defineEmits<{
@@ -48,9 +52,13 @@
     ];
   });
 
-  const handleUpdate = () => {
+  const handleUpdate = async (slug: string) => {
     replyMode.value = false;
     emit('update');
+
+    if (route.name) {
+      router.push({ name: route.name, hash: `#${slug}` });
+    }
   };
 
   const target = ref(null);
