@@ -37,6 +37,7 @@
       {
         name: 'Ответить',
         handle: () => {
+          emit('update');
           replyMode.value = true;
         },
         show: replyMode.value === false,
