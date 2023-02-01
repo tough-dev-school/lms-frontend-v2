@@ -13,10 +13,9 @@
     answer: Answer;
     questionId: string;
     parentId?: string;
-    showGoToAnswer?: boolean;
   }
 
-  const props = withDefaults(defineProps<Props>(), { showGoToAnswer: false });
+  const props = defineProps<Props>();
 
   const emit = defineEmits<{
     (e: 'update'): void;
@@ -57,7 +56,7 @@
 
 <template>
   <div v-if="!editMode">
-    <VAnswer :answer="answer as Answer" :showGoToAnswer="showGoToAnswer">
+    <VAnswer :answer="answer as Answer">
       <template #header>
         <VAnswerActions
           :created="answer.created"
