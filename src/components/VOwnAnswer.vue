@@ -8,7 +8,6 @@
   import VCard from '@/components/VCard.vue';
   import htmlToMarkdown from '@/utils/htmlToMarkdown';
   import type { Answer } from '@/types/homework';
-  import { useRoute, useRouter } from 'vue-router';
 
   export interface Props {
     answer: Answer;
@@ -23,10 +22,8 @@
     (e: 'update'): void;
     (e: 'delete'): void;
     (e: 'edit'): void;
+    (e: 'mounted', slug: string): void;
   }>();
-
-  const route = useRoute();
-  const router = useRouter();
 
   const homework = useHomework();
 
@@ -54,10 +51,7 @@
   };
 
   onMounted(() => {
-    // trick to scroll to answer after VThread update
-    if (route.hash === `#${props.answer.slug}`) {
-      if (route.name) router.push({ name: route.name, hash: route.hash });
-    }
+    emit('mounted', props.answer.slug);
   });
 </script>
 

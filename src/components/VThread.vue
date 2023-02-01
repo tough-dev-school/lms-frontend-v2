@@ -61,6 +61,12 @@
     }
   };
 
+  const scrollToComment = (slug: string) => {
+    if (route.hash === `#${slug}`) {
+      if (route.name) router.push({ name: route.name, hash: route.hash });
+    }
+  };
+
   const target = ref(null);
 
   onClickOutside(target, () => {
@@ -90,7 +96,8 @@
         :is="getRootComponent"
         v-bind="getRootComponentProps"
         :id="getRootComponentProps.answer.slug"
-        @update="emit('update')">
+        @update="emit('update')"
+        @mounted="scrollToComment">
         <template #footer>
           <button
             v-for="(action, index) in actions.filter((action) => action.show)"
