@@ -52,10 +52,7 @@
     ];
   });
 
-  const handleUpdate = async (slug: string) => {
-    replyMode.value = false;
-    emit('update');
-
+  const prepareForScroll = (slug: string) => {
     if (route.name) {
       router.push({ name: route.name, hash: `#${slug}` });
     }
@@ -65,6 +62,13 @@
     if (route.hash === `#${slug}`) {
       if (route.name) router.push({ name: route.name, hash: route.hash });
     }
+  };
+
+  const handleUpdate = async (slug: string) => {
+    replyMode.value = false;
+    emit('update');
+
+    prepareForScroll(slug);
   };
 
   const target = ref(null);
