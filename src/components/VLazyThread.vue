@@ -22,9 +22,14 @@
 
   const customActions = computed(() => [
     {
-      name: 'Загрузить коментарии',
+      name: 'Загрузить комментарии',
       handle: fetchComments,
-      show: descendants.value.length === 0,
+      show: props.originalPost.hasDescendants && descendants.value.length === 0,
+    },
+    {
+      name: 'Комментариев нет',
+      handle: null,
+      show: !props.originalPost.hasDescendants,
     },
   ]);
 </script>

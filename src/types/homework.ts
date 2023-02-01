@@ -12,6 +12,7 @@ export interface Answer {
   author: Author;
   text: string;
   src: string;
+  hasDescendants: boolean;
 }
 
 export interface Thread extends Answer {
