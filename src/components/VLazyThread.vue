@@ -22,7 +22,7 @@
 
   const customActions = computed(() => [
     {
-      name: 'Загрузить коментарии',
+      name: 'Загрузить комментарии',
       handle: fetchComments,
       show: descendants.value.length === 0,
     },
