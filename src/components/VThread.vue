@@ -3,7 +3,7 @@
   import VOwnAnswer from '@/components/VOwnAnswer.vue';
   import VAnswer from '@/components/VAnswer.vue';
   import VNewAnswer from '@/components/VNewAnswer.vue';
-  import { computed, ref, nextTick } from 'vue';
+  import { computed, ref } from 'vue';
   import { onClickOutside } from '@vueuse/core';
   import useUser from '@/stores/user';
   import { useRoute, useRouter } from 'vue-router';
