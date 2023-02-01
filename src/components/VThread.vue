@@ -61,7 +61,10 @@
 
   const scrollToComment = (slug: string) => {
     if (route.hash === `#${slug}`) {
-      if (route.name) router.push({ name: route.name, hash: route.hash });
+      if (route.name) {
+        router.push({ name: route.name, hash: route.hash });
+        router.push({ name: route.name });
+      }
     }
   };
 
