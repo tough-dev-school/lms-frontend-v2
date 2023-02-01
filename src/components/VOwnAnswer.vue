@@ -17,19 +17,23 @@
     showGoToAnswer?: boolean;
   }
 
-  const homework = useHomework();
+  const props = withDefaults(defineProps<Props>(), { showGoToAnswer: false });
+
   const emit = defineEmits<{
     (e: 'update'): void;
     (e: 'delete'): void;
     (e: 'edit'): void;
   }>();
-  const props = withDefaults(defineProps<Props>(), { showGoToAnswer: false });
+
+  const route = useRoute();
+  const router = useRouter();
+
+  const homework = useHomework();
+
   const editMode = ref(false);
   const text = ref('');
   const editTime = ref(30);
   const deleteTime = ref(10);
-  const route = useRoute();
-  const router = useRouter();
 
   const updateAnswer = async () => {
     await homework.updateAnswer(props.answer.slug, text.value);
