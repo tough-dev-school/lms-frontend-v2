@@ -19,7 +19,7 @@ export interface Thread extends Answer {
   descendants: Comment[];
 }
 
-export interface Comment extends Answer, Thread {
+export interface Comment extends Thread {
   parent: string;
 }
 
