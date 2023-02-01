@@ -29,6 +29,7 @@
   const user = useUser();
   const emit = defineEmits<{
     (e: 'update'): void;
+    (e: 'reply'): void;
   }>();
 
   const replyMode = ref(false);
@@ -40,7 +41,7 @@
       {
         name: 'Ответить',
         handle: () => {
-          emit('update');
+          emit('reply');
           replyMode.value = true;
         },
         show: replyMode.value === false,
