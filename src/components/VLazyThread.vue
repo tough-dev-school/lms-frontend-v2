@@ -24,7 +24,12 @@
     {
       name: 'Загрузить комментарии',
       handle: fetchComments,
-      show: descendants.value.length === 0,
+      show: props.originalPost.hasDescendants && descendants.value.length === 0,
+    },
+    {
+      name: 'Комментариев нет',
+      handle: false,
+      show: !props.originalPost.hasDescendants,
     },
   ]);
 </script>

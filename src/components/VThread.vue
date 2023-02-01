@@ -9,7 +9,7 @@
 
   export interface Actions {
     name: string;
-    handle: () => void;
+    handle: () => void | false;
     show: boolean;
   }
 
@@ -86,6 +86,7 @@
         <template #footer>
           <button
             v-for="(action, index) in actions.filter((action) => action.show)"
+            :class="{ 'cursor-auto opacity-50': !action.handle }"
             :key="index"
             @click="action.handle">
             {{ action.name }}
