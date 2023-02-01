@@ -9,7 +9,7 @@
 
   export interface Actions {
     name: string;
-    handle: () => void | false;
+    handle: (() => void) | null;
     show: boolean;
   }
 

@@ -28,7 +28,7 @@
     },
     {
       name: 'Комментариев нет',
-      handle: false,
+      handle: null,
       show: !props.originalPost.hasDescendants,
     },
   ]);
