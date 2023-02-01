@@ -23,9 +23,9 @@
       questionId: props.questionId,
       parentId: props.parentId,
     });
-    console.log(answer);
+
     text.value = '';
-    emit('update', answer.slug);
+    if (answer) emit('update', answer.slug);
   };
 </script>
 
