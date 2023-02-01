@@ -54,6 +54,7 @@
   };
 
   onMounted(() => {
+    // trick to scroll to answer after VThread update
     if (route.hash === `#${props.answer.slug}`) {
       if (route.name) router.push({ name: route.name, hash: route.hash });
     }
