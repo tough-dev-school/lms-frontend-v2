@@ -1,5 +1,5 @@
 import axios from '@/axios';
-import type { Answer, Comments, Question } from '@/types/homework';
+import type { Answer, Comments, Question, Comment } from '@/types/homework';
 import htmlToMarkdown from '@/utils/htmlToMarkdown';
 
 export const getQuestion = async (questionId: string) => {
