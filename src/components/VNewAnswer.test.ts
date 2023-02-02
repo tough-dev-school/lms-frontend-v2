@@ -7,6 +7,7 @@ import type VButton from '@/components/VButton.vue';
 import { faker } from '@faker-js/faker';
 import { createTestingPinia } from '@pinia/testing';
 import useHomework from '@/stores/homework';
+import { nextTick } from 'vue';
 
 const defaultProps = {
   questionId: faker.datatype.uuid(),
@@ -64,7 +65,9 @@ describe('VNewAnswer', () => {
     await getEditorWrapper().vm.$emit('update:modelValue', text);
     await getButtonWrapper().vm.$emit('click');
 
-    expect(getEditorWrapper().props().modelValue).toBe(text);
+    await nextTick();
+
+    expect(getEditorWrapper().props().modelValue).toBe('');
   });
 
   test('emits update on send', async () => {
