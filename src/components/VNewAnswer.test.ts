@@ -77,4 +77,13 @@ describe('VNewAnswer', () => {
   test('send button is disable with no text', () => {
     expect(getButtonWrapper().attributes()['disabled']).toBe('true');
   });
+
+  test('disallow sending of empty paragraphs', async () => {
+    await getEditorWrapper().vm.$emit(
+      'update:modelValue',
+      `<p></p>`.repeat(faker.datatype.number({ min: 1, max: 100 })),
+    );
+
+    expect(getButtonWrapper().attributes()['disabled']).toBe('true');
+  });
 });
