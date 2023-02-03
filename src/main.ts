@@ -13,7 +13,6 @@ import { BrowserTracing } from '@sentry/tracing';
 
 import './fonts.css';
 import './tailwind.css';
-import 'animate.css';
 
 const app = createApp(App);
 

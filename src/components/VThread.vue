@@ -19,10 +19,6 @@
     customActions: Actions[];
   }
 
-  const props = withDefaults(defineProps<Props>(), {
-    customActions: () => [],
-  });
-
   const route = useRoute();
   const router = useRouter();
 
@@ -31,10 +27,11 @@
     (e: 'update'): void;
     (e: 'reply'): void;
   }>();
-
   const replyMode = ref(false);
 
-  const animate = ref(false);
+  const props = withDefaults(defineProps<Props>(), {
+    customActions: () => [],
+  });
 
   const actions = computed<Actions[]>(() => {
     return [
@@ -67,7 +64,6 @@
     if (route.hash === `#${slug}`) {
       if (route.name) {
         router.push({ name: route.name, hash: route.hash });
-        animate.value = true;
         router.push({ name: route.name });
       }
     }
@@ -110,10 +106,7 @@
         v-bind="getRootComponentProps"
         :id="getRootComponentProps.answer.slug"
         @update="emit('update')"
-        @mounted="scrollToComment"
-        :class="{
-          'animate__animated animate__pulse': animate,
-        }">
+        @mounted="scrollToComment">
         <template #footer>
           <button
             v-for="(action, index) in actions.filter((action) => action.show)"
