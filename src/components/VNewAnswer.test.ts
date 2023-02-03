@@ -16,6 +16,7 @@ const defaultProps = {
   parentId: faker.datatype.uuid(),
 };
 
+const answer = getAnswerData();
 const text = faker.lorem.sentence();
 
 describe('VNewAnswer', () => {
@@ -37,6 +38,8 @@ describe('VNewAnswer', () => {
     });
 
     homework = useHomework();
+
+    (homework.postAnswer as ReturnType<typeof vi.fn>).mockResolvedValue(answer);
   });
 
   const getEditorWrapper = () => {
@@ -70,15 +73,13 @@ describe('VNewAnswer', () => {
     await getEditorWrapper().vm.$emit('update:modelValue', text);
     await getButtonWrapper().vm.$emit('click');
 
+    await flushPromises();
     await nextTick();
 
     expect(getEditorWrapper().props().modelValue).toBe('');
   });
 
   test('emits update on send', async () => {
-    const answer = getAnswerData();
-    (homework.postAnswer as ReturnType<typeof vi.fn>).mockResolvedValue(answer);
-
     await getEditorWrapper().vm.$emit('update:modelValue', text);
     await getButtonWrapper().vm.$emit('click');
 

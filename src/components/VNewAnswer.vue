@@ -24,10 +24,9 @@
       parentId: props.parentId,
     });
 
-    text.value = '';
-
     if (answer) {
       emit('update', answer.slug);
+      text.value = '';
     }
   };
 
