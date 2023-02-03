@@ -28,7 +28,7 @@
 <template>
   <div class="flex gap-8">
     <VAnswerActionsDesktop
-      class="hidden tablet:block"
+      class="hidden tablet:flex"
       :deleteTime="deleteTime"
       :editTime="editTime"
       :allowDelete="allowDelete"
