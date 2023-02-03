@@ -5,12 +5,19 @@
   import type { Answer } from '@/types/homework';
   import VCard from '@/components/VCard.vue';
   import VHtmlContent from '@/components/VHtmlContent.vue';
+  import { computed } from 'vue';
+  import useUser from '@/stores/user';
 
   export interface Props {
     answer: Answer;
   }
 
-  defineProps<Props>();
+  const user = useUser();
+  const props = defineProps<Props>();
+
+  const isOwn = computed(() => {
+    return props.answer.author.uuid === user.uuid;
+  });
 </script>
 
 <template>
@@ -23,6 +30,11 @@
       <div>
         <div class="font-bold" data-testid="name">
           {{ getName(answer.author.firstName, answer.author.lastName) }}
+          <span
+            v-if="isOwn"
+            class="h-16 rounded-8 bg-yellow px-4 text-sub font-normal text-white"
+            >вы</span
+          >
         </div>
         <div class="text-sub leading-tight text-gray" data-testid="date">
           {{ relativeDate(answer.created) }}
