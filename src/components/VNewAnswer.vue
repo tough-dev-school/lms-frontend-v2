@@ -25,7 +25,10 @@
     });
 
     text.value = '';
-    if (answer) emit('update', answer.slug);
+
+    if (answer) {
+      emit('update', answer.slug);
+    }
   };
 
   const allowSend = computed(() => {
