@@ -72,7 +72,6 @@ describe('VNewAnswer', () => {
   test('clears value on send', async () => {
     await getEditorWrapper().vm.$emit('update:modelValue', text);
     await getButtonWrapper().vm.$emit('click');
-
     await flushPromises();
     await nextTick();
 
@@ -82,7 +81,6 @@ describe('VNewAnswer', () => {
   test('emits update on send', async () => {
     await getEditorWrapper().vm.$emit('update:modelValue', text);
     await getButtonWrapper().vm.$emit('click');
-
     await flushPromises();
 
     expect(wrapper.emitted('update')).toStrictEqual([[answer.slug]]);
