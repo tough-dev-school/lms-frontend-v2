@@ -6,6 +6,7 @@
   import { computed, ref } from 'vue';
   import { onClickOutside } from '@vueuse/core';
   import useUser from '@/stores/user';
+  import { useRoute, useRouter } from 'vue-router';
 
   export interface Actions {
     name: string;
@@ -18,9 +19,13 @@
     customActions: Actions[];
   }
 
+  const route = useRoute();
+  const router = useRouter();
+
   const user = useUser();
   const emit = defineEmits<{
     (e: 'update'): void;
+    (e: 'reply'): void;
   }>();
   const replyMode = ref(false);
 
@@ -33,6 +38,7 @@
       {
         name: 'Ответить',
         handle: () => {
+          emit('reply');
           replyMode.value = true;
         },
         show: replyMode.value === false,
@@ -48,9 +54,26 @@
     ];
   });
 
-  const handleUpdate = () => {
+  const prepareForScroll = (slug: string) => {
+    if (route.name) {
+      router.push({ name: route.name, hash: `#${slug}` });
+    }
+  };
+
+  const scrollToComment = (slug: string) => {
+    if (route.hash === `#${slug}`) {
+      if (route.name) {
+        router.push({ name: route.name, hash: route.hash });
+        router.push({ name: route.name });
+      }
+    }
+  };
+
+  const handleUpdate = async (slug: string) => {
     replyMode.value = false;
     emit('update');
+
+    prepareForScroll(slug);
   };
 
   const target = ref(null);
@@ -82,7 +105,8 @@
         :is="getRootComponent"
         v-bind="getRootComponentProps"
         :id="getRootComponentProps.answer.slug"
-        @update="emit('update')">
+        @update="emit('update')"
+        @mounted="scrollToComment">
         <template #footer>
           <button
             v-for="(action, index) in actions.filter((action) => action.show)"

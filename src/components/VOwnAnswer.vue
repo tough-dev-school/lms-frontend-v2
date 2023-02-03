@@ -3,7 +3,7 @@
   import VTextEditor from '@/components/VTextEditor.vue';
   import VButton from '@/components/VButton.vue';
   import useHomework from '@/stores/homework';
-  import { ref } from 'vue';
+  import { ref, onMounted } from 'vue';
   import VAnswer from '@/components/VAnswer.vue';
   import VCard from '@/components/VCard.vue';
   import htmlToMarkdown from '@/utils/htmlToMarkdown';
@@ -13,16 +13,19 @@
     answer: Answer;
     questionId: string;
     parentId?: string;
-    showGoToAnswer?: boolean;
   }
 
-  const homework = useHomework();
+  const props = defineProps<Props>();
+
   const emit = defineEmits<{
     (e: 'update'): void;
     (e: 'delete'): void;
     (e: 'edit'): void;
+    (e: 'mounted', slug: string): void;
   }>();
-  const props = withDefaults(defineProps<Props>(), { showGoToAnswer: false });
+
+  const homework = useHomework();
+
   const editMode = ref(false);
   const text = ref('');
   const editTime = ref(30);
@@ -45,11 +48,15 @@
     text.value = htmlToMarkdown(props.answer.text);
     editMode.value = true;
   };
+
+  onMounted(() => {
+    emit('mounted', props.answer.slug);
+  });
 </script>
 
 <template>
   <div v-if="!editMode">
-    <VAnswer :answer="answer as Answer" :showGoToAnswer="showGoToAnswer">
+    <VAnswer :answer="answer as Answer">
       <template #header>
         <VAnswerActions
           :created="answer.created"

@@ -5,7 +5,7 @@
   import VFeedbackGuide from '@/components/VFeedbackGuide.vue';
   import { computed, watch } from 'vue';
   import useHomework from '@/stores/homework';
-  import { useRoute } from 'vue-router';
+  import { useRoute, useRouter } from 'vue-router';
   import { storeToRefs } from 'pinia';
   import VPreloader from '@/components/VPreloader.vue';
   import VHtmlContent from '@/components/VHtmlContent.vue';
@@ -16,17 +16,26 @@
   const homework = useHomework();
   const { question, answers } = storeToRefs(homework);
   const route = useRoute();
+  const router = useRouter();
 
   const answer = computed(() => {
     return answers.value.at(-1) as Thread;
   });
 
-  const getData = async () => {
+  const prepareForScroll = (slug: string) => {
+    if (route.name) {
+      router.push({ name: route.name, hash: `#${slug}` });
+    }
+  };
+
+  const getData = async (slug?: string) => {
     const { answerId } = route.params;
     await homework.getAnswerById(String(answerId), true);
     if (!answer.value) return;
     const questionId = answer.value.question;
     await homework.getQuestion(questionId);
+
+    if (slug) prepareForScroll(slug);
   };
 
   watch(

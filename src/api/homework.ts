@@ -1,5 +1,5 @@
 import axios from '@/axios';
-import type { Answer, Comments, Question } from '@/types/homework';
+import type { Answer, Comments, Question, Comment } from '@/types/homework';
 import htmlToMarkdown from '@/utils/htmlToMarkdown';
 
 export const getQuestion = async (questionId: string) => {
@@ -67,7 +67,7 @@ export const postAnswer = async ({
 
   if (parentId) data.parent = parentId;
 
-  return (await axios.post(url, data)).data;
+  return (await axios.post(url, data)).data as Answer | Comment;
 };
 
 export const deleteAnswer = async (answerId: string) => {

@@ -13,6 +13,10 @@
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-offwhite font-body text-black dark:bg-dark-black dark:text-white;
   }

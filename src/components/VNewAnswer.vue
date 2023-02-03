@@ -2,7 +2,7 @@
   import VTextEditor from '@/components/VTextEditor.vue';
   import VButton from '@/components/VButton.vue';
   import VCard from '@/components/VCard.vue';
-  import { ref } from 'vue';
+  import { ref, computed } from 'vue';
   import useHomework from '@/stores/homework';
 
   export interface Props {
@@ -12,20 +12,31 @@
 
   const props = defineProps<Props>();
   const emit = defineEmits<{
-    (e: 'update'): void;
+    (e: 'update', slug: string): void;
   }>();
   const homework = useHomework();
   const text = ref('');
 
   const sendPost = async () => {
-    await homework.postAnswer({
+    const answer = await homework.postAnswer({
       text: text.value,
       questionId: props.questionId,
       parentId: props.parentId,
     });
-    text.value = '';
-    emit('update');
+
+    if (answer) {
+      emit('update', answer.slug);
+      text.value = '';
+    }
   };
+
+  const allowSend = computed(() => {
+    const emptyTag = /<[\w]*><\/[\w]*>/;
+
+    return text.value.split(emptyTag).every((node) => !!node === false)
+      ? ''
+      : text.value;
+  });
 </script>
 
 <template>
@@ -36,10 +47,7 @@
       data-testid="editor"
       placeholder="Напишите ответ здесь" />
     <template #footer>
-      <VButton
-        @click="sendPost"
-        :disabled="!(text.length > 0)"
-        data-testid="button"
+      <VButton @click="sendPost" :disabled="!allowSend" data-testid="button"
         >Отправить</VButton
       >
     </template>

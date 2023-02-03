@@ -91,8 +91,9 @@ const useHomework = defineStore('homework', {
     }) {
       const toasts = useToasts();
       try {
-        await postAnswer({ text, questionId, parentId });
+        const answer = await postAnswer({ text, questionId, parentId });
         toasts.addMessage('Сообщение добавлено', 'success');
+        return answer;
       } catch (error: any) {}
     },
     async deleteAnswer(answerId: string) {
