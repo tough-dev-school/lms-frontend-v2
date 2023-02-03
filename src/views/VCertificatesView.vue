@@ -15,6 +15,17 @@
       diplomas: gorups[key],
     }));
   });
+
+  const getLocaleName = (localeCode: string) => {
+    switch (localeCode) {
+      case 'RU':
+        return 'На русском';
+      case 'EN':
+        return 'На английском';
+      default:
+        return localeCode;
+    }
+  };
 </script>
 
 <template>
@@ -28,12 +39,24 @@
         v-for="group in groupedDiplomas"
         :key="group.course">
         <VHeading tag="h2">Курс «{{ group.course }}»</VHeading>
-        <ul class="grid grid-cols-2 gap-32">
+        <ul class="grid gap-32 phone:grid-cols-2">
           <li v-for="certificate in group.diplomas" :key="certificate.slug">
-            <a :href="certificate.image" class="group" download>
+            <figure>
               <img :src="certificate.image" :alt="certificate.course.name" />
-              <p class="group-link py-8 text-center">Скачать</p>
-            </a>
+              <figcaption class="text-center">
+                <div>
+                  {{ getLocaleName(certificate.language) }}
+                </div>
+              </figcaption>
+              <div class="mt-8 flex flex-wrap justify-center gap-x-16 gap-y-8">
+                <a class="link" :href="certificate.image" download>Скачать</a>
+                <a
+                  class="link"
+                  :href="`https://cert.tough-dev.school/${certificate.slug}/en`"
+                  >Ссылка для LinkedIn</a
+                >
+              </div>
+            </figure>
           </li>
         </ul>
       </VCard>
