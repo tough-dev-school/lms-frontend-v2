@@ -31,7 +31,9 @@
   };
 
   const allowSend = computed(() => {
-    return text.value.split('<p></p>').every((node) => !!node === false)
+    const emptyTag = /<[\w]*><\/[\w]*>/;
+
+    return text.value.split(emptyTag).every((node) => !!node === false)
       ? ''
       : text.value;
   });

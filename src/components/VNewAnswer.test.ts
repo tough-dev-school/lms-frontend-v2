@@ -93,9 +93,13 @@ describe('VNewAnswer', () => {
   });
 
   test('disallow sending of empty paragraphs', async () => {
+    const tagName = faker.random.word();
+
     await getEditorWrapper().vm.$emit(
       'update:modelValue',
-      `<p></p>`.repeat(faker.datatype.number({ min: 1, max: 100 })),
+      `<${tagName}></${tagName}>`.repeat(
+        faker.datatype.number({ min: 1, max: 100 }),
+      ),
     );
 
     expect(getButtonWrapper().attributes()['disabled']).toBe('true');
