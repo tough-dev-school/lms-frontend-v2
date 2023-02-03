@@ -92,6 +92,10 @@ export const MailSent = Template.bind({});
 MailSent.args = {};
 MailSent.decorators = decorate('/login/mail-sent?email=demo@mail.com');
 
+export const Certificates = Template.bind({});
+Certificates.args = {};
+Certificates.decorators = decorate('/certificates');
+
 export const Settings = Template.bind({});
 Settings.args = {};
 Settings.decorators = decorate('/settings');
