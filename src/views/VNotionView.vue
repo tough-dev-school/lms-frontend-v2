@@ -7,20 +7,32 @@
   import VButton from '@/components/VButton.vue';
   import VPreloader from '@/components/VPreloader.vue';
   import useMaterials from '@/stores/materials';
-  import { storeToRefs } from 'pinia';
+  import { useTitle } from '@vueuse/core';
+  import getNotionTitle from '@/utils/getNotionTitle';
 
   const route = useRoute();
   const router = useRouter();
   const materials = useMaterials();
-  const { material } = storeToRefs(materials);
+  const title = useTitle();
+  const isLoaded = ref(false);
 
   const getData = async () => {
     isLoaded.value = false;
-    await materials.getData(String(route.params.id));
+
+    const materialId = String(route.params.id);
+
+    await materials.getData(materialId);
+
+    if (materials.material) {
+      const notionTitle = getNotionTitle(materialId, materials.material);
+
+      if (notionTitle) {
+        title.value = notionTitle;
+      }
+    }
+
     isLoaded.value = true;
   };
-
-  const isLoaded = ref(false);
 
   watch(
     route,
@@ -34,11 +46,14 @@
 </script>
 
 <template>
-  <VCard class="pt-32" v-if="isLoaded && material">
-    <NotionRenderer :blockMap="material" :map-page-url="mapPageUrl" fullPage />
+  <VCard class="pt-32" v-if="isLoaded && materials.material">
+    <NotionRenderer
+      :blockMap="materials.material"
+      :map-page-url="mapPageUrl"
+      fullPage />
   </VCard>
   <div
-    v-else-if="isLoaded && !material"
+    v-else-if="isLoaded && !materials.material"
     class="center flex max-w-[400px] flex-col text-center">
     <p>Материал не найден :(</p>
     <p>

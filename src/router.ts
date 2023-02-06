@@ -156,6 +156,9 @@ router.beforeEach(async (to: RouteLocationNormalized) => {
       query: { next: encodeURIComponent(to.fullPath) },
     };
   }
+
+  // Reset title after navigation
+  document.title = 'Школа Сильных Программистов';
 });
 
 export default router;
