@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-  // @ts-ignore
   import { NotionRenderer } from 'vue3-notion';
   import { useRoute, useRouter } from 'vue-router';
   import { watch, ref } from 'vue';
