@@ -23,10 +23,12 @@
 
     await materials.getData(materialId);
 
-    const notionTitle = getNotionTitle(materialId, materials.material);
+    if (materials.material) {
+      const notionTitle = getNotionTitle(materialId, materials.material);
 
-    if (notionTitle) {
-      title.value = notionTitle;
+      if (notionTitle) {
+        title.value = notionTitle;
+      }
     }
 
     isLoaded.value = true;
