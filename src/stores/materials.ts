@@ -1,9 +1,10 @@
+// @ts-ignore
+import type { BlockMap } from 'vue3-notion/src/lib/types';
 import { defineStore } from 'pinia';
 import { getMaterial } from '@/api/materials';
-import type { MaterialContentBlocks } from '@/types/materials';
 
 interface State {
-  material?: MaterialContentBlocks;
+  material?: BlockMap;
 }
 
 const useMaterials = defineStore('materials', {
