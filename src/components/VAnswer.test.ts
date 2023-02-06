@@ -1,4 +1,5 @@
-import { describe, expect, test, beforeEach } from 'vitest';
+import { describe, expect, test, beforeEach, vi } from 'vitest';
+import { createTestingPinia } from '@pinia/testing';
 import { VueWrapper, mount, RouterLinkStub } from '@vue/test-utils';
 import VAnswer from '@/components/VAnswer.vue';
 import getName from '@/utils/getName';
@@ -15,6 +16,11 @@ const defaultMountOptions = {
   props: defaultProps,
   shallow: true,
   global: {
+    plugins: [
+      createTestingPinia({
+        createSpy: vi.fn,
+      }),
+    ],
     stubs: {
       VCard: false,
       RouterLink: RouterLinkStub,
