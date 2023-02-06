@@ -33,6 +33,7 @@
           <span
             v-if="isOwn"
             class="h-16 rounded-8 bg-yellow px-4 text-sub font-normal text-white"
+            data-testid="own-badge"
             >вы</span
           >
         </div>

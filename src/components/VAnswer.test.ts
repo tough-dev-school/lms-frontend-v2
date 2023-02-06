@@ -7,6 +7,10 @@ import { getAnswerData } from '@/mocks/homework';
 import type VAvatar from '@/components/VAvatar.vue';
 import type VHtmlContent from '@/components/VHtmlContent.vue';
 import dayjs from 'dayjs';
+import cloneDeep from 'lodash/cloneDeep';
+import { faker } from '@faker-js/faker';
+
+const uuid = faker.datatype.uuid();
 
 const defaultProps = {
   answer: getAnswerData(),
@@ -19,6 +23,11 @@ const defaultMountOptions = {
     plugins: [
       createTestingPinia({
         createSpy: vi.fn,
+        initialState: {
+          user: {
+            uuid,
+          },
+        },
       }),
     ],
     stubs: {
@@ -49,6 +58,9 @@ describe('VAnswer', () => {
       '[data-testid="content"]',
     );
   };
+  const getOwnerBadgeWrapper = () => {
+    return wrapper.find('[data-testid="own-badge"]');
+  };
 
   test('props to display avatar passed to VAvatar', () => {
     const { firstName, lastName } = defaultProps.answer.author;
@@ -76,5 +88,17 @@ describe('VAnswer', () => {
 
   test('props to render content passed to VHtmlContent', () => {
     expect(getContentWrapper().props().content).toBe(defaultProps.answer.text);
+  });
+
+  test('answer has own badge if user is not matching author', () => {
+    expect(getOwnerBadgeWrapper().exists()).toBe(false);
+  });
+
+  test('answer has own badge if user matches author', () => {
+    const props = cloneDeep(defaultProps);
+    props.answer.author.uuid = uuid;
+    wrapper = mount(VAnswer, { ...defaultMountOptions, props });
+
+    expect(getOwnerBadgeWrapper().exists()).toBe(true);
   });
 });
