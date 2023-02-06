@@ -16,15 +16,9 @@
     }));
   });
 
-  const getLocaleName = (localeCode: string) => {
-    switch (localeCode) {
-      case 'RU':
-        return 'На русском';
-      case 'EN':
-        return 'На английском';
-      default:
-        return localeCode;
-    }
+  const localeLabel = {
+    RU: 'На русском',
+    EN: 'На английском',
   };
 </script>
 
@@ -45,7 +39,7 @@
               <img :src="certificate.image" :alt="certificate.course.name" />
               <figcaption class="text-center">
                 <div>
-                  {{ getLocaleName(certificate.language) }}
+                  {{ localeLabel[certificate.language] }}
                 </div>
               </figcaption>
               <div class="mt-8 flex flex-wrap justify-center gap-x-16 gap-y-8">
