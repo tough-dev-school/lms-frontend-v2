@@ -14,6 +14,7 @@
   const router = useRouter();
   const materials = useMaterials();
   const title = useTitle();
+  const isLoaded = ref(false);
 
   const getNotionTitle = () => {
     const blockId = idToUuid(String(route.params.id));
@@ -27,18 +28,16 @@
 
   const getData = async () => {
     isLoaded.value = false;
+
     await materials.getData(String(route.params.id));
 
     const notionTitle = getNotionTitle();
-
     if (notionTitle) {
       title.value = notionTitle;
     }
 
     isLoaded.value = true;
   };
-
-  const isLoaded = ref(false);
 
   watch(
     route,
