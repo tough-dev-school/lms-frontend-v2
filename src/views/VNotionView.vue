@@ -7,12 +7,10 @@
   import VButton from '@/components/VButton.vue';
   import VPreloader from '@/components/VPreloader.vue';
   import useMaterials from '@/stores/materials';
-  import { storeToRefs } from 'pinia';
 
   const route = useRoute();
   const router = useRouter();
   const materials = useMaterials();
-  const { material } = storeToRefs(materials);
 
   const getData = async () => {
     isLoaded.value = false;
@@ -34,11 +32,14 @@
 </script>
 
 <template>
-  <VCard class="pt-32" v-if="isLoaded && material">
-    <NotionRenderer :blockMap="material" :map-page-url="mapPageUrl" fullPage />
+  <VCard class="pt-32" v-if="isLoaded && materials.material">
+    <NotionRenderer
+      :blockMap="materials.material"
+      :map-page-url="mapPageUrl"
+      fullPage />
   </VCard>
   <div
-    v-else-if="isLoaded && !material"
+    v-else-if="isLoaded && !materials.material"
     class="center flex max-w-[400px] flex-col text-center">
     <p>Материал не найден :(</p>
     <p>
