@@ -7,14 +7,34 @@
   import VButton from '@/components/VButton.vue';
   import VPreloader from '@/components/VPreloader.vue';
   import useMaterials from '@/stores/materials';
+  import idToUuid from '@/utils/idToUuid';
+  import { useTitle } from '@vueuse/core';
 
   const route = useRoute();
   const router = useRouter();
   const materials = useMaterials();
+  const title = useTitle();
+
+  const getNotionTitle = () => {
+    const blockId = idToUuid(String(route.params.id));
+
+    const material = materials.material;
+
+    if (material) {
+      return material[blockId].value.properties.title[0][0];
+    }
+  };
 
   const getData = async () => {
     isLoaded.value = false;
     await materials.getData(String(route.params.id));
+
+    const notionTitle = getNotionTitle();
+
+    if (notionTitle) {
+      title.value = notionTitle;
+    }
+
     isLoaded.value = true;
   };
 
