@@ -8,6 +8,8 @@ jobs:
     if: ${{ github.event.issue.pull_request }}
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@v3
       - name: Get context
         run: echo "$GITHUB_CONTEXT"
         env:
