@@ -63,4 +63,5 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Update screenshots
+          branch: ${{ fromJSON(steps.get-pr.outputs.result).head.ref }}
           file_pattern: '*.png'
