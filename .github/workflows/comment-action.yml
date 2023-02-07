@@ -28,17 +28,17 @@ jobs:
         run: npx playwright install
 
       - name: Updating light mode screenshots 🌞
-        env:
-          COLOR_SCHEME: light
+        # env:
+        #   COLOR_SCHEME: light
         run: npm run test:visual:update
-
-      - name: Show git status
-        run: git status
 
       # - name: Updating dark mode screenshots 🌚
       #   env:
       #     COLOR_SCHEME: dark
       #   run: npm run test:visual:update
+
+      - name: Show git status
+        run: git status
 
       - name: Creating branch with updates 🦑
         uses: stefanzweifel/git-auto-commit-action@v4
