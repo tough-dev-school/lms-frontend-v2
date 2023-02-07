@@ -1,0 +1,15 @@
+name: Debug action
+
+on:
+  issue_comment:
+    types: [created, edited, deleted]
+
+jobs:
+  context:
+    if: ${{ github.event_name == 'pull_request' && contains(github.event.comment.body, '/regression') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Get context'
+        run: echo "$GITHUB_CONTEXT"
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
