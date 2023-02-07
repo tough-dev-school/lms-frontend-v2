@@ -47,6 +47,3 @@ jobs:
         with:
           commit_message: Update screenshots
           file_pattern: '*.png'
-          repository: .
-          push_options: '--force'
-          create_branch: true
