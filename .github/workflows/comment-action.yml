@@ -32,10 +32,10 @@ jobs:
           COLOR_SCHEME: light
         run: npm run test:visual:update
 
-      - name: Updating dark mode screenshots 🌚
-        env:
-          COLOR_SCHEME: dark
-        run: npm run test:visual:update
+      # - name: Updating dark mode screenshots 🌚
+      #   env:
+      #     COLOR_SCHEME: dark
+      #   run: npm run test:visual:update
 
       - name: Saving screenshots for preview 📥
         uses: actions/upload-artifact@v3
