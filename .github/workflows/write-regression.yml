@@ -6,7 +6,7 @@ on:
 
 jobs:
   write-regression:
-    if: $ {{ github.event_name == 'pull_request' && contains(github.event.comment.html_url, 'update regression') }}
+    if: $ {{ github.event_name == 'pull_request' && contains(github.event.comment.html_url, '/regression') }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎
