@@ -6,7 +6,6 @@ on:
 
 jobs:
   context:
-    if: ${{ github.event_name == 'pull_request' && contains(github.event.comment.body, '/regression') }}
     runs-on: ubuntu-latest
     steps:
       - name: Get context
