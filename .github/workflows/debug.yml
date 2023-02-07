@@ -2,7 +2,7 @@ name: Debug action
 
 on:
   issue_comment:
-    types: [created, edited, deleted]
+    types: [created]
 
 jobs:
   context:
