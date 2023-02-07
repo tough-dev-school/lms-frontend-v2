@@ -1,13 +1,11 @@
-name: Update regression
+name: Update visual regression test screenshots
 
-on:
-  issue_comment:
-    types: [created]
+on: [workflow_dispatch]
 
 jobs:
-  update-regression:
-    if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, '/regression') }}
+  write-regression:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout 🛎
         uses: actions/checkout@v3
@@ -28,14 +26,12 @@ jobs:
         run: npx playwright install
 
       - name: Updating light mode screenshots 🌞
-        env:
-          COLOR_SCHEME: light
         run: npm run test:visual:update
 
-      # - name: Updating dark mode screenshots 🌚
-      #   env:
-      #     COLOR_SCHEME: dark
-      #   run: npm run test:visual:update
+      - name: Updating dark mode screenshots 🌚
+        env:
+          COLOR_SCHEME: dark
+        run: npm run test:visual:update
 
       - name: Saving screenshots for preview 📥
         uses: actions/upload-artifact@v3
@@ -48,4 +44,8 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Update screenshots
+          branch: update-screenshots
           file_pattern: '*.png'
+          repository: .
+          push_options: '--force'
+          create_branch: true
