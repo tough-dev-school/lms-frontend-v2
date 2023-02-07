@@ -1,11 +1,11 @@
 name: Debug on comment action
 
-on:
-  issue_comment:
-    types: [created]
+on: issue_comment
 
 jobs:
-  get-context:
+  pr_commented:
+    name: PR comment
+    if: ${{ github.event.issue.pull_request }}
     runs-on: ubuntu-latest
     steps:
       - name: Get context
