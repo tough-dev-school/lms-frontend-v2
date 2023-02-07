@@ -1,11 +1,13 @@
 name: Update visual regression test screenshots
 
-on: [workflow_dispatch]
+on:
+  issue_comment:
+    types: [created, edited, deleted]
 
 jobs:
   write-regression:
+    if: $ {{ github.event_name == 'pull_request' && contains(github.event.comment.html_url, 'update regression') }}
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout 🛎
         uses: actions/checkout@v3
