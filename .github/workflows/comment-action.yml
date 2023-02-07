@@ -1,0 +1,16 @@
+name: Debug on comment action
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  pr_commented:
+    name: PR comment
+    if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, 'debug') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get context
+        run: echo "$GITHUB_CONTEXT"
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
