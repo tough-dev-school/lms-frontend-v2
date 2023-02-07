@@ -1,11 +1,11 @@
-name: Debug action
+name: Debug on comment action
 
 on:
   issue_comment:
     types: [created]
 
 jobs:
-  context:
+  get-context:
     runs-on: ubuntu-latest
     steps:
       - name: Get context
