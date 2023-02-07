@@ -26,6 +26,8 @@ jobs:
         run: npx playwright install
 
       - name: Updating light mode screenshots 🌞
+        env:
+          COLOR_SCHEME: light
         run: npm run test:visual:update
 
       - name: Updating dark mode screenshots 🌚
