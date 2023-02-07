@@ -45,8 +45,7 @@ jobs:
       - name: Creating branch with updates 🦑
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: Update screenshots
-          branch: update-screenshots
+          commit_message: Regression screenshots updated
           file_pattern: '*.png'
           repository: .
           push_options: '--force'
