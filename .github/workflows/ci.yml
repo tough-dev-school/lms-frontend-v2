@@ -1,11 +1,14 @@
 name: CI
 
-on: [push]
+on:
+  push:
+  issue_comment:
+    types: [created]
 
 jobs:
   build:
+    if: ${{ github.event.type == 'PushEvent' || (github.event.issue.pull_request && contains(github.event.comment.body, '/ci')) }}
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout 🛎
         uses: actions/checkout@v3
