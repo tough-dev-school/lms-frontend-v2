@@ -15,13 +15,11 @@ export const contentHtml =
 export const contentLorem =
   '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>';
 
-export const getQuestionData = (
-  { slug, name, text }: Question = {
-    slug: faker.datatype.uuid(),
-    name: faker.lorem.words(3),
-    text: contentLorem,
-  },
-) => {
+export const getQuestionData = ({
+  slug = faker.datatype.uuid(),
+  name = faker.lorem.words(3),
+  text = contentLorem,
+}: Partial<Question> = {}) => {
   return responseCaseMiddleware({
     slug,
     name,
@@ -29,13 +27,11 @@ export const getQuestionData = (
   }) as Question;
 };
 
-export const getAuthorData = (
-  { uuid, firstName, lastName }: Author = {
-    uuid: faker.datatype.uuid(),
-    firstName: faker.name.firstName(),
-    lastName: faker.name.lastName(),
-  },
-) => {
+export const getAuthorData = ({
+  uuid = faker.datatype.uuid(),
+  firstName = faker.name.firstName(),
+  lastName = faker.name.lastName(),
+}: Partial<Author> = {}) => {
   return responseCaseMiddleware({
     uuid,
     first_name: firstName,
@@ -43,30 +39,14 @@ export const getAuthorData = (
   }) as Author;
 };
 
-export const getAnswerData = (
-  {
-    created,
-    modified,
-    slug,
-    question,
-    author,
-    content,
-  }: {
-    created: string;
-    modified: string;
-    slug: string;
-    question: string;
-    author: Author;
-    content: string;
-  } = {
-    created: dayjs().toISOString(),
-    modified: dayjs().toISOString(),
-    slug: faker.datatype.uuid(),
-    question: faker.datatype.uuid(),
-    author: getAuthorData(),
-    content: contentLorem,
-  },
-) => {
+export const getAnswerData = ({
+  created = dayjs().toISOString(),
+  modified = dayjs().toISOString(),
+  slug = faker.datatype.uuid(),
+  question = faker.datatype.uuid(),
+  author = getAuthorData(),
+  content = contentLorem,
+}: Partial<Omit<Answer, 'text' | 'src'>> & { content?: string } = {}) => {
   return responseCaseMiddleware({
     created,
     modified,
