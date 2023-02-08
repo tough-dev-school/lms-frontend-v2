@@ -1,12 +1,10 @@
 name: Regression tests
 on:
   push:
-  issue_comment:
-    types: [created]
 
 jobs:
   regression:
-    if: ${{ github.event.type == 'PushEvent' || (github.event.issue.pull_request && contains(github.event.comment.body, '/ci')) }}
+    if: ${{ github.event.type == 'PushEvent' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎
