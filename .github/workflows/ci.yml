@@ -136,8 +136,8 @@ jobs:
     runs-on: ubuntu-latest
     if: |
       always() &&
-      !contains(needs.*.result, 'failure') &&
-      !contains(needs.*.result, 'cancelled')
+      !(needs.build.result == 'failure' || needs.build.result == 'cancelled')
+      !(needs.unittest.result == 'failure' || needs.unittest.result == 'cancelled')
     steps:
       - name: Fail
         run: exit 1
