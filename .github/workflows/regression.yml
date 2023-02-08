@@ -1,6 +1,8 @@
 name: Regression tests
 on:
   push:
+  issue_comment:
+    types: [created]
 
 jobs:
   regression:
