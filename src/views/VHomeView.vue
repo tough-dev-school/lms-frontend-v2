@@ -19,7 +19,10 @@
           params: { id: study.homePageSlug },
         }">
         <VCard class="relative p-0 px-0 phone:px-0 tablet:px-0">
-          <VCover :name="study.name" :image="study.cover" />
+          <VCover
+            :name="study.name"
+            :image="study.cover"
+            class="hidden phone:flex" />
           <p class="p-16">{{ study.name }}</p>
         </VCard>
       </RouterLink>
