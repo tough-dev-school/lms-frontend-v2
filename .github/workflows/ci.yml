@@ -10,7 +10,7 @@ jobs:
       - name: Get context
         run: echo "$GITHUB_CONTEXT"
         env:
-          GITHUB_CONTEXT: ${{ toJson(github.event) }}
+          GITHUB_CONTEXT: ${{ toJson(github.event_name) }}
 
       - name: Checkout 🛎
         uses: actions/checkout@v3
