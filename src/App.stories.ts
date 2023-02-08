@@ -10,12 +10,16 @@ import {
   getQuestionData,
   getAnswersData,
   getThreadData,
+  getCommentData,
+  contentHtml,
+  getAuthorData,
   getCommentsData,
 } from './mocks/homework';
 import useMaterials from './stores/materials';
 import { getMaterialsData } from './mocks/materials';
 import useStudies from './stores/studies';
 import { getStudiesData } from './mocks/studies';
+import { faker } from '@faker-js/faker';
 
 export default {
   title: 'Pages/App',
@@ -33,6 +37,8 @@ const Template: Story = (args) => ({
   template: '<App v-bind="args" />',
 });
 
+const userId = faker.datatype.uuid();
+
 const decorate = (initialRoute: string, callback: () => void = () => {}) => {
   return [
     (story: InstanceType<typeof App>) => {
@@ -42,7 +48,7 @@ const decorate = (initialRoute: string, callback: () => void = () => {}) => {
       const user = useUser();
       user.$patch({
         id: '',
-        uuid: '',
+        uuid: userId,
         username: 'johndoe@demo.com',
         firstName: 'Иван',
         lastName: 'Иванов',
@@ -117,16 +123,34 @@ export const HomeworkAnswerView = Template.bind({});
 HomeworkAnswerView.args = {};
 HomeworkAnswerView.decorators = decorate('/homework/answers/1234567890', () => {
   const homework = useHomework();
-  const answers = [getThreadData()];
+  const answers = [getThreadData(getAnswerData({ content: contentHtml }))];
 
-  answers[0].descendants = getCommentsData(answers[0], 3);
-  answers[0].descendants[0].descendants = getCommentsData(
-    answers[0].descendants[0],
-    2,
-  );
-  answers[0].descendants[0].descendants[0].descendants = getCommentsData(
-    answers[0].descendants[0].descendants[0],
-  );
+  const getBranch = () => {
+    const level1 = getCommentData(answers[0]);
+    const level2 = getCommentsData(level1, 2);
+    const level3 = getCommentsData(level2[0], 2);
+
+    level1.descendants = level2;
+    level2[0].descendants = level3;
+
+    return level1;
+  };
+
+  answers[0].descendants = [
+    // comment with formatting
+    {
+      ...getCommentData(answers[0]),
+      ...getAnswerData({ content: contentHtml }),
+    },
+    // own comment
+    {
+      ...getCommentData(answers[0]),
+      author: { ...getAuthorData(), uuid: userId },
+    },
+    // comment branch
+    getBranch(),
+  ];
+
   homework.$patch({
     answers: answers,
   });
