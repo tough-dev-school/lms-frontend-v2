@@ -46,6 +46,7 @@ export const getAnswerData = ({
   question = faker.datatype.uuid(),
   author = getAuthorData(),
   content = contentLorem,
+  hasDescendants = false,
 }: Partial<Omit<Answer, 'text' | 'src'>> & { content?: string } = {}) => {
   return responseCaseMiddleware({
     created,
@@ -55,6 +56,7 @@ export const getAnswerData = ({
     author,
     text: content,
     src: htmlToMarkdown(content),
+    hasDescendants,
   }) as Answer;
 };
 

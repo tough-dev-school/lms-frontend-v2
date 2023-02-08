@@ -162,7 +162,7 @@ HomeworkExpertView.decorators = decorate(
   '/homework/question-admin/1234567890',
   () => {
     const homework = useHomework();
-    const answers = getAnswersData(3);
+    const answers = [getAnswerData(), getAnswerData({ hasDescendants: true })];
     homework.$patch({
       answers: answers,
     });
