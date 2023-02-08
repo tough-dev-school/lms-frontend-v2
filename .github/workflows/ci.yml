@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'push' || (github.event.issue.pull_request && contains(github.event.comment.body, '/ci')) }}
     steps:
+      - name: Pre-check git status
+        run: git status
+
       - uses: actions/github-script@v3
         if: github.event.issue.pull_request && contains(github.event.comment.body, '/ci')
         id: get-pr
@@ -36,6 +39,9 @@ jobs:
 
       - uses: actions/checkout@v2
         if: github.event_name == 'push'
+
+      - name: Check git status
+        run: git status
 
       - name: Setup node 🏗
         uses: actions/setup-node@v3
