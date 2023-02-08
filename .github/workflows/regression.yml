@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v3
+        if: github.event.issue.pull_request && contains(github.event.comment.body, '/ci')
         id: get-pr
         with:
           script: |
