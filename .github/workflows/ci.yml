@@ -5,9 +5,13 @@ on:
 
 jobs:
   build:
-    if: ${{ github.event.type == 'PushEvent' }}
     runs-on: ubuntu-latest
     steps:
+      - name: Get context
+        run: echo "$GITHUB_CONTEXT"
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github.event) }}
+
       - name: Checkout 🛎
         uses: actions/checkout@v3
 
