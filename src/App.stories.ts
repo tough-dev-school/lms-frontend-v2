@@ -8,7 +8,6 @@ import useHomework from './stores/homework';
 import {
   getAnswerData,
   getQuestionData,
-  getAnswersData,
   getThreadData,
   getCommentData,
   contentHtml,
