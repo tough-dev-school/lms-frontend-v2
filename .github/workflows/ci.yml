@@ -131,13 +131,3 @@ jobs:
           username: circle
           key: ${{ secrets.DEPLOY_KEY }}
           script: docker service update app_lms --image ghcr.io/${{ steps.image.outputs.lowercase }}:${{ github.sha }} --with-registry-auth
-
-  fail:
-    runs-on: ubuntu-latest
-    if: |
-      always() &&
-      !(needs.build.result == 'failure' || needs.build.result == 'cancelled')
-      !(needs.unittest.result == 'failure' || needs.unittest.result == 'cancelled')
-    steps:
-      - name: Fail
-        run: exit 1
