@@ -135,10 +135,7 @@ jobs:
           script: docker service update app_lms --image ghcr.io/${{ steps.image.outputs.lowercase }}:${{ github.sha }} --with-registry-auth
   fail:
     runs-on: ubuntu-latest
-    if: |
-      always() &&
-      (contains(needs.*.result, 'failure') ||
-      contains(needs.*.result, 'cancelled'))
+    if: always()
     steps:
       - name: Fail
         run: exit 1
