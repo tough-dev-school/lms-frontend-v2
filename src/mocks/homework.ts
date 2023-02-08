@@ -64,10 +64,8 @@ export const getThreadData = (answer: Answer = getAnswerData()) => {
 
 export const getCommentData = (parent: Thread | Comment) => {
   return responseCaseMiddleware({
-    ...parent,
+    ...getThreadData(getAnswerData({ question: parent.question })),
     parent: parent.slug,
-    question: parent.question,
-    descendants: [],
   }) as Comment;
 };
 
