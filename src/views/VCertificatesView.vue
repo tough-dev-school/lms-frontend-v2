@@ -4,6 +4,7 @@
   import VCard from '@/components/VCard.vue';
   import { computed } from 'vue';
   import groupBy from 'lodash/groupBy';
+  import getCertificateLink from '@/utils/getCertificateLink';
 
   const diplomas = useDiplomas();
 
@@ -44,9 +45,7 @@
               </figcaption>
               <div class="mt-8 flex flex-wrap justify-center gap-x-16 gap-y-8">
                 <a class="link" :href="certificate.image" download>Скачать</a>
-                <a
-                  class="link"
-                  :href="`https://cert.tough-dev.school/${certificate.slug}/en`"
+                <a class="link" :href="getCertificateLink(certificate.slug)"
                   >Ссылка для LinkedIn</a
                 >
               </div>
