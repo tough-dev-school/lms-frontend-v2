@@ -16,7 +16,7 @@ export const getDiplomaData = (courseName: string, locale: locale) => {
       name: courseName,
     },
     slug: faker.datatype.uuid(),
-    language: getLocale(),
+    language: locale,
     image: faker.internet.url(),
     student: {
       uuid: faker.datatype.uuid(),
