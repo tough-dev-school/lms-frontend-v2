@@ -17,7 +17,11 @@ export const createCustomAxiosInstance = (
     useRequestCaseMiddleware: true,
   };
 
-  const config = merge(defaultConfig, userConfig) as CustomAxiosInstanceConfig;
+  const config = merge(
+    {},
+    defaultConfig,
+    userConfig,
+  ) as CustomAxiosInstanceConfig;
 
   const instance = axios.create();
 

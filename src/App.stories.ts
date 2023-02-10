@@ -7,18 +7,20 @@ import useToasts from '@/stores/toasts';
 import useHomework from './stores/homework';
 import {
   getAnswerData,
-  getQuestionData,
   getThreadData,
   getCommentData,
   contentHtml,
-  getAuthorData,
   getCommentsData,
+  answerData,
+  authorData,
+  questionData,
 } from './mocks/homework';
 import useMaterials from './stores/materials';
 import { getMaterialsData } from './mocks/materials';
 import useStudies from './stores/studies';
 import { getStudiesData } from './mocks/studies';
 import { faker } from '@faker-js/faker';
+import merge from 'lodash/merge';
 
 export default {
   title: 'Pages/App',
@@ -61,7 +63,7 @@ const decorate = (initialRoute: string, callback: () => void = () => {}) => {
 
       const homework = useHomework();
       homework.$patch({
-        question: getQuestionData(),
+        question: questionData,
       });
 
       const studies = useStudies();
@@ -125,9 +127,21 @@ HomeworkAnswerView.decorators = decorate('/homework/answers/1234567890', () => {
   const answers = [getThreadData(getAnswerData({ content: contentHtml }))];
 
   const getBranch = () => {
-    const level1 = getCommentData(answers[0]);
-    const level2 = getCommentsData(level1, 2);
-    const level3 = getCommentsData(level2[0], 2);
+    const level1 = [getCommentData(answers[0])].map((comment) => {
+      comment.author = authorData;
+
+      return comment;
+    })[0];
+    const level2 = getCommentsData(level1, 2).map((comment) => {
+      comment.author = authorData;
+
+      return comment;
+    });
+    const level3 = getCommentsData(level2[0], 2).map((comment) => {
+      comment.author = authorData;
+
+      return comment;
+    });
 
     level1.descendants = level2;
     level2[0].descendants = level3;
@@ -139,12 +153,12 @@ HomeworkAnswerView.decorators = decorate('/homework/answers/1234567890', () => {
     // comment with formatting
     {
       ...getCommentData(answers[0]),
-      ...getAnswerData({ content: contentHtml }),
+      ...getAnswerData({ content: contentHtml, author: authorData }),
     },
     // own comment
     {
       ...getCommentData(answers[0]),
-      author: { ...getAuthorData(), uuid: userId },
+      author: { ...authorData, uuid: userId },
     },
     // comment branch
     getBranch(),
@@ -161,7 +175,11 @@ HomeworkExpertView.decorators = decorate(
   '/homework/question-admin/1234567890',
   () => {
     const homework = useHomework();
-    const answers = [getAnswerData(), getAnswerData({ hasDescendants: true })];
+    const answers = [
+      answerData,
+      merge({}, answerData, { hasDescendants: true }),
+    ];
+    console.log(answers);
     homework.$patch({
       answers: answers,
     });
@@ -174,7 +192,9 @@ HomeworkQuestionView.decorators = decorate(
   '/homework/questions/1234567890',
   () => {
     const homework = useHomework();
-    const answers = [getAnswerData()];
+    const answers = [
+      merge({}, answerData, { author: { ...authorData, uuid: userId } }),
+    ];
     homework.$patch({
       answers: answers,
     });
