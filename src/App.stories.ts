@@ -125,7 +125,9 @@ export const HomeworkAnswerView = Template.bind({});
 HomeworkAnswerView.args = {};
 HomeworkAnswerView.decorators = decorate('/homework/answers/1234567890', () => {
   const homework = useHomework();
-  const answers = [getThreadData(getAnswerData({ content: contentHtml }))];
+  const answers = [
+    getThreadData(getAnswerData({ content: contentHtml, author: authorData })),
+  ];
 
   const patchComment = (value: Comment): Comment => {
     value.author = authorData;
@@ -188,7 +190,13 @@ HomeworkQuestionView.decorators = decorate(
   () => {
     const homework = useHomework();
     const answers = [
-      merge({}, answerData, { author: { ...authorData, uuid: userId } }),
+      merge({}, answerData, {
+        author: {
+          ...authorData,
+          uuid: userId,
+        },
+        slug: '36072121-e029-43cc-9c10-80ee4388c632',
+      }),
     ];
     homework.$patch({
       answers: answers,
