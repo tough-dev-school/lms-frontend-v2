@@ -7,15 +7,21 @@ import useToasts from '@/stores/toasts';
 import useHomework from './stores/homework';
 import {
   getAnswerData,
-  getQuestionData,
-  getAnswersData,
   getThreadData,
+  getCommentData,
+  contentHtml,
   getCommentsData,
+  answerData,
+  authorData,
+  questionData,
 } from './mocks/homework';
 import useMaterials from './stores/materials';
 import { getMaterialsData } from './mocks/materials';
 import useStudies from './stores/studies';
 import { getStudiesData } from './mocks/studies';
+import { faker } from '@faker-js/faker';
+import merge from 'lodash/merge';
+import type { Comment } from '@/types/homework';
 
 export default {
   title: 'Pages/App',
@@ -33,6 +39,8 @@ const Template: Story = (args) => ({
   template: '<App v-bind="args" />',
 });
 
+const userId = faker.datatype.uuid();
+
 const decorate = (initialRoute: string, callback: () => void = () => {}) => {
   return [
     (story: InstanceType<typeof App>) => {
@@ -42,7 +50,7 @@ const decorate = (initialRoute: string, callback: () => void = () => {}) => {
       const user = useUser();
       user.$patch({
         id: '',
-        uuid: '',
+        uuid: userId,
         username: 'johndoe@demo.com',
         firstName: 'Иван',
         lastName: 'Иванов',
@@ -56,7 +64,7 @@ const decorate = (initialRoute: string, callback: () => void = () => {}) => {
 
       const homework = useHomework();
       homework.$patch({
-        question: getQuestionData(),
+        question: questionData,
       });
 
       const studies = useStudies();
@@ -117,16 +125,42 @@ export const HomeworkAnswerView = Template.bind({});
 HomeworkAnswerView.args = {};
 HomeworkAnswerView.decorators = decorate('/homework/answers/1234567890', () => {
   const homework = useHomework();
-  const answers = [getThreadData()];
+  const answers = [
+    getThreadData(getAnswerData({ content: contentHtml, author: authorData })),
+  ];
 
-  answers[0].descendants = getCommentsData(answers[0], 3);
-  answers[0].descendants[0].descendants = getCommentsData(
-    answers[0].descendants[0],
-    2,
-  );
-  answers[0].descendants[0].descendants[0].descendants = getCommentsData(
-    answers[0].descendants[0].descendants[0],
-  );
+  const patchComment = (value: Comment): Comment => {
+    value.author = authorData;
+
+    return value;
+  };
+
+  const getBranch = () => {
+    const level1 = [getCommentData(answers[0])].map(patchComment)[0];
+    const level2 = getCommentsData(level1, 2).map(patchComment);
+    const level3 = getCommentsData(level2[0], 2).map(patchComment);
+
+    level1.descendants = level2;
+    level2[0].descendants = level3;
+
+    return level1;
+  };
+
+  answers[0].descendants = [
+    // comment with formatting
+    {
+      ...getCommentData(answers[0]),
+      ...getAnswerData({ content: contentHtml, author: authorData }),
+    },
+    // own comment
+    {
+      ...getCommentData(answers[0]),
+      author: { ...authorData, uuid: userId },
+    },
+    // comment branch
+    getBranch(),
+  ];
+
   homework.$patch({
     answers: answers,
   });
@@ -138,7 +172,11 @@ HomeworkExpertView.decorators = decorate(
   '/homework/question-admin/1234567890',
   () => {
     const homework = useHomework();
-    const answers = getAnswersData(3);
+    const answers = [
+      answerData,
+      merge({}, answerData, { hasDescendants: true }),
+    ];
+
     homework.$patch({
       answers: answers,
     });
@@ -151,7 +189,15 @@ HomeworkQuestionView.decorators = decorate(
   '/homework/questions/1234567890',
   () => {
     const homework = useHomework();
-    const answers = [getAnswerData()];
+    const answers = [
+      merge({}, answerData, {
+        author: {
+          ...authorData,
+          uuid: userId,
+        },
+        slug: '36072121-e029-43cc-9c10-80ee4388c632',
+      }),
+    ];
     homework.$patch({
       answers: answers,
     });

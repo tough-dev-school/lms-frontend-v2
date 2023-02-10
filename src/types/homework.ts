@@ -1,4 +1,4 @@
-interface Author {
+export interface Author {
   uuid: string;
   firstName: string;
   lastName: string;
