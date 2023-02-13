@@ -9,25 +9,12 @@ import {
 } from '@/api/homework';
 import type { Answer, Question, Thread } from '@/types/homework';
 import useToasts from '@/stores/toasts';
+import getThreads from '@/utils/getThreads';
 
 interface State {
   question: Question | undefined;
   answers: Answer[] | Thread[];
 }
-
-
-export const getThreads = async (answers: Answer[]) => {
-  const answerIds = answers.map((answer) => answer.slug);
-  const commentsData = await getComments(answerIds);
-  const threads: Thread[] = answers.map((answer) => {
-    return {
-      ...answer,
-      descendants: getCommentsBySlug(commentsData, answer.slug),
-    };
-  });
-
-  return threads;
-};
 
 const useHomework = defineStore('homework', {
   state: (): State => {
