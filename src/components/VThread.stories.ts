@@ -7,8 +7,9 @@ import useUser from '@/stores/user';
 
 const originalPost = getThreadData();
 originalPost.created = dayjs().toISOString();
-originalPost.descendants = getCommentsData(originalPost, 3);
-originalPost.descendants[1].descendants = getCommentsData(originalPost);
+originalPost.descendants = getCommentsData(originalPost, 3).descendants;
+originalPost.descendants[1].descendants =
+  getCommentsData(originalPost).descendants;
 
 const userId = faker.datatype.uuid();
 

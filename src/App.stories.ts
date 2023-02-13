@@ -137,8 +137,8 @@ HomeworkAnswerView.decorators = decorate('/homework/answers/1234567890', () => {
 
   const getBranch = () => {
     const level1 = [getCommentData(answers[0])].map(patchComment)[0];
-    const level2 = getCommentsData(level1, 2).map(patchComment);
-    const level3 = getCommentsData(level2[0], 2).map(patchComment);
+    const level2 = getCommentsData(level1, 2).descendants.map(patchComment);
+    const level3 = getCommentsData(level2[0], 2).descendants.map(patchComment);
 
     level1.descendants = level2;
     level2[0].descendants = level3;

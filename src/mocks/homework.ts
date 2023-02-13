@@ -4,6 +4,7 @@ import type {
   Question,
   Thread,
   Author,
+  Comments,
 } from '@/types/homework';
 import responseCaseMiddleware from '@/axios/responseCaseMiddleware';
 import htmlToMarkdown from '@/utils/htmlToMarkdown';
@@ -88,8 +89,11 @@ export const getCommentData = (parent: Thread | Comment) => {
 export const getCommentsData = (
   parent: Thread | Comment,
   length: number = 1,
-) => {
-  return [...Array(length)].map(() => getCommentData(parent)) as Comment[];
+): Comments => {
+  return {
+    slug: parent.slug,
+    descendants: [...Array(length)].map(() => getCommentData(parent)),
+  };
 };
 
 export const getAnswersData = (length: number = 1) => {
