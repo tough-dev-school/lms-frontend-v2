@@ -18,17 +18,17 @@ describe('studies store', () => {
     studies = useStudies();
   });
 
-  test('expect studies to be initially empty', () => {
+  test('studies are initially empty', () => {
     expect(studies.items).toHaveLength(0);
   });
 
-  test('expect getData to call get studies', async () => {
+  test('getData calls studies', async () => {
     await studies.getData();
 
     expect(getStudies).toHaveBeenCalledOnce();
   });
 
-  test('expect getData to set items', async () => {
+  test('getData sets items', async () => {
     const studiesData = getStudiesData();
     (getStudies as ReturnType<typeof vi.fn>).mockResolvedValue({
       results: studiesData,
