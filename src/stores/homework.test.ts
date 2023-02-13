@@ -2,7 +2,7 @@ import { describe, test, beforeEach, expect, vi } from 'vitest';
 import { createApp } from 'vue';
 import { setActivePinia } from 'pinia';
 import { createTestingPinia } from '@pinia/testing';
-import useHomework from './homework';
+import useHomework, { getCommentsBySlug } from './homework';
 import useToasts from './toasts';
 import { faker } from '@faker-js/faker';
 import {
@@ -13,10 +13,13 @@ import {
   getAnswers,
   getAnswer,
 } from '@/api/homework';
+import shuffle from 'lodash/shuffle';
 import {
   getAnswerData,
   getAnswersData,
+  getCommentsData,
   getQuestionData,
+  getThreadData,
 } from '@/mocks/homework';
 
 vi.mock('@/api/homework', () => {
@@ -143,5 +146,30 @@ describe('homework store', () => {
     await homework.updateAnswer(answerId, text);
 
     expect(toasts.addMessage).toHaveBeenCalledOnce();
+  });
+
+  test('getCommentsBySlug returns array if nothing found', () => {
+    expect(getCommentsBySlug([], faker.datatype.uuid())).toStrictEqual([]);
+  });
+
+  test('getCommentsBySlug returns array of comments', () => {
+    const targetSlug = faker.datatype.uuid();
+    const n = 10;
+
+    const parent = { ...getThreadData(getAnswerData()), slug: targetSlug };
+
+    const needed = getCommentsData(parent, n);
+    const notNeeded = [...Array(10)].map(() =>
+      getCommentsData(getThreadData(), 5),
+    );
+
+    const commentsData = shuffle([needed, ...notNeeded]);
+
+    expect(
+      getCommentsBySlug(commentsData, targetSlug).every(
+        (comment) => comment.parent === targetSlug,
+      ),
+    ).toBe(true);
+    expect(getCommentsBySlug(commentsData, targetSlug)).toHaveLength(n);
   });
 });
