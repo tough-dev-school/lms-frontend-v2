@@ -19,8 +19,8 @@ import {
   getAnswersData,
   getQuestionData,
   getThreadData,
+  getCommentData,
 } from '@/mocks/homework';
-import { flushPromises } from '@vue/test-utils';
 
 vi.mock('@/api/homework', () => {
   return {
@@ -34,15 +34,17 @@ vi.mock('@/api/homework', () => {
 });
 vi.mock('@/utils/getThreads');
 
-const answerData = getAnswerData();
-const answersData = getAnswersData();
-const threadsData = getThreadData();
-
 const text = faker.lorem.sentence();
 const questionId = faker.datatype.uuid();
 const parentId = faker.datatype.uuid();
 const authorId = faker.datatype.uuid();
 const answerId = faker.datatype.uuid();
+
+const answerData = getAnswerData();
+const answersData = getAnswersData();
+const threadsData = getThreadData();
+const postData = getCommentData({ ...getThreadData(), parent: parentId });
+const questionData = getQuestionData();
 
 describe('homework store', () => {
   let homework: ReturnType<typeof useHomework>;
@@ -60,6 +62,7 @@ describe('homework store', () => {
     (getAnswer as ReturnType<typeof vi.fn>).mockReturnValue(answerData);
     (getAnswers as ReturnType<typeof vi.fn>).mockReturnValue(answersData);
     (getThreads as ReturnType<typeof vi.fn>).mockReturnValue(threadsData);
+    (postAnswer as ReturnType<typeof vi.fn>).mockReturnValue(postData);
   });
 
   test('homework question is initially empty', () => {
@@ -78,7 +81,6 @@ describe('homework store', () => {
   });
 
   test('getQuestion sets question', async () => {
-    const questionData = getQuestionData();
     (getQuestion as ReturnType<typeof vi.fn>).mockResolvedValue(questionData);
 
     await homework.getQuestion(questionId);
@@ -141,6 +143,25 @@ describe('homework store', () => {
 
     expect(postAnswer).toHaveBeenCalledOnce();
     expect(postAnswer).toHaveBeenCalledWith({ text, questionId, parentId });
+  });
+
+  test('postAnswer returns answer', async () => {
+    const result = await homework.postAnswer({ text, questionId, parentId });
+
+    expect(result).toStrictEqual(postData);
+  });
+
+  test('postAnswer shows toast on success', async () => {
+    await homework.postAnswer({ text, questionId, parentId });
+
+    expect(toasts.addMessage).toHaveBeenCalledOnce();
+  });
+
+  test('postAnswer doesnt show toast on fail', async () => {
+    (postAnswer as ReturnType<typeof vi.fn>).mockRejectedValue({});
+    await homework.postAnswer({ text, questionId, parentId });
+
+    expect(toasts.addMessage).not.toHaveBeenCalled();
   });
 
   test('deleteAnswer calls api', async () => {
