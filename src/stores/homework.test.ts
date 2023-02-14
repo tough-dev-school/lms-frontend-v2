@@ -13,11 +13,14 @@ import {
   getAnswers,
   getAnswer,
 } from '@/api/homework';
+import getThreads from '@/utils/getThreads';
 import {
   getAnswerData,
   getAnswersData,
   getQuestionData,
+  getThreadData,
 } from '@/mocks/homework';
+import { flushPromises } from '@vue/test-utils';
 
 vi.mock('@/api/homework', () => {
   return {
@@ -29,6 +32,11 @@ vi.mock('@/api/homework', () => {
     getAnswer: vi.fn(),
   };
 });
+vi.mock('@/utils/getThreads');
+
+const answerData = getAnswerData();
+const answersData = getAnswersData();
+const threadsData = getThreadData();
 
 const text = faker.lorem.sentence();
 const questionId = faker.datatype.uuid();
@@ -48,6 +56,10 @@ describe('homework store', () => {
 
     homework = useHomework();
     toasts = useToasts();
+
+    (getAnswer as ReturnType<typeof vi.fn>).mockReturnValue(answerData);
+    (getAnswers as ReturnType<typeof vi.fn>).mockReturnValue(answersData);
+    (getThreads as ReturnType<typeof vi.fn>).mockReturnValue(threadsData);
   });
 
   test('homework question is initially empty', () => {
@@ -74,35 +86,53 @@ describe('homework store', () => {
     expect(homework.question).toStrictEqual(questionData);
   });
 
-  test('getAnswers calls api', async () => {
-    await homework.getAnswers({ questionId, authorId });
+  test('getAnswers always calls getAnswer', async () => {
+    const threads = true;
+    await homework.getAnswers({ questionId, authorId, threads });
 
     expect(getAnswers).toHaveBeenCalledOnce();
     expect(getAnswers).toHaveBeenCalledWith({ questionId, authorId });
   });
 
-  test('getAnswers sets answers', async () => {
-    const answersData = getAnswersData();
-    (getAnswers as ReturnType<typeof vi.fn>).mockResolvedValue(answersData);
+  test('getAnswers sets getThreads based result if threads enabled', async () => {
+    const threads = true;
+    await homework.getAnswers({ questionId, authorId, threads });
 
-    await homework.getAnswers({ questionId, authorId });
+    expect(getThreads).toHaveBeenCalledOnce();
+    expect(getThreads).toHaveBeenCalledWith(answersData);
+    expect(homework.answers).toStrictEqual(threadsData);
+  });
 
+  test('getAnswers sets getAnswer based result if threads disabled', async () => {
+    const threads = false;
+    await homework.getAnswers({ questionId, authorId, threads });
+
+    expect(getThreads).not.toHaveBeenCalled();
     expect(homework.answers).toStrictEqual(answersData);
   });
 
-  test('getAnswerById calls api', async () => {
-    await homework.getAnswerById(answerId);
+  test('getAnswerById calls getAnswer', async () => {
+    const threads = true;
+    await homework.getAnswerById(answerId, threads);
 
     expect(getAnswer).toHaveBeenCalledOnce();
     expect(getAnswer).toHaveBeenCalledWith(answerId);
   });
 
-  test('getAnswerById sets answers', async () => {
-    const answerData = getAnswerData();
-    (getAnswer as ReturnType<typeof vi.fn>).mockResolvedValue(answerData);
+  test('getAnswerById sets getThreads based result if threads enabled', async () => {
+    const threads = true;
+    await homework.getAnswerById(answerId, threads);
 
-    await homework.getAnswerById(answerId);
+    expect(getThreads).toHaveBeenCalledOnce();
+    expect(getThreads).toHaveBeenCalledWith([answerData]);
+    expect(homework.answers).toStrictEqual(threadsData);
+  });
 
+  test('getAnswerById sets getAnswer based result if threads disabled', async () => {
+    const threads = false;
+    await homework.getAnswerById(answerId, threads);
+
+    expect(getThreads).not.toHaveBeenCalled();
     expect(homework.answers).toStrictEqual([answerData]);
   });
 
