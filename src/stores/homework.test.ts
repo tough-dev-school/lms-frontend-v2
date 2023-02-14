@@ -143,12 +143,6 @@ describe('homework store', () => {
     expect(postAnswer).toHaveBeenCalledWith({ text, questionId, parentId });
   });
 
-  test('deleteAnswer shows toast on success', async () => {
-    await homework.postAnswer({ text, questionId, parentId });
-
-    expect(toasts.addMessage).toHaveBeenCalledOnce();
-  });
-
   test('deleteAnswer calls api', async () => {
     await homework.deleteAnswer(answerId);
 
@@ -162,6 +156,13 @@ describe('homework store', () => {
     expect(toasts.addMessage).toHaveBeenCalledOnce();
   });
 
+  test('deleteAnswer doesnt show toast on fail', async () => {
+    (deleteAnswer as ReturnType<typeof vi.fn>).mockRejectedValue({});
+    await homework.deleteAnswer(answerId);
+
+    expect(toasts.addMessage).not.toHaveBeenCalled();
+  });
+
   test('updateAnswer calls api', async () => {
     await homework.updateAnswer(answerId, text);
 
@@ -173,5 +174,12 @@ describe('homework store', () => {
     await homework.updateAnswer(answerId, text);
 
     expect(toasts.addMessage).toHaveBeenCalledOnce();
+  });
+
+  test('updateAnswer doesnt show toast on fail', async () => {
+    (updateAnswer as ReturnType<typeof vi.fn>).mockRejectedValue({});
+    await homework.updateAnswer(answerId, text);
+
+    expect(toasts.addMessage).not.toHaveBeenCalled();
   });
 });
