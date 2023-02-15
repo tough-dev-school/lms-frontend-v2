@@ -2,9 +2,9 @@
   import VHeading from '@/components/VHeading.vue';
   import VCard from '@/components/VCard.vue';
   import getCertificateLink from '@/utils/getCertificateLink';
-  import { Diploma } from '@/types/diplomas';
+  import type { Diploma } from '@/types/diplomas';
 
-  interface Props {
+  export interface Props {
     course: string;
     certificates: Diploma[];
   }
