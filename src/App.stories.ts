@@ -98,7 +98,7 @@ export const Certificates = Template.bind({});
 Certificates.args = {};
 Certificates.decorators = decorate('/certificates', () => {
   const diplomas = useDiplomas();
-  diplomas.items = diplomasData();
+  diplomas.items = diplomasData;
 });
 
 export const Settings = Template.bind({});
