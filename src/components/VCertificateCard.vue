@@ -2,6 +2,7 @@
   import VHeading from '@/components/VHeading.vue';
   import VCard from '@/components/VCard.vue';
   import type { Diploma } from '@/types/diplomas';
+  import VCertificate from './VCertificate.vue';
 
   export interface Props {
     course: string;
@@ -18,6 +19,7 @@
       <VCertificate
         v-for="certificate in certificates"
         data-testid="certificate"
+        :certificate="certificate"
         :key="certificate.slug" />
     </ul>
   </VCard>
