@@ -10,6 +10,8 @@ const getLocale = () => {
   return locales[faker.datatype.number({ min: 0, max: locales.length - 1 })];
 };
 
+const diplomaImage = 'https://loremflickr.com/1480/1048/cats?lock=52395';
+
 export const getDiplomaData = (courseName: string, locale: locale) => {
   return responseCaseMiddleware({
     course: {
