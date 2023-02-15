@@ -13,10 +13,13 @@ import {
   getAnswers,
   getAnswer,
 } from '@/api/homework';
+import getThreads from '@/utils/getThreads';
 import {
   getAnswerData,
   getAnswersData,
   getQuestionData,
+  getThreadData,
+  getCommentData,
 } from '@/mocks/homework';
 
 vi.mock('@/api/homework', () => {
@@ -29,12 +32,19 @@ vi.mock('@/api/homework', () => {
     getAnswer: vi.fn(),
   };
 });
+vi.mock('@/utils/getThreads');
 
 const text = faker.lorem.sentence();
 const questionId = faker.datatype.uuid();
 const parentId = faker.datatype.uuid();
 const authorId = faker.datatype.uuid();
 const answerId = faker.datatype.uuid();
+
+const answerData = getAnswerData();
+const answersData = getAnswersData();
+const threadsData = getThreadData();
+const postData = getCommentData({ ...getThreadData(), parent: parentId });
+const questionData = getQuestionData();
 
 describe('homework store', () => {
   let homework: ReturnType<typeof useHomework>;
@@ -45,26 +55,32 @@ describe('homework store', () => {
     const pinia = createTestingPinia({ createSpy: vi.fn, stubActions: false });
     app.use(pinia);
     setActivePinia(pinia);
+
     homework = useHomework();
     toasts = useToasts();
+
+    (getAnswer as ReturnType<typeof vi.fn>).mockReturnValue(answerData);
+    (getAnswers as ReturnType<typeof vi.fn>).mockReturnValue(answersData);
+    (getThreads as ReturnType<typeof vi.fn>).mockReturnValue(threadsData);
+    (postAnswer as ReturnType<typeof vi.fn>).mockReturnValue(postData);
   });
 
-  test('expect homework question to be initially undefined', () => {
+  test('homework question is initially empty', () => {
     expect(homework.question).toBe(undefined);
   });
 
-  test('expect homework answers to be initially undefined', () => {
+  test('homework answers are initially empty', () => {
     expect(homework.answers).toHaveLength(0);
   });
 
-  test('expect getQuestion to call api', async () => {
+  test('getQuestion calls api', async () => {
     await homework.getQuestion(questionId);
 
     expect(getQuestion).toHaveBeenCalledOnce();
     expect(getQuestion).toHaveBeenCalledWith(questionId);
   });
-  test('expect getQuestion to set question', async () => {
-    const questionData = getQuestionData();
+
+  test('getQuestion sets question', async () => {
     (getQuestion as ReturnType<typeof vi.fn>).mockResolvedValue(questionData);
 
     await homework.getQuestion(questionId);
@@ -72,69 +88,119 @@ describe('homework store', () => {
     expect(homework.question).toStrictEqual(questionData);
   });
 
-  test('expect getAnswers to call api', async () => {
-    await homework.getAnswers({ questionId, authorId });
+  test('getAnswers always calls getAnswer', async () => {
+    const threads = true;
+    await homework.getAnswers({ questionId, authorId, threads });
 
     expect(getAnswers).toHaveBeenCalledOnce();
     expect(getAnswers).toHaveBeenCalledWith({ questionId, authorId });
   });
-  test('expect getAnswers to set answers', async () => {
-    const answersData = getAnswersData();
-    (getAnswers as ReturnType<typeof vi.fn>).mockResolvedValue(answersData);
 
-    await homework.getAnswers({ questionId, authorId });
+  test('getAnswers sets getThreads based result if threads enabled', async () => {
+    const threads = true;
+    await homework.getAnswers({ questionId, authorId, threads });
 
+    expect(getThreads).toHaveBeenCalledOnce();
+    expect(getThreads).toHaveBeenCalledWith(answersData);
+    expect(homework.answers).toStrictEqual(threadsData);
+  });
+
+  test('getAnswers sets getAnswer based result if threads disabled', async () => {
+    const threads = false;
+    await homework.getAnswers({ questionId, authorId, threads });
+
+    expect(getThreads).not.toHaveBeenCalled();
     expect(homework.answers).toStrictEqual(answersData);
   });
 
-  test('expect getAnswerById to call api', async () => {
-    await homework.getAnswerById(answerId);
+  test('getAnswerById calls getAnswer', async () => {
+    const threads = true;
+    await homework.getAnswerById(answerId, threads);
 
     expect(getAnswer).toHaveBeenCalledOnce();
     expect(getAnswer).toHaveBeenCalledWith(answerId);
   });
-  test('expect getAnswerById to set answers', async () => {
-    const answerData = getAnswerData();
-    (getAnswer as ReturnType<typeof vi.fn>).mockResolvedValue(answerData);
 
-    await homework.getAnswerById(answerId);
+  test('getAnswerById sets getThreads based result if threads enabled', async () => {
+    const threads = true;
+    await homework.getAnswerById(answerId, threads);
 
+    expect(getThreads).toHaveBeenCalledOnce();
+    expect(getThreads).toHaveBeenCalledWith([answerData]);
+    expect(homework.answers).toStrictEqual(threadsData);
+  });
+
+  test('getAnswerById sets getAnswer based result if threads disabled', async () => {
+    const threads = false;
+    await homework.getAnswerById(answerId, threads);
+
+    expect(getThreads).not.toHaveBeenCalled();
     expect(homework.answers).toStrictEqual([answerData]);
   });
 
-  test('expect postAnswer to call api', async () => {
+  test('postAnswer calls api', async () => {
     await homework.postAnswer({ text, questionId, parentId });
 
     expect(postAnswer).toHaveBeenCalledOnce();
     expect(postAnswer).toHaveBeenCalledWith({ text, questionId, parentId });
   });
-  test('expect deleteAnswer to call toast on success', async () => {
+
+  test('postAnswer returns answer', async () => {
+    const result = await homework.postAnswer({ text, questionId, parentId });
+
+    expect(result).toStrictEqual(postData);
+  });
+
+  test('postAnswer shows toast on success', async () => {
     await homework.postAnswer({ text, questionId, parentId });
 
     expect(toasts.addMessage).toHaveBeenCalledOnce();
   });
 
-  test('expect deleteAnswer to call api', async () => {
+  test('postAnswer doesnt show toast on fail', async () => {
+    (postAnswer as ReturnType<typeof vi.fn>).mockRejectedValue({});
+    await homework.postAnswer({ text, questionId, parentId });
+
+    expect(toasts.addMessage).not.toHaveBeenCalled();
+  });
+
+  test('deleteAnswer calls api', async () => {
     await homework.deleteAnswer(answerId);
 
     expect(deleteAnswer).toHaveBeenCalledOnce();
     expect(deleteAnswer).toHaveBeenCalledWith(answerId);
   });
-  test('expect deleteAnswer to call toast on success', async () => {
+
+  test('deleteAnswer shows toast on success', async () => {
     await homework.deleteAnswer(answerId);
 
     expect(toasts.addMessage).toHaveBeenCalledOnce();
   });
 
-  test('expect updateAnswer to call api', async () => {
+  test('deleteAnswer doesnt show toast on fail', async () => {
+    (deleteAnswer as ReturnType<typeof vi.fn>).mockRejectedValue({});
+    await homework.deleteAnswer(answerId);
+
+    expect(toasts.addMessage).not.toHaveBeenCalled();
+  });
+
+  test('updateAnswer calls api', async () => {
     await homework.updateAnswer(answerId, text);
 
     expect(updateAnswer).toHaveBeenCalledOnce();
     expect(updateAnswer).toHaveBeenCalledWith(answerId, text);
   });
-  test('expect updateAnswer to call toast on success', async () => {
+
+  test('updateAnswer shows toast on success', async () => {
     await homework.updateAnswer(answerId, text);
 
     expect(toasts.addMessage).toHaveBeenCalledOnce();
+  });
+
+  test('updateAnswer doesnt show toast on fail', async () => {
+    (updateAnswer as ReturnType<typeof vi.fn>).mockRejectedValue({});
+    await homework.updateAnswer(answerId, text);
+
+    expect(toasts.addMessage).not.toHaveBeenCalled();
   });
 });

@@ -19,17 +19,17 @@ describe('materials store', () => {
     materials = useMaterials();
   });
 
-  test('expect materials to be initially empty', () => {
+  test('materials are initially empty', () => {
     expect(materials.material).toBe(undefined);
   });
 
-  test('expect getData to call get materials', async () => {
+  test(' getData to call get materials', async () => {
     await materials.getData(faker.datatype.uuid());
 
     expect(getMaterial).toHaveBeenCalledOnce();
   });
 
-  test('expect getData to set material', async () => {
+  test('getData sets material', async () => {
     const materialsData = getMaterialsData();
     (getMaterial as ReturnType<typeof vi.fn>).mockResolvedValue(materialsData);
 

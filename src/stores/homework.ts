@@ -6,33 +6,15 @@ import {
   updateAnswer,
   getAnswers,
   getAnswer,
-  getComments,
 } from '@/api/homework';
-import type { Answer, Comments, Question, Thread } from '@/types/homework';
+import type { Answer, Question, Thread } from '@/types/homework';
 import useToasts from '@/stores/toasts';
+import getThreads from '@/utils/getThreads';
 
 interface State {
   question: Question | undefined;
   answers: Answer[] | Thread[];
 }
-
-export const getCommentsBySlug = (commentsData: Comments[], slug: string) => {
-  const comments = commentsData.find((comments) => comments.slug === slug);
-  return comments ? comments.descendants : [];
-};
-
-export const getThreads = async (answers: Answer[]) => {
-  const answerIds = answers.map((answer) => answer.slug);
-  const commentsData = await getComments(answerIds);
-  const threads: Thread[] = answers.map((answer) => {
-    return {
-      ...answer,
-      descendants: getCommentsBySlug(commentsData, answer.slug),
-    };
-  });
-
-  return threads;
-};
 
 const useHomework = defineStore('homework', {
   state: (): State => {

@@ -44,7 +44,7 @@ export const getAnswers = async ({
 };
 
 export const getComments = async (answerIds: string[]) => {
-  const url = `/api/v2/homework/comments/?answer=` + [...answerIds].join(',');
+  const url = `/api/v2/homework/comments/?answer=${[...answerIds].join(',')}`;
 
   return (await axios.get(url)).data as Comments[];
 };
