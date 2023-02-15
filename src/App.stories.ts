@@ -22,6 +22,8 @@ import { getStudiesData } from './mocks/studies';
 import { faker } from '@faker-js/faker';
 import merge from 'lodash/merge';
 import type { Comment } from '@/types/homework';
+import useDiplomas from '@/stores/diplomas';
+import { diplomasData } from '@/mocks/diplomas';
 
 export default {
   title: 'Pages/App',
@@ -91,6 +93,13 @@ Login.decorators = decorate('/login');
 export const MailSent = Template.bind({});
 MailSent.args = {};
 MailSent.decorators = decorate('/login/mail-sent?email=demo@mail.com');
+
+export const Certificates = Template.bind({});
+Certificates.args = {};
+Certificates.decorators = decorate('/certificates', () => {
+  const diplomas = useDiplomas();
+  diplomas.items = diplomasData;
+});
 
 export const Settings = Template.bind({});
 Settings.args = {};

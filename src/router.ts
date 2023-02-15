@@ -17,6 +17,7 @@ const VHomeworkExpertView = () => import('@/views/VHomeworkExpertView.vue');
 const VHomeworkAnswerView = () => import('@/views/VHomeworkAnswerView.vue');
 const VLoginResetView = () => import('@/views/VLoginResetView.vue');
 const VLoginChangeView = () => import('@/views/VLoginChangeView.vue');
+const VCertificatesView = () => import('@/views/VCertificatesView.vue');
 
 const isAuthorized = () => {
   const auth = useAuth();
@@ -125,6 +126,11 @@ export const routes = [
     path: '/homework/answers/:answerId',
     name: 'homework-answer',
     component: VHomeworkAnswerView,
+  },
+  {
+    path: '/certificates',
+    name: 'certificates',
+    component: VCertificatesView,
   },
 ];
 

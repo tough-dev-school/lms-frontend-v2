@@ -63,6 +63,13 @@
     },
     ...studiesAsMenuItems.value,
     {
+      label: 'Сертификаты',
+      action: () => {
+        router.push({ name: 'certificates' });
+      },
+      id: 'certificates',
+    },
+    {
       label: 'Настройки',
       action: () => {
         router.push({ name: 'settings' });

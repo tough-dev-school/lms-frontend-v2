@@ -1,7 +1,14 @@
 <script setup lang="ts">
   import { withDefaults } from 'vue';
 
-  export type CardTags = 'div' | 'article' | 'section' | 'details' | 'aside';
+  export type CardTags =
+    | 'div'
+    | 'article'
+    | 'section'
+    | 'details'
+    | 'aside'
+    | 'li'
+    | 'ul';
   export interface Props {
     tag?: CardTags;
   }
@@ -12,7 +19,7 @@
 <template>
   <component
     :is="tag"
-    class="overflow-hidden rounded bg-white p-16 shadow phone:px-24 tablet:px-32 dark:bg-dark-gray">
+    class="overflow-hidden rounded bg-white p-16 shadow dark:bg-dark-gray phone:px-24 tablet:px-32">
     <slot />
     <footer
       class="grow-children mt-32 flex flex-wrap justify-end gap-8 border-t border-gray border-opacity-20 pt-16 empty:hidden phone:gap-16 phone:pt-24 phone:pb-16">
