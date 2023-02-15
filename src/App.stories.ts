@@ -23,7 +23,7 @@ import { faker } from '@faker-js/faker';
 import merge from 'lodash/merge';
 import type { Comment } from '@/types/homework';
 import useDiplomas from '@/stores/diplomas';
-import { getDiplomasData } from '@/mocks/diplomas';
+import { diplomasData, getDiplomasData } from '@/mocks/diplomas';
 
 export default {
   title: 'Pages/App',
@@ -98,10 +98,7 @@ export const Certificates = Template.bind({});
 Certificates.args = {};
 Certificates.decorators = decorate('/certificates', () => {
   const diplomas = useDiplomas();
-  diplomas.items = getDiplomasData().map((diploma) => {
-    diploma.image = 'https://picsum.photos/1480/1048';
-    return diploma;
-  });
+  diplomas.items = diplomasData();
 });
 
 export const Settings = Template.bind({});
