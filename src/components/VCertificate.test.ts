@@ -7,7 +7,7 @@ import { getDiplomaData } from '@/mocks/diplomas';
 import merge from 'lodash/merge';
 
 const defaultProps = {
-  certificate: getDiplomaData('Test course', 'RU'),
+  certificate: getDiplomaData(),
 };
 
 describe('VCertificate', () => {

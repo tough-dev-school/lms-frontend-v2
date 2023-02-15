@@ -1,7 +1,6 @@
 import type { Meta, Story } from '@storybook/vue3';
 import VCertificate from '@/components/VCertificate.vue';
 import { getDiplomaData } from '@/mocks/diplomas';
-import { faker } from '@faker-js/faker';
 
 export default {
   title: 'UI/VCertificate',
@@ -18,10 +17,10 @@ const Template: Story = (args) => ({
 
 export const En = Template.bind({});
 En.args = {
-  certificate: getDiplomaData(faker.commerce.productName(), 'EN'),
+  certificate: { ...getDiplomaData(), language: 'EN' },
 };
 
 export const Ru = Template.bind({});
 Ru.args = {
-  certificate: getDiplomaData(faker.commerce.productName(), 'RU'),
+  certificate: { ...getDiplomaData(), language: 'RU' },
 };

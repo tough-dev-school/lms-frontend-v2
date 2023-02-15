@@ -15,7 +15,7 @@ const Template: Story = (args) => ({
   template: '<VCertificateCard v-bind="args">This is card</VCertificateCard>',
 });
 
-const diplomas = getDiplomasData(1);
+const diplomas = getDiplomasData(['Cool course']);
 
 export const Default = Template.bind({});
 Default.args = {
