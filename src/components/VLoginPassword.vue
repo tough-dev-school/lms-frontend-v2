@@ -3,7 +3,7 @@
   import VButton from '@/components/VButton.vue';
   import VCard from '@/components/VCard.vue';
   import VTextInput from '@/components/VTextInput.vue';
-  import { ref } from 'vue';
+  import { ref, computed } from 'vue';
   import { onKeyStroke } from '@vueuse/core';
   import useAuth from '@/stores/auth';
   import { useRouter } from 'vue-router';
@@ -13,6 +13,10 @@
 
   const username = ref('');
   const password = ref('');
+
+  const isCredentialsInvalid = computed(
+    () => !(username.value && password.value),
+  );
 
   const loginWithCredentials = async () => {
     await auth.loginWithCredentials(username.value, password.value);
@@ -24,6 +28,7 @@
   }>();
 
   onKeyStroke('Enter', (e: KeyboardEvent) => {
+    if (isCredentialsInvalid.value) return;
     loginWithCredentials();
 
     e.preventDefault();
@@ -51,7 +56,7 @@
     <template #footer>
       <VButton
         @click="loginWithCredentials"
-        :disabled="!(username && password)"
+        :disabled="isCredentialsInvalid"
         class="flex-grow"
         >Войти</VButton
       >
