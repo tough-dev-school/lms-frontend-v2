@@ -28,6 +28,8 @@
 
   const editMode = ref(false);
   const text = ref('');
+
+  // edit and delete time defined in minutes
   const editTime = ref(30);
   const deleteTime = ref(10);
 
