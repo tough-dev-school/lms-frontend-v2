@@ -55,27 +55,31 @@
 </script>
 
 <template>
-  <div v-if="!editMode">
-    <VAnswer :answer="answer as Answer">
-      <template #header>
-        <VAnswerActions
-          :created="answer.created"
-          :edit-time="editTime"
-          :delete-time="deleteTime"
-          @edit="handleEdit"
-          @delete="handleDelete" />
-      </template>
-      <template #footer>
-        <slot name="footer" />
-      </template>
-    </VAnswer>
-  </div>
-  <VCard v-else class="px-0 pt-0 tablet:px-0">
+  <VAnswer v-if="!editMode" :answer="answer as Answer" data-testid="view">
+    <template #header>
+      <VAnswerActions
+        data-testid="actions"
+        :created="answer.created"
+        :edit-time="editTime"
+        :delete-time="deleteTime"
+        @edit="handleEdit"
+        @delete="handleDelete" />
+    </template>
+    <template #footer>
+      <slot name="footer" />
+    </template>
+  </VAnswer>
+  <VCard v-else class="px-0 pt-0 tablet:px-0" data-testid="edit">
     <VTextEditor
+      data-testid="editor"
       v-model="text"
       class="mb-16 rounded-t border-b border-offwhite" />
     <div class="flex flex-row-reverse px-32">
-      <VButton @click="updateAnswer" :disabled="!(text.length > 0)" class="h-32"
+      <VButton
+        @click="updateAnswer"
+        :disabled="!(text.length > 0)"
+        class="h-32"
+        data-testid="save"
         >Сохранить</VButton
       >
     </div>
