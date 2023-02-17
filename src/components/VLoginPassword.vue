@@ -6,10 +6,11 @@
   import { ref, computed } from 'vue';
   import { onKeyStroke } from '@vueuse/core';
   import useAuth from '@/stores/auth';
-  import { useRouter } from 'vue-router';
+  import { useRouter, useRoute } from 'vue-router';
 
   const auth = useAuth();
   const router = useRouter();
+  const route = useRoute();
 
   const username = ref('');
   const password = ref('');
@@ -20,7 +21,11 @@
 
   const loginWithCredentials = async () => {
     await auth.loginWithCredentials(username.value, password.value);
-    if (auth.token) router.push({ name: 'home' });
+    if (auth.token) {
+      route.query.next
+        ? router.push({ path: decodeURIComponent(String(route.query.next)) })
+        : router.push({ name: 'home' });
+    }
   };
 
   const emit = defineEmits<{
