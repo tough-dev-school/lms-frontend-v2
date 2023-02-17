@@ -144,6 +144,10 @@ support@tough-dev.school">
     width: 100%;
   }
 
+  .notion-simple-table-header {
+    background-color: transparent;
+  }
+
   .notion-simple-table {
     width: 100%;
   }
