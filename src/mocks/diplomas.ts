@@ -11,8 +11,6 @@ const getLocale = () => {
   return locales[faker.datatype.number({ min: 0, max: locales.length - 1 })];
 };
 
-const getDiplomaImage = () => faker.image.cats(1480, 1048, false);
-
 export const getDiplomaData = () => {
   return responseCaseMiddleware({
     course: {
@@ -20,7 +18,7 @@ export const getDiplomaData = () => {
     },
     slug: faker.datatype.uuid(),
     language: getLocale(),
-    image: getDiplomaImage(),
+    image: '/diploma-mock.jpg',
     student: {
       uuid: faker.datatype.uuid(),
       first_name: faker.name.firstName(),
