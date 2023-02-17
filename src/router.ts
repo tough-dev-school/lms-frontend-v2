@@ -157,9 +157,15 @@ router.beforeEach(async (to: RouteLocationNormalized) => {
 
   // Redirect to /login if unauthorized and route is not public
   if (!(isAuthorized() || to.meta.isPublic)) {
+    let query = {};
+
+    if (to.fullPath !== '/') {
+      query = { ...query, next: encodeURIComponent(to.fullPath) };
+    }
+
     return {
       name: 'login',
-      query: { next: encodeURIComponent(to.fullPath) },
+      query,
     };
   }
 
