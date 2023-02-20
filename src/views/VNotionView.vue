@@ -1,7 +1,8 @@
 <script lang="ts" setup>
   // @ts-ignore
   import { NotionRenderer } from 'vue3-notion';
-  import { useRouter, useRoute } from 'vue-router';
+  import { useRoute, useRouter } from 'vue-router';
+  import { watch, ref, computed } from 'vue';
   import VCard from '@/components/VCard.vue';
   import VButton from '@/components/VButton.vue';
   import useMaterials from '@/stores/materials';
@@ -21,15 +22,32 @@
       const materialId = String(route.params.id);
       title.value = getNotionTitle(materialId, materials.material);
     }
+
+    isLoaded.value = true;
+  };
+
+  watch(
+    route,
+    async () => {
+      await getData();
+    },
+    { immediate: true },
+  );
+
+  const mapPageUrl = (id: string) => `/materials/${id}`;
+
+  const rendererProps = computed(() => {
+    return {
+      blockMap: materials.material,
+      mapPageUrl,
+      fullPage: true,
+    };
   });
 </script>
 
 <template>
-  <VCard class="pt-32" v-if="materials.material">
-    <NotionRenderer
-      :blockMap="materials.material"
-      :map-page-url="mapPageUrl"
-      fullPage />
+  <VCard class="pt-32" v-if="isLoaded && materials.material">
+    <NotionRenderer v-bind="rendererProps" />
   </VCard>
   <div
     v-else-if="!materials.material"
