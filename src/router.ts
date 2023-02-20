@@ -6,6 +6,7 @@ import {
 import useAuth from '@/stores/auth';
 import useUser from '@/stores/user';
 import useStudies from '@/stores/studies';
+import useMaterials from './stores/materials';
 const VHomeView = () => import('@/views/VHomeView.vue');
 const VMailSentView = () => import('@/views/VMailSentView.vue');
 const VSettingsView = () => import('@/views/VSettingsView.vue');
@@ -111,6 +112,11 @@ export const routes = [
     path: '/materials/:id',
     name: 'materials',
     component: VNotionView,
+    beforeEnter: async (to: RouteLocationNormalized) => {
+      const materials = useMaterials();
+
+      await materials.getData(String(to.params.id));
+    },
   },
   {
     path: '/homework/questions/:questionId',
