@@ -46,7 +46,7 @@
     "vue": "^3.2.38",
     "vue-router": "^4.1.5",
     "vue-tabler-icons": "^2.15.0",
-    "vue3-notion": "^0.1.36"
+    "vue3-notion": "^0.1.40"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
