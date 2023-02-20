@@ -1,59 +1,38 @@
 <script lang="ts" setup>
   // @ts-ignore
   import { NotionRenderer } from 'vue3-notion';
-  import { useRoute, useRouter } from 'vue-router';
-  import { watch, ref } from 'vue';
+  import { useRouter, useRoute } from 'vue-router';
   import VCard from '@/components/VCard.vue';
   import VButton from '@/components/VButton.vue';
-  import VPreloader from '@/components/VPreloader.vue';
   import useMaterials from '@/stores/materials';
+  import { onMounted } from 'vue';
   import { useTitle } from '@vueuse/core';
   import getNotionTitle from '@/utils/getNotionTitle';
 
-  const route = useRoute();
   const router = useRouter();
   const materials = useMaterials();
   const title = useTitle();
-  const isLoaded = ref(false);
-
-  const getData = async () => {
-    isLoaded.value = false;
-
-    const materialId = String(route.params.id);
-
-    await materials.getData(materialId);
-
-    if (materials.material) {
-      const notionTitle = getNotionTitle(materialId, materials.material);
-
-      if (notionTitle) {
-        title.value = notionTitle;
-      }
-    }
-
-    isLoaded.value = true;
-  };
-
-  watch(
-    route,
-    async () => {
-      await getData();
-    },
-    { immediate: true },
-  );
+  const route = useRoute();
 
   const mapPageUrl = (id: string) => `/materials/${id}`;
+
+  onMounted(() => {
+    if (materials.material) {
+      const materialId = String(route.params.id);
+      title.value = getNotionTitle(materialId, materials.material);
+    }
+  });
 </script>
 
 <template>
-  <VCard class="pt-32" v-if="isLoaded && materials.material">
+  <VCard class="pt-32" v-if="materials.material">
     <NotionRenderer
       :blockMap="materials.material"
       :map-page-url="mapPageUrl"
       fullPage />
   </VCard>
   <div
-    v-else-if="isLoaded && !materials.material"
+    v-else-if="!materials.material"
     class="center flex max-w-[400px] flex-col text-center">
     <p>Материал не найден :(</p>
     <p>
@@ -69,7 +48,6 @@ support@tough-dev.school">
       >На главную</VButton
     >
   </div>
-  <VPreloader v-else />
 </template>
 
 <style>
