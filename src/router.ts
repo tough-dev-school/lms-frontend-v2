@@ -138,7 +138,7 @@ export const routes = [
     path: '/certificates',
     name: 'certificates',
     component: VCertificatesView,
-    beforeEnter: async (to: RouteLocationNormalized) => {
+    beforeEnter: async () => {
       const diplomas = useDiplomas();
 
       await diplomas.getData();
