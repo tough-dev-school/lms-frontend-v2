@@ -7,6 +7,7 @@ import useAuth from '@/stores/auth';
 import useUser from '@/stores/user';
 import useStudies from '@/stores/studies';
 import useMaterials from './stores/materials';
+import useDiplomas from './stores/diplomas';
 const VHomeView = () => import('@/views/VHomeView.vue');
 const VMailSentView = () => import('@/views/VMailSentView.vue');
 const VSettingsView = () => import('@/views/VSettingsView.vue');
@@ -137,6 +138,11 @@ export const routes = [
     path: '/certificates',
     name: 'certificates',
     component: VCertificatesView,
+    beforeEnter: async (to: RouteLocationNormalized) => {
+      const diplomas = useDiplomas();
+
+      await diplomas.getData();
+    },
   },
 ];
 
