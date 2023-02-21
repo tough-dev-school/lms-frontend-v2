@@ -27,7 +27,7 @@
   };
 
   watch(
-    route,
+    () => route.params.id,
     async () => {
       await getData();
     },
@@ -41,6 +41,10 @@
       blockMap: materials.material,
       mapPageUrl,
       fullPage: true,
+      pageLinkOptions: {
+        component: 'RouterLink',
+        href: 'to',
+      },
     };
   });
 </script>
