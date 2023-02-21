@@ -8,6 +8,7 @@ import useUser from '@/stores/user';
 import useStudies from '@/stores/studies';
 import useMaterials from './stores/materials';
 import useDiplomas from './stores/diplomas';
+import useLoading from './stores/loading';
 const VHomeView = () => import('@/views/VHomeView.vue');
 const VMailSentView = () => import('@/views/VMailSentView.vue');
 const VSettingsView = () => import('@/views/VSettingsView.vue');
@@ -174,8 +175,12 @@ router.beforeEach(
 
     if (to.name === 'materials' && to.params.id !== from.params.id) {
       const materials = useMaterials();
+      const loading = useLoading();
 
+      loading.isLoading = true;
+      materials.material = undefined;
       await materials.getData(String(to.params.id));
+      loading.isLoading = false;
     }
 
     if (to.name === 'certificates') {
