@@ -113,11 +113,6 @@ export const routes = [
     path: '/materials/:id',
     name: 'materials',
     component: VNotionView,
-    beforeEnter: async (to: RouteLocationNormalized) => {
-      const materials = useMaterials();
-
-      await materials.getData(String(to.params.id));
-    },
   },
   {
     path: '/homework/questions/:questionId',
@@ -179,6 +174,12 @@ router.beforeEach(async (to: RouteLocationNormalized) => {
       name: 'login',
       query,
     };
+  }
+
+  if (to.name === 'materials') {
+    const materials = useMaterials();
+
+    await materials.getData(String(to.params.id));
   }
 
   // Reset title after navigation
