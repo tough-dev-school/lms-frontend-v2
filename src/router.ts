@@ -53,7 +53,7 @@ export const routes = [
     path: '/login',
     name: 'login',
     component: VLoginView,
-    beforeEnter: disallowAuthorized,
+    beforeEnter: [disallowAuthorized],
     meta: {
       isPublic: true,
     },
@@ -62,7 +62,7 @@ export const routes = [
     path: '/login/mail-sent',
     name: 'mail-sent',
     component: VMailSentView,
-    beforeEnter: disallowAuthorized,
+    beforeEnter: [disallowAuthorized],
     meta: {
       isPublic: true,
     },
@@ -71,7 +71,7 @@ export const routes = [
     path: '/login/reset',
     name: 'login-reset',
     component: VLoginResetView,
-    beforeEnter: disallowAuthorized,
+    beforeEnter: [disallowAuthorized],
     meta: {
       isPublic: true,
     },
@@ -80,7 +80,7 @@ export const routes = [
     path: '/auth/password/reset/:uid/:token/',
     name: 'login-change',
     component: VLoginChangeView,
-    beforeEnter: disallowAuthorized,
+    beforeEnter: [disallowAuthorized],
     meta: {
       isPublic: true,
     },
