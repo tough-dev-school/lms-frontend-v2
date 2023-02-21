@@ -133,11 +133,6 @@ export const routes = [
     path: '/certificates',
     name: 'certificates',
     component: VCertificatesView,
-    beforeEnter: async () => {
-      const diplomas = useDiplomas();
-
-      await diplomas.getData();
-    },
   },
 ];
 
@@ -180,6 +175,12 @@ router.beforeEach(async (to: RouteLocationNormalized) => {
     const materials = useMaterials();
 
     await materials.getData(String(to.params.id));
+  }
+
+  if (to.name === 'certificates') {
+    const diplomas = useDiplomas();
+
+    await diplomas.getData();
   }
 
   // Reset title after navigation
