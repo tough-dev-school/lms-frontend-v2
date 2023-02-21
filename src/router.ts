@@ -146,45 +146,47 @@ const router = createRouter({
   },
 });
 
-router.beforeEach(async (to: RouteLocationNormalized) => {
-  // Get main data if authorized
-  if (isAuthorized()) {
-    await fetchMainUserData();
-  }
-
-  // Redirect to exisiting route if route does not exist
-  if (!to.name) {
-    return { name: 'home' };
-  }
-
-  // Redirect to /login if unauthorized and route is not public
-  if (!(isAuthorized() || to.meta.isPublic)) {
-    let query = {};
-
-    if (to.fullPath !== '/') {
-      query = { ...query, next: encodeURIComponent(to.fullPath) };
+router.beforeEach(
+  async (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
+    // Get main data if authorized
+    if (isAuthorized()) {
+      await fetchMainUserData();
     }
 
-    return {
-      name: 'login',
-      query,
-    };
-  }
+    // Redirect to exisiting route if route does not exist
+    if (!to.name) {
+      return { name: 'home' };
+    }
 
-  if (to.name === 'materials') {
-    const materials = useMaterials();
+    // Redirect to /login if unauthorized and route is not public
+    if (!(isAuthorized() || to.meta.isPublic)) {
+      let query = {};
 
-    await materials.getData(String(to.params.id));
-  }
+      if (to.fullPath !== '/') {
+        query = { ...query, next: encodeURIComponent(to.fullPath) };
+      }
 
-  if (to.name === 'certificates') {
-    const diplomas = useDiplomas();
+      return {
+        name: 'login',
+        query,
+      };
+    }
 
-    await diplomas.getData();
-  }
+    if (to.name === 'materials' && to.params.id !== from.params.id) {
+      const materials = useMaterials();
 
-  // Reset title after navigation
-  document.title = 'Школа Сильных Программистов';
-});
+      await materials.getData(String(to.params.id));
+    }
+
+    if (to.name === 'certificates') {
+      const diplomas = useDiplomas();
+
+      await diplomas.getData();
+    }
+
+    // Reset title after navigation
+    document.title = 'Школа Сильных Программистов';
+  },
+);
 
 export default router;
