@@ -43,6 +43,10 @@ jobs:
           path: node_modules
           key: ${{ runner.os }}-v1-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('.node-version') }}
 
+      - name: Install dependencies 👨🏻‍💻
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci --no-audit --include=dev
+
       - name: Install playwright browsers 😈
         run: npx playwright install
 
