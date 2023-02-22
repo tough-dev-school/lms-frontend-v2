@@ -8,6 +8,7 @@ import useUser from '@/stores/user';
 import useStudies from '@/stores/studies';
 import useMaterials from './stores/materials';
 import useDiplomas from './stores/diplomas';
+import useLoading from './stores/loading';
 const VHomeView = () => import('@/views/VHomeView.vue');
 const VMailSentView = () => import('@/views/VMailSentView.vue');
 const VSettingsView = () => import('@/views/VSettingsView.vue');
@@ -53,7 +54,7 @@ export const routes = [
     path: '/login',
     name: 'login',
     component: VLoginView,
-    beforeEnter: disallowAuthorized,
+    beforeEnter: [disallowAuthorized],
     meta: {
       isPublic: true,
     },
@@ -62,7 +63,7 @@ export const routes = [
     path: '/login/mail-sent',
     name: 'mail-sent',
     component: VMailSentView,
-    beforeEnter: disallowAuthorized,
+    beforeEnter: [disallowAuthorized],
     meta: {
       isPublic: true,
     },
@@ -71,7 +72,7 @@ export const routes = [
     path: '/login/reset',
     name: 'login-reset',
     component: VLoginResetView,
-    beforeEnter: disallowAuthorized,
+    beforeEnter: [disallowAuthorized],
     meta: {
       isPublic: true,
     },
@@ -80,7 +81,7 @@ export const routes = [
     path: '/auth/password/reset/:uid/:token/',
     name: 'login-change',
     component: VLoginChangeView,
-    beforeEnter: disallowAuthorized,
+    beforeEnter: [disallowAuthorized],
     meta: {
       isPublic: true,
     },
@@ -113,11 +114,6 @@ export const routes = [
     path: '/materials/:id',
     name: 'materials',
     component: VNotionView,
-    beforeEnter: async (to: RouteLocationNormalized) => {
-      const materials = useMaterials();
-
-      await materials.getData(String(to.params.id));
-    },
   },
   {
     path: '/homework/questions/:questionId',
@@ -138,11 +134,6 @@ export const routes = [
     path: '/certificates',
     name: 'certificates',
     component: VCertificatesView,
-    beforeEnter: async () => {
-      const diplomas = useDiplomas();
-
-      await diplomas.getData();
-    },
   },
 ];
 
@@ -156,33 +147,51 @@ const router = createRouter({
   },
 });
 
-router.beforeEach(async (to: RouteLocationNormalized) => {
-  // Get main data if authorized
-  if (isAuthorized()) {
-    await fetchMainUserData();
-  }
-
-  // Redirect to exisiting route if route does not exist
-  if (!to.name) {
-    return { name: 'home' };
-  }
-
-  // Redirect to /login if unauthorized and route is not public
-  if (!(isAuthorized() || to.meta.isPublic)) {
-    let query = {};
-
-    if (to.fullPath !== '/') {
-      query = { ...query, next: encodeURIComponent(to.fullPath) };
+router.beforeEach(
+  async (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
+    // Get main data if authorized
+    if (isAuthorized()) {
+      await fetchMainUserData();
     }
 
-    return {
-      name: 'login',
-      query,
-    };
-  }
+    // Redirect to exisiting route if route does not exist
+    if (!to.name) {
+      return { name: 'home' };
+    }
 
-  // Reset title after navigation
-  document.title = 'Школа Сильных Программистов';
-});
+    // Redirect to /login if unauthorized and route is not public
+    if (!(isAuthorized() || to.meta.isPublic)) {
+      let query = {};
+
+      if (to.fullPath !== '/') {
+        query = { ...query, next: encodeURIComponent(to.fullPath) };
+      }
+
+      return {
+        name: 'login',
+        query,
+      };
+    }
+
+    if (to.name === 'materials' && to.params.id !== from.params.id) {
+      const materials = useMaterials();
+      const loading = useLoading();
+
+      loading.isLoading = true;
+      materials.material = undefined;
+      await materials.getData(String(to.params.id));
+      loading.isLoading = false;
+    }
+
+    if (to.name === 'certificates') {
+      const diplomas = useDiplomas();
+
+      await diplomas.getData();
+    }
+
+    // Reset title after navigation
+    document.title = 'Школа Сильных Программистов';
+  },
+);
 
 export default router;

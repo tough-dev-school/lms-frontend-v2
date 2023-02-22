@@ -1,11 +1,11 @@
 <script lang="ts" setup>
   // @ts-ignore
   import { NotionRenderer } from 'vue3-notion';
-  import { useRouter, useRoute } from 'vue-router';
+  import { useRoute, useRouter } from 'vue-router';
+  import { watch, computed } from 'vue';
   import VCard from '@/components/VCard.vue';
   import VButton from '@/components/VButton.vue';
   import useMaterials from '@/stores/materials';
-  import { onMounted } from 'vue';
   import { useTitle } from '@vueuse/core';
   import getNotionTitle from '@/utils/getNotionTitle';
 
@@ -14,22 +14,35 @@
   const title = useTitle();
   const route = useRoute();
 
+  watch(
+    () => route.params.id,
+    async () => {
+      if (materials.material) {
+        const materialId = String(route.params.id);
+        title.value = getNotionTitle(materialId, materials.material);
+      }
+    },
+    { immediate: true },
+  );
+
   const mapPageUrl = (id: string) => `/materials/${id}`;
 
-  onMounted(() => {
-    if (materials.material) {
-      const materialId = String(route.params.id);
-      title.value = getNotionTitle(materialId, materials.material);
-    }
+  const rendererProps = computed(() => {
+    return {
+      blockMap: materials.material,
+      mapPageUrl,
+      fullPage: true,
+      pageLinkOptions: {
+        component: 'RouterLink',
+        href: 'to',
+      },
+    };
   });
 </script>
 
 <template>
   <VCard class="pt-32" v-if="materials.material">
-    <NotionRenderer
-      :blockMap="materials.material"
-      :map-page-url="mapPageUrl"
-      fullPage />
+    <NotionRenderer v-bind="rendererProps" />
   </VCard>
   <div
     v-else-if="!materials.material"
