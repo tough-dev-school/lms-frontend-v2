@@ -68,8 +68,6 @@ describe('VLoginResetView', () => {
 
     window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
 
-    await wrapper.vm.$nextTick();
-
     expect(auth.requestReset).toHaveBeenCalledOnce();
     expect(auth.requestReset).toHaveBeenCalledWith(email);
   });
@@ -85,6 +83,8 @@ describe('VLoginResetView', () => {
   });
 
   test('enter is disabled if email is empty', async () => {
+    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+
     expect(auth.requestReset).not.toHaveBeenCalled();
   });
 
