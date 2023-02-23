@@ -63,7 +63,16 @@ describe('VLoginResetView', () => {
     expect(auth.requestReset).toHaveBeenCalledWith(email);
   });
 
-  test.todo('click on enter calls requestReset');
+  test('enter calls requestReset', async () => {
+    await typeInEmail();
+
+    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+
+    await wrapper.vm.$nextTick();
+
+    expect(auth.requestReset).toHaveBeenCalledOnce();
+    expect(auth.requestReset).toHaveBeenCalledWith(email);
+  });
 
   test('button is enabled if email is not empty', async () => {
     await typeInEmail();
