@@ -56,7 +56,6 @@ describe('VNewAnswer', () => {
 
   test('sends data on send', async () => {
     const { parentId, questionId } = defaultProps;
-    const homework = useHomework();
 
     await getEditorWrapper().vm.$emit('update:modelValue', text);
     await getButtonWrapper().vm.$emit('click');
