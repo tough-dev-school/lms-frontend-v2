@@ -13,17 +13,13 @@
 
   const email = ref('');
 
-  const loginWithEmail = async () => {
-    await auth.loginWithEmail(email.value);
-    if (auth.token) router.push({ name: 'home' });
-  };
-
   const handleResetRequest = async () => {
     await auth.requestReset(email.value);
   };
 
   onKeyStroke('Enter', (e: KeyboardEvent) => {
-    loginWithEmail();
+    if (!email.value) return;
+    handleResetRequest();
 
     e.preventDefault();
   });
@@ -36,15 +32,21 @@
       label="Электронная почта"
       tip="Мы отправим ссылку для сброса пароля по этому адресу"
       type="email"
-      v-model="email" />
+      v-model="email"
+      data-testid="email" />
     <template #footer>
-      <VButton @click="handleResetRequest" :disabled="!email" class="flex-grow"
+      <VButton
+        @click="handleResetRequest"
+        :disabled="!email"
+        class="flex-grow"
+        data-testid="send"
         >Отправить письмо</VButton
       >
       <VButton
         appearance="link"
         @click="router.push({ name: 'login' })"
-        class="flex-grow">
+        class="flex-grow"
+        data-testid="password">
         Войти по паролю
       </VButton>
     </template>
