@@ -27,7 +27,7 @@ describe('custom axios', () => {
 
   beforeEach(() => {
     const app = createApp({});
-    const pinia = createTestingPinia({ createSpy: vi.fn, stubActions: false });
+    const pinia = createTestingPinia({ createSpy: vi.fn });
     app.use(pinia);
     setActivePinia(pinia);
 
