@@ -6,9 +6,9 @@ import {
 import useAuth from '@/stores/auth';
 import useUser from '@/stores/user';
 import useStudies from '@/stores/studies';
-import useMaterials from './stores/materials';
-import useDiplomas from './stores/diplomas';
-import useLoading from './stores/loading';
+import useMaterials from '@/stores/materials';
+import useDiplomas from '@/stores/diplomas';
+import useLoading from '@/stores/loading';
 const VHomeView = () => import('@/views/VHomeView.vue');
 const VMailSentView = () => import('@/views/VMailSentView.vue');
 const VSettingsView = () => import('@/views/VSettingsView.vue');
