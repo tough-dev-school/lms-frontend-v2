@@ -6,9 +6,9 @@ import {
 import useAuth from '@/stores/auth';
 import useUser from '@/stores/user';
 import useStudies from '@/stores/studies';
-import useMaterials from './stores/materials';
-import useDiplomas from './stores/diplomas';
-import useLoading from './stores/loading';
+import useMaterials from '@/stores/materials';
+import useDiplomas from '@/stores/diplomas';
+import useLoading from '@/stores/loading';
 const VHomeView = () => import('@/views/VHomeView.vue');
 const VMailSentView = () => import('@/views/VMailSentView.vue');
 const VSettingsView = () => import('@/views/VSettingsView.vue');
@@ -21,6 +21,8 @@ const VHomeworkAnswerView = () => import('@/views/VHomeworkAnswerView.vue');
 const VLoginResetView = () => import('@/views/VLoginResetView.vue');
 const VLoginChangeView = () => import('@/views/VLoginChangeView.vue');
 const VCertificatesView = () => import('@/views/VCertificatesView.vue');
+import loginByToken from '@/router/loginByToken';
+import loginById from '@/router/loginById';
 
 const isAuthorized = () => {
   const auth = useAuth();
@@ -90,11 +92,7 @@ export const routes = [
     path: '/auth/passwordless/:passwordlessToken',
     name: 'token',
     component: VLoadingView,
-    beforeEnter: async (to: RouteLocationNormalized) => {
-      const auth = useAuth();
-      await auth.exchangeTokens(String(to.params.passwordlessToken));
-      return { name: 'home' };
-    },
+    beforeEnter: [loginByToken],
     meta: {
       isPublic: true,
     },
@@ -103,12 +101,7 @@ export const routes = [
     path: '/auth/as/:userId',
     name: 'auth-as',
     component: VLoadingView,
-    beforeEnter: async (to: RouteLocationNormalized) => {
-      const auth = useAuth();
-
-      await auth.loginWithUserId(String(to.params.userId));
-      return { name: 'home' };
-    },
+    beforeEnter: [loginById],
   },
   {
     path: '/materials/:id',
