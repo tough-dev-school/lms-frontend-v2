@@ -57,10 +57,22 @@ describe('VLoginResetView', () => {
   test('click on send calls requestReset', async () => {
     await typeInEmail();
 
-    await getSendWrapper().vm.$emit('click');
+    await getSendWrapper().trigger('submit');
 
     expect(auth.requestReset).toHaveBeenCalledOnce();
     expect(auth.requestReset).toHaveBeenCalledWith(email);
+  });
+
+  test('click on send redirects to mail-sent', async () => {
+    await typeInEmail();
+
+    await getSendWrapper().trigger('submit');
+
+    expect(auth.requestReset).toHaveBeenCalledOnce();
+    expect(routerPushMock).toHaveBeenCalledWith({
+      name: 'mail-sent',
+      query: { email },
+    });
   });
 
   test('button is enabled if email is not empty', async () => {
