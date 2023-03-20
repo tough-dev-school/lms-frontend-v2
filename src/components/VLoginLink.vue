@@ -4,7 +4,6 @@
   import VCard from '@/components/VCard.vue';
   import VTextInput from '@/components/VTextInput.vue';
   import { ref } from 'vue';
-  import { onKeyStroke } from '@vueuse/core';
   import useAuth from '@/stores/auth';
   import { useRouter } from 'vue-router';
 
@@ -19,24 +18,19 @@
   };
 
   const emit = defineEmits<{ (e: 'change'): void }>();
-
-  onKeyStroke('Enter', (e: KeyboardEvent) => {
-    loginWithEmail();
-
-    e.preventDefault();
-  });
 </script>
 
 <template>
-  <VCard>
+  <VCard tag="form" @submit.prevent="loginWithEmail">
     <VHeading tag="h1" class="mb-32">Вход и регистрация</VHeading>
     <VTextInput
       label="Электронная почта"
       tip="Мы отправим ссылку для входа по этому адресу"
       type="email"
+      autocomplete="username"
       v-model="email" />
     <template #footer>
-      <VButton @click="loginWithEmail" :disabled="!email" class="flex-grow"
+      <VButton type="submit" :disabled="!email" class="flex-grow"
         >Получить доступ</VButton
       >
       <VButton
