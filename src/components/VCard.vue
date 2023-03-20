@@ -1,16 +1,8 @@
 <script setup lang="ts">
   import { withDefaults } from 'vue';
 
-  export type CardTags =
-    | 'div'
-    | 'article'
-    | 'section'
-    | 'details'
-    | 'aside'
-    | 'li'
-    | 'ul';
   export interface Props {
-    tag?: CardTags;
+    tag?: string;
   }
 
   withDefaults(defineProps<Props>(), { tag: 'div' });

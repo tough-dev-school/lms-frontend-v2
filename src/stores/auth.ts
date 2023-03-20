@@ -79,8 +79,6 @@ const useAuth = defineStore('auth', {
     async requestReset(email: string) {
       try {
         await requestReset(email);
-        const toasts = useToasts();
-        toasts.addMessage('Письмо отправлено!', 'success');
       } catch (error: any) {}
     },
     resetAuth() {

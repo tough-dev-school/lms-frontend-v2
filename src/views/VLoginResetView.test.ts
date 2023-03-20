@@ -57,19 +57,22 @@ describe('VLoginResetView', () => {
   test('click on send calls requestReset', async () => {
     await typeInEmail();
 
-    await getSendWrapper().vm.$emit('click');
+    await getSendWrapper().trigger('submit');
 
     expect(auth.requestReset).toHaveBeenCalledOnce();
     expect(auth.requestReset).toHaveBeenCalledWith(email);
   });
 
-  test('enter calls requestReset', async () => {
+  test('click on send redirects to mail-sent', async () => {
     await typeInEmail();
 
-    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
+    await getSendWrapper().trigger('submit');
 
     expect(auth.requestReset).toHaveBeenCalledOnce();
-    expect(auth.requestReset).toHaveBeenCalledWith(email);
+    expect(routerPushMock).toHaveBeenCalledWith({
+      name: 'mail-sent',
+      query: { email },
+    });
   });
 
   test('button is enabled if email is not empty', async () => {
@@ -80,12 +83,6 @@ describe('VLoginResetView', () => {
 
   test('button is disabled if email is empty', async () => {
     expect(getSendWrapper().attributes('disabled')).toBe('true');
-  });
-
-  test('enter is disabled if email is empty', async () => {
-    window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter' }));
-
-    expect(auth.requestReset).not.toHaveBeenCalled();
   });
 
   test('click on password button returns to login', async () => {

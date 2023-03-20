@@ -4,7 +4,6 @@
   import VCard from '@/components/VCard.vue';
   import VTextInput from '@/components/VTextInput.vue';
   import { ref } from 'vue';
-  import { onKeyStroke } from '@vueuse/core';
   import useAuth from '@/stores/auth';
   import { useRouter } from 'vue-router';
 
@@ -15,30 +14,25 @@
 
   const handleResetRequest = async () => {
     await auth.requestReset(email.value);
+    router.push({ name: 'mail-sent', query: { email: email.value } });
   };
-
-  onKeyStroke('Enter', (e: KeyboardEvent) => {
-    if (!email.value) return;
-    handleResetRequest();
-
-    e.preventDefault();
-  });
 </script>
 
 <template>
-  <VCard class="mt-[25vh]">
+  <VCard tag="form" class="mt-[25vh]" @submit.prevent="handleResetRequest">
     <VHeading tag="h1" class="mb-32">Сброс пароля</VHeading>
     <VTextInput
       label="Электронная почта"
       tip="Мы отправим ссылку для сброса пароля по этому адресу"
       type="email"
       v-model="email"
+      autocomplete="username"
       data-testid="email" />
     <template #footer>
       <VButton
-        @click="handleResetRequest"
         :disabled="!email"
         class="flex-grow"
+        type="submit"
         data-testid="send"
         >Отправить письмо</VButton
       >
