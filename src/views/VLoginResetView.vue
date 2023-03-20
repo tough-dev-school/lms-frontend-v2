@@ -14,6 +14,7 @@
 
   const handleResetRequest = async () => {
     await auth.requestReset(email.value);
+    router.push({ name: 'login' });
   };
 </script>
 
