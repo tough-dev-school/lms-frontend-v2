@@ -30,7 +30,6 @@
       data-testid="email" />
     <template #footer>
       <VButton
-        @click="handleResetRequest"
         :disabled="!email"
         class="flex-grow"
         type="submit"
