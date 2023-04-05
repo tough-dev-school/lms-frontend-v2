@@ -119,7 +119,7 @@
       </component>
       <div class="thread-ruler" :class="{ 'mt-16': replyMode }">
         <VNewAnswer
-          v-if="replyMode"
+          v-show="replyMode"
           :questionId="originalPost.question"
           :parentId="originalPost.slug"
           @update="handleUpdate" />
