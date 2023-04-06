@@ -47,9 +47,9 @@
     "prismjs": "^1.29.0",
     "turndown": "^7.1.1",
     "vue": "^3.3.4",
+    "vue-notion": "^3.0.0-beta.1",
     "vue-router": "^4.1.5",
-    "vue-tabler-icons": "^2.15.0",
-    "vue3-notion": "github:tough-dev-school/vue3-notion"
+    "vue-tabler-icons": "^2.15.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",

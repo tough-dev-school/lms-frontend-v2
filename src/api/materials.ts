@@ -1,6 +1,5 @@
-// @ts-ignore
-import type { BlockMap } from 'vue3-notion/src/lib/types';
 import { createCustomAxiosInstance } from '@/axios';
+import type { BlockMap } from '@/types/materials';
 
 const axios = createCustomAxiosInstance({ useResponseCaseMiddleware: false });
 
