@@ -2,6 +2,7 @@
   import Placeholder from '@tiptap/extension-placeholder';
   import { BubbleMenu, EditorContent, Editor } from '@tiptap/vue-3';
   import StarterKit from '@tiptap/starter-kit';
+  import Image from '@tiptap/extension-image';
   import {
     BoldIcon,
     H1Icon,
@@ -11,6 +12,7 @@
     BlockquoteIcon,
     ListNumbersIcon,
     ListIcon,
+    PhotoIcon,
   } from 'vue-tabler-icons';
   import { onBeforeUnmount, watch, withDefaults } from 'vue';
 
@@ -35,6 +37,7 @@
       Placeholder.configure({
         placeholder: props.placeholder,
       }),
+      Image,
     ],
     onUpdate: () => {
       const html = editor.getHTML();
@@ -87,6 +90,14 @@
     editor.chain().focus().toggleBulletList().run();
   };
 
+  const addImage = () => {
+    const image = prompt('Enter image url', 'https://picsum.photos/200/300');
+
+    if (image) {
+      editor.commands.setImage({ src: 'https://picsum.photos/200/300' });
+    }
+  };
+
   const focus = () => {
     editor.chain().focus();
   };
@@ -98,6 +109,7 @@
 
 <template>
   <div class="bg-white dark:bg-dark-gray">
+    <button @click="addImage" class="bubble-button">Добавить картинку</button>
     <BubbleMenu
       class="bubble-menu"
       :editor="editor"
