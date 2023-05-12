@@ -45,7 +45,7 @@
   };
 
   const handleEdit = async () => {
-    text.value = htmlToMarkdown(props.answer.text);
+    text.value = props.answer.text;
     editMode.value = true;
   };
 
