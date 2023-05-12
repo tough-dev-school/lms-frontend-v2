@@ -21,8 +21,8 @@ const escapes: [RegExp, string][] = [
 ];
 
 const URL_REGEX =
-  /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi;
-var regex = new RegExp(URL_REGEX);
+  /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi; // eslint-disable-line no-useless-escape
+const regex = new RegExp(URL_REGEX);
 
 TurndownService.prototype.escape = function (string) {
   if (string.match(regex)) return string;
