@@ -84,7 +84,7 @@ support@tough-dev.school">
   }
 
   .notion-image-caption {
-    @apply dark:text-white;
+    color: inherit;
   }
 
   .notion-bookmark div {
