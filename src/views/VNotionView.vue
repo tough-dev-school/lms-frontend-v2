@@ -92,7 +92,7 @@ support@tough-dev.school">
   }
 
   .notion-callout {
-    @apply dark:border-0;
+    @apply border-0;
   }
 
   .notion-red_background,
