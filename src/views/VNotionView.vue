@@ -175,7 +175,7 @@ support@tough-dev.school">
 
   img.notion-page-icon {
     max-width: 100%;
-    max-width: 100%;
+    max-height: 100%;
     width: clamp(72px, 10vw, 96px);
     height: clamp(72px, 10vw, 96px);
   }
