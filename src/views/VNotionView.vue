@@ -70,7 +70,6 @@ support@tough-dev.school">
     @apply text-black dark:text-white;
   }
 
-  .notion-gray_background,
   .notion-bookmark,
   .notion-code {
     @apply dark:bg-dark-black;
@@ -93,7 +92,7 @@ support@tough-dev.school">
   }
 
   .notion-callout {
-    @apply dark:border-0;
+    @apply dark:border-0 dark:text-black;
   }
 
   .notion-page-cover {
