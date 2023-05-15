@@ -92,7 +92,28 @@ support@tough-dev.school">
   }
 
   .notion-callout {
-    @apply dark:border-0 dark:text-black;
+    @apply dark:border-0;
+  }
+
+  .notion-red_background,
+  .notion-pink_background,
+  .notion-blue_background,
+  .notion-purple_background,
+  .notion-teal_background,
+  .notion-yellow_background,
+  .notion-orange_background,
+  .notion-brown_background,
+  .notion-gray_background,
+  .notion-red_background_co,
+  .notion-pink_background_co,
+  .notion-blue_background_co,
+  .notion-purple_background_co,
+  .notion-teal_background_co,
+  .notion-yellow_background_co,
+  .notion-orange_background_co,
+  .notion-brown_background_co,
+  .notion-gray_background_co {
+    @apply dark:text-black;
   }
 
   .notion-page-cover {
