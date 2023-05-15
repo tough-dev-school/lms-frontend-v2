@@ -174,8 +174,8 @@ support@tough-dev.school">
   }
 
   img.notion-page-icon {
-    max-width: auto;
-    min-width: auto;
+    max-width: 100%;
+    max-width: 100%;
     width: clamp(72px, 10vw, 96px);
     height: clamp(72px, 10vw, 96px);
   }
