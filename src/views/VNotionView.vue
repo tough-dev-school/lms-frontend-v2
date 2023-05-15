@@ -151,4 +151,11 @@ support@tough-dev.school">
     background-color: var(--fg-color-0);
     border: none;
   }
+
+  .notion-page-icon {
+    max-width: auto;
+    min-width: auto;
+    width: clamp(72px, 10vw, 96px);
+    height: clamp(72px, 10vw, 96px);
+  }
 </style>
