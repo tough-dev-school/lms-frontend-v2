@@ -173,10 +173,14 @@ support@tough-dev.school">
     border: none;
   }
 
-  .notion-page-icon {
+  img.notion-page-icon {
     max-width: auto;
     min-width: auto;
     width: clamp(72px, 10vw, 96px);
     height: clamp(72px, 10vw, 96px);
+  }
+
+  .notion-page-icon-offset img {
+    margin-top: -50%;
   }
 </style>
