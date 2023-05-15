@@ -70,7 +70,6 @@ support@tough-dev.school">
     @apply text-black dark:text-white;
   }
 
-  .notion-gray_background,
   .notion-bookmark,
   .notion-code {
     @apply dark:bg-dark-black;
@@ -85,7 +84,7 @@ support@tough-dev.school">
   }
 
   .notion-image-caption {
-    @apply dark:text-white;
+    color: inherit;
   }
 
   .notion-bookmark div {
@@ -93,7 +92,28 @@ support@tough-dev.school">
   }
 
   .notion-callout {
-    @apply dark:border-0;
+    @apply border-0;
+  }
+
+  .notion-red_background,
+  .notion-pink_background,
+  .notion-blue_background,
+  .notion-purple_background,
+  .notion-teal_background,
+  .notion-yellow_background,
+  .notion-orange_background,
+  .notion-brown_background,
+  .notion-gray_background,
+  .notion-red_background_co,
+  .notion-pink_background_co,
+  .notion-blue_background_co,
+  .notion-purple_background_co,
+  .notion-teal_background_co,
+  .notion-yellow_background_co,
+  .notion-orange_background_co,
+  .notion-brown_background_co,
+  .notion-gray_background_co {
+    @apply dark:text-black;
   }
 
   .notion-page-cover {
@@ -151,5 +171,16 @@ support@tough-dev.school">
     height: 1px;
     background-color: var(--fg-color-0);
     border: none;
+  }
+
+  img.notion-page-icon {
+    max-width: 100%;
+    max-height: 100%;
+    width: clamp(72px, 10vw, 96px);
+    height: clamp(72px, 10vw, 96px);
+  }
+
+  .notion-page-icon-offset img {
+    margin-top: -50%;
   }
 </style>
