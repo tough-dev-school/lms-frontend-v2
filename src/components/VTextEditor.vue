@@ -14,6 +14,7 @@
     ListIcon,
     PhotoIcon,
   } from 'vue-tabler-icons';
+  import useHomework from '@/stores/homework';
   import { onBeforeUnmount, watch, withDefaults } from 'vue';
 
   export interface Props {
@@ -29,6 +30,8 @@
   const emit = defineEmits<{
     (e: 'update:modelValue', value: string): void;
   }>();
+
+  const homework = useHomework();
 
   const editor = new Editor({
     content: props.modelValue,
@@ -90,10 +93,10 @@
     editor.chain().focus().toggleBulletList().run();
   };
 
-  const addImage = () => {
-    const image = prompt('Enter image url', 'https://picsum.photos/200/300');
+  const addImage = async (event) => {
+    const response = await homework.sendImage(event.target.files[0]);
 
-    if (image) {
+    if (response) {
       editor.commands.setImage({ src: 'https://picsum.photos/200/300' });
     }
   };
@@ -109,7 +112,15 @@
 
 <template>
   <div class="bg-white dark:bg-dark-gray">
-    <button @click="addImage" class="bubble-button">Добавить картинку</button>
+    <label class="link cursor-pointer"
+      >Добавить картинку
+      <input
+        class="visually-hidden"
+        type="file"
+        @change="addImage($event)"
+        accept="image/*"
+        name="image"
+    /></label>
     <BubbleMenu
       class="bubble-menu"
       :editor="editor"

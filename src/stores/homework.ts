@@ -4,6 +4,7 @@ import {
   postAnswer,
   deleteAnswer,
   updateAnswer,
+  sendImage,
   getAnswers,
   getAnswer,
 } from '@/api/homework';
@@ -91,6 +92,9 @@ const useHomework = defineStore('homework', {
         await updateAnswer(answerId, text);
         toasts.addMessage('Сообщение отправлено', 'success');
       } catch (error: any) {}
+    },
+    async sendImage(file: File) {
+      return await sendImage(file);
     },
   },
 });
