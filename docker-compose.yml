@@ -17,12 +17,37 @@ services:
       - EMAIL_FROM=dev@localhost
       - EMAIL_ENABLED=On
       - FRONTEND_URL=http://localhost:3000/
+      - NOTION_MIDDLEWARE_URL=http://notion-middleware:8000
+      - DEFAULT_FILE_STORAGE=storages.backends.s3boto3.S3Boto3Storage
+      - AWS_S3_ENDPOINT_URL=http://s3:9000
+      - AWS_S3_CUSTOM_DOMAIN=localhost:9000/dev
+      - "AWS_S3_CUSTOM_DOMAIN_PROTOCOL=http:"
+      - AWS_ACCESS_KEY_ID=root
+      - AWS_SECRET_ACCESS_KEY=ibcxJ8Du
+      - AWS_STORAGE_BUCKET_NAME=dev
 
     ports:
       - 8000:8000
     links:
+      - s3
       - postgres
       - redis
+
+  notion-middleware:
+    image: ghcr.io/tough-dev-school/notion-middleware
+    env_file: ".env"
+
+  s3:
+    image: bitnami/minio
+    environment:
+      - MINIO_ROOT_USER=root
+      - MINIO_ROOT_PASSWORD=ibcxJ8Du
+      - MINIO_DEFAULT_BUCKETS=dev:public
+    volumes:
+      - s3-data:/data
+    ports:
+      - 9000:9000
+      - 9001:9001
 
   postgres:
     ports:
@@ -36,3 +61,4 @@ services:
 
 volumes:
   db-data:
+  s3-data:
