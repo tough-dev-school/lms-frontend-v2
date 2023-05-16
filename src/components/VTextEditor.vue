@@ -126,10 +126,14 @@
     editor.chain().focus().toggleBulletList().run();
   };
 
-  const addImage = async (event) => {
-    const { image } = await homework.sendImage(event.target.files[0]);
-
-    editor.commands.setImage({ src: image });
+  const addImage = async (event: Event) => {
+    if (event.target) {
+      const file = (event.target as HTMLInputElement).files?.[0];
+      if (file) {
+        const { image } = await homework.sendImage(file);
+        editor.commands.setImage({ src: image });
+      }
+    }
   };
 
   const focus = () => {
