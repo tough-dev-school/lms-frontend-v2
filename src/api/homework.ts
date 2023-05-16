@@ -81,3 +81,12 @@ export const updateAnswer = async (answerId: string, text: string) => {
 
   await axios.patch(url, { text: htmlToMarkdown(text) });
 };
+
+export const sendImage = async (file: File) => {
+  const formData = new FormData();
+  formData.append('image', file);
+
+  const url = `/api/v2/homework/answers/image/`;
+
+  return (await axios.post(url, formData)).data as { image: string };
+};
