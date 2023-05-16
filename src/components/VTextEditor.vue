@@ -140,15 +140,6 @@
 
 <template>
   <div class="bg-white dark:bg-dark-gray">
-    <label class="link cursor-pointer"
-      >Добавить картинку
-      <input
-        class="visually-hidden"
-        type="file"
-        @change="addImage($event)"
-        accept="image/*"
-        name="image"
-    /></label>
     <FloatingMenu
       class="float-menu"
       :editor="editor"
@@ -196,6 +187,15 @@
         :class="{ 'float-button_active': editor.isActive('bulletList') }">
         <ListIcon />
       </button>
+      <label class="float-button">
+        <PhotoIcon />
+        <input
+          class="visually-hidden"
+          type="file"
+          @change="addImage($event)"
+          accept="image/*"
+          name="image"
+      /></label>
     </FloatingMenu>
     <BubbleMenu
       class="bubble-menu"
