@@ -42,6 +42,31 @@
       }),
       Image,
     ],
+    editorProps: {
+      handleDrop: async (view, event, slice, moved) => {
+        if (
+          !moved &&
+          event.dataTransfer &&
+          event.dataTransfer.files &&
+          event.dataTransfer.files[0]
+        ) {
+          let file = event.dataTransfer.files[0];
+
+          const response = await homework.sendImage(file);
+          const { schema } = view.state;
+          const coordinates = view.posAtCoords({
+            left: event.clientX,
+            top: event.clientY,
+          });
+          const node = schema.nodes.image.create({ src: response.image });
+          const transaction = view.state.tr.insert(coordinates.pos, node);
+          view.dispatch(transaction);
+
+          return true;
+        }
+        return false;
+      },
+    },
     onUpdate: () => {
       const html = editor.getHTML();
       emit('update:modelValue', html);
