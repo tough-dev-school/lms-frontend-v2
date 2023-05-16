@@ -48,7 +48,7 @@
       Image,
     ],
     editorProps: {
-      handleDrop: async (view, event, slice, moved) => {
+      handleDrop: (view, event, slice, moved) => {
         if (
           !moved &&
           event.dataTransfer &&
@@ -57,15 +57,18 @@
         ) {
           let file = event.dataTransfer.files[0];
 
-          const { image } = await homework.sendImage(file);
-          const { schema } = view.state;
-          const coordinates = view.posAtCoords({
-            left: event.clientX,
-            top: event.clientY,
+          homework.sendImage(file).then(({ image }) => {
+            const { schema } = view.state;
+            const coordinates = view.posAtCoords({
+              left: event.clientX,
+              top: event.clientY,
+            });
+            if (coordinates) {
+              const node = schema.nodes.image.create({ src: image });
+              const transaction = view.state.tr.insert(coordinates.pos, node);
+              view.dispatch(transaction);
+            }
           });
-          const node = schema.nodes.image.create({ src: image });
-          const transaction = view.state.tr.insert(coordinates.pos, node);
-          view.dispatch(transaction);
 
           return true;
         }
