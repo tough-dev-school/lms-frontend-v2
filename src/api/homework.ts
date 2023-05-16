@@ -88,9 +88,5 @@ export const sendImage = async (file: File) => {
 
   const url = `/api/v2/homework/answers/image/`;
 
-  return await axios.post(url, formData, {
-    headers: {
-      'Content-Type': `multipart/form-data`,
-    },
-  });
+  await axios.post(url, formData);
 };

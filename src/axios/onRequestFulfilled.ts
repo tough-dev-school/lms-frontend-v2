@@ -11,9 +11,7 @@ const onRequestFulfilled = (
 
   request = cloneDeep(request);
 
-  request.headers = {
-    ...request.headers,
-  };
+  request.headers = request.headers || {};
 
   // Manage authorization via pinia
   if (auth.token) {
@@ -21,7 +19,7 @@ const onRequestFulfilled = (
   }
 
   // Convert data keys to target case
-  if (request.data) {
+  if (!(request.data instanceof FormData)) {
     request.data = requestCaseMiddleware(request.data, enableCaseMiddleware);
   }
 
