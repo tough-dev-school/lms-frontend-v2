@@ -6,7 +6,6 @@
   import { ref, onMounted } from 'vue';
   import VAnswer from '@/components/VAnswer.vue';
   import VCard from '@/components/VCard.vue';
-  import htmlToMarkdown from '@/utils/htmlToMarkdown';
   import type { Answer } from '@/types/homework';
 
   export interface Props {
@@ -45,7 +44,7 @@
   };
 
   const handleEdit = async () => {
-    text.value = htmlToMarkdown(props.answer.text);
+    text.value = props.answer.text;
     editMode.value = true;
   };
 
