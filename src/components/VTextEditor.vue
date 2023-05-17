@@ -45,7 +45,7 @@
       Placeholder.configure({
         placeholder: props.placeholder,
       }),
-      Image,
+      Image.configure({ inline: true }),
     ],
     editorProps: {
       handleDrop: (view, event, slice, moved) => {
