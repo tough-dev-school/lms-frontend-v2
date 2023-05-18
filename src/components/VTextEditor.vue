@@ -136,10 +136,6 @@
     }
   };
 
-  const focus = () => {
-    editor.chain().focus();
-  };
-
   onBeforeUnmount(() => {
     editor.destroy();
   });
@@ -222,14 +218,15 @@
         <ItalicIcon />
       </button>
     </BubbleMenu>
-    <EditorContent
-      :editor="editor"
-      class="prose max-w-none py-24 dark:prose-invert"
-      @click="focus" />
+    <EditorContent :editor="editor" class="EditorContent" />
   </div>
 </template>
 
 <style>
+  .EditorContent .ProseMirror {
+    @apply prose max-w-none py-24 dark:prose-invert;
+  }
+
   .bubble-menu,
   .float-menu {
     @apply flex rounded;
