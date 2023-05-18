@@ -88,7 +88,7 @@ export const getCommentData = (parent: Thread | Comment) => {
 
 export const getCommentsData = (
   parent: Thread | Comment,
-  length: number = 1,
+  length = 1,
 ): Comments => {
   return {
     slug: parent.slug,
@@ -96,6 +96,6 @@ export const getCommentsData = (
   };
 };
 
-export const getAnswersData = (length: number = 1) => {
+export const getAnswersData = (length = 1) => {
   return [...Array(length)].map(() => getAnswerData()) as Answer[];
 };

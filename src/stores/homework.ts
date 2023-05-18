@@ -52,7 +52,7 @@ const useHomework = defineStore('homework', {
         }
       } catch (error: any) {}
     },
-    async getAnswerById(answerId: string, threads: boolean = false) {
+    async getAnswerById(answerId: string, threads = false) {
       try {
         const answer = await getAnswer(answerId);
 

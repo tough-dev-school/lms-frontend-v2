@@ -9,11 +9,7 @@ export class VToastMessage {
   lifetime: number;
   type: VToastType;
 
-  constructor(
-    text: string,
-    type: VToastType = undefined,
-    lifetime: number = 5000,
-  ) {
+  constructor(text: string, type: VToastType = undefined, lifetime = 5000) {
     this.text = text;
     this.type = type;
     this.id = nanoid(8);
@@ -35,7 +31,7 @@ const useToasts = defineStore('toasts', {
       if (this.disabled) return;
       this.messages = [...this.messages, new VToastMessage(text, type)];
     },
-    removeMessage(id: String) {
+    removeMessage(id: string) {
       this.messages = this.messages.filter((message) => message.id !== id);
     },
     disable() {
