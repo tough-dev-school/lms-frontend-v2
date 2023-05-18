@@ -20,7 +20,8 @@
     PhotoIcon,
   } from 'vue-tabler-icons';
   import useHomework from '@/stores/homework';
-  import { onBeforeUnmount, watch, withDefaults } from 'vue';
+  import { onBeforeUnmount, watch, withDefaults, ref } from 'vue';
+  import { onKeyDown, useKeyModifier, useFocusWithin } from '@vueuse/core';
 
   export interface Props {
     modelValue: string;
@@ -32,9 +33,22 @@
     placeholder: '',
   });
 
+  const currentEditor = ref();
+  const { focused } = useFocusWithin(currentEditor);
+
   const emit = defineEmits<{
     (e: 'update:modelValue', value: string): void;
+    (e: 'send'): void;
   }>();
+
+  const isMetaPressed = useKeyModifier('Meta');
+
+  onKeyDown('Enter', (e) => {
+    if (isMetaPressed.value && focused.value) {
+      e.preventDefault();
+      emit('send');
+    }
+  });
 
   const homework = useHomework();
 
@@ -136,17 +150,13 @@
     }
   };
 
-  const focus = () => {
-    editor.chain().focus();
-  };
-
   onBeforeUnmount(() => {
     editor.destroy();
   });
 </script>
 
 <template>
-  <div class="bg-white dark:bg-dark-gray">
+  <div class="bg-white dark:bg-dark-gray" ref="currentEditor">
     <FloatingMenu
       class="float-menu"
       :editor="editor"
@@ -222,10 +232,7 @@
         <ItalicIcon />
       </button>
     </BubbleMenu>
-    <EditorContent
-      :editor="editor"
-      class="prose max-w-none py-24 dark:prose-invert"
-      @click="focus" />
+    <EditorContent :editor="editor" class="EditorContent" />
   </div>
 </template>
 
@@ -253,7 +260,7 @@
   }
 
   .ProseMirror {
-    @apply rounded bg-white py-8 px-16 outline-none dark:bg-dark-gray;
+    @apply prose max-w-none rounded bg-white py-24 px-16 outline-none dark:prose-invert dark:bg-dark-gray tablet:px-32;
   }
 
   .ProseMirror-focused {
