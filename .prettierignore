@@ -2,3 +2,6 @@ pnpm-lock.yaml
 dist/
 coverage/
 docker-compose.yml
+.husky/
+.prettierignore
+.lintstagedrc
