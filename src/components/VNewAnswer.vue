@@ -2,7 +2,7 @@
   import VTextEditor from '@/components/VTextEditor.vue';
   import VButton from '@/components/VButton.vue';
   import VCard from '@/components/VCard.vue';
-  import { ref, computed } from 'vue';
+  import { ref, computed, watch } from 'vue';
   import useHomework from '@/stores/homework';
 
   export interface Props {
@@ -15,7 +15,18 @@
     (e: 'update', slug: string): void;
   }>();
   const homework = useHomework();
-  const text = ref('');
+
+  const getInitialValue = () => {
+    if (props.parentId && localStorage.getItem(props.parentId)) {
+      return localStorage.getItem(props.parentId) as string;
+    } else if (localStorage.getItem(props.questionId)) {
+      return localStorage.getItem(props.questionId) as string;
+    } else {
+      return '';
+    }
+  };
+
+  const text = ref(getInitialValue());
 
   const sendPost = async () => {
     const answer = await homework.postAnswer({
@@ -36,6 +47,11 @@
     return text.value.split(emptyTag).every((node) => !!node === false)
       ? ''
       : text.value;
+  });
+
+  watch(text, (value) => {
+    const key = props.parentId || props.questionId;
+    localStorage.setItem(key, value);
   });
 </script>
 
