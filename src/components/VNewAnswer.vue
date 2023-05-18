@@ -58,7 +58,7 @@
 </script>
 
 <template>
-  <VCard class="pt-0">
+  <VCard class="VNewAnswer pt-0">
     <VTextEditor
       v-model="text"
       @send="sendPost"
@@ -72,3 +72,9 @@
     </template>
   </VCard>
 </template>
+
+<style>
+  .VNewAnswer .ProseMirror {
+    @apply px-0 tablet:px-0;
+  }
+</style>
