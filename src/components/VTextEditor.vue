@@ -223,10 +223,6 @@
 </template>
 
 <style>
-  .EditorContent .ProseMirror {
-    @apply prose max-w-none py-24 dark:prose-invert;
-  }
-
   .bubble-menu,
   .float-menu {
     @apply flex rounded;
@@ -250,7 +246,7 @@
   }
 
   .ProseMirror {
-    @apply rounded bg-white py-8 px-16 outline-none dark:bg-dark-gray;
+    @apply prose max-w-none rounded bg-white py-24 px-16 outline-none dark:prose-invert dark:bg-dark-gray tablet:px-32;
   }
 
   .ProseMirror-focused {
