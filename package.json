@@ -15,7 +15,7 @@
     "fix:lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore --max-warnings=0",
     "check:format": "prettier --write .",
     "check": "run-p fix:*",
-    "fix-all": "npm run lint:fix && npm run format:fix",
+    "fix": "run-p fix:*",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
