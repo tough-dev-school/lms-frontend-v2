@@ -28,7 +28,10 @@ jobs:
         run: npm ci --no-audit --include=dev
 
       - name: Run linter 👀
-        run: npm run lint
+        run: npm run lint:check
+
+      - name: Run prettier 🧹
+        run: npm run format:check
 
       - name: Run typecheck ✅
         run: npm run type-check
