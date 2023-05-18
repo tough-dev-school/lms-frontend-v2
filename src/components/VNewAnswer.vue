@@ -28,7 +28,17 @@
 
   const text = ref(getInitialValue());
 
+  const allowSend = computed(() => {
+    const emptyTag = /<[\w]*><\/[\w]*>/;
+
+    return text.value.split(emptyTag).every((node) => !!node === false)
+      ? ''
+      : text.value;
+  });
+
   const sendPost = async () => {
+    if (!allowSend.value) return;
+
     const answer = await homework.postAnswer({
       text: text.value,
       questionId: props.questionId,
@@ -41,14 +51,6 @@
     }
   };
 
-  const allowSend = computed(() => {
-    const emptyTag = /<[\w]*><\/[\w]*>/;
-
-    return text.value.split(emptyTag).every((node) => !!node === false)
-      ? ''
-      : text.value;
-  });
-
   watch(text, (value) => {
     const key = props.parentId || props.questionId;
     localStorage.setItem(key, value);
@@ -59,6 +61,7 @@
   <VCard class="pt-0">
     <VTextEditor
       v-model="text"
+      @send="sendPost"
       class="-mb-32 rounded-t border-offwhite dark:border-dark-black"
       data-testid="editor"
       placeholder="Напишите ответ здесь" />

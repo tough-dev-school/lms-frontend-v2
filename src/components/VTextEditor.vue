@@ -20,7 +20,8 @@
     PhotoIcon,
   } from 'vue-tabler-icons';
   import useHomework from '@/stores/homework';
-  import { onBeforeUnmount, watch, withDefaults } from 'vue';
+  import { onBeforeUnmount, watch, withDefaults, ref } from 'vue';
+  import { onKeyDown, useKeyModifier, useFocusWithin } from '@vueuse/core';
 
   export interface Props {
     modelValue: string;
@@ -32,9 +33,22 @@
     placeholder: '',
   });
 
+  const currentEditor = ref();
+  const { focused } = useFocusWithin(currentEditor);
+
   const emit = defineEmits<{
     (e: 'update:modelValue', value: string): void;
+    (e: 'send'): void;
   }>();
+
+  const isMetaPressed = useKeyModifier('Meta');
+
+  onKeyDown('Enter', (e) => {
+    if (isMetaPressed.value && focused.value) {
+      e.preventDefault();
+      emit('send');
+    }
+  });
 
   const homework = useHomework();
 
@@ -142,7 +156,7 @@
 </script>
 
 <template>
-  <div class="bg-white dark:bg-dark-gray">
+  <div class="bg-white dark:bg-dark-gray" ref="currentEditor">
     <FloatingMenu
       class="float-menu"
       :editor="editor"

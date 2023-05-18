@@ -3,7 +3,7 @@
   import VTextEditor from '@/components/VTextEditor.vue';
   import VButton from '@/components/VButton.vue';
   import useHomework from '@/stores/homework';
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, computed } from 'vue';
   import VAnswer from '@/components/VAnswer.vue';
   import VCard from '@/components/VCard.vue';
   import type { Answer } from '@/types/homework';
@@ -30,7 +30,10 @@
   const editTime = ref(30);
   const deleteTime = ref(10);
 
+  const isDisabled = computed(() => !(text.value.length > 0));
+
   const updateAnswer = async () => {
+    if (isDisabled.value) return;
     await homework.updateAnswer(props.answer.slug, text.value);
     emit('update');
     editMode.value = false;
@@ -72,9 +75,10 @@
   <VCard v-else class="px-0 pt-0 tablet:px-0">
     <VTextEditor
       v-model="text"
+      @send="updateAnswer"
       class="mb-16 rounded-t border-b border-offwhite" />
     <div class="flex flex-row-reverse px-32">
-      <VButton @click="updateAnswer" :disabled="!(text.length > 0)" class="h-32"
+      <VButton @click="updateAnswer" :disabled="isDisabled" class="h-32"
         >Сохранить</VButton
       >
     </div>
