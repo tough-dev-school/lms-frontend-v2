@@ -5,7 +5,7 @@ import VCertificateCard from './VCertificateCard.vue';
 import { getDiplomasData } from '@/mocks/diplomas';
 import type VCertificate from './VCertificate.vue';
 
-let diplomas = getDiplomasData();
+const diplomas = getDiplomasData();
 
 const defaultProps = {
   course: diplomas[0].course.name,

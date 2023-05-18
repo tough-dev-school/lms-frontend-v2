@@ -26,7 +26,7 @@ describe('VCard', () => {
   });
 
   test('card has slot', () => {
-    let content = faker.finance.account();
+    const content = faker.finance.account();
 
     wrapper = mount(VCard, {
       shallow: true,

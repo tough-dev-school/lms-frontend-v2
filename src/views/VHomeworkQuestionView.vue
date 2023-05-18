@@ -53,7 +53,9 @@
       <VHeading tag="h2" class="mb-24">Ответ</VHeading>
 
       <VCard class="mb-16 bg-yellow-light" v-if="answer">
-        <VHeading tag="h3" class="mb-8">Поделиться ссылкой на сделанную домашку</VHeading>
+        <VHeading tag="h3" class="mb-8"
+          >Поделиться ссылкой на сделанную домашку</VHeading
+        >
         <RouterLink
           class="link block"
           :to="{

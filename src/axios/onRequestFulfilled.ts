@@ -5,7 +5,7 @@ import cloneDeep from 'lodash/cloneDeep';
 
 const onRequestFulfilled = (
   request: AxiosRequestConfig,
-  enableCaseMiddleware: boolean = true,
+  enableCaseMiddleware = true,
 ) => {
   const auth = useAuth();
 

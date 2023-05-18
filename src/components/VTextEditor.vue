@@ -55,7 +55,7 @@
           event.dataTransfer.files &&
           event.dataTransfer.files[0]
         ) {
-          let file = event.dataTransfer.files[0];
+          const file = event.dataTransfer.files[0];
 
           homework.sendImage(file).then(({ image }) => {
             const { schema } = view.state;

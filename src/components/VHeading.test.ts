@@ -24,7 +24,7 @@ describe('VHeading', () => {
   });
 
   test('heading has slot', () => {
-    let content = faker.finance.account();
+    const content = faker.finance.account();
 
     wrapper = mount(VHeading, {
       shallow: true,
