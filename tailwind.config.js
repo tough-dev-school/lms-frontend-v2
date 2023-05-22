@@ -14,6 +14,7 @@ const spacing = (base, limit, unit = 'px') => {
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
   content: ['./index.html', './src/**/*.{js,ts,vue,jsx,tsx}'],
   theme: {
     fontFamily: {
