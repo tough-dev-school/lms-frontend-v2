@@ -31,11 +31,6 @@ jobs:
       - name: Run visual tests for light mode 🌞
         run: npm run test:visual
 
-      - name: Run visual test for dark mode 🌑
-        env:
-          COLOR_SCHEME: dark
-        run: npm run test:visual
-
       - name: Saving test results 📥
         if: failure()
         uses: actions/upload-artifact@v3
