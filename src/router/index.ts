@@ -182,8 +182,8 @@ router.beforeEach(
       await diplomas.getData();
     }
 
-    // Reset title after navigation
-    document.title = 'Школа Сильных Программистов';
+    // Reset title after navigation (except hash change)
+    if (from.path !== to.path) document.title = 'Школа Сильных Программистов';
   },
 );
 
