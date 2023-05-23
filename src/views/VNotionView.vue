@@ -19,7 +19,8 @@
     async () => {
       if (materials.material) {
         const materialId = String(route.params.id);
-        title.value = getNotionTitle(materialId, materials.material);
+        const notionTitle = getNotionTitle(materialId, materials.material);
+        if (notionTitle) title.value = notionTitle;
       }
     },
     { immediate: true },
