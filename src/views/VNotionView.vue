@@ -3,6 +3,14 @@
   import { NotionRenderer } from 'vue3-notion';
   import { useRoute, useRouter } from 'vue-router';
   import { watch, computed } from 'vue';
+
+  import 'prismjs';
+  import 'prismjs/themes/prism.css';
+  import 'prismjs/components/prism-typescript.js';
+  import 'prismjs/components/prism-ruby.js';
+  import 'prismjs/components/prism-python.js';
+  import 'prismjs/components/prism-bash.js';
+
   import VCard from '@/components/VCard.vue';
   import VButton from '@/components/VButton.vue';
   import useMaterials from '@/stores/materials';
@@ -43,7 +51,7 @@
 
 <template>
   <VCard class="pt-32" v-if="materials.material">
-    <NotionRenderer v-bind="rendererProps" />
+    <NotionRenderer v-bind="rendererProps" prism />
   </VCard>
   <div
     v-else-if="!materials.material"
