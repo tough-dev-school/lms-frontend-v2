@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3';
 import App from '@/App.vue';
 import vueRouter from 'storybook-vue3-router';
 import { routes } from '@/router';
@@ -33,7 +33,7 @@ export default {
   },
 } as Meta;
 
-const Template: Story = (args) => ({
+const Template: StoryFn = (args) => ({
   components: { App },
   setup() {
     return { args };
@@ -86,100 +86,126 @@ const decorate = (initialRoute: string, callback: () => void = () => {}) => {
   ];
 };
 
-export const Login = Template.bind({});
-Login.args = {};
-Login.decorators = decorate('/login');
+export const Login = {
+  render: Template,
+  args: {},
+  decorators: decorate('/login'),
+};
 
-export const MailSent = Template.bind({});
-MailSent.args = {};
-MailSent.decorators = decorate('/login/mail-sent?email=demo@mail.com');
+export const MailSent = {
+  render: Template,
+  args: {},
+  decorators: decorate('/login/mail-sent?email=demo@mail.com'),
+};
 
-export const Certificates = Template.bind({});
-Certificates.args = {};
-Certificates.decorators = decorate('/certificates', () => {
-  const diplomas = useDiplomas();
-  diplomas.items = diplomasData;
-});
+export const Certificates = {
+  render: Template,
+  args: {},
 
-export const Settings = Template.bind({});
-Settings.args = {};
-Settings.decorators = decorate('/settings');
+  decorators: decorate('/certificates', () => {
+    const diplomas = useDiplomas();
+    diplomas.items = diplomasData;
+  }),
+};
 
-export const ResetPassword = Template.bind({});
-ResetPassword.args = {};
-ResetPassword.decorators = decorate('/login/reset');
+export const Settings = {
+  render: Template,
+  args: {},
+  decorators: decorate('/settings'),
+};
 
-export const ChangePassword = Template.bind({});
-ChangePassword.args = {};
-ChangePassword.decorators = decorate(
-  '/auth/password/reset/1234567890/1234567890',
-);
+export const ResetPassword = {
+  render: Template,
+  args: {},
+  decorators: decorate('/login/reset'),
+};
 
-export const Homepage = Template.bind({});
-Homepage.args = {};
-Homepage.decorators = decorate('/');
+export const ChangePassword = {
+  render: Template,
+  args: {},
 
-export const NotionView = Template.bind({});
-NotionView.args = {};
-NotionView.decorators = decorate('/materials/1234567890');
+  decorators: decorate('/auth/password/reset/1234567890/1234567890'),
+};
 
-export const NotionViewMissing = Template.bind({});
-NotionViewMissing.args = {};
-NotionViewMissing.decorators = decorate('/materials/1234567890', () => {
-  const materials = useMaterials();
-  materials.$patch({ material: undefined });
-});
+export const Homepage = {
+  render: Template,
+  args: {},
+  decorators: decorate('/'),
+};
 
-export const HomeworkAnswerView = Template.bind({});
-HomeworkAnswerView.args = {};
-HomeworkAnswerView.decorators = decorate('/homework/answers/1234567890', () => {
-  const homework = useHomework();
-  const answers = [
-    getThreadData(getAnswerData({ content: contentHtml, author: authorData })),
-  ];
+export const NotionView = {
+  render: Template,
+  args: {},
+  decorators: decorate('/materials/1234567890'),
+};
 
-  const patchComment = (value: Comment): Comment => {
-    value.author = authorData;
+export const NotionViewMissing = {
+  render: Template,
+  args: {},
 
-    return value;
-  };
+  decorators: decorate('/materials/1234567890', () => {
+    const materials = useMaterials();
+    materials.$patch({ material: undefined });
+  }),
+};
 
-  const getBranch = () => {
-    const level1 = [getCommentData(answers[0])].map(patchComment)[0];
-    const level2 = getCommentsData(level1, 2).descendants.map(patchComment);
-    const level3 = getCommentsData(level2[0], 2).descendants.map(patchComment);
+export const HomeworkAnswerView = {
+  render: Template,
+  args: {},
 
-    level1.descendants = level2;
-    level2[0].descendants = level3;
+  decorators: decorate('/homework/answers/1234567890', () => {
+    const homework = useHomework();
+    const answers = [
+      getThreadData(
+        getAnswerData({ content: contentHtml, author: authorData }),
+      ),
+    ];
 
-    return level1;
-  };
+    const patchComment = (value: Comment): Comment => {
+      value.author = authorData;
 
-  answers[0].descendants = [
-    // comment with formatting
-    {
-      ...getCommentData(answers[0]),
-      ...getAnswerData({ content: contentHtml, author: authorData }),
-    },
-    // own comment
-    {
-      ...getCommentData(answers[0]),
-      author: { ...authorData, uuid: userId },
-    },
-    // comment branch
-    getBranch(),
-  ];
+      return value;
+    };
 
-  homework.$patch({
-    answers: answers,
-  });
-});
+    const getBranch = () => {
+      const level1 = [getCommentData(answers[0])].map(patchComment)[0];
+      const level2 = getCommentsData(level1, 2).descendants.map(patchComment);
+      const level3 = getCommentsData(level2[0], 2).descendants.map(
+        patchComment,
+      );
 
-export const HomeworkExpertView = Template.bind({});
-HomeworkExpertView.args = {};
-HomeworkExpertView.decorators = decorate(
-  '/homework/question-admin/1234567890',
-  () => {
+      level1.descendants = level2;
+      level2[0].descendants = level3;
+
+      return level1;
+    };
+
+    answers[0].descendants = [
+      // comment with formatting
+      {
+        ...getCommentData(answers[0]),
+        ...getAnswerData({ content: contentHtml, author: authorData }),
+      },
+      // own comment
+      {
+        ...getCommentData(answers[0]),
+        author: { ...authorData, uuid: userId },
+      },
+      // comment branch
+      getBranch(),
+    ];
+
+    homework.$patch({
+      answers: answers,
+    });
+  }),
+};
+
+export const HomeworkExpertView = {
+  render: Template,
+  args: {},
+
+  decorators: decorate('/homework/question-admin/1234567890', () => {
     const homework = useHomework();
     const answers = [
       answerData,
@@ -189,14 +215,14 @@ HomeworkExpertView.decorators = decorate(
     homework.$patch({
       answers: answers,
     });
-  },
-);
+  }),
+};
 
-export const HomeworkQuestionView = Template.bind({});
-HomeworkQuestionView.args = {};
-HomeworkQuestionView.decorators = decorate(
-  '/homework/questions/1234567890',
-  () => {
+export const HomeworkQuestionView = {
+  render: Template,
+  args: {},
+
+  decorators: decorate('/homework/questions/1234567890', () => {
     const homework = useHomework();
     const answers = [
       merge({}, answerData, {
@@ -210,5 +236,5 @@ HomeworkQuestionView.decorators = decorate(
     homework.$patch({
       answers: answers,
     });
-  },
-);
+  }),
+};

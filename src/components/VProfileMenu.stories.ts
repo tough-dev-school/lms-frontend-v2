@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3';
 import VProfileMenu from '@/components/VProfileMenu.vue';
 import useUser from '@/stores/user';
 import { faker } from '@faker-js/faker';
@@ -8,7 +8,7 @@ export default {
   component: VProfileMenu,
 } as Meta;
 
-const Template: Story = (args) => ({
+const Template: StoryFn = (args) => ({
   components: { VProfileMenu },
   setup() {
     const user = useUser();
@@ -22,5 +22,7 @@ const Template: Story = (args) => ({
   template: '<VProfileMenu v-bind="args" />',
 });
 
-export const Default = Template.bind({});
-Default.args = {};
+export const Default = {
+  render: Template,
+  args: {},
+};

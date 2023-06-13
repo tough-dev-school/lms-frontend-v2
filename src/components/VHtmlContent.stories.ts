@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3';
 import VHtmlContent from '@/components/VHtmlContent.vue';
 import { contentHtml } from '@/mocks/homework';
 
@@ -7,7 +7,7 @@ export default {
   component: VHtmlContent,
 } as Meta;
 
-const Template: Story = (args) => ({
+const Template: StoryFn = (args) => ({
   components: { VHtmlContent },
   setup() {
     return { args };
@@ -15,7 +15,10 @@ const Template: Story = (args) => ({
   template: '<VHtmlContent v-bind="args" />',
 });
 
-export const Default = Template.bind({});
-Default.args = {
-  content: contentHtml,
+export const Default = {
+  render: Template,
+
+  args: {
+    content: contentHtml,
+  },
 };

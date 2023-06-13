@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3';
 import VTextInput from '@/components/VTextInput.vue';
 
 export default {
@@ -6,7 +6,7 @@ export default {
   component: VTextInput,
 } as Meta;
 
-const Template: Story = (args) => ({
+const Template: StoryFn = (args) => ({
   components: { VTextInput },
   setup() {
     return { args };
@@ -14,18 +14,27 @@ const Template: Story = (args) => ({
   template: '<VTextInput placeholder="Enter some text…" v-bind="args" />',
 });
 
-export const Default = Template.bind({});
-Default.args = {
-  tip: 'This is a tooltip for text',
-  label: 'Basic text input',
+export const Default = {
+  render: Template,
+
+  args: {
+    tip: 'This is a tooltip for text',
+    label: 'Basic text input',
+  },
 };
 
-export const ErrorWithMessage = Template.bind({});
-ErrorWithMessage.args = {
-  error: 'This is error',
+export const ErrorWithMessage = {
+  render: Template,
+
+  args: {
+    error: 'This is error',
+  },
 };
 
-export const ErrorWithoutMessage = Template.bind({});
-ErrorWithoutMessage.args = {
-  error: true,
+export const ErrorWithoutMessage = {
+  render: Template,
+
+  args: {
+    error: true,
+  },
 };

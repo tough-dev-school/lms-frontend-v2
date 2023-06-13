@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3';
 
 import VAvatar from '@/components/VAvatar.vue';
 
@@ -7,7 +7,7 @@ export default {
   component: VAvatar,
 } as Meta;
 
-const Template: Story = (args) => ({
+const Template: StoryFn = (args) => ({
   components: { VAvatar },
   setup() {
     return { args };
@@ -15,8 +15,11 @@ const Template: Story = (args) => ({
   template: '<VAvatar v-bind="args" />',
 });
 
-export const Default = Template.bind({});
-Default.args = {
-  firstName: 'John',
-  lastName: 'Doe',
+export const Default = {
+  render: Template,
+
+  args: {
+    firstName: 'John',
+    lastName: 'Doe',
+  },
 };

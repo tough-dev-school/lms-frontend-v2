@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3';
 import VButton from '@/components/VButton.vue';
 
 export default {
@@ -6,7 +6,7 @@ export default {
   component: VButton,
 } as Meta;
 
-const Template: Story = (args) => ({
+const Template: StoryFn = (args) => ({
   components: { VButton },
   setup() {
     return { args };
@@ -14,12 +14,18 @@ const Template: Story = (args) => ({
   template: '<VButton v-bind="args">Press me</VButton>',
 });
 
-export const Default = Template.bind({});
-Default.args = {
-  appearance: 'button',
+export const Default = {
+  render: Template,
+
+  args: {
+    appearance: 'button',
+  },
 };
 
-export const Link = Template.bind({});
-Link.args = {
-  appearance: 'link',
+export const Link = {
+  render: Template,
+
+  args: {
+    appearance: 'link',
+  },
 };

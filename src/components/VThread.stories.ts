@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3';
 import VThread from '@/components/VThread.vue';
 import { getCommentsData, getThreadData } from '@/mocks/homework';
 import dayjs from 'dayjs';
@@ -18,7 +18,7 @@ export default {
   component: VThread,
 } as Meta;
 
-const Template: Story = (args) => ({
+const Template: StoryFn = (args) => ({
   components: { VThread },
   setup() {
     const user = useUser();
@@ -30,13 +30,18 @@ const Template: Story = (args) => ({
   template: '<VThread v-bind="args" />',
 });
 
-export const Default = Template.bind({});
-Default.args = { originalPost };
+export const Default = {
+  render: Template,
+  args: { originalPost },
+};
 
-export const Own = Template.bind({});
-Own.args = {
-  originalPost: {
-    ...originalPost,
-    author: { ...originalPost.author, uuid: userId },
+export const Own = {
+  render: Template,
+
+  args: {
+    originalPost: {
+      ...originalPost,
+      author: { ...originalPost.author, uuid: userId },
+    },
   },
 };

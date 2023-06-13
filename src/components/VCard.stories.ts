@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3';
 import VCard from '@/components/VCard.vue';
 
 export default {
@@ -6,7 +6,7 @@ export default {
   component: VCard,
 } as Meta;
 
-const Template: Story = (args) => ({
+const Template: StoryFn = (args) => ({
   components: { VCard },
   setup() {
     return { args };
@@ -14,5 +14,7 @@ const Template: Story = (args) => ({
   template: '<VCard v-bind="args">This is card</VCard>',
 });
 
-export const Default = Template.bind({});
-Default.args = {};
+export const Default = {
+  render: Template,
+  args: {},
+};

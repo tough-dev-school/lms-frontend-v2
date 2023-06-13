@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3';
 import VTextEditor from '@/components/VTextEditor.vue';
 
 export default {
@@ -6,7 +6,7 @@ export default {
   component: VTextEditor,
 } as Meta;
 
-const Template: Story = (args) => ({
+const Template: StoryFn = (args) => ({
   components: { VTextEditor },
   setup() {
     return { args };
@@ -14,10 +14,15 @@ const Template: Story = (args) => ({
   template: '<VTextEditor v-bind="args" />',
 });
 
-export const Default = Template.bind({});
-Default.args = {};
+export const Default = {
+  render: Template,
+  args: {},
+};
 
-export const Placeholder = Template.bind({});
-Placeholder.args = {
-  placeholder: 'You can change placeholder text',
+export const Placeholder = {
+  render: Template,
+
+  args: {
+    placeholder: 'You can change placeholder text',
+  },
 };

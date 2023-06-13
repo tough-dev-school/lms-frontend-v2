@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3';
 import VCertificateCard from '@/components/VCertificateCard.vue';
 import { getDiplomasData } from '@/mocks/diplomas';
 
@@ -7,7 +7,7 @@ export default {
   component: VCertificateCard,
 } as Meta;
 
-const Template: Story = (args) => ({
+const Template: StoryFn = (args) => ({
   components: { VCertificateCard },
   setup() {
     return { args };
@@ -17,11 +17,14 @@ const Template: Story = (args) => ({
 
 const diplomas = getDiplomasData(['Cool course']);
 
-export const Default = Template.bind({});
-Default.args = {
-  course: diplomas[0].course.name,
-  certificates: diplomas.map((diploma) => {
-    diploma.image = 'https://picsum.photos/1480/1048';
-    return diploma;
-  }),
+export const Default = {
+  render: Template,
+
+  args: {
+    course: diplomas[0].course.name,
+    certificates: diplomas.map((diploma) => {
+      diploma.image = 'https://picsum.photos/1480/1048';
+      return diploma;
+    }),
+  },
 };
