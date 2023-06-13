@@ -66,3 +66,4 @@ jobs:
           commit_message: Update screenshots
           branch: ${{ fromJSON(steps.get-pr.outputs.result).head.ref }}
           file_pattern: '*.png'
+          commit_options: '--no-verify'
