@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
 import App from '@/App.vue';
-import vueRouter from 'storybook-vue3-router';
+import { vueRouter } from 'storybook-vue3-router';
 import { routes } from '@/router';
 import useUser from '@/stores/user';
 import useToasts from '@/stores/toasts';
