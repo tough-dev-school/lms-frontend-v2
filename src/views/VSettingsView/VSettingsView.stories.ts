@@ -8,7 +8,7 @@ export default {
   decorators: [defaultLayoutDecorator],
 } as Meta;
 
-const Template: StoryFn = (args) => ({
+const Template: StoryFn = () => ({
   components: { VSettingsView },
   template: '<VSettingsView v-bind="args" />',
 });
