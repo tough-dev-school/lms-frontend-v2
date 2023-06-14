@@ -2,10 +2,12 @@ import type { Meta, StoryFn } from '@storybook/vue3';
 import VSettingsView from './VSettingsView.vue';
 import useUser from '@/stores/user';
 import { faker } from '@faker-js/faker';
+import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 
 export default {
   title: 'App/VSettingsView',
   component: VSettingsView,
+  decorators: [defaultLayoutDecorator],
 } as Meta;
 
 const Template: StoryFn = (args) => ({

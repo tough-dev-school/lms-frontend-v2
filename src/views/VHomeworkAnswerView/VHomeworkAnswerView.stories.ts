@@ -4,6 +4,7 @@ import VHomeworkAnswerView from './VHomeworkAnswerView.vue';
 export default {
   title: 'App/VHomeworkAnswerView',
   component: VHomeworkAnswerView,
+  decorators: [defaultLayoutDecorator],
 } as Meta;
 
 const Template: StoryFn = (args) => ({

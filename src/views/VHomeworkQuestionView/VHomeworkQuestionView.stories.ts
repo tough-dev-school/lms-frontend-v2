@@ -1,9 +1,11 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
 import VHomeworkQuestionView from './VHomeworkQuestionView.vue';
+import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 
 export default {
   title: 'App/VHomeworkQuestionView',
   component: VHomeworkQuestionView,
+  decorators: [defaultLayoutDecorator],
 } as Meta;
 
 const Template: StoryFn = (args) => ({

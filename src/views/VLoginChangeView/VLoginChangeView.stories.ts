@@ -4,6 +4,7 @@ import VLoginChangeView from './VLoginChangeView.vue';
 export default {
   title: 'App/VLoginChangeView',
   component: VLoginChangeView,
+  decorators: [defaultLayoutDecorator],
 } as Meta;
 
 const Template: StoryFn = (args) => ({
