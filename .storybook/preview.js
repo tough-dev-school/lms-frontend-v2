@@ -6,14 +6,7 @@ import { createPinia } from 'pinia';
 import FloatingVue from 'floating-vue';
 import 'floating-vue/dist/style.css';
 
-const pinia = createPinia();
-
-setup((app) => {
-  app.use(FloatingVue);
-  app.use(pinia);
-});
-
-export const parameters = {
+const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
   controls: {
     matchers: {
@@ -47,3 +40,15 @@ export const parameters = {
     defaultViewport: 'fluid',
   },
 };
+
+setup((app) => {
+  app.use(FloatingVue);
+  app.use(createPinia());
+});
+
+/** @type { import('@storybook/vue3').Preview } */
+const preview = {
+  parameters,
+};
+
+export default preview;
