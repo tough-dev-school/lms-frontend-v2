@@ -3,8 +3,10 @@ import '../src/tailwind.css';
 
 import { setup } from '@storybook/vue3';
 import { createPinia } from 'pinia';
+import { routes } from '@/router';
 import FloatingVue from 'floating-vue';
 import 'floating-vue/dist/style.css';
+import { createRouter, createWebHistory } from 'vue-router';
 
 const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -42,6 +44,12 @@ const parameters = {
 };
 
 setup((app) => {
+  app.use(
+    createRouter({
+      history: createWebHistory(import.meta.env.BASE_URL),
+      routes,
+    }),
+  );
   app.use(FloatingVue);
   app.use(createPinia());
 });
