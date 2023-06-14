@@ -1,15 +1,17 @@
 import '../src/fonts.css';
 import '../src/tailwind.css';
 
-import { app } from '@storybook/vue3';
+import { setup } from '@storybook/vue3';
 import { createPinia } from 'pinia';
 import FloatingVue from 'floating-vue';
 import 'floating-vue/dist/style.css';
 
 const pinia = createPinia();
 
-app.use(FloatingVue);
-app.use(pinia);
+setup((app) => {
+  app.use(FloatingVue);
+  app.use(pinia);
+});
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
