@@ -7,9 +7,7 @@ import useMaterials from '@/stores/materials';
 import useStudies from '@/stores/studies';
 import useToasts from '@/stores/toasts';
 import useUser from '@/stores/user';
-import { faker } from '@faker-js/faker';
-
-const userId = faker.datatype.uuid();
+import { userId } from '@/mocks/userId';
 
 const layoutDecorator = (story, layout) => ({
   components: { layout, story },

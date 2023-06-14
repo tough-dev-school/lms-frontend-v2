@@ -1,6 +1,8 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
 import VCertificatesView from './VCertificatesView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
+import useDiplomas from '@/stores/diplomas';
+import { diplomasData } from '@/mocks/diplomas';
 
 export default {
   title: 'App/VCertificatesView',
@@ -11,6 +13,9 @@ export default {
 const Template: StoryFn = (args) => ({
   components: { VCertificatesView },
   setup() {
+    const diplomas = useDiplomas();
+    diplomas.items = diplomasData;
+
     return { args };
   },
   template: '<VCertificatesView v-bind="args" />',
