@@ -9,18 +9,24 @@ import useStudies from '@/stores/studies';
 import useMaterials from '@/stores/materials';
 import useDiplomas from '@/stores/diplomas';
 import useLoading from '@/stores/loading';
-const VHomeView = () => import('@/views/VHomeView.vue');
-const VMailSentView = () => import('@/views/VMailSentView.vue');
-const VSettingsView = () => import('@/views/VSettingsView.vue');
-const VLoginView = () => import('@/views/VLoginView.vue');
-const VLoadingView = () => import('@/views/VLoadingView.vue');
-const VNotionView = () => import('@/views/VNotionView.vue');
-const VHomeworkQuestionView = () => import('@/views/VHomeworkQuestionView.vue');
-const VHomeworkExpertView = () => import('@/views/VHomeworkExpertView.vue');
-const VHomeworkAnswerView = () => import('@/views/VHomeworkAnswerView.vue');
-const VLoginResetView = () => import('@/views/VLoginResetView.vue');
-const VLoginChangeView = () => import('@/views/VLoginChangeView.vue');
-const VCertificatesView = () => import('@/views/VCertificatesView.vue');
+const VHomeView = () => import('@/views/VHomeView/VHomeView.vue');
+const VMailSentView = () => import('@/views/VMailSentView/VMailSentView.vue');
+const VSettingsView = () => import('@/views/VSettingsView/VSettingsView.vue');
+const VLoginView = () => import('@/views/VLoginView/VLoginView.vue');
+const VLoadingView = () => import('@/views/VLoadingView/VLoadingView.vue');
+const VNotionView = () => import('@/views/VNotionView/VNotionView.vue');
+const VHomeworkQuestionView = () =>
+  import('@/views/VHomeworkQuestionView/VHomeworkQuestionView.vue');
+const VHomeworkExpertView = () =>
+  import('@/views/VHomeworkExpertView/VHomeworkExpertView.vue');
+const VHomeworkAnswerView = () =>
+  import('@/views/VHomeworkAnswerView/VHomeworkAnswerView.vue');
+const VLoginResetView = () =>
+  import('@/views/VLoginResetView/VLoginResetView.vue');
+const VLoginChangeView = () =>
+  import('@/views/VLoginChangeView/VLoginChangeView.vue');
+const VCertificatesView = () =>
+  import('@/views/VCertificatesView/VCertificatesView.vue');
 import loginByToken from '@/router/loginByToken';
 import loginById from '@/router/loginById';
 

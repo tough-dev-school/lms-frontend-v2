@@ -1,17 +1,14 @@
 import '../src/fonts.css';
 import '../src/tailwind.css';
 
-import { app } from '@storybook/vue3';
+import { setup } from '@storybook/vue3';
 import { createPinia } from 'pinia';
+import { routes } from '@/router';
 import FloatingVue from 'floating-vue';
 import 'floating-vue/dist/style.css';
+import { createRouter, createWebHistory } from 'vue-router';
 
-const pinia = createPinia();
-
-app.use(FloatingVue);
-app.use(pinia);
-
-export const parameters = {
+const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
   controls: {
     matchers: {
@@ -45,3 +42,21 @@ export const parameters = {
     defaultViewport: 'fluid',
   },
 };
+
+setup((app) => {
+  app.use(
+    createRouter({
+      history: createWebHistory(import.meta.env.BASE_URL),
+      routes,
+    }),
+  );
+  app.use(FloatingVue);
+  app.use(createPinia());
+});
+
+/** @type { import('@storybook/vue3').Preview } */
+const preview = {
+  parameters,
+};
+
+export default preview;

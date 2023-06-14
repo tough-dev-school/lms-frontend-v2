@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3';
 import VHeading from '@/components/VHeading.vue';
 
 export default {
@@ -6,7 +6,7 @@ export default {
   component: VHeading,
 } as Meta;
 
-const Template: Story = (args) => ({
+const Template: StoryFn = (args) => ({
   components: { VHeading },
   setup() {
     return { args };
@@ -14,20 +14,31 @@ const Template: Story = (args) => ({
   template: '<VHeading v-bind="args">VHeading</VHeading>',
 });
 
-export const Default = Template.bind({});
-Default.args = {};
-
-export const H1 = Template.bind({});
-H1.args = {
-  tag: 'h1',
+export const Default = {
+  render: Template,
+  args: {},
 };
 
-export const H2 = Template.bind({});
-H2.args = {
-  tag: 'h2',
+export const H1 = {
+  render: Template,
+
+  args: {
+    tag: 'h1',
+  },
 };
 
-export const H3 = Template.bind({});
-H3.args = {
-  tag: 'h3',
+export const H2 = {
+  render: Template,
+
+  args: {
+    tag: 'h2',
+  },
+};
+
+export const H3 = {
+  render: Template,
+
+  args: {
+    tag: 'h3',
+  },
 };

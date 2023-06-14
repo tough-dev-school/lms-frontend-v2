@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3';
 import VPasswordSettings from '@/components/VPasswordSettings.vue';
 
 export default {
@@ -6,7 +6,7 @@ export default {
   component: VPasswordSettings,
 } as Meta;
 
-const Template: Story = (args) => ({
+const Template: StoryFn = (args) => ({
   components: { VPasswordSettings },
   setup() {
     return { args };
@@ -14,5 +14,7 @@ const Template: Story = (args) => ({
   template: '<VPasswordSettings v-bind="args"/>',
 });
 
-export const Default = Template.bind({});
-Default.args = {};
+export const Default = {
+  render: Template,
+  args: {},
+};

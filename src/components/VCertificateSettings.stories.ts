@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3';
 import VCertificateSettings from '@/components/VCertificateSettings.vue';
 
 export default {
@@ -6,7 +6,7 @@ export default {
   component: VCertificateSettings,
 } as Meta;
 
-const Template: Story = (args) => ({
+const Template: StoryFn = (args) => ({
   components: { VCertificateSettings },
   setup() {
     return { args };
@@ -14,5 +14,7 @@ const Template: Story = (args) => ({
   template: '<VCertificateSettings v-bind="args"/>',
 });
 
-export const Default = Template.bind({});
-Default.args = {};
+export const Default = {
+  render: Template,
+  args: {},
+};

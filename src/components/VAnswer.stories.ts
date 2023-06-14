@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3';
 import VAnswer from '@/components/VAnswer.vue';
 import { getAnswerData } from '@/mocks/homework';
 
@@ -7,7 +7,7 @@ export default {
   component: VAnswer,
 } as Meta;
 
-const Template: Story = (args) => ({
+const Template: StoryFn = (args) => ({
   components: { VAnswer },
   setup() {
     return { args };
@@ -15,7 +15,10 @@ const Template: Story = (args) => ({
   template: '<VAnswer v-bind="args" />',
 });
 
-export const Default = Template.bind({});
-Default.args = {
-  answer: getAnswerData(),
+export const Default = {
+  render: Template,
+
+  args: {
+    answer: getAnswerData(),
+  },
 };

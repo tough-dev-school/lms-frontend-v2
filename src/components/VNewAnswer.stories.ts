@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3';
 import VNewAnswer from '@/components/VNewAnswer.vue';
 import { faker } from '@faker-js/faker';
 
@@ -7,7 +7,7 @@ export default {
   component: VNewAnswer,
 } as Meta;
 
-const Template: Story = (args) => ({
+const Template: StoryFn = (args) => ({
   components: { VNewAnswer },
   setup() {
     return { args };
@@ -15,8 +15,11 @@ const Template: Story = (args) => ({
   template: '<VNewAnswer v-bind="args" />',
 });
 
-export const Default = Template.bind({});
-Default.args = {
-  questionId: faker.datatype.uuid(),
-  parentId: faker.datatype.uuid(),
+export const Default = {
+  render: Template,
+
+  args: {
+    questionId: faker.datatype.uuid(),
+    parentId: faker.datatype.uuid(),
+  },
 };

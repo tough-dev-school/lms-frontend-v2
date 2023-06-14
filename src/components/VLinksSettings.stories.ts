@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3';
 import VLinksSettings from '@/components/VLinksSettings.vue';
 
 export default {
@@ -6,7 +6,7 @@ export default {
   component: VLinksSettings,
 } as Meta;
 
-const Template: Story = (args) => ({
+const Template: StoryFn = (args) => ({
   components: { VLinksSettings },
   setup() {
     return { args };
@@ -14,5 +14,7 @@ const Template: Story = (args) => ({
   template: '<VLinksSettings v-bind="args"/>',
 });
 
-export const Default = Template.bind({});
-Default.args = {};
+export const Default = {
+  render: Template,
+  args: {},
+};

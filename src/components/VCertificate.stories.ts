@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3';
 import VCertificate from '@/components/VCertificate.vue';
 import { getDiplomaData } from '@/mocks/diplomas';
 
@@ -7,7 +7,7 @@ export default {
   component: VCertificate,
 } as Meta;
 
-const Template: Story = (args) => ({
+const Template: StoryFn = (args) => ({
   components: { VCertificate },
   setup() {
     return { args };
@@ -15,12 +15,18 @@ const Template: Story = (args) => ({
   template: '<VCertificate v-bind="args"/>',
 });
 
-export const En = Template.bind({});
-En.args = {
-  certificate: { ...getDiplomaData(), language: 'EN' },
+export const En = {
+  render: Template,
+
+  args: {
+    certificate: { ...getDiplomaData(), language: 'EN' },
+  },
 };
 
-export const Ru = Template.bind({});
-Ru.args = {
-  certificate: { ...getDiplomaData(), language: 'RU' },
+export const Ru = {
+  render: Template,
+
+  args: {
+    certificate: { ...getDiplomaData(), language: 'RU' },
+  },
 };

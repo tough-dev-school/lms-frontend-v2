@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3';
 import VToastFeed from '@/components/VToastFeed.vue';
 import useToasts from '@/stores/toasts';
 import { faker } from '@faker-js/faker';
@@ -8,7 +8,7 @@ export default {
   component: VToastFeed,
 } as Meta;
 
-const Template: Story = (args) => ({
+const Template: StoryFn = (args) => ({
   components: { VToastFeed },
   setup() {
     const toasts = useToasts();
@@ -20,5 +20,7 @@ const Template: Story = (args) => ({
   template: '<VToastFeed v-bind="args" />',
 });
 
-export const Default = Template.bind({});
-Default.args = {};
+export const Default = {
+  render: Template,
+  args: {},
+};

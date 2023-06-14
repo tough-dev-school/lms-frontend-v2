@@ -1,4 +1,4 @@
-import type { Meta, Story } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3';
 import VPreloader from '@/components/VPreloader.vue';
 
 export default {
@@ -6,7 +6,7 @@ export default {
   component: VPreloader,
 } as Meta;
 
-const Template: Story = (args) => ({
+const Template: StoryFn = (args) => ({
   components: { VPreloader },
   setup() {
     return { args };
@@ -14,5 +14,7 @@ const Template: Story = (args) => ({
   template: '<VPreloader v-bind="args" />',
 });
 
-export const Default = Template.bind({});
-Default.args = { message: 'This is a toast!' };
+export const Default = {
+  render: Template,
+  args: { message: 'This is a toast!' },
+};
