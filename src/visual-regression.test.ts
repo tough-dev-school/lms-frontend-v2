@@ -34,38 +34,38 @@ describe('visual regression test for', () => {
   const scenarios: Scenario[] = [
     {
       name: 'Login — email login',
-      path: `/iframe.html?args=&id=pages-app--login&viewMode=story#/login`,
+      path: `/iframe.html?args=&id=app-vloginview--default&viewMode=story`,
     },
     {
       name: 'Login — password login',
-      path: `/iframe.html?args=&id=pages-app--login&viewMode=story#/login`,
+      path: `/iframe.html?args=&id=app-vloginview--default&viewMode=story`,
       action: async () => {
         await page.click('[data-testid="to-password-mode"]');
       },
     },
     {
       name: 'Login — reset password',
-      path: `/iframe.html?args=&id=pages-app--reset-password&viewMode=story#/login/reset`,
+      path: `/iframe.html?args=&id=app-vloginresetview--default&viewMode=story`,
     },
     {
       name: 'Login — change password',
-      path: `/iframe.html?args=&id=pages-app--change-password&viewMode=story#/auth/password/reset/1234567890/1234567890`,
+      path: `/iframe.html?args=&id=app-vloginchangeview--default&viewMode=story`,
     },
     {
       name: 'Login — mail sent',
-      path: '/iframe.html?args=&id=pages-app--mail-sent&viewMode=story#/login/mail-sent?email=demo@mail.com',
+      path: '/iframe.html?args=&id=app-vmailsentview--default&viewMode=story',
     },
     {
       name: 'Certificates',
-      path: `/iframe.html?args=&id=pages-app--certificates&viewMode=story#/certificates`,
+      path: `/iframe.html?args=&id=app-vcertificatesview--default&viewMode=story`,
     },
     {
       name: 'Settings',
-      path: `/iframe.html?args=&id=pages-app--settings&viewMode=story#/settings`,
+      path: `/iframe.html?args=&id=app-vsettingsview--default&viewMode=story`,
     },
     {
       name: 'Materials',
-      path: '/iframe.html?args=&id=pages-app--notion-view&viewMode=story#/materials/1234567890',
+      path: '/iframe.html?args=&id=app-vnotionview--default&viewMode=story',
     },
     {
       name: 'Materials Missing',
@@ -73,19 +73,19 @@ describe('visual regression test for', () => {
     },
     {
       name: 'HomeworkAnswers',
-      path: `/iframe.html?args=&id=pages-app--homework-answer-view&viewMode=story#/homework/answers/1234567890`,
+      path: `/iframe.html?args=&id=app-vhomeworkanswerview--default&viewMode=story`,
     },
     {
       name: 'HomeworkExpert',
-      path: '/iframe.html?args=&id=pages-app--homework-expert-view&viewMode=story#/homework/question-admin/1234567890',
+      path: '/iframe.html?args=&id=app-vhomeworkexpertview--default&viewMode=story',
     },
     {
       name: 'HomeworkQuestion',
-      path: '/iframe.html?args=&id=pages-app--homework-question-view&viewMode=story#/homework/questions/1234567890',
+      path: '/iframe.html?args=&id=app-vhomeworkquestionview--default&viewMode=story',
     },
     {
       name: 'Homepage',
-      path: '/iframe.html?args=&id=pages-app--homepage&viewMode=story#/',
+      path: '/iframe.html?args=&id=app-vhomeview--default&viewMode=story',
     },
   ];
 
