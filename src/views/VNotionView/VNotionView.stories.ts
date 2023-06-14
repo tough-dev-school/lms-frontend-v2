@@ -2,10 +2,12 @@ import type { Meta, StoryFn } from '@storybook/vue3';
 import VNotionView from './VNotionView.vue';
 import useMaterials from '@/stores/materials';
 import { getMaterialsData } from '@/mocks/materials';
+import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 
 export default {
   title: 'App/VNotionView',
   component: VNotionView,
+  decorators: [defaultLayoutDecorator],
 } as Meta;
 
 const Template: StoryFn = (args) => ({
