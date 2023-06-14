@@ -36,9 +36,6 @@ const layoutDecorator = (story, layout) => ({
       question: questionData,
     });
 
-    const studies = useStudies();
-    studies.$patch({ items: getStudiesData(5, true) });
-
     const materials = useMaterials();
     materials.$patch({ material: getMaterialsData() });
   },

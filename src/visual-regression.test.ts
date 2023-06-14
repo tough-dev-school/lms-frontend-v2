@@ -60,6 +60,10 @@ describe('visual regression test for', () => {
       path: `/iframe.html?args=&id=app-vcertificatesview--default&viewMode=story`,
     },
     {
+      name: 'No Certificates',
+      path: `/iframe.html?args=&id=app-vcertificatesview--empty&viewMode=story`,
+    },
+    {
       name: 'Settings',
       path: `/iframe.html?args=&id=app-vsettingsview--default&viewMode=story`,
     },
@@ -69,7 +73,7 @@ describe('visual regression test for', () => {
     },
     {
       name: 'Materials Missing',
-      path: '/iframe.html?id=pages-app--notion-view-missing&viewMode=story#/materials/1234567890',
+      path: '/iframe.html?args=&id=app-vnotionview--empty&viewMode=story',
     },
     {
       name: 'HomeworkAnswers',
@@ -86,6 +90,10 @@ describe('visual regression test for', () => {
     {
       name: 'Homepage',
       path: '/iframe.html?args=&id=app-vhomeview--default&viewMode=story',
+    },
+    {
+      name: 'Empty Homepage',
+      path: '/iframe.html?args=&id=app-vhomeview--empty&viewMode=story',
     },
   ];
 

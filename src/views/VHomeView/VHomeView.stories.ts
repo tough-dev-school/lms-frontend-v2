@@ -1,6 +1,8 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
 import VHomeView from './VHomeView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
+import { getStudiesData } from '@/mocks/studies';
+import useStudies from '@/stores/studies';
 
 export default {
   title: 'App/VHomeView',
@@ -18,4 +20,26 @@ const Template: StoryFn = (args) => ({
 
 export const Default = {
   render: Template,
+  decorators: [
+    () => ({
+      setup() {
+        const studies = useStudies();
+        studies.$patch({ items: getStudiesData(5, true) });
+      },
+      template: '<story />',
+    }),
+  ],
+};
+
+export const Empty = {
+  render: Template,
+  decorators: [
+    () => ({
+      setup() {
+        const studies = useStudies();
+        studies.items = [];
+      },
+      template: '<story />',
+    }),
+  ],
 };

@@ -13,9 +13,6 @@ export default {
 const Template: StoryFn = (args) => ({
   components: { VCertificatesView },
   setup() {
-    const diplomas = useDiplomas();
-    diplomas.items = diplomasData;
-
     return { args };
   },
   template: '<VCertificatesView v-bind="args" />',
@@ -23,4 +20,26 @@ const Template: StoryFn = (args) => ({
 
 export const Default = {
   render: Template,
+  decorators: [
+    () => ({
+      setup() {
+        const diplomas = useDiplomas();
+        diplomas.items = diplomasData;
+      },
+      template: '<story />',
+    }),
+  ],
+};
+
+export const Empty = {
+  render: Template,
+  decorators: [
+    () => ({
+      setup() {
+        const diplomas = useDiplomas();
+        diplomas.items = [];
+      },
+      template: '<story />',
+    }),
+  ],
 };

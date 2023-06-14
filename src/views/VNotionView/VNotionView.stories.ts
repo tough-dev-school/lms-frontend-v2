@@ -13,8 +13,6 @@ export default {
 const Template: StoryFn = (args) => ({
   components: { VNotionView },
   setup() {
-    const materials = useMaterials();
-    materials.$patch({ material: getMaterialsData() });
     return { args };
   },
   template: '<VNotionView v-bind="args" />',
@@ -22,4 +20,27 @@ const Template: StoryFn = (args) => ({
 
 export const Default = {
   render: Template,
+  decorators: [
+    () => ({
+      setup() {
+        const materials = useMaterials();
+        materials.$patch({ material: getMaterialsData() });
+      },
+      template: '<story />',
+    }),
+  ],
+};
+
+export const Empty = {
+  render: Template,
+  decorators: [
+    () => ({
+      setup() {
+        const materials = useMaterials();
+
+        materials.material = undefined;
+      },
+      template: '<story />',
+    }),
+  ],
 };
