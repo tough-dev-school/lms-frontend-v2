@@ -9,7 +9,7 @@ interface Scenario {
   action?: () => Promise<void>;
 }
 
-type ColorScheme = 'light' | 'dark';
+type ColorScheme = 'light';
 
 type Test = [string, string, () => Promise<void>, number, number];
 
