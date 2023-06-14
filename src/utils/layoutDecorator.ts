@@ -1,15 +1,13 @@
 import VDefaultLayout from '@/layouts/VDefaultLayout.vue';
 import { questionData } from '@/mocks/homework';
 import { getMaterialsData } from '@/mocks/materials';
-import { getStudiesData } from '@/mocks/studies';
 import useHomework from '@/stores/homework';
 import useMaterials from '@/stores/materials';
-import useStudies from '@/stores/studies';
 import useToasts from '@/stores/toasts';
 import useUser from '@/stores/user';
 import { userId } from '@/mocks/userId';
 
-const layoutDecorator = (story, layout) => ({
+const layoutDecorator = (story: any, layout: any) => ({
   components: { layout, story },
   template: '<layout><story /></layout>',
   setup() {
@@ -41,7 +39,7 @@ const layoutDecorator = (story, layout) => ({
   },
 });
 
-const defaultLayoutDecorator = (story) =>
+const defaultLayoutDecorator = (story: any) =>
   layoutDecorator(story, VDefaultLayout);
 
 export { defaultLayoutDecorator };
