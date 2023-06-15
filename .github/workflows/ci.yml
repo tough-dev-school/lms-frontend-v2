@@ -10,34 +10,30 @@ jobs:
       - name: Checkout 🛎
         uses: actions/checkout@v3
 
-      - name: Setup node 🏗
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Use Node.js
         uses: actions/setup-node@v3
-        id: setup-node
         with:
           node-version-file: '.node-version'
+          cache: 'pnpm'
 
-      - name: Cache node_modules
-        uses: actions/cache@v3
-        id: cache
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-v1-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('.node-version') }}
-
-      - name: Install dependencies 👨🏻‍💻
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci --no-audit --include=dev
+      - name: Install dependencies
+        run: pnpm install
 
       - name: Run linter 👀
-        run: npm run check:lint
+        run: pnpm run check:lint
 
       - name: Run prettier 🧹
-        run: npm run check:format
+        run: pnpm run check:format
 
       - name: Run typecheck ✅
-        run: npm run check:type
+        run: pnpm run check:type
 
       - name: Build 😎
-        run: npm run build
+        run: pnpm run build
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
@@ -67,7 +63,7 @@ jobs:
           key: ${{ runner.os }}-v1-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('.node-version') }}
 
       - name: Run unit tests 🧪
-        run: npm run test:unit
+        run: pnpm run test:unit
 
   build-docker-image:
     needs: unittest
