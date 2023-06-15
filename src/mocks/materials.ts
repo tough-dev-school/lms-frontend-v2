@@ -1,4 +1,5 @@
-// @ts-ignore
+// @ts-nocheck
+// #FIXME Remove ts-nocheck
 import type { BlockMap } from 'vue3-notion/src/lib/types';
 
 export const getMaterialsData = (): BlockMap => {
