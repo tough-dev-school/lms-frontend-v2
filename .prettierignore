@@ -5,3 +5,4 @@ docker-compose.yml
 .husky/
 .prettierignore
 .lintstagedrc
+.npmrc
