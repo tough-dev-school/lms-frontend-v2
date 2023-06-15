@@ -49,18 +49,18 @@ jobs:
       - name: Checkout 🛎
         uses: actions/checkout@v3
 
-      - name: Setup node 🏗
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
           node-version-file: '.node-version'
+          cache: 'pnpm'
 
-      - name: Restore cache
-        uses: actions/cache/restore@v3
-        id: cache
-        with:
-          fail-on-cache-miss: true
-          path: node_modules
-          key: ${{ runner.os }}-v1-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('.node-version') }}
+      - name: Install dependencies
+        run: pnpm install
 
       - name: Run unit tests 🧪
         run: pnpm run test:unit
