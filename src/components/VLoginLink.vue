@@ -17,7 +17,7 @@
     router.push({ name: 'mail-sent', query: { email: email.value } });
   };
 
-  const emit = defineEmits<{ (e: 'change'): void }>();
+  const emit = defineEmits<{ change: [undefined] }>();
 </script>
 
 <template>

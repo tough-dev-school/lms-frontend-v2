@@ -17,10 +17,10 @@
   const props = defineProps<Props>();
 
   const emit = defineEmits<{
-    (e: 'update'): void;
-    (e: 'delete'): void;
-    (e: 'edit'): void;
-    (e: 'mounted', slug: string): void;
+    update: [undefined];
+    delete: [undefined];
+    edit: [undefined];
+    mounted: [slug: string];
   }>();
 
   const homework = useHomework();
