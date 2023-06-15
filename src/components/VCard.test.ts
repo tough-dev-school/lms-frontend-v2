@@ -30,6 +30,7 @@ describe('VCard', () => {
 
     wrapper = mount(VCard, {
       shallow: true,
+      // @ts-ignore # FIXME: type error on alpha of test-utils
       slots: { default: content },
       props: defaultProps,
     });

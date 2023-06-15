@@ -6,7 +6,7 @@ import type VTextInput from './VTextInput.vue';
 import useUser from '@/stores/user';
 import { createTestingPinia } from '@pinia/testing';
 import { faker } from '@faker-js/faker';
-import type { VueNode } from '@vue/test-utils/dist/types';
+import type { VueNode } from 'node_modules/@vue/test-utils/dist/types';
 
 const defaultData = {
   firstName: faker.name.firstName(),
