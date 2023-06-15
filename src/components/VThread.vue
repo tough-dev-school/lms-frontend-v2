@@ -24,8 +24,8 @@
 
   const user = useUser();
   const emit = defineEmits<{
-    update: [undefined];
-    reply: [undefined];
+    update: [];
+    reply: [];
   }>();
   const replyMode = ref(false);
 

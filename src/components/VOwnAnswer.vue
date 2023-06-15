@@ -17,9 +17,9 @@
   const props = defineProps<Props>();
 
   const emit = defineEmits<{
-    update: [undefined];
-    delete: [undefined];
-    edit: [undefined];
+    update: [];
+    delete: [];
+    edit: [];
     mounted: [slug: string];
   }>();
 
