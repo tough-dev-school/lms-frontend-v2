@@ -12,7 +12,7 @@
 
   const props = defineProps<Props>();
   const emit = defineEmits<{
-    (e: 'update', slug: string): void;
+    update: [slug: string];
   }>();
   const homework = useHomework();
 

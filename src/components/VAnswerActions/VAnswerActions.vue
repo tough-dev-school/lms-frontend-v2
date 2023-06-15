@@ -13,8 +13,8 @@
   const props = defineProps<Props>();
 
   const emit = defineEmits<{
-    (e: 'delete'): void;
-    (e: 'edit'): void;
+    delete: [undefined];
+    edit: [undefined];
   }>();
 
   const checkIsAvailable = (timeout: number) => {

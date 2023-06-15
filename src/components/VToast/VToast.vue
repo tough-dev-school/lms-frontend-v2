@@ -13,7 +13,7 @@
   const props = withDefaults(defineProps<Props>(), { text: 'Ошибка!' });
 
   const emit = defineEmits<{
-    (e: 'delete', id: string): void;
+    delete: [id: string];
   }>();
 
   let timeout: ReturnType<typeof setTimeout>;
