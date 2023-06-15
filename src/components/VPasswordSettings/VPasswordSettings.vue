@@ -17,7 +17,7 @@
   const newPassword2 = ref('');
 
   const props = defineProps<Props>();
-  const emit = defineEmits<{ save: [undefined] }>();
+  const emit = defineEmits<{ save: [] }>();
 
   const savePassword = async () => {
     await auth.changePassword({

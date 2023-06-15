@@ -11,8 +11,8 @@
   defineProps<Props>();
 
   const emit = defineEmits<{
-    delete: [undefined];
-    edit: [undefined];
+    delete: [];
+    edit: [];
   }>();
 </script>
 

@@ -38,7 +38,7 @@
 
   const emit = defineEmits<{
     'update:modelValue': [value: string];
-    send: [undefined];
+    send: [];
   }>();
 
   const isMetaPressed = useKeyModifier('Meta');
