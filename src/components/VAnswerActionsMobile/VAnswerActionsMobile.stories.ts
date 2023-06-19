@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import VAnswerActionsMobile from '@/components/VAnswerActionsMobile.vue';
+import VAnswerActionsMobile from '@/components/VAnswerActionsMobile';
 
 export default {
   title: 'AnswerActions/VAnswerActionsMobile',

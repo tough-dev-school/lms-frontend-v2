@@ -1,9 +1,9 @@
 import { describe, expect, test, beforeEach, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import VNewAnswer from '@/components/VNewAnswer.vue';
-import type VTextEditor from '@/components/VTextEditor.vue';
-import type VButton from '@/components/VButton.vue';
+import VNewAnswer from '@/components/VNewAnswer';
+import type VTextEditor from '@/components/VTextEditor';
+import type VButton from '@/components/VButton';
 import { faker } from '@faker-js/faker';
 import { createTestingPinia } from '@pinia/testing';
 import useHomework from '@/stores/homework';

@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-  import VAvatar from '@/components/VAvatar.vue';
+  import VAvatar from '@/components/VAvatar';
   import { relativeDate } from '@/utils/date';
   import getName from '@/utils/getName';
   import type { Answer } from '@/types/homework';
-  import VCard from '@/components/VCard.vue';
-  import VHtmlContent from '@/components/VHtmlContent.vue';
+  import VCard from '@/components/VCard';
+  import VHtmlContent from '@/components/VHtmlContent';
   import { computed } from 'vue';
   import useUser from '@/stores/user';
 

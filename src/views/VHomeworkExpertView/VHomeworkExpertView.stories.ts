@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import VHomeworkExpertView from './VHomeworkExpertView.vue';
+import VHomeworkExpertView from './VHomeworkExpertView';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import useHomework from '@/stores/homework';
 import merge from 'lodash/merge';

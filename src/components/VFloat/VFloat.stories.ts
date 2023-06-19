@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import VFloat from '@/components/VFloat.vue';
+import VFloat from '@/components/VFloat';
 
 export default {
   title: 'UI/VFloat',

@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import VLoginResetView from './VLoginResetView.vue';
+import VLoginResetView from './VLoginResetView';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 
 export default {

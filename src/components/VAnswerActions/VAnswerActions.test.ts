@@ -1,9 +1,9 @@
 import { describe, expect, test, beforeEach } from 'vitest';
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import VAnswerActions from './VAnswerActions.vue';
-import type VAnswerActionsDesktop from '@/components/VAnswerActionsDesktop.vue';
-import type VAnswerActionsMobile from '@/components/VAnswerActionsMobile.vue';
+import VAnswerActions from './VAnswerActions';
+import type VAnswerActionsDesktop from '@/components/VAnswerActionsDesktop';
+import type VAnswerActionsMobile from '@/components/VAnswerActionsMobile';
 import dayjs from 'dayjs';
 import { nextTick } from 'vue';
 import { faker } from '@faker-js/faker';

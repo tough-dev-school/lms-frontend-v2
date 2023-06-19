@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import VAnswer from '@/components/VAnswer.vue';
+import VAnswer from '@/components/VAnswer';
 import { getAnswerData } from '@/mocks/homework';
 
 export default {

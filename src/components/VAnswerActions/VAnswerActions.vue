@@ -1,8 +1,8 @@
 <script lang="ts" setup>
   import dayjs from 'dayjs';
   import { computed } from 'vue';
-  import VAnswerActionsDesktop from '@/components/VAnswerActionsDesktop.vue';
-  import VAnswerActionsMobile from '@/components/VAnswerActionsMobile.vue';
+  import VAnswerActionsDesktop from '@/components/VAnswerActionsDesktop';
+  import VAnswerActionsMobile from '@/components/VAnswerActionsMobile';
 
   export interface Props {
     created: string;

@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
 
-import VCover from '@/components/VCover.vue';
+import VCover from '@/components/VCover';
 
 export default {
   title: 'UI/VCover',

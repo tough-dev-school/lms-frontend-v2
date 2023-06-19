@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import VCertificateSettings from '@/components/VCertificateSettings.vue';
+import VCertificateSettings from '@/components/VCertificateSettings';
 
 export default {
   title: 'Settings/VCertificateSettings',

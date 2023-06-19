@@ -1,8 +1,8 @@
 <script lang="ts" setup>
   import type { Thread } from '@/types/homework';
-  import VOwnAnswer from '@/components/VOwnAnswer.vue';
-  import VAnswer from '@/components/VAnswer.vue';
-  import VNewAnswer from '@/components/VNewAnswer.vue';
+  import VOwnAnswer from '@/components/VOwnAnswer';
+  import VAnswer from '@/components/VAnswer';
+  import VNewAnswer from '@/components/VNewAnswer';
   import { computed, ref } from 'vue';
   import { onClickOutside } from '@vueuse/core';
   import useUser from '@/stores/user';

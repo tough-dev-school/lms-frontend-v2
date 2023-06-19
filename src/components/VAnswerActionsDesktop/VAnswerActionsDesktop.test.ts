@@ -1,7 +1,7 @@
 import { describe, expect, test, beforeEach } from 'vitest';
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import VAnswerActionsDesktop from './VAnswerActionsDesktop.vue';
+import VAnswerActionsDesktop from './VAnswerActionsDesktop';
 import { faker } from '@faker-js/faker';
 import { nextTick } from 'vue';
 

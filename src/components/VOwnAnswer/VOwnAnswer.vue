@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-  import VAnswerActions from '@/components/VAnswerActions.vue';
-  import VTextEditor from '@/components/VTextEditor.vue';
-  import VButton from '@/components/VButton.vue';
+  import VAnswerActions from '@/components/VAnswerActions';
+  import VTextEditor from '@/components/VTextEditor';
+  import VButton from '@/components/VButton';
   import useHomework from '@/stores/homework';
   import { ref, onMounted, computed } from 'vue';
-  import VAnswer from '@/components/VAnswer.vue';
-  import VCard from '@/components/VCard.vue';
+  import VAnswer from '@/components/VAnswer';
+  import VCard from '@/components/VCard';
   import type { Answer } from '@/types/homework';
 
   export interface Props {

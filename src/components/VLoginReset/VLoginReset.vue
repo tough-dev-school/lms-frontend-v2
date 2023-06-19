@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-  import VHeading from '@/components/VHeading.vue';
-  import VButton from '@/components/VButton.vue';
-  import VCard from '@/components/VCard.vue';
-  import VTextInput from '@/components/VTextInput.vue';
+  import VHeading from '@/components/VHeading';
+  import VButton from '@/components/VButton';
+  import VCard from '@/components/VCard';
+  import VTextInput from '@/components/VTextInput';
   import { ref } from 'vue';
   import { onKeyStroke } from '@vueuse/core';
   import useAuth from '@/stores/auth';

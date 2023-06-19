@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import VPasswordSettings from '@/components/VPasswordSettings.vue';
+import VPasswordSettings from '@/components/VPasswordSettings';
 
 export default {
   title: 'Settings/VPasswordSettings',

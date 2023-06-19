@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import VOwnAnswer from '@/components/VOwnAnswer.vue';
+import VOwnAnswer from '@/components/VOwnAnswer';
 import { faker } from '@faker-js/faker';
 import { getAnswerData } from '@/mocks/homework';
 import dayjs from 'dayjs';

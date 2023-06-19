@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import VHomeworkQuestionView from './VHomeworkQuestionView.vue';
+import VHomeworkQuestionView from './VHomeworkQuestionView';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 
 export default {

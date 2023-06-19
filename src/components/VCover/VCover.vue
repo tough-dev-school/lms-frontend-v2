@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import VHeading from '@/components/VHeading.vue';
+  import VHeading from '@/components/VHeading';
   import { computed } from 'vue';
 
   export interface Props {

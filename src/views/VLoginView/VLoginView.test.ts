@@ -1,9 +1,9 @@
 import { describe, expect, test, beforeEach } from 'vitest';
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import VLoginView from './VLoginView.vue';
-import type VLoginLink from '@/components/VLoginLink.vue';
-import type VLoginPassword from '@/components/VLoginPassword.vue';
+import VLoginView from './VLoginView';
+import type VLoginLink from '@/components/VLoginLink';
+import type VLoginPassword from '@/components/VLoginPassword';
 
 describe('VLoginView', () => {
   let wrapper: VueWrapper<InstanceType<typeof VLoginView>>;

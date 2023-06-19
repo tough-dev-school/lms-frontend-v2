@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import VThread from '@/components/VThread.vue';
+import VThread from '@/components/VThread';
 import { getCommentsData, getThreadData } from '@/mocks/homework';
 import dayjs from 'dayjs';
 import { faker } from '@faker-js/faker';

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-  import VLoginLink from '@/components/VLoginLink.vue';
-  import VLoginPassword from '@/components/VLoginPassword.vue';
+  import VLoginLink from '@/components/VLoginLink';
+  import VLoginPassword from '@/components/VLoginPassword';
   import { ref } from 'vue';
 
   export type Mode = 'link' | 'password';

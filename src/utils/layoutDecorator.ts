@@ -1,4 +1,4 @@
-import VDefaultLayout from '@/layouts/VDefaultLayout.vue';
+import VDefaultLayout from '@/layouts/VDefaultLayout';
 import { questionData } from '@/mocks/homework';
 import { getMaterialsData } from '@/mocks/materials';
 import useHomework from '@/stores/homework';

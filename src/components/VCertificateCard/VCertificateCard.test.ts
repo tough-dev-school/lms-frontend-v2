@@ -1,9 +1,9 @@
 import { describe, expect, test, beforeEach } from 'vitest';
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import VCertificateCard from './VCertificateCard.vue';
+import VCertificateCard from './VCertificateCard';
 import { getDiplomasData } from '@/mocks/diplomas';
-import type VCertificate from './VCertificate.vue';
+import type VCertificate from './VCertificate';
 
 const diplomas = getDiplomasData();
 
