@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import VMailSentView from './VMailSentView';
+import { VMailSentView } from '.';
 
 export default {
   title: 'App/VMailSentView',

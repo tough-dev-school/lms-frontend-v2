@@ -1,7 +1,7 @@
 import { describe, expect, test, beforeEach, vi } from 'vitest';
 import { RouterLinkStub, mount, VueWrapper } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
-import VHomeView from './VHomeView';
+import { VHomeView } from '.';
 import useStudies from '@/stores/studies';
 import { getStudiesData } from '@/mocks/studies';
 import type { RouterLink } from 'vue-router';

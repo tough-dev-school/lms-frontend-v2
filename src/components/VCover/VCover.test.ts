@@ -1,7 +1,7 @@
 import { describe, expect, test, beforeEach } from 'vitest';
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import VCover from './VCover';
+import { VCover } from '.';
 import { faker } from '@faker-js/faker';
 
 const studyName = faker.commerce.productName();

@@ -1,7 +1,7 @@
 import { describe, expect, test, beforeEach } from 'vitest';
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import VHeading from './VHeading';
+import { VHeading } from '.';
 import { faker } from '@faker-js/faker';
 
 const defaultProps = {};

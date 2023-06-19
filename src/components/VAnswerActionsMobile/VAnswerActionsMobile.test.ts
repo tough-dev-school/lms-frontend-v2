@@ -1,8 +1,8 @@
 import { describe, expect, test, beforeEach } from 'vitest';
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import VAnswerActionsMobile from './VAnswerActionsMobile';
-import VCard from './VCard';
+import { VAnswerActionsMobile } from '.';
+import { VCard } from '.';
 import { faker } from '@faker-js/faker';
 import { nextTick } from 'vue';
 

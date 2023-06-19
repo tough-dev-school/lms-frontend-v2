@@ -6,7 +6,7 @@ import {
   getThreadData,
 } from '@/mocks/homework';
 import { faker } from '@faker-js/faker';
-import getThreads from './getThreads';
+import { getThreads } from '.';
 import getCommentsBySlug from '@/utils/getCommentsBySlug';
 import { flushPromises } from '@vue/test-utils';
 

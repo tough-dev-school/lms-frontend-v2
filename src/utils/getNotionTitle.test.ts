@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { describe, expect, test } from 'vitest';
-import getNotionTitle from './getNotionTitle';
+import { getNotionTitle } from '.';
 
 const title = faker.lorem.sentence();
 const id = faker.datatype.uuid();

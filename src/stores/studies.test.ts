@@ -1,6 +1,6 @@
 import { describe, test, beforeEach, expect, vi } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
-import useStudies from './studies';
+import { useStudies } from '.';
 import { getStudies } from '@/api/studies';
 import { getStudiesData } from '@/mocks/studies';
 

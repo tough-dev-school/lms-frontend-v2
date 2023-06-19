@@ -1,7 +1,7 @@
 import { describe, expect, test, beforeEach } from 'vitest';
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import VCertificate from './VCertificate';
+import { VCertificate } from '.';
 import getCertificateLink from '@/utils/getCertificateLink';
 import { getDiplomaData } from '@/mocks/diplomas';
 import merge from 'lodash/merge';

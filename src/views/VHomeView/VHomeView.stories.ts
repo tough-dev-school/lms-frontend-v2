@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import VHomeView from './VHomeView';
+import { VHomeView } from '.';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import { getStudiesData } from '@/mocks/studies';
 import useStudies from '@/stores/studies';

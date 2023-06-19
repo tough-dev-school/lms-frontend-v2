@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest';
-import idToUuid from './idToUuid';
+import { idToUuid } from '.';
 
 describe('idToUuid', () => {
   test('returns predicted uuid', () => {

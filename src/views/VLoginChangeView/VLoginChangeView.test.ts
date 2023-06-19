@@ -1,7 +1,7 @@
 import { describe, expect, test, beforeEach, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import VLoginChangeView from './VLoginChangeView';
+import { VLoginChangeView } from '.';
 import { VPasswordSettings } from '@/components/VPasswordSettings';
 import { faker } from '@faker-js/faker';
 

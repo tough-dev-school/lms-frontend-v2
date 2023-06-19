@@ -1,7 +1,7 @@
 import { describe, expect, test, beforeEach, vi } from 'vitest';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
-import VMailSentView from './VMailSentView';
+import { VMailSentView } from '.';
 import { faker } from '@faker-js/faker';
 import useAuth from '@/stores/auth';
 

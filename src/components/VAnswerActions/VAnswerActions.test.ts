@@ -1,7 +1,7 @@
 import { describe, expect, test, beforeEach } from 'vitest';
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import VAnswerActions from './VAnswerActions';
+import { VAnswerActions } from '.';
 import { type VAnswerActionsDesktop } from '@/components/VAnswerActionsDesktop';
 import { type VAnswerActionsMobile } from '@/components/VAnswerActionsMobile';
 import dayjs from 'dayjs';

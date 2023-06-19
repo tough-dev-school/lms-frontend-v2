@@ -1,6 +1,6 @@
 import { describe, test, beforeEach, expect, vi } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
-import useMaterials from './materials';
+import { useMaterials } from '.';
 import { getMaterial } from '@/api/materials';
 import { getMaterialsData } from '@/mocks/materials';
 import { faker } from '@faker-js/faker';
