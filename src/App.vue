@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import VDefaultLayout from '@/layouts/VDefaultLayout';
+  import { VDefaultLayout } from '@/layouts/VDefaultLayout';
 </script>
 
 <template>
