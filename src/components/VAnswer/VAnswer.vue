@@ -23,10 +23,7 @@
 <template>
   <VCard>
     <div class="mb-16 flex items-center gap-8">
-      <VAvatar
-        data-testid="avatar"
-        :first-name="answer.author.firstName"
-        :last-name="answer.author.lastName" />
+      <VAvatar data-testid="avatar" :userId="answer.author.uuid" />
       <div>
         <div class="font-bold" data-testid="name">
           {{ getName(answer.author.firstName, answer.author.lastName) }}
