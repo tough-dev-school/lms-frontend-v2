@@ -3,7 +3,7 @@ to: src/components/<%= name %>/<%= name %>.stories.ts
 ---
 
 import type { Meta, StoryObj } from '@storybook/vue3';
-import <%= name %> from '@/components/<%= name %>.vue';
+import { <%= name %> } from './<%= name %>.vue';
 
 const meta: Meta<typeof <%= name %>> = {
   title: 'Base/<%= name %>',
