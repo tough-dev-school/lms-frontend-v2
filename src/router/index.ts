@@ -9,6 +9,7 @@ import useStudies from '@/stores/studies';
 import useMaterials from '@/stores/materials';
 import useDiplomas from '@/stores/diplomas';
 import useLoading from '@/stores/loading';
+
 const VHomeView = () => import('@/views/VHomeView/VHomeView.vue');
 const VMailSentView = () => import('@/views/VMailSentView/VMailSentView.vue');
 const VSettingsView = () => import('@/views/VSettingsView/VSettingsView.vue');

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-  import VHeading from '@/components/VHeading.vue';
-  import VCard from '@/components/VCard.vue';
-  import VButton from '@/components/VButton.vue';
+  import { VHeading } from '@/components/VHeading';
+  import { VCard } from '@/components/VCard';
+  import { VButton } from '@/components/VButton';
   import useAuth from '@/stores/auth';
   import { useRouter, useRoute } from 'vue-router';
   import { computed } from 'vue';

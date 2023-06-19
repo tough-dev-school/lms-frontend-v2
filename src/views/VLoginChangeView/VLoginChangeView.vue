@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import VPasswordSettings from '@/components/VPasswordSettings.vue';
+  import { VPasswordSettings } from '@/components/VPasswordSettings';
   import { useRoute, useRouter } from 'vue-router';
 
   const route = useRoute();

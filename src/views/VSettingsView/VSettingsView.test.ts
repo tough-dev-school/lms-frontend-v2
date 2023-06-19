@@ -1,7 +1,7 @@
 import { describe, expect, test, beforeEach } from 'vitest';
 import { mount, RouterLinkStub } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import VSettingsView from './VSettingsView.vue';
+import { VSettingsView } from '.';
 import type { RouterLink } from 'vue-router';
 
 const defaultProps = {};

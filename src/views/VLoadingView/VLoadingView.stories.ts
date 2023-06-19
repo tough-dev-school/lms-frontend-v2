@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import VLoadingView from './VLoadingView.vue';
+import { VLoadingView } from '.';
 
 export default {
   title: 'App/VLoadingView',

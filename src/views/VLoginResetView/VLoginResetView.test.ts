@@ -1,9 +1,9 @@
 import { describe, expect, test, beforeEach, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import VLoginResetView from './VLoginResetView.vue';
-import type VButton from '@/components/VButton.vue';
-import type VTextInput from '@/components/VTextInput.vue';
+import { VLoginResetView } from '.';
+import type { VButton } from '@/components/VButton';
+import type { VTextInput } from '@/components/VTextInput';
 import { faker } from '@faker-js/faker';
 import useAuth from '@/stores/auth';
 import { createTestingPinia } from '@pinia/testing';

@@ -1,8 +1,8 @@
 import { vi, describe, expect, test, beforeEach } from 'vitest';
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import VCertificatesView from './VCertificatesView.vue';
-import type VCertificateCard from '@/components/VCertificateCard.vue';
+import { VCertificatesView } from '.';
+import type { VCertificateCard } from '@/components/VCertificateCard';
 import { createTestingPinia } from '@pinia/testing';
 import { getDiplomasData } from '@/mocks/diplomas';
 import useDiplomas from '@/stores/diplomas';
