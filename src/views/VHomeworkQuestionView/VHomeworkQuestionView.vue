@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-  import VHtmlContent from '@/components/VHtmlContent';
+  import { VHtmlContent } from '@/components/VHtmlContent';
   import useHomework from '@/stores/homework';
   import { useRoute } from 'vue-router';
   import { computed, onMounted, ref } from 'vue';
   import type { Ref } from 'vue';
   import { storeToRefs } from 'pinia';
-  import VHeading from '@/components/VHeading';
-  import VPreloader from '@/components/VPreloader';
-  import VOwnAnswer from '@/components/VOwnAnswer';
-  import VNewAnswer from '@/components/VNewAnswer';
-  import VCard from '@/components/VCard';
+  import { VHeading } from '@/components/VHeading';
+  import { VPreloader } from '@/components/VPreloader';
+  import { VOwnAnswer } from '@/components/VOwnAnswer';
+  import { VNewAnswer } from '@/components/VNewAnswer';
+  import { VCard } from '@/components/VCard';
   import useUser from '@/stores/user';
 
   const route = useRoute();

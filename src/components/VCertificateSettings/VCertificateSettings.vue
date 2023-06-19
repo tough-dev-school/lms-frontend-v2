@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-  import VTextInput from '@/components/VTextInput';
-  import VButton from '@/components/VButton';
-  import VHeading from '@/components/VHeading';
-  import VCard from '@/components/VCard';
+  import { VTextInput } from '@/components/VTextInput';
+  import { VButton } from '@/components/VButton';
+  import { VHeading } from '@/components/VHeading';
+  import { VCard } from '@/components/VCard';
   import useUser from '@/stores/user';
   import type { Gender } from '@/types/users';
   import { ref, onMounted } from 'vue';

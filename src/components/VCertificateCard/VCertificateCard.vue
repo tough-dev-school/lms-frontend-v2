@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-  import VHeading from '@/components/VHeading';
-  import VCard from '@/components/VCard';
+  import { VHeading } from '@/components/VHeading';
+  import { VCard } from '@/components/VCard';
   import type { Diploma } from '@/types/diplomas';
   import VCertificate from './VCertificate';
 

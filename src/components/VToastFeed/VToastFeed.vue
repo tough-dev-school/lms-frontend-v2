@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import VToast from '@/components/VToast';
+  import { VToast } from '@/components/VToast';
   import useToasts from '@/stores/toasts';
   import { storeToRefs } from 'pinia';
 

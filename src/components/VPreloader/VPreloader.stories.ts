@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import VPreloader from '@/components/VPreloader';
+import { VPreloader } from '@/components/VPreloader';
 
 export default {
   title: 'UI/VPreloader',

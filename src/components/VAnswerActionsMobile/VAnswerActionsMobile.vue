@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import VFloat from '@/components/VFloat';
+  import { VFloat } from '@/components/VFloat';
 
   export interface Props {
     allowDelete: boolean;

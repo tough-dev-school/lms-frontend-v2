@@ -1,11 +1,11 @@
 import { describe, expect, test, beforeEach, vi } from 'vitest';
 import { createTestingPinia } from '@pinia/testing';
 import { VueWrapper, mount, RouterLinkStub } from '@vue/test-utils';
-import VAnswer from '@/components/VAnswer';
+import { VAnswer } from '@/components/VAnswer';
 import getName from '@/utils/getName';
 import { getAnswerData } from '@/mocks/homework';
-import type VAvatar from '@/components/VAvatar';
-import type VHtmlContent from '@/components/VHtmlContent';
+import { type VAvatar } from '@/components/VAvatar';
+import { type VHtmlContent } from '@/components/VHtmlContent';
 import dayjs from 'dayjs';
 import cloneDeep from 'lodash/cloneDeep';
 import { faker } from '@faker-js/faker';

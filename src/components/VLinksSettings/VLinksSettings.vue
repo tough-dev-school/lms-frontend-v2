@@ -1,9 +1,9 @@
 <script lang="ts" setup>
   import { ref, onMounted } from 'vue';
-  import VTextInput from '@/components/VTextInput';
-  import VButton from '@/components/VButton';
-  import VHeading from '@/components/VHeading';
-  import VCard from '@/components/VCard';
+  import { VTextInput } from '@/components/VTextInput';
+  import { VButton } from '@/components/VButton';
+  import { VHeading } from '@/components/VHeading';
+  import { VCard } from '@/components/VCard';
   import useUser from '@/stores/user';
 
   const linkedinUsername = ref('');

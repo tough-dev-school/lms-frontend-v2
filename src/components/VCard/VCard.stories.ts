@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import VCard from '@/components/VCard';
+import { VCard } from '@/components/VCard';
 
 export default {
   title: 'UI/VCard',

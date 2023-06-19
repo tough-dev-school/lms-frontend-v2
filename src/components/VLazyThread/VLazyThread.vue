@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import type { Answer, Comment } from '@/types/homework';
-  import VThread from '@/components/VThread';
-  import VPreloader from '@/components/VPreloader';
+  import { VThread } from '@/components/VThread';
+  import { VPreloader } from '@/components/VPreloader';
   import { getComments } from '@/api/homework';
   import { ref, computed } from 'vue';
 

@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-  import VHeading from '@/components/VHeading';
-  import VCard from '@/components/VCard';
-  import VPasswordSettings from '@/components/VPasswordSettings';
-  import VLinksSettigns from '@/components/VLinksSettings';
-  import VCertificateSettings from '@/components/VCertificateSettings';
+  import { VHeading } from '@/components/VHeading';
+  import { VCard } from '@/components/VCard';
+  import { VPasswordSettings } from '@/components/VPasswordSettings';
+  import { VLinksSettigns } from '@/components/VLinksSettings';
+  import { VCertificateSettings } from '@/components/VCertificateSettings';
 </script>
 
 <template>

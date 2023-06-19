@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import useDiplomas from '@/stores/diplomas';
-  import VHeading from '@/components/VHeading';
-  import VCertificateCard from '@/components/VCertificateCard';
+  import { VHeading } from '@/components/VHeading';
+  import { VCertificateCard } from '@/components/VCertificateCard';
   import { computed } from 'vue';
   import groupBy from 'lodash/groupBy';
 

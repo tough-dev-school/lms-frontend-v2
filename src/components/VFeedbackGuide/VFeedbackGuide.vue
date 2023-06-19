@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import VCard from '@/components/VCard';
+  import { VCard } from '@/components/VCard';
 </script>
 
 <template>

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-  import VHeading from '@/components/VHeading';
-  import VCard from '@/components/VCard';
-  import VCover from '@/components/VCover';
+  import { VHeading } from '@/components/VHeading';
+  import { VCard } from '@/components/VCard';
+  import { VCover } from '@/components/VCover';
   import useStudies from '@/stores/studies';
 
   const studies = useStudies();

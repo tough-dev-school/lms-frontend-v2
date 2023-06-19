@@ -1,9 +1,9 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
-  import VHeading from '@/components/VHeading';
-  import VButton from '@/components/VButton';
-  import VCard from '@/components/VCard';
-  import VTextInput from '@/components/VTextInput';
+  import { VHeading } from '@/components/VHeading';
+  import { VButton } from '@/components/VButton';
+  import { VCard } from '@/components/VCard';
+  import { VTextInput } from '@/components/VTextInput';
   import useAuth from '@/stores/auth';
 
   export interface Props {

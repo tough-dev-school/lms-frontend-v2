@@ -1,7 +1,7 @@
 <script setup lang="ts">
-  import VTextEditor from '@/components/VTextEditor';
-  import VButton from '@/components/VButton';
-  import VCard from '@/components/VCard';
+  import { VTextEditor } from '@/components/VTextEditor';
+  import { VButton } from '@/components/VButton';
+  import { VCard } from '@/components/VCard';
   import { ref, computed, watch } from 'vue';
   import useHomework from '@/stores/homework';
 

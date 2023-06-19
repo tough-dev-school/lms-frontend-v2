@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import VNewAnswer from '@/components/VNewAnswer';
+import { VNewAnswer } from '@/components/VNewAnswer';
 import { faker } from '@faker-js/faker';
 
 export default {

@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import VProfileMenu from '@/components/VProfileMenu';
+import { VProfileMenu } from '@/components/VProfileMenu';
 import useUser from '@/stores/user';
 import { faker } from '@faker-js/faker';
 

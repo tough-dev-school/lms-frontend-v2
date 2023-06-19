@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import VButton from '@/components/VButton';
+import { VButton } from '@/components/VButton';
 
 export default {
   title: 'Forms/VButton',

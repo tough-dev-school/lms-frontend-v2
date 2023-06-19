@@ -11,8 +11,8 @@
   import 'prismjs/components/prism-python.js';
   import 'prismjs/components/prism-bash.js';
 
-  import VCard from '@/components/VCard';
-  import VButton from '@/components/VButton';
+  import { VCard } from '@/components/VCard';
+  import { VButton } from '@/components/VButton';
   import useMaterials from '@/stores/materials';
   import { useTitle } from '@vueuse/core';
   import getNotionTitle from '@/utils/getNotionTitle';

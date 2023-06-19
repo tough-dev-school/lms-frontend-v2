@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import { ref, computed } from 'vue';
   import { onClickOutside } from '@vueuse/core';
-  import VAvatar from '@/components/VAvatar';
+  import { VAvatar } from '@/components/VAvatar';
   import { useRouter } from 'vue-router';
   import useUser from '@/stores/user';
   import useAuth from '@/stores/auth';
