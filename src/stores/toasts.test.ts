@@ -1,8 +1,7 @@
 import { describe, test, beforeEach, expect } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
-import { useToasts } from '.';
+import useToasts, { type VToastMessage } from './toasts';
 import { faker } from '@faker-js/faker';
-import type { VToastMessage } from '.';
 
 const MESSAGE_ONE = faker.datatype.uuid();
 const MESSAGE_TWO = faker.datatype.uuid();

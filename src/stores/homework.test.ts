@@ -2,8 +2,8 @@ import { describe, test, beforeEach, expect, vi } from 'vitest';
 import { createApp } from 'vue';
 import { setActivePinia } from 'pinia';
 import { createTestingPinia } from '@pinia/testing';
-import { useHomework } from '.';
-import { useToasts } from '.';
+import useHomework from './homework';
+import useToasts from './toasts';
 import { faker } from '@faker-js/faker';
 import {
   getQuestion,

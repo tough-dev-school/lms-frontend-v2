@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { describe, test, beforeEach, vi, expect } from 'vitest';
-import { loginByToken } from '.';
+import loginByToken from './loginByToken';
 import useAuth from '@/stores/auth';
 import type { RouteLocationNormalized } from 'vue-router';
 import { createApp } from 'vue';
