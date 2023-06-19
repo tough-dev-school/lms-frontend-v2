@@ -1,5 +1,5 @@
 ---
-to: src/components/<%= name %>/<%= name %>.stories.ts
+to: src/<%= folder %>/<%= name %>/<%= name %>.stories.ts
 ---
 
 import type { Meta, StoryObj } from '@storybook/vue3';

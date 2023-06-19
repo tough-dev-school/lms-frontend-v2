@@ -20,7 +20,9 @@
     "storybook": "storybook dev -p 3000",
     "build-storybook": "storybook build",
     "prepare": "husky install",
-    "add:component": "pnpx hygen new component --name"
+    "add:component": "pnpx hygen new component --folder components --name",
+    "add:view": "pnpx hygen new component --folder views --name",
+    "add:layout": "pnpx hygen new component --folder layouts --name"
   },
   "dependencies": {
     "@sentry/tracing": "^7.22.0",

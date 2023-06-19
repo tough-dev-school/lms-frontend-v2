@@ -1,5 +1,5 @@
 ---
-to: src/components/<%= name %>/index.ts
+to: src/<%= folder %>/<%= name %>/index.ts
 ---
 
 import <%= name %> from './<%= name %>.vue';

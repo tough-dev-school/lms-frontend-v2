@@ -1,5 +1,5 @@
 ---
-to: src/components/<%= name %>/<%= name %>.test.ts
+to: src/<%= folder %>/<%= name %>/<%= name %>.test.ts
 ---
 
 import { describe, expect, test, beforeEach } from 'vitest';

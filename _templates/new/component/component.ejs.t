@@ -1,5 +1,5 @@
 ---
-to: src/components/<%= name %>/<%= name %>.vue
+to: src/<%= folder %>/<%= name %>/<%= name %>.vue
 ---
 
 <script lang="ts" setup>
