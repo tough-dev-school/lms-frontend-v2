@@ -2,7 +2,7 @@ import { describe, expect, test, beforeEach, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import { VPasswordSettings } from '.';
-import type VTextInput from '.';
+import type { VTextInput } from '@/components/VTextInput';
 import useAuth from '@/stores/auth';
 import { createTestingPinia } from '@pinia/testing';
 import { faker } from '@faker-js/faker';

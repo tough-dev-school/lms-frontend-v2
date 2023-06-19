@@ -2,7 +2,7 @@
   import { VHeading } from '@/components/VHeading';
   import { VCard } from '@/components/VCard';
   import { VPasswordSettings } from '@/components/VPasswordSettings';
-  import { VLinksSettigns } from '@/components/VLinksSettings';
+  import { VLinksSettings } from '@/components/VLinksSettings';
   import { VCertificateSettings } from '@/components/VCertificateSettings';
 </script>
 
@@ -37,7 +37,7 @@
         </li>
       </ul>
     </VCard>
-    <VLinksSettigns id="links" data-testid="links-settings" />
+    <VLinksSettings id="links" data-testid="links-settings" />
     <VPasswordSettings id="password" data-testid="password-settings" />
     <VCertificateSettings id="certificate" data-testid="certificate-settings" />
   </div>

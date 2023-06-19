@@ -3,7 +3,7 @@ import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import { VCertificateCard } from '.';
 import { getDiplomasData } from '@/mocks/diplomas';
-import type VCertificate from '.';
+import type { VCertificate } from '@/components/VCertificate';
 
 const diplomas = getDiplomasData();
 

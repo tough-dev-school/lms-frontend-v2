@@ -3,7 +3,7 @@ import { mount, VueWrapper } from '@vue/test-utils';
 import { VToastFeed } from '@/components/VToastFeed';
 import { faker } from '@faker-js/faker';
 import useToasts, { VToastMessage } from '@/stores/toasts';
-import { type VToast } from '@/components/VToast';
+import type { VToast } from '@/components/VToast';
 import { createTestingPinia } from '@pinia/testing';
 
 const MESSAGES = 10;
