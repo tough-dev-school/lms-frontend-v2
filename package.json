@@ -19,7 +19,8 @@
     "fix": "run-p fix:*",
     "storybook": "storybook dev -p 3000",
     "build-storybook": "storybook build",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "add:component": "pnpx hygen new component --name"
   },
   "dependencies": {
     "@sentry/tracing": "^7.22.0",
