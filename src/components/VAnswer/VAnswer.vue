@@ -7,6 +7,8 @@
   import { VHtmlContent } from '@/components/VHtmlContent';
   import { computed } from 'vue';
   import useUser from '@/stores/user';
+  import { mockReactionsData } from '@/components/VReactions/mocks/mockReactionsData';
+  import { VReactions } from '@/components/VReactions';
 
   export interface Props {
     answer: Answer;
@@ -18,6 +20,8 @@
   const isOwn = computed(() => {
     return props.answer.author.uuid === user.uuid;
   });
+
+  const reactionsData = mockReactionsData();
 </script>
 
 <template>
@@ -46,5 +50,6 @@
       class="flex flex-row-reverse gap-16 pt-16 text-sub text-gray empty:appearance-none">
       <slot name="footer" />
     </div>
+    <VReactions :reactionsData="reactionsData" />
   </VCard>
 </template>

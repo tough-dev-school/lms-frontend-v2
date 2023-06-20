@@ -26,7 +26,7 @@
 </script>
 
 <template>
-  <div class="flex flex-wrap gap-16 text-h2">
+  <div class="flex flex-wrap gap-16 text-[1.5em]">
     <VReactionsPalette />
     <VReaction
       v-for="(reaction, index) in reactions"
@@ -37,6 +37,6 @@
 
 <style>
   .emoji-button {
-    @apply box-content cursor-pointer bg-offwhite p-8 transition-colors hover:bg-lightgray;
+    @apply box-content cursor-pointer bg-offwhite p-4 transition-colors hover:bg-lightgray;
   }
 </style>

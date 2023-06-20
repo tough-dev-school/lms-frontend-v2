@@ -16,7 +16,7 @@
     </div>
     <div class="flex items-center pr-16">
       <abbr
-        class="relative -mr-[16px] transition-all hover:z-50 hover:scale-125"
+        class="relative -mr-[20px] transition-all hover:z-50 hover:scale-125"
         v-for="author in reaction.authors"
         :key="author.uuid"
         :title="`${author.firstName} ${author.lastName}`">
