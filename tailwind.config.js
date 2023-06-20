@@ -44,6 +44,7 @@ module.exports = {
       green: { DEFAULT: 'rgb(35, 207, 104)' },
       'dark-black': { DEFAULT: '#1C1B22' },
       'dark-gray': { DEFAULT: '#2B2A33' },
+      lightgray: { DEFAULT: '#e3e3e3' },
     },
     fontSize: {
       sub: '14px',
