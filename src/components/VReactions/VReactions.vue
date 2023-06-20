@@ -42,15 +42,19 @@
 
 <template>
   <div class="flex flex-wrap gap-16 text-h2">
-    <div class="inline-flex gap-16 rounded bg-offwhite">
+    <div class="inline-flex rounded bg-offwhite">
       <button
-        class="flex h-56 w-56 items-center justify-center rounded bg-offwhite p-8 grayscale hover:bg-lightgray"
+        class="emoji-button box-content flex h-40 w-40 items-center justify-center rounded p-8 grayscale"
         v-if="!isOpen"
         @click="handleOpen">
         😀
       </button>
       <button
-        class="h-56 w-56 cursor-pointer rounded bg-offwhite p-8 hover:bg-lightgray"
+        class="emoji-button rounded-none h-40 w-40 p-8"
+        :class="{
+          'rounded-r': index === options.length - 1,
+          'rounded-l': index === 0,
+        }"
         v-for="(reaction, index) in options"
         :key="index"
         @click="handleClose"
@@ -59,7 +63,7 @@
       </button>
     </div>
     <div
-      class="flex cursor-pointer gap-16 rounded bg-offwhite p-8 hover:bg-lightgray"
+      class="emoji-button flex gap-16 rounded"
       v-for="(reaction, index) in reactions"
       :key="index">
       <div class="flex h-40 w-40 items-center justify-center">
@@ -77,3 +81,9 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+  .emoji-button {
+    @apply box-content cursor-pointer bg-offwhite p-8 transition-colors hover:bg-lightgray;
+  }
+</style>
