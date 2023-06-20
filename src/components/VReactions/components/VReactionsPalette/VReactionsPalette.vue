@@ -17,13 +17,13 @@
 <template>
   <div class="inline-flex rounded bg-offwhite" ref="palette">
     <button
-      class="emoji-button box-content flex h-40 w-40 items-center justify-center rounded p-8 grayscale"
+      class="emoji-button box-content flex h-32 w-32 items-center justify-center rounded p-8 grayscale"
       v-if="!isOpen"
       @click="handleOpen">
       😀
     </button>
     <button
-      class="emoji-button rounded-none h-40 w-40 p-8"
+      class="emoji-button rounded-none h-32 w-32 p-8"
       :class="{
         'rounded-r': index === options.length - 1,
         'rounded-l': index === 0,

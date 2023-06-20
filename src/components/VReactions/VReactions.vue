@@ -37,6 +37,6 @@
 
 <style>
   .emoji-button {
-    @apply box-content cursor-pointer bg-offwhite p-4 transition-colors hover:bg-lightgray;
+    @apply box-content cursor-pointer bg-offwhite transition-colors hover:bg-lightgray;
   }
 </style>

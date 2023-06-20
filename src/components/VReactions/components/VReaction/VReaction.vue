@@ -10,8 +10,8 @@
 </script>
 
 <template>
-  <div class="emoji-button flex gap-16 rounded">
-    <div class="flex h-40 w-40 items-center justify-center">
+  <div class="emoji-button flex items-center gap-16 rounded p-8 pr-16">
+    <div class="flex h-32 w-32 items-center justify-center">
       {{ reaction.emoji }}
     </div>
     <div class="flex items-center pr-16">
