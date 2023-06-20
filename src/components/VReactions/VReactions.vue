@@ -3,11 +3,14 @@
   import { ref } from 'vue';
   import { VAvatar } from '@/components/VAvatar';
 
-  const options = [...Array(10)].map(() => faker.internet.emoji());
+  const ALLOWED_REACTIONS = ['👍', '👎', '😄', '🎉', '😕', '❤️', '🚀', '👀'];
+
+  const options = ALLOWED_REACTIONS;
+
   const reactions = [...Array(10)].map(() => {
     {
       return {
-        emoji: faker.internet.emoji(),
+        emoji: faker.helpers.arrayElement(ALLOWED_REACTIONS),
         authors: [...Array(faker.datatype.number({ min: 1, max: 3 }))].map(
           () => {
             return {
