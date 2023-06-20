@@ -15,7 +15,7 @@
 </script>
 
 <template>
-  <div class="inline-flex rounded bg-offwhite" ref="palette">
+  <div class="inline-flex rounded bg-offwhite text-[1.5em]" ref="palette">
     <button
       class="emoji-button box-content flex h-32 w-32 items-center justify-center rounded p-8 grayscale"
       v-if="!isOpen"

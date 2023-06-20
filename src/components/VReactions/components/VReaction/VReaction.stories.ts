@@ -1,21 +1,33 @@
-import type { Meta, StoryObj } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3';
 import { VReaction } from '.';
-import { mockReactionData } from '@/component/VReactions/mocks/mockReactionsData';
+import { VCard } from '@/components/VCard';
+import { mockReactionAuthor } from '@/components/VReactions/mocks/mockReactionsData';
+import { faker } from '@faker-js/faker';
+import { ALLOWED_REACTIONS } from '../VReactionsPalette';
+import times from 'lodash/times';
 
-const meta: Meta<typeof VReaction> = {
-  title: 'Base/VReaction',
+export default {
+  title: 'Reactions/VReaction',
   component: VReaction,
-  render: () => ({
-    components: { VReaction },
-    template: '<VReaction >Hello World</VReaction>',
-  }),
-  tags: ['autodocs'],
-};
+} as Meta;
 
-export default meta;
+const Template: StoryFn = (args) => ({
+  components: { VReaction, VCard },
+  setup() {
+    return { args };
+  },
+  template: '<VCard><VReaction v-bind="args" /></VCard>',
+});
 
-type Story = StoryObj<typeof VReaction>;
-
-export const Default: Story = {
-  reaction: mockReactionData(),
+export const Default = {
+  render: Template,
+  args: {
+    reaction: {
+      emoji: faker.helpers.arrayElement(ALLOWED_REACTIONS),
+      authors: times(
+        faker.datatype.number({ min: 1, max: 5 }),
+        mockReactionAuthor,
+      ),
+    },
+  },
 };

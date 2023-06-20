@@ -30,7 +30,7 @@
 </script>
 
 <template>
-  <div class="flex flex-wrap gap-16 text-[1.5em]">
+  <div class="flex flex-wrap gap-16">
     <VReactionsPalette />
     <VReaction
       v-for="(reaction, index) in reactions"

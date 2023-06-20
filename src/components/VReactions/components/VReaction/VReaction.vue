@@ -8,7 +8,8 @@
 </script>
 
 <template>
-  <div class="emoji-button flex items-center gap-16 rounded p-8 pr-16">
+  <div
+    class="emoji-button inline-flex items-center gap-16 rounded p-8 pr-16 text-[1.5em]">
     <div class="flex h-32 w-32 items-center justify-center">
       {{ reaction.emoji }}
     </div>
