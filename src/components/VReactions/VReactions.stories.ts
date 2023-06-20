@@ -1,19 +1,22 @@
-import type { Meta, StoryObj } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3';
 import { VReactions } from '.';
 import { VCard } from '@/components/VCard';
+import { mockReactionsData } from './mocks/mockReactionsData';
 
-const meta: Meta<typeof VReactions> = {
-  title: 'Base/VReactions',
+export default {
+  title: 'Reactions/VReactions',
   component: VReactions,
-  render: () => ({
-    components: { VReactions, VCard },
-    template: '<VCard><VReactions >Hello World</VReactions></VCard>',
-  }),
-  tags: ['autodocs'],
+} as Meta;
+
+const Template: StoryFn = (args) => ({
+  components: { VReactions, VCard },
+  setup() {
+    return { args };
+  },
+  template: '<VCard><VReactions v-bind="args" /></VCard>',
+});
+
+export const Default = {
+  render: Template,
+  args: { reactionsData: mockReactionsData() },
 };
-
-export default meta;
-
-type Story = StoryObj<typeof VReactions>;
-
-export const Default: Story = {};

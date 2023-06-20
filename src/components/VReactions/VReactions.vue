@@ -1,34 +1,23 @@
 <script lang="ts" setup>
-  import { faker } from '@faker-js/faker';
-  import { computed, ref } from 'vue';
+  import { computed } from 'vue';
 
   import uniq from 'lodash/uniq';
   import { VReaction } from './components/VReaction';
-  import {
-    VReactionsPalette,
-    ALLOWED_REACTIONS,
-  } from './components/VReactionsPalette';
+  import { VReactionsPalette } from './components/VReactionsPalette';
 
-  const reactionsData = [
-    ...Array(faker.datatype.number({ min: 1, max: 15 })),
-  ].map(() => {
-    return {
-      emoji: faker.helpers.arrayElement(ALLOWED_REACTIONS),
-      author: {
-        firstName: faker.name.firstName(),
-        lastName: faker.name.lastName(),
-        uuid: faker.datatype.uuid(),
-      },
-    };
+  const props = withDefaults(defineProps<{ reactionsData: any[] }>(), {
+    reactionsData: () => [],
   });
 
   const reactions = computed(() => {
-    const usedReactions = uniq(reactionsData.map((reaction) => reaction.emoji));
+    const usedReactions = uniq(
+      props.reactionsData.map((reaction) => reaction.emoji),
+    );
 
     return usedReactions.map((emoji) => {
       return {
         emoji,
-        authors: reactionsData
+        authors: props.reactionsData
           .filter((reaction) => reaction.emoji === emoji)
           .map((reaction) => reaction.author),
       };
