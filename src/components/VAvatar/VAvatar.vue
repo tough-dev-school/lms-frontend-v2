@@ -23,3 +23,9 @@
     class="flex h-32 w-32 items-center justify-center rounded-full bg-black object-cover p-4"
     :src="image" />
 </template>
+
+<style scoped>
+  img {
+    background-image: radial-gradient(black 60%, lightgray 75%);
+  }
+</style>
