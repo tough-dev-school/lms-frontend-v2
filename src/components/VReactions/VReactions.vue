@@ -3,6 +3,7 @@
   import { computed, ref } from 'vue';
   import { VAvatar } from '@/components/VAvatar';
   import uniq from 'lodash/uniq';
+  import { onClickOutside } from '@vueuse/core';
 
   const ALLOWED_REACTIONS = ['👍', '👎', '😄', '🎉', '😕', '❤️', '🚀', '👀'];
 
@@ -35,14 +36,17 @@
   });
 
   const isOpen = ref(false);
+  const palette = ref(null);
 
   const handleOpen = () => (isOpen.value = true);
   const handleClose = () => (isOpen.value = false);
+
+  onClickOutside(palette, () => (isOpen.value = false));
 </script>
 
 <template>
   <div class="flex flex-wrap gap-16 text-h2">
-    <div class="inline-flex rounded bg-offwhite">
+    <div class="inline-flex rounded bg-offwhite" ref="palette">
       <button
         class="emoji-button box-content flex h-40 w-40 items-center justify-center rounded p-8 grayscale"
         v-if="!isOpen"
