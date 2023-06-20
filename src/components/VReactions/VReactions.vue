@@ -1,27 +1,37 @@
 <script lang="ts" setup>
   import { faker } from '@faker-js/faker';
-  import { ref } from 'vue';
+  import { computed, ref } from 'vue';
   import { VAvatar } from '@/components/VAvatar';
+  import uniq from 'lodash/uniq';
 
   const ALLOWED_REACTIONS = ['👍', '👎', '😄', '🎉', '😕', '❤️', '🚀', '👀'];
 
   const options = ALLOWED_REACTIONS;
 
-  const reactions = [...Array(10)].map(() => {
-    {
+  const reactionsData = [
+    ...Array(faker.datatype.number({ min: 1, max: 15 })),
+  ].map(() => {
+    return {
+      emoji: faker.helpers.arrayElement(ALLOWED_REACTIONS),
+      author: {
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName(),
+        uuid: faker.datatype.uuid(),
+      },
+    };
+  });
+
+  const reactions = computed(() => {
+    const usedReactions = uniq(reactionsData.map((reaction) => reaction.emoji));
+
+    return usedReactions.map((emoji) => {
       return {
-        emoji: faker.helpers.arrayElement(ALLOWED_REACTIONS),
-        authors: [...Array(faker.datatype.number({ min: 1, max: 3 }))].map(
-          () => {
-            return {
-              firstName: faker.name.firstName(),
-              lastName: faker.name.lastName(),
-              uuid: faker.datatype.uuid(),
-            };
-          },
-        ),
+        emoji,
+        authors: reactionsData
+          .filter((reaction) => reaction.emoji === emoji)
+          .map((reaction) => reaction.author),
       };
-    }
+    });
   });
 
   const isOpen = ref(false);
