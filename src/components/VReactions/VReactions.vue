@@ -2,10 +2,14 @@
   import { computed } from 'vue';
 
   import uniq from 'lodash/uniq';
-  import { VReaction } from './components/VReaction';
+  import { VReaction, type Reaction } from './components/VReaction';
   import { VReactionsPalette } from './components/VReactionsPalette';
 
-  const props = withDefaults(defineProps<{ reactionsData: any[] }>(), {
+  interface Props {
+    reactionsData: Reaction[];
+  }
+
+  const props = withDefaults(defineProps<Props>(), {
     reactionsData: () => [],
   });
 

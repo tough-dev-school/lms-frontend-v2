@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { VReaction } from '.';
+import { mockReactionData } from '@/component/VReactions/mocks/mockReactionsData';
 
 const meta: Meta<typeof VReaction> = {
   title: 'Base/VReaction',
@@ -15,4 +16,6 @@ export default meta;
 
 type Story = StoryObj<typeof VReaction>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  reaction: mockReactionData(),
+};

@@ -1,11 +1,9 @@
 <script lang="ts" setup>
   import { VAvatar } from '@/components/VAvatar';
+  import type { ReactionAuthor } from '@/components/VReactions';
 
   defineProps<{
-    reaction: {
-      emoji: string;
-      authors: { firstName: string; lastName: string; uuid: string }[];
-    }[];
+    reaction: { emoji: string; authors: ReactionAuthor[] };
   }>();
 </script>
 
