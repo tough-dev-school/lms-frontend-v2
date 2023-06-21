@@ -45,7 +45,7 @@ jobs:
         run: pnpm install
 
       - name: Install playwright browsers 😈
-        run: pnpx playwright install
+        run: npx playwright install
 
       - name: Updating light mode screenshots 🌞
         env:
