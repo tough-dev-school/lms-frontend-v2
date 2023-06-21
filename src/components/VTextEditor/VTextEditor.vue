@@ -37,8 +37,8 @@
   const { focused } = useFocusWithin(currentEditor);
 
   const emit = defineEmits<{
-    (e: 'update:modelValue', value: string): void;
-    (e: 'send'): void;
+    'update:modelValue': [value: string];
+    send: [];
   }>();
 
   const isMetaPressed = useKeyModifier('Meta');

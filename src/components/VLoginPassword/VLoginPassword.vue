@@ -32,7 +32,7 @@
   });
 
   const emit = defineEmits<{
-    (e: 'change'): void;
+    change: [];
   }>();
 </script>
 
