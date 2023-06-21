@@ -6,3 +6,4 @@ docker-compose.yml
 .prettierignore
 .lintstagedrc
 *.ejs.t
+.npmrc
