@@ -31,29 +31,26 @@ jobs:
           repository: ${{ fromJSON(steps.get-pr.outputs.result).head.repo.full_name }}
           ref: ${{ fromJSON(steps.get-pr.outputs.result).head.sha }}
 
-      - name: Setup node env 🏗
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
           node-version-file: '.node-version'
+          cache: 'pnpm'
 
-      - name: Restore cache
-        uses: actions/cache@v3
-        id: cache
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-v1-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('.node-version') }}
-
-      - name: Install dependencies 👨🏻‍💻
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci --no-audit --include=dev
+      - name: Install dependencies
+        run: pnpm install
 
       - name: Install playwright browsers 😈
-        run: npx playwright install
+        run: pnpx playwright install
 
       - name: Updating light mode screenshots 🌞
         env:
           COLOR_SCHEME: light
-        run: npm run test:visual:update
+        run: pnpm run test:visual:update
 
       - name: Creating branch with updates 🦑
         uses: stefanzweifel/git-auto-commit-action@v4
