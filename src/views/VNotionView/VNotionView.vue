@@ -10,6 +10,8 @@
   import 'prismjs/components/prism-ruby.js';
   import 'prismjs/components/prism-python.js';
   import 'prismjs/components/prism-bash.js';
+  import 'prismjs/components/prism-c.js';
+  import 'prismjs/components/prism-cpp.js';
 
   import { VCard } from '@/components/VCard';
   import { VButton } from '@/components/VButton';
