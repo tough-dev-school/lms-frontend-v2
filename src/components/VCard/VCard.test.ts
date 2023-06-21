@@ -30,7 +30,7 @@ describe('VCard', () => {
 
     wrapper = mount(VCard, {
       shallow: true,
-      slots: { default: content },
+      slots: { default: content, footer: '' },
       props: defaultProps,
     });
 
