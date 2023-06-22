@@ -1,12 +1,31 @@
 <script lang="ts" setup>
-  import { ref } from 'vue';
+  import { ref, computed } from 'vue';
   import { onClickOutside } from '@vueuse/core';
   import { ALLOWED_REACTIONS, ReactionEmoji } from '.';
 
   const isOpen = ref(false);
   const palette = ref(null);
 
-  const options = ALLOWED_REACTIONS;
+  const props = withDefaults(
+    defineProps<{
+      usedReactions?: ReactionEmoji[];
+      maxReactions?: number;
+    }>(),
+    {
+      usedReactions: () => [],
+      maxReactions: 3,
+    },
+  );
+
+  const options = computed(() =>
+    ALLOWED_REACTIONS.filter(
+      (reaction) => !props.usedReactions.includes(reaction),
+    ),
+  );
+
+  const isDisabled = computed(
+    () => props.usedReactions.length >= props.maxReactions,
+  );
 
   const emit = defineEmits<{ click: [value: ReactionEmoji] }>();
 
@@ -24,9 +43,10 @@
 <template>
   <div class="inline-flex rounded bg-offwhite text-[1.5em]" ref="palette">
     <button
-      class="emoji-button box-content flex h-32 w-32 items-center justify-center rounded p-8 grayscale"
+      class="emoji-button box-content flex h-32 w-32 items-center justify-center rounded p-8"
       v-if="!isOpen"
-      @click="handleOpen">
+      @click="handleOpen"
+      :disabled="isDisabled">
       😀
     </button>
     <button
