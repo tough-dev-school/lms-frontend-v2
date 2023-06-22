@@ -1,15 +1,22 @@
 <script lang="ts" setup>
   import { ref } from 'vue';
   import { onClickOutside } from '@vueuse/core';
-  import { ALLOWED_REACTIONS } from '.';
+  import { ALLOWED_REACTIONS, ReactionEmoji } from '.';
 
   const isOpen = ref(false);
   const palette = ref(null);
 
   const options = ALLOWED_REACTIONS;
 
+  const emit = defineEmits<{ click: [value: ReactionEmoji] }>();
+
   const handleOpen = () => (isOpen.value = true);
   const handleClose = () => (isOpen.value = false);
+
+  const handleClick = (emoji: ReactionEmoji) => {
+    emit('click', emoji);
+    handleClose();
+  };
 
   onClickOutside(palette, () => (isOpen.value = false));
 </script>
@@ -30,7 +37,7 @@
       }"
       v-for="(reaction, index) in options"
       :key="index"
-      @click="handleClose"
+      @click="handleClick(reaction)"
       v-else>
       {{ reaction }}
     </button>

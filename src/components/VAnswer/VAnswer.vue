@@ -47,6 +47,6 @@
       class="flex flex-row-reverse gap-16 pt-16 text-sub text-gray empty:appearance-none">
       <slot name="footer" />
     </div>
-    <VReactions :reactions="answer.reactions" />
+    <VReactions :answer-id="answer.slug" :reactions="answer.reactions" />
   </VCard>
 </template>

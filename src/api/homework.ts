@@ -1,6 +1,16 @@
 import axios from '@/axios';
-import type { Answer, Comments, Question, Comment } from '@/types/homework';
+import type {
+  Answer,
+  Comments,
+  Question,
+  Comment,
+  Reaction,
+} from '@/types/homework';
 import htmlToMarkdown from '@/utils/htmlToMarkdown';
+import {
+  ALLOWED_REACTIONS,
+  ReactionEmoji,
+} from '@/components/VReactions/components/VReactionsPalette';
 
 export const getQuestion = async (questionId: string) => {
   const url = `/api/v2/homework/questions/${questionId}/`;
@@ -89,4 +99,21 @@ export const sendImage = async (file: File) => {
   const url = `/api/v2/homework/answers/image/`;
 
   return (await axios.post(url, formData)).data as { image: string };
+};
+
+export const addReaction = async (
+  answerId: string,
+  reaction: ReactionEmoji,
+) => {
+  const url = `/api/v2/homework/answers/${answerId}/reactions/`;
+
+  const data = { emoji: reaction };
+
+  return (await axios.post(url, data)).data as Reaction;
+};
+
+export const removeReaction = async (answerId: string, reactionId: string) => {
+  const url = `/api/v2/homework/answers/${answerId}/reactions/${reactionId}/}`;
+
+  await axios.delete(url);
 };

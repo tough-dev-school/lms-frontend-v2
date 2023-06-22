@@ -7,10 +7,13 @@ import {
   sendImage,
   getAnswers,
   getAnswer,
+  addReaction,
+  removeReaction,
 } from '@/api/homework';
 import type { Answer, Question, Thread } from '@/types/homework';
 import useToasts from '@/stores/toasts';
 import getThreads from '@/utils/getThreads';
+import type { ReactionEmoji } from '@/components/VReactions/components/VReactionsPalette';
 
 interface State {
   question: Question | undefined;
@@ -95,6 +98,12 @@ const useHomework = defineStore('homework', {
     },
     async sendImage(file: File) {
       return await sendImage(file);
+    },
+    async addReaction(answerId: string, reaction: ReactionEmoji) {
+      return await addReaction(answerId, reaction);
+    },
+    async removeReaction(answerId: string, reaction: ReactionEmoji) {
+      return await removeReaction(answerId, reaction);
     },
   },
 });

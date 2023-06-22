@@ -2,10 +2,17 @@
   import { computed } from 'vue';
   import uniq from 'lodash/uniq';
   import { VReaction } from './components/VReaction';
-  import { VReactionsPalette } from './components/VReactionsPalette';
+  import {
+    ReactionEmoji,
+    VReactionsPalette,
+  } from './components/VReactionsPalette';
   import type { Reaction } from '@/types/homework';
+  import useHomework from '@/stores/homework';
+
+  const homeworkStore = useHomework();
 
   interface Props {
+    answerId: string;
     reactions: Reaction[];
   }
 
@@ -27,11 +34,15 @@
       };
     });
   });
+
+  const addReaction = (emoji: ReactionEmoji) => {
+    homeworkStore.addReaction(props.answerId, emoji);
+  };
 </script>
 
 <template>
   <div class="flex flex-wrap gap-16">
-    <VReactionsPalette />
+    <VReactionsPalette @click="addReaction" />
     <VReaction
       v-for="(reaction, index) in reactions"
       :reaction="reaction"
