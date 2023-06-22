@@ -1,21 +1,14 @@
 import { describe, expect, test, beforeEach } from 'vitest';
-import { mount, type MountingOptions, VueWrapper } from '@vue/test-utils';
-import { faker } from '@faker-js/faker';
+import { mount, VueWrapper } from '@vue/test-utils';
 import { VReactions } from '.';
 
 describe('VReactions', () => {
   let wrapper: VueWrapper<InstanceType<typeof VReactions>>;
-  let options: MountingOptions<any, {}>;
-  const mountComponent = () => {
-    wrapper = mount(VReactions, options);
-  };
 
   beforeEach(() => {
-    options = {
+    wrapper = mount(VReactions, {
       shallow: true,
-    };
-
-    mountComponent();
+    });
   });
 
   test.todo('passes props to VReactionsPalette', () => {});
