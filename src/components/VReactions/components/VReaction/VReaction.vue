@@ -1,15 +1,13 @@
 <script lang="ts" setup>
   import { VAvatar } from '@/components/VAvatar';
   import type { Reaction, ReactionEmoji } from '@/types/homework';
-  import useUser from '@/stores/user';
   import { computed } from 'vue';
 
   const props = defineProps<{
+    userId: string;
     emoji: ReactionEmoji;
     reactions: Reaction[];
   }>();
-
-  const userStore = useUser();
 
   const emit = defineEmits<{
     add: [reaction: ReactionEmoji];
@@ -18,7 +16,7 @@
 
   const ownReaction = computed(() => {
     return props.reactions.find(
-      (reaction) => reaction.author.uuid === userStore.uuid,
+      (reaction) => reaction.author.uuid === props.userId,
     );
   });
 
@@ -34,8 +32,8 @@
     return props.reactions
       .map((reaction) => reaction.author)
       .sort((a, b) => {
-        if (a.uuid === userStore.uuid) return -1;
-        if (b.uuid === userStore.uuid) return 1;
+        if (a.uuid === props.userId) return -1;
+        if (b.uuid === props.userId) return 1;
         return 0;
       });
   });

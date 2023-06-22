@@ -55,6 +55,7 @@
       <VReaction
         v-for="(reactions, emoji) in groupedReactions"
         :emoji="emoji"
+        :userId="userStore.uuid"
         @remove="removeReaction"
         @add="addReaction"
         :reactions="reactions"

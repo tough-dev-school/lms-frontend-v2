@@ -5,6 +5,8 @@ import { mockReactionsData } from '@/components/VReactions/mocks/mockReactionsDa
 import { faker } from '@faker-js/faker';
 import { ALLOWED_REACTIONS } from '../VReactionsPalette';
 
+const userId = faker.datatype.uuid();
+
 export default {
   title: 'Reactions/VReaction',
   component: VReaction,
@@ -21,7 +23,19 @@ const Template: StoryFn = (args) => ({
 export const Default = {
   render: Template,
   args: {
+    userId,
     emoji: faker.helpers.arrayElement(ALLOWED_REACTIONS),
     reactions: mockReactionsData(),
+  },
+};
+
+export const Own = {
+  render: Template,
+  args: {
+    userId,
+    emoji: faker.helpers.arrayElement(ALLOWED_REACTIONS),
+    reactions: mockReactionsData(1).map((reaction) => {
+      return { ...reaction, author: { ...reaction.author, uuid: userId } };
+    }),
   },
 };

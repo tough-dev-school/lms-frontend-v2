@@ -11,6 +11,6 @@ export const mockReactionData = (): Reaction => ({
   author: getAuthorData(),
 });
 
-export const mockReactionsData = (): Reaction[] => {
-  return times(faker.datatype.number({ min: 1, max: 15 }), mockReactionData);
+export const mockReactionsData = (n: number = 10): Reaction[] => {
+  return times(faker.datatype.number({ min: 1, max: n }), mockReactionData);
 };
