@@ -15,6 +15,8 @@ describe('VReaction', () => {
       shallow: true,
     };
 
+    test.todo('own avatar is always last');
+
     mountComponent();
   });
 });

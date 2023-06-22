@@ -30,6 +30,16 @@
       emit('add', props.emoji);
     }
   };
+
+  const orderedAuthors = computed(() => {
+    return props.reactions
+      .map((reaction) => reaction.author)
+      .sort((a, b) => {
+        if (a.uuid === userStore.uuid) return -1;
+        if (b.uuid === userStore.uuid) return 1;
+        return 0;
+      });
+  });
 </script>
 
 <template>
@@ -45,10 +55,10 @@
     <div class="flex items-center pr-16">
       <abbr
         class="relative -mr-[20px] transition-all hover:z-50 hover:scale-125"
-        v-for="reaction in reactions"
-        :key="reaction.slug"
-        :title="`${reaction.author.firstName} ${reaction.author.lastName}`">
-        <VAvatar :userId="reaction.author.uuid" />
+        v-for="author in orderedAuthors"
+        :key="author.uuid"
+        :title="`${author.firstName} ${author.lastName}`">
+        <VAvatar :userId="author.uuid" />
       </abbr>
     </div>
   </div>
