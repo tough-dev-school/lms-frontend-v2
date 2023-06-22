@@ -1,6 +1,5 @@
 <script lang="ts" setup>
   import { computed } from 'vue';
-  import uniq from 'lodash/uniq';
   import { VReaction } from './components/VReaction';
   import {
     ReactionEmoji,
@@ -8,6 +7,7 @@
   } from './components/VReactionsPalette';
   import type { Reaction } from '@/types/homework';
   import useHomework from '@/stores/homework';
+  import { groupBy } from 'lodash';
 
   const homeworkStore = useHomework();
 
@@ -20,23 +20,16 @@
     reactions: () => [],
   });
 
-  const reactions = computed(() => {
-    const usedReactions = uniq(
-      props.reactions.map((reaction) => reaction.emoji),
-    );
-
-    return usedReactions.map((emoji) => {
-      return {
-        emoji,
-        authors: props.reactions
-          .filter((reaction) => reaction.emoji === emoji)
-          .map((reaction) => reaction.author),
-      };
-    });
+  const groupedReactions = computed(() => {
+    return groupBy(props.reactions, (reaction) => reaction.emoji);
   });
 
   const addReaction = (emoji: ReactionEmoji) => {
     homeworkStore.addReaction(props.answerId, emoji);
+  };
+
+  const removeReaction = (reactionId: string) => {
+    homeworkStore.removeReaction(props.answerId, reactionId);
   };
 </script>
 
@@ -44,9 +37,12 @@
   <div class="flex flex-wrap gap-16">
     <VReactionsPalette @click="addReaction" />
     <VReaction
-      v-for="(reaction, index) in reactions"
-      :reaction="reaction"
-      :key="index" />
+      v-for="(reactions, emoji) in groupedReactions"
+      :emoji="emoji"
+      @remove="removeReaction"
+      @add="addReaction"
+      :reactions="reactions"
+      :key="emoji" />
   </div>
 </template>
 

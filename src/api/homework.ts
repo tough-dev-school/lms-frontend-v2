@@ -113,7 +113,7 @@ export const addReaction = async (
 };
 
 export const removeReaction = async (answerId: string, reactionId: string) => {
-  const url = `/api/v2/homework/answers/${answerId}/reactions/${reactionId}/}`;
+  const url = `/api/v2/homework/answers/${answerId}/reactions/${reactionId}/`;
 
   await axios.delete(url);
 };
