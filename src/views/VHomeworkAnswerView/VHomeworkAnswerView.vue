@@ -55,7 +55,7 @@
         <summary>Показать задание</summary>
         <VHtmlContent :content="question.text" class="mt-16" />
       </VCard>
-      <VAnswer :answer="answer" />
+      <VAnswer :answer="answer" @update="getData" />
     </section>
     <section class="flex flex-col gap-24">
       <VHeading tag="h2">Обсуждение</VHeading>

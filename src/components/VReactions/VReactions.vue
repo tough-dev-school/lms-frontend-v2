@@ -20,16 +20,22 @@
     reactions: () => [],
   });
 
+  const emit = defineEmits<{
+    update: [];
+  }>();
+
   const groupedReactions = computed(() => {
     return groupBy(props.reactions, (reaction) => reaction.emoji);
   });
 
   const addReaction = (emoji: ReactionEmoji) => {
     homeworkStore.addReaction(props.answerId, emoji);
+    emit('update');
   };
 
   const removeReaction = (reactionId: string) => {
     homeworkStore.removeReaction(props.answerId, reactionId);
+    emit('update');
   };
 </script>
 

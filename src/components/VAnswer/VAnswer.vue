@@ -13,6 +13,10 @@
     answer: Answer;
   }
 
+  const emit = defineEmits<{
+    update: [];
+  }>();
+
   const user = useUser();
   const props = defineProps<Props>();
 
@@ -47,6 +51,9 @@
       class="flex flex-row-reverse gap-16 pt-16 text-sub text-gray empty:appearance-none">
       <slot name="footer" />
     </div>
-    <VReactions :answer-id="answer.slug" :reactions="answer.reactions" />
+    <VReactions
+      @update="emit('update')"
+      :answer-id="answer.slug"
+      :reactions="answer.reactions" />
   </VCard>
 </template>
