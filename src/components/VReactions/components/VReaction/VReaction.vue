@@ -35,7 +35,10 @@
 <template>
   <div
     @click="handleClick"
-    class="emoji-button inline-flex items-center gap-16 rounded p-8 pr-16 text-[1.5em]">
+    class="emoji-button inline-flex items-center gap-16 rounded p-8 pr-16 text-[1.5em]"
+    :class="{
+      '!bg-blue hover:!bg-blue-hover': ownReaction,
+    }">
     <div class="flex h-32 w-32 items-center justify-center">
       {{ emoji }}
     </div>
