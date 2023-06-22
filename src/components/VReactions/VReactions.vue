@@ -1,27 +1,27 @@
 <script lang="ts" setup>
   import { computed } from 'vue';
-
   import uniq from 'lodash/uniq';
-  import { VReaction, type Reaction } from './components/VReaction';
+  import { VReaction } from './components/VReaction';
   import { VReactionsPalette } from './components/VReactionsPalette';
+  import type { Reaction } from '@/types/homework';
 
   interface Props {
-    reactionsData: Reaction[];
+    reactions: Reaction[];
   }
 
   const props = withDefaults(defineProps<Props>(), {
-    reactionsData: () => [],
+    reactions: () => [],
   });
 
   const reactions = computed(() => {
     const usedReactions = uniq(
-      props.reactionsData.map((reaction) => reaction.emoji),
+      props.reactions.map((reaction) => reaction.emoji),
     );
 
     return usedReactions.map((emoji) => {
       return {
         emoji,
-        authors: props.reactionsData
+        authors: props.reactions
           .filter((reaction) => reaction.emoji === emoji)
           .map((reaction) => reaction.author),
       };

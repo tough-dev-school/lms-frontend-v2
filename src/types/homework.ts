@@ -4,6 +4,13 @@ export interface Author {
   lastName: string;
 }
 
+export interface Reaction {
+  slug: string;
+  emoji: string;
+  author: Author;
+  answer: string;
+}
+
 export interface Answer {
   created: string;
   modified: string;
@@ -13,6 +20,7 @@ export interface Answer {
   text: string;
   src: string;
   hasDescendants: boolean;
+  reactions: Reaction[];
 }
 
 export interface Thread extends Answer {
