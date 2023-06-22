@@ -48,12 +48,12 @@
     </div>
     <VHtmlContent :content="answer.text" data-testid="content" />
     <div
-      class="flex flex-row-reverse gap-16 pt-16 text-sub text-gray empty:appearance-none">
+      class="flex justify-between gap-16 pt-16 text-sub text-gray empty:appearance-none">
+      <VReactions
+        @update="emit('update')"
+        :answer-id="answer.slug"
+        :reactions="answer.reactions" />
       <slot name="footer" />
     </div>
-    <VReactions
-      @update="emit('update')"
-      :answer-id="answer.slug"
-      :reactions="answer.reactions" />
   </VCard>
 </template>
