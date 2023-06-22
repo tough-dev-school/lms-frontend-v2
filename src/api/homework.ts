@@ -5,12 +5,9 @@ import type {
   Question,
   Comment,
   Reaction,
+  ReactionEmoji,
 } from '@/types/homework';
 import htmlToMarkdown from '@/utils/htmlToMarkdown';
-import {
-  ALLOWED_REACTIONS,
-  ReactionEmoji,
-} from '@/components/VReactions/components/VReactionsPalette';
 
 export const getQuestion = async (questionId: string) => {
   const url = `/api/v2/homework/questions/${questionId}/`;

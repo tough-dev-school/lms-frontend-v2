@@ -1,7 +1,8 @@
 <script lang="ts" setup>
   import { ref, computed } from 'vue';
   import { onClickOutside } from '@vueuse/core';
-  import { ALLOWED_REACTIONS, ReactionEmoji } from '.';
+  import { ALLOWED_REACTIONS } from '.';
+  import type { ReactionEmoji } from '@/types/homework';
 
   const isOpen = ref(false);
   const palette = ref(null);

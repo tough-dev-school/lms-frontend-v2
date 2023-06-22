@@ -1,9 +1,8 @@
 <script lang="ts" setup>
   import { VAvatar } from '@/components/VAvatar';
-  import type { Reaction } from '@/types/homework';
+  import type { Reaction, ReactionEmoji } from '@/types/homework';
   import useUser from '@/stores/user';
   import { computed } from 'vue';
-  import type { ReactionEmoji } from '../VReactionsPalette';
 
   const props = defineProps<{
     emoji: ReactionEmoji;

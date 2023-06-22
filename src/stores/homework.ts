@@ -10,10 +10,9 @@ import {
   addReaction,
   removeReaction,
 } from '@/api/homework';
-import type { Answer, Question, Thread } from '@/types/homework';
+import type { Answer, Question, ReactionEmoji, Thread } from '@/types/homework';
 import useToasts from '@/stores/toasts';
 import getThreads from '@/utils/getThreads';
-import type { ReactionEmoji } from '@/components/VReactions/components/VReactionsPalette';
 
 interface State {
   question: Question | undefined;

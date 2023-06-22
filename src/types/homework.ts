@@ -1,3 +1,14 @@
+export enum ReactionEmoji {
+  LIKE = '👍',
+  DISLIKE = '👎',
+  HAPPY = '😄',
+  PARTY = '🎉',
+  SAD = '😕',
+  HEART = '❤️',
+  ROCKET = '🚀',
+  SEEN = '👀',
+}
+
 export interface Author {
   uuid: string;
   firstName: string;

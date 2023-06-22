@@ -1,11 +1,8 @@
 <script lang="ts" setup>
   import { computed } from 'vue';
   import { VReaction } from './components/VReaction';
-  import {
-    ReactionEmoji,
-    VReactionsPalette,
-  } from './components/VReactionsPalette';
-  import type { Reaction } from '@/types/homework';
+  import { VReactionsPalette } from './components/VReactionsPalette';
+  import type { Reaction, ReactionEmoji } from '@/types/homework';
   import useHomework from '@/stores/homework';
   import { groupBy } from 'lodash';
   import useUser from '@/stores/user';
@@ -26,7 +23,10 @@
   }>();
 
   const groupedReactions = computed(() => {
-    return groupBy(props.reactions, (reaction) => reaction.emoji);
+    return groupBy(props.reactions, (reaction) => reaction.emoji) as Record<
+      ReactionEmoji,
+      Reaction[]
+    >;
   });
 
   const addReaction = (emoji: ReactionEmoji) => {
@@ -44,7 +44,7 @@
   const usedReactions = computed(() => {
     return props.reactions
       .filter((reaction) => reaction.author.uuid === userStore.uuid)
-      .map((reaction) => reaction.emoji);
+      .map((reaction) => reaction.emoji as ReactionEmoji);
   });
 </script>
 
