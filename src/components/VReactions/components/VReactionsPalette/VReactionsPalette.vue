@@ -1,22 +1,19 @@
 <script lang="ts" setup>
   import { ref, computed } from 'vue';
   import { onClickOutside } from '@vueuse/core';
-  import { ALLOWED_REACTIONS } from '.';
+  import {
+    ALLOWED_REACTIONS,
+    MAX_REACTIONS,
+    type VReactionsPaletteProps,
+  } from '.';
   import type { ReactionEmoji } from '@/types/homework';
 
   const isOpen = ref(false);
   const palette = ref(null);
 
-  const props = withDefaults(
-    defineProps<{
-      usedReactions?: ReactionEmoji[];
-    }>(),
-    {
-      usedReactions: () => [],
-    },
-  );
-
-  const MAX_REACTIONS = 3;
+  const props = withDefaults(defineProps<VReactionsPaletteProps>(), {
+    usedReactions: () => [],
+  });
 
   const options = computed(() =>
     ALLOWED_REACTIONS.filter(
@@ -50,10 +47,10 @@
     data-testid="open">
     😀
   </button>
-  <div class="inline-flex rounded bg-offwhite" v-else>
+  <div class="inline-flex rounded bg-offwhite" data-testid="palette" v-else>
     <button
       class="emoji-button rounded-none h-32 w-32 p-8"
-      data-testid="item"
+      data-testid="reaction"
       :class="{
         'rounded-r': index === options.length - 1,
         'rounded-l': index === 0,
