@@ -34,8 +34,11 @@ export const Own = {
   args: {
     userId,
     emoji: faker.helpers.arrayElement(ALLOWED_REACTIONS),
-    reactions: mockReactionsData(1).map((reaction) => {
-      return { ...reaction, author: { ...reaction.author, uuid: userId } };
-    }),
+    reactions: [
+      ...mockReactionsData(1).map((reaction) => {
+        return { ...reaction, author: { ...reaction.author, uuid: userId } };
+      }),
+      ...mockReactionsData(3),
+    ],
   },
 };

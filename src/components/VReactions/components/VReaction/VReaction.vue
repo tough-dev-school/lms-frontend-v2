@@ -1,13 +1,11 @@
 <script lang="ts" setup>
   import { VAvatar } from '@/components/VAvatar';
-  import type { Reaction, ReactionEmoji } from '@/types/homework';
+  import type { ReactionEmoji } from '@/types/homework';
   import { computed } from 'vue';
+  import getName from '@/utils/getName';
+  import type { VReactionProps } from '.';
 
-  const props = defineProps<{
-    userId: string;
-    emoji: ReactionEmoji;
-    reactions: Reaction[];
-  }>();
+  const props = defineProps<VReactionProps>();
 
   const emit = defineEmits<{
     add: [reaction: ReactionEmoji];
@@ -32,8 +30,8 @@
     return props.reactions
       .map((reaction) => reaction.author)
       .sort((a, b) => {
-        if (a.uuid === props.userId) return -1;
-        if (b.uuid === props.userId) return 1;
+        if (a.uuid === props.userId) return 1;
+        if (b.uuid === props.userId) return -1;
         return 0;
       });
   });
@@ -43,7 +41,6 @@
   <div
     @click="handleClick"
     class="emoji-button inline-flex items-center gap-16 rounded p-8 pr-16"
-    data-testid="click"
     :class="{
       '!border !border-gray': ownReaction,
     }">
@@ -56,7 +53,7 @@
         v-for="author in orderedAuthors"
         :key="author.uuid"
         data-testid="author"
-        :title="`${author.firstName} ${author.lastName}`">
+        :title="getName(author.firstName, author.lastName)">
         <VAvatar :userId="author.uuid" data-testid="avatar" />
       </abbr>
     </div>
