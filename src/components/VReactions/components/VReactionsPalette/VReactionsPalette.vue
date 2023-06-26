@@ -10,13 +10,13 @@
   const props = withDefaults(
     defineProps<{
       usedReactions?: ReactionEmoji[];
-      maxReactions?: number;
     }>(),
     {
       usedReactions: () => [],
-      maxReactions: 3,
     },
   );
+
+  const MAX_REACTIONS = 3;
 
   const options = computed(() =>
     ALLOWED_REACTIONS.filter(
@@ -25,7 +25,7 @@
   );
 
   const isDisabled = computed(
-    () => props.usedReactions.length >= props.maxReactions,
+    () => props.usedReactions.length >= MAX_REACTIONS,
   );
 
   const emit = defineEmits<{ click: [value: ReactionEmoji] }>();
