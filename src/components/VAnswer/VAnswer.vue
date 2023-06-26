@@ -55,6 +55,7 @@
         @update="emit('update')"
         :answer-id="answer.slug"
         :reactions="answer.reactions" />
+      <div class="flex-grow"></div>
       <slot name="footer" />
     </div>
   </VCard>
