@@ -50,7 +50,10 @@
 
 <template>
   <div class="flex flex-wrap gap-16">
-    <VReactionsPalette @click="addReaction" :usedReactions="usedReactions" />
+    <VReactionsPalette
+      @click="addReaction"
+      :usedReactions="usedReactions"
+      data-testid="palette" />
     <TransitionGroup class="flex flex-wrap gap-16" name="reaction" tag="ul">
       <VReaction
         v-for="(reactions, emoji) in groupedReactions"
@@ -59,7 +62,8 @@
         @remove="removeReaction"
         @add="addReaction"
         :reactions="reactions"
-        :key="emoji" />
+        :key="emoji"
+        data-testid="reaction" />
     </TransitionGroup>
   </div>
 </template>

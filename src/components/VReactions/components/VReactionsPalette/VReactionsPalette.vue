@@ -47,11 +47,13 @@
       class="emoji-button box-content flex h-32 w-32 items-center justify-center rounded p-8"
       v-if="!isOpen"
       @click="handleOpen"
-      :disabled="isDisabled">
+      :disabled="isDisabled"
+      data-testid="open">
       😀
     </button>
     <button
       class="emoji-button rounded-none h-32 w-32 p-8"
+      data-testid="item"
       :class="{
         'rounded-r': index === options.length - 1,
         'rounded-l': index === 0,

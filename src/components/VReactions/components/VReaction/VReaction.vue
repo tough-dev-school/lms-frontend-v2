@@ -43,10 +43,11 @@
   <div
     @click="handleClick"
     class="emoji-button inline-flex items-center gap-16 rounded p-8 pr-16 text-[1.5em]"
+    data-testid="click"
     :class="{
       '!border !border-gray': ownReaction,
     }">
-    <div class="flex h-32 w-32 items-center justify-center">
+    <div class="flex h-32 w-32 items-center justify-center" data-testid="emoji">
       {{ emoji }}
     </div>
     <div class="flex items-center pr-16">
@@ -54,8 +55,9 @@
         class="relative -mr-[20px] transition-all hover:z-50 hover:scale-125"
         v-for="author in orderedAuthors"
         :key="author.uuid"
+        data-testid="author"
         :title="`${author.firstName} ${author.lastName}`">
-        <VAvatar :userId="author.uuid" />
+        <VAvatar :userId="author.uuid" data-testid="avatar" />
       </abbr>
     </div>
   </div>
