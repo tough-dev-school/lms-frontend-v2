@@ -1,6 +1,7 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import { VReactionsPalette } from '.';
+import { ALLOWED_REACTIONS, MAX_REACTIONS, VReactionsPalette } from '.';
 import { VCard } from '@/components/VCard';
+import { faker } from '@faker-js/faker';
 
 export default {
   title: 'Reactions/VReactionsPalette',
@@ -12,9 +13,32 @@ const Template: StoryFn = (args) => ({
   setup() {
     return { args };
   },
+  argTypes: {
+    usedReactions: { control: 'object' },
+  },
   template: '<VCard><VReactionsPalette v-bind="args" /></VCard>',
 });
 
 export const Default = {
   render: Template,
+};
+
+export const Disabled = {
+  render: Template,
+  args: {
+    usedReactions: faker.helpers.arrayElements(
+      ALLOWED_REACTIONS,
+      MAX_REACTIONS,
+    ),
+  },
+};
+
+export const Exclude = {
+  render: Template,
+  args: {
+    usedReactions: faker.helpers.arrayElements(
+      ALLOWED_REACTIONS,
+      MAX_REACTIONS - 1,
+    ),
+  },
 };

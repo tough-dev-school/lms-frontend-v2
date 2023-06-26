@@ -13,6 +13,9 @@ const Template: StoryFn = (args) => ({
   setup() {
     return { args };
   },
+  argTypes: {
+    reactions: { control: 'object' },
+  },
   template: '<VCard><VReactions v-bind="args" /></VCard>',
 });
 
