@@ -7,7 +7,7 @@ import {
   type VReactionsPaletteProps,
 } from '.';
 import { nextTick } from 'vue';
-import { times, uniq, without } from 'lodash';
+import without from 'lodash/without';
 import { faker } from '@faker-js/faker';
 
 const defaultProps = {

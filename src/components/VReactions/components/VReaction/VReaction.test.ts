@@ -25,17 +25,17 @@ const mountComponent = (props: VReactionProps) => {
   });
 };
 
-const mountWithOwn = () => {
-  const props: VReactionProps = {
-    ...defaultProps,
-    reactions: defaultProps.reactions.map((reaction, index) =>
-      index === 0
-        ? { ...reaction, author: { ...reaction.author, uuid: userId } }
-        : reaction,
-    ),
-  };
+const withOwnProps: VReactionProps = {
+  ...defaultProps,
+  reactions: defaultProps.reactions.map((reaction, index) =>
+    index === 0
+      ? { ...reaction, author: { ...reaction.author, uuid: userId } }
+      : reaction,
+  ),
+};
 
-  return mountComponent(props);
+const mountWithOwn = () => {
+  return mountComponent(withOwnProps);
 };
 
 describe('VReaction', () => {
@@ -55,15 +55,18 @@ describe('VReaction', () => {
   test('emit add on click if not already sent', () => {
     wrapper.trigger('click');
 
-    expect(wrapper.emitted('add')).toBeTruthy();
+    expect(wrapper.emitted('add')).toStrictEqual([[defaultProps.emoji]]);
   });
 
   test('emit remove on click if already sent', () => {
     wrapper = mountWithOwn();
+    const targetSlug = withOwnProps.reactions.find(
+      (reaction) => reaction.author.uuid === userId,
+    )?.slug;
 
     wrapper.trigger('click');
 
-    expect(wrapper.emitted('remove')).toBeTruthy();
+    expect(wrapper.emitted('remove')).toStrictEqual([[targetSlug]]);
   });
 
   test('displays correct number of avatars', () => {
