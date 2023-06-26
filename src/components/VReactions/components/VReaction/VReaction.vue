@@ -42,7 +42,7 @@
 <template>
   <div
     @click="handleClick"
-    class="emoji-button inline-flex items-center gap-16 rounded p-8 pr-16 text-[1.5em]"
+    class="emoji-button inline-flex items-center gap-16 rounded p-8 pr-16"
     data-testid="click"
     :class="{
       '!border !border-gray': ownReaction,

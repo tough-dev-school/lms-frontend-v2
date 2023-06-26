@@ -70,7 +70,7 @@
 
 <style>
   .emoji-button {
-    @apply box-content border border-offwhite cursor-pointer bg-offwhite transition-colors;
+    @apply box-content border border-offwhite cursor-pointer bg-offwhite transition-colors text-[1.5rem];
     @apply hover:bg-lightgray hover:border-lightgray;
     @apply disabled:hover:bg-offwhite disabled:hover:border-offwhite disabled:opacity-50 disabled:cursor-not-allowed;
   }
