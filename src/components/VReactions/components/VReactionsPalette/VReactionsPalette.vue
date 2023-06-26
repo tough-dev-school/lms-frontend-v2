@@ -42,15 +42,15 @@
 </script>
 
 <template>
-  <div class="inline-flex rounded bg-offwhite text-[1.5em]" ref="palette">
-    <button
-      class="emoji-button box-content flex h-32 w-32 items-center justify-center rounded p-8"
-      v-if="!isOpen"
-      @click="handleOpen"
-      :disabled="isDisabled"
-      data-testid="open">
-      😀
-    </button>
+  <button
+    class="emoji-button box-content flex h-32 w-32 items-center justify-center rounded p-8"
+    v-if="!isOpen"
+    @click="handleOpen"
+    :disabled="isDisabled"
+    data-testid="open">
+    😀
+  </button>
+  <div class="inline-flex rounded bg-offwhite" v-else>
     <button
       class="emoji-button rounded-none h-32 w-32 p-8"
       data-testid="item"
@@ -60,8 +60,7 @@
       }"
       v-for="(reaction, index) in options"
       :key="index"
-      @click="handleClick(reaction)"
-      v-else>
+      @click="handleClick(reaction)">
       {{ reaction }}
     </button>
   </div>
