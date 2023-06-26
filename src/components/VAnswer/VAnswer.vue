@@ -49,14 +49,14 @@
     </div>
     <VHtmlContent :content="answer.text" data-testid="content" />
     <div
-      class="flex justify-between gap-16 pt-16 text-sub text-gray empty:appearance-none">
+      class="flex justify-between flex-row-reverse gap-16 pt-16 text-sub text-gray empty:appearance-none">
+      <slot name="footer" />
+      <div class="flex-grow"></div>
       <VReactions
         v-if="showReactions"
         @update="emit('update')"
         :answer-id="answer.slug"
         :reactions="answer.reactions" />
-      <div class="flex-grow"></div>
-      <slot name="footer" />
     </div>
   </VCard>
 </template>
