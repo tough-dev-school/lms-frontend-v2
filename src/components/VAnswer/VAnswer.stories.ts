@@ -22,3 +22,12 @@ export const Default = {
     answer: getAnswerData(),
   },
 };
+
+export const NoReactions = {
+  render: Template,
+
+  args: {
+    answer: getAnswerData(),
+    showReactions: false,
+  },
+};

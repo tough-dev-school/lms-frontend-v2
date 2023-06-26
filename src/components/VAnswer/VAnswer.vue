@@ -11,6 +11,7 @@
 
   export interface Props {
     answer: Answer;
+    showReactions?: boolean;
   }
 
   const emit = defineEmits<{
@@ -18,7 +19,7 @@
   }>();
 
   const user = useUser();
-  const props = defineProps<Props>();
+  const props = withDefaults(defineProps<Props>(), { showReactions: true });
 
   const isOwn = computed(() => {
     return props.answer.author.uuid === user.uuid;
@@ -50,6 +51,7 @@
     <div
       class="flex justify-between gap-16 pt-16 text-sub text-gray empty:appearance-none">
       <VReactions
+        v-if="showReactions"
         @update="emit('update')"
         :answer-id="answer.slug"
         :reactions="answer.reactions" />
