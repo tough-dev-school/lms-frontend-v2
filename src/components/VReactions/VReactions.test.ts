@@ -50,10 +50,8 @@ describe('VReactions', () => {
 
   const getPaletteWrapper = () =>
     wrapper.findComponent<typeof VReactionsPalette>('[data-testid="palette"]');
-
   const getReactionWrappers = () =>
-    wrapper.findAllComponents('[data-testid="reaction"]');
-
+    wrapper.findAllComponents<typeof VReaction>('[data-testid="reaction"]');
   const getReactionWrapper = () => getReactionWrappers()[0];
 
   test('passes props to VReactionsPalette', () => {

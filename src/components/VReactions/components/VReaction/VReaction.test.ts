@@ -5,6 +5,7 @@ import { VReaction, type VReactionProps } from '.';
 import { ALLOWED_REACTIONS } from '../VReactionsPalette';
 import { mockReactionsData } from '../../mocks/mockReactionsData';
 import getName from '@/utils/getName';
+import type { VAvatar } from '@/components/VAvatar';
 
 const emoji = faker.helpers.arrayElement(ALLOWED_REACTIONS);
 const userId = faker.datatype.uuid();
@@ -48,7 +49,7 @@ describe('VReaction', () => {
   const getEmojiWrapper = () => wrapper.find('[data-testid="emoji"]');
   const getAuthorWrapper = () => wrapper.find('[data-testid="author"]');
   const getAvatarWrappers = () =>
-    wrapper.findAllComponents('[data-testid="avatar"]');
+    wrapper.findAllComponents<typeof VAvatar>('[data-testid="avatar"]');
 
   const getLastAvatar = () => getAvatarWrappers().slice(-1)[0];
 
