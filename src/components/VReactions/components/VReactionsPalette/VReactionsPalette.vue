@@ -41,20 +41,20 @@
 
 <template>
   <button
-    class="answer-action box-content flex h-32 w-32 items-center justify-center rounded p-8 text-[1.5rem]"
+    class="answer-action box-content flex items-center justify-center text-[1.5rem]"
     v-if="!isOpen"
     @click="handleOpen"
     :disabled="isDisabled"
     data-testid="open">
     <MoodHappyIcon />
   </button>
-  <div class="inline-flex rounded bg-offwhite" data-testid="palette" v-else>
+  <div class="inline-flex rounded-8 bg-offwhite" data-testid="palette" v-else>
     <button
-      class="answer-action rounded-none h-32 w-32 p-8 text-[1.5rem]"
+      class="answer-action rounded-none h-24 w-24 text-[20px]"
       data-testid="reaction"
       :class="{
-        'rounded-r': index === options.length - 1,
-        'rounded-l': index === 0,
+        'rounded-8-r': index === options.length - 1,
+        'rounded-8-l': index === 0,
       }"
       v-for="(reaction, index) in options"
       :key="index"

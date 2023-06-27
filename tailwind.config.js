@@ -55,6 +55,7 @@ module.exports = {
       h3: '1.25rem',
     },
     borderRadius: {
+      4: '4px',
       8: '8px',
       16: '16px',
       DEFAULT: '16px',

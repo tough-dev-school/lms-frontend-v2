@@ -52,7 +52,7 @@
   <TransitionGroup
     name="reaction"
     tag="ul"
-    class="flex flex-wrap flex-row gap-16 text-[1.5rem]">
+    class="flex flex-wrap flex-row gap-8 text-[1.5rem]">
     <VReactionsPalette
       @click="addReaction"
       :usedReactions="usedReactions"

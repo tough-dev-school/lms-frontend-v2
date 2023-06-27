@@ -27,7 +27,7 @@
 </script>
 
 <template>
-  <VCard>
+  <VCard class="pb-32">
     <div class="mb-16 flex items-center gap-8">
       <VAvatar data-testid="avatar" :userId="answer.author.uuid" />
       <div>
