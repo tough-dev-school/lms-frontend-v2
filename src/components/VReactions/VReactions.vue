@@ -49,7 +49,7 @@
 </script>
 
 <template>
-  <div class="flex flex-wrap gap-16">
+  <div class="flex flex-wrap">
     <VReactionsPalette
       @click="addReaction"
       :usedReactions="usedReactions"

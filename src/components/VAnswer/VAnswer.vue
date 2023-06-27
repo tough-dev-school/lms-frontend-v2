@@ -51,7 +51,7 @@
     <div
       class="flex justify-between flex-row-reverse gap-16 pt-16 text-sub text-gray empty:appearance-none">
       <slot name="footer" />
-      <div class="flex-grow"></div>
+      <div class="flex-grow -mr-16"></div>
       <VReactions
         v-if="showReactions"
         @update="emit('update')"
