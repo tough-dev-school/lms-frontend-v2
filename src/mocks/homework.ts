@@ -59,6 +59,7 @@ export const getAnswerData = ({
   author = getAuthorData(),
   content = contentLorem,
   hasDescendants = false,
+  reactions = mockReactionsData(),
 }: Partial<Omit<Answer, 'text' | 'src'>> & {
   content?: string;
 } = {}) => {
@@ -71,7 +72,7 @@ export const getAnswerData = ({
     text: content,
     src: htmlToMarkdown(content),
     hasDescendants,
-    reactions: mockReactionsData(),
+    reactions,
   };
   return responseCaseMiddleware(data) as Answer;
 };
