@@ -1,3 +1,5 @@
+// #FIXME Split into separate modules
+
 import { faker } from '@faker-js/faker';
 import responseCaseMiddleware from '@/axios/responseCaseMiddleware';
 import type { Diploma } from '@/types/diplomas';
