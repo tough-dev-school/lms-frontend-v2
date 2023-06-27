@@ -1,25 +1,26 @@
 <script lang="ts" setup>
   import { computed } from 'vue';
   import { VReaction } from './components/VReaction';
-  import { VReactionsPalette } from './components/VReactionsPalette';
   import type { Reaction, ReactionEmoji } from '@/types/homework';
-  import useHomework from '@/stores/homework';
   import { groupBy } from 'lodash';
   import useUser from '@/stores/user';
-
-  const homeworkStore = useHomework();
+  import { VReactionsPalette } from './components/VReactionsPalette';
 
   interface Props {
     answerId: string;
     reactions: Reaction[];
+    hidePalette?: boolean;
+    reactionsClasses?: string;
+    paletteClasses?: string;
   }
 
   const props = withDefaults(defineProps<Props>(), {
-    reactions: () => [],
+    hidePalette: false,
   });
 
   const emit = defineEmits<{
-    update: [];
+    add: [emoji: ReactionEmoji];
+    remove: [reactionId: string];
   }>();
 
   const groupedReactions = computed(() => {
@@ -28,16 +29,6 @@
       Reaction[]
     >;
   });
-
-  const addReaction = (emoji: ReactionEmoji) => {
-    homeworkStore.addReaction(props.answerId, emoji);
-    emit('update');
-  };
-
-  const removeReaction = (reactionId: string) => {
-    homeworkStore.removeReaction(props.answerId, reactionId);
-    emit('update');
-  };
 
   const userStore = useUser();
 
@@ -54,15 +45,18 @@
     tag="ul"
     class="flex flex-wrap flex-row gap-8 text-[1.5rem]">
     <VReactionsPalette
-      @click="addReaction"
+      :class="paletteClasses"
+      v-if="!hidePalette"
+      @click="(emoji) => emit('add', emoji)"
       :usedReactions="usedReactions"
       data-testid="palette" />
     <VReaction
+      :class="reactionsClasses"
       v-for="(reactions, emoji) in groupedReactions"
       :emoji="emoji"
       :userId="userStore.uuid"
-      @remove="removeReaction"
-      @add="addReaction"
+      @add="(emoji) => emit('add', emoji)"
+      @remove="(reactionId) => emit('remove', reactionId)"
       :reactions="reactions"
       :key="emoji"
       data-testid="reaction" />

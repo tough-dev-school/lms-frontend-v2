@@ -26,7 +26,7 @@
     () => props.usedReactions.length >= MAX_REACTIONS,
   );
 
-  const emit = defineEmits<{ click: [value: ReactionEmoji] }>();
+  const emit = defineEmits<{ click: [emoji: ReactionEmoji] }>();
 
   const handleOpen = () => (isOpen.value = true);
   const handleClose = () => (isOpen.value = false);

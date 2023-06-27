@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { ALLOWED_REACTIONS } from '../components/VReactionsPalette';
+import { ALLOWED_REACTIONS } from '@/components/VReactions/components/VReactionsPalette';
 import times from 'lodash/times';
 import type { Reaction } from '@/types/homework';
 import { mockAuthorData } from '@/mocks/mockAuthorData';
