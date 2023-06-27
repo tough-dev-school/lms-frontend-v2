@@ -1,9 +1,10 @@
 <script lang="ts" setup>
   import type { Answer, Comment } from '@/types/homework';
-  import { VThread } from '@/components/VThread';
+  import { VThread, type ThreadAction } from '@/components/VThread';
   import { VPreloader } from '@/components/VPreloader';
   import { getComments } from '@/api/homework';
   import { ref, computed } from 'vue';
+  import { MessagesIcon, MessagesOffIcon } from 'vue-tabler-icons';
 
   export interface Props {
     originalPost: Answer;
@@ -20,16 +21,19 @@
     isLoading.value = false;
   };
 
-  const customActions = computed(() => [
+  const customActions = computed<ThreadAction[]>(() => [
     {
       name: 'Загрузить комментарии',
       handle: fetchComments,
       show: props.originalPost.hasDescendants && descendants.value.length === 0,
+      icon: MessagesIcon,
     },
     {
       name: 'Комментариев нет',
       handle: null,
       show: !props.originalPost.hasDescendants,
+      disabled: true,
+      icon: MessagesOffIcon,
     },
   ]);
 </script>

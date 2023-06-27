@@ -7,6 +7,7 @@
     type VReactionsPaletteProps,
   } from '.';
   import type { ReactionEmoji } from '@/types/homework';
+  import { MoodHappyIcon } from 'vue-tabler-icons';
 
   const isOpen = ref(false);
   const palette = ref(null);
@@ -40,16 +41,16 @@
 
 <template>
   <button
-    class="emoji-button box-content flex h-32 w-32 items-center justify-center rounded p-8"
+    class="answer-action box-content flex h-32 w-32 items-center justify-center rounded p-8 text-[1.5rem]"
     v-if="!isOpen"
     @click="handleOpen"
     :disabled="isDisabled"
     data-testid="open">
-    😀
+    <MoodHappyIcon />
   </button>
   <div class="inline-flex rounded bg-offwhite" data-testid="palette" v-else>
     <button
-      class="emoji-button rounded-none h-32 w-32 p-8"
+      class="answer-action rounded-none h-32 w-32 p-8 text-[1.5rem]"
       data-testid="reaction"
       :class="{
         'rounded-r': index === options.length - 1,

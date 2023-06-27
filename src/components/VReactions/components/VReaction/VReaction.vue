@@ -40,7 +40,7 @@
 <template>
   <div
     @click="handleClick"
-    class="emoji-button inline-flex items-center gap-16 rounded p-8 pr-16"
+    class="answer-action inline-flex items-center gap-16 rounded p-8 pr-16 text-[1.5rem]"
     :class="{
       '!border !border-gray': ownReaction,
     }">

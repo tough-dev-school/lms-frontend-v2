@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+  import { TrashXIcon, PencilPlusIcon } from 'vue-tabler-icons';
+
   export interface Props {
     allowDelete: boolean;
     allowEdit: boolean;
@@ -17,18 +19,18 @@
 <template>
   <div class="flex items-center gap-8">
     <button
-      class="secondary-action"
+      class="answer-action"
       data-testid="delete"
       v-if="allowDelete"
       @click="emit('delete')">
-      Удалить <sup>{{ `<${deleteTime} мин` }}</sup>
+      <TrashXIcon /> {{ `<${deleteTime} мин` }}
     </button>
     <button
-      class="secondary-action"
+      class="answer-action"
       data-testid="edit"
       v-if="allowEdit"
       @click="emit('edit')">
-      Редактировать <sup>{{ `<${editTime} мин` }}</sup>
+      <PencilPlusIcon /> {{ `<${editTime} мин` }}
     </button>
   </div>
 </template>
