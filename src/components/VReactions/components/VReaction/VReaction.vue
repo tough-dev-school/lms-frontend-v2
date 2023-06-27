@@ -54,7 +54,10 @@
         :key="author.uuid"
         data-testid="author"
         :title="getName(author.firstName, author.lastName)">
-        <VAvatar class="w-24 h-24" :userId="author.uuid" data-testid="avatar" />
+        <VAvatar
+          class="!w-24 !h-24"
+          :userId="author.uuid"
+          data-testid="avatar" />
       </abbr>
     </div>
   </div>
