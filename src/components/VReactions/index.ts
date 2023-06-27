@@ -1,5 +1,5 @@
 import VReactions from './VReactions.vue';
-import type { Reaction } from '@/types/homework';
+import type { Reaction, ReactionEmoji } from '@/types/homework';
 import type { VReactionsPaletteProps } from './components/VReactionsPalette';
 
 export interface VReactionsProps extends VReactionsPaletteProps {
@@ -8,4 +8,9 @@ export interface VReactionsProps extends VReactionsPaletteProps {
   palette?: boolean;
 }
 
-export { VReactions };
+const getUsedReactions = (reactions: Reaction[], authorId: string) =>
+  reactions
+    .filter((reaction) => reaction.author.uuid === authorId)
+    .map((reaction) => reaction.emoji as ReactionEmoji);
+
+export { VReactions, getUsedReactions };

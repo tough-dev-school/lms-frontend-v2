@@ -7,7 +7,7 @@
   import { VHtmlContent } from '@/components/VHtmlContent';
   import { computed, ref } from 'vue';
   import useUser from '@/stores/user';
-  import { VReactions } from '@/components/VReactions';
+  import { VReactions, getUsedReactions } from '@/components/VReactions';
   import type { ReactionEmoji } from '@/types/homework';
   import useHomework from '@/stores/homework';
   import { MoodHappyIcon } from 'vue-tabler-icons';
@@ -42,11 +42,9 @@
     emit('update');
   };
 
-  const usedReactions = computed(() => {
-    return props.answer.reactions
-      .filter((reaction) => reaction.author.uuid === userStore.uuid)
-      .map((reaction) => reaction.emoji as ReactionEmoji);
-  });
+  const usedReactions = computed(() =>
+    getUsedReactions(props.answer.reactions, userStore.uuid),
+  );
 
   const isDisabled = computed(
     () => usedReactions.value.length >= MAX_REACTIONS,

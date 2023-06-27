@@ -1,6 +1,6 @@
 import { describe, expect, test, beforeEach, vi } from 'vitest';
 import { mount, VueWrapper } from '@vue/test-utils';
-import { VReactions, type VReactionsProps } from '.';
+import { getUsedReactions, VReactions, type VReactionsProps } from '.';
 import type { VReactionsPalette } from './components/VReactionsPalette';
 import { createTestingPinia } from '@pinia/testing';
 import { mockReactionData, mockReactionsData } from './mocks/mockReactionsData';
@@ -13,20 +13,19 @@ import { mockEmoji } from '@/mocks/emoji';
 
 const userId = faker.datatype.uuid();
 
-const reactionsClasses = faker.datatype.uuid();
-const paletteClasses = faker.datatype.uuid();
-
 const defaultProps: VReactionsProps = {
   reactions: [
     { ...mockReactionData(), author: { ...getAuthorData(), uuid: userId } },
     ...mockReactionsData(),
   ],
   answerId: faker.datatype.uuid(),
-  reactionsClasses,
-  paletteClasses,
+  palette: true,
 };
 
-const mountComponent = (props: VReactionsProps = defaultProps) => {
+const mountComponent = (
+  props: VReactionsProps = defaultProps,
+  debug = false,
+) => {
   return mount(VReactions, {
     shallow: true,
     props,
@@ -58,18 +57,18 @@ describe('VReactions', () => {
     wrapper.findAllComponents<typeof VReaction>('[data-testid="reaction"]');
   const getReactionWrapper = () => getReactionWrappers()[0];
 
-  test('passes props to VReactionsPalette', () => {
+  test('passes props to VReactionsPalette', async () => {
+    const usedReactions = getUsedReactions(defaultProps.reactions, userId);
+    wrapper = mountComponent(
+      {
+        ...defaultProps,
+        usedReactions,
+      },
+      true,
+    );
     const palette = getPaletteWrapper();
 
-    const props = {
-      usedReactions: defaultProps.reactions
-        .filter((reaction) => {
-          return reaction.author.uuid === userId;
-        })
-        .map((reaction) => reaction.emoji),
-    };
-
-    expect(palette.props()).toStrictEqual(props);
+    expect(palette.props()).toStrictEqual({ usedReactions });
   });
 
   test('passes props to VReaction', () => {
@@ -126,16 +125,8 @@ describe('VReactions', () => {
   });
 
   test('hide palette', () => {
-    wrapper = mountComponent({ ...defaultProps, hidePalette: true });
+    wrapper = mountComponent({ ...defaultProps, palette: false });
 
     expect(getPaletteWrapper().exists()).toBeFalsy();
-  });
-
-  test('add palette classes', () => {
-    expect(getPaletteWrapper().classes()).toContain(paletteClasses);
-  });
-
-  test('add reactions classes', () => {
-    expect(getReactionWrapper().classes()).toContain(reactionsClasses);
   });
 });

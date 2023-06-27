@@ -6,7 +6,6 @@ import {
   VReactionsPalette,
   type VReactionsPaletteProps,
 } from '.';
-import { nextTick } from 'vue';
 import without from 'lodash/without';
 import { faker } from '@faker-js/faker';
 
@@ -25,39 +24,9 @@ describe('VReactionsPalette', () => {
     wrapper = mountComponent(defaultProps);
   });
 
-  const getOpenWrapper = () => wrapper.find('[data-testid="open"]');
-  const getPaletteWrapper = () => wrapper.find('[data-testid="palette"]');
   const getReactionWrappers = () => wrapper.findAll('[data-testid="reaction"]');
 
-  const openPalette = async () => {
-    getOpenWrapper().trigger('click');
-
-    await nextTick();
-  };
-
-  test('is not disabled by default', () => {
-    expect(getOpenWrapper().attributes('disabled')).toBe(undefined);
-  });
-
-  test('becames disabled if reaches limit', () => {
-    wrapper = mountComponent({ usedReactions: ALLOWED_REACTIONS });
-
-    expect(getOpenWrapper().attributes('disabled')).toBe('');
-  });
-
-  test('closed by default', () => {
-    expect(getPaletteWrapper().exists()).toBe(false);
-  });
-
-  test('opens on click', async () => {
-    await openPalette();
-
-    expect(getPaletteWrapper().exists()).toBe(true);
-  });
-
   test('shows all reactions when no reactions sent', async () => {
-    await openPalette();
-
     expect(getReactionWrappers().length).toBe(ALLOWED_REACTIONS.length);
   });
 
@@ -70,31 +39,25 @@ describe('VReactionsPalette', () => {
     wrapper = mountComponent({
       usedReactions,
     });
-    await openPalette();
 
-    expect(getPaletteWrapper().text()).toBe(
+    expect(wrapper.text()).toBe(
       without(ALLOWED_REACTIONS, ...usedReactions).join(''),
     );
   });
 
   test('emits click with reaction', async () => {
-    await openPalette();
     getReactionWrappers()[0].trigger('click');
 
     expect(wrapper.emitted('click')).toStrictEqual([[ALLOWED_REACTIONS[0]]]);
   });
 
-  test('closes on click', async () => {
-    await openPalette();
+  test('emits close on click', async () => {
     getReactionWrappers()[0].trigger('click');
-    await nextTick();
 
-    expect(getPaletteWrapper().exists()).toBe(false);
+    expect(wrapper.emitted('close')).toStrictEqual([[]]);
   });
 
   test('displays emoji', async () => {
-    await openPalette();
-
-    expect(getPaletteWrapper().text()).toBe(ALLOWED_REACTIONS.join(''));
+    expect(wrapper.text()).toBe(ALLOWED_REACTIONS.join(''));
   });
 });

@@ -41,7 +41,6 @@
     data-testid="palette" />
   <TransitionGroup name="reaction">
     <VReaction
-      :class="reactionsClasses"
       v-for="(reactions, emoji) in groupedReactions"
       :emoji="emoji"
       :userId="userStore.uuid"
