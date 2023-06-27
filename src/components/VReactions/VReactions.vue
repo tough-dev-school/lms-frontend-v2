@@ -5,16 +5,9 @@
   import { groupBy } from 'lodash';
   import useUser from '@/stores/user';
   import { VReactionsPalette } from './components/VReactionsPalette';
+  import type { VReactionsProps } from '.';
 
-  interface Props {
-    answerId: string;
-    reactions: Reaction[];
-    hidePalette?: boolean;
-    reactionsClasses?: string;
-    paletteClasses?: string;
-  }
-
-  const props = withDefaults(defineProps<Props>(), {
+  const props = withDefaults(defineProps<VReactionsProps>(), {
     hidePalette: false,
   });
 
