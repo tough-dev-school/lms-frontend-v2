@@ -15,4 +15,4 @@ interface VThreadProps {
   customActions: ThreadAction[];
 }
 
-export { VThread, type ThreadAction as Actions, type VThreadProps };
+export { VThread, type ThreadAction, type VThreadProps };
