@@ -11,10 +11,7 @@
   import type { ReactionEmoji } from '@/types/homework';
   import useHomework from '@/stores/homework';
   import { MoodHappyIcon } from 'vue-tabler-icons';
-  import {
-    MAX_REACTIONS,
-    VReactionsPalette,
-  } from '@/components/VReactions/components/VReactionsPalette';
+  import { MAX_REACTIONS } from '@/components/VReactions/components/VReactionsPalette';
 
   export interface Props {
     answer: Answer;
@@ -33,7 +30,7 @@
     return props.answer.author.uuid === userStore.uuid;
   });
 
-  const isReactionsOpen = ref(false);
+  const isPaletteOpen = ref(false);
 
   const addReaction = (emoji: ReactionEmoji) => {
     homeworkStore.addReaction(props.answer.slug, emoji);
@@ -55,9 +52,8 @@
     () => usedReactions.value.length >= MAX_REACTIONS,
   );
 
-  const handleReactionsToggle = () =>
-    (isReactionsOpen.value = !isReactionsOpen.value);
-  const handleReactionsClose = () => (isReactionsOpen.value = false);
+  const togglePalette = () => (isPaletteOpen.value = !isPaletteOpen.value);
+  const closePalette = () => (isPaletteOpen.value = false);
 </script>
 
 <template>
@@ -85,7 +81,7 @@
     <div class="flex justify-between items-start gap-16 pt-16">
       <button
         class="answer-action box-content flex items-center justify-center text-[1.5rem]"
-        @click="handleReactionsToggle"
+        @click="togglePalette"
         :disabled="isDisabled"
         data-testid="open">
         <MoodHappyIcon />
@@ -94,18 +90,15 @@
       <slot name="footer" />
     </div>
     <div class="gap-16 mt-16 flex items-start flex-wrap">
-      <VReactionsPalette
-        v-if="isReactionsOpen"
-        @close="handleReactionsClose"
-        @click="addReaction"
-        :usedReactions="usedReactions"
-        data-testid="palette" />
       <VReactions
         v-if="showReactions"
-        @add="addReaction"
-        @remove="removeReaction"
+        :usedReactions="usedReactions"
         :answer-id="answer.slug"
-        :reactions="answer.reactions" />
+        :reactions="answer.reactions"
+        :palette="isPaletteOpen"
+        @close="closePalette"
+        @add="addReaction"
+        @remove="removeReaction" />
     </div>
   </VCard>
 </template>

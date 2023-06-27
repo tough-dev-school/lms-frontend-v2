@@ -1,12 +1,11 @@
 import VReactions from './VReactions.vue';
 import type { Reaction } from '@/types/homework';
+import type { VReactionsPaletteProps } from './components/VReactionsPalette';
 
-export interface VReactionsProps {
+export interface VReactionsProps extends VReactionsPaletteProps {
   answerId: string;
   reactions: Reaction[];
-  hidePalette?: boolean;
-  reactionsClasses?: string;
-  paletteClasses?: string;
+  palette?: boolean;
 }
 
 export { VReactions };

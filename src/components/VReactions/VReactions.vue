@@ -5,14 +5,16 @@
   import { groupBy } from 'lodash';
   import useUser from '@/stores/user';
   import type { VReactionsProps } from '.';
+  import { VReactionsPalette } from './components/VReactionsPalette';
 
   const props = withDefaults(defineProps<VReactionsProps>(), {
-    hidePalette: false,
+    palette: false,
   });
 
   const emit = defineEmits<{
     add: [emoji: ReactionEmoji];
     remove: [reactionId: string];
+    close: [];
   }>();
 
   const groupedReactions = computed(() => {
@@ -22,10 +24,21 @@
     >;
   });
 
+  const handlePaletteClick = (emoji: ReactionEmoji) => {
+    emit('add', emoji);
+    emit('close');
+  };
+
   const userStore = useUser();
 </script>
 
 <template>
+  <VReactionsPalette
+    v-if="palette"
+    @close="emit('close')"
+    @click="handlePaletteClick"
+    :usedReactions="usedReactions"
+    data-testid="palette" />
   <TransitionGroup name="reaction">
     <VReaction
       :class="reactionsClasses"
