@@ -87,7 +87,7 @@
       <div class="flex-grow -ml-16"></div>
       <slot name="footer" />
     </div>
-    <div class="gap-16 mt-16 flex items-start flex-wrap">
+    <div class="gap-16 mt-16 flex items-start flex-wrap empty:hidden">
       <VReactions
         v-if="showReactions"
         :usedReactions="usedReactions"
