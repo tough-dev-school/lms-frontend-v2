@@ -1,15 +1,9 @@
 <script lang="ts" setup>
   import { ref, computed } from 'vue';
   import { onClickOutside } from '@vueuse/core';
-  import {
-    ALLOWED_REACTIONS,
-    MAX_REACTIONS,
-    type VReactionsPaletteProps,
-  } from '.';
+  import { ALLOWED_REACTIONS, type VReactionsPaletteProps } from '.';
   import type { ReactionEmoji } from '@/types/homework';
-  import { MoodHappyIcon } from 'vue-tabler-icons';
 
-  const isOpen = ref(false);
   const palette = ref(null);
 
   const props = withDefaults(defineProps<VReactionsPaletteProps>(), {
@@ -22,33 +16,22 @@
     ),
   );
 
-  const isDisabled = computed(
-    () => props.usedReactions.length >= MAX_REACTIONS,
-  );
+  const emit = defineEmits<{ click: [emoji: ReactionEmoji]; close: [] }>();
 
-  const emit = defineEmits<{ click: [emoji: ReactionEmoji] }>();
-
-  const handleOpen = () => (isOpen.value = true);
-  const handleClose = () => (isOpen.value = false);
+  const handleClose = () => {
+    emit('close');
+  };
 
   const handleClick = (emoji: ReactionEmoji) => {
     emit('click', emoji);
     handleClose();
   };
 
-  onClickOutside(palette, () => (isOpen.value = false));
+  onClickOutside(palette, handleClose);
 </script>
 
 <template>
-  <button
-    class="answer-action box-content flex items-center justify-center text-[1.5rem]"
-    v-if="!isOpen"
-    @click="handleOpen"
-    :disabled="isDisabled"
-    data-testid="open">
-    <MoodHappyIcon />
-  </button>
-  <div class="inline-flex rounded-8 bg-offwhite" data-testid="palette" v-else>
+  <div class="inline-flex rounded-8 bg-offwhite" data-testid="palette">
     <button
       class="answer-action rounded-none h-24 w-24 text-[20px]"
       data-testid="reaction"

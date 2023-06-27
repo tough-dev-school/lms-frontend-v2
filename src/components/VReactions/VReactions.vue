@@ -4,7 +4,6 @@
   import type { Reaction, ReactionEmoji } from '@/types/homework';
   import { groupBy } from 'lodash';
   import useUser from '@/stores/user';
-  import { VReactionsPalette } from './components/VReactionsPalette';
   import type { VReactionsProps } from '.';
 
   const props = withDefaults(defineProps<VReactionsProps>(), {
@@ -24,25 +23,10 @@
   });
 
   const userStore = useUser();
-
-  const usedReactions = computed(() => {
-    return props.reactions
-      .filter((reaction) => reaction.author.uuid === userStore.uuid)
-      .map((reaction) => reaction.emoji as ReactionEmoji);
-  });
 </script>
 
 <template>
-  <TransitionGroup
-    name="reaction"
-    tag="ul"
-    class="flex flex-wrap flex-row gap-8 text-[1.5rem]">
-    <VReactionsPalette
-      :class="paletteClasses"
-      v-if="!hidePalette"
-      @click="(emoji) => emit('add', emoji)"
-      :usedReactions="usedReactions"
-      data-testid="palette" />
+  <TransitionGroup name="reaction">
     <VReaction
       :class="reactionsClasses"
       v-for="(reactions, emoji) in groupedReactions"

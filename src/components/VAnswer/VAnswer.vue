@@ -5,11 +5,16 @@
   import type { Answer } from '@/types/homework';
   import { VCard } from '@/components/VCard';
   import { VHtmlContent } from '@/components/VHtmlContent';
-  import { computed } from 'vue';
+  import { computed, ref } from 'vue';
   import useUser from '@/stores/user';
   import { VReactions } from '@/components/VReactions';
   import type { ReactionEmoji } from '@/types/homework';
   import useHomework from '@/stores/homework';
+  import { MoodHappyIcon } from 'vue-tabler-icons';
+  import {
+    MAX_REACTIONS,
+    VReactionsPalette,
+  } from '@/components/VReactions/components/VReactionsPalette';
 
   export interface Props {
     answer: Answer;
@@ -28,6 +33,8 @@
     return props.answer.author.uuid === userStore.uuid;
   });
 
+  const isReactionsOpen = ref(false);
+
   const addReaction = (emoji: ReactionEmoji) => {
     homeworkStore.addReaction(props.answer.slug, emoji);
     emit('update');
@@ -37,6 +44,20 @@
     homeworkStore.removeReaction(props.answer.slug, reactionId);
     emit('update');
   };
+
+  const usedReactions = computed(() => {
+    return props.answer.reactions
+      .filter((reaction) => reaction.author.uuid === userStore.uuid)
+      .map((reaction) => reaction.emoji as ReactionEmoji);
+  });
+
+  const isDisabled = computed(
+    () => usedReactions.value.length >= MAX_REACTIONS,
+  );
+
+  const handleReactionsToggle = () =>
+    (isReactionsOpen.value = !isReactionsOpen.value);
+  const handleReactionsClose = () => (isReactionsOpen.value = false);
 </script>
 
 <template>
@@ -62,19 +83,24 @@
     </div>
     <VHtmlContent :content="answer.text" data-testid="content" />
     <div class="flex justify-between items-start gap-16 pt-16">
-      <VReactions
-        v-if="showReactions"
-        @add="addReaction"
-        @remove="removeReaction"
-        reactionsClasses="tablet:flex hidden"
-        :answer-id="answer.slug"
-        :reactions="answer.reactions" />
+      <button
+        class="answer-action box-content flex items-center justify-center text-[1.5rem]"
+        @click="handleReactionsToggle"
+        :disabled="isDisabled"
+        data-testid="open">
+        <MoodHappyIcon />
+      </button>
       <div class="flex-grow -ml-16"></div>
       <slot name="footer" />
     </div>
-    <div class="gap-16 mt-16 tablet:hidden flex">
+    <div class="gap-16 mt-16 flex items-start flex-wrap">
+      <VReactionsPalette
+        v-if="isReactionsOpen"
+        @close="handleReactionsClose"
+        @click="addReaction"
+        :usedReactions="usedReactions"
+        data-testid="palette" />
       <VReactions
-        palette-classes="hidden"
         v-if="showReactions"
         @add="addReaction"
         @remove="removeReaction"
