@@ -49,7 +49,7 @@
     </div>
     <VHtmlContent :content="answer.text" data-testid="content" />
     <div
-      class="flex justify-between gap-16 pt-16 text-sub text-gray empty:appearance-none">
+      class="flex justify-between items-start gap-16 pt-16 text-sub text-gray empty:appearance-none">
       <VReactions
         v-if="showReactions"
         @update="emit('update')"

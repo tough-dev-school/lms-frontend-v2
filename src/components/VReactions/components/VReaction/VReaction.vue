@@ -40,7 +40,7 @@
 <template>
   <div
     @click="handleClick"
-    class="answer-action inline-flex items-center gap-16 rounded p-8 pr-16 text-[1.5rem]"
+    class="answer-action flex-row inline-flex items-center gap-16 rounded p-8 pr-16 text-[1.5rem]"
     :class="{
       '!border !border-gray': ownReaction,
     }">
