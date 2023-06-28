@@ -1,7 +1,8 @@
-import type { Answer, Thread } from '@/types/homework';
+import type { Thread } from '@/types/homework';
 import { mockAnswer } from './mockAnswer';
 
-export const mockThread = (answer: Answer = mockAnswer()): Thread => ({
-  ...answer,
+export const mockThread = (payload: Partial<Thread> = {}): Thread => ({
+  ...mockAnswer(),
   descendants: [],
+  ...payload,
 });
