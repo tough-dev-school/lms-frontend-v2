@@ -18,7 +18,7 @@ export const mockAnswer = (payload: Partial<Answer> = {}): Answer => {
     src: htmlToMarkdown(text),
     hasDescendants: false,
     reactions: faker.helpers.multiple(mockReaction, {
-      count: { min: 0, max: 15 },
+      count: { min: 0, max: 5 },
     }),
     ...payload,
   };
