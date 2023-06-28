@@ -13,7 +13,10 @@ import htmlToMarkdown from '@/utils/htmlToMarkdown';
 import dayjs from 'dayjs';
 import { faker } from '@faker-js/faker';
 import makeStatic from '@/utils/makeStatic';
-import { mockReactionsData } from '@/components/VReactions/mocks/mockReactionsData';
+import {
+  mockReactionsData,
+  staticReactionsData,
+} from '@/components/VReactions/mocks/mockReactionsData';
 import { userId } from './userId';
 
 export const contentHtml =
@@ -83,6 +86,7 @@ export const getAnswerData = ({
 
 export const answerData = makeStatic(getAnswerData(), {
   author: authorData,
+  reactions: staticReactionsData,
 });
 
 export const getThreadData = (answer: Answer = getAnswerData()) => {
