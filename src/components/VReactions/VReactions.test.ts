@@ -3,29 +3,26 @@ import { mount, VueWrapper } from '@vue/test-utils';
 import { getUsedReactions, VReactions, type VReactionsProps } from '.';
 import type { VReactionsPalette } from './components/VReactionsPalette';
 import { createTestingPinia } from '@pinia/testing';
-import { mockReactionData, mockReactionsData } from './mocks/mockReactionsData';
 import groupBy from 'lodash/groupBy';
 import { faker } from '@faker-js/faker';
 import useUser from '@/stores/user';
-import { getAuthorData } from '@/mocks/homework';
 import type { VReaction } from './components/VReaction';
 import { mockEmoji } from '@/mocks/emoji';
+import { mockAuthor } from '@/mocks/mockAuthor';
+import { mockReaction } from '@/mocks/mockReaction';
 
-const userId = faker.datatype.uuid();
+const userId = faker.string.uuid();
 
 const defaultProps: VReactionsProps = {
   reactions: [
-    { ...mockReactionData(), author: { ...getAuthorData(), uuid: userId } },
-    ...mockReactionsData(),
+    { ...mockReaction(), author: { ...mockAuthor(), uuid: userId } },
+    ...faker.helpers.multiple(mockReaction, { count: 5 }),
   ],
-  answerId: faker.datatype.uuid(),
+  answerId: faker.string.uuid(),
   palette: true,
 };
 
-const mountComponent = (
-  props: VReactionsProps = defaultProps,
-  debug = false,
-) => {
+const mountComponent = (props: VReactionsProps = defaultProps) => {
   return mount(VReactions, {
     shallow: true,
     props,
@@ -59,13 +56,10 @@ describe('VReactions', () => {
 
   test('passes props to VReactionsPalette', async () => {
     const usedReactions = getUsedReactions(defaultProps.reactions, userId);
-    wrapper = mountComponent(
-      {
-        ...defaultProps,
-        usedReactions,
-      },
-      true,
-    );
+    wrapper = mountComponent({
+      ...defaultProps,
+      usedReactions,
+    });
     const palette = getPaletteWrapper();
 
     expect(palette.props()).toStrictEqual({ usedReactions });
@@ -108,7 +102,7 @@ describe('VReactions', () => {
 
   test('emits remove on VReaction remove', () => {
     const reaction = getReactionWrapper();
-    const slug = faker.datatype.uuid();
+    const slug = faker.string.uuid();
 
     reaction.vm.$emit('remove', slug);
 

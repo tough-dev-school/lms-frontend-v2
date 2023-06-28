@@ -3,19 +3,21 @@ import { mount, VueWrapper } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
 import { VReaction, type VReactionProps } from '.';
 import { ALLOWED_REACTIONS } from '../VReactionsPalette';
-import { mockReactionsData } from '../../mocks/mockReactionsData';
 import getName from '@/utils/getName';
 import type { VAvatar } from '@/components/VAvatar';
+import { mockReaction } from '@/mocks/mockReaction';
 
 const emoji = faker.helpers.arrayElement(ALLOWED_REACTIONS);
-const userId = faker.datatype.uuid();
+const userId = faker.string.uuid();
 
 const defaultProps: VReactionProps = {
   emoji,
-  reactions: mockReactionsData().map((reaction) => {
-    reaction.emoji = emoji;
-    return reaction;
-  }),
+  reactions: faker.helpers
+    .multiple(mockReaction, { count: { min: 1, max: 5 } })
+    .map((reaction) => {
+      reaction.emoji = emoji;
+      return reaction;
+    }),
   userId,
 };
 

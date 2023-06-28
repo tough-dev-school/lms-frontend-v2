@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
 import { VHtmlContent } from '@/components/VHtmlContent';
-import { contentHtml } from '@/mocks/homework';
+import { mockHtmlContent } from '@/mocks/mockHtmlContent';
 
 export default {
   title: 'Answer/VHtmlContent',
@@ -19,6 +19,6 @@ export const Default = {
   render: Template,
 
   args: {
-    content: contentHtml,
+    content: mockHtmlContent(),
   },
 };

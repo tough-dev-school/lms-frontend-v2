@@ -1,17 +1,15 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
 import { VHomeworkAnswerView } from '.';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
-import {
-  getAnswerData,
-  getCommentData,
-  getCommentsData,
-  getThreadData,
-  contentHtml,
-  authorData,
-} from '@/mocks/homework';
 import useHomework from '@/stores/homework';
 import type { Comment } from '@/types/homework';
-import { userId } from '@/mocks/userId';
+import { userId1 } from '@/mocks/mockUserId';
+import { mockThread } from '@/mocks/mockThread';
+import { mockAnswer } from '@/mocks/mockAnswer';
+import { mockHtmlContent } from '@/mocks/mockHtmlContent';
+import { mockAuthor } from '@/mocks/mockAuthor';
+import { mockComment } from '@/mocks/mockComment';
+import { mockComments } from '@/mocks/mockComments';
 
 export default {
   title: 'App/VHomeworkAnswerView',
@@ -24,23 +22,19 @@ const Template: StoryFn = (args) => ({
   setup() {
     const homework = useHomework();
     const answers = [
-      getThreadData(
-        getAnswerData({ content: contentHtml, author: authorData }),
-      ),
+      mockThread(mockAnswer({ text: mockHtmlContent(), author: mockAuthor() })),
     ];
 
     const patchComment = (value: Comment): Comment => {
-      value.author = authorData;
+      value.author = mockAuthor();
 
       return value;
     };
 
     const getBranch = () => {
-      const level1 = [getCommentData(answers[0])].map(patchComment)[0];
-      const level2 = getCommentsData(level1, 2).descendants.map(patchComment);
-      const level3 = getCommentsData(level2[0], 2).descendants.map(
-        patchComment,
-      );
+      const level1 = [mockComment(answers[0])].map(patchComment)[0];
+      const level2 = mockComments(level1).descendants.map(patchComment);
+      const level3 = mockComments(level2[0]).descendants.map(patchComment);
 
       level1.descendants = level2;
       level2[0].descendants = level3;
@@ -51,13 +45,13 @@ const Template: StoryFn = (args) => ({
     answers[0].descendants = [
       // comment with formatting
       {
-        ...getCommentData(answers[0]),
-        ...getAnswerData({ content: contentHtml, author: authorData }),
+        ...mockComment(answers[0]),
+        ...mockAnswer({ text: mockHtmlContent(), author: mockAuthor() }),
       },
       // own comment
       {
-        ...getCommentData(answers[0]),
-        author: { ...authorData, uuid: userId },
+        ...mockComment(answers[0]),
+        author: { ...mockAuthor(), uuid: userId1 },
       },
       // comment branch
       getBranch(),

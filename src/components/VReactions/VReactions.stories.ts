@@ -1,7 +1,8 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
 import { VReactions } from '.';
 import { VCard } from '@/components/VCard';
-import { mockReactionsData } from './mocks/mockReactionsData';
+import { faker } from '@faker-js/faker';
+import { mockReaction } from '@/mocks/mockReaction';
 
 export default {
   title: 'Reactions/VReactions',
@@ -21,5 +22,5 @@ const Template: StoryFn = (args) => ({
 
 export const Default = {
   render: Template,
-  args: { reactions: mockReactionsData() },
+  args: { reactions: faker.helpers.multiple(mockReaction, { count: 15 }) },
 };

@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
 import { VAnswer } from '@/components/VAnswer';
-import { getAnswerData } from '@/mocks/homework';
+import { mockAnswer } from '@/mocks/mockAnswer';
 
 export default {
   title: 'Answer/VAnswer',
@@ -19,7 +19,7 @@ export const Default = {
   render: Template,
 
   args: {
-    answer: getAnswerData(),
+    answer: mockAnswer(),
   },
 };
 
@@ -27,7 +27,7 @@ export const NoReactions = {
   render: Template,
 
   args: {
-    answer: getAnswerData(),
+    answer: mockAnswer(),
     showReactions: false,
   },
 };

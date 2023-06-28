@@ -3,7 +3,7 @@ import { VHomeworkExpertView } from '.';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import useHomework from '@/stores/homework';
 import merge from 'lodash/merge';
-import { answerData } from '@/mocks/homework';
+import { mockAnswer } from '@/mocks/mockAnswer';
 
 export default {
   title: 'App/VHomeworkExpertView',
@@ -16,8 +16,8 @@ const Template: StoryFn = (args) => ({
   setup() {
     const homework = useHomework();
     const answers = [
-      answerData,
-      merge({}, answerData, { hasDescendants: true }),
+      mockAnswer(),
+      merge({}, mockAnswer(), { hasDescendants: true }),
     ];
 
     homework.$patch({

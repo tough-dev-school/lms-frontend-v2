@@ -1,9 +1,9 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
 import { VReaction } from '.';
 import { VCard } from '@/components/VCard';
-import { mockReactionsData } from '@/components/VReactions/mocks/mockReactionsData';
 import { faker } from '@faker-js/faker';
 import { ALLOWED_REACTIONS } from '../VReactionsPalette';
+import { mockReaction } from '@/mocks/mockReaction';
 
 const userId = faker.datatype.uuid();
 
@@ -25,7 +25,7 @@ export const Default = {
   args: {
     userId,
     emoji: faker.helpers.arrayElement(ALLOWED_REACTIONS),
-    reactions: mockReactionsData(),
+    reactions: faker.helpers.multiple(mockReaction, { count: 15 }),
   },
 };
 
@@ -35,10 +35,10 @@ export const Own = {
     userId,
     emoji: faker.helpers.arrayElement(ALLOWED_REACTIONS),
     reactions: [
-      ...mockReactionsData(1).map((reaction) => {
+      ...faker.helpers.multiple(mockReaction, { count: 1 }).map((reaction) => {
         return { ...reaction, author: { ...reaction.author, uuid: userId } };
       }),
-      ...mockReactionsData(3),
+      ...faker.helpers.multiple(mockReaction, { count: 3 }),
     ],
   },
 };

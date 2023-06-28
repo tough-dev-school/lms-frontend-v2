@@ -7,16 +7,16 @@ import type { VButton } from '@/components/VButton';
 import { faker } from '@faker-js/faker';
 import { createTestingPinia } from '@pinia/testing';
 import useHomework from '@/stores/homework';
-import { getAnswerData } from '@/mocks/homework';
 import { nextTick } from 'vue';
 import { flushPromises } from '@vue/test-utils';
+import { mockAnswer } from '@/mocks/mockAnswer';
 
 const defaultProps = {
-  questionId: faker.datatype.uuid(),
-  parentId: faker.datatype.uuid(),
+  questionId: faker.string.uuid(),
+  parentId: faker.string.uuid(),
 };
 
-const answer = getAnswerData();
+const answer = mockAnswer();
 const text = faker.lorem.sentence();
 
 describe('VNewAnswer', () => {
