@@ -7,7 +7,7 @@ import groupBy from 'lodash/groupBy';
 import { faker } from '@faker-js/faker';
 import useUser from '@/stores/user';
 import type { VReaction } from './components/VReaction';
-import { mockEmoji } from '@/mocks/emoji';
+import { mockEmoji } from '@/mocks/mockEmoji';
 import { mockAuthor } from '@/mocks/mockAuthor';
 import { mockReaction } from '@/mocks/mockReaction';
 

@@ -1,6 +1,6 @@
 import type { Reaction } from '@/types/homework';
 import { faker } from '@faker-js/faker';
-import { mockEmoji } from './emoji';
+import { mockEmoji } from './mockEmoji';
 import { mockAuthor } from './mockAuthor';
 
 export const mockReaction = (payload: Partial<Reaction> = {}): Reaction => ({
