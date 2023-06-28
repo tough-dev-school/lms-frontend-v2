@@ -3,7 +3,7 @@ import { VHomeworkAnswerView } from '.';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import useHomework from '@/stores/homework';
 import type { Comment } from '@/types/homework';
-import { userId1 } from '@/mocks/mockUserId';
+import { USER_1 } from '@/mocks/mockUserId';
 import { mockThread } from '@/mocks/mockThread';
 import { mockAnswer } from '@/mocks/mockAnswer';
 import { mockContent } from '@/mocks/mockContent';

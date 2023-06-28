@@ -1,7 +1,7 @@
 import { VDefaultLayout } from '@/layouts/VDefaultLayout';
 import { getMaterialsData } from '@/mocks/materials';
-import { mockQuestion } from '@/mocks/mockQuestion';
-import { mockUserId } from '@/mocks/mockUserId';
+import { mockQuestion, STATIC_QUESTION } from '@/mocks/mockQuestion';
+import { mockUserId, USER_1 } from '@/mocks/mockUserId';
 import useHomework from '@/stores/homework';
 import useMaterials from '@/stores/materials';
 import useToasts from '@/stores/toasts';
@@ -17,7 +17,7 @@ const layoutDecorator = (story: any, layout: any) => ({
     const user = useUser();
     user.$patch({
       id: '',
-      uuid: mockUserId(),
+      uuid: mockUserId(USER_1),
       username: 'johndoe@demo.com',
       firstName: 'Иван',
       lastName: 'Иванов',
@@ -31,7 +31,7 @@ const layoutDecorator = (story: any, layout: any) => ({
 
     const homework = useHomework();
     homework.$patch({
-      question: mockQuestion(),
+      question: mockQuestion(STATIC_QUESTION),
     });
 
     const materials = useMaterials();

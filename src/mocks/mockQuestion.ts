@@ -8,3 +8,9 @@ export const mockQuestion = (payload: Partial<Question> = {}): Question => ({
   text: mockContent(LOREM_CONTENT),
   ...payload,
 });
+
+export const STATIC_QUESTION = {
+  slug: 'd89180cd-1bba-4fb9-873f-7b6ad6e3865e',
+  name: 'Just a static question',
+  text: mockContent(LOREM_CONTENT),
+};
