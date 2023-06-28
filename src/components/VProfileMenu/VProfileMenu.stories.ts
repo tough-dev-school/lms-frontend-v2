@@ -14,9 +14,9 @@ const Template: StoryFn = (args) => ({
     const user = useUser();
     user.$patch({
       username: faker.internet.email(),
-      firstName: faker.name.firstName(),
-      lastName: faker.name.lastName(),
-      uuid: faker.datatype.uuid(),
+      firstName: faker.person.firstName(),
+      lastName: faker.person.lastName(),
+      uuid: faker.string.uuid(),
     });
     return { args };
   },

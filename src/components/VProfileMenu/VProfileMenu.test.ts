@@ -45,8 +45,8 @@ describe('VProfileMenu', () => {
     user = useUser();
     user.$patch({
       username: faker.internet.email(),
-      firstName: faker.name.firstName(),
-      lastName: faker.name.lastName(),
+      firstName: faker.person.firstName(),
+      lastName: faker.person.lastName(),
     });
 
     studies = useStudies();
@@ -183,10 +183,10 @@ describe('VProfileMenu', () => {
 
   test('Has no link to certificates if has needed data', async () => {
     user.$patch({
-      firstName: faker.name.firstName(),
-      firstNameEn: faker.name.lastName(),
-      lastName: faker.name.firstName(),
-      lastNameEn: faker.name.lastName(),
+      firstName: faker.person.firstName(),
+      firstNameEn: faker.person.lastName(),
+      lastName: faker.person.firstName(),
+      lastNameEn: faker.person.lastName(),
     });
     await getButtonWrapper().trigger('click');
 

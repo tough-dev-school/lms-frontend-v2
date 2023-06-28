@@ -7,8 +7,8 @@ import { faker } from '@faker-js/faker';
 
 const defaultProps = {};
 
-const uid = faker.datatype.uuid();
-const token = faker.datatype.uuid();
+const uid = faker.string.uuid();
+const token = faker.string.uuid();
 
 const routerPushMock = vi.fn();
 

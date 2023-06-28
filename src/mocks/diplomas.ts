@@ -10,7 +10,7 @@ type locale = 'RU' | 'EN';
 const locales: locale[] = ['RU', 'EN'];
 
 const getLocale = () => {
-  return locales[faker.datatype.number({ min: 0, max: locales.length - 1 })];
+  return locales[faker.number.int({ min: 0, max: locales.length - 1 })];
 };
 
 export const getDiplomaData = () => {
@@ -18,13 +18,13 @@ export const getDiplomaData = () => {
     course: {
       name: faker.commerce.productName(),
     },
-    slug: faker.datatype.uuid(),
+    slug: faker.string.uuid(),
     language: getLocale(),
     image: '/diploma-mock.jpg',
     student: {
-      uuid: faker.datatype.uuid(),
-      first_name: faker.name.firstName(),
-      last_name: faker.name.lastName(),
+      uuid: faker.string.uuid(),
+      first_name: faker.person.firstName(),
+      last_name: faker.person.lastName(),
     },
     url: faker.internet.url(),
   }) as Diploma;

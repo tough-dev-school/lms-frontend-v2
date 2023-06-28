@@ -12,7 +12,7 @@ originalPost.descendants = mockComments(originalPost).descendants;
 originalPost.descendants[1].descendants =
   mockComments(originalPost).descendants;
 
-const userId = faker.datatype.uuid();
+const userId = faker.string.uuid();
 
 export default {
   title: 'Answer/VThread',

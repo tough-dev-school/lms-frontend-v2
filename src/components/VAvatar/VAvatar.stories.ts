@@ -19,6 +19,6 @@ export const Default = {
   render: Template,
 
   args: {
-    userId: faker.datatype.uuid(),
+    userId: faker.string.uuid(),
   },
 };

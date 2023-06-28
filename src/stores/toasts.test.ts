@@ -3,9 +3,9 @@ import { createPinia, setActivePinia } from 'pinia';
 import useToasts, { type VToastMessage } from './toasts';
 import { faker } from '@faker-js/faker';
 
-const MESSAGE_ONE = faker.datatype.uuid();
-const MESSAGE_TWO = faker.datatype.uuid();
-const MESSAGE_THREE = faker.datatype.uuid();
+const MESSAGE_ONE = faker.string.uuid();
+const MESSAGE_TWO = faker.string.uuid();
+const MESSAGE_THREE = faker.string.uuid();
 
 const MESSAGES = [MESSAGE_ONE, MESSAGE_TWO, MESSAGE_THREE];
 
@@ -31,7 +31,7 @@ describe('toasts store', () => {
   });
 
   test('addMessage adds message', () => {
-    const text = faker.datatype.uuid();
+    const text = faker.string.uuid();
 
     toasts.addMessage(text);
 
@@ -67,7 +67,7 @@ describe('toasts store', () => {
   });
 
   test('addMessage does nothing if disabled', () => {
-    const text = faker.datatype.uuid();
+    const text = faker.string.uuid();
 
     toasts.disable();
     toasts.addMessage(text);

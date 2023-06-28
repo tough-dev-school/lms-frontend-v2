@@ -95,7 +95,7 @@ describe('VNewAnswer', () => {
     await getEditorWrapper().vm.$emit(
       'update:modelValue',
       `<${tagName}></${tagName}>`.repeat(
-        faker.datatype.number({ min: 1, max: 100 }),
+        faker.number.int({ min: 1, max: 100 }),
       ),
     );
 

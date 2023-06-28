@@ -3,10 +3,10 @@ import { faker } from '@faker-js/faker';
 
 const generateStudy = () => {
   return {
-    id: faker.datatype.number(),
+    id: faker.number.int(),
     slug: faker.datatype.string(),
     name: faker.finance.accountName(),
-    homePageSlug: faker.datatype.uuid(),
+    homePageSlug: faker.string.uuid(),
   };
 };
 

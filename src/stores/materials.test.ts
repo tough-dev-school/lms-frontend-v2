@@ -24,7 +24,7 @@ describe('materials store', () => {
   });
 
   test(' getData to call get materials', async () => {
-    await materials.getData(faker.datatype.uuid());
+    await materials.getData(faker.string.uuid());
 
     expect(getMaterial).toHaveBeenCalledOnce();
   });
@@ -33,7 +33,7 @@ describe('materials store', () => {
     const materialsData = getMaterialsData();
     (getMaterial as ReturnType<typeof vi.fn>).mockResolvedValue(materialsData);
 
-    await materials.getData(faker.datatype.uuid());
+    await materials.getData(faker.string.uuid());
 
     expect(materials.material).toStrictEqual(materialsData);
   });

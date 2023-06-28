@@ -9,8 +9,8 @@ import { faker } from '@faker-js/faker';
 import { nextTick } from 'vue';
 
 const defaultProps = {
-  uid: faker.datatype.uuid(),
-  token: faker.datatype.uuid(),
+  uid: faker.string.uuid(),
+  token: faker.string.uuid(),
 };
 
 describe('VPasswordSettings', () => {
@@ -51,7 +51,7 @@ describe('VPasswordSettings', () => {
     expect(getResetHeadingWrapper().exists()).toBe(true);
   });
   test('shows change heading when has auth', async () => {
-    auth.$patch({ token: faker.datatype.uuid() });
+    auth.$patch({ token: faker.string.uuid() });
 
     await nextTick();
 
@@ -59,8 +59,8 @@ describe('VPasswordSettings', () => {
   });
 
   test('sends data on save', async () => {
-    const password1 = faker.datatype.uuid();
-    const password2 = faker.datatype.uuid();
+    const password1 = faker.string.uuid();
+    const password2 = faker.string.uuid();
 
     getPassword1Wrapper().vm.$emit('update:modelValue', password1);
     getPassword2Wrapper().vm.$emit('update:modelValue', password2);

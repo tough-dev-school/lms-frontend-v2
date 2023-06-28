@@ -7,7 +7,7 @@ import { createApp } from 'vue';
 import { createTestingPinia } from '@pinia/testing';
 import { setActivePinia } from 'pinia';
 
-const passwordlessToken = faker.datatype.uuid();
+const passwordlessToken = faker.string.uuid();
 
 const to: Partial<RouteLocationNormalized> = {
   params: {

@@ -7,8 +7,8 @@ import useAuth from './auth';
 import useToasts from './toasts';
 import { createApp } from 'vue';
 
-const token = faker.datatype.uuid();
-const passwordlessToken = faker.datatype.uuid();
+const token = faker.string.uuid();
+const passwordlessToken = faker.string.uuid();
 const username = faker.internet.userName();
 const password = faker.internet.password();
 const email = faker.internet.email();
@@ -80,7 +80,7 @@ describe('toasts store', () => {
   });
 
   test('resetAuth resets token', () => {
-    auth.token = faker.datatype.uuid();
+    auth.token = faker.string.uuid();
 
     auth.resetAuth();
 
