@@ -1,10 +1,10 @@
 import type { Question } from '@/types/homework';
 import { faker } from '@faker-js/faker';
-import { contentLorem } from './mockHtmlContent';
+import { LOREM_CONTENT, mockContent } from './mockContent';
 
 export const mockQuestion = (payload: Partial<Question> = {}): Question => ({
   slug: faker.string.uuid(),
   name: faker.lorem.words(3),
-  text: contentLorem(),
+  text: mockContent(LOREM_CONTENT),
   ...payload,
 });

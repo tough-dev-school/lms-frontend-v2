@@ -6,7 +6,7 @@ import type { Comment } from '@/types/homework';
 import { userId1 } from '@/mocks/mockUserId';
 import { mockThread } from '@/mocks/mockThread';
 import { mockAnswer } from '@/mocks/mockAnswer';
-import { mockHtmlContent } from '@/mocks/mockHtmlContent';
+import { mockContent } from '@/mocks/mockContent';
 import { mockAuthor } from '@/mocks/mockAuthor';
 import { mockComment } from '@/mocks/mockComment';
 import { mockComments } from '@/mocks/mockComments';
@@ -22,7 +22,7 @@ const Template: StoryFn = (args) => ({
   setup() {
     const homework = useHomework();
     const answers = [
-      mockThread(mockAnswer({ text: mockHtmlContent(), author: mockAuthor() })),
+      mockThread(mockAnswer({ text: mockContent(), author: mockAuthor() })),
     ];
 
     const patchComment = (value: Comment): Comment => {
@@ -46,12 +46,12 @@ const Template: StoryFn = (args) => ({
       // comment with formatting
       {
         ...mockComment(answers[0]),
-        ...mockAnswer({ text: mockHtmlContent(), author: mockAuthor() }),
+        ...mockAnswer({ text: mockContent(), author: mockAuthor() }),
       },
       // own comment
       {
         ...mockComment(answers[0]),
-        author: { ...mockAuthor(), uuid: userId1 },
+        author: { ...mockAuthor(), uuid: mockUserId(USER_1) },
       },
       // comment branch
       getBranch(),
