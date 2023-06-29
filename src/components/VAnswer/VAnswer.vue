@@ -76,7 +76,9 @@
       <slot name="header"></slot>
     </div>
     <VHtmlContent :content="answer.text" data-testid="content" />
-    <div class="flex justify-between items-start gap-16 pt-16">
+    <div
+      class="flex justify-start flex-wrap items-start gap-x-8 gap-y-16 pt-16">
+      <slot name="footer" />
       <button
         class="answer-action box-content flex items-center justify-center text-[1.5rem]"
         @click="togglePalette"
@@ -84,10 +86,7 @@
         data-testid="open">
         <MoodHappyIcon />
       </button>
-      <div class="flex-grow -ml-16"></div>
-      <slot name="footer" />
-    </div>
-    <div class="gap-16 mt-16 flex items-start flex-wrap empty:hidden">
+      <div></div>
       <VReactions
         v-if="showReactions"
         :usedReactions="usedReactions"

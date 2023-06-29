@@ -25,7 +25,6 @@
 
   const actions = computed<ThreadAction[]>(() => {
     return [
-      ...props.customActions,
       {
         name: 'Ответить',
         handle: () => {
@@ -43,6 +42,7 @@
         icon: MessageCircleOffIcon,
         show: replyMode.value === true,
       },
+      ...props.customActions,
     ];
   });
 

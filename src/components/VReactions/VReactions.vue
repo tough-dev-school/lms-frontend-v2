@@ -39,6 +39,7 @@
     @click="handlePaletteClick"
     :usedReactions="usedReactions"
     data-testid="palette" />
+  <div></div>
   <TransitionGroup name="reaction">
     <VReaction
       v-for="(reactions, emoji) in groupedReactions"
