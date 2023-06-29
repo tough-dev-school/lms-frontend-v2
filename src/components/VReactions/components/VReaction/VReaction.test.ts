@@ -71,6 +71,15 @@ describe('VReaction', () => {
     expect(wrapper.emitted('remove')).toStrictEqual([[targetSlug]]);
   });
 
+  test('dont emit anything if disabled', () => {
+    wrapper = mountComponent({ ...defaultProps, disabled: true });
+
+    wrapper.trigger('click');
+
+    expect(wrapper.emitted('add')).toBe(undefined);
+    expect(wrapper.emitted('remove')).toBe(undefined);
+  });
+
   test('displays correct number of avatars', () => {
     expect(getAvatarWrappers()).toHaveLength(defaultProps.reactions.length);
   });
