@@ -49,7 +49,11 @@ describe('VReactions', () => {
   const getReactionWrapper = () => getReactionWrappers()[0];
 
   test('passes props to VReaction', () => {
-    const emoji = defaultProps.reactions[0].emoji;
+    const emoji = defaultProps.reactions.sort((a, b) => {
+      return (
+        ALLOWED_REACTIONS.indexOf(a.emoji) - ALLOWED_REACTIONS.indexOf(b.emoji)
+      );
+    })[0].emoji;
     const targetProps = {
       userId,
       emoji,

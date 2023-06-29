@@ -17,7 +17,7 @@ export interface Author {
 
 export interface Reaction {
   slug: string;
-  emoji: string;
+  emoji: ReactionEmoji;
   author: Author;
   answer: string;
 }
