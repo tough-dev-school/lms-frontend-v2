@@ -1,9 +1,4 @@
-// @ts-nocheck
-// #FIXME Remove ts-nocheck
-// #FIXME Split into separate modules
-import type { BlockMap } from 'vue3-notion/src/lib/types';
-
-export const getMaterialsData = (): BlockMap => {
+export const mockMaterial = () => {
   return {
     'cf1379bf-bf5a-41f9-942f-31dd4253c178': {
       role: 'reader',
