@@ -16,7 +16,8 @@ const Template: StoryFn = (args) => ({
   argTypes: {
     reactions: { control: 'object' },
   },
-  template: '<VCard><VReactions v-bind="args" /></VCard>',
+  template:
+    '<VCard class="flex justify-start flex-wrap items-start gap-x-8 gap-y-16 pt-16"><VReactions v-bind="args" /></VCard>',
 });
 
 export const Default = {
