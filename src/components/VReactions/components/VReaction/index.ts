@@ -4,7 +4,7 @@ import type { Reaction, ReactionEmoji } from '@/types/homework';
 interface VReactionProps {
   userId: string;
   emoji: ReactionEmoji;
-  reactions: Reaction[];
+  reactions?: Reaction[];
 }
 
 export { VReaction, type VReactionProps };

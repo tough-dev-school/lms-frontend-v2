@@ -5,7 +5,7 @@
   import { groupBy } from 'lodash';
   import useUser from '@/stores/user';
   import type { VReactionsProps } from '.';
-  import { VReactionsPalette } from './components/VReactionsPalette';
+  import { ALLOWED_REACTIONS } from '.';
 
   const props = withDefaults(defineProps<VReactionsProps>(), {
     palette: false,
@@ -24,30 +24,29 @@
     >;
   });
 
-  const handlePaletteClick = (emoji: ReactionEmoji) => {
-    emit('add', emoji);
-    emit('close');
-  };
+  const sortReactions = (reactions: ReactionEmoji[]) =>
+    reactions.sort(
+      (a, b) => ALLOWED_REACTIONS.indexOf(a) - ALLOWED_REACTIONS.indexOf(b),
+    );
+
+  const emojiSet = computed(() =>
+    sortReactions(
+      props.palette ? ALLOWED_REACTIONS : Object.keys(groupedReactions.value),
+    ),
+  );
 
   const userStore = useUser();
 </script>
 
 <template>
-  <VReactionsPalette
-    v-if="palette"
-    @close="emit('close')"
-    @click="handlePaletteClick"
-    :usedReactions="usedReactions"
-    data-testid="palette" />
-  <div></div>
   <TransitionGroup name="reaction">
     <VReaction
-      v-for="(reactions, emoji) in groupedReactions"
+      v-for="emoji in emojiSet"
       :emoji="emoji"
       :userId="userStore.uuid"
       @add="(emoji) => emit('add', emoji)"
       @remove="(reactionId) => emit('remove', reactionId)"
-      :reactions="reactions"
+      :reactions="groupedReactions[emoji]"
       :key="emoji"
       data-testid="reaction" />
   </TransitionGroup>

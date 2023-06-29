@@ -11,7 +11,7 @@
   import type { ReactionEmoji } from '@/types/homework';
   import useHomework from '@/stores/homework';
   import { MoodHappyIcon } from 'vue-tabler-icons';
-  import { MAX_REACTIONS } from '@/components/VReactions/components/VReactionsPalette';
+  import { MAX_REACTIONS } from '@/components/VReactions';
 
   export interface Props {
     answer: Answer;

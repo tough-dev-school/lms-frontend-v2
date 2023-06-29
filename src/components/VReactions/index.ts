@@ -1,8 +1,10 @@
 import VReactions from './VReactions.vue';
-import type { Reaction, ReactionEmoji } from '@/types/homework';
-import type { VReactionsPaletteProps } from './components/VReactionsPalette';
+import { type Reaction, ReactionEmoji } from '@/types/homework';
 
-export interface VReactionsProps extends VReactionsPaletteProps {
+export const ALLOWED_REACTIONS = Object.values(ReactionEmoji);
+export const MAX_REACTIONS = 3;
+
+export interface VReactionsProps {
   answerId: string;
   reactions: Reaction[];
   palette?: boolean;

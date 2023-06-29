@@ -2,7 +2,7 @@ import { describe, expect, test, beforeEach } from 'vitest';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
 import { VReaction, type VReactionProps } from '.';
-import { ALLOWED_REACTIONS } from '../VReactionsPalette';
+import { ALLOWED_REACTIONS } from '.';
 import { mockReactionsData } from '../../mocks/mockReactionsData';
 import getName from '@/utils/getName';
 import type { VAvatar } from '@/components/VAvatar';

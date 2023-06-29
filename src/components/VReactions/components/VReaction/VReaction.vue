@@ -13,8 +13,9 @@
   }>();
 
   const ownReaction = computed(() => {
-    return props.reactions.find(
-      (reaction) => reaction.author.uuid === props.userId,
+    return (
+      props.reactions &&
+      props.reactions.find((reaction) => reaction.author.uuid === props.userId)
     );
   });
 
@@ -27,27 +28,30 @@
   };
 
   const orderedAuthors = computed(() => {
-    return props.reactions
-      .map((reaction) => reaction.author)
-      .sort((a, b) => {
-        if (a.uuid === props.userId) return 1;
-        if (b.uuid === props.userId) return -1;
-        return 0;
-      });
+    return (
+      props.reactions &&
+      props.reactions
+        .map((reaction) => reaction.author)
+        .sort((a, b) => {
+          if (a.uuid === props.userId) return 1;
+          if (b.uuid === props.userId) return -1;
+          return 0;
+        })
+    );
   });
 </script>
 
 <template>
   <div
     @click="handleClick"
-    class="answer-action flex-row inline-flex items-center gap-16 pl-8 pr-4 text-[1.25rem]"
+    class="answer-action flex-row inline-flex items-center gap-16 pl-8 pr-4 text-[1.25rem] min-w-[64px]"
     :class="{
       '!border !border-gray': ownReaction,
     }">
     <div class="flex h-24 w-24 items-center justify-center" data-testid="emoji">
       {{ emoji }}
     </div>
-    <div class="flex items-center pr-16">
+    <div class="flex items-center pr-16" v-if="orderedAuthors">
       <abbr
         class="relative -mr-[12px] transition-all hover:z-50 hover:scale-125"
         v-for="author in orderedAuthors"
