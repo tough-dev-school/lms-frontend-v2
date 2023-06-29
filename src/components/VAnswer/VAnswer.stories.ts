@@ -23,11 +23,4 @@ export const Default = {
   },
 };
 
-export const NoReactions = {
-  render: Template,
-
-  args: {
-    answer: getAnswerData(),
-    showReactions: false,
-  },
-};
+// #TODO Add stories for OWN answers (=disabled reactions)

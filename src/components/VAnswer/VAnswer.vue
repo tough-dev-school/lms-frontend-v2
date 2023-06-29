@@ -1,3 +1,9 @@
+<script lang="ts">
+  export interface VAnswerProps {
+    answer: Answer;
+  }
+</script>
+
 <script lang="ts" setup>
   import { VAvatar } from '@/components/VAvatar';
   import { relativeDate } from '@/utils/date';
@@ -13,18 +19,13 @@
   import { MoodHappyIcon } from 'vue-tabler-icons';
   import { MAX_REACTIONS } from '@/components/VReactions';
 
-  export interface Props {
-    answer: Answer;
-    showReactions?: boolean;
-  }
-
   const emit = defineEmits<{
     update: [];
   }>();
 
   const homeworkStore = useHomework();
   const userStore = useUser();
-  const props = withDefaults(defineProps<Props>(), { showReactions: true });
+  const props = defineProps<VAnswerProps>();
 
   const isOwn = computed(() => {
     return props.answer.author.uuid === userStore.uuid;
@@ -83,16 +84,17 @@
         class="answer-action box-content flex items-center justify-center text-[1.5rem]"
         @click="togglePalette"
         :disabled="isDisabled"
+        v-if="!isOwn"
         data-testid="open">
         <MoodHappyIcon />
       </button>
       <div></div>
       <VReactions
-        v-if="showReactions"
         :usedReactions="usedReactions"
         :answer-id="answer.slug"
         :reactions="answer.reactions"
         :palette="isPaletteOpen"
+        :disabled="isOwn"
         @close="closePalette"
         @add="addReaction"
         @remove="removeReaction" />
