@@ -20,15 +20,14 @@ const defaultProps = {
   userId,
 };
 
-const mountComponent = (props: VReactionProps) => {
+const mountComponent = (props: Partial<VReactionProps> = {}) => {
   return mount(VReaction, {
     shallow: true,
-    props,
+    props: { ...defaultProps, ...props },
   });
 };
 
 const withOwnProps = {
-  ...defaultProps,
   reactions: defaultProps.reactions.map((reaction, index) =>
     index === 0
       ? { ...reaction, author: { ...reaction.author, uuid: userId } }
