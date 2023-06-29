@@ -1,10 +1,18 @@
+<script lang="ts">
+  export interface VReactionsProps {
+    answerId: string;
+    reactions: Reaction[];
+    palette?: boolean;
+    disabled?: boolean;
+  }
+</script>
+
 <script lang="ts" setup>
   import { computed } from 'vue';
   import { VReaction } from './components/VReaction';
   import type { Reaction, ReactionEmoji } from '@/types/homework';
   import { groupBy } from 'lodash';
   import useUser from '@/stores/user';
-  import type { VReactionsProps } from '.';
   import { ALLOWED_REACTIONS } from '.';
 
   const props = withDefaults(defineProps<VReactionsProps>(), {
@@ -27,11 +35,13 @@
   const sortReactions = (reactions: ReactionEmoji[]) =>
     reactions.sort(
       (a, b) => ALLOWED_REACTIONS.indexOf(a) - ALLOWED_REACTIONS.indexOf(b),
-    );
+    ) as ReactionEmoji[];
 
   const emojiSet = computed(() =>
     sortReactions(
-      props.palette ? ALLOWED_REACTIONS : Object.keys(groupedReactions.value),
+      !props.disabled && props.palette
+        ? ALLOWED_REACTIONS
+        : (Object.keys(groupedReactions.value) as ReactionEmoji[]),
     ),
   );
 
@@ -41,6 +51,7 @@
 <template>
   <TransitionGroup name="reaction">
     <VReaction
+      :disabled="disabled"
       v-for="emoji in emojiSet"
       :emoji="emoji"
       :userId="userStore.uuid"
