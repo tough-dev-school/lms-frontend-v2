@@ -92,7 +92,7 @@
       <VReactions
         :answer-id="answer.slug"
         :reactions="answer.reactions"
-        :palette="isPaletteOpen"
+        :open="isPaletteOpen"
         :disabled="isOwn"
         @close="closePalette"
         @add="addReaction"

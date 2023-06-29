@@ -15,7 +15,7 @@ const Template: StoryFn = (args) => ({
   },
   argTypes: {
     reactions: { control: 'object' },
-    palette: { control: 'boolean' },
+    open: { control: 'boolean' },
     disabled: { control: 'boolean' },
   },
   template:
@@ -24,15 +24,15 @@ const Template: StoryFn = (args) => ({
 
 export const Default = {
   render: Template,
-  args: { reactions: mockReactionsData(), palette: false, disabled: false },
+  args: { reactions: mockReactionsData(), open: false, disabled: false },
 };
 
 export const Open = {
   render: Template,
-  args: { reactions: mockReactionsData(), palette: true, disabled: false },
+  args: { reactions: mockReactionsData(), open: true, disabled: false },
 };
 
 export const Disabled = {
   render: Template,
-  args: { reactions: mockReactionsData(), palette: true, disabled: true },
+  args: { reactions: mockReactionsData(), open: true, disabled: true },
 };

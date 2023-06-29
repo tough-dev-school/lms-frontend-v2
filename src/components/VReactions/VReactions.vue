@@ -2,7 +2,7 @@
   export interface VReactionsProps {
     answerId: string;
     reactions: Reaction[];
-    palette?: boolean;
+    open?: boolean;
     disabled?: boolean;
   }
 </script>
@@ -16,7 +16,7 @@
   import { ALLOWED_REACTIONS } from '.';
 
   const props = withDefaults(defineProps<VReactionsProps>(), {
-    palette: false,
+    open: false,
     disabled: false,
   });
 
@@ -40,7 +40,7 @@
 
   const emojiSet = computed(() =>
     sortReactions(
-      !props.disabled && props.palette
+      !props.disabled && props.open
         ? ALLOWED_REACTIONS
         : (Object.keys(groupedReactions.value) as ReactionEmoji[]),
     ),
@@ -52,14 +52,14 @@
 <template>
   <TransitionGroup name="reaction">
     <VReaction
-      :disabled="disabled"
       v-for="emoji in emojiSet"
+      :key="emoji"
+      :disabled="disabled"
       :emoji="emoji"
       :userId="userStore.uuid"
+      :reactions="groupedReactions[emoji]"
       @add="(emoji) => emit('add', emoji)"
       @remove="(reactionId) => emit('remove', reactionId)"
-      :reactions="groupedReactions[emoji]"
-      :key="emoji"
       data-testid="reaction" />
   </TransitionGroup>
 </template>
