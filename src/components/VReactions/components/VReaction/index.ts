@@ -1,3 +1,3 @@
-import VReaction from './VReaction.vue';
+import VReaction, { type VReactionProps } from './VReaction.vue';
 
-export { VReaction };
+export { VReaction, type VReactionProps };

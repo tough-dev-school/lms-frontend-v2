@@ -2,7 +2,7 @@ import { describe, expect, test, beforeEach } from 'vitest';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
 import { VReaction, type VReactionProps } from '.';
-import { ALLOWED_REACTIONS } from '.';
+import { ALLOWED_REACTIONS } from '@/components/VReactions';
 import { mockReactionsData } from '../../mocks/mockReactionsData';
 import getName from '@/utils/getName';
 import type { VAvatar } from '@/components/VAvatar';
@@ -10,12 +10,13 @@ import type { VAvatar } from '@/components/VAvatar';
 const emoji = faker.helpers.arrayElement(ALLOWED_REACTIONS);
 const userId = faker.datatype.uuid();
 
-const defaultProps: VReactionProps = {
+const defaultProps = {
   emoji,
   reactions: mockReactionsData().map((reaction) => {
     reaction.emoji = emoji;
     return reaction;
   }),
+  disabled: false,
   userId,
 };
 
@@ -26,7 +27,7 @@ const mountComponent = (props: VReactionProps) => {
   });
 };
 
-const withOwnProps: VReactionProps = {
+const withOwnProps = {
   ...defaultProps,
   reactions: defaultProps.reactions.map((reaction, index) =>
     index === 0

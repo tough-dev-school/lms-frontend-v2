@@ -17,6 +17,7 @@
 
   const props = withDefaults(defineProps<VReactionsProps>(), {
     palette: false,
+    disabled: false,
   });
 
   const emit = defineEmits<{

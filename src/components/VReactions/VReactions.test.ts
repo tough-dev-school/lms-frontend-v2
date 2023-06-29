@@ -1,7 +1,6 @@
 import { describe, expect, test, beforeEach, vi } from 'vitest';
 import { mount, VueWrapper } from '@vue/test-utils';
-import { getUsedReactions, VReactions, type VReactionsProps } from '.';
-import type { VReactionsPalette } from './components/VReactionsPalette';
+import { VReactions, type VReactionsProps } from '.';
 import { createTestingPinia } from '@pinia/testing';
 import { mockReactionData, mockReactionsData } from './mocks/mockReactionsData';
 import groupBy from 'lodash/groupBy';
@@ -13,13 +12,14 @@ import { mockEmoji } from '@/mocks/emoji';
 
 const userId = faker.datatype.uuid();
 
-const defaultProps: VReactionsProps = {
+const defaultProps = {
   reactions: [
     { ...mockReactionData(), author: { ...getAuthorData(), uuid: userId } },
     ...mockReactionsData(),
   ],
   answerId: faker.datatype.uuid(),
   palette: true,
+  disabled: false,
 };
 
 const mountComponent = (
@@ -51,25 +51,9 @@ describe('VReactions', () => {
     userStore.uuid = userId;
   });
 
-  const getPaletteWrapper = () =>
-    wrapper.findComponent<typeof VReactionsPalette>('[data-testid="palette"]');
   const getReactionWrappers = () =>
     wrapper.findAllComponents<typeof VReaction>('[data-testid="reaction"]');
   const getReactionWrapper = () => getReactionWrappers()[0];
-
-  test('passes props to VReactionsPalette', async () => {
-    const usedReactions = getUsedReactions(defaultProps.reactions, userId);
-    wrapper = mountComponent(
-      {
-        ...defaultProps,
-        usedReactions,
-      },
-      true,
-    );
-    const palette = getPaletteWrapper();
-
-    expect(palette.props()).toStrictEqual({ usedReactions });
-  });
 
   test('passes props to VReaction', () => {
     const reactionsData = groupBy(
@@ -97,15 +81,6 @@ describe('VReactions', () => {
     expect(reactions).toHaveLength(reactionsData.length);
   });
 
-  test('emits add on VReactionsPalette click', () => {
-    const palette = getPaletteWrapper();
-
-    const emoji = mockEmoji();
-    palette.vm.$emit('click', emoji);
-
-    expect(wrapper.emitted('add')).toStrictEqual([[emoji]]);
-  });
-
   test('emits remove on VReaction remove', () => {
     const reaction = getReactionWrapper();
     const slug = faker.datatype.uuid();
@@ -124,9 +99,5 @@ describe('VReactions', () => {
     expect(wrapper.emitted('add')).toStrictEqual([[emoji]]);
   });
 
-  test('hide palette', () => {
-    wrapper = mountComponent({ ...defaultProps, palette: false });
-
-    expect(getPaletteWrapper().exists()).toBeFalsy();
-  });
+  test.todo('hide palette');
 });

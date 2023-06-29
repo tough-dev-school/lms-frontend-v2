@@ -3,7 +3,7 @@ import { VReaction } from '.';
 import { VCard } from '@/components/VCard';
 import { mockReactionsData } from '@/components/VReactions/mocks/mockReactionsData';
 import { faker } from '@faker-js/faker';
-import { ALLOWED_REACTIONS } from '../VReaction';
+import { ALLOWED_REACTIONS } from '@/components/VReactions';
 
 const userId = faker.datatype.uuid();
 

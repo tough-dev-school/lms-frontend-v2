@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Reaction, ReactionEmoji } from '@/types/homework';
 
-  interface VReactionProps {
+  export interface VReactionProps {
     userId: string;
     emoji: ReactionEmoji;
     reactions?: Reaction[];
@@ -14,7 +14,9 @@
   import { computed } from 'vue';
   import getName from '@/utils/getName';
 
-  const props = defineProps<VReactionProps>();
+  const props = withDefaults(defineProps<VReactionProps>(), {
+    reactions: () => [],
+  });
 
   const emit = defineEmits<{
     add: [reaction: ReactionEmoji];
@@ -22,9 +24,8 @@
   }>();
 
   const ownReaction = computed(() => {
-    return (
-      props.reactions &&
-      props.reactions.find((reaction) => reaction.author.uuid === props.userId)
+    return props.reactions.find(
+      (reaction) => reaction.author.uuid === props.userId,
     );
   });
 
@@ -38,16 +39,13 @@
   };
 
   const orderedAuthors = computed(() => {
-    return (
-      props.reactions &&
-      props.reactions
-        .map((reaction) => reaction.author)
-        .sort((a, b) => {
-          if (a.uuid === props.userId) return 1;
-          if (b.uuid === props.userId) return -1;
-          return 0;
-        })
-    );
+    return props.reactions
+      .map((reaction) => reaction.author)
+      .sort((a, b) => {
+        if (a.uuid === props.userId) return 1;
+        if (b.uuid === props.userId) return -1;
+        return 0;
+      });
   });
 </script>
 
@@ -63,7 +61,7 @@
     <div class="flex h-24 w-24 items-center justify-center" data-testid="emoji">
       {{ emoji }}
     </div>
-    <div class="flex items-center pr-16" v-if="orderedAuthors">
+    <div class="flex items-center pr-16" v-if="reactions.length > 0">
       <abbr
         class="relative -mr-[12px] transition-all hover:z-50 hover:scale-125"
         v-for="author in orderedAuthors"

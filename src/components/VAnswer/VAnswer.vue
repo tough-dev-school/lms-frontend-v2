@@ -13,7 +13,7 @@
   import { VHtmlContent } from '@/components/VHtmlContent';
   import { computed, ref } from 'vue';
   import useUser from '@/stores/user';
-  import { VReactions, getUsedReactions } from '@/components/VReactions';
+  import { VReactions } from '@/components/VReactions';
   import type { ReactionEmoji } from '@/types/homework';
   import useHomework from '@/stores/homework';
   import { MoodHappyIcon } from 'vue-tabler-icons';
@@ -43,12 +43,12 @@
     emit('update');
   };
 
-  const usedReactions = computed(() =>
-    getUsedReactions(props.answer.reactions, userStore.uuid),
-  );
-
   const isDisabled = computed(
-    () => usedReactions.value.length >= MAX_REACTIONS,
+    () =>
+      props.answer.reactions
+        .filter((reaction) => reaction.author.uuid === userStore.uuid)
+        .map((reaction) => reaction.emoji as ReactionEmoji).length >=
+      MAX_REACTIONS,
   );
 
   const togglePalette = () => (isPaletteOpen.value = !isPaletteOpen.value);
@@ -90,7 +90,6 @@
       </button>
       <div></div>
       <VReactions
-        :usedReactions="usedReactions"
         :answer-id="answer.slug"
         :reactions="answer.reactions"
         :palette="isPaletteOpen"
