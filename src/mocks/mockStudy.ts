@@ -1,22 +1,20 @@
-// #FIXME Split into separate modules
+import type { Study } from '@/types/studies';
 import { faker } from '@faker-js/faker';
 
-const generateStudy = () => {
+export const mockStudy = (payload: Partial<Study> = {}): Study => {
   return {
+    cover: faker.image.url(),
     id: faker.number.int(),
-    slug: faker.datatype.string(),
+    slug: faker.string.sample(),
     name: faker.finance.accountName(),
     homePageSlug: faker.string.uuid(),
+    ...payload,
   };
 };
 
-const staticStudy = {
+export const STATIC_STUDY = {
   id: 32,
   slug: 'popug-4-vip',
   name: 'Асинхронная архитектура (всё включено)',
   homePageSlug: '23fe5823cd0c44e5a56fc7aa2e2439a4',
-};
-
-export const getStudiesData = (n = 1, isStatic = false) => {
-  return [...Array(n)].map(() => (isStatic ? staticStudy : generateStudy()));
 };
