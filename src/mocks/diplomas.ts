@@ -1,68 +1,57 @@
-// #FIXME Split into separate modules
-
 import { faker } from '@faker-js/faker';
-import responseCaseMiddleware from '@/axios/responseCaseMiddleware';
 import type { Diploma } from '@/types/diplomas';
-import merge from 'lodash/merge';
+import { DiplomaLocale, mockLocale } from './mockLocale';
+import { mockAuthor, STATIC_AUTHOR_1 } from './mockAuthor';
 
-type locale = 'RU' | 'EN';
-
-const locales: locale[] = ['RU', 'EN'];
-
-const getLocale = () => {
-  return locales[faker.number.int({ min: 0, max: locales.length - 1 })];
-};
-
-export const getDiplomaData = () => {
-  return responseCaseMiddleware({
+export const mockDiplomaData = (): Diploma => {
+  return {
     course: {
       name: faker.commerce.productName(),
     },
     slug: faker.string.uuid(),
-    language: getLocale(),
+    language: mockLocale(),
     image: '/diploma-mock.jpg',
-    student: {
-      uuid: faker.string.uuid(),
-      first_name: faker.person.firstName(),
-      last_name: faker.person.lastName(),
-    },
+    student: mockAuthor(),
     url: faker.internet.url(),
-  }) as Diploma;
+  };
 };
 
-const getDiplomaSet = (courseName: string, diploma: Diploma) => {
-  const diplomas: Diploma[] = [];
-
-  locales.forEach((locale) => {
-    diplomas.push(
-      merge(
-        {},
-        diploma,
-        { language: locale },
-        { course: { name: courseName } },
-      ),
-    );
+export const mockDiplomaSet = (payload: Diploma): Diploma[] => {
+  return Object.values(DiplomaLocale).map((locale) => {
+    return {
+      ...payload,
+      language: locale,
+      course: { name: payload.course.name },
+    };
   });
-
-  return diplomas;
 };
 
-export const getDiplomasData = (
-  courses: string[] = [faker.commerce.productName()],
-) => {
-  const diplomas: Diploma[] = [];
-
-  courses.forEach((courseName) => {
-    getDiplomaSet(courseName, getDiplomaData()).forEach((diploma) => {
-      diplomas.push(diploma);
-    });
-  });
-
-  return diplomas;
+export const STATIC_DIPLOMA_1: Diploma = {
+  ...mockDiplomaData(),
+  course: {
+    name: 'Amazing Course',
+  },
+  student: STATIC_AUTHOR_1,
 };
 
-export const diplomasData: Diploma[] = getDiplomasData([
-  'Cool course',
-  'Amazing course',
-  'Pro course',
-]);
+export const STATIC_DIPLOMA_2: Diploma = {
+  ...mockDiplomaData(),
+  course: {
+    name: 'Cool Course',
+  },
+  student: STATIC_AUTHOR_1,
+};
+
+export const STATIC_DIPLOMA_3: Diploma = {
+  ...mockDiplomaData(),
+  course: {
+    name: 'Pro Course',
+  },
+  student: STATIC_AUTHOR_1,
+};
+
+export const STATIC_DIPLOMAS = [
+  STATIC_DIPLOMA_1,
+  STATIC_DIPLOMA_2,
+  STATIC_DIPLOMA_3,
+];

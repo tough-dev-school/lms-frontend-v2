@@ -1,8 +1,4 @@
-interface Student {
-  uuid: string;
-  first_name: string;
-  last_name: string;
-}
+import type { Author } from './homework';
 
 interface Course {
   name: string;
@@ -13,6 +9,6 @@ export interface Diploma {
   slug: string;
   language: 'RU' | 'EN';
   image: string;
-  student: Student;
+  student: Author;
   url: string;
 }
