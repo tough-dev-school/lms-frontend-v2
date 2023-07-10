@@ -1,3 +1,9 @@
+<script lang="ts">
+  export interface VAnswerProps {
+    answer: Answer;
+  }
+</script>
+
 <script lang="ts" setup>
   import { VAvatar } from '@/components/VAvatar';
   import { relativeDate } from '@/utils/date';
@@ -7,16 +13,11 @@
   import { VHtmlContent } from '@/components/VHtmlContent';
   import { computed, ref } from 'vue';
   import useUser from '@/stores/user';
-  import { VReactions, getUsedReactions } from '@/components/VReactions';
+  import { VReactions } from '@/components/VReactions';
   import type { ReactionEmoji } from '@/types/homework';
   import useHomework from '@/stores/homework';
   import { MoodHappyIcon } from 'vue-tabler-icons';
-  import { MAX_REACTIONS } from '@/components/VReactions/components/VReactionsPalette';
-
-  export interface Props {
-    answer: Answer;
-    showReactions?: boolean;
-  }
+  import { MAX_REACTIONS } from '@/components/VReactions';
 
   const emit = defineEmits<{
     update: [];
@@ -24,7 +25,7 @@
 
   const homeworkStore = useHomework();
   const userStore = useUser();
-  const props = withDefaults(defineProps<Props>(), { showReactions: true });
+  const props = defineProps<VAnswerProps>();
 
   const isOwn = computed(() => {
     return props.answer.author.uuid === userStore.uuid;
@@ -42,12 +43,12 @@
     emit('update');
   };
 
-  const usedReactions = computed(() =>
-    getUsedReactions(props.answer.reactions, userStore.uuid),
-  );
-
   const isDisabled = computed(
-    () => usedReactions.value.length >= MAX_REACTIONS,
+    () =>
+      props.answer.reactions
+        .filter((reaction) => reaction.author.uuid === userStore.uuid)
+        .map((reaction) => reaction.emoji as ReactionEmoji).length >=
+      MAX_REACTIONS,
   );
 
   const togglePalette = () => (isPaletteOpen.value = !isPaletteOpen.value);
@@ -76,24 +77,23 @@
       <slot name="header"></slot>
     </div>
     <VHtmlContent :content="answer.text" data-testid="content" />
-    <div class="flex justify-between items-start gap-16 pt-16">
+    <div
+      class="flex justify-start flex-wrap items-start gap-x-8 gap-y-16 pt-16">
+      <slot name="footer" />
       <button
         class="answer-action box-content flex items-center justify-center text-[1.5rem]"
         @click="togglePalette"
         :disabled="isDisabled"
+        v-if="!isOwn"
         data-testid="open">
         <MoodHappyIcon />
       </button>
-      <div class="flex-grow -ml-16"></div>
-      <slot name="footer" />
-    </div>
-    <div class="gap-16 mt-16 flex items-start flex-wrap empty:hidden">
+      <div></div>
       <VReactions
-        v-if="showReactions"
-        :usedReactions="usedReactions"
         :answer-id="answer.slug"
         :reactions="answer.reactions"
-        :palette="isPaletteOpen"
+        :open="isPaletteOpen"
+        :disabled="isOwn"
         @close="closePalette"
         @add="addReaction"
         @remove="removeReaction" />

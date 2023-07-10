@@ -1,14 +1,23 @@
+<script lang="ts">
+  export interface VReactionsProps {
+    answerId: string;
+    reactions: Reaction[];
+    open?: boolean;
+    disabled?: boolean;
+  }
+</script>
+
 <script lang="ts" setup>
   import { computed } from 'vue';
   import { VReaction } from './components/VReaction';
   import type { Reaction, ReactionEmoji } from '@/types/homework';
   import { groupBy } from 'lodash';
   import useUser from '@/stores/user';
-  import type { VReactionsProps } from '.';
-  import { VReactionsPalette } from './components/VReactionsPalette';
+  import { ALLOWED_REACTIONS } from '.';
 
   const props = withDefaults(defineProps<VReactionsProps>(), {
-    palette: false,
+    open: false,
+    disabled: false,
   });
 
   const emit = defineEmits<{
@@ -24,30 +33,33 @@
     >;
   });
 
-  const handlePaletteClick = (emoji: ReactionEmoji) => {
-    emit('add', emoji);
-    emit('close');
-  };
+  const sortReactions = (reactions: ReactionEmoji[]) =>
+    reactions.sort(
+      (a, b) => ALLOWED_REACTIONS.indexOf(a) - ALLOWED_REACTIONS.indexOf(b),
+    ) as ReactionEmoji[];
+
+  const emojiSet = computed(() =>
+    sortReactions(
+      !props.disabled && props.open
+        ? ALLOWED_REACTIONS
+        : (Object.keys(groupedReactions.value) as ReactionEmoji[]),
+    ),
+  );
 
   const userStore = useUser();
 </script>
 
 <template>
-  <VReactionsPalette
-    v-if="palette"
-    @close="emit('close')"
-    @click="handlePaletteClick"
-    :usedReactions="usedReactions"
-    data-testid="palette" />
   <TransitionGroup name="reaction">
     <VReaction
-      v-for="(reactions, emoji) in groupedReactions"
+      v-for="emoji in emojiSet"
+      :key="emoji"
+      :disabled="disabled"
       :emoji="emoji"
       :userId="userStore.uuid"
+      :reactions="groupedReactions[emoji]"
       @add="(emoji) => emit('add', emoji)"
       @remove="(reactionId) => emit('remove', reactionId)"
-      :reactions="reactions"
-      :key="emoji"
       data-testid="reaction" />
   </TransitionGroup>
 </template>

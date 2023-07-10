@@ -1,3 +1,5 @@
+// #FIXME Split into separate modules
+
 import { faker } from '@faker-js/faker';
 import type { Diploma } from '@/types/diplomas';
 import { DiplomaLocale, mockLocale } from './mockLocale';

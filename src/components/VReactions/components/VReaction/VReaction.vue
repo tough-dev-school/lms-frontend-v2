@@ -1,11 +1,22 @@
+<script lang="ts">
+  import type { Reaction, ReactionEmoji } from '@/types/homework';
+
+  export interface VReactionProps {
+    userId: string;
+    emoji: ReactionEmoji;
+    reactions?: Reaction[];
+    disabled: boolean;
+  }
+</script>
+
 <script lang="ts" setup>
   import { VAvatar } from '@/components/VAvatar';
-  import type { ReactionEmoji } from '@/types/homework';
   import { computed } from 'vue';
   import getName from '@/utils/getName';
-  import type { VReactionProps } from '.';
 
-  const props = defineProps<VReactionProps>();
+  const props = withDefaults(defineProps<VReactionProps>(), {
+    reactions: () => [],
+  });
 
   const emit = defineEmits<{
     add: [reaction: ReactionEmoji];
@@ -19,6 +30,7 @@
   });
 
   const handleClick = () => {
+    if (props.disabled) return;
     if (ownReaction.value) {
       emit('remove', ownReaction.value.slug);
     } else {
@@ -40,14 +52,16 @@
 <template>
   <div
     @click="handleClick"
-    class="answer-action flex-row inline-flex items-center gap-16 pl-8 pr-4 text-[1.25rem]"
+    class="answer-action-base flex-row inline-flex items-center gap-16 pl-8 pr-4 text-[1.25rem] min-w-[64px]"
     :class="{
+      'answer-action-hover': !disabled,
+      'cursor-not-allowed': disabled,
       '!border !border-gray': ownReaction,
     }">
     <div class="flex h-24 w-24 items-center justify-center" data-testid="emoji">
       {{ emoji }}
     </div>
-    <div class="flex items-center pr-16">
+    <div class="flex items-center pr-16" v-if="reactions.length > 0">
       <abbr
         class="relative -mr-[12px] transition-all hover:z-50 hover:scale-125"
         v-for="author in orderedAuthors"

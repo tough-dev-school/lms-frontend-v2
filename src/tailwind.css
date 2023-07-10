@@ -63,9 +63,18 @@
     @apply overflow-hidden rounded-8 bg-white shadow dark:bg-dark-gray;
   }
 
-  .answer-action {
+  .answer-action,
+  .answer-action-base {
     @apply rounded-8 text-dark-gray text-sub flex flex-col justify-center items-center px-16 py-4 box-content border border-offwhite cursor-pointer bg-offwhite transition-colors;
+  }
+
+  .answer-action,
+  .answer-action-hover {
     @apply hover:bg-lightgray hover:border-lightgray;
+  }
+
+  .answer-action,
+  .answer-action-disabled {
     @apply disabled:hover:bg-offwhite disabled:hover:border-offwhite disabled:opacity-50 disabled:cursor-not-allowed;
   }
 }

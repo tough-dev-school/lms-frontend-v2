@@ -16,11 +16,36 @@ const Template: StoryFn = (args) => ({
   },
   argTypes: {
     reactions: { control: 'object' },
+    open: { control: 'boolean' },
+    disabled: { control: 'boolean' },
   },
-  template: '<VCard><VReactions v-bind="args" /></VCard>',
+  template:
+    '<VCard class="flex justify-start flex-wrap items-start gap-x-8 gap-y-16 pt-16"><VReactions v-bind="args" /></VCard>',
 });
 
 export const Default = {
   render: Template,
-  args: { reactions: faker.helpers.multiple(mockReaction, { count: 15 }) },
+  args: {
+    reactions: faker.helpers.multiple(mockReaction, { count: 15 }),
+    open: false,
+    disabled: false,
+  },
+};
+
+export const Open = {
+  render: Template,
+  args: {
+    reactions: faker.helpers.multiple(mockReaction, { count: 15 }),
+    open: true,
+    disabled: false,
+  },
+};
+
+export const Disabled = {
+  render: Template,
+  args: {
+    reactions: faker.helpers.multiple(mockReaction, { count: 15 }),
+    open: true,
+    disabled: true,
+  },
 };

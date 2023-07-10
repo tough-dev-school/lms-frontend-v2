@@ -2,34 +2,32 @@ import { describe, expect, test, beforeEach } from 'vitest';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
 import { VReaction, type VReactionProps } from '.';
-import { ALLOWED_REACTIONS } from '../VReactionsPalette';
+import { ALLOWED_REACTIONS } from '@/components/VReactions';
+import { mockReactionsData } from '../../mocks/mockReactionsData';
 import getName from '@/utils/getName';
 import type { VAvatar } from '@/components/VAvatar';
-import { mockReaction } from '@/mocks/mockReaction';
 
 const emoji = faker.helpers.arrayElement(ALLOWED_REACTIONS);
-const userId = faker.string.uuid();
+const userId = faker.datatype.uuid();
 
-const defaultProps: VReactionProps = {
+const defaultProps = {
   emoji,
-  reactions: faker.helpers
-    .multiple(mockReaction, { count: { min: 1, max: 5 } })
-    .map((reaction) => {
-      reaction.emoji = emoji;
-      return reaction;
-    }),
+  reactions: mockReactionsData().map((reaction) => {
+    reaction.emoji = emoji;
+    return reaction;
+  }),
+  disabled: false,
   userId,
 };
 
-const mountComponent = (props: VReactionProps) => {
+const mountComponent = (props: Partial<VReactionProps> = {}) => {
   return mount(VReaction, {
     shallow: true,
-    props,
+    props: { ...defaultProps, ...props },
   });
 };
 
-const withOwnProps: VReactionProps = {
-  ...defaultProps,
+const withOwnProps = {
   reactions: defaultProps.reactions.map((reaction, index) =>
     index === 0
       ? { ...reaction, author: { ...reaction.author, uuid: userId } }
@@ -70,6 +68,15 @@ describe('VReaction', () => {
     wrapper.trigger('click');
 
     expect(wrapper.emitted('remove')).toStrictEqual([[targetSlug]]);
+  });
+
+  test('dont emit anything if disabled', () => {
+    wrapper = mountComponent({ ...defaultProps, disabled: true });
+
+    wrapper.trigger('click');
+
+    expect(wrapper.emitted('add')).toBe(undefined);
+    expect(wrapper.emitted('remove')).toBe(undefined);
   });
 
   test('displays correct number of avatars', () => {
