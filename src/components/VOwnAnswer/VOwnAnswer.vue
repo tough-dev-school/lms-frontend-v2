@@ -58,7 +58,7 @@
 
 <template>
   <div v-if="!editMode">
-    <VAnswer :answer="answer as Answer">
+    <VAnswer @update="emit('update')" :answer="answer as Answer">
       <template #header>
         <VAnswerActions
           :created="answer.created"

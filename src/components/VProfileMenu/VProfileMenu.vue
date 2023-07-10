@@ -21,7 +21,7 @@
   const user = useUser();
   const auth = useAuth();
   const studies = useStudies();
-  const { firstName, lastName, username, name } = storeToRefs(user);
+  const { username, name, uuid: userId } = storeToRefs(user);
 
   onClickOutside(menu, () => (isOpen.value = false));
 
@@ -103,11 +103,7 @@
       :class="{ VProfileMenu__Button_Active: isOpen }"
       @click="isOpen = !isOpen"
       data-testid="button">
-      <VAvatar
-        :first-name="firstName"
-        :last-name="lastName"
-        class="mr-8"
-        data-testid="avatar" />
+      <VAvatar :user-id="userId" class="mr-8" data-testid="avatar" />
       <ul class="text-sub">
         <li class="leading-tight" data-testid="name">{{ name }}</li>
         <li class="leading-tight text-gray" data-testid="username">

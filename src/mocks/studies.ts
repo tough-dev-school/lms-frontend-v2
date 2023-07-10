@@ -1,3 +1,4 @@
+// #FIXME Split into separate modules
 import { faker } from '@faker-js/faker';
 
 const generateStudy = () => {

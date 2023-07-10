@@ -1,5 +1,6 @@
 // @ts-nocheck
 // #FIXME Remove ts-nocheck
+// #FIXME Split into separate modules
 import type { BlockMap } from 'vue3-notion/src/lib/types';
 
 export const getMaterialsData = (): BlockMap => {

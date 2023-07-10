@@ -7,8 +7,10 @@ import {
   sendImage,
   getAnswers,
   getAnswer,
+  addReaction,
+  removeReaction,
 } from '@/api/homework';
-import type { Answer, Question, Thread } from '@/types/homework';
+import type { Answer, Question, ReactionEmoji, Thread } from '@/types/homework';
 import useToasts from '@/stores/toasts';
 import getThreads from '@/utils/getThreads';
 
@@ -95,6 +97,12 @@ const useHomework = defineStore('homework', {
     },
     async sendImage(file: File) {
       return await sendImage(file);
+    },
+    async addReaction(answerId: string, reaction: ReactionEmoji) {
+      return await addReaction(answerId, reaction);
+    },
+    async removeReaction(answerId: string, reactionId: string) {
+      return await removeReaction(answerId, reactionId);
     },
   },
 });
