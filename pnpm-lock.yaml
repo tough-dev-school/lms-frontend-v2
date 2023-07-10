@@ -85,8 +85,8 @@ devDependencies:
     specifier: ^7.19.1
     version: 7.19.1
   '@faker-js/faker':
-    specifier: ^7.5.0
-    version: 7.5.0
+    specifier: ^8.0.2
+    version: 8.0.2
   '@pinia/testing':
     specifier: ^0.0.14
     version: 0.0.14(pinia@2.0.21)(vue@3.3.4)
@@ -3019,9 +3019,9 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@faker-js/faker@7.5.0:
-    resolution: {integrity: sha512-8wNUCCUHvfvI0gQpDUho/3gPzABffnCn5um65F8dzQ86zz6dlt4+nmAA7PQUc8L+eH+9RgR/qzy5N/8kN0Ozdw==}
-    engines: {node: '>=14.0.0', npm: '>=6.0.0'}
+  /@faker-js/faker@8.0.2:
+    resolution: {integrity: sha512-Uo3pGspElQW91PCvKSIAXoEgAUlRnH29sX2/p89kg7sP1m2PzCufHINd0FhTXQf6DYGiUlVncdSPa2F9wxed2A==}
+    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
     dev: true
 
   /@fal-works/esbuild-plugin-global-externals@2.1.2:
