@@ -34,7 +34,7 @@ describe('VTextInput', () => {
   };
 
   test('label can be set by prop', () => {
-    const label = faker.finance.accountName();
+    const label = faker.finance.accountNumberName();
     wrapper = mount(VTextInput, {
       shallow: true,
       props: { ...defaultProps, label },
@@ -44,7 +44,7 @@ describe('VTextInput', () => {
   });
 
   test('label can be set by slot', () => {
-    const label = faker.finance.accountName();
+    const label = faker.finance.accountNumberName();
     wrapper = mount(VTextInput, {
       shallow: true,
       slots: { label },

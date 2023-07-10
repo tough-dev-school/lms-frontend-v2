@@ -90,7 +90,7 @@ describe('VNewAnswer', () => {
   });
 
   test('disallow sending of empty paragraphs', async () => {
-    const tagName = faker.random.word();
+    const tagName = faker.lorem.word();
 
     await getEditorWrapper().vm.$emit(
       'update:modelValue',

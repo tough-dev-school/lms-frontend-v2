@@ -5,14 +5,14 @@ import { ReactionEmoji, type Reaction } from '@/types/homework';
 import { mockAuthorData } from '@/mocks/mockAuthorData';
 
 export const mockReactionData = (): Reaction => ({
-  slug: faker.datatype.uuid(),
-  answer: faker.datatype.uuid(),
+  slug: faker.string.uuid(),
+  answer: faker.string.uuid(),
   emoji: faker.helpers.arrayElement(ALLOWED_REACTIONS),
   author: mockAuthorData(),
 });
 
 export const mockReactionsData = (n: number = 10): Reaction[] => {
-  return times(faker.datatype.number({ min: 1, max: n }), mockReactionData);
+  return times(faker.number.int({ min: 1, max: n }), mockReactionData);
 };
 
 export const staticReactionsData = [

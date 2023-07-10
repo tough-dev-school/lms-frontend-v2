@@ -11,12 +11,12 @@ import { uniq } from 'lodash';
 
 const defaultProps: VReactionsProps = {
   reactions: mockReactionsData(),
-  answerId: faker.datatype.uuid(),
+  answerId: faker.string.uuid(),
   open: false,
   disabled: false,
 };
 
-const userId = faker.datatype.uuid();
+const userId = faker.string.uuid();
 
 const mountComponent = (props: Partial<VReactionsProps> = {}) => {
   return mount(VReactions, {

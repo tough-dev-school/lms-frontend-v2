@@ -5,7 +5,7 @@ import { mockReactionsData } from '@/components/VReactions/mocks/mockReactionsDa
 import { faker } from '@faker-js/faker';
 import { ALLOWED_REACTIONS } from '@/components/VReactions';
 
-const userId = faker.datatype.uuid();
+const userId = faker.string.uuid();
 
 export default {
   title: 'Reactions/VReaction',

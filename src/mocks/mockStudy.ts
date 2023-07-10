@@ -6,7 +6,7 @@ export const mockStudy = (payload: Partial<Study> = {}): Study => {
     cover: faker.image.url(),
     id: faker.number.int(),
     slug: faker.string.sample(),
-    name: faker.finance.accountName(),
+    name: faker.finance.accountNumberName(),
     homePageSlug: faker.string.uuid(),
     ...payload,
   };
