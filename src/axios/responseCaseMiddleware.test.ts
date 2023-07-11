@@ -4,7 +4,7 @@ import camelcaseKeys from 'camelcase-keys';
 import {
   STATIC_CAMEL_CASE_EXAMPLE,
   STATIC_SNAKE_CASE_EXAMPLE,
-} from '@/mocks/case';
+} from '@/mocks/mockCase';
 
 vi.mock('camelcase-keys');
 

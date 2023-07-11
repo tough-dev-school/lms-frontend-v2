@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
 import { VCertificate } from '@/components/VCertificate';
-import { getDiplomaData } from '@/mocks/diplomas';
+import { mockDiplomaData } from '@/mocks/mockDiploma';
 
 export default {
   title: 'UI/VCertificate',
@@ -19,7 +19,7 @@ export const En = {
   render: Template,
 
   args: {
-    certificate: { ...getDiplomaData(), language: 'EN' },
+    certificate: { ...mockDiplomaData(), language: 'EN' },
   },
 };
 
@@ -27,6 +27,6 @@ export const Ru = {
   render: Template,
 
   args: {
-    certificate: { ...getDiplomaData(), language: 'RU' },
+    certificate: { ...mockDiplomaData(), language: 'RU' },
   },
 };

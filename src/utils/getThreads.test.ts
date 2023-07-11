@@ -7,6 +7,7 @@ import { flushPromises } from '@vue/test-utils';
 import { mockAnswer } from '@/mocks/mockAnswer';
 import { mockThread } from '@/mocks/mockThread';
 import { mockComments } from '@/mocks/mockComments';
+import { mockComment } from '@/mocks/mockComment';
 
 const answers = faker.helpers.multiple(mockAnswer, {
   count: { min: 3, max: 10 },
@@ -47,7 +48,9 @@ describe('getThreads', () => {
   });
 
   test('return threads', async () => {
-    const comments = mockComments(mockThread()).descendants;
+    const comments = mockComments([
+      mockComment(mockThread(mockAnswer())),
+    ]).descendants;
     (getCommentsBySlug as ReturnType<typeof vi.fn>).mockReturnValue(comments);
 
     expect(await getThreads(answers)).toHaveLength(answers.length);

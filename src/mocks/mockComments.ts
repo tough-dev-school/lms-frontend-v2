@@ -1,10 +1,10 @@
 import type { Comments, Comment, Thread } from '@/types/homework';
 
-export const mockComments = (
-  payload: Partial<Thread | Comment> & Pick<Thread | Comment, 'slug'>,
-): Comments => {
+export const mockComments = (payload: Comment[]): Comments => {
+  const slug = payload[0].parent;
+
   return {
-    descendants: [],
-    ...payload,
+    descendants: [...payload],
+    slug,
   };
 };

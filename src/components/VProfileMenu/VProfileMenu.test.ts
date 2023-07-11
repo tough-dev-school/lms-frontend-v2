@@ -8,7 +8,7 @@ import { faker } from '@faker-js/faker';
 import { vi } from 'vitest';
 import { createTestingPinia } from '@pinia/testing';
 import useStudies from '@/stores/studies';
-import { getStudiesData } from '@/mocks/studies';
+import { mockStudy } from '@/mocks/mockStudy';
 
 const routerPushMock = vi.fn();
 
@@ -51,7 +51,7 @@ describe('VProfileMenu', () => {
 
     studies = useStudies();
     studies.$patch({
-      items: getStudiesData(3),
+      items: faker.helpers.multiple(mockStudy, { count: 3 }),
     });
 
     auth = useAuth();
@@ -209,7 +209,7 @@ describe('VProfileMenu', () => {
     const NUMBER_OF_MATERIALS = 2;
 
     studies.$patch({
-      items: getStudiesData(NUMBER_OF_MATERIALS),
+      items: faker.helpers.multiple(mockStudy, { count: NUMBER_OF_MATERIALS }),
     });
 
     await getButtonWrapper().trigger('click');
@@ -219,7 +219,9 @@ describe('VProfileMenu', () => {
   });
 
   test('Has max of 3 materials', async () => {
-    studies.$patch({ items: getStudiesData(10) });
+    studies.$patch({
+      items: faker.helpers.multiple(mockStudy, { count: 10 }),
+    });
 
     await getButtonWrapper().trigger('click');
     const materials = getMaterialsWrapper();

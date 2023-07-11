@@ -2,8 +2,8 @@ import { describe, test, beforeEach, expect, vi } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
 import useMaterials from './materials';
 import { getMaterial } from '@/api/materials';
-import { getMaterialsData } from '@/mocks/materials';
 import { faker } from '@faker-js/faker';
+import { mockMaterial } from '@/mocks/mockMaterial';
 
 vi.mock('@/api/materials', () => {
   return {
@@ -30,7 +30,7 @@ describe('materials store', () => {
   });
 
   test('getData sets material', async () => {
-    const materialsData = getMaterialsData();
+    const materialsData = mockMaterial();
     (getMaterial as ReturnType<typeof vi.fn>).mockResolvedValue(materialsData);
 
     await materials.getData(faker.string.uuid());

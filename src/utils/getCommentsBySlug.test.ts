@@ -5,6 +5,7 @@ import shuffle from 'lodash/shuffle';
 import { mockThread } from '@/mocks/mockThread';
 import { mockAnswer } from '@/mocks/mockAnswer';
 import { mockComments } from '@/mocks/mockComments';
+import { mockComment } from '@/mocks/mockComment';
 
 describe('getCommentsBySlug', () => {
   test('getCommentsBySlug returns array if nothing found', () => {
@@ -14,15 +15,22 @@ describe('getCommentsBySlug', () => {
   test('getCommentsBySlug returns array of comments', () => {
     const targetSlug = faker.string.uuid();
     const n = 10;
-
-    const parent = { ...mockThread(mockAnswer()), slug: targetSlug };
-
-    const needed = mockComments(parent);
-    const notNeeded = faker.helpers.multiple(() => mockComments(mockThread()), {
-      count: 10,
-    });
-
-    const commentsData = shuffle([needed, ...notNeeded]);
+    const generateData = (slug: string) =>
+      mockComments(
+        faker.helpers.multiple(
+          () => ({
+            ...mockComment({ ...mockThread(mockAnswer()), parent: slug }),
+            slug,
+          }),
+          { count: 10 },
+        ),
+      );
+    const needed = generateData(targetSlug);
+    const notNeeded = faker.helpers.multiple(
+      () => generateData(faker.string.uuid()),
+      { count: 10 },
+    );
+    const commentsData = shuffle([...notNeeded, needed]);
 
     expect(
       getCommentsBySlug(commentsData, targetSlug).every(

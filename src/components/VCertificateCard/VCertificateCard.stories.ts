@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
 import { VCertificateCard } from '@/components/VCertificateCard';
-import { getDiplomasData } from '@/mocks/diplomas';
+import { getDiplomasData } from '@/mocks/mockDiploma';
 
 export default {
   title: 'UI/VCertificateCard',

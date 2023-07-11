@@ -3,11 +3,11 @@ import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import { VCertificate } from '.';
 import getCertificateLink from '@/utils/getCertificateLink';
-import { getDiplomaData } from '@/mocks/diplomas';
 import merge from 'lodash/merge';
+import { mockDiplomaData } from '@/mocks/mockDiploma';
 
 const defaultProps = {
-  certificate: getDiplomaData(),
+  certificate: mockDiplomaData(),
 };
 
 describe('VCertificate', () => {

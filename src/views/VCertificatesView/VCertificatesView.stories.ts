@@ -2,7 +2,9 @@ import type { Meta, StoryFn } from '@storybook/vue3';
 import { VCertificatesView } from '.';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import useDiplomas from '@/stores/diplomas';
-import { diplomasData } from '@/mocks/diplomas';
+import { mockDiplomaData, mockDiplomaSet } from '@/mocks/mockDiploma';
+import { faker } from '@faker-js/faker';
+import { flatten } from 'lodash';
 
 export default {
   title: 'App/VCertificatesView',
@@ -24,7 +26,11 @@ export const Default = {
     () => ({
       setup() {
         const diplomas = useDiplomas();
-        diplomas.items = diplomasData;
+        diplomas.items = flatten(
+          faker.helpers.multiple(() => mockDiplomaSet(mockDiplomaData()), {
+            count: 5,
+          }),
+        );
       },
       template: '<story />',
     }),

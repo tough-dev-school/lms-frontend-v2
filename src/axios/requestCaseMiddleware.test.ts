@@ -4,7 +4,7 @@ import decamelizeKeys from 'decamelize-keys';
 import {
   STATIC_CAMEL_CASE_EXAMPLE,
   STATIC_SNAKE_CASE_EXAMPLE,
-} from '@/mocks/case';
+} from '@/mocks/mockCase';
 
 const data = STATIC_CAMEL_CASE_EXAMPLE;
 
