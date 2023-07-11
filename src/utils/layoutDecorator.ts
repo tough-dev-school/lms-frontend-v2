@@ -1,5 +1,5 @@
 import { VDefaultLayout } from '@/layouts/VDefaultLayout';
-import { getMaterialsData } from '@/mocks/materials';
+import { mockMaterial } from '@/mocks/mockMaterial';
 import { mockQuestion, STATIC_QUESTION } from '@/mocks/mockQuestion';
 import { mockUserId, USER_1 } from '@/mocks/mockUserId';
 import useHomework from '@/stores/homework';
@@ -35,7 +35,7 @@ const layoutDecorator = (story: any, layout: any) => ({
     });
 
     const materials = useMaterials();
-    materials.$patch({ material: getMaterialsData() });
+    materials.$patch({ material: mockMaterial() });
   },
 });
 
