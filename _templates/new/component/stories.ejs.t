@@ -3,20 +3,22 @@ to: src/<%= folder %>/<%= name %>/<%= name %>.stories.ts
 ---
 
 import type { Meta, StoryObj } from '@storybook/vue3';
-import { <%= name %> } from './<%= name %>.vue';
+import { <%= name %> } from '.';
 
-const meta: Meta<typeof <%= name %>> = {
-  title: 'Base/<%= name %>',
+export default {
+  title: '<%= name %>',
   component: <%= name %>,
-  render: () => ({
-    components: { <%= name %> },
-    template: '<<%= name %> >Hello World</<%= name %>>',
-  }),
-  tags: ['autodocs'],
+} as Meta;
+
+const Template: StoryFn = (args) => ({
+  components: { <%= name %> },
+  setup() {
+    return { args };
+  },
+  template: '<<%= name %> v-bind="args" />',
+});
+
+export const Default = {
+  render: Template,
+  args: {},
 };
-
-export default meta;
-
-type Story = StoryObj<typeof <%= name %>>;
-
-export const Default: Story = {};

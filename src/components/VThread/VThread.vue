@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-  import type { Thread } from '@/types/homework';
   import { VOwnAnswer } from '@/components/VOwnAnswer';
   import { VAnswer } from '@/components/VAnswer';
   import { VNewAnswer } from '@/components/VNewAnswer';
@@ -7,17 +6,8 @@
   import { onClickOutside } from '@vueuse/core';
   import useUser from '@/stores/user';
   import { useRoute, useRouter } from 'vue-router';
-
-  export interface Actions {
-    name: string;
-    handle: (() => void) | null;
-    show: boolean;
-  }
-
-  export interface Props {
-    originalPost: Thread;
-    customActions: Actions[];
-  }
+  import type { VThreadProps, ThreadAction } from '.';
+  import { MessageCircleIcon, MessageCircleOffIcon } from 'vue-tabler-icons';
 
   const route = useRoute();
   const router = useRouter();
@@ -29,11 +19,11 @@
   }>();
   const replyMode = ref(false);
 
-  const props = withDefaults(defineProps<Props>(), {
+  const props = withDefaults(defineProps<VThreadProps>(), {
     customActions: () => [],
   });
 
-  const actions = computed<Actions[]>(() => {
+  const actions = computed<ThreadAction[]>(() => {
     return [
       {
         name: 'Ответить',
@@ -41,6 +31,7 @@
           emit('reply');
           replyMode.value = true;
         },
+        icon: MessageCircleIcon,
         show: replyMode.value === false,
       },
       {
@@ -48,6 +39,7 @@
         handle: () => {
           replyMode.value = false;
         },
+        icon: MessageCircleOffIcon,
         show: replyMode.value === true,
       },
       ...props.customActions,
@@ -109,11 +101,14 @@
         @mounted="scrollToComment">
         <template #footer>
           <button
+            class="answer-action"
             v-for="(action, index) in actions.filter((action) => action.show)"
             :class="{ 'cursor-auto opacity-50': !action.handle }"
             :key="index"
-            @click="action.handle">
-            {{ action.name }}
+            @click="action.handle"
+            :title="action.name"
+            :disabled="action.disabled">
+            <component :is="action.icon" />
           </button>
         </template>
       </component>

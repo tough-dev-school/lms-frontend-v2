@@ -120,8 +120,7 @@ describe('VProfileMenu', () => {
   test.todo('Click outside profile should close menu');
 
   test('VAvatar should have correct props', () => {
-    expect(getAvatarWrapper().props().firstName).toBe(user.firstName);
-    expect(getAvatarWrapper().props().lastName).toBe(user.lastName);
+    expect(getAvatarWrapper().props().userId).toBe(user.uuid);
   });
 
   test('Displays correct name', () => {

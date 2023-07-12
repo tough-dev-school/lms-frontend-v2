@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-
 import { VAvatar } from '@/components/VAvatar';
+import { faker } from '@faker-js/faker';
 
 export default {
   title: 'UI/VAvatar',
@@ -19,7 +19,6 @@ export const Default = {
   render: Template,
 
   args: {
-    firstName: 'John',
-    lastName: 'Doe',
+    userId: faker.datatype.uuid(),
   },
 };
