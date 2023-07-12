@@ -44,10 +44,7 @@ describe('VToastFeed', () => {
   test('VToast delete event calls removeMessage with correct id', async () => {
     const toasts = useToasts();
 
-    ((await getFirstToast()) as VueWrapper).vm.$emit(
-      'delete',
-      toasts.messages[0].id,
-    );
+    (getFirstToast() as VueWrapper).vm.$emit('delete', toasts.messages[0].id);
 
     expect(toasts.removeMessage).toHaveBeenCalledOnce();
     expect(toasts.removeMessage).toHaveBeenCalledWith(toasts.messages[0].id);

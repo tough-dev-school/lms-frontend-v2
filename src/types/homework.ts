@@ -1,7 +1,25 @@
+export enum ReactionEmoji {
+  LIKE = '👍',
+  DISLIKE = '👎',
+  HAPPY = '😄',
+  PARTY = '🎉',
+  SAD = '😕',
+  HEART = '❤️',
+  ROCKET = '🚀',
+  SEEN = '👀',
+}
+
 export interface Author {
   uuid: string;
   firstName: string;
   lastName: string;
+}
+
+export interface Reaction {
+  slug: string;
+  emoji: ReactionEmoji;
+  author: Author;
+  answer: string;
 }
 
 export interface Answer {
@@ -13,6 +31,7 @@ export interface Answer {
   text: string;
   src: string;
   hasDescendants: boolean;
+  reactions: Reaction[];
 }
 
 export interface Thread extends Answer {

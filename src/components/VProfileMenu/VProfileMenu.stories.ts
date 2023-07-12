@@ -16,6 +16,7 @@ const Template: StoryFn = (args) => ({
       username: faker.internet.email(),
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
+      uuid: faker.datatype.uuid(),
     });
     return { args };
   },

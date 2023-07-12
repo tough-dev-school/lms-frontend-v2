@@ -63,10 +63,9 @@ describe('VAnswer', () => {
   };
 
   test('props to display avatar passed to VAvatar', () => {
-    const { firstName, lastName } = defaultProps.answer.author;
+    const { uuid } = defaultProps.answer.author;
 
-    expect(getAvatarWrapper().props().firstName).toBe(firstName);
-    expect(getAvatarWrapper().props().lastName).toBe(lastName);
+    expect(getAvatarWrapper().props().userId).toBe(uuid);
   });
 
   test('answer has author name', () => {

@@ -43,7 +43,9 @@ module.exports = {
       red: { DEFAULT: '#ff5d29' },
       green: { DEFAULT: 'rgb(35, 207, 104)' },
       'dark-black': { DEFAULT: '#1C1B22' },
-      'dark-gray': { DEFAULT: '#2B2A33' },
+      'dark-gray': { DEFAULT: '#4a4a4a' },
+      lightgray: { DEFAULT: '#e3e3e3' },
+      transparent: { DEFAULT: 'transparent' },
     },
     fontSize: {
       sub: '14px',
@@ -53,6 +55,7 @@ module.exports = {
       h3: '1.25rem',
     },
     borderRadius: {
+      4: '4px',
       8: '8px',
       16: '16px',
       DEFAULT: '16px',
