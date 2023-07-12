@@ -16,6 +16,10 @@ const defaultProps = {
   answer: mockAnswer(),
 };
 
+vi.mock('@formkit/auto-animate/vue', () => ({
+  useAutoAnimate: () => [null],
+}));
+
 const defaultMountOptions = {
   props: defaultProps,
   shallow: true,
