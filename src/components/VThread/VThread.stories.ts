@@ -5,12 +5,18 @@ import { faker } from '@faker-js/faker';
 import useUser from '@/stores/user';
 import { mockThread } from '@/mocks/mockThread';
 import { mockComments } from '@/mocks/mockComments';
+import { mockComment } from '@/mocks/mockComment';
+import { mockAnswer } from '@/mocks/mockAnswer';
 
 const originalPost = mockThread();
 originalPost.created = dayjs().toISOString();
-originalPost.descendants = mockComments(originalPost).descendants;
-originalPost.descendants[1].descendants =
-  mockComments(originalPost).descendants;
+originalPost.descendants = mockComments([
+  mockComment(mockThread(mockAnswer())),
+  mockComment(mockThread(mockAnswer())),
+]).descendants;
+originalPost.descendants[1].descendants = mockComments([
+  mockComment(mockThread(mockAnswer())),
+]).descendants;
 
 const userId = faker.string.uuid();
 

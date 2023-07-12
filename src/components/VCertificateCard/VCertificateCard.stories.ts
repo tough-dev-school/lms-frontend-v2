@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
 import { VCertificateCard } from '@/components/VCertificateCard';
-import { getDiplomasData } from '@/mocks/mockDiploma';
+import { mockDiplomaData, mockDiplomaSet } from '@/mocks/mockDiploma';
 
 export default {
   title: 'UI/VCertificateCard',
@@ -15,7 +15,7 @@ const Template: StoryFn = (args) => ({
   template: '<VCertificateCard v-bind="args">This is card</VCertificateCard>',
 });
 
-const diplomas = getDiplomasData(['Cool course']);
+const diplomas = mockDiplomaSet(mockDiplomaData());
 
 export const Default = {
   render: Template,

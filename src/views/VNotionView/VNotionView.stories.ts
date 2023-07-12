@@ -1,8 +1,8 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
 import { VNotionView } from '.';
 import useMaterials from '@/stores/materials';
-import { getMaterialsData } from '@/mocks/materials';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
+import { mockMaterial } from '@/mocks/mockMaterial';
 
 export default {
   title: 'App/VNotionView',
@@ -24,7 +24,7 @@ export const Default = {
     () => ({
       setup() {
         const materials = useMaterials();
-        materials.$patch({ material: getMaterialsData() });
+        materials.$patch({ material: mockMaterial() });
       },
       template: '<story />',
     }),
