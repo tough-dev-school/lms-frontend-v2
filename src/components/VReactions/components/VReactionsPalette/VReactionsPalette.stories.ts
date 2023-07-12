@@ -16,21 +16,12 @@ const Template: StoryFn = (args) => ({
   argTypes: {
     usedReactions: { control: 'object' },
   },
-  template: '<VCard><VReactionsPalette v-bind="args" /></VCard>',
+  template:
+    '<VCard class="flex gap-8"><VReactionsPalette v-bind="args" /></VCard>',
 });
 
 export const Default = {
   render: Template,
-};
-
-export const Disabled = {
-  render: Template,
-  args: {
-    usedReactions: faker.helpers.arrayElements(
-      ALLOWED_REACTIONS,
-      MAX_REACTIONS,
-    ),
-  },
 };
 
 export const Exclude = {
