@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { getMaterial } from '@/api/materials';
-import type { BlockMap } from 'vue-notion/src/lib/types';
+import type { BlockMap } from '@/types/materials';
 
 interface State {
   material?: BlockMap;
