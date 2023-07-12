@@ -7,7 +7,7 @@ import { createApp } from 'vue';
 import { createTestingPinia } from '@pinia/testing';
 import { setActivePinia } from 'pinia';
 
-const userId = faker.datatype.uuid();
+const userId = faker.string.uuid();
 
 const to: Partial<RouteLocationNormalized> = {
   params: {

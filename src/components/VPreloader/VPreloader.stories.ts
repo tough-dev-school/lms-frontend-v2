@@ -16,5 +16,4 @@ const Template: StoryFn = (args) => ({
 
 export const Default = {
   render: Template,
-  args: { message: 'This is a toast!' },
 };

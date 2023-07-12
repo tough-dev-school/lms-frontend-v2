@@ -1,17 +1,24 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
 import { VThread } from '@/components/VThread';
-import { getCommentsData, getThreadData } from '@/mocks/homework';
 import dayjs from 'dayjs';
 import { faker } from '@faker-js/faker';
 import useUser from '@/stores/user';
+import { mockThread } from '@/mocks/mockThread';
+import { mockComments } from '@/mocks/mockComments';
+import { mockComment } from '@/mocks/mockComment';
+import { mockAnswer } from '@/mocks/mockAnswer';
 
-const originalPost = getThreadData();
+const originalPost = mockThread();
 originalPost.created = dayjs().toISOString();
-originalPost.descendants = getCommentsData(originalPost, 3).descendants;
-originalPost.descendants[1].descendants =
-  getCommentsData(originalPost).descendants;
+originalPost.descendants = mockComments([
+  mockComment(mockThread(mockAnswer())),
+  mockComment(mockThread(mockAnswer())),
+]).descendants;
+originalPost.descendants[1].descendants = mockComments([
+  mockComment(mockThread(mockAnswer())),
+]).descendants;
 
-const userId = faker.datatype.uuid();
+const userId = faker.string.uuid();
 
 export default {
   title: 'Answer/VThread',

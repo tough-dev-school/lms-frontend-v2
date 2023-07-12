@@ -1,8 +1,9 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
 import { VHomeView } from '.';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
-import { getStudiesData } from '@/mocks/studies';
 import useStudies from '@/stores/studies';
+import { faker } from '@faker-js/faker';
+import { mockStudy, STATIC_STUDY } from '@/mocks/mockStudy';
 
 export default {
   title: 'App/VHomeView',
@@ -24,7 +25,9 @@ export const Default = {
     () => ({
       setup() {
         const studies = useStudies();
-        studies.$patch({ items: getStudiesData(5, true) });
+        studies.$patch({
+          items: [STATIC_STUDY],
+        });
       },
       template: '<story />',
     }),

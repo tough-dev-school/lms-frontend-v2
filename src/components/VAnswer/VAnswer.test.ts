@@ -3,17 +3,17 @@ import { createTestingPinia } from '@pinia/testing';
 import { VueWrapper, mount, RouterLinkStub } from '@vue/test-utils';
 import { VAnswer } from '@/components/VAnswer';
 import getName from '@/utils/getName';
-import { getAnswerData } from '@/mocks/homework';
 import type { VAvatar } from '@/components/VAvatar';
 import type { VHtmlContent } from '@/components/VHtmlContent';
 import dayjs from 'dayjs';
 import cloneDeep from 'lodash/cloneDeep';
 import { faker } from '@faker-js/faker';
+import { mockAnswer } from '@/mocks/mockAnswer';
 
-const uuid = faker.datatype.uuid();
+const uuid = faker.string.uuid();
 
 const defaultProps = {
-  answer: getAnswerData(),
+  answer: mockAnswer(),
 };
 
 vi.mock('@formkit/auto-animate/vue', () => ({

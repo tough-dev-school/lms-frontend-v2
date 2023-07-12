@@ -75,7 +75,7 @@ describe('VAnswerActions', () => {
   });
 
   test('disable delete if no time left', async () => {
-    const delay = Number(faker.random.numeric());
+    const delay = Number(faker.string.numeric());
 
     wrapper.setProps({
       deleteTime: delay,
@@ -89,7 +89,7 @@ describe('VAnswerActions', () => {
   });
 
   test('disable edit if no time left', async () => {
-    const delay = Number(faker.random.numeric());
+    const delay = Number(faker.string.numeric());
 
     wrapper.setProps({
       editTime: delay,

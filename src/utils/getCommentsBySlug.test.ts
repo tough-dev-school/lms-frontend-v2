@@ -2,29 +2,35 @@ import { describe, expect, test } from 'vitest';
 import getCommentsBySlug from './getCommentsBySlug';
 import { faker } from '@faker-js/faker';
 import shuffle from 'lodash/shuffle';
-import {
-  getAnswerData,
-  getCommentsData,
-  getThreadData,
-} from '@/mocks/homework';
+import { mockThread } from '@/mocks/mockThread';
+import { mockAnswer } from '@/mocks/mockAnswer';
+import { mockComments } from '@/mocks/mockComments';
+import { mockComment } from '@/mocks/mockComment';
 
 describe('getCommentsBySlug', () => {
   test('getCommentsBySlug returns array if nothing found', () => {
-    expect(getCommentsBySlug([], faker.datatype.uuid())).toStrictEqual([]);
+    expect(getCommentsBySlug([], faker.string.uuid())).toStrictEqual([]);
   });
 
   test('getCommentsBySlug returns array of comments', () => {
-    const targetSlug = faker.datatype.uuid();
+    const targetSlug = faker.string.uuid();
     const n = 10;
-
-    const parent = { ...getThreadData(getAnswerData()), slug: targetSlug };
-
-    const needed = getCommentsData(parent, n);
-    const notNeeded = [...Array(10)].map(() =>
-      getCommentsData(getThreadData(), 5),
+    const generateData = (slug: string) =>
+      mockComments(
+        faker.helpers.multiple(
+          () => ({
+            ...mockComment({ ...mockThread(mockAnswer()), parent: slug }),
+            slug,
+          }),
+          { count: 10 },
+        ),
+      );
+    const needed = generateData(targetSlug);
+    const notNeeded = faker.helpers.multiple(
+      () => generateData(faker.string.uuid()),
+      { count: 10 },
     );
-
-    const commentsData = shuffle([needed, ...notNeeded]);
+    const commentsData = shuffle([...notNeeded, needed]);
 
     expect(
       getCommentsBySlug(commentsData, targetSlug).every(

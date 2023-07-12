@@ -3,9 +3,9 @@ import responseCaseMiddleware from '@/axios/responseCaseMiddleware';
 import { faker } from '@faker-js/faker';
 
 export const mockAuthorData = ({
-  uuid = faker.datatype.uuid(),
-  firstName = faker.name.firstName(),
-  lastName = faker.name.lastName(),
+  uuid = faker.string.uuid(),
+  firstName = faker.person.firstName(),
+  lastName = faker.person.lastName(),
 }: Partial<Author> = {}) => {
   return responseCaseMiddleware({
     uuid,

@@ -39,7 +39,7 @@ describe('onRequestFulfilled', () => {
   });
 
   test('auth token added to request headers if exist', () => {
-    authStore.token = faker.datatype.uuid();
+    authStore.token = faker.string.uuid();
 
     const request = onRequestFulfilled(input, true);
 

@@ -1,4 +1,4 @@
-export const camelCase = {
+export const STATIC_CAMEL_CASE_EXAMPLE = {
   basicExample: true,
   arrayExample: [
     { arrayChildExample: 1 },
@@ -10,7 +10,7 @@ export const camelCase = {
   },
 };
 
-export const snakeCase = {
+export const STATIC_SNAKE_CASE_EXAMPLE = {
   basic_example: true,
   array_example: [
     { array_child_example: 1 },

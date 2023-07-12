@@ -8,7 +8,7 @@ import { faker } from '@faker-js/faker';
 import { vi } from 'vitest';
 import { createTestingPinia } from '@pinia/testing';
 import useStudies from '@/stores/studies';
-import { getStudiesData } from '@/mocks/studies';
+import { mockStudy } from '@/mocks/mockStudy';
 
 const routerPushMock = vi.fn();
 
@@ -45,13 +45,13 @@ describe('VProfileMenu', () => {
     user = useUser();
     user.$patch({
       username: faker.internet.email(),
-      firstName: faker.name.firstName(),
-      lastName: faker.name.lastName(),
+      firstName: faker.person.firstName(),
+      lastName: faker.person.lastName(),
     });
 
     studies = useStudies();
     studies.$patch({
-      items: getStudiesData(3),
+      items: faker.helpers.multiple(mockStudy, { count: 3 }),
     });
 
     auth = useAuth();
@@ -183,10 +183,10 @@ describe('VProfileMenu', () => {
 
   test('Has no link to certificates if has needed data', async () => {
     user.$patch({
-      firstName: faker.name.firstName(),
-      firstNameEn: faker.name.lastName(),
-      lastName: faker.name.firstName(),
-      lastNameEn: faker.name.lastName(),
+      firstName: faker.person.firstName(),
+      firstNameEn: faker.person.lastName(),
+      lastName: faker.person.firstName(),
+      lastNameEn: faker.person.lastName(),
     });
     await getButtonWrapper().trigger('click');
 
@@ -209,7 +209,7 @@ describe('VProfileMenu', () => {
     const NUMBER_OF_MATERIALS = 2;
 
     studies.$patch({
-      items: getStudiesData(NUMBER_OF_MATERIALS),
+      items: faker.helpers.multiple(mockStudy, { count: NUMBER_OF_MATERIALS }),
     });
 
     await getButtonWrapper().trigger('click');
@@ -219,7 +219,9 @@ describe('VProfileMenu', () => {
   });
 
   test('Has max of 3 materials', async () => {
-    studies.$patch({ items: getStudiesData(10) });
+    studies.$patch({
+      items: faker.helpers.multiple(mockStudy, { count: 10 }),
+    });
 
     await getButtonWrapper().trigger('click');
     const materials = getMaterialsWrapper();

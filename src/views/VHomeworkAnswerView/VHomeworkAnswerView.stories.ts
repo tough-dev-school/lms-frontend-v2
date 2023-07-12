@@ -1,17 +1,19 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
 import { VHomeworkAnswerView } from '.';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
-import {
-  getAnswerData,
-  getCommentData,
-  getCommentsData,
-  getThreadData,
-  contentHtml,
-  authorData,
-} from '@/mocks/homework';
 import useHomework from '@/stores/homework';
-import type { Comment } from '@/types/homework';
-import { userId } from '@/mocks/userId';
+import type { Answer } from '@/types/homework';
+import { mockThread } from '@/mocks/mockThread';
+import { mockAnswer } from '@/mocks/mockAnswer';
+import { HTML_CONTENT, mockContent } from '@/mocks/mockContent';
+import {
+  STATIC_AUTHOR_1,
+  STATIC_AUTHOR_2,
+  STATIC_AUTHOR_3,
+} from '@/mocks/mockAuthor';
+import { mockComment } from '@/mocks/mockComment';
+import dayjs from 'dayjs';
+import { STATIC_REACTIONS, STATIC_REACTION_2 } from '@/mocks/mockReaction';
 
 export default {
   title: 'App/VHomeworkAnswerView',
@@ -23,44 +25,65 @@ const Template: StoryFn = (args) => ({
   components: { VHomeworkAnswerView },
   setup() {
     const homework = useHomework();
-    const answers = [
-      getThreadData(
-        getAnswerData({ content: contentHtml, author: authorData }),
-      ),
-    ];
 
-    const patchComment = (value: Comment): Comment => {
-      value.author = authorData;
-
-      return value;
-    };
-
-    const getBranch = () => {
-      const level1 = [getCommentData(answers[0])].map(patchComment)[0];
-      const level2 = getCommentsData(level1, 2).descendants.map(patchComment);
-      const level3 = getCommentsData(level2[0], 2).descendants.map(
-        patchComment,
-      );
-
-      level1.descendants = level2;
-      level2[0].descendants = level3;
-
-      return level1;
-    };
-
-    answers[0].descendants = [
-      // comment with formatting
-      {
-        ...getCommentData(answers[0]),
-        ...getAnswerData({ content: contentHtml, author: authorData }),
-      },
-      // own comment
-      {
-        ...getCommentData(answers[0]),
-        author: { ...authorData, uuid: userId },
-      },
-      // comment branch
-      getBranch(),
+    const answers: Answer[] = [
+      mockThread({
+        // Root
+        ...mockAnswer({
+          author: STATIC_AUTHOR_1,
+          text: mockContent(HTML_CONTENT),
+        }),
+        descendants: [
+          // First thread
+          // 1
+          mockComment({
+            ...mockThread({
+              ...mockAnswer({
+                text: mockContent(HTML_CONTENT),
+                author: STATIC_AUTHOR_2,
+              }),
+            }),
+            descendants: [
+              // 2
+              mockComment({
+                ...mockThread(mockAnswer({ author: STATIC_AUTHOR_1 })),
+                descendants: [
+                  // 3
+                  mockComment(
+                    mockThread(
+                      mockAnswer({
+                        author: STATIC_AUTHOR_2,
+                        reactions: STATIC_REACTIONS,
+                      }),
+                    ),
+                  ),
+                ],
+              }),
+            ],
+          }),
+          // Second thread
+          // 1
+          mockComment({
+            ...mockThread({
+              ...mockAnswer({
+                author: STATIC_AUTHOR_3,
+                reactions: [STATIC_REACTION_2],
+              }),
+            }),
+            descendants: [
+              // 2
+              mockComment(
+                mockThread(
+                  mockAnswer({
+                    author: STATIC_AUTHOR_1,
+                    created: dayjs().subtract(1, 'year').toISOString(),
+                  }),
+                ),
+              ),
+            ],
+          }),
+        ],
+      }),
     ];
 
     homework.$patch({

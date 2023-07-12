@@ -7,16 +7,16 @@ import type { VButton } from '@/components/VButton';
 import { faker } from '@faker-js/faker';
 import { createTestingPinia } from '@pinia/testing';
 import useHomework from '@/stores/homework';
-import { getAnswerData } from '@/mocks/homework';
 import { nextTick } from 'vue';
 import { flushPromises } from '@vue/test-utils';
+import { mockAnswer } from '@/mocks/mockAnswer';
 
 const defaultProps = {
-  questionId: faker.datatype.uuid(),
-  parentId: faker.datatype.uuid(),
+  questionId: faker.string.uuid(),
+  parentId: faker.string.uuid(),
 };
 
-const answer = getAnswerData();
+const answer = mockAnswer();
 const text = faker.lorem.sentence();
 
 describe('VNewAnswer', () => {
@@ -90,12 +90,12 @@ describe('VNewAnswer', () => {
   });
 
   test('disallow sending of empty paragraphs', async () => {
-    const tagName = faker.random.word();
+    const tagName = faker.lorem.word();
 
     await getEditorWrapper().vm.$emit(
       'update:modelValue',
       `<${tagName}></${tagName}>`.repeat(
-        faker.datatype.number({ min: 1, max: 100 }),
+        faker.number.int({ min: 1, max: 100 }),
       ),
     );
 

@@ -3,11 +3,12 @@ import { RouterLinkStub, mount, VueWrapper } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
 import { VHomeView } from '.';
 import useStudies from '@/stores/studies';
-import { getStudiesData } from '@/mocks/studies';
 import type { RouterLink } from 'vue-router';
 import { nextTick } from 'vue';
+import { faker } from '@faker-js/faker';
+import { mockStudy } from '@/mocks/mockStudy';
 
-const defaultStudies = getStudiesData(3);
+const defaultStudies = faker.helpers.multiple(mockStudy, { count: 3 });
 
 describe('VHomeView', () => {
   let wrapper: VueWrapper<InstanceType<typeof VHomeView>>;

@@ -7,3 +7,4 @@ docker-compose.yml
 .lintstagedrc
 *.ejs.t
 .npmrc
+*.png

@@ -4,12 +4,21 @@ import type { VueWrapper } from '@vue/test-utils';
 import { VCertificatesView } from '.';
 import type { VCertificateCard } from '@/components/VCertificateCard';
 import { createTestingPinia } from '@pinia/testing';
-import { getDiplomasData } from '@/mocks/diplomas';
+import { mockDiplomaData, mockDiplomaSet } from '@/mocks/mockDiploma';
 import useDiplomas from '@/stores/diplomas';
 import uniq from 'lodash/uniq';
 import { nextTick } from 'vue';
+import { faker } from '@faker-js/faker';
+import { flatten } from 'lodash';
 
 const defaultProps = {};
+
+const mockDiplomas = () =>
+  flatten(
+    faker.helpers.multiple(() => mockDiplomaSet(mockDiplomaData()), {
+      count: 5,
+    }),
+  );
 
 describe('VCertificatesView', () => {
   let wrapper: VueWrapper<InstanceType<typeof VCertificatesView>>;
@@ -24,7 +33,9 @@ describe('VCertificatesView', () => {
           createTestingPinia({
             createSpy: vi.fn,
             initialState: {
-              diplomas: { items: getDiplomasData() },
+              diplomas: {
+                items: mockDiplomas(),
+              },
             },
           }),
         ],
@@ -56,6 +67,7 @@ describe('VCertificatesView', () => {
 
   test('passes props to card', async () => {
     const courseName = diplomas.items[0].course.name;
+
     expect(getCertificateCardWrapper().props().course).toBe(courseName);
     expect(getCertificateCardWrapper().props().certificates).toStrictEqual(
       diplomas.items.filter((diploma) => diploma.course.name === courseName),

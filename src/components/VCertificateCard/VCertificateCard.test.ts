@@ -2,10 +2,10 @@ import { describe, expect, test, beforeEach } from 'vitest';
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import { VCertificateCard } from '.';
-import { getDiplomasData } from '@/mocks/diplomas';
 import type { VCertificate } from '@/components/VCertificate';
+import { mockDiplomaData, mockDiplomaSet } from '@/mocks/mockDiploma';
 
-const diplomas = getDiplomasData();
+const diplomas = mockDiplomaSet(mockDiplomaData());
 
 const defaultProps = {
   course: diplomas[0].course.name,
