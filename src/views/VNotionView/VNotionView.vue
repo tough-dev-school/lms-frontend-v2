@@ -113,6 +113,10 @@ support@tough-dev.school">
     @apply border-0 items-start;
   }
 
+  .notion-simple-table-data {
+    position: initial;
+  }
+
   .notion-red_background,
   .notion-pink_background,
   .notion-blue_background,
