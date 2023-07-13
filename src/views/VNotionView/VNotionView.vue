@@ -81,6 +81,12 @@ support@tough-dev.school">
     @apply text-black dark:text-white;
   }
 
+  .notion-page-cover {
+    margin: 0;
+    width: 100%;
+    height: auto;
+  }
+
   .notion-bookmark,
   .notion-code {
     @apply dark:bg-dark-black;
@@ -125,11 +131,6 @@ support@tough-dev.school">
   .notion-brown_background_co,
   .notion-gray_background_co {
     @apply dark:text-black;
-  }
-
-  .notion-page-cover {
-    width: var(--notion-max-width);
-    margin: 0 auto;
   }
 
   .notion-page,
