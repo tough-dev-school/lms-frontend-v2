@@ -85,6 +85,7 @@ support@tough-dev.school">
     margin: 0;
     width: 100%;
     height: auto;
+    @apply aspect-[5/2];
   }
 
   .notion-bookmark,
