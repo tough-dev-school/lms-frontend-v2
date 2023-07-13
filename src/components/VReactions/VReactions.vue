@@ -50,36 +50,14 @@
 </script>
 
 <template>
-  <TransitionGroup name="reaction">
-    <VReaction
-      v-for="emoji in emojiSet"
-      :key="emoji"
-      :disabled="disabled"
-      :emoji="emoji"
-      :userId="userStore.uuid"
-      :reactions="groupedReactions[emoji]"
-      @add="(emoji) => emit('add', emoji)"
-      @remove="(reactionId) => emit('remove', reactionId)"
-      data-testid="reaction" />
-  </TransitionGroup>
+  <VReaction
+    v-for="emoji in emojiSet"
+    :key="emoji"
+    :disabled="disabled"
+    :emoji="emoji"
+    :userId="userStore.uuid"
+    :reactions="groupedReactions[emoji]"
+    @add="(emoji) => emit('add', emoji)"
+    @remove="(reactionId) => emit('remove', reactionId)"
+    data-testid="reaction" />
 </template>
-
-<style>
-  .reaction-enter-active {
-    transform-origin: left;
-  }
-
-  .reaction-leave-active {
-    transform-origin: center;
-  }
-
-  .reaction-enter-active,
-  .reaction-leave-active {
-    transition: all 300ms ease;
-  }
-  .reaction-enter-from,
-  .reaction-leave-to {
-    opacity: 0;
-    transform: scale(0);
-  }
-</style>

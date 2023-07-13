@@ -8,7 +8,7 @@ import getName from '@/utils/getName';
 import type { VAvatar } from '@/components/VAvatar';
 
 const emoji = faker.helpers.arrayElement(ALLOWED_REACTIONS);
-const userId = faker.datatype.uuid();
+const userId = faker.string.uuid();
 
 const defaultProps = {
   emoji,

@@ -6,17 +6,17 @@ import { createTestingPinia } from '@pinia/testing';
 import { faker } from '@faker-js/faker';
 import { mockReactionsData } from './mocks/mockReactionsData';
 import useUser from '@/stores/user';
-import { mockEmoji } from '@/mocks/emoji';
 import { uniq } from 'lodash';
+import { mockEmoji } from '@/mocks/mockEmoji';
 
 const defaultProps: VReactionsProps = {
   reactions: mockReactionsData(),
-  answerId: faker.datatype.uuid(),
+  answerId: faker.string.uuid(),
   open: false,
   disabled: false,
 };
 
-const userId = faker.datatype.uuid();
+const userId = faker.string.uuid();
 
 const mountComponent = (props: Partial<VReactionsProps> = {}) => {
   return mount(VReactions, {
@@ -68,7 +68,7 @@ describe('VReactions', () => {
 
   test('emits remove on VReaction remove', () => {
     const reaction = getReactionWrapper();
-    const slug = faker.datatype.uuid();
+    const slug = faker.string.uuid();
 
     reaction.vm.$emit('remove', slug);
 

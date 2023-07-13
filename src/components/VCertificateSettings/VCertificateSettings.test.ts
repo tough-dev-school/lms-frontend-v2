@@ -9,10 +9,10 @@ import { faker } from '@faker-js/faker';
 import type { VueNode } from '@vue/test-utils/dist/types';
 
 const defaultData = {
-  firstName: faker.name.firstName(),
-  lastName: faker.name.lastName(),
-  firstNameEn: faker.name.firstName(),
-  lastNameEn: faker.name.lastName(),
+  firstName: faker.person.firstName(),
+  lastName: faker.person.lastName(),
+  firstNameEn: faker.person.firstName(),
+  lastNameEn: faker.person.lastName(),
   gender: 'female',
 };
 
@@ -70,10 +70,10 @@ describe('VCertificateSettings', () => {
   });
 
   test('fills fields with actual data on save', async () => {
-    const firstName = faker.name.firstName();
-    const lastName = faker.name.lastName();
-    const firstNameEn = faker.name.firstName();
-    const lastNameEn = faker.name.lastName();
+    const firstName = faker.person.firstName();
+    const lastName = faker.person.lastName();
+    const firstNameEn = faker.person.firstName();
+    const lastNameEn = faker.person.lastName();
     const gender = 'female';
 
     user.$patch({
@@ -96,10 +96,10 @@ describe('VCertificateSettings', () => {
   });
 
   test('sends data on save', async () => {
-    const firstName = faker.name.firstName();
-    const lastName = faker.name.lastName();
-    const firstNameEn = faker.name.firstName();
-    const lastNameEn = faker.name.lastName();
+    const firstName = faker.person.firstName();
+    const lastName = faker.person.lastName();
+    const firstNameEn = faker.person.firstName();
+    const lastNameEn = faker.person.lastName();
 
     getFirstNameWrapper().vm.$emit('update:modelValue', firstName);
     getLastNameWrapper().vm.$emit('update:modelValue', lastName);

@@ -1,11 +1,11 @@
 import { VDefaultLayout } from '@/layouts/VDefaultLayout';
-import { questionData } from '@/mocks/homework';
-import { getMaterialsData } from '@/mocks/materials';
+import { mockMaterial } from '@/mocks/mockMaterial';
+import { mockQuestion, STATIC_QUESTION } from '@/mocks/mockQuestion';
+import { mockUserId, USER_1 } from '@/mocks/mockUserId';
 import useHomework from '@/stores/homework';
 import useMaterials from '@/stores/materials';
 import useToasts from '@/stores/toasts';
 import useUser from '@/stores/user';
-import { userId } from '@/mocks/userId';
 
 const layoutDecorator = (story: any, layout: any) => ({
   components: { layout, story },
@@ -17,7 +17,7 @@ const layoutDecorator = (story: any, layout: any) => ({
     const user = useUser();
     user.$patch({
       id: '',
-      uuid: userId,
+      uuid: mockUserId(USER_1),
       username: 'johndoe@demo.com',
       firstName: 'Иван',
       lastName: 'Иванов',
@@ -31,11 +31,11 @@ const layoutDecorator = (story: any, layout: any) => ({
 
     const homework = useHomework();
     homework.$patch({
-      question: questionData,
+      question: mockQuestion(STATIC_QUESTION),
     });
 
     const materials = useMaterials();
-    materials.$patch({ material: getMaterialsData() });
+    materials.$patch({ material: mockMaterial() });
   },
 });
 

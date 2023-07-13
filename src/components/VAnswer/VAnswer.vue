@@ -18,6 +18,7 @@
   import useHomework from '@/stores/homework';
   import { MoodHappyIcon } from 'vue-tabler-icons';
   import { MAX_REACTIONS } from '@/components/VReactions';
+  import { useAutoAnimate } from '@formkit/auto-animate/vue';
 
   const emit = defineEmits<{
     update: [];
@@ -53,6 +54,8 @@
 
   const togglePalette = () => (isPaletteOpen.value = !isPaletteOpen.value);
   const closePalette = () => (isPaletteOpen.value = false);
+
+  const [parent] = useAutoAnimate();
 </script>
 
 <template>
@@ -78,7 +81,8 @@
     </div>
     <VHtmlContent :content="answer.text" data-testid="content" />
     <div
-      class="flex justify-start flex-wrap items-start gap-x-8 gap-y-16 pt-16">
+      class="flex justify-start flex-wrap items-start gap-8 pt-16"
+      ref="parent">
       <slot name="footer" />
       <button
         class="answer-action box-content flex items-center justify-center text-[1.5rem]"
@@ -88,7 +92,6 @@
         data-testid="open">
         <MoodHappyIcon />
       </button>
-      <div></div>
       <VReactions
         :answer-id="answer.slug"
         :reactions="answer.reactions"

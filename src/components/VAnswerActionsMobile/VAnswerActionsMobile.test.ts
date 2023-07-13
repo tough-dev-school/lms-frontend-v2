@@ -9,8 +9,8 @@ import { nextTick } from 'vue';
 const defaultProps = {
   allowDelete: true,
   allowEdit: true,
-  deleteTime: Number(faker.random.numeric()),
-  editTime: Number(faker.random.numeric()),
+  deleteTime: Number(faker.string.numeric()),
+  editTime: Number(faker.string.numeric()),
 };
 
 describe('VAnswerActionsMobile', () => {

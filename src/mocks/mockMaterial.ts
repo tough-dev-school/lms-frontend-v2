@@ -1,6 +1,6 @@
 import type { BlockMap } from '@/types/materials';
 
-export const getMaterialsData = (): BlockMap => {
+export const mockMaterial = (): BlockMap => {
   return {
     'cf1379bf-bf5a-41f9-942f-31dd4253c178': {
       role: 'reader',

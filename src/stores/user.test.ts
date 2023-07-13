@@ -41,14 +41,14 @@ describe('user store', () => {
 
   test('getData sets data from api', async () => {
     const data = {
-      id: faker.datatype.uuid(),
-      uuid: faker.datatype.uuid(),
+      id: faker.string.uuid(),
+      uuid: faker.string.uuid(),
       username: faker.internet.email(),
-      firstName: faker.name.firstName(),
-      lastName: faker.name.lastName(),
-      firstNameEn: faker.name.firstName(),
-      lastNameEn: faker.name.lastName(),
-      gender: faker.name.sex(),
+      firstName: faker.person.firstName(),
+      lastName: faker.person.lastName(),
+      firstNameEn: faker.person.firstName(),
+      lastNameEn: faker.person.lastName(),
+      gender: faker.person.sex(),
       linkedinUsername: faker.internet.userName(),
       githubUsername: faker.internet.userName(),
       telegramUsername: faker.internet.userName(),
@@ -71,11 +71,11 @@ describe('user store', () => {
   });
 
   test('setData calls api with data', async () => {
-    const firstName = faker.name.firstName();
-    const lastName = faker.name.lastName();
-    const firstNameEn = faker.name.firstName();
-    const lastNameEn = faker.name.lastName();
-    const gender = faker.name.sex() as Gender;
+    const firstName = faker.person.firstName();
+    const lastName = faker.person.lastName();
+    const firstNameEn = faker.person.firstName();
+    const lastNameEn = faker.person.lastName();
+    const gender = faker.person.sex() as Gender;
     const linkedinUsername = faker.internet.userName();
     const githubUsername = faker.internet.userName();
     const telegramUsername = faker.internet.userName();
@@ -105,8 +105,8 @@ describe('user store', () => {
   });
 
   test('setData calls api only with changed data', async () => {
-    const firstName = faker.name.firstName();
-    const lastName = faker.name.lastName();
+    const firstName = faker.person.firstName();
+    const lastName = faker.person.lastName();
     const changedLastName = lastName + 'edit';
     user.$patch({ firstName, lastName });
 

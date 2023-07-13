@@ -19,7 +19,7 @@ export const Default = {
   render: Template,
 
   args: {
-    questionId: faker.datatype.uuid(),
-    parentId: faker.datatype.uuid(),
+    questionId: faker.string.uuid(),
+    parentId: faker.string.uuid(),
   },
 };

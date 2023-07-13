@@ -14,13 +14,10 @@ import {
   getAnswer,
 } from '@/api/homework';
 import getThreads from '@/utils/getThreads';
-import {
-  getAnswerData,
-  getAnswersData,
-  getQuestionData,
-  getThreadData,
-  getCommentData,
-} from '@/mocks/homework';
+import { mockAnswer } from '@/mocks/mockAnswer';
+import { mockThread } from '@/mocks/mockThread';
+import { mockQuestion } from '@/mocks/mockQuestion';
+import { mockComment } from '@/mocks/mockComment';
 
 vi.mock('@/api/homework', () => {
   return {
@@ -35,16 +32,16 @@ vi.mock('@/api/homework', () => {
 vi.mock('@/utils/getThreads');
 
 const text = faker.lorem.sentence();
-const questionId = faker.datatype.uuid();
-const parentId = faker.datatype.uuid();
-const authorId = faker.datatype.uuid();
-const answerId = faker.datatype.uuid();
+const questionId = faker.string.uuid();
+const parentId = faker.string.uuid();
+const authorId = faker.string.uuid();
+const answerId = faker.string.uuid();
 
-const answerData = getAnswerData();
-const answersData = getAnswersData();
-const threadsData = getThreadData();
-const postData = getCommentData({ ...getThreadData(), parent: parentId });
-const questionData = getQuestionData();
+const answerData = mockAnswer();
+const answersData = faker.helpers.multiple(mockAnswer, { count: 3 });
+const threadsData = mockThread();
+const postData = mockComment({ ...mockThread(), parent: parentId });
+const questionData = mockQuestion();
 
 describe('homework store', () => {
   let homework: ReturnType<typeof useHomework>;

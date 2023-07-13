@@ -4,7 +4,7 @@ import { mount, VueWrapper } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
 
 const defaultProps = {
-  userId: faker.datatype.uuid(),
+  userId: faker.string.uuid(),
 };
 
 describe('VAvatar', () => {
