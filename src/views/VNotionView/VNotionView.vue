@@ -110,7 +110,7 @@ support@tough-dev.school">
   }
 
   .notion-callout {
-    @apply border-0;
+    @apply border-0 items-start;
   }
 
   .notion-red_background,
