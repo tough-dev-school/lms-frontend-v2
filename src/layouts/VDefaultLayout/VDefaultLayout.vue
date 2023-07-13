@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+  // #TODO Remove test message when new-notion is merged
+
   import { VProfileMenu } from '@/components/VProfileMenu';
   import { VPreloader } from '@/components/VPreloader';
   import { VToastFeed } from '@/components/VToastFeed';
@@ -12,11 +14,17 @@
   const hasHeader = computed(() => {
     return !route.meta.isPublic;
   });
+
+  const isNotionTest = computed(() =>
+    window.location.host.includes('new-notion'),
+  );
 </script>
 
 <template>
   <main class="container pb-128" v-if="!loading.isLoading">
-    <p class="p-8 px-16 bg-lightgray text-black rounded mt-16">
+    <p
+      v-if="isNotionTest"
+      class="p-8 px-16 bg-lightgray text-black rounded mt-16">
       Это тестовая ветка с новым рендером ноушена. О багах писать
       <a
         class="link"
