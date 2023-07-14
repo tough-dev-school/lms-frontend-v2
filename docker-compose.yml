@@ -25,6 +25,7 @@ services:
       - AWS_ACCESS_KEY_ID=root
       - AWS_SECRET_ACCESS_KEY=ibcxJ8Du
       - AWS_STORAGE_BUCKET_NAME=dev
+      - NOTION_CACHE_ONLY=On
 
     ports:
       - 8000:8000
