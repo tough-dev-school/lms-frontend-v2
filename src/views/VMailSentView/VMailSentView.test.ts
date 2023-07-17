@@ -63,16 +63,16 @@ describe('VMailSentView', () => {
   test('button has correct attributes for gmail', async () => {
     useRoute.mockReturnValueOnce(gmailEmailQuery);
 
-    expect(getOpenWrapper().exists()).toBeTruthy();
-    expect(getOpenWrapper().attributes('href')).toBeTruthy(GMAIL.url);
+    expect(getOpenWrapper().exists()).toBe(true);
+    expect(getOpenWrapper().attributes('href')).toBe(GMAIL.url);
     expect(getOpenWrapper().text()).toContain(GMAIL.label);
   });
 
   test('button has correct attributes for mailru', async () => {
     useRoute.mockReturnValueOnce(mailruEmailQuery);
 
-    expect(getOpenWrapper().exists()).toBeTruthy();
-    expect(getOpenWrapper().attributes('href')).toBeTruthy(MAILRU.url);
+    expect(getOpenWrapper().exists()).toBe(true);
+    expect(getOpenWrapper().attributes('href')).toBe(MAILRU.url);
     expect(getOpenWrapper().text()).toContain(MAILRU.label);
   });
 });
