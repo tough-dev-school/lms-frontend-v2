@@ -1,23 +1,27 @@
-import { describe, expect, test, beforeEach, vi } from 'vitest';
+import { describe, expect, test, beforeEach, vi, afterEach } from 'vitest';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
-import { VMailSentView } from '.';
 import { faker } from '@faker-js/faker';
 
-const email = faker.internet.email();
-
+const useRoute = vi.fn();
 vi.mock('vue-router/dist/vue-router.mjs', () => ({
-  useRoute: () => ({
-    query: {
-      email,
-    },
-  }),
+  useRoute,
 }));
+
+import { VMailSentView, GMAIL, MAILRU } from '.';
+
+const email = faker.internet.email();
+const getQuery = (email: string) => ({ query: { email } });
+
+const gmailEmailQuery = getQuery('john@gmail.com');
+const mailruEmailQuery = getQuery('ivan@mail.ru');
 
 describe('VMailSentView', () => {
   let wrapper: VueWrapper<InstanceType<typeof VMailSentView>>;
 
   beforeEach(() => {
+    useRoute.mockReturnValue(getQuery(email));
+
     wrapper = mount(VMailSentView, {
       shallow: true,
       global: {
@@ -44,9 +48,31 @@ describe('VMailSentView', () => {
     expect(getMessageWrapper().text()).toContain(email);
   });
 
-  test.todo('button is not shown if email service is not recognized');
+  test('button is not shown if email service is not recognized', () => {
+    expect(getOpenWrapper().exists()).toBe(false);
+  });
 
-  test.todo('button is shown if email service is recognized');
+  test('button is shown if email service is recognized', async () => {
+    useRoute.mockReturnValueOnce(
+      faker.helpers.arrayElement([mailruEmailQuery, gmailEmailQuery]),
+    );
 
-  test.todo('button has correct attributes');
+    expect(getOpenWrapper().exists()).toBe(true);
+  });
+
+  test('button has correct attributes for gmail', async () => {
+    useRoute.mockReturnValueOnce(gmailEmailQuery);
+
+    expect(getOpenWrapper().exists()).toBeTruthy();
+    expect(getOpenWrapper().attributes('href')).toBeTruthy(GMAIL.url);
+    expect(getOpenWrapper().text()).toContain(GMAIL.label);
+  });
+
+  test('button has correct attributes for mailru', async () => {
+    useRoute.mockReturnValueOnce(mailruEmailQuery);
+
+    expect(getOpenWrapper().exists()).toBeTruthy();
+    expect(getOpenWrapper().attributes('href')).toBeTruthy(MAILRU.url);
+    expect(getOpenWrapper().text()).toContain(MAILRU.label);
+  });
 });

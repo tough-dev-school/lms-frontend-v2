@@ -3,21 +3,11 @@
   import { VCard } from '@/components/VCard';
   import { useRoute } from 'vue-router';
   import { computed } from 'vue';
+  import { KNOWN_EMAIL_PROVIDERS } from '.';
 
   const route = useRoute();
 
   const email = computed(() => String(route.query.email));
-
-  interface EmailProvider {
-    label: string;
-    url: string;
-    keyword: string;
-  }
-
-  const KNOWN_EMAIL_PROVIDERS: EmailProvider[] = [
-    { label: 'GMail', url: 'https://mail.google.com/', keyword: 'gmail.com' },
-    { label: 'Mail.ru', url: 'https://e.mail.ru/inbox/', keyword: 'mail.ru' },
-  ];
 
   const emailProvider = computed(() => {
     return KNOWN_EMAIL_PROVIDERS.find((provider) => {
