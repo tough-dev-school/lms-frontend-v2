@@ -3,15 +3,14 @@ import { mount, VueWrapper } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
 import { faker } from '@faker-js/faker';
 
-const useRoute = vi.fn();
+const email = faker.internet.email();
+const getQuery = (email: string) => ({ query: { email } });
+const useRoute = vi.fn(() => getQuery(email));
 vi.mock('vue-router/dist/vue-router.mjs', () => ({
   useRoute,
 }));
 
 import { VMailSentView, GMAIL, MAILRU } from '.';
-
-const email = faker.internet.email();
-const getQuery = (email: string) => ({ query: { email } });
 
 const gmailEmailQuery = getQuery('john@gmail.com');
 const mailruEmailQuery = getQuery('ivan@mail.ru');
@@ -20,8 +19,6 @@ describe('VMailSentView', () => {
   let wrapper: VueWrapper<InstanceType<typeof VMailSentView>>;
 
   beforeEach(() => {
-    useRoute.mockReturnValue(getQuery(email));
-
     wrapper = mount(VMailSentView, {
       shallow: true,
       global: {
