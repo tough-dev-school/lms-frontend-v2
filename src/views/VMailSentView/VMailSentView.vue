@@ -2,20 +2,13 @@
   import { VHeading } from '@/components/VHeading';
   import { VCard } from '@/components/VCard';
   import { VButton } from '@/components/VButton';
-  import useAuth from '@/stores/auth';
   import { useRouter, useRoute } from 'vue-router';
   import { computed } from 'vue';
 
-  const auth = useAuth();
   const router = useRouter();
-
   const route = useRoute();
 
   const email = computed(() => String(route.query.email));
-
-  const resendEmail = async () => {
-    await auth.loginWithEmail(email.value);
-  };
 
   const back = () => {
     router.push({ name: 'login' });
@@ -27,9 +20,6 @@
     <VHeading tag="h1">Ссылка отправлена</VHeading>
     <p data-testid="message">Мы отправили ссылку по адресу {{ email }}</p>
     <template #footer>
-      <VButton class="flex-grow" @click="resendEmail" data-testid="resend"
-        >Отправить ещё раз</VButton
-      >
       <VButton
         class="flex-grow"
         appearance="link"
