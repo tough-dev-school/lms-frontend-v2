@@ -10,12 +10,10 @@
 
 <template>
   <VLoginLink
-    class="mt-[25vh]"
     v-if="mode === 'link'"
     data-testid="login-link"
     @change="mode = 'password'" />
   <VLoginPassword
-    class="mt-[25vh]"
     data-testid="login-password"
     v-else-if="mode === 'password'"
     @change="mode = 'link'" />
