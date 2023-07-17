@@ -37,6 +37,10 @@ describe('VMailSentView', () => {
     });
   });
 
+  afterEach(() => {
+    vi.resetAllMocks();
+  });
+
   const getMessageWrapper = () => {
     return wrapper.find(`[data-testid="message"]`);
   };
