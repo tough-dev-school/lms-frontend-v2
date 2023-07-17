@@ -3,15 +3,10 @@ import { mount, VueWrapper } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
 import { VMailSentView } from '.';
 import { faker } from '@faker-js/faker';
-import useAuth from '@/stores/auth';
 
-const routerPushMock = vi.fn();
 const email = faker.internet.email();
 
 vi.mock('vue-router/dist/vue-router.mjs', () => ({
-  useRouter: () => ({
-    push: routerPushMock,
-  }),
   useRoute: () => ({
     query: {
       email,
@@ -21,7 +16,6 @@ vi.mock('vue-router/dist/vue-router.mjs', () => ({
 
 describe('VMailSentView', () => {
   let wrapper: VueWrapper<InstanceType<typeof VMailSentView>>;
-  let auth: ReturnType<typeof useAuth>;
 
   beforeEach(() => {
     wrapper = mount(VMailSentView, {
@@ -37,32 +31,22 @@ describe('VMailSentView', () => {
         },
       },
     });
-
-    auth = useAuth();
   });
 
   const getMessageWrapper = () => {
     return wrapper.find(`[data-testid="message"]`);
   };
-  const getResendWrapper = () => {
-    return wrapper.find(`[data-testid="resend"]`);
-  };
-  const getRestartWrapper = () => {
-    return wrapper.find(`[data-testid="restart"]`);
+  const getOpenWrapper = () => {
+    return wrapper.find(`[data-testid="open"]`);
   };
 
   test('message contains email', () => {
     expect(getMessageWrapper().text()).toContain(email);
   });
-  test('click on resend sends email', () => {
-    getResendWrapper().trigger('click');
 
-    expect(auth.loginWithEmail).toHaveBeenCalledWith(email);
-  });
+  test.todo('button is not shown if email service is not recognized');
 
-  test('click on restart returns to login', () => {
-    getRestartWrapper().trigger('click');
+  test.todo('button is shown if email service is recognized');
 
-    expect(routerPushMock).toHaveBeenCalledWith({ name: 'login' });
-  });
+  test.todo('button has correct attributes');
 });

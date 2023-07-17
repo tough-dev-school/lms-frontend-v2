@@ -31,7 +31,11 @@
     <VHeading tag="h1">Ссылка отправлена</VHeading>
     <p data-testid="message">Мы отправили ссылку по адресу {{ email }}</p>
     <template #footer>
-      <a class="flex-grow button" :href="emailProvider.url" v-if="emailProvider"
+      <a
+        class="flex-grow button"
+        data-testid="open"
+        :href="emailProvider.url"
+        v-if="emailProvider"
         >Открыть {{ emailProvider.label }}</a
       >
     </template>
