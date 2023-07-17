@@ -31,11 +31,6 @@ const useAuth = defineStore('auth', {
     async loginWithEmail(email: string) {
       try {
         await sendLoginLink(email);
-
-        useToasts().addMessage(
-          'Ссылка для входа отправлена на почту!',
-          'success',
-        );
       } catch (error: any) {}
     },
     async exchangeTokens(passwordlessToken: string) {
