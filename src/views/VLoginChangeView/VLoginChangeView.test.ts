@@ -12,7 +12,7 @@ const token = faker.string.uuid();
 
 const routerPushMock = vi.fn();
 
-vi.mock('vue-router/dist/vue-router.mjs', () => ({
+vi.mock('vue-router', () => ({
   useRouter: () => ({
     push: routerPushMock,
   }),

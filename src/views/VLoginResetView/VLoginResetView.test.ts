@@ -12,7 +12,7 @@ const defaultProps = {};
 
 const routerPushMock = vi.fn();
 
-vi.mock('vue-router/dist/vue-router.mjs', () => ({
+vi.mock('vue-router', () => ({
   useRouter: () => ({
     push: routerPushMock,
   }),
