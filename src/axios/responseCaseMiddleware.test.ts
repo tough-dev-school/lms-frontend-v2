@@ -16,7 +16,7 @@ describe('responseCaseMiddleware', () => {
     );
     const result = responseCaseMiddleware(data, true);
 
-    expect(camelcaseKeys).toHaveBeenCalledOnce();
+    expect(camelcaseKeys).toHaveBeenCalledTimes(1);
     expect(camelcaseKeys).toHaveBeenCalledWith(data, { deep: true });
     expect(result).toStrictEqual(camelcaseKeys(data));
   });

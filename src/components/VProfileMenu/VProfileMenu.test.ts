@@ -132,7 +132,7 @@ describe('VProfileMenu', () => {
 
     await getHomeWrapper().trigger('click');
 
-    expect(routerPushMock).toHaveBeenCalledOnce();
+    expect(routerPushMock).toHaveBeenCalledTimes(1);
     expect(routerPushMock).toHaveBeenCalledWith({ name: 'home' });
   });
 
@@ -141,7 +141,7 @@ describe('VProfileMenu', () => {
 
     await getSettingsWrapper().trigger('click');
 
-    expect(routerPushMock).toHaveBeenCalledOnce();
+    expect(routerPushMock).toHaveBeenCalledTimes(1);
     expect(routerPushMock).toHaveBeenCalledWith({ name: 'settings' });
   });
 
@@ -149,14 +149,14 @@ describe('VProfileMenu', () => {
     await getButtonWrapper().trigger('click');
     await getLogoutWrapper().trigger('click');
 
-    expect(auth.resetAuth).toHaveBeenCalledOnce();
+    expect(auth.resetAuth).toHaveBeenCalledTimes(1);
   });
 
   test('Click on logout opens login', async () => {
     await getButtonWrapper().trigger('click');
     await getLogoutWrapper().trigger('click');
 
-    expect(routerPushMock).toHaveBeenCalledOnce();
+    expect(routerPushMock).toHaveBeenCalledTimes(1);
     expect(routerPushMock).toHaveBeenCalledWith({ name: 'login' });
   });
 
@@ -194,7 +194,7 @@ describe('VProfileMenu', () => {
 
     await getCertificateWrapper().trigger('click');
 
-    expect(routerPushMock).toHaveBeenCalledOnce();
+    expect(routerPushMock).toHaveBeenCalledTimes(1);
     expect(routerPushMock).toHaveBeenCalledWith({
       name: 'settings',
       hash: '#certificate',
@@ -229,7 +229,7 @@ describe('VProfileMenu', () => {
     await getButtonWrapper().trigger('click');
     await getMaterialWrapper().trigger('click');
 
-    expect(routerPushMock).toHaveBeenCalledOnce();
+    expect(routerPushMock).toHaveBeenCalledTimes(1);
     expect(routerPushMock).toHaveBeenCalledWith({
       name: 'materials',
       params: { id: studies.items[0].homePageSlug },

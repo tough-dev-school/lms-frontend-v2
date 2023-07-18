@@ -13,7 +13,7 @@ describe('requestCaseMiddleware', () => {
   test('run decamelizeKeys when enabled', () => {
     const result = requestCaseMiddleware(data, true);
 
-    expect(decamelizeKeys).toHaveBeenCalledOnce();
+    expect(decamelizeKeys).toHaveBeenCalledTimes(1);
     expect(decamelizeKeys).toHaveBeenCalledWith(data, { deep: true });
     expect(result).toStrictEqual(STATIC_SNAKE_CASE_EXAMPLE);
   });

@@ -59,7 +59,7 @@ describe('VNewAnswer', () => {
     await getEditorWrapper().vm.$emit('update:modelValue', text);
     await getButtonWrapper().vm.$emit('click');
 
-    expect(homework.postAnswer).toHaveBeenCalledOnce();
+    expect(homework.postAnswer).toHaveBeenCalledTimes(1);
     expect(homework.postAnswer).toHaveBeenCalledWith({
       parentId,
       questionId,

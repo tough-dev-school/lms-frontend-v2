@@ -25,7 +25,7 @@ describe('studies store', () => {
   test('getData calls studies', async () => {
     await studies.getData();
 
-    expect(getStudies).toHaveBeenCalledOnce();
+    expect(getStudies).toHaveBeenCalledTimes(1);
   });
 
   test('getData sets items', async () => {

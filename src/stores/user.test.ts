@@ -35,7 +35,7 @@ describe('user store', () => {
   test('getData calls api', async () => {
     await user.getData();
 
-    expect(getUser).toHaveBeenCalledOnce();
+    expect(getUser).toHaveBeenCalledTimes(1);
   });
 
   test('getData sets data from api', async () => {

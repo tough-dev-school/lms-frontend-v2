@@ -28,7 +28,7 @@ describe('getThreads', () => {
   test('call getComments with answer ids', () => {
     getThreads(answers);
 
-    expect(getComments).toHaveBeenCalledOnce();
+    expect(getComments).toHaveBeenCalledTimes(1);
     expect(getComments).toHaveBeenCalledWith(
       answers.map((answer) => answer.slug),
     );

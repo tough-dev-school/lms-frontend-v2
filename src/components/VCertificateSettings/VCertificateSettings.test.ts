@@ -108,7 +108,7 @@ describe('VCertificateSettings', () => {
 
     await getSaveWrapper().trigger('click');
 
-    expect(user.setData).toHaveBeenCalledOnce();
+    expect(user.setData).toHaveBeenCalledTimes(1);
     expect(user.setData).toHaveBeenCalledWith({
       firstName,
       lastName,

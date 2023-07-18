@@ -25,7 +25,7 @@ describe('materials store', () => {
   test(' getData to call get materials', async () => {
     await materials.getData(faker.string.uuid());
 
-    expect(getMaterial).toHaveBeenCalledOnce();
+    expect(getMaterial).toHaveBeenCalledTimes(1);
   });
 
   test('getData sets material', async () => {

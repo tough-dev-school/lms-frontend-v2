@@ -38,7 +38,7 @@ describe('VLoginChangeView', () => {
   test('navigates to /login on save', () => {
     getPasswordSettingsWrapper().vm.$emit('save');
 
-    expect(routerPushMock).toHaveBeenCalledOnce();
+    expect(routerPushMock).toHaveBeenCalledTimes(1);
     expect(routerPushMock).toHaveBeenCalledWith({ name: 'login' });
   });
 });

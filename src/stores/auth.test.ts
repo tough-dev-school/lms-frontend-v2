@@ -37,7 +37,7 @@ describe('toasts store', () => {
   test('loginWithCredentials calls api with needed parameters', async () => {
     await auth.loginWithCredentials(username, password);
 
-    expect(loginWithCredentials).toHaveBeenCalledOnce();
+    expect(loginWithCredentials).toHaveBeenCalledTimes(1);
     expect(loginWithCredentials).toHaveBeenCalledWith(username, password);
   });
 
@@ -53,7 +53,7 @@ describe('toasts store', () => {
   test('loginWithEmail calls api with needed parameters', () => {
     auth.loginWithEmail(email);
 
-    expect(sendLoginLink).toHaveBeenCalledOnce();
+    expect(sendLoginLink).toHaveBeenCalledTimes(1);
     expect(sendLoginLink).toHaveBeenCalledWith(email);
   });
 
@@ -67,7 +67,7 @@ describe('toasts store', () => {
   test('exchangeTokens calls api with needed parameters', async () => {
     await auth.exchangeTokens(passwordlessToken);
 
-    expect(loginWithLink).toHaveBeenCalledOnce();
+    expect(loginWithLink).toHaveBeenCalledTimes(1);
     expect(loginWithLink).toHaveBeenCalledWith(passwordlessToken);
   });
 
