@@ -12,10 +12,7 @@ import { mockStudy } from '@/mocks/mockStudy';
 
 const routerPushMock = vi.fn();
 
-// vue-router/dist/vue-router.mjs import path is used instead of vue-router because of vue-router issue.
-// We should change path vue-router when it is fixed.
-// https://github.com/vuejs/router/issues/1466
-vi.mock('vue-router/dist/vue-router.mjs', () => ({
+vi.mock('vue-router', () => ({
   useRouter: () => ({
     push: routerPushMock,
   }),

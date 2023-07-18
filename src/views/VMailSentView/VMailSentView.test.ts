@@ -8,7 +8,7 @@ import useAuth from '@/stores/auth';
 const routerPushMock = vi.fn();
 const email = faker.internet.email();
 
-vi.mock('vue-router/dist/vue-router.mjs', () => ({
+vi.mock('vue-router', () => ({
   useRouter: () => ({
     push: routerPushMock,
   }),
