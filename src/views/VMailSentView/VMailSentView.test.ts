@@ -18,7 +18,7 @@ const mailruEmailQuery = getQuery('ivan@mail.ru');
 describe('VMailSentView', () => {
   let wrapper: VueWrapper<InstanceType<typeof VMailSentView>>;
 
-  beforeEach(() => {
+  const mountWrapper = () => {
     wrapper = mount(VMailSentView, {
       shallow: true,
       global: {
@@ -32,6 +32,10 @@ describe('VMailSentView', () => {
         },
       },
     });
+  };
+
+  beforeEach(() => {
+    mountWrapper();
   });
 
   afterEach(() => {
@@ -57,12 +61,14 @@ describe('VMailSentView', () => {
     useRoute.mockReturnValueOnce(
       faker.helpers.arrayElement([mailruEmailQuery, gmailEmailQuery]),
     );
+    mountWrapper();
 
     expect(getOpenWrapper().exists()).toBe(true);
   });
 
   test('button has correct attributes for gmail', async () => {
     useRoute.mockReturnValueOnce(gmailEmailQuery);
+    mountWrapper();
 
     expect(getOpenWrapper().exists()).toBe(true);
     expect(getOpenWrapper().attributes('href')).toBe(GMAIL.url);
@@ -71,6 +77,7 @@ describe('VMailSentView', () => {
 
   test('button has correct attributes for mailru', async () => {
     useRoute.mockReturnValueOnce(mailruEmailQuery);
+    mountWrapper();
 
     expect(getOpenWrapper().exists()).toBe(true);
     expect(getOpenWrapper().attributes('href')).toBe(MAILRU.url);
