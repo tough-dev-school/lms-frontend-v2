@@ -7,7 +7,7 @@ export default mergeConfig(
   defineConfig({
     test: {
       globals: true,
-      restoreMocks: true,
+      mockReset: true,
       environment: 'jsdom',
       exclude: [...configDefaults.exclude, './src/visual-regression.test.ts'],
       coverage: {
