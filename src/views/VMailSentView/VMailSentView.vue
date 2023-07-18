@@ -23,14 +23,11 @@
   <VCard class="flex flex-col gap-16">
     <VHeading tag="h1">Ссылка отправлена</VHeading>
     <div data-testid="message">
-      <p>Мы отправили ссылку по адресу {{ email }}</p>
-      <p>Если письма долго нет — посмотрите пожалуйста в спаме</p>
-      <p>
-        Если и там нет —
-        <button class="link" @click="chatra('openChat', true)">
-          напишите нам
-        </button>
-      </p>
+      Мы отправили ссылку по адресу {{ email }}. Если письма долго нет —
+      посмотрите пожалуйста в спаме. Если и там нет —
+      <button class="link" @click="chatra('openChat', true)">
+        напишите нам</button
+      >.
     </div>
     <template #footer>
       <a
