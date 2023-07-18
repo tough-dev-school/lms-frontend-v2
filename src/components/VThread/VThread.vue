@@ -98,7 +98,8 @@
         v-bind="getRootComponentProps"
         :id="getRootComponentProps.answer.slug"
         @update="emit('update')"
-        @mounted="scrollToComment">
+        @mounted="scrollToComment"
+        :hasDescendants="originalPost.descendants.length > 0">
         <template #footer>
           <button
             class="answer-action"
