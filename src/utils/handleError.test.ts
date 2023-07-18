@@ -1,4 +1,3 @@
-import { describe, beforeEach, expect, test, vi } from 'vitest';
 import handleError, { DEFAULT_ERROR_MESSAGE } from '@/utils/handleError';
 import { faker } from '@faker-js/faker';
 import { createApp } from 'vue';

@@ -1,4 +1,3 @@
-import { describe, test, beforeEach, expect } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
 import useToasts, { type VToastMessage } from './toasts';
 import { faker } from '@faker-js/faker';

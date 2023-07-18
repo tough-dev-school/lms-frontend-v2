@@ -1,4 +1,3 @@
-import { describe, test, expect, vi, beforeEach } from 'vitest';
 import { getComments } from '@/api/homework';
 import { faker } from '@faker-js/faker';
 import getThreads from './getThreads';

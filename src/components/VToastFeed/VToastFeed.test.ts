@@ -1,4 +1,3 @@
-import { describe, expect, test, beforeEach, vi } from 'vitest';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { VToastFeed } from '@/components/VToastFeed';
 import { faker } from '@faker-js/faker';

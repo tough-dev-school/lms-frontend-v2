@@ -1,4 +1,3 @@
-import { expect, test, describe, vi, beforeEach } from 'vitest';
 import onResponseFulfilled from './onResponseFulfilled';
 import responseCaseMiddleware from './responseCaseMiddleware';
 import { createApp } from 'vue';

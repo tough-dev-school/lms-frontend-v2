@@ -1,5 +1,5 @@
 import useAuth from '@/stores/auth';
-import { test, describe, vi, beforeEach, expect } from 'vitest';
+
 import { createApp } from 'vue';
 import { setActivePinia } from 'pinia';
 import { createTestingPinia } from '@pinia/testing';

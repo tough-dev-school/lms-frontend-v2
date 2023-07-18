@@ -1,4 +1,3 @@
-import { describe, expect, test } from 'vitest';
 import getCommentsBySlug from './getCommentsBySlug';
 import { faker } from '@faker-js/faker';
 import shuffle from 'lodash/shuffle';
