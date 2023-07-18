@@ -4,6 +4,7 @@
   import { useRoute } from 'vue-router';
   import { computed } from 'vue';
   import { KNOWN_EMAIL_PROVIDERS } from '.';
+  import { useChatra } from '@/hooks/useChatra';
 
   const route = useRoute();
 
@@ -14,12 +15,23 @@
       return email.value.includes(provider.keyword);
     });
   });
+
+  const { chatra } = useChatra();
 </script>
 
 <template>
   <VCard class="flex flex-col gap-16">
     <VHeading tag="h1">Ссылка отправлена</VHeading>
-    <p data-testid="message">Мы отправили ссылку по адресу {{ email }}</p>
+    <div data-testid="message">
+      <p>Мы отправили ссылку по адресу {{ email }}</p>
+      <p>Если письма долго нет — посмотрите пожалуйста в спаме</p>
+      <p>
+        Если и там нет —
+        <button class="link" @click="chatra('openChat', true)">
+          напишите нам
+        </button>
+      </p>
+    </div>
     <template #footer>
       <a
         class="flex-grow button"
