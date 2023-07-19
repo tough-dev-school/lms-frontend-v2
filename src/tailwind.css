@@ -40,6 +40,10 @@
     max-width: 100%;
   }
 
+  .button {
+    @apply leading-[1.5] rounded bg-yellow p-module text-center text-black transition-colors hover:bg-yellow-hover disabled:opacity-25;
+  }
+
   .label {
     @apply mb-8 w-full text-gray;
   }

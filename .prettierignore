@@ -8,3 +8,5 @@ docker-compose.yml
 *.ejs.t
 .npmrc
 *.png
+*.svg
+*.jpg

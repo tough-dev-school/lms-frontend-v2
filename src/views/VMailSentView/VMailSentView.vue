@@ -1,41 +1,41 @@
 <script lang="ts" setup>
   import { VHeading } from '@/components/VHeading';
   import { VCard } from '@/components/VCard';
-  import { VButton } from '@/components/VButton';
-  import useAuth from '@/stores/auth';
-  import { useRouter, useRoute } from 'vue-router';
+  import { useRoute } from 'vue-router';
   import { computed } from 'vue';
-
-  const auth = useAuth();
-  const router = useRouter();
+  import { KNOWN_EMAIL_PROVIDERS } from '.';
+  import { useChatra } from '@/hooks/useChatra';
 
   const route = useRoute();
 
   const email = computed(() => String(route.query.email));
 
-  const resendEmail = async () => {
-    await auth.loginWithEmail(email.value);
-  };
+  const emailProvider = computed(() => {
+    return KNOWN_EMAIL_PROVIDERS.find((provider) => {
+      return email.value.includes(provider.keyword);
+    });
+  });
 
-  const back = () => {
-    router.push({ name: 'login' });
-  };
+  const { chatra } = useChatra();
 </script>
 
 <template>
-  <VCard class="mt-[25vh] flex flex-col gap-16">
+  <VCard class="flex flex-col gap-16">
     <VHeading tag="h1">Ссылка отправлена</VHeading>
-    <p data-testid="message">Мы отправили ссылку по адресу {{ email }}</p>
+    <div data-testid="message">
+      Мы отправили ссылку по адресу {{ email }}. Если письма долго нет —
+      посмотрите пожалуйста в спаме. Если и там нет —
+      <button class="link" @click="chatra('openChat', true)">
+        напишите нам</button
+      >.
+    </div>
     <template #footer>
-      <VButton class="flex-grow" @click="resendEmail" data-testid="resend"
-        >Отправить ещё раз</VButton
-      >
-      <VButton
-        class="flex-grow"
-        appearance="link"
-        @click="back"
-        data-testid="restart"
-        >На другую почту</VButton
+      <a
+        class="flex-grow button"
+        data-testid="open"
+        :href="emailProvider.url"
+        v-if="emailProvider"
+        >Открыть {{ emailProvider.label }}</a
       >
     </template>
   </VCard>
