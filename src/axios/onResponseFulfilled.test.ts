@@ -4,6 +4,7 @@ import { createApp } from 'vue';
 import { setActivePinia } from 'pinia';
 import { createTestingPinia } from '@pinia/testing';
 import type { AxiosResponse } from 'axios';
+import { cloneDeep } from 'lodash';
 
 vi.mock('./responseCaseMiddleware');
 
@@ -18,16 +19,22 @@ describe('onResponseFulfilled', () => {
   });
 
   test('request data is converted to CamelCase', () => {
-    onResponseFulfilled(input, true);
+    onResponseFulfilled(cloneDeep(input), true);
 
     expect(responseCaseMiddleware).toHaveBeenCalledTimes(1);
-    expect(responseCaseMiddleware).toHaveBeenCalledWith(input.data, true);
+    expect(responseCaseMiddleware).toHaveBeenCalledWith(
+      cloneDeep(input).data,
+      true,
+    );
   });
 
   test('request data coversion can be disabled', () => {
-    onResponseFulfilled(input, false);
+    onResponseFulfilled(cloneDeep(input), false);
 
     expect(responseCaseMiddleware).toHaveBeenCalledTimes(1);
-    expect(responseCaseMiddleware).toHaveBeenCalledWith(input.data, false);
+    expect(responseCaseMiddleware).toHaveBeenCalledWith(
+      cloneDeep(input).data,
+      false,
+    );
   });
 });
