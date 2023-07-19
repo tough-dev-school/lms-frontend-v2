@@ -4,8 +4,9 @@ import { faker } from '@faker-js/faker';
 
 const email = faker.internet.email();
 const getQuery = (email: string) => ({ query: { email } });
-const useRoute = vi.fn(() => getQuery(email));
-vi.mock('vue-router', () => ({
+const useRoute = vi.fn();
+
+vi.doMock('vue-router', () => ({
   useRoute,
 }));
 
@@ -34,6 +35,8 @@ describe('VMailSentView', () => {
   };
 
   beforeEach(() => {
+    useRoute.mockReturnValue(getQuery(email));
+
     mountWrapper();
   });
 
