@@ -13,7 +13,6 @@
     answer: Answer;
     questionId: string;
     parentId?: string;
-    hasDescendants: boolean;
   }
 
   const props = defineProps<Props>();
@@ -35,7 +34,7 @@
   const isEditable = computed(() => {
     const isDayPassed = dayjs().unix() < dayjs(props.answer.created).unix();
 
-    return isDayPassed || props.hasDescendants;
+    return isDayPassed || props.answer.hasDescendants;
   });
 
   const updateAnswer = async () => {
