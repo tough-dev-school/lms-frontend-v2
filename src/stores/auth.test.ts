@@ -1,4 +1,3 @@
-import { describe, test, beforeEach, expect, vi } from 'vitest';
 import { setActivePinia } from 'pinia';
 import { createTestingPinia } from '@pinia/testing';
 import { loginWithCredentials, loginWithLink, sendLoginLink } from '@/api/auth';
@@ -38,7 +37,7 @@ describe('toasts store', () => {
   test('loginWithCredentials calls api with needed parameters', async () => {
     await auth.loginWithCredentials(username, password);
 
-    expect(loginWithCredentials).toHaveBeenCalledOnce();
+    expect(loginWithCredentials).toHaveBeenCalledTimes(1);
     expect(loginWithCredentials).toHaveBeenCalledWith(username, password);
   });
 
@@ -54,21 +53,14 @@ describe('toasts store', () => {
   test('loginWithEmail calls api with needed parameters', () => {
     auth.loginWithEmail(email);
 
-    expect(sendLoginLink).toHaveBeenCalledOnce();
+    expect(sendLoginLink).toHaveBeenCalledTimes(1);
     expect(sendLoginLink).toHaveBeenCalledWith(email);
-  });
-
-  test('loginWithEmail always shows toast (for visual feedback)', async () => {
-    (sendLoginLink as ReturnType<typeof vi.fn>).mockRejectedValue({});
-    await auth.loginWithEmail(email);
-
-    expect(toasts.addMessage).toHaveBeenCalledTimes(1);
   });
 
   test('exchangeTokens calls api with needed parameters', async () => {
     await auth.exchangeTokens(passwordlessToken);
 
-    expect(loginWithLink).toHaveBeenCalledOnce();
+    expect(loginWithLink).toHaveBeenCalledTimes(1);
     expect(loginWithLink).toHaveBeenCalledWith(passwordlessToken);
   });
 

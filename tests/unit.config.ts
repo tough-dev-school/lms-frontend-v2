@@ -6,7 +6,8 @@ export default mergeConfig(
   viteConfig,
   defineConfig({
     test: {
-      restoreMocks: true,
+      globals: true,
+      mockReset: true,
       environment: 'jsdom',
       exclude: [...configDefaults.exclude, './src/visual-regression.test.ts'],
       coverage: {

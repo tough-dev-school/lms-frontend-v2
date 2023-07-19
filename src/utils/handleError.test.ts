@@ -1,4 +1,3 @@
-import { describe, beforeEach, expect, test, vi } from 'vitest';
 import handleError, { DEFAULT_ERROR_MESSAGE } from '@/utils/handleError';
 import { faker } from '@faker-js/faker';
 import { createApp } from 'vue';
@@ -28,7 +27,7 @@ describe('handleError', () => {
   test('calls toast with default message for empty error', () => {
     handleError();
 
-    expect(toasts.addMessage).toHaveBeenCalledOnce();
+    expect(toasts.addMessage).toHaveBeenCalledTimes(1);
     expect(toasts.addMessage).toHaveBeenCalledWith(
       DEFAULT_ERROR_MESSAGE,
       'error',
@@ -40,7 +39,7 @@ describe('handleError', () => {
 
     handleError(message);
 
-    expect(toasts.addMessage).toHaveBeenCalledOnce();
+    expect(toasts.addMessage).toHaveBeenCalledTimes(1);
     expect(toasts.addMessage).toHaveBeenCalledWith(message, 'error');
   });
 
@@ -52,7 +51,7 @@ describe('handleError', () => {
 
     handleError(error);
 
-    expect(toasts.addMessage).toHaveBeenCalledOnce();
+    expect(toasts.addMessage).toHaveBeenCalledTimes(1);
     expect(toasts.addMessage).toHaveBeenCalledWith(message, 'error');
   });
 

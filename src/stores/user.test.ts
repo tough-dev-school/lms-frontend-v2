@@ -1,6 +1,5 @@
 import getName from '@/utils/getName';
 
-import { describe, test, vi, expect, beforeEach } from 'vitest';
 import { createApp } from 'vue';
 import useToasts from '@/stores/toasts';
 import useUser from '@/stores/user';
@@ -36,7 +35,7 @@ describe('user store', () => {
   test('getData calls api', async () => {
     await user.getData();
 
-    expect(getUser).toHaveBeenCalledOnce();
+    expect(getUser).toHaveBeenCalledTimes(1);
   });
 
   test('getData sets data from api', async () => {

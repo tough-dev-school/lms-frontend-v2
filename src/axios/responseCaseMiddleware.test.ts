@@ -1,4 +1,3 @@
-import { describe, test, expect, vi } from 'vitest';
 import responseCaseMiddleware from './responseCaseMiddleware';
 import camelcaseKeys from 'camelcase-keys';
 import {
@@ -17,7 +16,7 @@ describe('responseCaseMiddleware', () => {
     );
     const result = responseCaseMiddleware(data, true);
 
-    expect(camelcaseKeys).toHaveBeenCalledOnce();
+    expect(camelcaseKeys).toHaveBeenCalledTimes(1);
     expect(camelcaseKeys).toHaveBeenCalledWith(data, { deep: true });
     expect(result).toStrictEqual(camelcaseKeys(data));
   });

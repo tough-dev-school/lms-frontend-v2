@@ -1,4 +1,3 @@
-import { describe, expect, test, beforeEach, vi } from 'vitest';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { VToastFeed } from '@/components/VToastFeed';
 import { faker } from '@faker-js/faker';
@@ -46,7 +45,7 @@ describe('VToastFeed', () => {
 
     (getFirstToast() as VueWrapper).vm.$emit('delete', toasts.messages[0].id);
 
-    expect(toasts.removeMessage).toHaveBeenCalledOnce();
+    expect(toasts.removeMessage).toHaveBeenCalledTimes(1);
     expect(toasts.removeMessage).toHaveBeenCalledWith(toasts.messages[0].id);
   });
 

@@ -1,4 +1,3 @@
-import { describe, test, beforeEach, expect, vi } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
 import useStudies from './studies';
 import { getStudies } from '@/api/studies';
@@ -26,7 +25,7 @@ describe('studies store', () => {
   test('getData calls studies', async () => {
     await studies.getData();
 
-    expect(getStudies).toHaveBeenCalledOnce();
+    expect(getStudies).toHaveBeenCalledTimes(1);
   });
 
   test('getData sets items', async () => {

@@ -1,4 +1,3 @@
-import { describe, expect, test, beforeEach, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import { VPasswordSettings } from '.';
@@ -67,7 +66,7 @@ describe('VPasswordSettings', () => {
 
     await getSaveWrapper().trigger('click');
 
-    expect(auth.changePassword).toHaveBeenCalledOnce();
+    expect(auth.changePassword).toHaveBeenCalledTimes(1);
     expect(auth.changePassword).toHaveBeenCalledWith({
       newPassword1: password1,
       newPassword2: password2,

@@ -1,4 +1,3 @@
-import { describe, expect, test, beforeEach, vi } from 'vitest';
 import { createTestingPinia } from '@pinia/testing';
 import { VueWrapper, mount, RouterLinkStub } from '@vue/test-utils';
 import { VAnswer } from '@/components/VAnswer';
