@@ -5,7 +5,8 @@ import { faker } from '@faker-js/faker';
 const email = faker.internet.email();
 const getQuery = (email: string) => ({ query: { email } });
 const useRoute = vi.fn(() => getQuery(email));
-vi.mock('vue-router', () => ({
+// #FIXME maybe doMock → mock
+vi.doMock('vue-router', () => ({
   useRoute,
 }));
 
