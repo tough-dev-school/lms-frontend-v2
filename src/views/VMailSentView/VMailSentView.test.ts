@@ -1,4 +1,3 @@
-import { describe, expect, test, beforeEach, vi, afterEach } from 'vitest';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
 import { faker } from '@faker-js/faker';
@@ -6,7 +5,8 @@ import { faker } from '@faker-js/faker';
 const email = faker.internet.email();
 const getQuery = (email: string) => ({ query: { email } });
 const useRoute = vi.fn(() => getQuery(email));
-vi.mock('vue-router/dist/vue-router.mjs', () => ({
+// #FIXME maybe doMock → mock
+vi.doMock('vue-router', () => ({
   useRoute,
 }));
 

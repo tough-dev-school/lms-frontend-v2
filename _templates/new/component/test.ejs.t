@@ -2,7 +2,6 @@
 to: src/<%= folder %>/<%= name %>/<%= name %>.test.ts
 ---
 
-import { describe, expect, test, beforeEach } from 'vitest';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
 import { <%= name %> } from '.';

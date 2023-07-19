@@ -1,4 +1,3 @@
-import { describe, test, expect, beforeEach, vi } from 'vitest';
 import { type VueWrapper, mount } from '@vue/test-utils';
 import { ALLOWED_REACTIONS, VReactions, type VReactionsProps } from '.';
 import type { VReaction } from './components/VReaction';

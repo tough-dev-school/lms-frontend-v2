@@ -1,4 +1,3 @@
-import { describe, expect, test, beforeEach, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import { VLinksSettings } from '.';
@@ -85,7 +84,7 @@ describe('VLinksSettings', () => {
     getTelegramWrapper().vm.$emit('update:modelValue', telegramUsername);
     await getSaveWrapper().trigger('click');
 
-    expect(user.setData).toHaveBeenCalledOnce();
+    expect(user.setData).toHaveBeenCalledTimes(1);
     expect(user.setData).toHaveBeenCalledWith({
       githubUsername,
       linkedinUsername,

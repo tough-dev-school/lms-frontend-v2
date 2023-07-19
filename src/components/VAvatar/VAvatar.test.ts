@@ -1,4 +1,3 @@
-import { beforeEach, describe, test, expect } from 'vitest';
 import { VAvatar } from '@/components/VAvatar';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
