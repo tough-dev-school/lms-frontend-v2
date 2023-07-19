@@ -10,13 +10,10 @@ import {
   resetPassword,
 } from '@/api/auth';
 import useToasts from './toasts';
-import throttle from 'lodash/throttle';
 
 type AuthStoreState = {
   token: AuthToken | undefined;
 };
-
-const throttledSendLoginLink = throttle(sendLoginLink, 30000);
 
 const useAuth = defineStore('auth', {
   state: (): AuthStoreState => {
@@ -33,13 +30,7 @@ const useAuth = defineStore('auth', {
     },
     async loginWithEmail(email: string) {
       try {
-        // Prevent spamming emails
-        await throttledSendLoginLink(email);
-
-        useToasts().addMessage(
-          'Ссылка для входа отправлена на почту!',
-          'success',
-        );
+        await sendLoginLink(email);
       } catch (error: any) {}
     },
     async exchangeTokens(passwordlessToken: string) {

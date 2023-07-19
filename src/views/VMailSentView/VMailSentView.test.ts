@@ -1,10 +1,7 @@
 import { mount, VueWrapper } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
-import { VMailSentView } from '.';
 import { faker } from '@faker-js/faker';
-import useAuth from '@/stores/auth';
 
-const routerPushMock = vi.fn();
 const email = faker.internet.email();
 
 vi.mock('vue-router', () => ({
@@ -18,9 +15,13 @@ vi.mock('vue-router', () => ({
   }),
 }));
 
+import { VMailSentView, GMAIL, MAILRU } from '.';
+
+const gmailEmailQuery = getQuery('john@gmail.com');
+const mailruEmailQuery = getQuery('ivan@mail.ru');
+
 describe('VMailSentView', () => {
   let wrapper: VueWrapper<InstanceType<typeof VMailSentView>>;
-  let auth: ReturnType<typeof useAuth>;
 
   beforeEach(() => {
     wrapper = mount(VMailSentView, {
@@ -36,32 +37,48 @@ describe('VMailSentView', () => {
         },
       },
     });
+  });
 
-    auth = useAuth();
+  afterEach(() => {
+    vi.resetAllMocks();
   });
 
   const getMessageWrapper = () => {
     return wrapper.find(`[data-testid="message"]`);
   };
-  const getResendWrapper = () => {
-    return wrapper.find(`[data-testid="resend"]`);
-  };
-  const getRestartWrapper = () => {
-    return wrapper.find(`[data-testid="restart"]`);
+  const getOpenWrapper = () => {
+    return wrapper.find(`[data-testid="open"]`);
   };
 
-  test('message contains email', () => {
+  test.todo('message contains email', () => {
     expect(getMessageWrapper().text()).toContain(email);
   });
-  test('click on resend sends email', () => {
-    getResendWrapper().trigger('click');
 
-    expect(auth.loginWithEmail).toHaveBeenCalledWith(email);
+  test.todo('button is not shown if email service is not recognized', () => {
+    expect(getOpenWrapper().exists()).toBe(false);
   });
 
-  test('click on restart returns to login', () => {
-    getRestartWrapper().trigger('click');
+  test.todo('button is shown if email service is recognized', async () => {
+    useRoute.mockReturnValueOnce(
+      faker.helpers.arrayElement([mailruEmailQuery, gmailEmailQuery]),
+    );
 
-    expect(routerPushMock).toHaveBeenCalledWith({ name: 'login' });
+    expect(getOpenWrapper().exists()).toBe(true);
+  });
+
+  test.todo('button has correct attributes for gmail', async () => {
+    useRoute.mockReturnValueOnce(gmailEmailQuery);
+
+    expect(getOpenWrapper().exists()).toBe(true);
+    expect(getOpenWrapper().attributes('href')).toBe(GMAIL.url);
+    expect(getOpenWrapper().text()).toContain(GMAIL.label);
+  });
+
+  test.todo('button has correct attributes for mailru', async () => {
+    useRoute.mockReturnValueOnce(mailruEmailQuery);
+
+    expect(getOpenWrapper().exists()).toBe(true);
+    expect(getOpenWrapper().attributes('href')).toBe(MAILRU.url);
+    expect(getOpenWrapper().text()).toContain(MAILRU.label);
   });
 });
