@@ -1,4 +1,3 @@
-import { describe, expect, test, beforeEach, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import { VLoginChangeView } from '.';
@@ -39,7 +38,7 @@ describe('VLoginChangeView', () => {
   test('navigates to /login on save', () => {
     getPasswordSettingsWrapper().vm.$emit('save');
 
-    expect(routerPushMock).toHaveBeenCalledOnce();
+    expect(routerPushMock).toHaveBeenCalledTimes(1);
     expect(routerPushMock).toHaveBeenCalledWith({ name: 'login' });
   });
 });

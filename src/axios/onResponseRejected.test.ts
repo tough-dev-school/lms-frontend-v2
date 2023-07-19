@@ -1,5 +1,5 @@
 import useAuth from '@/stores/auth';
-import { test, describe, vi, beforeEach, expect } from 'vitest';
+
 import { createApp } from 'vue';
 import { setActivePinia } from 'pinia';
 import { createTestingPinia } from '@pinia/testing';
@@ -35,25 +35,27 @@ describe('custom axios', () => {
   });
 
   test('response data is converted to CamelCase', () => {
-    const error = cloneDeep(defaultError);
-
-    onResponseRejected(error as unknown as AxiosError, true).catch(() => {});
+    onResponseRejected(
+      cloneDeep(defaultError) as unknown as AxiosError,
+      true,
+    ).catch(() => {});
 
     expect(responseCaseMiddleware).toHaveBeenCalledTimes(1);
     expect(responseCaseMiddleware).toHaveBeenCalledWith(
-      error.response.data,
+      cloneDeep(defaultError).response.data,
       true,
     );
   });
 
   test('response data coversion can be disabled', () => {
-    const error = cloneDeep(defaultError);
-
-    onResponseRejected(error as unknown as AxiosError, false).catch(() => {});
+    onResponseRejected(
+      cloneDeep(defaultError) as unknown as AxiosError,
+      false,
+    ).catch(() => {});
 
     expect(responseCaseMiddleware).toHaveBeenCalledTimes(1);
     expect(responseCaseMiddleware).toHaveBeenCalledWith(
-      error.response.data,
+      cloneDeep(defaultError).response.data,
       false,
     );
   });

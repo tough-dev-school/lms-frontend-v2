@@ -1,4 +1,3 @@
-import { describe, test, beforeEach, expect, vi } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
 import useMaterials from './materials';
 import { getMaterial } from '@/api/materials';
@@ -26,7 +25,7 @@ describe('materials store', () => {
   test(' getData to call get materials', async () => {
     await materials.getData(faker.string.uuid());
 
-    expect(getMaterial).toHaveBeenCalledOnce();
+    expect(getMaterial).toHaveBeenCalledTimes(1);
   });
 
   test('getData sets material', async () => {

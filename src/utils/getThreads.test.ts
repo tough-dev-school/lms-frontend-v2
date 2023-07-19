@@ -1,4 +1,3 @@
-import { describe, test, expect, vi, beforeEach } from 'vitest';
 import { getComments } from '@/api/homework';
 import { faker } from '@faker-js/faker';
 import getThreads from './getThreads';
@@ -29,7 +28,7 @@ describe('getThreads', () => {
   test('call getComments with answer ids', () => {
     getThreads(answers);
 
-    expect(getComments).toHaveBeenCalledOnce();
+    expect(getComments).toHaveBeenCalledTimes(1);
     expect(getComments).toHaveBeenCalledWith(
       answers.map((answer) => answer.slug),
     );

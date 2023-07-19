@@ -1,4 +1,3 @@
-import { describe, expect, test, beforeEach, vi, afterEach } from 'vitest';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
 import { faker } from '@faker-js/faker';
