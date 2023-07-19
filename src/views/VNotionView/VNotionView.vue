@@ -18,6 +18,7 @@
   import useMaterials from '@/stores/materials';
   import { useTitle } from '@vueuse/core';
   import getNotionTitle from '@/utils/getNotionTitle';
+  import { useChatra } from '@/hooks/useChatra';
 
   const router = useRouter();
   const materials = useMaterials();
@@ -37,6 +38,7 @@
   );
 
   const mapPageUrl = (id: string) => `/materials/${id}`;
+  const { chatra } = useChatra();
 
   const rendererProps = computed(() => {
     return {
@@ -60,7 +62,11 @@
     class="center flex max-w-[400px] flex-col text-center">
     <p>Материал не найден :(</p>
     <p>
-      Если кажется что здесь какая-то ошибка напишите в чат в углу экрана или на
+      Если кажется что здесь какая-то ошибка напишите
+      <button class="link" @click="chatra('openChat', true)">
+        в чат в углу экрана
+      </button>
+      или на
       <a
         class="link"
         href="mailto:
