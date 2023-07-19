@@ -5,17 +5,20 @@ import {
   STATIC_SNAKE_CASE_EXAMPLE,
 } from '@/mocks/mockCase';
 
-const data = STATIC_CAMEL_CASE_EXAMPLE;
-
 vi.mock('decamelize-keys');
+
+const data = STATIC_CAMEL_CASE_EXAMPLE;
 
 describe('requestCaseMiddleware', () => {
   test('run decamelizeKeys when enabled', () => {
+    (decamelizeKeys as ReturnType<typeof vi.fn>).mockReturnValue(
+      STATIC_SNAKE_CASE_EXAMPLE,
+    );
     const result = requestCaseMiddleware(data, true);
 
     expect(decamelizeKeys).toHaveBeenCalledTimes(1);
     expect(decamelizeKeys).toHaveBeenCalledWith(data, { deep: true });
-    expect(result).toStrictEqual(STATIC_SNAKE_CASE_EXAMPLE);
+    expect(result).toStrictEqual(decamelizeKeys(data));
   });
 
   test('dont run decamelizeKeys when not enabled', () => {
