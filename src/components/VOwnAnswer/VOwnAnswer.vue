@@ -34,7 +34,7 @@
   const isEditable = computed(() => {
     const isDayPassed = dayjs().unix() < dayjs(props.answer.created).unix();
 
-    return isDayPassed || props.answer.hasDescendants;
+    return !(isDayPassed || props.answer.hasDescendants);
   });
 
   const updateAnswer = async () => {
