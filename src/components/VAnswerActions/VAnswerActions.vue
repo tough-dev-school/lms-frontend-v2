@@ -2,12 +2,6 @@
   import { VAnswerActionsDesktop } from '@/components/VAnswerActionsDesktop';
   import { VAnswerActionsMobile } from '@/components/VAnswerActionsMobile';
 
-  export interface Props {
-    created: string;
-    deleteTime: number;
-    editTime: number;
-  }
-
   const emit = defineEmits<{
     delete: [];
     edit: [];
