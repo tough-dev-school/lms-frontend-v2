@@ -11,10 +11,10 @@ vi.doMock('vue-router', () => ({
 }));
 
 import { VMailSentView } from '.';
-import { getProvider } from '@brachkow/email-providers';
+import { getProviderById } from '@brachkow/email-providers';
 
-const GMAIL = getProvider('GMAIL');
-const MAILRU = getProvider('MAILRU');
+const GMAIL = getProviderById('GMAIL');
+const MAILRU = getProviderById('MAILRU');
 
 const gmailEmailQuery = getQuery('john@gmail.com');
 const mailruEmailQuery = getQuery('ivan@mail.ru');
