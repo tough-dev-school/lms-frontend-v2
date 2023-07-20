@@ -8,7 +8,7 @@
 </script>
 
 <script lang="ts" setup>
-  import { computed } from 'vue';
+  import { computed, watch, ref } from 'vue';
   import { VReaction } from './components/VReaction';
   import type { Reaction, ReactionEmoji } from '@/types/homework';
   import { groupBy } from 'lodash';
@@ -26,11 +26,21 @@
     close: [];
   }>();
 
+  const localReactions = ref<Reaction[]>([]);
+
+  watch(
+    () => props.reactions,
+    () => {
+      localReactions.value = props.reactions;
+    },
+    { immediate: true },
+  );
+
   const groupedReactions = computed(() => {
-    return groupBy(props.reactions, (reaction) => reaction.emoji) as Record<
-      ReactionEmoji,
-      Reaction[]
-    >;
+    return groupBy(
+      localReactions.value,
+      (reaction) => reaction.emoji,
+    ) as Record<ReactionEmoji, Reaction[]>;
   });
 
   const sortReactions = (reactions: ReactionEmoji[]) =>
@@ -47,6 +57,30 @@
   );
 
   const userStore = useUser();
+
+  const handleAdd = (emoji: ReactionEmoji) => {
+    emit('add', emoji);
+
+    const reaction: Reaction = {
+      slug: '',
+      author: {
+        uuid: userStore.uuid,
+        firstName: userStore.firstName,
+        lastName: userStore.lastName,
+      },
+      emoji,
+      answer: props.answerId,
+    };
+
+    localReactions.value = [...localReactions.value, reaction];
+  };
+
+  const handleRemove = (emoji: ReactionEmoji, reactionId: string) => {
+    emit('remove', reactionId);
+    localReactions.value = localReactions.value.filter((reaction) => {
+      return reaction.emoji === emoji;
+    });
+  };
 </script>
 
 <template>
@@ -57,7 +91,7 @@
     :emoji="emoji"
     :userId="userStore.uuid"
     :reactions="groupedReactions[emoji]"
-    @add="(emoji) => emit('add', emoji)"
-    @remove="(reactionId) => emit('remove', reactionId)"
+    @add="handleAdd"
+    @remove="(reactionId) => handleRemove(emoji, reactionId)"
     data-testid="reaction" />
 </template>
