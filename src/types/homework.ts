@@ -22,7 +22,7 @@ export interface Reaction {
   answer: string;
 }
 
-export interface Answer {
+export interface Post {
   created: string;
   modified: string;
   slug: string;
@@ -30,11 +30,14 @@ export interface Answer {
   author: Author;
   text: string;
   src: string;
-  hasDescendants: boolean;
   reactions: Reaction[];
 }
 
-export interface Thread extends Answer {
+export interface Answer extends Post {
+  hasDescendants: boolean;
+}
+
+export interface Thread extends Post {
   descendants: Comment[];
 }
 
