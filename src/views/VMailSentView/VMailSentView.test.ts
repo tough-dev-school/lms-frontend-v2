@@ -2,7 +2,7 @@ import { mount, VueWrapper } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
 import { faker } from '@faker-js/faker';
 
-const email = faker.internet.email();
+const email = faker.internet.email({ provider: 'foobar.baz' });
 const getQuery = (email: string) => ({ query: { email } });
 const useRoute = vi.fn();
 
