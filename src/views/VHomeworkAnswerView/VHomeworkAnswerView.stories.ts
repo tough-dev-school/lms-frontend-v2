@@ -46,7 +46,9 @@ const Template: StoryFn = (args) => ({
             descendants: [
               // 2
               mockComment({
-                ...mockThread(mockAnswer({ author: STATIC_AUTHOR_1 })),
+                ...mockThread(
+                  mockAnswer({ author: STATIC_AUTHOR_1, hasDescendants: true }),
+                ),
                 descendants: [
                   // 3
                   mockComment(
@@ -76,7 +78,7 @@ const Template: StoryFn = (args) => ({
                 mockThread(
                   mockAnswer({
                     author: STATIC_AUTHOR_1,
-                    created: dayjs().subtract(1, 'year').toISOString(),
+                    created: dayjs().toISOString(),
                   }),
                 ),
               ),
