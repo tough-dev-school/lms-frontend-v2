@@ -6,11 +6,11 @@
   import { ref, onMounted, computed } from 'vue';
   import { VAnswer } from '@/components/VAnswer';
   import { VCard } from '@/components/VCard';
-  import type { Answer, Thread } from '@/types/homework';
+  import type { Answer, Thread, Comment } from '@/types/homework';
   import dayjs from 'dayjs';
 
   export interface Props {
-    answer: Answer | Thread;
+    answer: Answer | Thread | Comment;
     questionId: string;
     parentId?: string;
   }
@@ -33,12 +33,8 @@
 
   const isEditable = computed(() => {
     const isDayPassed = dayjs().unix() < dayjs(props.answer.created).unix();
-    const hasDescendants =
-      (props.answer as Answer).hasDescendants ||
-      ((props.answer as Thread).descendants &&
-        (props.answer as Thread).descendants.length > 0);
 
-    return !(isDayPassed || hasDescendants);
+    return !(isDayPassed || props.answer.hasDescendants);
   });
 
   const updateAnswer = async () => {

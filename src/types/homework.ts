@@ -37,7 +37,7 @@ export interface Answer extends Post {
   hasDescendants: boolean;
 }
 
-export interface Thread extends Post {
+export interface Thread extends Answer {
   descendants: Comment[];
 }
 
