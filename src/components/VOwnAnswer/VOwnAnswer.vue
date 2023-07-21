@@ -6,10 +6,11 @@
   import { ref, onMounted, computed } from 'vue';
   import { VAnswer } from '@/components/VAnswer';
   import { VCard } from '@/components/VCard';
-  import type { Answer } from '@/types/homework';
+  import type { Answer, Thread, Comment } from '@/types/homework';
+  import dayjs from 'dayjs';
 
   export interface Props {
-    answer: Answer;
+    answer: Answer | Thread | Comment;
     questionId: string;
     parentId?: string;
   }
@@ -27,10 +28,14 @@
 
   const editMode = ref(false);
   const text = ref('');
-  const editTime = ref(30);
-  const deleteTime = ref(10);
 
   const isDisabled = computed(() => !(text.value.length > 0));
+
+  const isEditable = computed(() => {
+    const isDayPassed = dayjs().unix() < dayjs(props.answer.created).unix();
+
+    return !(isDayPassed || props.answer.hasDescendants);
+  });
 
   const updateAnswer = async () => {
     if (isDisabled.value) return;
@@ -61,9 +66,7 @@
     <VAnswer @update="emit('update')" :answer="answer as Answer">
       <template #header>
         <VAnswerActions
-          :created="answer.created"
-          :edit-time="editTime"
-          :delete-time="deleteTime"
+          v-if="isEditable"
           @edit="handleEdit"
           @delete="handleDelete" />
       </template>

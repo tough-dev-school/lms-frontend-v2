@@ -2,10 +2,10 @@ import { mount, VueWrapper } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
 import { faker } from '@faker-js/faker';
 
-const email = faker.internet.email();
+const email = faker.internet.email({ provider: 'foobar.baz' });
 const getQuery = (email: string) => ({ query: { email } });
-const useRoute = vi.fn(() => getQuery(email));
-// #FIXME maybe doMock → mock
+const useRoute = vi.fn();
+
 vi.doMock('vue-router', () => ({
   useRoute,
 }));
@@ -18,7 +18,7 @@ const mailruEmailQuery = getQuery('ivan@mail.ru');
 describe('VMailSentView', () => {
   let wrapper: VueWrapper<InstanceType<typeof VMailSentView>>;
 
-  beforeEach(() => {
+  const mountWrapper = () => {
     wrapper = mount(VMailSentView, {
       shallow: true,
       global: {
@@ -32,6 +32,12 @@ describe('VMailSentView', () => {
         },
       },
     });
+  };
+
+  beforeEach(() => {
+    useRoute.mockReturnValue(getQuery(email));
+
+    mountWrapper();
   });
 
   afterEach(() => {
@@ -45,32 +51,35 @@ describe('VMailSentView', () => {
     return wrapper.find(`[data-testid="open"]`);
   };
 
-  test.todo('message contains email', () => {
+  test('message contains email', () => {
     expect(getMessageWrapper().text()).toContain(email);
   });
 
-  test.todo('button is not shown if email service is not recognized', () => {
+  test('button is not shown if email service is not recognized', () => {
     expect(getOpenWrapper().exists()).toBe(false);
   });
 
-  test.todo('button is shown if email service is recognized', async () => {
+  test('button is shown if email service is recognized', async () => {
     useRoute.mockReturnValueOnce(
       faker.helpers.arrayElement([mailruEmailQuery, gmailEmailQuery]),
     );
+    mountWrapper();
 
     expect(getOpenWrapper().exists()).toBe(true);
   });
 
-  test.todo('button has correct attributes for gmail', async () => {
+  test('button has correct attributes for gmail', async () => {
     useRoute.mockReturnValueOnce(gmailEmailQuery);
+    mountWrapper();
 
     expect(getOpenWrapper().exists()).toBe(true);
     expect(getOpenWrapper().attributes('href')).toBe(GMAIL.url);
     expect(getOpenWrapper().text()).toContain(GMAIL.label);
   });
 
-  test.todo('button has correct attributes for mailru', async () => {
+  test('button has correct attributes for mailru', async () => {
     useRoute.mockReturnValueOnce(mailruEmailQuery);
+    mountWrapper();
 
     expect(getOpenWrapper().exists()).toBe(true);
     expect(getOpenWrapper().attributes('href')).toBe(MAILRU.url);

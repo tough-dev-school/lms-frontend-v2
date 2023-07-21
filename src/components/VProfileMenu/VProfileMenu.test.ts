@@ -4,7 +4,6 @@ import useUser from '@/stores/user';
 import useAuth from '@/stores/auth';
 import type { VAvatar } from '@/components/VAvatar';
 import { faker } from '@faker-js/faker';
-
 import { createTestingPinia } from '@pinia/testing';
 import useStudies from '@/stores/studies';
 import { mockStudy } from '@/mocks/mockStudy';
