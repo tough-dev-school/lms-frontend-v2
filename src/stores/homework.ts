@@ -100,14 +100,14 @@ const useHomework = defineStore('homework', {
     },
     async addReaction({
       answerId,
-      reaction,
+      emoji,
       slug,
     }: {
       answerId: string;
-      reaction: ReactionEmoji;
+      emoji: ReactionEmoji;
       slug: string;
     }) {
-      return await addReaction({ answerId, reaction, slug });
+      return await addReaction({ answerId, emoji, slug });
     },
     async removeReaction(answerId: string, reactionId: string) {
       return await removeReaction(answerId, reactionId);

@@ -100,16 +100,16 @@ export const sendImage = async (file: File) => {
 
 export const addReaction = async ({
   answerId,
-  reaction,
+  emoji,
   slug,
 }: {
   answerId: string;
-  reaction: ReactionEmoji;
+  emoji: ReactionEmoji;
   slug?: string;
 }) => {
   const url = `/api/v2/homework/answers/${answerId}/reactions/`;
 
-  const data: { emoji: ReactionEmoji; slug?: string } = { emoji: reaction };
+  const data: { emoji: ReactionEmoji; slug?: string } = { emoji };
 
   if (slug) data.slug = slug;
 
