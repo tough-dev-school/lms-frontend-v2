@@ -98,13 +98,20 @@ export const sendImage = async (file: File) => {
   return (await axios.post(url, formData)).data as { image: string };
 };
 
-export const addReaction = async (
-  answerId: string,
-  reaction: ReactionEmoji,
-) => {
+export const addReaction = async ({
+  answerId,
+  reaction,
+  slug,
+}: {
+  answerId: string;
+  reaction: ReactionEmoji;
+  slug?: string;
+}) => {
   const url = `/api/v2/homework/answers/${answerId}/reactions/`;
 
-  const data = { emoji: reaction };
+  const data: { emoji: ReactionEmoji; slug?: string } = { emoji: reaction };
+
+  if (slug) data.slug = slug;
 
   return (await axios.post(url, data)).data as Reaction;
 };

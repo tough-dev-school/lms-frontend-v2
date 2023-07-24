@@ -35,7 +35,7 @@
   const isPaletteOpen = ref(false);
 
   const addReaction = (emoji: ReactionEmoji) => {
-    homeworkStore.addReaction(props.answer.slug, emoji);
+    homeworkStore.addReaction({ answerId: props.answer.slug, emoji });
     emit('update');
   };
 
