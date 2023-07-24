@@ -13,7 +13,7 @@
   import type { Reaction, ReactionEmoji } from '@/types/homework';
   import { groupBy } from 'lodash';
   import useUser from '@/stores/user';
-  import { ALLOWED_REACTIONS } from '.';
+  import { ALLOWED_REACTIONS, MAX_REACTIONS } from '.';
 
   const props = withDefaults(defineProps<VReactionsProps>(), {
     open: false,
@@ -21,10 +21,12 @@
   });
 
   const emit = defineEmits<{
-    add: [emoji: ReactionEmoji];
+    add: [emoji: ReactionEmoji, slug: string];
     remove: [reactionId: string];
     close: [];
   }>();
+
+  const userStore = useUser();
 
   const localReactions = ref<Reaction[]>([]);
 
@@ -35,6 +37,25 @@
     },
     { immediate: true },
   );
+
+  const isUnderLimit = computed(
+    () =>
+      localReactions.value.filter(
+        (reaction) => reaction.author.uuid === userStore.uuid,
+      ).length < MAX_REACTIONS,
+  );
+
+  const isDisabled = (reactions: Reaction[] | undefined) => {
+    if (reactions === undefined) reactions = [];
+    // Reaction that is set can't be disabled
+    if (reactions.find((reaction) => reaction.author.uuid === userStore.uuid)) {
+      return false;
+    }
+
+    if (isUnderLimit.value) return false;
+
+    return true;
+  };
 
   const groupedReactions = computed(() => {
     return groupBy(
@@ -56,13 +77,12 @@
     ),
   );
 
-  const userStore = useUser();
-
   const handleAdd = (emoji: ReactionEmoji) => {
-    emit('add', emoji);
+    const slug = crypto.randomUUID();
+    emit('add', emoji, slug);
 
     const reaction: Reaction = {
-      slug: '',
+      slug,
       author: {
         uuid: userStore.uuid,
         firstName: userStore.firstName,
@@ -75,10 +95,10 @@
     localReactions.value = [...localReactions.value, reaction];
   };
 
-  const handleRemove = (emoji: ReactionEmoji, reactionId: string) => {
+  const handleRemove = (reactionId: string) => {
     emit('remove', reactionId);
     localReactions.value = localReactions.value.filter(
-      (reaction) => reaction.emoji !== emoji,
+      (reaction) => reaction.slug !== reactionId,
     );
   };
 </script>
@@ -87,11 +107,11 @@
   <VReaction
     v-for="emoji in emojiSet"
     :key="emoji"
-    :disabled="disabled"
+    :disabled="isDisabled(groupedReactions[emoji])"
     :emoji="emoji"
     :userId="userStore.uuid"
     :reactions="groupedReactions[emoji]"
     @add="handleAdd"
-    @remove="(reactionId) => handleRemove(emoji, reactionId)"
+    @remove="handleRemove"
     data-testid="reaction" />
 </template>

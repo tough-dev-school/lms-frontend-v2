@@ -33,8 +33,8 @@
 
   const isPaletteOpen = ref(false);
 
-  const addReaction = (emoji: ReactionEmoji) => {
-    homeworkStore.addReaction({ answerId: props.answer.slug, emoji });
+  const addReaction = (emoji: ReactionEmoji, slug: string) => {
+    homeworkStore.addReaction({ answerId: props.answer.slug, emoji, slug });
     emit('update');
   };
 
