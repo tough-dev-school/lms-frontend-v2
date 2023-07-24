@@ -1,10 +1,11 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
+
 import { VAvatar } from '@/components/VAvatar';
 import { faker } from '@faker-js/faker';
 
 export default {
-  title: 'UI/VAvatar',
   component: VAvatar,
+  title: 'UI/VAvatar',
 } as Meta;
 
 const Template: StoryFn = (args) => ({
@@ -16,9 +17,9 @@ const Template: StoryFn = (args) => ({
 });
 
 export const Default = {
-  render: Template,
-
   args: {
     userId: faker.string.uuid(),
   },
+
+  render: Template,
 };

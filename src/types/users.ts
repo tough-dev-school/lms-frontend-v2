@@ -1,27 +1,27 @@
 export type Gender = 'female' | 'male' | undefined;
 
 export interface User {
-  id: string;
-  uuid: string;
-  username: string;
   firstName: string;
-  lastName: string;
   firstNameEn: string;
-  lastNameEn: string;
   gender: Gender;
-  linkedinUsername: string;
   githubUsername: string;
+  id: string;
+  lastName: string;
+  lastNameEn: string;
+  linkedinUsername: string;
   telegramUsername: string;
+  username: string;
+  uuid: string;
 }
 
 type EditableUserDataProperties =
   | 'firstName'
-  | 'lastName'
   | 'firstNameEn'
-  | 'lastNameEn'
   | 'gender'
-  | 'linkedinUsername'
   | 'githubUsername'
+  | 'lastName'
+  | 'lastNameEn'
+  | 'linkedinUsername'
   | 'telegramUsername';
 
 export type EditableUserData = Partial<Pick<User, EditableUserDataProperties>>;

@@ -1,14 +1,14 @@
-import {
-  createRouter,
-  createWebHistory,
-  type RouteLocationNormalized,
-} from 'vue-router';
 import useAuth from '@/stores/auth';
-import useUser from '@/stores/user';
-import useStudies from '@/stores/studies';
-import useMaterials from '@/stores/materials';
 import useDiplomas from '@/stores/diplomas';
 import useLoading from '@/stores/loading';
+import useMaterials from '@/stores/materials';
+import useStudies from '@/stores/studies';
+import useUser from '@/stores/user';
+import {
+  type RouteLocationNormalized,
+  createRouter,
+  createWebHistory,
+} from 'vue-router';
 
 const VHomeView = () => import('@/views/VHomeView/VHomeView.vue');
 const VMailSentView = () => import('@/views/VMailSentView/VMailSentView.vue');
@@ -28,8 +28,8 @@ const VLoginChangeView = () =>
   import('@/views/VLoginChangeView/VLoginChangeView.vue');
 const VCertificatesView = () =>
   import('@/views/VCertificatesView/VCertificatesView.vue');
-import loginByToken from '@/router/loginByToken';
 import loginById from '@/router/loginById';
+import loginByToken from '@/router/loginByToken';
 
 const isAuthorized = () => {
   const auth = useAuth();
@@ -50,90 +50,90 @@ const disallowAuthorized = () => {
 
 export const routes = [
   {
-    path: '/',
-    name: 'home',
     component: VHomeView,
+    name: 'home',
+    path: '/',
   },
   {
-    path: '/settings',
-    name: 'settings',
     component: VSettingsView,
+    name: 'settings',
+    path: '/settings',
   },
   {
-    path: '/login',
-    name: 'login',
+    beforeEnter: [disallowAuthorized],
     component: VLoginView,
-    beforeEnter: [disallowAuthorized],
     meta: {
       isPublic: true,
     },
+    name: 'login',
+    path: '/login',
   },
   {
-    path: '/login/mail-sent',
-    name: 'mail-sent',
+    beforeEnter: [disallowAuthorized],
     component: VMailSentView,
-    beforeEnter: [disallowAuthorized],
     meta: {
       isPublic: true,
     },
+    name: 'mail-sent',
+    path: '/login/mail-sent',
   },
   {
-    path: '/login/reset',
-    name: 'login-reset',
+    beforeEnter: [disallowAuthorized],
     component: VLoginResetView,
-    beforeEnter: [disallowAuthorized],
     meta: {
       isPublic: true,
     },
+    name: 'login-reset',
+    path: '/login/reset',
   },
   {
-    path: '/auth/password/reset/:uid/:token/',
-    name: 'login-change',
+    beforeEnter: [disallowAuthorized],
     component: VLoginChangeView,
-    beforeEnter: [disallowAuthorized],
     meta: {
       isPublic: true,
     },
+    name: 'login-change',
+    path: '/auth/password/reset/:uid/:token/',
   },
   {
-    path: '/auth/passwordless/:passwordlessToken',
-    name: 'token',
-    component: VLoadingView,
     beforeEnter: [loginByToken],
+    component: VLoadingView,
     meta: {
       isPublic: true,
     },
+    name: 'token',
+    path: '/auth/passwordless/:passwordlessToken',
   },
   {
-    path: '/auth/as/:userId',
-    name: 'auth-as',
-    component: VLoadingView,
     beforeEnter: [loginById],
+    component: VLoadingView,
+    name: 'auth-as',
+    path: '/auth/as/:userId',
   },
   {
-    path: '/materials/:id',
-    name: 'materials',
     component: VNotionView,
+    name: 'materials',
+    path: '/materials/:id',
   },
   {
-    path: '/homework/questions/:questionId',
-    name: 'homework-question',
     component: VHomeworkQuestionView,
+    name: 'homework-question',
+    path: '/homework/questions/:questionId',
   },
   {
-    path: '/homework/question-admin/:questionId',
-    name: 'homework-expert',
     component: VHomeworkExpertView,
+    name: 'homework-expert',
+    path: '/homework/question-admin/:questionId',
   },
   {
-    path: '/homework/answers/:answerId',
-    name: 'homework-answer',
     component: VHomeworkAnswerView,
+    name: 'homework-answer',
+    path: '/homework/answers/:answerId',
   },
   {
-    path: '/certificates',
-    name: 'certificates',
     component: VCertificatesView,
+    name: 'certificates',
+    path: '/certificates',
   },
 ];
 

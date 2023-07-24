@@ -1,9 +1,10 @@
-import { mount, VueWrapper } from '@vue/test-utils';
-import { VToastFeed } from '@/components/VToastFeed';
-import { faker } from '@faker-js/faker';
-import useToasts, { VToastMessage } from '@/stores/toasts';
 import type { VToast } from '@/components/VToast';
+
+import { VToastFeed } from '@/components/VToastFeed';
+import useToasts, { VToastMessage } from '@/stores/toasts';
+import { faker } from '@faker-js/faker';
 import { createTestingPinia } from '@pinia/testing';
+import { VueWrapper, mount } from '@vue/test-utils';
 
 const MESSAGES = 10;
 
@@ -16,19 +17,19 @@ describe('VToastFeed', () => {
     });
 
     wrapper = mount(VToastFeed, {
-      shallow: true,
       global: {
         plugins: [
           createTestingPinia({
+            createSpy: vi.fn,
             initialState: {
               toasts: {
                 messages,
               },
             },
-            createSpy: vi.fn,
           }),
         ],
       },
+      shallow: true,
     });
   });
 

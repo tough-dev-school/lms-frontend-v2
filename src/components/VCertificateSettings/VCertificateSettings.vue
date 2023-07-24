@@ -1,11 +1,12 @@
 <script lang="ts" setup>
-  import { VTextInput } from '@/components/VTextInput';
-  import { VButton } from '@/components/VButton';
-  import { VHeading } from '@/components/VHeading';
-  import { VCard } from '@/components/VCard';
-  import useUser from '@/stores/user';
   import type { Gender } from '@/types/users';
-  import { ref, onMounted } from 'vue';
+
+  import { VButton } from '@/components/VButton';
+  import { VCard } from '@/components/VCard';
+  import { VHeading } from '@/components/VHeading';
+  import { VTextInput } from '@/components/VTextInput';
+  import useUser from '@/stores/user';
+  import { onMounted, ref } from 'vue';
 
   const user = useUser();
 
@@ -26,10 +27,10 @@
   const saveCertificate = async () => {
     await user.setData({
       firstName: firstName.value,
-      lastName: lastName.value,
       firstNameEn: firstNameEn.value,
-      lastNameEn: lastNameEn.value,
       gender: gender.value,
+      lastName: lastName.value,
+      lastNameEn: lastNameEn.value,
     });
     update();
   };

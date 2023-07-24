@@ -1,12 +1,13 @@
-import { mount, VueWrapper } from '@vue/test-utils';
+import { faker } from '@faker-js/faker';
+import { VueWrapper, mount } from '@vue/test-utils';
+import without from 'lodash/without';
+
 import {
   ALLOWED_REACTIONS,
   MAX_REACTIONS,
   VReactionsPalette,
   type VReactionsPaletteProps,
 } from '.';
-import without from 'lodash/without';
-import { faker } from '@faker-js/faker';
 
 const defaultProps = {
   usedReactions: [],

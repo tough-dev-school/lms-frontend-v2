@@ -1,9 +1,10 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
+
 import { VPasswordSettings } from '@/components/VPasswordSettings';
 
 export default {
-  title: 'Settings/VPasswordSettings',
   component: VPasswordSettings,
+  title: 'Settings/VPasswordSettings',
 } as Meta;
 
 const Template: StoryFn = (args) => ({
@@ -15,6 +16,6 @@ const Template: StoryFn = (args) => ({
 });
 
 export const Default = {
-  render: Template,
   args: {},
+  render: Template,
 };

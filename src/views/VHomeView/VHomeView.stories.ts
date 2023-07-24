@@ -1,14 +1,16 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import { VHomeView } from '.';
-import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
+
+import { STATIC_STUDY, mockStudy } from '@/mocks/mockStudy';
 import useStudies from '@/stores/studies';
+import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import { faker } from '@faker-js/faker';
-import { mockStudy, STATIC_STUDY } from '@/mocks/mockStudy';
+
+import { VHomeView } from '.';
 
 export default {
-  title: 'App/VHomeView',
   component: VHomeView,
   decorators: [defaultLayoutDecorator],
+  title: 'App/VHomeView',
 } as Meta;
 
 const Template: StoryFn = (args) => ({
@@ -20,7 +22,6 @@ const Template: StoryFn = (args) => ({
 });
 
 export const Default = {
-  render: Template,
   decorators: [
     () => ({
       setup() {
@@ -32,10 +33,10 @@ export const Default = {
       template: '<story />',
     }),
   ],
+  render: Template,
 };
 
 export const Empty = {
-  render: Template,
   decorators: [
     () => ({
       setup() {
@@ -45,4 +46,5 @@ export const Empty = {
       template: '<story />',
     }),
   ],
+  render: Template,
 };

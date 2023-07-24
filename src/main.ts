@@ -1,17 +1,14 @@
-import { createApp } from 'vue';
-import { createPinia } from 'pinia';
-import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
-
-import App from './App.vue';
-import router from './router';
-
+import { BrowserTracing } from '@sentry/tracing';
+import * as Sentry from '@sentry/vue';
 import FloatingVue from 'floating-vue';
 import 'floating-vue/dist/style.css';
+import { createPinia } from 'pinia';
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
+import { createApp } from 'vue';
 
-import * as Sentry from '@sentry/vue';
-import { BrowserTracing } from '@sentry/tracing';
-
+import App from './App.vue';
 import './fonts.css';
+import router from './router';
 import './tailwind.css';
 
 const app = createApp(App);

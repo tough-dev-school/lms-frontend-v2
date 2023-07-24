@@ -1,10 +1,11 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
+
 import { VNewAnswer } from '@/components/VNewAnswer';
 import { faker } from '@faker-js/faker';
 
 export default {
-  title: 'Answer/VNewAnswer',
   component: VNewAnswer,
+  title: 'Answer/VNewAnswer',
 } as Meta;
 
 const Template: StoryFn = (args) => ({
@@ -16,10 +17,10 @@ const Template: StoryFn = (args) => ({
 });
 
 export const Default = {
-  render: Template,
-
   args: {
-    questionId: faker.string.uuid(),
     parentId: faker.string.uuid(),
+    questionId: faker.string.uuid(),
   },
+
+  render: Template,
 };

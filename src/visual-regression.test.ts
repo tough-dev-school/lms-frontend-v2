@@ -3,12 +3,12 @@ import playwright from 'playwright';
 expect.extend({ toMatchImageSnapshot });
 
 interface Scenario {
+  action?: () => Promise<void>;
   name: string;
   path: string;
-  action?: () => Promise<void>;
 }
 
-type ColorScheme = 'light' | 'dark';
+type ColorScheme = 'dark' | 'light';
 
 type Test = [string, string, () => Promise<void>, number, number];
 
@@ -36,11 +36,11 @@ describe('visual regression test for', () => {
       path: `/iframe.html?args=&id=app-vloginview--default&viewMode=story`,
     },
     {
-      name: 'Login — password login',
-      path: `/iframe.html?args=&id=app-vloginview--default&viewMode=story`,
       action: async () => {
         await page.click('[data-testid="to-password-mode"]');
       },
+      name: 'Login — password login',
+      path: `/iframe.html?args=&id=app-vloginview--default&viewMode=story`,
     },
     {
       name: 'Login — reset password',
@@ -121,7 +121,7 @@ describe('visual regression test for', () => {
 
   test.each(tests)('%s', async (name, route, action, width, height) => {
     await page.emulateMedia({ colorScheme: COLOR_SCHEME });
-    await page.setViewportSize({ width, height });
+    await page.setViewportSize({ height, width });
     await goto(route);
 
     await action();

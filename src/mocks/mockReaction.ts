@@ -1,13 +1,14 @@
-import { ReactionEmoji, type Reaction } from '@/types/homework';
+import { type Reaction, ReactionEmoji } from '@/types/homework';
 import { faker } from '@faker-js/faker';
+
+import { STATIC_AUTHOR_1, STATIC_AUTHOR_2, mockAuthor } from './mockAuthor';
 import { mockEmoji } from './mockEmoji';
-import { mockAuthor, STATIC_AUTHOR_1, STATIC_AUTHOR_2 } from './mockAuthor';
 
 export const mockReaction = (payload: Partial<Reaction> = {}): Reaction => ({
-  slug: faker.string.uuid(),
-  emoji: mockEmoji(),
-  author: mockAuthor(),
   answer: faker.string.uuid(),
+  author: mockAuthor(),
+  emoji: mockEmoji(),
+  slug: faker.string.uuid(),
   ...payload,
 });
 

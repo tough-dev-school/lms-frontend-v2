@@ -1,24 +1,22 @@
 <script lang="ts" setup>
-  // @ts-ignore
-  import { NotionRenderer } from 'vue3-notion';
-  import { useRoute, useRouter } from 'vue-router';
-  import { watch, computed } from 'vue';
-
+  import { VButton } from '@/components/VButton';
+  import { VCard } from '@/components/VCard';
+  import { useChatra } from '@/hooks/useChatra';
+  import useMaterials from '@/stores/materials';
+  import getNotionTitle from '@/utils/getNotionTitle';
+  import { useTitle } from '@vueuse/core';
   import 'prismjs';
-  import 'prismjs/themes/prism.css';
-  import 'prismjs/components/prism-typescript.js';
-  import 'prismjs/components/prism-ruby.js';
-  import 'prismjs/components/prism-python.js';
   import 'prismjs/components/prism-bash.js';
   import 'prismjs/components/prism-c.js';
   import 'prismjs/components/prism-cpp.js';
-
-  import { VCard } from '@/components/VCard';
-  import { VButton } from '@/components/VButton';
-  import useMaterials from '@/stores/materials';
-  import { useTitle } from '@vueuse/core';
-  import getNotionTitle from '@/utils/getNotionTitle';
-  import { useChatra } from '@/hooks/useChatra';
+  import 'prismjs/components/prism-python.js';
+  import 'prismjs/components/prism-ruby.js';
+  import 'prismjs/components/prism-typescript.js';
+  import 'prismjs/themes/prism.css';
+  import { computed, watch } from 'vue';
+  import { useRoute, useRouter } from 'vue-router';
+  // @ts-ignore
+  import { NotionRenderer } from 'vue3-notion';
 
   const router = useRouter();
   const materials = useMaterials();
@@ -43,8 +41,8 @@
   const rendererProps = computed(() => {
     return {
       blockMap: materials.material,
-      mapPageUrl,
       fullPage: true,
+      mapPageUrl,
       pageLinkOptions: {
         component: 'RouterLink',
         href: 'to',

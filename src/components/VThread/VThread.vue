@@ -1,21 +1,22 @@
 <script lang="ts" setup>
-  import { VOwnAnswer } from '@/components/VOwnAnswer';
   import { VAnswer } from '@/components/VAnswer';
   import { VNewAnswer } from '@/components/VNewAnswer';
-  import { computed, ref } from 'vue';
-  import { onClickOutside } from '@vueuse/core';
+  import { VOwnAnswer } from '@/components/VOwnAnswer';
   import useUser from '@/stores/user';
+  import { onClickOutside } from '@vueuse/core';
+  import { computed, ref } from 'vue';
   import { useRoute, useRouter } from 'vue-router';
-  import type { VThreadProps, ThreadAction } from '.';
   import { MessageCircleIcon, MessageCircleOffIcon } from 'vue-tabler-icons';
+
+  import type { ThreadAction, VThreadProps } from '.';
 
   const route = useRoute();
   const router = useRouter();
 
   const user = useUser();
   const emit = defineEmits<{
-    update: [];
     reply: [];
+    update: [];
   }>();
   const replyMode = ref(false);
 
@@ -27,20 +28,20 @@
     return [
       ...props.customActions,
       {
-        name: 'Ответить',
         handle: () => {
           emit('reply');
           replyMode.value = true;
         },
         icon: MessageCircleIcon,
+        name: 'Ответить',
         show: replyMode.value === false,
       },
       {
-        name: 'Не отвечать',
         handle: () => {
           replyMode.value = false;
         },
         icon: MessageCircleOffIcon,
+        name: 'Не отвечать',
         show: replyMode.value === true,
       },
     ];
@@ -48,14 +49,14 @@
 
   const prepareForScroll = (slug: string) => {
     if (route.name) {
-      router.push({ name: route.name, hash: `#${slug}` });
+      router.push({ hash: `#${slug}`, name: route.name });
     }
   };
 
   const scrollToComment = (slug: string) => {
     if (route.hash === `#${slug}`) {
       if (route.name) {
-        router.push({ name: route.name, hash: route.hash });
+        router.push({ hash: route.hash, name: route.name });
         router.push({ name: route.name });
       }
     }

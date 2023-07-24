@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-  import { VProfileMenu } from '@/components/VProfileMenu';
   import { VPreloader } from '@/components/VPreloader';
+  import { VProfileMenu } from '@/components/VProfileMenu';
   import { VToastFeed } from '@/components/VToastFeed';
-  import { useRoute } from 'vue-router';
-  import { computed } from 'vue';
   import useLoading from '@/stores/loading';
+  import { computed } from 'vue';
+  import { useRoute } from 'vue-router';
 
   const route = useRoute();
   const loading = useLoading();

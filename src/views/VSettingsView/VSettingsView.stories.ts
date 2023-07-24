@@ -1,11 +1,13 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import { VSettingsView } from '.';
+
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 
+import { VSettingsView } from '.';
+
 export default {
-  title: 'App/VSettingsView',
   component: VSettingsView,
   decorators: [defaultLayoutDecorator],
+  title: 'App/VSettingsView',
 } as Meta;
 
 const Template: StoryFn = () => ({

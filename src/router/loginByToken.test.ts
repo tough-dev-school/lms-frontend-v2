@@ -1,11 +1,12 @@
-import { faker } from '@faker-js/faker';
-
-import loginByToken from './loginByToken';
-import useAuth from '@/stores/auth';
 import type { RouteLocationNormalized } from 'vue-router';
-import { createApp } from 'vue';
+
+import useAuth from '@/stores/auth';
+import { faker } from '@faker-js/faker';
 import { createTestingPinia } from '@pinia/testing';
 import { setActivePinia } from 'pinia';
+import { createApp } from 'vue';
+
+import loginByToken from './loginByToken';
 
 const passwordlessToken = faker.string.uuid();
 

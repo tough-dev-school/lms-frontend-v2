@@ -1,14 +1,16 @@
-import { defineStore } from 'pinia';
 import type { AuthToken } from '@/types/auth';
+
 import {
+  changePassword,
   loginWithCredentials,
-  sendLoginLink,
   loginWithLink,
   loginWithUserId,
-  changePassword,
   requestReset,
   resetPassword,
+  sendLoginLink,
 } from '@/api/auth';
+import { defineStore } from 'pinia';
+
 import useToasts from './toasts';
 
 type AuthStoreState = {
@@ -16,45 +18,17 @@ type AuthStoreState = {
 };
 
 const useAuth = defineStore('auth', {
-  state: (): AuthStoreState => {
-    return {
-      token: undefined,
-    };
-  },
   actions: {
-    async loginWithCredentials(username: string, password: string) {
-      try {
-        const loginResult = await loginWithCredentials(username, password);
-        this.token = loginResult.token;
-      } catch (error: any) {}
-    },
-    async loginWithEmail(email: string) {
-      try {
-        await sendLoginLink(email);
-      } catch (error: any) {}
-    },
-    async exchangeTokens(passwordlessToken: string) {
-      try {
-        const loginResult = await loginWithLink(passwordlessToken);
-        this.token = loginResult.token;
-      } catch (error: any) {}
-    },
-    async loginWithUserId(userId: string) {
-      try {
-        const loginResult = await loginWithUserId(userId);
-        this.token = loginResult.token;
-      } catch (error: any) {}
-    },
     async changePassword({
       newPassword1,
       newPassword2,
-      uid,
       token,
+      uid,
     }: {
       newPassword1: string;
       newPassword2: string;
-      uid?: string;
       token?: string;
+      uid?: string;
     }) {
       const savedToast = () =>
         useToasts().addMessage('Новый пароль сохранен', 'success');
@@ -76,6 +50,29 @@ const useAuth = defineStore('auth', {
         }
       }
     },
+    async exchangeTokens(passwordlessToken: string) {
+      try {
+        const loginResult = await loginWithLink(passwordlessToken);
+        this.token = loginResult.token;
+      } catch (error: any) {}
+    },
+    async loginWithCredentials(username: string, password: string) {
+      try {
+        const loginResult = await loginWithCredentials(username, password);
+        this.token = loginResult.token;
+      } catch (error: any) {}
+    },
+    async loginWithEmail(email: string) {
+      try {
+        await sendLoginLink(email);
+      } catch (error: any) {}
+    },
+    async loginWithUserId(userId: string) {
+      try {
+        const loginResult = await loginWithUserId(userId);
+        this.token = loginResult.token;
+      } catch (error: any) {}
+    },
     async requestReset(email: string) {
       try {
         await requestReset(email);
@@ -86,6 +83,11 @@ const useAuth = defineStore('auth', {
     },
   },
   persist: true,
+  state: (): AuthStoreState => {
+    return {
+      token: undefined,
+    };
+  },
 });
 
 export default useAuth;

@@ -1,14 +1,14 @@
 <script lang="ts" setup>
-  import { ref } from 'vue';
-  import { VHeading } from '@/components/VHeading';
   import { VButton } from '@/components/VButton';
   import { VCard } from '@/components/VCard';
+  import { VHeading } from '@/components/VHeading';
   import { VTextInput } from '@/components/VTextInput';
   import useAuth from '@/stores/auth';
+  import { ref } from 'vue';
 
   export interface Props {
-    uid?: string;
     token?: string;
+    uid?: string;
   }
 
   const auth = useAuth();
@@ -23,8 +23,8 @@
     await auth.changePassword({
       newPassword1: newPassword1.value,
       newPassword2: newPassword2.value,
-      uid: props.uid,
       token: props.token,
+      uid: props.uid,
     });
 
     emit('save');

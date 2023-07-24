@@ -1,9 +1,10 @@
-import requestCaseMiddleware from './requestCaseMiddleware';
-import decamelizeKeys from 'decamelize-keys';
 import {
   STATIC_CAMEL_CASE_EXAMPLE,
   STATIC_SNAKE_CASE_EXAMPLE,
 } from '@/mocks/mockCase';
+import decamelizeKeys from 'decamelize-keys';
+
+import requestCaseMiddleware from './requestCaseMiddleware';
 
 vi.mock('decamelize-keys');
 

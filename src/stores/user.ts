@@ -1,49 +1,30 @@
-import { defineStore } from 'pinia';
-import { setUser, getUser } from '@/api/users';
-import useToasts from '@/stores/toasts';
-import type { User, EditableUserData } from '@/types/users';
-import getName from '@/utils/getName';
+import type { EditableUserData, User } from '@/types/users';
 import type { Dictionary } from '@/utils/filterDictionary';
+
+import { getUser, setUser } from '@/api/users';
+import useToasts from '@/stores/toasts';
 import filterDictionary from '@/utils/filterDictionary';
+import getName from '@/utils/getName';
+import { defineStore } from 'pinia';
 
 const useUser = defineStore('user', {
-  state: (): User => {
-    return {
-      id: '',
-      uuid: '',
-      username: '',
-      firstName: '',
-      lastName: '',
-      firstNameEn: '',
-      lastNameEn: '',
-      gender: undefined,
-      linkedinUsername: '',
-      githubUsername: '',
-      telegramUsername: '',
-    };
-  },
-  getters: {
-    name(state) {
-      return getName(state.firstName, state.lastName);
-    },
-  },
   actions: {
     async getData() {
       try {
         const user = await getUser();
 
         const {
-          id,
-          uuid,
-          username,
           firstName,
-          lastName,
           firstNameEn,
-          lastNameEn,
           gender,
-          linkedinUsername,
           githubUsername,
+          id,
+          lastName,
+          lastNameEn,
+          linkedinUsername,
           telegramUsername,
+          username,
+          uuid,
         } = user;
 
         this.id = id;
@@ -73,6 +54,26 @@ const useUser = defineStore('user', {
         await this.getData();
       } catch (error: any) {}
     },
+  },
+  getters: {
+    name(state) {
+      return getName(state.firstName, state.lastName);
+    },
+  },
+  state: (): User => {
+    return {
+      firstName: '',
+      firstNameEn: '',
+      gender: undefined,
+      githubUsername: '',
+      id: '',
+      lastName: '',
+      lastNameEn: '',
+      linkedinUsername: '',
+      telegramUsername: '',
+      username: '',
+      uuid: '',
+    };
   },
 });
 

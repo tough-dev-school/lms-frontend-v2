@@ -1,5 +1,6 @@
-import axios from '@/axios';
 import type { Diploma } from '@/types/diplomas';
+
+import axios from '@/axios';
 
 export const getDiplomas = async () => {
   const url = `/api/v2/diplomas/`;

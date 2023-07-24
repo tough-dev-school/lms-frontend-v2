@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { TrashXIcon, PencilPlusIcon } from 'vue-tabler-icons';
+  import { PencilPlusIcon, TrashXIcon } from 'vue-tabler-icons';
 
   const emit = defineEmits<{
     delete: [];

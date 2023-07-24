@@ -1,11 +1,12 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
+
 import { VToastFeed } from '@/components/VToastFeed';
 import useToasts from '@/stores/toasts';
 import { faker } from '@faker-js/faker';
 
 export default {
-  title: 'Toasts/VToastFeed',
   component: VToastFeed,
+  title: 'Toasts/VToastFeed',
 } as Meta;
 
 const Template: StoryFn = (args) => ({
@@ -21,6 +22,6 @@ const Template: StoryFn = (args) => ({
 });
 
 export const Default = {
-  render: Template,
   args: {},
+  render: Template,
 };

@@ -1,16 +1,17 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import { VHomeworkExpertView } from '.';
-import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
-import useHomework from '@/stores/homework';
 
 import { mockAnswer } from '@/mocks/mockAnswer';
 import { STATIC_AUTHOR_2, STATIC_AUTHOR_3 } from '@/mocks/mockAuthor';
 import { STATIC_REACTIONS } from '@/mocks/mockReaction';
+import useHomework from '@/stores/homework';
+import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
+
+import { VHomeworkExpertView } from '.';
 
 export default {
-  title: 'App/VHomeworkExpertView',
   component: VHomeworkExpertView,
   decorators: [defaultLayoutDecorator],
+  title: 'App/VHomeworkExpertView',
 } as Meta;
 
 const Template: StoryFn = (args) => ({

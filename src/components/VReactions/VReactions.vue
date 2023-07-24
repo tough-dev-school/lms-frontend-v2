@@ -1,29 +1,31 @@
 <script lang="ts">
   export interface VReactionsProps {
     answerId: string;
-    reactions: Reaction[];
-    open?: boolean;
     disabled?: boolean;
+    open?: boolean;
+    reactions: Reaction[];
   }
 </script>
 
 <script lang="ts" setup>
-  import { computed } from 'vue';
-  import { VReaction } from './components/VReaction';
   import type { Reaction, ReactionEmoji } from '@/types/homework';
-  import { groupBy } from 'lodash';
+
   import useUser from '@/stores/user';
+  import { groupBy } from 'lodash';
+  import { computed } from 'vue';
+
   import { ALLOWED_REACTIONS } from '.';
+  import { VReaction } from './components/VReaction';
 
   const props = withDefaults(defineProps<VReactionsProps>(), {
-    open: false,
     disabled: false,
+    open: false,
   });
 
   const emit = defineEmits<{
     add: [emoji: ReactionEmoji];
-    remove: [reactionId: string];
     close: [];
+    remove: [reactionId: string];
   }>();
 
   const groupedReactions = computed(() => {

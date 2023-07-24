@@ -1,8 +1,10 @@
-import { mount } from '@vue/test-utils';
-import type { VueWrapper } from '@vue/test-utils';
-import { VLoginView } from '.';
 import type { VLoginLink } from '@/components/VLoginLink';
 import type { VLoginPassword } from '@/components/VLoginPassword';
+import type { VueWrapper } from '@vue/test-utils';
+
+import { mount } from '@vue/test-utils';
+
+import { VLoginView } from '.';
 
 describe('VLoginView', () => {
   let wrapper: VueWrapper<InstanceType<typeof VLoginView>>;

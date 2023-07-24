@@ -1,9 +1,10 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
+
 import { VCard } from '@/components/VCard';
 
 export default {
-  title: 'UI/VCard',
   component: VCard,
+  title: 'UI/VCard',
 } as Meta;
 
 const Template: StoryFn = (args) => ({
@@ -15,6 +16,6 @@ const Template: StoryFn = (args) => ({
 });
 
 export const Default = {
-  render: Template,
   args: {},
+  render: Template,
 };

@@ -1,9 +1,10 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
+
 import { VHeading } from '@/components/VHeading';
 
 export default {
-  title: 'UI/VHeading',
   component: VHeading,
+  title: 'UI/VHeading',
 } as Meta;
 
 const Template: StoryFn = (args) => ({
@@ -15,30 +16,30 @@ const Template: StoryFn = (args) => ({
 });
 
 export const Default = {
-  render: Template,
   args: {},
+  render: Template,
 };
 
 export const H1 = {
-  render: Template,
-
   args: {
     tag: 'h1',
   },
+
+  render: Template,
 };
 
 export const H2 = {
-  render: Template,
-
   args: {
     tag: 'h2',
   },
+
+  render: Template,
 };
 
 export const H3 = {
-  render: Template,
-
   args: {
     tag: 'h3',
   },
+
+  render: Template,
 };

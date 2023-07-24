@@ -1,36 +1,36 @@
 export enum ReactionEmoji {
-  LIKE = '👍',
   DISLIKE = '👎',
   HAPPY = '😄',
-  PARTY = '🎉',
-  SAD = '😕',
   HEART = '❤️',
+  LIKE = '👍',
+  PARTY = '🎉',
   ROCKET = '🚀',
+  SAD = '😕',
   SEEN = '👀',
 }
 
 export interface Author {
-  uuid: string;
   firstName: string;
   lastName: string;
+  uuid: string;
 }
 
 export interface Reaction {
-  slug: string;
-  emoji: ReactionEmoji;
-  author: Author;
   answer: string;
+  author: Author;
+  emoji: ReactionEmoji;
+  slug: string;
 }
 
 export interface Post {
+  author: Author;
   created: string;
   modified: string;
-  slug: string;
   question: string;
-  author: Author;
-  text: string;
-  src: string;
   reactions: Reaction[];
+  slug: string;
+  src: string;
+  text: string;
 }
 
 export interface Answer extends Post {
@@ -46,12 +46,12 @@ export interface Comment extends Thread {
 }
 
 export interface Question {
-  text: string;
   name: string;
   slug: string;
+  text: string;
 }
 
 export interface Comments {
-  slug: string;
   descendants: Comment[];
+  slug: string;
 }

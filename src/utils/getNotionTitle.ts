@@ -1,5 +1,6 @@
 // @ts-ignore
-import type { BlockMap, Block } from 'vue3-notion/src/lib/types';
+import type { Block, BlockMap } from 'vue3-notion/src/lib/types';
+
 import idToUuid from './idToUuid';
 
 const getNotionTitle = (materialId: string, material: BlockMap) => {

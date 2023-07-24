@@ -1,13 +1,14 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
+
 import { VAnswer } from '@/components/VAnswer';
 import { mockAnswer } from '@/mocks/mockAnswer';
-import useUser from '@/stores/user';
-import { USER_1 } from '@/mocks/mockUserId';
 import { STATIC_AUTHOR_1 } from '@/mocks/mockAuthor';
+import { USER_1 } from '@/mocks/mockUserId';
+import useUser from '@/stores/user';
 
 export default {
-  title: 'Answer/VAnswer',
   component: VAnswer,
+  title: 'Answer/VAnswer',
 } as Meta;
 
 const userId = USER_1;
@@ -29,19 +30,19 @@ const Template: StoryFn = (args) => ({
 });
 
 export const Default = {
-  render: Template,
-
   args: {
     answer,
   },
+
+  render: Template,
 };
 
 export const Own = {
-  render: Template,
-
   args: {
     answer: ownAnswer,
   },
+
+  render: Template,
 };
 
 // #TODO Add stories for OWN answers (=disabled reactions)

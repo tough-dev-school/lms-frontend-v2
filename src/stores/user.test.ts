@@ -1,18 +1,18 @@
-import getName from '@/utils/getName';
+import type { Gender } from '@/types/users';
 
-import { createApp } from 'vue';
+import { getUser, setUser } from '@/api/users';
 import useToasts from '@/stores/toasts';
 import useUser from '@/stores/user';
-import { setActivePinia } from 'pinia';
-import { createTestingPinia } from '@pinia/testing';
-import { setUser, getUser } from '@/api/users';
+import getName from '@/utils/getName';
 import { faker } from '@faker-js/faker';
-import type { Gender } from '@/types/users';
+import { createTestingPinia } from '@pinia/testing';
+import { setActivePinia } from 'pinia';
+import { createApp } from 'vue';
 
 vi.mock('@/api/users', () => {
   return {
-    setUser: vi.fn(),
     getUser: vi.fn(),
+    setUser: vi.fn(),
   };
 });
 
@@ -40,17 +40,17 @@ describe('user store', () => {
 
   test('getData sets data from api', async () => {
     const data = {
-      id: faker.string.uuid(),
-      uuid: faker.string.uuid(),
-      username: faker.internet.email(),
       firstName: faker.person.firstName(),
-      lastName: faker.person.lastName(),
       firstNameEn: faker.person.firstName(),
-      lastNameEn: faker.person.lastName(),
       gender: faker.person.sex(),
-      linkedinUsername: faker.internet.userName(),
       githubUsername: faker.internet.userName(),
+      id: faker.string.uuid(),
+      lastName: faker.person.lastName(),
+      lastNameEn: faker.person.lastName(),
+      linkedinUsername: faker.internet.userName(),
       telegramUsername: faker.internet.userName(),
+      username: faker.internet.email(),
+      uuid: faker.string.uuid(),
     };
     (getUser as ReturnType<typeof vi.fn>).mockResolvedValue(data);
 
@@ -81,24 +81,24 @@ describe('user store', () => {
 
     await user.setData({
       firstName,
-      lastName,
       firstNameEn,
-      lastNameEn,
       gender,
-      linkedinUsername,
       githubUsername,
+      lastName,
+      lastNameEn,
+      linkedinUsername,
       telegramUsername,
     });
 
     expect(setUser).toHaveBeenCalledTimes(1);
     expect(setUser).toBeCalledWith({
       firstName,
-      lastName,
       firstNameEn,
-      lastNameEn,
       gender,
-      linkedinUsername,
       githubUsername,
+      lastName,
+      lastNameEn,
+      linkedinUsername,
       telegramUsername,
     });
   });

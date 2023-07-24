@@ -1,5 +1,5 @@
-import { createPinia, setActivePinia } from 'pinia';
 import useLoading from '@/stores/loading';
+import { createPinia, setActivePinia } from 'pinia';
 
 describe('loading store', () => {
   let loading: ReturnType<typeof useLoading>;

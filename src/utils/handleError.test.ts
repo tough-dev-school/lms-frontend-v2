@@ -1,9 +1,9 @@
+import useToasts from '@/stores/toasts';
 import handleError, { DEFAULT_ERROR_MESSAGE } from '@/utils/handleError';
 import { faker } from '@faker-js/faker';
-import { createApp } from 'vue';
-import { setActivePinia } from 'pinia';
 import { createTestingPinia } from '@pinia/testing';
-import useToasts from '@/stores/toasts';
+import { setActivePinia } from 'pinia';
+import { createApp } from 'vue';
 
 const createError = (data: object = {}) => {
   return {

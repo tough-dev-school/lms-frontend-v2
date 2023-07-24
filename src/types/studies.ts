@@ -1,7 +1,7 @@
 export type Study = {
-  id: number;
-  slug: string;
-  name: string;
-  homePageSlug: string;
   cover: string;
+  homePageSlug: string;
+  id: number;
+  name: string;
+  slug: string;
 };

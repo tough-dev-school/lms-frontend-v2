@@ -1,15 +1,15 @@
 import { VButton } from '@/components/VButton';
-import { mount, VueWrapper } from '@vue/test-utils';
+import { VueWrapper, mount } from '@vue/test-utils';
 
 describe('VButton', () => {
   let wrapper: VueWrapper;
 
   beforeEach(() => {
-    wrapper = mount(VButton, { shallow: true, props: {} });
+    wrapper = mount(VButton, { props: {}, shallow: true });
   });
 
   test('button visual can be link', () => {
-    wrapper = mount(VButton, { shallow: true, props: { appearance: 'link' } });
+    wrapper = mount(VButton, { props: { appearance: 'link' }, shallow: true });
 
     expect(wrapper.classes('link')).toBe(true);
   });

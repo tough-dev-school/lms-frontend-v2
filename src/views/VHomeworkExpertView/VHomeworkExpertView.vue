@@ -1,16 +1,16 @@
 <script lang="ts" setup>
-  import { VHeading } from '@/components/VHeading';
-  import { VLazyThread } from '@/components/VLazyThread';
   import { VCard } from '@/components/VCard';
-  import { watch } from 'vue';
-  import useHomework from '@/stores/homework';
-  import { useRoute } from 'vue-router';
-  import { storeToRefs } from 'pinia';
-  import { VPreloader } from '@/components/VPreloader';
+  import { VHeading } from '@/components/VHeading';
   import { VHtmlContent } from '@/components/VHtmlContent';
+  import { VLazyThread } from '@/components/VLazyThread';
+  import { VPreloader } from '@/components/VPreloader';
+  import useHomework from '@/stores/homework';
+  import { storeToRefs } from 'pinia';
+  import { watch } from 'vue';
+  import { useRoute } from 'vue-router';
 
   const homework = useHomework();
-  const { question, answers } = storeToRefs(homework);
+  const { answers, question } = storeToRefs(homework);
   const route = useRoute();
 
   const getData = async () => {

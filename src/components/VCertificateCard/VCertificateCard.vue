@@ -1,12 +1,13 @@
 <script lang="ts" setup>
-  import { VHeading } from '@/components/VHeading';
-  import { VCard } from '@/components/VCard';
   import type { Diploma } from '@/types/diplomas';
+
+  import { VCard } from '@/components/VCard';
   import { VCertificate } from '@/components/VCertificate';
+  import { VHeading } from '@/components/VHeading';
 
   export interface Props {
-    course: string;
     certificates: Diploma[];
+    course: string;
   }
 
   defineProps<Props>();

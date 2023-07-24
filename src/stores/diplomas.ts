@@ -1,15 +1,13 @@
-import { defineStore } from 'pinia';
 import type { Diploma } from '@/types/diplomas';
+
 import { getDiplomas } from '@/api/diplomas';
+import { defineStore } from 'pinia';
 
 interface State {
   items: Diploma[];
 }
 
 const useDiplomas = defineStore('diplomas', {
-  state: (): State => ({
-    items: [],
-  }),
   actions: {
     async getData() {
       try {
@@ -17,6 +15,9 @@ const useDiplomas = defineStore('diplomas', {
       } catch (error: any) {}
     },
   },
+  state: (): State => ({
+    items: [],
+  }),
 });
 
 export default useDiplomas;

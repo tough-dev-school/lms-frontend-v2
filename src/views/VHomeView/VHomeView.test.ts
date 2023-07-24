@@ -1,11 +1,13 @@
-import { RouterLinkStub, mount, VueWrapper } from '@vue/test-utils';
-import { createTestingPinia } from '@pinia/testing';
-import { VHomeView } from '.';
-import useStudies from '@/stores/studies';
 import type { RouterLink } from 'vue-router';
-import { nextTick } from 'vue';
-import { faker } from '@faker-js/faker';
+
 import { mockStudy } from '@/mocks/mockStudy';
+import useStudies from '@/stores/studies';
+import { faker } from '@faker-js/faker';
+import { createTestingPinia } from '@pinia/testing';
+import { RouterLinkStub, VueWrapper, mount } from '@vue/test-utils';
+import { nextTick } from 'vue';
+
+import { VHomeView } from '.';
 
 const defaultStudies = faker.helpers.multiple(mockStudy, { count: 3 });
 
@@ -15,7 +17,6 @@ describe('VHomeView', () => {
 
   beforeEach(() => {
     wrapper = mount(VHomeView, {
-      shallow: true,
       global: {
         plugins: [
           createTestingPinia({
@@ -23,10 +24,11 @@ describe('VHomeView', () => {
           }),
         ],
         stubs: {
-          VCard: false,
           RouterLink: RouterLinkStub,
+          VCard: false,
         },
       },
+      shallow: true,
     });
 
     studies = useStudies();

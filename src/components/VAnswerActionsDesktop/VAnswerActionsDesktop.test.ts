@@ -1,5 +1,7 @@
-import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
+
+import { mount } from '@vue/test-utils';
+
 import { VAnswerActionsDesktop } from '.';
 
 describe('VAnswerActionsDesktop', () => {
@@ -7,12 +9,12 @@ describe('VAnswerActionsDesktop', () => {
 
   beforeEach(() => {
     wrapper = mount(VAnswerActionsDesktop, {
-      shallow: true,
       global: {
         stubs: {
           VFloat: false,
         },
       },
+      shallow: true,
     });
   });
 

@@ -3,8 +3,8 @@
   import { computed } from 'vue';
 
   export interface Props {
-    name: string;
     image?: string;
+    name: string;
   }
 
   const props = defineProps<Props>();

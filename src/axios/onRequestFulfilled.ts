@@ -1,7 +1,9 @@
-import useAuth from '@/stores/auth';
 import type { AxiosRequestConfig } from 'axios';
-import requestCaseMiddleware from './requestCaseMiddleware';
+
+import useAuth from '@/stores/auth';
 import cloneDeep from 'lodash/cloneDeep';
+
+import requestCaseMiddleware from './requestCaseMiddleware';
 
 const onRequestFulfilled = (
   request: AxiosRequestConfig,

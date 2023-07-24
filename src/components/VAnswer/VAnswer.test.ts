@@ -1,13 +1,14 @@
-import { createTestingPinia } from '@pinia/testing';
-import { VueWrapper, mount, RouterLinkStub } from '@vue/test-utils';
-import { VAnswer } from '@/components/VAnswer';
-import getName from '@/utils/getName';
 import type { VAvatar } from '@/components/VAvatar';
 import type { VHtmlContent } from '@/components/VHtmlContent';
+
+import { VAnswer } from '@/components/VAnswer';
+import { mockAnswer } from '@/mocks/mockAnswer';
+import getName from '@/utils/getName';
+import { faker } from '@faker-js/faker';
+import { createTestingPinia } from '@pinia/testing';
+import { RouterLinkStub, VueWrapper, mount } from '@vue/test-utils';
 import dayjs from 'dayjs';
 import cloneDeep from 'lodash/cloneDeep';
-import { faker } from '@faker-js/faker';
-import { mockAnswer } from '@/mocks/mockAnswer';
 
 const uuid = faker.string.uuid();
 
@@ -20,8 +21,6 @@ vi.mock('@formkit/auto-animate/vue', () => ({
 }));
 
 const defaultMountOptions = {
-  props: defaultProps,
-  shallow: true,
   global: {
     plugins: [
       createTestingPinia({
@@ -34,10 +33,12 @@ const defaultMountOptions = {
       }),
     ],
     stubs: {
-      VCard: false,
       RouterLink: RouterLinkStub,
+      VCard: false,
     },
   },
+  props: defaultProps,
+  shallow: true,
 };
 
 describe('VAnswer', () => {

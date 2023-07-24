@@ -2,7 +2,6 @@
   import { withDefaults } from 'vue';
 
   export type AllowedTags =
-    | 'text'
     | 'date'
     | 'datetime-local'
     | 'email'
@@ -11,14 +10,15 @@
     | 'password'
     | 'search'
     | 'tel'
+    | 'text'
     | 'url'
     | 'week';
 
   export interface Props {
-    label?: string;
-    tip?: string;
     error?: boolean | string;
+    label?: string;
     modelValue: string;
+    tip?: string;
     type?: AllowedTags;
   }
 

@@ -1,9 +1,10 @@
-import responseCaseMiddleware from './responseCaseMiddleware';
-import camelcaseKeys from 'camelcase-keys';
 import {
   STATIC_CAMEL_CASE_EXAMPLE,
   STATIC_SNAKE_CASE_EXAMPLE,
 } from '@/mocks/mockCase';
+import camelcaseKeys from 'camelcase-keys';
+
+import responseCaseMiddleware from './responseCaseMiddleware';
 
 vi.mock('camelcase-keys');
 

@@ -1,9 +1,10 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
+
 import { VTextInput } from '@/components/VTextInput';
 
 export default {
-  title: 'Forms/VTextInput',
   component: VTextInput,
+  title: 'Forms/VTextInput',
 } as Meta;
 
 const Template: StoryFn = (args) => ({
@@ -15,26 +16,26 @@ const Template: StoryFn = (args) => ({
 });
 
 export const Default = {
-  render: Template,
-
   args: {
-    tip: 'This is a tooltip for text',
     label: 'Basic text input',
+    tip: 'This is a tooltip for text',
   },
+
+  render: Template,
 };
 
 export const ErrorWithMessage = {
-  render: Template,
-
   args: {
     error: 'This is error',
   },
+
+  render: Template,
 };
 
 export const ErrorWithoutMessage = {
-  render: Template,
-
   args: {
     error: true,
   },
+
+  render: Template,
 };

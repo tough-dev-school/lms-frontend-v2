@@ -1,8 +1,9 @@
-import { createPinia, setActivePinia } from 'pinia';
-import useMaterials from './materials';
 import { getMaterial } from '@/api/materials';
-import { faker } from '@faker-js/faker';
 import { mockMaterial } from '@/mocks/mockMaterial';
+import { faker } from '@faker-js/faker';
+import { createPinia, setActivePinia } from 'pinia';
+
+import useMaterials from './materials';
 
 vi.mock('@/api/materials', () => {
   return {

@@ -6,9 +6,9 @@ interface Course {
 
 export interface Diploma {
   course: Course;
-  slug: string;
-  language: 'RU' | 'EN';
   image: string;
+  language: 'EN' | 'RU';
+  slug: string;
   student: Author;
   url: string;
 }

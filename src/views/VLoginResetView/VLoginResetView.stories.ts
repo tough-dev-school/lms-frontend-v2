@@ -1,11 +1,13 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import { VLoginResetView } from '.';
+
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 
+import { VLoginResetView } from '.';
+
 export default {
-  title: 'App/VLoginResetView',
   component: VLoginResetView,
   decorators: [defaultLayoutDecorator],
+  title: 'App/VLoginResetView',
 } as Meta;
 
 const Template: StoryFn = (args) => ({

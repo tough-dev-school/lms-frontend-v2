@@ -1,6 +1,6 @@
 import { VAvatar } from '@/components/VAvatar';
-import { mount, VueWrapper } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
+import { VueWrapper, mount } from '@vue/test-utils';
 
 const defaultProps = {
   userId: faker.string.uuid(),
@@ -10,7 +10,7 @@ describe('VAvatar', () => {
   let wrapper: VueWrapper;
 
   beforeEach(() => {
-    wrapper = mount(VAvatar, { shallow: true, props: defaultProps });
+    wrapper = mount(VAvatar, { props: defaultProps, shallow: true });
   });
 
   test('Has image source', () => {

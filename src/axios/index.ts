@@ -1,20 +1,21 @@
 import axios from 'axios';
+import merge from 'lodash/merge';
+
 import onRequestFulfilled from './onRequestFulfilled';
 import onResponseFulfilled from './onResponseFulfilled';
 import onResponseRejected from './onResponseRejected';
-import merge from 'lodash/merge';
 
 interface CustomAxiosInstanceConfig {
-  useResponseCaseMiddleware: boolean;
   useRequestCaseMiddleware: boolean;
+  useResponseCaseMiddleware: boolean;
 }
 
 export const createCustomAxiosInstance = (
   userConfig: Partial<CustomAxiosInstanceConfig> = {},
 ) => {
   const defaultConfig = {
-    useResponseCaseMiddleware: true,
     useRequestCaseMiddleware: true,
+    useResponseCaseMiddleware: true,
   };
 
   const config = merge(
@@ -25,7 +26,7 @@ export const createCustomAxiosInstance = (
 
   const instance = axios.create();
 
-  const { useResponseCaseMiddleware, useRequestCaseMiddleware } = config;
+  const { useRequestCaseMiddleware, useResponseCaseMiddleware } = config;
 
   instance.interceptors.request.use((value) =>
     onRequestFulfilled(value, useRequestCaseMiddleware),

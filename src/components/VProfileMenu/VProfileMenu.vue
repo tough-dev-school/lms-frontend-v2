@@ -1,18 +1,18 @@
 <script lang="ts" setup>
-  import { ref, computed } from 'vue';
-  import { onClickOutside } from '@vueuse/core';
   import { VAvatar } from '@/components/VAvatar';
-  import { useRouter } from 'vue-router';
-  import useUser from '@/stores/user';
   import useAuth from '@/stores/auth';
   import useStudies from '@/stores/studies';
+  import useUser from '@/stores/user';
+  import { onClickOutside } from '@vueuse/core';
   import { storeToRefs } from 'pinia';
+  import { computed, ref } from 'vue';
+  import { useRouter } from 'vue-router';
 
   export interface ProfileMenuItem {
-    label: string;
     action: () => void;
-    isHidden?: boolean;
     id: string;
+    isHidden?: boolean;
+    label: string;
   }
 
   const isOpen = ref(false);
@@ -21,7 +21,7 @@
   const user = useUser();
   const auth = useAuth();
   const studies = useStudies();
-  const { username, name, uuid: userId } = storeToRefs(user);
+  const { name, username, uuid: userId } = storeToRefs(user);
 
   onClickOutside(menu, () => (isOpen.value = false));
 
@@ -36,7 +36,6 @@
   const studiesAsMenuItems = computed<ProfileMenuItem[]>(() => {
     return studies.items.slice(0, 3).map((study) => {
       return {
-        label: study.name.replace(/\(.*\)/, '').trim(),
         action: () => {
           router.push({
             name: 'materials',
@@ -44,6 +43,7 @@
           });
         },
         id: `material-${study.id}`,
+        label: study.name.replace(/\(.*\)/, '').trim(),
       };
     });
   });
@@ -55,43 +55,43 @@
 
   const menuItems = computed<ProfileMenuItem[]>(() => [
     {
-      label: 'На главную',
       action: () => {
         router.push({ name: 'home' });
       },
       id: 'home',
+      label: 'На главную',
     },
     ...studiesAsMenuItems.value,
     {
-      label: 'Сертификаты',
       action: () => {
         router.push({ name: 'certificates' });
       },
       id: 'certificates',
+      label: 'Сертификаты',
     },
     {
-      label: 'Настройки',
       action: () => {
         router.push({ name: 'settings' });
       },
       id: 'settings',
+      label: 'Настройки',
     },
     {
-      label: 'Добавьте данные для диплома',
       action: () => {
-        router.push({ name: 'settings', hash: '#certificate' });
+        router.push({ hash: '#certificate', name: 'settings' });
       },
-      isHidden: hasCertificateData.value,
       id: 'certificate',
+      isHidden: hasCertificateData.value,
+      label: 'Добавьте данные для диплома',
     },
     {
-      label: 'Выйти',
       action: () => {
         auth.resetAuth();
         router.push({ name: 'login' });
         isOpen.value = false;
       },
       id: 'logout',
+      label: 'Выйти',
     },
   ]);
 </script>

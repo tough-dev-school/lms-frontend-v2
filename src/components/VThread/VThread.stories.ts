@@ -1,12 +1,13 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
+
 import { VThread } from '@/components/VThread';
-import dayjs from 'dayjs';
-import { faker } from '@faker-js/faker';
-import useUser from '@/stores/user';
-import { mockThread } from '@/mocks/mockThread';
-import { mockComments } from '@/mocks/mockComments';
-import { mockComment } from '@/mocks/mockComment';
 import { mockAnswer } from '@/mocks/mockAnswer';
+import { mockComment } from '@/mocks/mockComment';
+import { mockComments } from '@/mocks/mockComments';
+import { mockThread } from '@/mocks/mockThread';
+import useUser from '@/stores/user';
+import { faker } from '@faker-js/faker';
+import dayjs from 'dayjs';
 
 const originalPost = mockThread();
 originalPost.created = dayjs().toISOString();
@@ -21,8 +22,8 @@ originalPost.descendants[1].descendants = mockComments([
 const userId = faker.string.uuid();
 
 export default {
-  title: 'Answer/VThread',
   component: VThread,
+  title: 'Answer/VThread',
 } as Meta;
 
 const Template: StoryFn = (args) => ({
@@ -38,17 +39,17 @@ const Template: StoryFn = (args) => ({
 });
 
 export const Default = {
-  render: Template,
   args: { originalPost },
+  render: Template,
 };
 
 export const Own = {
-  render: Template,
-
   args: {
     originalPost: {
       ...originalPost,
       author: { ...originalPost.author, uuid: userId },
     },
   },
+
+  render: Template,
 };

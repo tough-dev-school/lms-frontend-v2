@@ -1,9 +1,10 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
+
 import { VFeedbackGuide } from '@/components/VFeedbackGuide';
 
 export default {
-  title: 'UI/VFeedbackGuide',
   component: VFeedbackGuide,
+  title: 'UI/VFeedbackGuide',
 } as Meta;
 
 const Template: StoryFn = (args) => ({
@@ -15,6 +16,6 @@ const Template: StoryFn = (args) => ({
 });
 
 export const Default = {
-  render: Template,
   args: {},
+  render: Template,
 };

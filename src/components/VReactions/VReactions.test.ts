@@ -1,26 +1,26 @@
-import { type VueWrapper, mount } from '@vue/test-utils';
-import { ALLOWED_REACTIONS, VReactions, type VReactionsProps } from '.';
-import type { VReaction } from './components/VReaction';
-import { createTestingPinia } from '@pinia/testing';
-import { faker } from '@faker-js/faker';
-import { mockReactionsData } from './mocks/mockReactionsData';
-import useUser from '@/stores/user';
-import { uniq } from 'lodash';
 import { mockEmoji } from '@/mocks/mockEmoji';
+import useUser from '@/stores/user';
+import { faker } from '@faker-js/faker';
+import { createTestingPinia } from '@pinia/testing';
+import { type VueWrapper, mount } from '@vue/test-utils';
+import { uniq } from 'lodash';
+
+import type { VReaction } from './components/VReaction';
+
+import { ALLOWED_REACTIONS, VReactions, type VReactionsProps } from '.';
+import { mockReactionsData } from './mocks/mockReactionsData';
 
 const defaultProps: VReactionsProps = {
-  reactions: mockReactionsData(),
   answerId: faker.string.uuid(),
-  open: false,
   disabled: false,
+  open: false,
+  reactions: mockReactionsData(),
 };
 
 const userId = faker.string.uuid();
 
 const mountComponent = (props: Partial<VReactionsProps> = {}) => {
   return mount(VReactions, {
-    shallow: true,
-    props: { ...defaultProps, ...props },
     global: {
       plugins: [
         createTestingPinia({
@@ -28,6 +28,8 @@ const mountComponent = (props: Partial<VReactionsProps> = {}) => {
         }),
       ],
     },
+    props: { ...defaultProps, ...props },
+    shallow: true,
   });
 };
 
@@ -54,12 +56,12 @@ describe('VReactions', () => {
       );
     })[0].emoji;
     const targetProps = {
-      userId,
-      emoji,
       disabled: defaultProps.disabled,
+      emoji,
       reactions: defaultProps.reactions.filter(
         (reaction) => reaction.emoji === emoji,
       ),
+      userId,
     };
 
     expect(getReactionWrapper().props()).toStrictEqual(targetProps);

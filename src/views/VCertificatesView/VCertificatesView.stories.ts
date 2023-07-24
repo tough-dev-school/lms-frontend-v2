@@ -1,14 +1,16 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import { VCertificatesView } from '.';
-import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
+
+import { STATIC_DIPLOMAS, mockDiplomaSet } from '@/mocks/mockDiploma';
 import useDiplomas from '@/stores/diplomas';
-import { mockDiplomaSet, STATIC_DIPLOMAS } from '@/mocks/mockDiploma';
+import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import { flatten } from 'lodash';
 
+import { VCertificatesView } from '.';
+
 export default {
-  title: 'App/VCertificatesView',
   component: VCertificatesView,
   decorators: [defaultLayoutDecorator],
+  title: 'App/VCertificatesView',
 } as Meta;
 
 const Template: StoryFn = (args) => ({
@@ -20,7 +22,6 @@ const Template: StoryFn = (args) => ({
 });
 
 export const Default = {
-  render: Template,
   decorators: [
     () => ({
       setup() {
@@ -32,10 +33,10 @@ export const Default = {
       template: '<story />',
     }),
   ],
+  render: Template,
 };
 
 export const Empty = {
-  render: Template,
   decorators: [
     () => ({
       setup() {
@@ -45,4 +46,5 @@ export const Empty = {
       template: '<story />',
     }),
   ],
+  render: Template,
 };

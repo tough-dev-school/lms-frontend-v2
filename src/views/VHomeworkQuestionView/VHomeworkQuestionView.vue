@@ -1,22 +1,23 @@
 <script lang="ts" setup>
-  import { VHtmlContent } from '@/components/VHtmlContent';
-  import useHomework from '@/stores/homework';
-  import { useRoute } from 'vue-router';
-  import { computed, onMounted, ref } from 'vue';
   import type { Ref } from 'vue';
-  import { storeToRefs } from 'pinia';
-  import { VHeading } from '@/components/VHeading';
-  import { VPreloader } from '@/components/VPreloader';
-  import { VOwnAnswer } from '@/components/VOwnAnswer';
-  import { VNewAnswer } from '@/components/VNewAnswer';
+
   import { VCard } from '@/components/VCard';
+  import { VHeading } from '@/components/VHeading';
+  import { VHtmlContent } from '@/components/VHtmlContent';
+  import { VNewAnswer } from '@/components/VNewAnswer';
+  import { VOwnAnswer } from '@/components/VOwnAnswer';
+  import { VPreloader } from '@/components/VPreloader';
+  import useHomework from '@/stores/homework';
   import useUser from '@/stores/user';
+  import { storeToRefs } from 'pinia';
+  import { computed, onMounted, ref } from 'vue';
+  import { useRoute } from 'vue-router';
 
   const route = useRoute();
   const homework = useHomework();
   const user = useUser();
 
-  const { question, answers } = storeToRefs(homework);
+  const { answers, question } = storeToRefs(homework);
   const questionId: Ref<string | undefined> = ref(undefined);
 
   const answer = computed(() => {
@@ -27,8 +28,8 @@
     questionId.value = String(route.params.questionId);
     await homework.getQuestion(questionId.value);
     await homework.getAnswers({
-      questionId: questionId.value,
       authorId: user.uuid,
+      questionId: questionId.value,
     });
   };
 

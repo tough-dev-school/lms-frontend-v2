@@ -1,9 +1,10 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
+
 import { VLinksSettings } from '@/components/VLinksSettings';
 
 export default {
-  title: 'Settings/VLinksSettings',
   component: VLinksSettings,
+  title: 'Settings/VLinksSettings',
 } as Meta;
 
 const Template: StoryFn = (args) => ({
@@ -15,6 +16,6 @@ const Template: StoryFn = (args) => ({
 });
 
 export const Default = {
-  render: Template,
   args: {},
+  render: Template,
 };

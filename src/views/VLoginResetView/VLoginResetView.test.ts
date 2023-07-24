@@ -1,11 +1,13 @@
-import { mount } from '@vue/test-utils';
-import type { VueWrapper } from '@vue/test-utils';
-import { VLoginResetView } from '.';
 import type { VButton } from '@/components/VButton';
 import type { VTextInput } from '@/components/VTextInput';
-import { faker } from '@faker-js/faker';
+import type { VueWrapper } from '@vue/test-utils';
+
 import useAuth from '@/stores/auth';
+import { faker } from '@faker-js/faker';
 import { createTestingPinia } from '@pinia/testing';
+import { mount } from '@vue/test-utils';
+
+import { VLoginResetView } from '.';
 
 const defaultProps = {};
 
@@ -25,8 +27,6 @@ describe('VLoginResetView', () => {
 
   beforeEach(() => {
     wrapper = mount(VLoginResetView, {
-      shallow: true,
-      props: defaultProps,
       global: {
         plugins: [
           createTestingPinia({
@@ -37,6 +37,8 @@ describe('VLoginResetView', () => {
           VCard: false,
         },
       },
+      props: defaultProps,
+      shallow: true,
     });
 
     auth = useAuth();

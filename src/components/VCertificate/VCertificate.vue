@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-  import getCertificateLink from '@/utils/getCertificateLink';
   import type { Diploma } from '@/types/diplomas';
+
+  import getCertificateLink from '@/utils/getCertificateLink';
 
   export interface Props {
     certificate: Diploma;
@@ -9,8 +10,8 @@
   defineProps<Props>();
 
   const localeLabel = {
-    RU: 'На русском',
     EN: 'На английском',
+    RU: 'На русском',
   };
 </script>
 

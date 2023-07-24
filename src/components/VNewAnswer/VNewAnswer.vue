@@ -1,13 +1,13 @@
 <script setup lang="ts">
-  import { VTextEditor } from '@/components/VTextEditor';
   import { VButton } from '@/components/VButton';
   import { VCard } from '@/components/VCard';
-  import { ref, computed, watch } from 'vue';
+  import { VTextEditor } from '@/components/VTextEditor';
   import useHomework from '@/stores/homework';
+  import { computed, ref, watch } from 'vue';
 
   export interface Props {
-    questionId: string;
     parentId?: string;
+    questionId: string;
   }
 
   const props = defineProps<Props>();
@@ -40,9 +40,9 @@
     if (!allowSend.value) return;
 
     const answer = await homework.postAnswer({
-      text: text.value,
-      questionId: props.questionId,
       parentId: props.parentId,
+      questionId: props.questionId,
+      text: text.value,
     });
 
     if (answer) {

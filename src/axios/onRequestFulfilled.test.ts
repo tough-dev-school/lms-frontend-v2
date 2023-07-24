@@ -1,12 +1,13 @@
-import onRequestFulfilled from './onRequestFulfilled';
-
-import requestCaseMiddleware from './requestCaseMiddleware';
 import type { AxiosRequestConfig } from 'axios';
-import { faker } from '@faker-js/faker';
-import { createApp } from 'vue';
-import { setActivePinia } from 'pinia';
-import { createTestingPinia } from '@pinia/testing';
+
 import useAuth from '@/stores/auth';
+import { faker } from '@faker-js/faker';
+import { createTestingPinia } from '@pinia/testing';
+import { setActivePinia } from 'pinia';
+import { createApp } from 'vue';
+
+import onRequestFulfilled from './onRequestFulfilled';
+import requestCaseMiddleware from './requestCaseMiddleware';
 
 vi.mock('./requestCaseMiddleware');
 

@@ -1,23 +1,24 @@
 import { mergeConfig } from 'vite';
 import { configDefaults, defineConfig } from 'vitest/config';
+
 import viteConfig from '../vite.config';
 
 export default mergeConfig(
   viteConfig,
   defineConfig({
     test: {
-      globals: true,
-      mockReset: true,
-      environment: 'jsdom',
-      exclude: [...configDefaults.exclude, './src/visual-regression.test.ts'],
       coverage: {
-        provider: 'istanbul',
+        all: true,
+        exclude: ['**/*.stories.ts'],
         extension: ['.ts', '.js', '.vue'],
         include: ['**/*.ts', '**/*.vue'],
-        exclude: ['**/*.stories.ts'],
-        all: true,
+        provider: 'istanbul',
         reporter: 'lcov',
       },
+      environment: 'jsdom',
+      exclude: [...configDefaults.exclude, './src/visual-regression.test.ts'],
+      globals: true,
+      mockReset: true,
     },
   }),
 );

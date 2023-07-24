@@ -1,9 +1,10 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
+
 import { VFloat } from '@/components/VFloat';
 
 export default {
-  title: 'UI/VFloat',
   component: VFloat,
+  title: 'UI/VFloat',
 } as Meta;
 
 const Template: StoryFn = (args) => ({
@@ -15,6 +16,6 @@ const Template: StoryFn = (args) => ({
 });
 
 export const Default = {
-  render: Template,
   args: {},
+  render: Template,
 };

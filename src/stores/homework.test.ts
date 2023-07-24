@@ -1,31 +1,32 @@
-import { createApp } from 'vue';
-import { setActivePinia } from 'pinia';
-import { createTestingPinia } from '@pinia/testing';
-import useHomework from './homework';
-import useToasts from './toasts';
-import { faker } from '@faker-js/faker';
 import {
+  deleteAnswer,
+  getAnswer,
+  getAnswers,
   getQuestion,
   postAnswer,
-  deleteAnswer,
   updateAnswer,
-  getAnswers,
-  getAnswer,
 } from '@/api/homework';
-import getThreads from '@/utils/getThreads';
 import { mockAnswer } from '@/mocks/mockAnswer';
-import { mockThread } from '@/mocks/mockThread';
-import { mockQuestion } from '@/mocks/mockQuestion';
 import { mockComment } from '@/mocks/mockComment';
+import { mockQuestion } from '@/mocks/mockQuestion';
+import { mockThread } from '@/mocks/mockThread';
+import getThreads from '@/utils/getThreads';
+import { faker } from '@faker-js/faker';
+import { createTestingPinia } from '@pinia/testing';
+import { setActivePinia } from 'pinia';
+import { createApp } from 'vue';
+
+import useHomework from './homework';
+import useToasts from './toasts';
 
 vi.mock('@/api/homework', () => {
   return {
+    deleteAnswer: vi.fn(),
+    getAnswer: vi.fn(),
+    getAnswers: vi.fn(),
     getQuestion: vi.fn(),
     postAnswer: vi.fn(),
-    deleteAnswer: vi.fn(),
     updateAnswer: vi.fn(),
-    getAnswers: vi.fn(),
-    getAnswer: vi.fn(),
   };
 });
 vi.mock('@/utils/getThreads');
@@ -86,15 +87,15 @@ describe('homework store', () => {
 
   test('getAnswers always calls getAnswer', async () => {
     const threads = true;
-    await homework.getAnswers({ questionId, authorId, threads });
+    await homework.getAnswers({ authorId, questionId, threads });
 
     expect(getAnswers).toHaveBeenCalledTimes(1);
-    expect(getAnswers).toHaveBeenCalledWith({ questionId, authorId });
+    expect(getAnswers).toHaveBeenCalledWith({ authorId, questionId });
   });
 
   test('getAnswers sets getThreads based result if threads enabled', async () => {
     const threads = true;
-    await homework.getAnswers({ questionId, authorId, threads });
+    await homework.getAnswers({ authorId, questionId, threads });
 
     expect(getThreads).toHaveBeenCalledTimes(1);
     expect(getThreads).toHaveBeenCalledWith(answersData);
@@ -103,7 +104,7 @@ describe('homework store', () => {
 
   test('getAnswers sets getAnswer based result if threads disabled', async () => {
     const threads = false;
-    await homework.getAnswers({ questionId, authorId, threads });
+    await homework.getAnswers({ authorId, questionId, threads });
 
     expect(getThreads).not.toHaveBeenCalled();
     expect(homework.answers).toStrictEqual(answersData);
@@ -135,27 +136,27 @@ describe('homework store', () => {
   });
 
   test('postAnswer calls api', async () => {
-    await homework.postAnswer({ text, questionId, parentId });
+    await homework.postAnswer({ parentId, questionId, text });
 
     expect(postAnswer).toHaveBeenCalledTimes(1);
-    expect(postAnswer).toHaveBeenCalledWith({ text, questionId, parentId });
+    expect(postAnswer).toHaveBeenCalledWith({ parentId, questionId, text });
   });
 
   test('postAnswer returns answer', async () => {
-    const result = await homework.postAnswer({ text, questionId, parentId });
+    const result = await homework.postAnswer({ parentId, questionId, text });
 
     expect(result).toStrictEqual(postData);
   });
 
   test('postAnswer shows toast on success', async () => {
-    await homework.postAnswer({ text, questionId, parentId });
+    await homework.postAnswer({ parentId, questionId, text });
 
     expect(toasts.addMessage).toHaveBeenCalledTimes(1);
   });
 
   test('postAnswer doesnt show toast on fail', async () => {
     (postAnswer as ReturnType<typeof vi.fn>).mockRejectedValue({});
-    await homework.postAnswer({ text, questionId, parentId });
+    await homework.postAnswer({ parentId, questionId, text });
 
     expect(toasts.addMessage).not.toHaveBeenCalled();
   });

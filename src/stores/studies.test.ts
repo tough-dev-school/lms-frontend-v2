@@ -1,8 +1,9 @@
-import { createPinia, setActivePinia } from 'pinia';
-import useStudies from './studies';
 import { getStudies } from '@/api/studies';
 import { mockStudy } from '@/mocks/mockStudy';
 import { faker } from '@faker-js/faker';
+import { createPinia, setActivePinia } from 'pinia';
+
+import useStudies from './studies';
 
 vi.mock('@/api/studies', () => {
   return {

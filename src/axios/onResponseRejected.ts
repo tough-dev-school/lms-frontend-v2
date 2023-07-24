@@ -1,6 +1,8 @@
-import useAuth from '@/stores/auth';
 import type { AxiosError } from 'axios';
+
+import useAuth from '@/stores/auth';
 import handleError from '@/utils/handleError';
+
 import responseCaseMiddleware from './responseCaseMiddleware';
 
 const onResponseRejected = (

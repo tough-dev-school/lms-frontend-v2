@@ -1,19 +1,19 @@
-import { mount, VueWrapper } from '@vue/test-utils';
 import { VTextInput } from '@/components/VTextInput';
 import { faker } from '@faker-js/faker';
+import { VueWrapper, mount } from '@vue/test-utils';
 
 const defaultProps = {
-  tip: 'This is a tip',
-  label: 'This is a label',
   error: 'This is a error',
+  label: 'This is a label',
   modelValue: '',
+  tip: 'This is a tip',
 };
 
 describe('VTextInput', () => {
   let wrapper: VueWrapper<InstanceType<typeof VTextInput>>;
 
   beforeEach(() => {
-    wrapper = mount(VTextInput, { shallow: true, props: defaultProps });
+    wrapper = mount(VTextInput, { props: defaultProps, shallow: true });
   });
 
   const getLabelWrapper = () => {
@@ -35,8 +35,8 @@ describe('VTextInput', () => {
   test('label can be set by prop', () => {
     const label = faker.finance.accountName();
     wrapper = mount(VTextInput, {
-      shallow: true,
       props: { ...defaultProps, label },
+      shallow: true,
     });
 
     expect(getLabelWrapper().text()).toBe(label);
@@ -45,9 +45,9 @@ describe('VTextInput', () => {
   test('label can be set by slot', () => {
     const label = faker.finance.accountName();
     wrapper = mount(VTextInput, {
+      props: defaultProps,
       shallow: true,
       slots: { label },
-      props: defaultProps,
     });
 
     expect(getLabelWrapper().text()).toBe(label);
@@ -59,8 +59,8 @@ describe('VTextInput', () => {
 
   test('has no tip if no tip is defined', () => {
     wrapper = mount(VTextInput, {
-      shallow: true,
       props: { ...defaultProps, tip: undefined },
+      shallow: true,
     });
 
     expect(getTipWrapper().exists()).toBe(false);
@@ -72,8 +72,8 @@ describe('VTextInput', () => {
 
   test('has no error if no error is defined', () => {
     wrapper = mount(VTextInput, {
-      shallow: true,
       props: { ...defaultProps, error: undefined },
+      shallow: true,
     });
 
     expect(getErrorWrapper().exists()).toBe(false);

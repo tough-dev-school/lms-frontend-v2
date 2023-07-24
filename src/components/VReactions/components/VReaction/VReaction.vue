@@ -2,17 +2,17 @@
   import type { Reaction, ReactionEmoji } from '@/types/homework';
 
   export interface VReactionProps {
-    userId: string;
+    disabled: boolean;
     emoji: ReactionEmoji;
     reactions?: Reaction[];
-    disabled: boolean;
+    userId: string;
   }
 </script>
 
 <script lang="ts" setup>
   import { VAvatar } from '@/components/VAvatar';
-  import { computed } from 'vue';
   import getName from '@/utils/getName';
+  import { computed } from 'vue';
 
   const props = withDefaults(defineProps<VReactionProps>(), {
     reactions: () => [],

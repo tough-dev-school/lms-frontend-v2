@@ -1,13 +1,15 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import { VNotionView } from '.';
+
+import { mockMaterial } from '@/mocks/mockMaterial';
 import useMaterials from '@/stores/materials';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
-import { mockMaterial } from '@/mocks/mockMaterial';
+
+import { VNotionView } from '.';
 
 export default {
-  title: 'App/VNotionView',
   component: VNotionView,
   decorators: [defaultLayoutDecorator],
+  title: 'App/VNotionView',
 } as Meta;
 
 const Template: StoryFn = (args) => ({
@@ -19,7 +21,6 @@ const Template: StoryFn = (args) => ({
 });
 
 export const Default = {
-  render: Template,
   decorators: [
     () => ({
       setup() {
@@ -29,10 +30,10 @@ export const Default = {
       template: '<story />',
     }),
   ],
+  render: Template,
 };
 
 export const Empty = {
-  render: Template,
   decorators: [
     () => ({
       setup() {
@@ -43,4 +44,5 @@ export const Empty = {
       template: '<story />',
     }),
   ],
+  render: Template,
 };

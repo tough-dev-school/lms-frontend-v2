@@ -1,7 +1,7 @@
 import { VDefaultLayout } from '@/layouts/VDefaultLayout';
 import { mockMaterial } from '@/mocks/mockMaterial';
-import { mockQuestion, STATIC_QUESTION } from '@/mocks/mockQuestion';
-import { mockUserId, USER_1 } from '@/mocks/mockUserId';
+import { STATIC_QUESTION, mockQuestion } from '@/mocks/mockQuestion';
+import { USER_1, mockUserId } from '@/mocks/mockUserId';
 import useHomework from '@/stores/homework';
 import useMaterials from '@/stores/materials';
 import useToasts from '@/stores/toasts';
@@ -9,24 +9,23 @@ import useUser from '@/stores/user';
 
 const layoutDecorator = (story: any, layout: any) => ({
   components: { layout, story },
-  template: '<layout><story /></layout>',
   setup() {
     const toasts = useToasts();
     toasts.disable();
 
     const user = useUser();
     user.$patch({
-      id: '',
-      uuid: mockUserId(USER_1),
-      username: 'johndoe@demo.com',
       firstName: 'Иван',
-      lastName: 'Иванов',
       firstNameEn: 'John',
-      lastNameEn: 'Doe',
       gender: 'male',
-      linkedinUsername: 'johndoe',
       githubUsername: 'johndoe',
+      id: '',
+      lastName: 'Иванов',
+      lastNameEn: 'Doe',
+      linkedinUsername: 'johndoe',
       telegramUsername: 'johndoe',
+      username: 'johndoe@demo.com',
+      uuid: mockUserId(USER_1),
     });
 
     const homework = useHomework();
@@ -37,6 +36,7 @@ const layoutDecorator = (story: any, layout: any) => ({
     const materials = useMaterials();
     materials.$patch({ material: mockMaterial() });
   },
+  template: '<layout><story /></layout>',
 });
 
 const defaultLayoutDecorator = (story: any) =>

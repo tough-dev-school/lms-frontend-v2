@@ -1,4 +1,5 @@
 import type { AxiosResponse } from 'axios';
+
 import responseCaseMiddleware from './responseCaseMiddleware';
 
 const onResponseFulfilled = (

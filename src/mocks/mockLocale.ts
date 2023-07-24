@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker';
 
 export enum DiplomaLocale {
-  RU = 'RU',
   EN = 'EN',
+  RU = 'RU',
 }
 
 const locales = [DiplomaLocale.RU, DiplomaLocale.EN];

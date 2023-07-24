@@ -1,15 +1,16 @@
 import { getComments } from '@/api/homework';
-import { faker } from '@faker-js/faker';
-import getThreads from './getThreads';
-import getCommentsBySlug from '@/utils/getCommentsBySlug';
-import { flushPromises } from '@vue/test-utils';
 import { mockAnswer } from '@/mocks/mockAnswer';
-import { mockThread } from '@/mocks/mockThread';
-import { mockComments } from '@/mocks/mockComments';
 import { mockComment } from '@/mocks/mockComment';
+import { mockComments } from '@/mocks/mockComments';
+import { mockThread } from '@/mocks/mockThread';
+import getCommentsBySlug from '@/utils/getCommentsBySlug';
+import { faker } from '@faker-js/faker';
+import { flushPromises } from '@vue/test-utils';
+
+import getThreads from './getThreads';
 
 const answers = faker.helpers.multiple(mockAnswer, {
-  count: { min: 3, max: 10 },
+  count: { max: 10, min: 3 },
 });
 
 vi.mock('@/api/homework', () => {

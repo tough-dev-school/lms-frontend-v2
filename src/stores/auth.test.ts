@@ -1,10 +1,11 @@
-import { setActivePinia } from 'pinia';
-import { createTestingPinia } from '@pinia/testing';
 import { loginWithCredentials, loginWithLink, sendLoginLink } from '@/api/auth';
 import { faker } from '@faker-js/faker';
+import { createTestingPinia } from '@pinia/testing';
+import { setActivePinia } from 'pinia';
+import { createApp } from 'vue';
+
 import useAuth from './auth';
 import useToasts from './toasts';
-import { createApp } from 'vue';
 
 const token = faker.string.uuid();
 const passwordlessToken = faker.string.uuid();
@@ -15,8 +16,8 @@ const email = faker.internet.email();
 vi.mock('@/api/auth', () => {
   return {
     loginWithCredentials: vi.fn(),
-    sendLoginLink: vi.fn(),
     loginWithLink: vi.fn(),
+    sendLoginLink: vi.fn(),
   };
 });
 

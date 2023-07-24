@@ -1,14 +1,16 @@
-import { mount } from '@vue/test-utils';
-import type { VueWrapper } from '@vue/test-utils';
-import { VCertificateCard } from '.';
 import type { VCertificate } from '@/components/VCertificate';
+import type { VueWrapper } from '@vue/test-utils';
+
 import { mockDiplomaData, mockDiplomaSet } from '@/mocks/mockDiploma';
+import { mount } from '@vue/test-utils';
+
+import { VCertificateCard } from '.';
 
 const diplomas = mockDiplomaSet(mockDiplomaData());
 
 const defaultProps = {
-  course: diplomas[0].course.name,
   certificates: diplomas,
+  course: diplomas[0].course.name,
 };
 
 describe('VCertificateCard', () => {
@@ -17,8 +19,8 @@ describe('VCertificateCard', () => {
   beforeEach(() => {
     wrapper = mount(VCertificateCard, {
       global: { stubs: { VCard: false, VHeading: false } },
-      shallow: true,
       props: defaultProps,
+      shallow: true,
     });
   });
 

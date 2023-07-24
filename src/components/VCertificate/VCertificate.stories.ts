@@ -1,10 +1,11 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
+
 import { VCertificate } from '@/components/VCertificate';
 import { mockDiplomaData } from '@/mocks/mockDiploma';
 
 export default {
-  title: 'UI/VCertificate',
   component: VCertificate,
+  title: 'UI/VCertificate',
 } as Meta;
 
 const Template: StoryFn = (args) => ({
@@ -16,17 +17,17 @@ const Template: StoryFn = (args) => ({
 });
 
 export const En = {
-  render: Template,
-
   args: {
     certificate: { ...mockDiplomaData(), language: 'EN' },
   },
+
+  render: Template,
 };
 
 export const Ru = {
-  render: Template,
-
   args: {
     certificate: { ...mockDiplomaData(), language: 'RU' },
   },
+
+  render: Template,
 };

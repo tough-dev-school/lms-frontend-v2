@@ -1,20 +1,22 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import { VReaction } from '.';
+
 import { VCard } from '@/components/VCard';
+import { ALLOWED_REACTIONS } from '@/components/VReactions';
 import { mockReactionsData } from '@/components/VReactions/mocks/mockReactionsData';
 import { faker } from '@faker-js/faker';
-import { ALLOWED_REACTIONS } from '@/components/VReactions';
+
+import { VReaction } from '.';
 
 const userId = faker.string.uuid();
 const emoji = faker.helpers.arrayElement(ALLOWED_REACTIONS);
 
 export default {
-  title: 'Reactions/VReaction',
   component: VReaction,
+  title: 'Reactions/VReaction',
 } as Meta;
 
 const Template: StoryFn = (args) => ({
-  components: { VReaction, VCard },
+  components: { VCard, VReaction },
   setup() {
     return { args };
   },
@@ -22,18 +24,16 @@ const Template: StoryFn = (args) => ({
 });
 
 export const Default = {
-  render: Template,
   args: {
-    userId,
     emoji,
     reactions: mockReactionsData(),
+    userId,
   },
+  render: Template,
 };
 
 export const Own = {
-  render: Template,
   args: {
-    userId,
     emoji,
     reactions: [
       ...mockReactionsData(1).map((reaction) => {
@@ -41,15 +41,17 @@ export const Own = {
       }),
       ...mockReactionsData(3),
     ],
+    userId,
   },
+  render: Template,
 };
 
 export const Disabled = {
-  render: Template,
   args: {
-    userId,
+    disabled: true,
     emoji,
     reactions: mockReactionsData(),
-    disabled: true,
+    userId,
   },
+  render: Template,
 };

@@ -1,9 +1,10 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
+
 import { VButton } from '@/components/VButton';
 
 export default {
-  title: 'Forms/VButton',
   component: VButton,
+  title: 'Forms/VButton',
 } as Meta;
 
 const Template: StoryFn = (args) => ({
@@ -15,17 +16,17 @@ const Template: StoryFn = (args) => ({
 });
 
 export const Default = {
-  render: Template,
-
   args: {
     appearance: 'button',
   },
+
+  render: Template,
 };
 
 export const Link = {
-  render: Template,
-
   args: {
     appearance: 'link',
   },
+
+  render: Template,
 };

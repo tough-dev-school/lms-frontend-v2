@@ -1,7 +1,9 @@
 <script lang="ts" setup>
-  import { computed } from 'vue';
-  import { ALLOWED_REACTIONS, type VReactionsPaletteProps } from '.';
   import type { ReactionEmoji } from '@/types/homework';
+
+  import { computed } from 'vue';
+
+  import { ALLOWED_REACTIONS, type VReactionsPaletteProps } from '.';
 
   const props = withDefaults(defineProps<VReactionsPaletteProps>(), {
     usedReactions: () => [],

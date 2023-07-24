@@ -1,4 +1,5 @@
 import type { RouteLocationNormalized } from 'vue-router';
+
 import useAuth from '@/stores/auth';
 
 const loginByToken = async (to: RouteLocationNormalized) => {

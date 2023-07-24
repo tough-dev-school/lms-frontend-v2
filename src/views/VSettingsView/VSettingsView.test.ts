@@ -1,7 +1,9 @@
-import { mount, RouterLinkStub } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import { VSettingsView } from '.';
 import type { RouterLink } from 'vue-router';
+
+import { RouterLinkStub, mount } from '@vue/test-utils';
+
+import { VSettingsView } from '.';
 
 const defaultProps = {};
 
@@ -10,14 +12,14 @@ describe('VSettingsView', () => {
 
   beforeEach(() => {
     wrapper = mount(VSettingsView, {
-      shallow: true,
-      props: defaultProps,
       global: {
         stubs: {
-          VCard: false,
           RouterLink: RouterLinkStub,
+          VCard: false,
         },
       },
+      props: defaultProps,
+      shallow: true,
     });
   });
 

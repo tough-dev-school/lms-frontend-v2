@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-  import { ref, onMounted } from 'vue';
-  import { VTextInput } from '@/components/VTextInput';
   import { VButton } from '@/components/VButton';
-  import { VHeading } from '@/components/VHeading';
   import { VCard } from '@/components/VCard';
+  import { VHeading } from '@/components/VHeading';
+  import { VTextInput } from '@/components/VTextInput';
   import useUser from '@/stores/user';
+  import { onMounted, ref } from 'vue';
 
   const linkedinUsername = ref('');
   const githubUsername = ref('');
@@ -19,8 +19,8 @@
 
   const saveProfile = async () => {
     await user.setData({
-      linkedinUsername: linkedinUsername.value,
       githubUsername: githubUsername.value,
+      linkedinUsername: linkedinUsername.value,
       telegramUsername: telegramUsername.value,
     });
     update();

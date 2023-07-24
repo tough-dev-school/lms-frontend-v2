@@ -1,24 +1,26 @@
-import type { Meta, StoryFn } from '@storybook/vue3';
-import { VHomeworkAnswerView } from '.';
-import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
-import useHomework from '@/stores/homework';
 import type { Answer } from '@/types/homework';
-import { mockThread } from '@/mocks/mockThread';
+import type { Meta, StoryFn } from '@storybook/vue3';
+
 import { mockAnswer } from '@/mocks/mockAnswer';
-import { HTML_CONTENT, mockContent } from '@/mocks/mockContent';
 import {
   STATIC_AUTHOR_1,
   STATIC_AUTHOR_2,
   STATIC_AUTHOR_3,
 } from '@/mocks/mockAuthor';
 import { mockComment } from '@/mocks/mockComment';
+import { HTML_CONTENT, mockContent } from '@/mocks/mockContent';
+import { STATIC_REACTION_2, STATIC_REACTIONS } from '@/mocks/mockReaction';
+import { mockThread } from '@/mocks/mockThread';
+import useHomework from '@/stores/homework';
+import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import dayjs from 'dayjs';
-import { STATIC_REACTIONS, STATIC_REACTION_2 } from '@/mocks/mockReaction';
+
+import { VHomeworkAnswerView } from '.';
 
 export default {
-  title: 'App/VHomeworkAnswerView',
   component: VHomeworkAnswerView,
   decorators: [defaultLayoutDecorator],
+  title: 'App/VHomeworkAnswerView',
 } as Meta;
 
 const Template: StoryFn = (args) => ({
@@ -39,8 +41,8 @@ const Template: StoryFn = (args) => ({
           mockComment({
             ...mockThread({
               ...mockAnswer({
-                text: mockContent(HTML_CONTENT),
                 author: STATIC_AUTHOR_2,
+                text: mockContent(HTML_CONTENT),
               }),
             }),
             descendants: [

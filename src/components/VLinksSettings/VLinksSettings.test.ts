@@ -1,14 +1,16 @@
-import { mount } from '@vue/test-utils';
-import type { VueWrapper } from '@vue/test-utils';
-import { VLinksSettings } from '.';
 import type { VTextInput } from '@/components/VTextInput';
+import type { VueWrapper } from '@vue/test-utils';
+
 import useUser from '@/stores/user';
-import { createTestingPinia } from '@pinia/testing';
 import { faker } from '@faker-js/faker';
+import { createTestingPinia } from '@pinia/testing';
+import { mount } from '@vue/test-utils';
+
+import { VLinksSettings } from '.';
 
 const defaultData = {
-  linkedinUsername: faker.internet.userName(),
   githubUsername: faker.internet.userName(),
+  linkedinUsername: faker.internet.userName(),
   telegramUsername: faker.internet.userName(),
 };
 
@@ -18,7 +20,6 @@ describe('VLinksSettings', () => {
 
   beforeEach(() => {
     wrapper = mount(VLinksSettings, {
-      shallow: true,
       global: {
         plugins: [
           createTestingPinia({
@@ -32,6 +33,7 @@ describe('VLinksSettings', () => {
           VCard: false,
         },
       },
+      shallow: true,
     });
 
     user = useUser();

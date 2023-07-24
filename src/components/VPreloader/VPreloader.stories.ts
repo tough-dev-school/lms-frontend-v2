@@ -1,9 +1,10 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
+
 import { VPreloader } from '@/components/VPreloader';
 
 export default {
-  title: 'UI/VPreloader',
   component: VPreloader,
+  title: 'UI/VPreloader',
 } as Meta;
 
 const Template: StoryFn = (args) => ({

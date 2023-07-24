@@ -1,12 +1,13 @@
-import axios from '@/axios';
 import type {
   Answer,
+  Comment,
   Comments,
   Question,
-  Comment,
   Reaction,
   ReactionEmoji,
 } from '@/types/homework';
+
+import axios from '@/axios';
 import htmlToMarkdown from '@/utils/htmlToMarkdown';
 
 export const getQuestion = async (questionId: string) => {
@@ -22,16 +23,16 @@ export const getAnswer = async (answerId: string) => {
 };
 
 interface getAnswersParams {
-  question?: string;
   author?: string;
+  question?: string;
 }
 
 export const getAnswers = async ({
-  questionId,
   authorId,
+  questionId,
 }: {
-  questionId?: string;
   authorId?: string;
+  questionId?: string;
 } = {}) => {
   const url = '/api/v2/homework/answers/';
 
@@ -57,19 +58,19 @@ export const getComments = async (answerIds: string[]) => {
 };
 
 export const postAnswer = async ({
-  text,
-  questionId,
   parentId,
+  questionId,
+  text,
 }: {
-  text: string;
-  questionId: string;
   parentId?: string;
+  questionId: string;
+  text: string;
 }) => {
   const url = '/api/v2/homework/answers/';
 
-  const data: { text: string; question: string; parent?: string } = {
-    text: htmlToMarkdown(text),
+  const data: { parent?: string; question: string; text: string } = {
     question: questionId,
+    text: htmlToMarkdown(text),
   };
 
   if (parentId) data.parent = parentId;

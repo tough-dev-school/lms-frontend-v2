@@ -1,9 +1,10 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
+
 import { VTextEditor } from '@/components/VTextEditor';
 
 export default {
-  title: 'Forms/VTextEditor',
   component: VTextEditor,
+  title: 'Forms/VTextEditor',
 } as Meta;
 
 const Template: StoryFn = (args) => ({
@@ -15,14 +16,14 @@ const Template: StoryFn = (args) => ({
 });
 
 export const Default = {
-  render: Template,
   args: {},
+  render: Template,
 };
 
 export const Placeholder = {
-  render: Template,
-
   args: {
     placeholder: 'You can change placeholder text',
   },
+
+  render: Template,
 };

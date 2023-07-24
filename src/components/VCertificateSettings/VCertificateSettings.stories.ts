@@ -1,9 +1,10 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
+
 import { VCertificateSettings } from '@/components/VCertificateSettings';
 
 export default {
-  title: 'Settings/VCertificateSettings',
   component: VCertificateSettings,
+  title: 'Settings/VCertificateSettings',
 } as Meta;
 
 const Template: StoryFn = (args) => ({
@@ -15,6 +16,6 @@ const Template: StoryFn = (args) => ({
 });
 
 export const Default = {
-  render: Template,
   args: {},
+  render: Template,
 };

@@ -1,7 +1,9 @@
-import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import { VCover } from '.';
+
 import { faker } from '@faker-js/faker';
+import { mount } from '@vue/test-utils';
+
+import { VCover } from '.';
 
 const studyName = faker.commerce.productName();
 const studyAdditionalInfo = faker.commerce.productAdjective();
@@ -17,9 +19,9 @@ describe('VCover', () => {
 
   beforeEach(() => {
     wrapper = mount(VCover, {
-      shallow: true,
-      props: defaultProps,
       global: { stubs: { VHeading: false } },
+      props: defaultProps,
+      shallow: true,
     });
   });
 
@@ -36,8 +38,8 @@ describe('VCover', () => {
 
   test('has real cover if defined', () => {
     wrapper = mount(VCover, {
-      shallow: true,
       props: { ...defaultProps, image: 'image' },
+      shallow: true,
     });
 
     expect(getImageCoverWrapper().exists()).toBe(true);

@@ -1,15 +1,16 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
+
 import { VOwnAnswer } from '@/components/VOwnAnswer';
+import { mockAnswer } from '@/mocks/mockAnswer';
+import { STATIC_AUTHOR_1 } from '@/mocks/mockAuthor';
+import { USER_1 } from '@/mocks/mockUserId';
+import useUser from '@/stores/user';
 import { faker } from '@faker-js/faker';
 import dayjs from 'dayjs';
-import { mockAnswer } from '@/mocks/mockAnswer';
-import useUser from '@/stores/user';
-import { USER_1 } from '@/mocks/mockUserId';
-import { STATIC_AUTHOR_1 } from '@/mocks/mockAuthor';
 
 export default {
-  title: 'Answer/VOwnAnswer',
   component: VOwnAnswer,
+  title: 'Answer/VOwnAnswer',
 } as Meta;
 
 const userId = USER_1;
@@ -33,21 +34,21 @@ const Template: StoryFn = (args) => ({
 });
 
 export const Default = {
-  render: Template,
-
   args: {
     answer: answer,
-    questionId: faker.string.uuid(),
     parentId: faker.string.uuid(),
+    questionId: faker.string.uuid(),
   },
+
+  render: Template,
 };
 
 export const Editable = {
-  render: Template,
-
   args: {
     answer: editableAnswer,
-    questionId: faker.string.uuid(),
     parentId: faker.string.uuid(),
+    questionId: faker.string.uuid(),
   },
+
+  render: Template,
 };

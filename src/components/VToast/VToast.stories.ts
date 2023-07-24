@@ -1,9 +1,10 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
+
 import { VToast } from '@/components/VToast';
 
 export default {
-  title: 'Toasts/VToast',
   component: VToast,
+  title: 'Toasts/VToast',
 } as Meta;
 
 const Template: StoryFn = (args) => ({
@@ -15,16 +16,16 @@ const Template: StoryFn = (args) => ({
 });
 
 export const Default = {
-  render: Template,
   args: { text: 'This is a message!' },
+  render: Template,
 };
 
 export const Error = {
-  render: Template,
   args: { text: 'This is a error!', type: 'error' },
+  render: Template,
 };
 
 export const Success = {
-  render: Template,
   args: { text: 'This is a success!', type: 'success' },
+  render: Template,
 };

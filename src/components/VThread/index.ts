@@ -1,18 +1,19 @@
 import type { Thread } from '@/types/homework';
-import VThread from './VThread.vue';
 import type { MoodHappyIcon } from 'vue-tabler-icons';
 
+import VThread from './VThread.vue';
+
 interface ThreadAction {
-  name?: string;
-  handle: (() => void) | null;
-  show: boolean;
-  icon: typeof MoodHappyIcon;
   disabled?: boolean;
+  handle: (() => void) | null;
+  icon: typeof MoodHappyIcon;
+  name?: string;
+  show: boolean;
 }
 
 interface VThreadProps {
-  originalPost: Thread;
   customActions: ThreadAction[];
+  originalPost: Thread;
 }
 
-export { VThread, type ThreadAction, type VThreadProps };
+export { type ThreadAction, VThread, type VThreadProps };

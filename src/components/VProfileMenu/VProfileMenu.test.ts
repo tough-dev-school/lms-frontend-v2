@@ -1,12 +1,13 @@
-import { RouterLinkStub, mount, VueWrapper } from '@vue/test-utils';
-import { VProfileMenu } from '@/components/VProfileMenu';
-import useUser from '@/stores/user';
-import useAuth from '@/stores/auth';
 import type { VAvatar } from '@/components/VAvatar';
+
+import { VProfileMenu } from '@/components/VProfileMenu';
+import { mockStudy } from '@/mocks/mockStudy';
+import useAuth from '@/stores/auth';
+import useStudies from '@/stores/studies';
+import useUser from '@/stores/user';
 import { faker } from '@faker-js/faker';
 import { createTestingPinia } from '@pinia/testing';
-import useStudies from '@/stores/studies';
-import { mockStudy } from '@/mocks/mockStudy';
+import { RouterLinkStub, VueWrapper, mount } from '@vue/test-utils';
 
 const routerPushMock = vi.fn();
 
@@ -24,7 +25,6 @@ describe('VProfileMenu', () => {
 
   beforeEach(() => {
     wrapper = mount(VProfileMenu, {
-      shallow: true,
       global: {
         plugins: [
           createTestingPinia({
@@ -35,13 +35,14 @@ describe('VProfileMenu', () => {
           RouterLink: RouterLinkStub,
         },
       },
+      shallow: true,
     });
 
     user = useUser();
     user.$patch({
-      username: faker.internet.email(),
       firstName: faker.person.firstName(),
       lastName: faker.person.lastName(),
+      username: faker.internet.email(),
     });
 
     studies = useStudies();
@@ -195,8 +196,8 @@ describe('VProfileMenu', () => {
 
     expect(routerPushMock).toHaveBeenCalledTimes(1);
     expect(routerPushMock).toHaveBeenCalledWith({
-      name: 'settings',
       hash: '#certificate',
+      name: 'settings',
     });
   });
 

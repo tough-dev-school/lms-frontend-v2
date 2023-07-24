@@ -1,18 +1,19 @@
-import { mount } from '@vue/test-utils';
-import type { VueWrapper } from '@vue/test-utils';
-import { VNewAnswer } from '@/components/VNewAnswer';
-import type { VTextEditor } from '@/components/VTextEditor';
 import type { VButton } from '@/components/VButton';
+import type { VTextEditor } from '@/components/VTextEditor';
+import type { VueWrapper } from '@vue/test-utils';
+
+import { VNewAnswer } from '@/components/VNewAnswer';
+import { mockAnswer } from '@/mocks/mockAnswer';
+import useHomework from '@/stores/homework';
 import { faker } from '@faker-js/faker';
 import { createTestingPinia } from '@pinia/testing';
-import useHomework from '@/stores/homework';
-import { nextTick } from 'vue';
+import { mount } from '@vue/test-utils';
 import { flushPromises } from '@vue/test-utils';
-import { mockAnswer } from '@/mocks/mockAnswer';
+import { nextTick } from 'vue';
 
 const defaultProps = {
-  questionId: faker.string.uuid(),
   parentId: faker.string.uuid(),
+  questionId: faker.string.uuid(),
 };
 
 const answer = mockAnswer();
@@ -24,16 +25,16 @@ describe('VNewAnswer', () => {
 
   beforeEach(() => {
     wrapper = mount(VNewAnswer, {
-      shallow: true,
       global: {
-        stubs: { VCard: false },
         plugins: [
           createTestingPinia({
             createSpy: vi.fn,
           }),
         ],
+        stubs: { VCard: false },
       },
       props: defaultProps,
+      shallow: true,
     });
 
     homework = useHomework();
@@ -94,7 +95,7 @@ describe('VNewAnswer', () => {
     await getEditorWrapper().vm.$emit(
       'update:modelValue',
       `<${tagName}></${tagName}>`.repeat(
-        faker.number.int({ min: 1, max: 100 }),
+        faker.number.int({ max: 100, min: 1 }),
       ),
     );
 

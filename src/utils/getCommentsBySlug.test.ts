@@ -1,10 +1,11 @@
-import getCommentsBySlug from './getCommentsBySlug';
+import { mockAnswer } from '@/mocks/mockAnswer';
+import { mockComment } from '@/mocks/mockComment';
+import { mockComments } from '@/mocks/mockComments';
+import { mockThread } from '@/mocks/mockThread';
 import { faker } from '@faker-js/faker';
 import shuffle from 'lodash/shuffle';
-import { mockThread } from '@/mocks/mockThread';
-import { mockAnswer } from '@/mocks/mockAnswer';
-import { mockComments } from '@/mocks/mockComments';
-import { mockComment } from '@/mocks/mockComment';
+
+import getCommentsBySlug from './getCommentsBySlug';
 
 describe('getCommentsBySlug', () => {
   test('getCommentsBySlug returns array if nothing found', () => {

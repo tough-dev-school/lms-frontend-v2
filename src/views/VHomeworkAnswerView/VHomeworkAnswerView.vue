@@ -1,20 +1,21 @@
 <script lang="ts" setup>
-  import { VHeading } from '@/components/VHeading';
-  import { VAnswer } from '@/components/VAnswer';
-  import { VThread } from '@/components/VThread';
-  import { VFeedbackGuide } from '@/components/VFeedbackGuide';
-  import { computed, watch } from 'vue';
-  import useHomework from '@/stores/homework';
-  import { useRoute, useRouter } from 'vue-router';
-  import { storeToRefs } from 'pinia';
-  import { VPreloader } from '@/components/VPreloader';
-  import { VHtmlContent } from '@/components/VHtmlContent';
-  import { VCard } from '@/components/VCard';
-  import { VNewAnswer } from '@/components/VNewAnswer';
   import type { Thread } from '@/types/homework';
 
+  import { VAnswer } from '@/components/VAnswer';
+  import { VCard } from '@/components/VCard';
+  import { VFeedbackGuide } from '@/components/VFeedbackGuide';
+  import { VHeading } from '@/components/VHeading';
+  import { VHtmlContent } from '@/components/VHtmlContent';
+  import { VNewAnswer } from '@/components/VNewAnswer';
+  import { VPreloader } from '@/components/VPreloader';
+  import { VThread } from '@/components/VThread';
+  import useHomework from '@/stores/homework';
+  import { storeToRefs } from 'pinia';
+  import { computed, watch } from 'vue';
+  import { useRoute, useRouter } from 'vue-router';
+
   const homework = useHomework();
-  const { question, answers } = storeToRefs(homework);
+  const { answers, question } = storeToRefs(homework);
   const route = useRoute();
   const router = useRouter();
 
@@ -24,7 +25,7 @@
 
   const prepareForScroll = (slug: string) => {
     if (route.name) {
-      router.push({ name: route.name, hash: `#${slug}` });
+      router.push({ hash: `#${slug}`, name: route.name });
     }
   };
 

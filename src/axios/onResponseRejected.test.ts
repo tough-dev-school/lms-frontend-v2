@@ -1,21 +1,22 @@
-import useAuth from '@/stores/auth';
-
-import { createApp } from 'vue';
-import { setActivePinia } from 'pinia';
-import { createTestingPinia } from '@pinia/testing';
-import onResponseRejected from './onResponseRejected';
-import { cloneDeep } from 'lodash';
-import responseCaseMiddleware from './responseCaseMiddleware';
-import handleError from '@/utils/handleError';
 import type { AxiosError } from 'axios';
+
+import useAuth from '@/stores/auth';
+import handleError from '@/utils/handleError';
+import { createTestingPinia } from '@pinia/testing';
+import { cloneDeep } from 'lodash';
+import { setActivePinia } from 'pinia';
+import { createApp } from 'vue';
+
+import onResponseRejected from './onResponseRejected';
+import responseCaseMiddleware from './responseCaseMiddleware';
 
 const defaultError = {
   response: {
-    status: 400,
+    data: { details: 'really bad thing' },
     headers: {
       'content-type': 'text/html; charset=utf-8',
     },
-    data: { details: 'really bad thing' },
+    status: 400,
   },
 };
 

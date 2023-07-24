@@ -1,6 +1,6 @@
-import { mount, VueWrapper } from '@vue/test-utils';
-import { createTestingPinia } from '@pinia/testing';
 import { faker } from '@faker-js/faker';
+import { createTestingPinia } from '@pinia/testing';
+import { VueWrapper, mount } from '@vue/test-utils';
 
 const email = faker.internet.email({ provider: 'foobar.baz' });
 const getQuery = (email: string) => ({ query: { email } });
@@ -10,7 +10,7 @@ vi.doMock('vue-router', () => ({
   useRoute,
 }));
 
-import { VMailSentView, GMAIL, MAILRU } from '.';
+import { GMAIL, MAILRU, VMailSentView } from '.';
 
 const gmailEmailQuery = getQuery('john@gmail.com');
 const mailruEmailQuery = getQuery('ivan@mail.ru');
@@ -20,7 +20,6 @@ describe('VMailSentView', () => {
 
   const mountWrapper = () => {
     wrapper = mount(VMailSentView, {
-      shallow: true,
       global: {
         plugins: [
           createTestingPinia({
@@ -31,6 +30,7 @@ describe('VMailSentView', () => {
           VCard: false,
         },
       },
+      shallow: true,
     });
   };
 

@@ -2,7 +2,6 @@
 require('@rushstack/eslint-patch/modern-module-resolution');
 
 module.exports = {
-  root: true,
   env: {
     node: true,
   },
@@ -17,6 +16,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
   },
+  root: true,
   rules: {
     'no-empty': ['error', { allowEmptyCatch: true }],
   },

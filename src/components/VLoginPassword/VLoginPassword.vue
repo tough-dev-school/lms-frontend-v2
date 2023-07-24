@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-  import { VHeading } from '@/components/VHeading';
   import { VButton } from '@/components/VButton';
   import { VCard } from '@/components/VCard';
+  import { VHeading } from '@/components/VHeading';
   import { VTextInput } from '@/components/VTextInput';
-  import { ref, computed } from 'vue';
   import useAuth from '@/stores/auth';
-  import { useRouter, useRoute } from 'vue-router';
+  import { computed, ref } from 'vue';
+  import { useRoute, useRouter } from 'vue-router';
 
   const auth = useAuth();
   const router = useRouter();

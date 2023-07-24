@@ -1,57 +1,35 @@
-import { defineStore } from 'pinia';
+import type { Answer, Question, ReactionEmoji, Thread } from '@/types/homework';
+
 import {
+  addReaction,
+  deleteAnswer,
+  getAnswer,
+  getAnswers,
   getQuestion,
   postAnswer,
-  deleteAnswer,
-  updateAnswer,
-  sendImage,
-  getAnswers,
-  getAnswer,
-  addReaction,
   removeReaction,
+  sendImage,
+  updateAnswer,
 } from '@/api/homework';
-import type { Answer, Question, ReactionEmoji, Thread } from '@/types/homework';
 import useToasts from '@/stores/toasts';
 import getThreads from '@/utils/getThreads';
+import { defineStore } from 'pinia';
 
 interface State {
-  question: Question | undefined;
   answers: Answer[] | Thread[];
+  question: Question | undefined;
 }
 
 const useHomework = defineStore('homework', {
-  state: (): State => {
-    return {
-      question: undefined,
-      answers: [],
-    };
-  },
   actions: {
-    async getQuestion(questionId: string) {
-      try {
-        this.question = await getQuestion(questionId);
-      } catch (error: any) {}
+    async addReaction(answerId: string, reaction: ReactionEmoji) {
+      return await addReaction(answerId, reaction);
     },
-    async getAnswers({
-      questionId,
-      authorId,
-      threads,
-    }: {
-      questionId?: string;
-      authorId?: string;
-      threads?: boolean;
-    }) {
+    async deleteAnswer(answerId: string) {
+      const toasts = useToasts();
       try {
-        const answers = await getAnswers({
-          questionId,
-          authorId,
-        });
-
-        if (threads) {
-          this.answers = await getThreads(answers);
-        } else {
-          this.answers = answers;
-        }
+        await deleteAnswer(answerId);
+        toasts.addMessage('Сообщение удалено', 'success');
       } catch (error: any) {}
     },
     async getAnswerById(answerId: string, threads = false) {
@@ -65,28 +43,54 @@ const useHomework = defineStore('homework', {
         }
       } catch (error: any) {}
     },
-    async postAnswer({
-      text,
+    async getAnswers({
+      authorId,
       questionId,
-      parentId,
+      threads,
     }: {
-      text: string;
-      questionId: string;
+      authorId?: string;
+      questionId?: string;
+      threads?: boolean;
+    }) {
+      try {
+        const answers = await getAnswers({
+          authorId,
+          questionId,
+        });
+
+        if (threads) {
+          this.answers = await getThreads(answers);
+        } else {
+          this.answers = answers;
+        }
+      } catch (error: any) {}
+    },
+    async getQuestion(questionId: string) {
+      try {
+        this.question = await getQuestion(questionId);
+      } catch (error: any) {}
+    },
+    async postAnswer({
+      parentId,
+      questionId,
+      text,
+    }: {
       parentId?: string;
+      questionId: string;
+      text: string;
     }) {
       const toasts = useToasts();
       try {
-        const answer = await postAnswer({ text, questionId, parentId });
+        const answer = await postAnswer({ parentId, questionId, text });
         toasts.addMessage('Сообщение добавлено', 'success');
         return answer;
       } catch (error: any) {}
     },
-    async deleteAnswer(answerId: string) {
-      const toasts = useToasts();
-      try {
-        await deleteAnswer(answerId);
-        toasts.addMessage('Сообщение удалено', 'success');
-      } catch (error: any) {}
+    async removeReaction(answerId: string, reactionId: string) {
+      return await removeReaction(answerId, reactionId);
+    },
+    async sendImage(file: File) {
+      return await sendImage(file);
     },
     async updateAnswer(answerId: string, text: string) {
       const toasts = useToasts();
@@ -95,15 +99,12 @@ const useHomework = defineStore('homework', {
         toasts.addMessage('Сообщение отправлено', 'success');
       } catch (error: any) {}
     },
-    async sendImage(file: File) {
-      return await sendImage(file);
-    },
-    async addReaction(answerId: string, reaction: ReactionEmoji) {
-      return await addReaction(answerId, reaction);
-    },
-    async removeReaction(answerId: string, reactionId: string) {
-      return await removeReaction(answerId, reactionId);
-    },
+  },
+  state: (): State => {
+    return {
+      answers: [],
+      question: undefined,
+    };
   },
 });
 

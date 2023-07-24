@@ -1,51 +1,53 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import { VReactions } from '.';
+
 import { VCard } from '@/components/VCard';
-import { faker } from '@faker-js/faker';
 import { mockReaction } from '@/mocks/mockReaction';
+import { faker } from '@faker-js/faker';
+
+import { VReactions } from '.';
 
 export default {
-  title: 'Reactions/VReactions',
   component: VReactions,
+  title: 'Reactions/VReactions',
 } as Meta;
 
 const Template: StoryFn = (args) => ({
-  components: { VReactions, VCard },
+  argTypes: {
+    disabled: { control: 'boolean' },
+    open: { control: 'boolean' },
+    reactions: { control: 'object' },
+  },
+  components: { VCard, VReactions },
   setup() {
     return { args };
-  },
-  argTypes: {
-    reactions: { control: 'object' },
-    open: { control: 'boolean' },
-    disabled: { control: 'boolean' },
   },
   template:
     '<VCard class="flex justify-start flex-wrap items-start gap-x-8 gap-y-16 pt-16"><VReactions v-bind="args" /></VCard>',
 });
 
 export const Default = {
-  render: Template,
   args: {
-    reactions: faker.helpers.multiple(mockReaction, { count: 15 }),
-    open: false,
     disabled: false,
+    open: false,
+    reactions: faker.helpers.multiple(mockReaction, { count: 15 }),
   },
+  render: Template,
 };
 
 export const Open = {
-  render: Template,
   args: {
-    reactions: faker.helpers.multiple(mockReaction, { count: 15 }),
-    open: true,
     disabled: false,
+    open: true,
+    reactions: faker.helpers.multiple(mockReaction, { count: 15 }),
   },
+  render: Template,
 };
 
 export const Disabled = {
-  render: Template,
   args: {
-    reactions: faker.helpers.multiple(mockReaction, { count: 15 }),
-    open: true,
     disabled: true,
+    open: true,
+    reactions: faker.helpers.multiple(mockReaction, { count: 15 }),
   },
+  render: Template,
 };

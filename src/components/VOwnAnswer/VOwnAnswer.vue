@@ -1,27 +1,28 @@
 <script lang="ts" setup>
-  import { VAnswerActions } from '@/components/VAnswerActions';
-  import { VTextEditor } from '@/components/VTextEditor';
-  import { VButton } from '@/components/VButton';
-  import useHomework from '@/stores/homework';
-  import { ref, onMounted, computed } from 'vue';
+  import type { Answer, Comment, Thread } from '@/types/homework';
+
   import { VAnswer } from '@/components/VAnswer';
+  import { VAnswerActions } from '@/components/VAnswerActions';
+  import { VButton } from '@/components/VButton';
   import { VCard } from '@/components/VCard';
-  import type { Answer, Thread, Comment } from '@/types/homework';
+  import { VTextEditor } from '@/components/VTextEditor';
+  import useHomework from '@/stores/homework';
   import dayjs from 'dayjs';
+  import { computed, onMounted, ref } from 'vue';
 
   export interface Props {
-    answer: Answer | Thread | Comment;
-    questionId: string;
+    answer: Answer | Comment | Thread;
     parentId?: string;
+    questionId: string;
   }
 
   const props = defineProps<Props>();
 
   const emit = defineEmits<{
-    update: [];
     delete: [];
     edit: [];
     mounted: [slug: string];
+    update: [];
   }>();
 
   const homework = useHomework();

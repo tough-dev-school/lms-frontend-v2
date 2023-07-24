@@ -1,5 +1,6 @@
-import axios from '@/axios';
 import type { Study } from '@/types/studies';
+
+import axios from '@/axios';
 
 export const getStudies = async () => {
   const url = `/api/v2/studies/purchased/`;

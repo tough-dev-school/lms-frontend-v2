@@ -1,10 +1,11 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
+
 import { VHtmlContent } from '@/components/VHtmlContent';
 import { mockContent } from '@/mocks/mockContent';
 
 export default {
-  title: 'Answer/VHtmlContent',
   component: VHtmlContent,
+  title: 'Answer/VHtmlContent',
 } as Meta;
 
 const Template: StoryFn = (args) => ({
@@ -16,9 +17,9 @@ const Template: StoryFn = (args) => ({
 });
 
 export const Default = {
-  render: Template,
-
   args: {
     content: mockContent(),
   },
+
+  render: Template,
 };

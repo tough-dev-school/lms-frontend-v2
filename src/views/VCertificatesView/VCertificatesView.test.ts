@@ -1,14 +1,16 @@
-import { mount } from '@vue/test-utils';
-import type { VueWrapper } from '@vue/test-utils';
-import { VCertificatesView } from '.';
 import type { VCertificateCard } from '@/components/VCertificateCard';
-import { createTestingPinia } from '@pinia/testing';
+import type { VueWrapper } from '@vue/test-utils';
+
 import { mockDiplomaData, mockDiplomaSet } from '@/mocks/mockDiploma';
 import useDiplomas from '@/stores/diplomas';
+import { faker } from '@faker-js/faker';
+import { createTestingPinia } from '@pinia/testing';
+import { mount } from '@vue/test-utils';
+import { flatten } from 'lodash';
 import uniq from 'lodash/uniq';
 import { nextTick } from 'vue';
-import { faker } from '@faker-js/faker';
-import { flatten } from 'lodash';
+
+import { VCertificatesView } from '.';
 
 const defaultProps = {};
 
@@ -25,8 +27,6 @@ describe('VCertificatesView', () => {
 
   beforeEach(() => {
     wrapper = mount(VCertificatesView, {
-      shallow: true,
-      props: defaultProps,
       global: {
         plugins: [
           createTestingPinia({
@@ -39,6 +39,8 @@ describe('VCertificatesView', () => {
           }),
         ],
       },
+      props: defaultProps,
+      shallow: true,
     });
 
     diplomas = useDiplomas();

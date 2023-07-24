@@ -1,8 +1,10 @@
-import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import { VLoginChangeView } from '.';
+
 import { VPasswordSettings } from '@/components/VPasswordSettings';
 import { faker } from '@faker-js/faker';
+import { mount } from '@vue/test-utils';
+
+import { VLoginChangeView } from '.';
 
 const defaultProps = {};
 
@@ -12,10 +14,10 @@ const token = faker.string.uuid();
 const routerPushMock = vi.fn();
 
 vi.mock('vue-router', () => ({
+  useRoute: () => ({ params: { token, uid } }),
   useRouter: () => ({
     push: routerPushMock,
   }),
-  useRoute: () => ({ params: { uid, token } }),
 }));
 
 describe('VLoginChangeView', () => {
@@ -23,8 +25,8 @@ describe('VLoginChangeView', () => {
 
   beforeEach(() => {
     wrapper = mount(VLoginChangeView, {
-      shallow: true,
       props: defaultProps,
+      shallow: true,
     });
   });
 
@@ -32,7 +34,7 @@ describe('VLoginChangeView', () => {
     wrapper.findComponent(VPasswordSettings);
 
   test('has proper data in props', () => {
-    expect(getPasswordSettingsWrapper().props()).toStrictEqual({ uid, token });
+    expect(getPasswordSettingsWrapper().props()).toStrictEqual({ token, uid });
   });
 
   test('navigates to /login on save', () => {

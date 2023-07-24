@@ -1,11 +1,13 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import { VMailSentView } from '.';
+
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 
+import { VMailSentView } from '.';
+
 export default {
-  title: 'App/VMailSentView',
   component: VMailSentView,
   decorators: [defaultLayoutDecorator],
+  title: 'App/VMailSentView',
 } as Meta;
 
 const Template: StoryFn = (args) => ({

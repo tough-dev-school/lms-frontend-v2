@@ -1,18 +1,20 @@
-import { mount } from '@vue/test-utils';
-import type { VueWrapper } from '@vue/test-utils';
-import { VCertificateSettings } from '.';
 import type { VTextInput } from '@/components/VTextInput';
-import useUser from '@/stores/user';
-import { createTestingPinia } from '@pinia/testing';
-import { faker } from '@faker-js/faker';
+import type { VueWrapper } from '@vue/test-utils';
 import type { VueNode } from '@vue/test-utils/dist/types';
+
+import useUser from '@/stores/user';
+import { faker } from '@faker-js/faker';
+import { createTestingPinia } from '@pinia/testing';
+import { mount } from '@vue/test-utils';
+
+import { VCertificateSettings } from '.';
 
 const defaultData = {
   firstName: faker.person.firstName(),
-  lastName: faker.person.lastName(),
   firstNameEn: faker.person.firstName(),
-  lastNameEn: faker.person.lastName(),
   gender: 'female',
+  lastName: faker.person.lastName(),
+  lastNameEn: faker.person.lastName(),
 };
 
 describe('VCertificateSettings', () => {
@@ -21,20 +23,20 @@ describe('VCertificateSettings', () => {
 
   beforeEach(() => {
     wrapper = mount(VCertificateSettings, {
-      shallow: true,
       global: {
         plugins: [
           createTestingPinia({
+            createSpy: vi.fn,
             initialState: {
               user: { ...defaultData },
             },
-            createSpy: vi.fn,
           }),
         ],
         stubs: {
           VCard: false,
         },
       },
+      shallow: true,
     });
 
     user = useUser();
@@ -77,10 +79,10 @@ describe('VCertificateSettings', () => {
 
     user.$patch({
       firstName,
-      lastName,
       firstNameEn,
-      lastNameEn,
       gender,
+      lastName,
+      lastNameEn,
     });
 
     await getSaveWrapper().trigger('click');
@@ -111,10 +113,10 @@ describe('VCertificateSettings', () => {
     expect(user.setData).toHaveBeenCalledTimes(1);
     expect(user.setData).toHaveBeenCalledWith({
       firstName,
-      lastName,
       firstNameEn,
-      lastNameEn,
       gender: 'female',
+      lastName,
+      lastNameEn,
     });
   });
 });

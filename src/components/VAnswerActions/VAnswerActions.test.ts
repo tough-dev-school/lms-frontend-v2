@@ -1,8 +1,10 @@
-import { mount } from '@vue/test-utils';
-import type { VueWrapper } from '@vue/test-utils';
-import { VAnswerActions } from '.';
 import type { VAnswerActionsDesktop } from '@/components/VAnswerActionsDesktop';
 import type { VAnswerActionsMobile } from '@/components/VAnswerActionsMobile';
+import type { VueWrapper } from '@vue/test-utils';
+
+import { mount } from '@vue/test-utils';
+
+import { VAnswerActions } from '.';
 
 describe('VAnswerActions', () => {
   let wrapper: VueWrapper<InstanceType<typeof VAnswerActions>>;

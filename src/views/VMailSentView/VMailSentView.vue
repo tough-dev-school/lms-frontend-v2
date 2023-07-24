@@ -1,10 +1,11 @@
 <script lang="ts" setup>
-  import { VHeading } from '@/components/VHeading';
   import { VCard } from '@/components/VCard';
-  import { useRoute } from 'vue-router';
-  import { computed } from 'vue';
-  import { KNOWN_EMAIL_PROVIDERS } from '.';
+  import { VHeading } from '@/components/VHeading';
   import { useChatra } from '@/hooks/useChatra';
+  import { computed } from 'vue';
+  import { useRoute } from 'vue-router';
+
+  import { KNOWN_EMAIL_PROVIDERS } from '.';
 
   const route = useRoute();
 

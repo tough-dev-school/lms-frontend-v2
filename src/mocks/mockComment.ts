@@ -1,10 +1,11 @@
-import type { Thread, Comment } from '@/types/homework';
+import type { Comment, Thread } from '@/types/homework';
+
 import { mockAnswer } from './mockAnswer';
 import { mockThread } from './mockThread';
 
 export const mockComment = (
-  payload: Partial<Thread | Comment> &
-    Pick<Thread | Comment, 'slug' | 'question'>,
+  payload: Partial<Comment | Thread> &
+    Pick<Comment | Thread, 'question' | 'slug'>,
 ): Comment => {
   const parent = payload.slug;
   const question = payload.question;

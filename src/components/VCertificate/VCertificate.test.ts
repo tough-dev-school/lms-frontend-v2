@@ -1,9 +1,11 @@
-import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import { VCertificate } from '.';
-import getCertificateLink from '@/utils/getCertificateLink';
-import merge from 'lodash/merge';
+
 import { mockDiplomaData } from '@/mocks/mockDiploma';
+import getCertificateLink from '@/utils/getCertificateLink';
+import { mount } from '@vue/test-utils';
+import merge from 'lodash/merge';
+
+import { VCertificate } from '.';
 
 const defaultProps = {
   certificate: mockDiplomaData(),
@@ -13,7 +15,7 @@ describe('VCertificate', () => {
   let wrapper: VueWrapper<InstanceType<typeof VCertificate>>;
 
   beforeEach(() => {
-    wrapper = mount(VCertificate, { shallow: true, props: defaultProps });
+    wrapper = mount(VCertificate, { props: defaultProps, shallow: true });
   });
 
   const getImageWrapper = () => {
@@ -41,12 +43,12 @@ describe('VCertificate', () => {
     ['EN', 'На английском'],
   ])('has language label', (locale, expected) => {
     wrapper = mount(VCertificate, {
-      shallow: true,
       props: merge({}, defaultProps, {
         certificate: {
           language: locale,
         },
       }),
+      shallow: true,
     });
 
     expect(getLabelWrapper().text()).toBe(expected);

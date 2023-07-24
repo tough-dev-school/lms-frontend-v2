@@ -1,27 +1,27 @@
 <script setup lang="ts">
+  import useHomework from '@/stores/homework';
+  import Image from '@tiptap/extension-image';
   import Placeholder from '@tiptap/extension-placeholder';
+  import StarterKit from '@tiptap/starter-kit';
   import {
     BubbleMenu,
-    EditorContent,
     Editor,
+    EditorContent,
     FloatingMenu,
   } from '@tiptap/vue-3';
-  import StarterKit from '@tiptap/starter-kit';
-  import Image from '@tiptap/extension-image';
+  import { onKeyDown, useFocusWithin, useKeyModifier } from '@vueuse/core';
+  import { onBeforeUnmount, ref, watch, withDefaults } from 'vue';
   import {
+    BlockquoteIcon,
     BoldIcon,
     H1Icon,
     H2Icon,
     H3Icon,
     ItalicIcon,
-    BlockquoteIcon,
-    ListNumbersIcon,
     ListIcon,
+    ListNumbersIcon,
     PhotoIcon,
   } from 'vue-tabler-icons';
-  import useHomework from '@/stores/homework';
-  import { onBeforeUnmount, watch, withDefaults, ref } from 'vue';
-  import { onKeyDown, useKeyModifier, useFocusWithin } from '@vueuse/core';
 
   export interface Props {
     modelValue: string;
@@ -37,8 +37,8 @@
   const { focused } = useFocusWithin(currentEditor);
 
   const emit = defineEmits<{
-    'update:modelValue': [value: string];
     send: [];
+    'update:modelValue': [value: string];
   }>();
 
   const isMetaPressed = useKeyModifier('Meta');
@@ -54,13 +54,6 @@
 
   const editor = new Editor({
     content: props.modelValue,
-    extensions: [
-      StarterKit,
-      Placeholder.configure({
-        placeholder: props.placeholder,
-      }),
-      Image.configure({ inline: true }),
-    ],
     editorProps: {
       handleDrop: (view, event, slice, moved) => {
         if (
@@ -89,6 +82,13 @@
         return false;
       },
     },
+    extensions: [
+      StarterKit,
+      Placeholder.configure({
+        placeholder: props.placeholder,
+      }),
+      Image.configure({ inline: true }),
+    ],
     onUpdate: () => {
       const html = editor.getHTML();
       emit('update:modelValue', html);

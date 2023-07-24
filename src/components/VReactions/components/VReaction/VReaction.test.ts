@@ -1,28 +1,30 @@
-import { mount, VueWrapper } from '@vue/test-utils';
-import { faker } from '@faker-js/faker';
-import { VReaction, type VReactionProps } from '.';
-import { ALLOWED_REACTIONS } from '@/components/VReactions';
-import { mockReactionsData } from '../../mocks/mockReactionsData';
-import getName from '@/utils/getName';
 import type { VAvatar } from '@/components/VAvatar';
+
+import { ALLOWED_REACTIONS } from '@/components/VReactions';
+import getName from '@/utils/getName';
+import { faker } from '@faker-js/faker';
+import { VueWrapper, mount } from '@vue/test-utils';
+
+import { VReaction, type VReactionProps } from '.';
+import { mockReactionsData } from '../../mocks/mockReactionsData';
 
 const emoji = faker.helpers.arrayElement(ALLOWED_REACTIONS);
 const userId = faker.string.uuid();
 
 const defaultProps = {
+  disabled: false,
   emoji,
   reactions: mockReactionsData().map((reaction) => {
     reaction.emoji = emoji;
     return reaction;
   }),
-  disabled: false,
   userId,
 };
 
 const mountComponent = (props: Partial<VReactionProps> = {}) => {
   return mount(VReaction, {
-    shallow: true,
     props: { ...defaultProps, ...props },
+    shallow: true,
   });
 };
 

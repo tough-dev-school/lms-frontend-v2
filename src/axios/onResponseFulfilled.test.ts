@@ -1,10 +1,12 @@
+import type { AxiosResponse } from 'axios';
+
+import { createTestingPinia } from '@pinia/testing';
+import { cloneDeep } from 'lodash';
+import { setActivePinia } from 'pinia';
+import { createApp } from 'vue';
+
 import onResponseFulfilled from './onResponseFulfilled';
 import responseCaseMiddleware from './responseCaseMiddleware';
-import { createApp } from 'vue';
-import { setActivePinia } from 'pinia';
-import { createTestingPinia } from '@pinia/testing';
-import type { AxiosResponse } from 'axios';
-import { cloneDeep } from 'lodash';
 
 vi.mock('./responseCaseMiddleware');
 

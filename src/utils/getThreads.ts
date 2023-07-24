@@ -1,6 +1,7 @@
-import getCommentsBySlug from '@/utils/getCommentsBySlug';
-import { getComments } from '@/api/homework';
 import type { Answer, Thread } from '@/types/homework';
+
+import { getComments } from '@/api/homework';
+import getCommentsBySlug from '@/utils/getCommentsBySlug';
 
 const getThreads = async (answers: Answer[]) => {
   const answerIds = answers.map((answer) => answer.slug);

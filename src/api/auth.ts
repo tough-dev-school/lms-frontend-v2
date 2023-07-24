@@ -1,5 +1,6 @@
-import axios from '@/axios';
 import type { AuthToken } from '@/types/auth';
+
+import axios from '@/axios';
 
 type LoginResponse = {
   token: AuthToken;
@@ -11,8 +12,8 @@ export const loginWithCredentials = async (
 ): Promise<LoginResponse> => {
   const url = `/api/v2/auth/token/`;
   const data = {
-    username,
     password,
+    username,
   };
 
   return (await axios.post(url, data)).data as LoginResponse;
@@ -65,7 +66,7 @@ export const resetPassword = async (
   return await axios.post(url, {
     new_password1: newPassword1,
     new_password2: newPassword2,
-    uid: uid,
     token: token,
+    uid: uid,
   });
 };

@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-  import useDiplomas from '@/stores/diplomas';
-  import { VHeading } from '@/components/VHeading';
   import { VCertificateCard } from '@/components/VCertificateCard';
-  import { computed } from 'vue';
+  import { VHeading } from '@/components/VHeading';
+  import useDiplomas from '@/stores/diplomas';
   import groupBy from 'lodash/groupBy';
+  import { computed } from 'vue';
 
   const diplomas = useDiplomas();
 
@@ -11,8 +11,8 @@
     const gorups = groupBy(diplomas.items, (diploma) => diploma.course.name);
 
     return Object.keys(gorups).map((key) => ({
-      course: key,
       certificates: gorups[key],
+      course: key,
     }));
   });
 </script>

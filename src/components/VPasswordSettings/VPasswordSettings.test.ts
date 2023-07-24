@@ -1,15 +1,17 @@
-import { mount } from '@vue/test-utils';
-import type { VueWrapper } from '@vue/test-utils';
-import { VPasswordSettings } from '.';
 import type { VTextInput } from '@/components/VTextInput';
+import type { VueWrapper } from '@vue/test-utils';
+
 import useAuth from '@/stores/auth';
-import { createTestingPinia } from '@pinia/testing';
 import { faker } from '@faker-js/faker';
+import { createTestingPinia } from '@pinia/testing';
+import { mount } from '@vue/test-utils';
 import { nextTick } from 'vue';
 
+import { VPasswordSettings } from '.';
+
 const defaultProps = {
-  uid: faker.string.uuid(),
   token: faker.string.uuid(),
+  uid: faker.string.uuid(),
 };
 
 describe('VPasswordSettings', () => {
@@ -18,8 +20,6 @@ describe('VPasswordSettings', () => {
 
   beforeEach(() => {
     wrapper = mount(VPasswordSettings, {
-      shallow: true,
-      props: defaultProps,
       global: {
         plugins: [
           createTestingPinia({
@@ -30,6 +30,8 @@ describe('VPasswordSettings', () => {
           VCard: false,
         },
       },
+      props: defaultProps,
+      shallow: true,
     });
 
     auth = useAuth();
@@ -70,8 +72,8 @@ describe('VPasswordSettings', () => {
     expect(auth.changePassword).toHaveBeenCalledWith({
       newPassword1: password1,
       newPassword2: password2,
-      uid: defaultProps.uid,
       token: defaultProps.token,
+      uid: defaultProps.uid,
     });
   });
 

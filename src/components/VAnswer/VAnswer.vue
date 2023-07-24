@@ -5,20 +5,21 @@
 </script>
 
 <script lang="ts" setup>
-  import { VAvatar } from '@/components/VAvatar';
-  import { relativeDate } from '@/utils/date';
-  import getName from '@/utils/getName';
+  import type { ReactionEmoji } from '@/types/homework';
   import type { Answer } from '@/types/homework';
+
+  import { VAvatar } from '@/components/VAvatar';
   import { VCard } from '@/components/VCard';
   import { VHtmlContent } from '@/components/VHtmlContent';
-  import { computed, ref } from 'vue';
-  import useUser from '@/stores/user';
   import { VReactions } from '@/components/VReactions';
-  import type { ReactionEmoji } from '@/types/homework';
-  import useHomework from '@/stores/homework';
-  import { MoodHappyIcon } from 'vue-tabler-icons';
   import { MAX_REACTIONS } from '@/components/VReactions';
+  import useHomework from '@/stores/homework';
+  import useUser from '@/stores/user';
+  import { relativeDate } from '@/utils/date';
+  import getName from '@/utils/getName';
   import { useAutoAnimate } from '@formkit/auto-animate/vue';
+  import { computed, ref } from 'vue';
+  import { MoodHappyIcon } from 'vue-tabler-icons';
 
   const emit = defineEmits<{
     update: [];

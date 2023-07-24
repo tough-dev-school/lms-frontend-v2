@@ -1,4 +1,5 @@
 import { ReactionEmoji } from '@/types/homework';
+
 import VReactionsPalette from './VReactionsPalette.vue';
 
 const ALLOWED_REACTIONS = Object.values(ReactionEmoji);
@@ -10,8 +11,8 @@ interface VReactionsPaletteProps {
 }
 
 export {
-  type VReactionsPaletteProps,
+  ALLOWED_REACTIONS,
   MAX_REACTIONS,
   VReactionsPalette,
-  ALLOWED_REACTIONS,
+  type VReactionsPaletteProps,
 };

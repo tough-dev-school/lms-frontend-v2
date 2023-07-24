@@ -1,19 +1,21 @@
-import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import { VAnswerActionsMobile } from '.';
+
 import { VCard } from '@/components/VCard';
+import { mount } from '@vue/test-utils';
+
+import { VAnswerActionsMobile } from '.';
 
 describe('VAnswerActionsMobile', () => {
   let wrapper: VueWrapper<InstanceType<typeof VAnswerActionsMobile>>;
 
   beforeEach(() => {
     wrapper = mount(VAnswerActionsMobile, {
-      shallow: true,
       global: {
         stubs: {
           VFloat: VCard,
         },
       },
+      shallow: true,
     });
   });
 
