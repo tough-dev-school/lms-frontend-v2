@@ -39,7 +39,6 @@
       <div class="flex flex-col gap-24">
         <VLazyThread
           v-for="answer in answers"
-          :show-go-to-answer="true"
           :key="answer.slug"
           :originalPost="answer">
         </VLazyThread>
