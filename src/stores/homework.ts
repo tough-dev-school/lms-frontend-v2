@@ -105,7 +105,7 @@ const useHomework = defineStore('homework', {
     }: {
       answerId: string;
       emoji: ReactionEmoji;
-      slug: string;
+      slug?: string;
     }) {
       return await addReaction({ answerId, emoji, slug });
     },
