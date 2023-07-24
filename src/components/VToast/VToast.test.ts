@@ -1,11 +1,11 @@
 import { mount, VueWrapper } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
 import { VToast } from '@/components/VToast';
-import { nanoid } from 'nanoid';
+import { uuid } from '@/utils/uuid';
 
 const defaultProps = {
   text: faker.lorem.sentence(),
-  id: nanoid(),
+  id: uuid(),
   lifetime: 1000,
 };
 

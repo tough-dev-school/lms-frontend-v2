@@ -14,6 +14,7 @@
   import { groupBy } from 'lodash';
   import useUser from '@/stores/user';
   import { ALLOWED_REACTIONS, MAX_REACTIONS } from '.';
+  import { uuid } from '@/utils/uuid';
 
   const props = withDefaults(defineProps<VReactionsProps>(), {
     open: false,
@@ -78,7 +79,7 @@
   );
 
   const handleAdd = (emoji: ReactionEmoji) => {
-    const slug = crypto.randomUUID();
+    const slug = uuid();
     emit('add', emoji, slug);
 
     const reaction: Reaction = {
