@@ -39,21 +39,20 @@
     { immediate: true },
   );
 
-  const isUnderLimit = computed(
-    () =>
-      localReactions.value.filter(
-        (reaction) => reaction.author.uuid === userStore.uuid,
-      ).length < MAX_REACTIONS,
-  );
-
   const isDisabled = (reactions: Reaction[] | undefined) => {
     if (reactions === undefined) reactions = [];
+
     // Reaction that is set can't be disabled
     if (reactions.find((reaction) => reaction.author.uuid === userStore.uuid)) {
       return false;
     }
 
-    if (isUnderLimit.value) return false;
+    const isUnderLimit =
+      localReactions.value.filter(
+        (reaction) => reaction.author.uuid === userStore.uuid,
+      ).length < MAX_REACTIONS;
+
+    if (isUnderLimit) return false;
 
     return true;
   };
