@@ -77,9 +77,9 @@
 
   const handleRemove = (emoji: ReactionEmoji, reactionId: string) => {
     emit('remove', reactionId);
-    localReactions.value = localReactions.value.filter((reaction) => {
-      return reaction.emoji === emoji;
-    });
+    localReactions.value = localReactions.value.filter(
+      (reaction) => reaction.emoji !== emoji,
+    );
   };
 </script>
 
