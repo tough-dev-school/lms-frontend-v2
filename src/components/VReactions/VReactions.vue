@@ -64,23 +64,22 @@
     ) as Record<ReactionEmoji, Reaction[]>;
   });
 
-  const sortReactions = (reactions: ReactionEmoji[]) =>
-    reactions.sort(
-      (a, b) => ALLOWED_REACTIONS.indexOf(a) - ALLOWED_REACTIONS.indexOf(b),
+  const emojiSet = computed(() => {
+    const sortReactions = (reactions: ReactionEmoji[]) =>
+      reactions.sort(
+        (a, b) => ALLOWED_REACTIONS.indexOf(a) - ALLOWED_REACTIONS.indexOf(b),
+      );
+
+    const EXISTING_REACTIONS = Object.keys(
+      groupedReactions.value,
     ) as ReactionEmoji[];
 
-  const emojiSet = computed(() =>
-    sortReactions(
-      !props.disabled && props.open
-        ? ALLOWED_REACTIONS
-        : (Object.keys(groupedReactions.value) as ReactionEmoji[]),
-    ),
-  );
+    return sortReactions(
+      !props.disabled && props.open ? ALLOWED_REACTIONS : EXISTING_REACTIONS,
+    );
+  });
 
-  const handleAdd = (emoji: ReactionEmoji) => {
-    const slug = uuid();
-    emit('add', emoji, slug);
-
+  const optimisticallyAdd = (emoji: ReactionEmoji, slug: string) => {
     const reaction: Reaction = {
       slug,
       author: {
@@ -95,11 +94,22 @@
     localReactions.value = [...localReactions.value, reaction];
   };
 
-  const handleRemove = (reactionId: string) => {
-    emit('remove', reactionId);
+  const handleAdd = (emoji: ReactionEmoji) => {
+    const slug = uuid();
+
+    optimisticallyAdd(emoji, slug);
+    emit('add', emoji, slug);
+  };
+
+  const optimisticallyRemove = (reactionId: string) => {
     localReactions.value = localReactions.value.filter(
       (reaction) => reaction.slug !== reactionId,
     );
+  };
+
+  const handleRemove = (reactionId: string) => {
+    optimisticallyRemove(reactionId);
+    emit('remove', reactionId);
   };
 </script>
 
