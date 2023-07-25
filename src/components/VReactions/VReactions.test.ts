@@ -5,7 +5,7 @@ import { createTestingPinia } from '@pinia/testing';
 import { faker } from '@faker-js/faker';
 import { mockReactionsData } from './mocks/mockReactionsData';
 import useUser from '@/stores/user';
-import { uniq } from 'lodash';
+import { flatten, uniq } from 'lodash';
 import { mockEmoji } from '@/mocks/mockEmoji';
 
 const defaultProps: VReactionsProps = {
@@ -76,11 +76,14 @@ describe('VReactions', () => {
 
   test('emits add on VReaction add', () => {
     const reaction = getReactionWrapper();
-    const emoji = mockEmoji();
+    const emoji = defaultProps.reactions[0].emoji;
 
     reaction.vm.$emit('add', emoji);
 
-    expect(wrapper.emitted('add')).toStrictEqual([[emoji]]);
+    const emitted = flatten(wrapper.emitted('add'));
+    expect(emitted[0]).toStrictEqual(emoji);
+    expect(emitted[1]).toBeDefined();
+    expect(emitted[1]).toHaveLength(36);
   });
 
   test('displays only existing reactions when closed', () => {
