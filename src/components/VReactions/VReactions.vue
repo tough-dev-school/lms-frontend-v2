@@ -15,6 +15,7 @@
   import useUser from '@/stores/user';
   import { ALLOWED_REACTIONS, MAX_REACTIONS } from '.';
   import { uuid } from '@/utils/uuid';
+  import debounce from 'lodash/debounce';
 
   const props = withDefaults(defineProps<VReactionsProps>(), {
     open: false,
@@ -31,10 +32,15 @@
 
   const localReactions = ref<Reaction[]>([]);
 
+  const actualizeReactions = debounce(
+    () => (localReactions.value = props.reactions),
+    1500,
+  );
+
   watch(
     () => props.reactions,
     () => {
-      localReactions.value = props.reactions;
+      actualizeReactions();
     },
     { immediate: true },
   );
