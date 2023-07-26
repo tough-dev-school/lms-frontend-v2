@@ -12,7 +12,7 @@ interface ThreadAction {
 
 interface VThreadProps {
   originalPost: Thread;
-  customActions: ThreadAction[];
+  customActions?: ThreadAction[];
 }
 
 export { VThread, type ThreadAction, type VThreadProps };
