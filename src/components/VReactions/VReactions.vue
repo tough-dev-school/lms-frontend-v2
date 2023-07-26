@@ -8,7 +8,7 @@
 </script>
 
 <script lang="ts" setup>
-  import { computed, watch, ref } from 'vue';
+  import { computed, watch, ref, onMounted } from 'vue';
   import { VReaction } from './components/VReaction';
   import type { Reaction, ReactionEmoji } from '@/types/homework';
   import { groupBy } from 'lodash';
@@ -32,18 +32,19 @@
 
   const localReactions = ref<Reaction[]>([]);
 
-  const actualizeReactions = debounce(
-    () => (localReactions.value = props.reactions),
-    1500,
-  );
+  const actualizeReactions = () => (localReactions.value = props.reactions);
+  const actualizeReactionsDebounced = debounce(actualizeReactions, 1500);
 
   watch(
     () => props.reactions,
     () => {
-      actualizeReactions();
+      actualizeReactionsDebounced();
     },
-    { immediate: true },
   );
+
+  onMounted(() => {
+    actualizeReactions();
+  });
 
   const isDisabled = (reactions: Reaction[] | undefined) => {
     if (reactions === undefined) reactions = [];
