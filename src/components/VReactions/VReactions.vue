@@ -15,7 +15,6 @@
   import useUser from '@/stores/user';
   import { ALLOWED_REACTIONS, MAX_REACTIONS } from '.';
   import { uuid } from '@/utils/uuid';
-  import dayjs from 'dayjs';
 
   const props = withDefaults(defineProps<VReactionsProps>(), {
     open: false,
@@ -31,23 +30,14 @@
   const userStore = useUser();
 
   const localReactions = ref<Reaction[]>([]);
-  const lastUpdateAt = ref(dayjs().unix());
 
   watch(
     () => props.reactions,
     () => {
-      const now = dayjs().unix();
-
-      console.log([now, lastUpdateAt.value]);
-
-      if (now < lastUpdateAt.value) return;
-
       localReactions.value = props.reactions;
     },
     { immediate: true },
   );
-
-  const updateLastUpdateAt = () => (lastUpdateAt.value = dayjs().unix());
 
   const isDisabled = (reactions: Reaction[] | undefined) => {
     if (reactions === undefined) reactions = [];
@@ -108,7 +98,6 @@
     const slug = uuid();
 
     optimisticallyAdd(emoji, slug);
-    updateLastUpdateAt();
     emit('add', emoji, slug);
   };
 
@@ -120,7 +109,6 @@
 
   const handleRemove = (reactionId: string) => {
     optimisticallyRemove(reactionId);
-    updateLastUpdateAt();
     emit('remove', reactionId);
   };
 </script>
