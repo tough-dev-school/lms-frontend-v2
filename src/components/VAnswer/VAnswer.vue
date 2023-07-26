@@ -18,7 +18,6 @@
   import useHomework from '@/stores/homework';
   import { MoodHappyIcon } from 'vue-tabler-icons';
   import { useAutoAnimate } from '@formkit/auto-animate/vue';
-  import debounce from 'lodash/debounce';
 
   const emit = defineEmits<{
     update: [];
@@ -34,16 +33,14 @@
 
   const isPaletteOpen = ref(false);
 
-  const debouncedUpdate = debounce(() => emit('update'), 500);
-
   const addReaction = (emoji: ReactionEmoji, slug: string) => {
     homeworkStore.addReaction({ answerId: props.answer.slug, emoji, slug });
-    debouncedUpdate();
+    emit('update');
   };
 
   const removeReaction = (reactionId: string) => {
     homeworkStore.removeReaction(props.answer.slug, reactionId);
-    debouncedUpdate();
+    emit('update');
   };
 
   const togglePalette = () => (isPaletteOpen.value = !isPaletteOpen.value);
