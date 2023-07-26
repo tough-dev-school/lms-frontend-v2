@@ -1,4 +1,3 @@
-import { describe, expect, test, beforeEach, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import { VCertificateSettings } from '.';
@@ -109,7 +108,7 @@ describe('VCertificateSettings', () => {
 
     await getSaveWrapper().trigger('click');
 
-    expect(user.setData).toHaveBeenCalledOnce();
+    expect(user.setData).toHaveBeenCalledTimes(1);
     expect(user.setData).toHaveBeenCalledWith({
       firstName,
       lastName,

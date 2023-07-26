@@ -1,4 +1,3 @@
-import { describe, expect, test, beforeEach, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import { VLoginResetView } from '.';
@@ -12,7 +11,7 @@ const defaultProps = {};
 
 const routerPushMock = vi.fn();
 
-vi.mock('vue-router/dist/vue-router.mjs', () => ({
+vi.mock('vue-router', () => ({
   useRouter: () => ({
     push: routerPushMock,
   }),
@@ -59,7 +58,7 @@ describe('VLoginResetView', () => {
 
     await getSendWrapper().trigger('submit');
 
-    expect(auth.requestReset).toHaveBeenCalledOnce();
+    expect(auth.requestReset).toHaveBeenCalledTimes(1);
     expect(auth.requestReset).toHaveBeenCalledWith(email);
   });
 
@@ -68,7 +67,7 @@ describe('VLoginResetView', () => {
 
     await getSendWrapper().trigger('submit');
 
-    expect(auth.requestReset).toHaveBeenCalledOnce();
+    expect(auth.requestReset).toHaveBeenCalledTimes(1);
     expect(routerPushMock).toHaveBeenCalledWith({
       name: 'mail-sent',
       query: { email },

@@ -1,4 +1,3 @@
-import { describe, expect, test, beforeEach, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import { VNewAnswer } from '@/components/VNewAnswer';
@@ -60,7 +59,7 @@ describe('VNewAnswer', () => {
     await getEditorWrapper().vm.$emit('update:modelValue', text);
     await getButtonWrapper().vm.$emit('click');
 
-    expect(homework.postAnswer).toHaveBeenCalledOnce();
+    expect(homework.postAnswer).toHaveBeenCalledTimes(1);
     expect(homework.postAnswer).toHaveBeenCalledWith({
       parentId,
       questionId,

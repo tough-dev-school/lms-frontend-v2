@@ -1,21 +1,16 @@
-import { describe, expect, test, beforeEach } from 'vitest';
 import { RouterLinkStub, mount, VueWrapper } from '@vue/test-utils';
 import { VProfileMenu } from '@/components/VProfileMenu';
 import useUser from '@/stores/user';
 import useAuth from '@/stores/auth';
 import type { VAvatar } from '@/components/VAvatar';
 import { faker } from '@faker-js/faker';
-import { vi } from 'vitest';
 import { createTestingPinia } from '@pinia/testing';
 import useStudies from '@/stores/studies';
 import { mockStudy } from '@/mocks/mockStudy';
 
 const routerPushMock = vi.fn();
 
-// vue-router/dist/vue-router.mjs import path is used instead of vue-router because of vue-router issue.
-// We should change path vue-router when it is fixed.
-// https://github.com/vuejs/router/issues/1466
-vi.mock('vue-router/dist/vue-router.mjs', () => ({
+vi.mock('vue-router', () => ({
   useRouter: () => ({
     push: routerPushMock,
   }),
@@ -136,7 +131,7 @@ describe('VProfileMenu', () => {
 
     await getHomeWrapper().trigger('click');
 
-    expect(routerPushMock).toHaveBeenCalledOnce();
+    expect(routerPushMock).toHaveBeenCalledTimes(1);
     expect(routerPushMock).toHaveBeenCalledWith({ name: 'home' });
   });
 
@@ -145,7 +140,7 @@ describe('VProfileMenu', () => {
 
     await getSettingsWrapper().trigger('click');
 
-    expect(routerPushMock).toHaveBeenCalledOnce();
+    expect(routerPushMock).toHaveBeenCalledTimes(1);
     expect(routerPushMock).toHaveBeenCalledWith({ name: 'settings' });
   });
 
@@ -153,14 +148,14 @@ describe('VProfileMenu', () => {
     await getButtonWrapper().trigger('click');
     await getLogoutWrapper().trigger('click');
 
-    expect(auth.resetAuth).toHaveBeenCalledOnce();
+    expect(auth.resetAuth).toHaveBeenCalledTimes(1);
   });
 
   test('Click on logout opens login', async () => {
     await getButtonWrapper().trigger('click');
     await getLogoutWrapper().trigger('click');
 
-    expect(routerPushMock).toHaveBeenCalledOnce();
+    expect(routerPushMock).toHaveBeenCalledTimes(1);
     expect(routerPushMock).toHaveBeenCalledWith({ name: 'login' });
   });
 
@@ -198,7 +193,7 @@ describe('VProfileMenu', () => {
 
     await getCertificateWrapper().trigger('click');
 
-    expect(routerPushMock).toHaveBeenCalledOnce();
+    expect(routerPushMock).toHaveBeenCalledTimes(1);
     expect(routerPushMock).toHaveBeenCalledWith({
       name: 'settings',
       hash: '#certificate',
@@ -233,7 +228,7 @@ describe('VProfileMenu', () => {
     await getButtonWrapper().trigger('click');
     await getMaterialWrapper().trigger('click');
 
-    expect(routerPushMock).toHaveBeenCalledOnce();
+    expect(routerPushMock).toHaveBeenCalledTimes(1);
     expect(routerPushMock).toHaveBeenCalledWith({
       name: 'materials',
       params: { id: studies.items[0].homePageSlug },

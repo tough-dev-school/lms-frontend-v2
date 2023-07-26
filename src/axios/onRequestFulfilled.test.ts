@@ -1,5 +1,5 @@
 import onRequestFulfilled from './onRequestFulfilled';
-import { test, describe, vi, beforeEach, expect } from 'vitest';
+
 import requestCaseMiddleware from './requestCaseMiddleware';
 import type { AxiosRequestConfig } from 'axios';
 import { faker } from '@faker-js/faker';
