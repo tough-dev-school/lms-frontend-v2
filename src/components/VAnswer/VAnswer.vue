@@ -34,7 +34,7 @@
 
   const isPaletteOpen = ref(false);
 
-  const debouncedUpdate = debounce(() => emit('update'), 500);
+  const debouncedUpdate = debounce(() => emit('update'), 1000);
 
   const addReaction = (emoji: ReactionEmoji, slug: string) => {
     homeworkStore.addReaction({ answerId: props.answer.slug, emoji, slug });
