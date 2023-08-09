@@ -25,6 +25,7 @@
     "add:layout": "pnpx hygen new component --folder layouts --name"
   },
   "dependencies": {
+    "@brachkow/email-providers": "^1.2.0",
     "@formkit/auto-animate": "^0.7.0",
     "@sentry/tracing": "^7.22.0",
     "@sentry/vue": "^7.22.0",
