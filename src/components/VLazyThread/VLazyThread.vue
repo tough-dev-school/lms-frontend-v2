@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import type { Answer, Comment } from '@/types/homework';
-  import { VThread, type ThreadAction } from '@/components/VThread';
+  import VThread, { type ThreadAction } from '@/components/VThread/VThread.vue';
   import VPreloader from '@/components/VPreloader/VPreloader.vue';
   import { getComments } from '@/api/homework';
   import { ref, computed } from 'vue';

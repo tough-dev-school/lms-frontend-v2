@@ -1,12 +1,14 @@
 import { type VueWrapper, mount } from '@vue/test-utils';
-import { ALLOWED_REACTIONS, VReactions, type VReactionsProps } from '.';
-import type { VReaction } from './components/VReaction';
+import VReactions, {
+  ALLOWED_REACTIONS,
+  type VReactionsProps,
+} from './VReactions.vue';
+import type VReaction from './components/VReaction/VReaction.vue';
 import { createTestingPinia } from '@pinia/testing';
 import { faker } from '@faker-js/faker';
 import { mockReactionsData } from './mocks/mockReactionsData';
 import useUser from '@/stores/user';
 import { flatten, uniq } from 'lodash';
-import { mockEmoji } from '@/mocks/mockEmoji';
 
 const defaultProps: VReactionsProps = {
   reactions: mockReactionsData(),
