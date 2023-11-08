@@ -3,7 +3,7 @@
   import VHeading from '@/components/VHeading/VHeading.vue';
   import VCertificateCard from '@/components/VCertificateCard/VCertificateCard.vue';
   import { computed } from 'vue';
-  import groupBy from 'lodash/groupBy';
+  import { groupBy } from 'lodash-es';
 
   const diplomas = useDiplomas();
 

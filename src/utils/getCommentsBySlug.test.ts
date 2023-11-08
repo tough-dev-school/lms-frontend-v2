@@ -1,6 +1,6 @@
 import getCommentsBySlug from './getCommentsBySlug';
 import { faker } from '@faker-js/faker';
-import shuffle from 'lodash/shuffle';
+import { shuffle } from 'lodash-es';
 import { mockThread } from '@/mocks/mockThread';
 import { mockAnswer } from '@/mocks/mockAnswer';
 import { mockComments } from '@/mocks/mockComments';

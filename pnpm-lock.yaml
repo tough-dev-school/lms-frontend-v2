@@ -56,7 +56,7 @@ dependencies:
   floating-vue:
     specifier: ^2.0.0-beta.24
     version: 2.0.0-beta.24(vue@3.3.8)
-  lodash:
+  lodash-es:
     specifier: ^4.17.21
     version: 4.17.21
   minidenticons:
@@ -136,9 +136,9 @@ devDependencies:
   '@types/jsdom':
     specifier: ^21.1.5
     version: 21.1.5
-  '@types/lodash':
-    specifier: ^4.14.201
-    version: 4.14.201
+  '@types/lodash-es':
+    specifier: ^4.17.11
+    version: 4.17.11
   '@types/node':
     specifier: ^20.9.0
     version: 20.9.0
@@ -4584,6 +4584,12 @@ packages:
     resolution: {integrity: sha512-Hr5Jfhc9eYOQNPYO5WLDq/n4jqijdHNlDXjuAQkkt+mWdQR+XJToOHrsD4cPaMXpn6KO7y2+wM8AZEs8VpBLVA==}
     dev: true
 
+  /@types/lodash-es@4.17.11:
+    resolution: {integrity: sha512-eCw8FYAWHt2DDl77s+AMLLzPn310LKohruumpucZI4oOFJkIgnlaJcy23OKMJxx4r9PeTF13Gv6w+jqjWQaYUg==}
+    dependencies:
+      '@types/lodash': 4.14.201
+    dev: true
+
   /@types/lodash@4.14.201:
     resolution: {integrity: sha512-y9euML0cim1JrykNxADLfaG0FgD1g/yTHwUs/Jg9ZIU7WKj2/4IW9Lbb1WZbvck78W/lfGXFfe+u2EGfIJXdLQ==}
     dev: true
@@ -8759,6 +8765,10 @@ packages:
     dependencies:
       p-locate: 6.0.0
     dev: true
+
+  /lodash-es@4.17.21:
+    resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
+    dev: false
 
   /lodash.castarray@4.4.0:
     resolution: {integrity: sha512-aVx8ztPv7/2ULbArGJ2Y42bG1mEQ5mGjpdvrbJcJFU3TbYybe+QlLS4pst9zV52ymy2in1KpFPiZnAOATxD4+Q==}

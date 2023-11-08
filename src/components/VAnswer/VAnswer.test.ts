@@ -5,7 +5,7 @@ import getName from '@/utils/getName';
 import type VAvatar from '@/components/VAvatar/VAvatar.vue';
 import type VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
 import dayjs from 'dayjs';
-import cloneDeep from 'lodash/cloneDeep';
+import { cloneDeep } from 'lodash-es';
 import { faker } from '@faker-js/faker';
 import { mockAnswer } from '@/mocks/mockAnswer';
 

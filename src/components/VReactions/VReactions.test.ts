@@ -8,7 +8,7 @@ import { createTestingPinia } from '@pinia/testing';
 import { faker } from '@faker-js/faker';
 import { mockReactionsData } from './mocks/mockReactionsData';
 import useUser from '@/stores/user';
-import { flatten, uniq } from 'lodash';
+import { flatten, uniq } from 'lodash-es';
 
 const defaultProps: VReactionsProps = {
   reactions: mockReactionsData(),
