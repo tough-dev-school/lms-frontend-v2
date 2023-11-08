@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import { VLoginChangeView } from '.';
-import { VPasswordSettings } from '@/components/VPasswordSettings';
+import VPasswordSettings from '@/components/VPasswordSettings/VPasswordSettings.vue';
 import { faker } from '@faker-js/faker';
 
 const defaultProps = {};

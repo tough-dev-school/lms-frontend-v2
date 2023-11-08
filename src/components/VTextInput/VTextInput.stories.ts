@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import { VTextInput } from '@/components/VTextInput';
+import VTextInput from '@/components/VTextInput/VTextInput.vue';
 
 export default {
   title: 'Forms/VTextInput',

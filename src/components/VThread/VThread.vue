@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-  import { VOwnAnswer } from '@/components/VOwnAnswer';
-  import { VAnswer } from '@/components/VAnswer';
-  import { VNewAnswer } from '@/components/VNewAnswer';
+  import VOwnAnswer from '@/components/VOwnAnswer/VOwnAnswer.vue';
+  import VAnswer from '@/components/VAnswer/VAnswer.vue';
+  import VNewAnswer from '@/components/VNewAnswer/VNewAnswer.vue';
   import { computed, ref } from 'vue';
   import { onClickOutside } from '@vueuse/core';
   import useUser from '@/stores/user';

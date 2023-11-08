@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import { VCertificateCard } from '@/components/VCertificateCard';
+import VCertificateCard from '@/components/VCertificateCard/VCertificateCard.vue';
 import { mockDiplomaData, mockDiplomaSet } from '@/mocks/mockDiploma';
 
 export default {

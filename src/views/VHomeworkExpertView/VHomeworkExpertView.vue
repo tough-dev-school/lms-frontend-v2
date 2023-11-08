@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-  import { VHeading } from '@/components/VHeading';
-  import { VLazyThread } from '@/components/VLazyThread';
-  import { VCard } from '@/components/VCard';
+  import VHeading from '@/components/VHeading/VHeading.vue';
+  import VLazyThread from '@/components/VLazyThread/VLazyThread.vue';
+  import VCard from '@/components/VCard/VCard.vue';
   import { watch } from 'vue';
   import useHomework from '@/stores/homework';
   import { useRoute } from 'vue-router';
   import { storeToRefs } from 'pinia';
-  import { VPreloader } from '@/components/VPreloader';
-  import { VHtmlContent } from '@/components/VHtmlContent';
+  import VPreloader from '@/components/VPreloader/VPreloader.vue';
+  import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
 
   const homework = useHomework();
   const { question, answers } = storeToRefs(homework);

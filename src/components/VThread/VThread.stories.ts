@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import { VThread } from '@/components/VThread';
+import VThread from '@/components/VThread/VThread.vue';
 import dayjs from 'dayjs';
 import { faker } from '@faker-js/faker';
 import useUser from '@/stores/user';

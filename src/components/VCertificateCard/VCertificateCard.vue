@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-  import { VHeading } from '@/components/VHeading';
-  import { VCard } from '@/components/VCard';
+  import VHeading from '@/components/VHeading/VHeading.vue';
+  import VCard from '@/components/VCard/VCard.vue';
   import type { Diploma } from '@/types/diplomas';
-  import { VCertificate } from '@/components/VCertificate';
+  import VCertificate from '@/components/VCertificate/VCertificate.vue';
 
   export interface Props {
     course: string;

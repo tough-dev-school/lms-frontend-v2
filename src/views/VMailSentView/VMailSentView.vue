@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-  import { VHeading } from '@/components/VHeading';
-  import { VCard } from '@/components/VCard';
+  import VHeading from '@/components/VHeading/VHeading.vue';
+  import VCard from '@/components/VCard/VCard.vue';
   import { useRoute } from 'vue-router';
   import { computed } from 'vue';
   import { useChatra } from '@/hooks/useChatra';

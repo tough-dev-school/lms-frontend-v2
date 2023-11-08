@@ -10,7 +10,7 @@
 </script>
 
 <script lang="ts" setup>
-  import { VAvatar } from '@/components/VAvatar';
+  import VAvatar from '@/components/VAvatar/VAvatar.vue';
   import { computed } from 'vue';
   import getName from '@/utils/getName';
 

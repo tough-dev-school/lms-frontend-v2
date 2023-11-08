@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import { VNewAnswer } from '@/components/VNewAnswer';
+import VNewAnswer from '@/components/VNewAnswer/VNewAnswer.vue';
 import type { VTextEditor } from '@/components/VTextEditor';
 import type { VButton } from '@/components/VButton';
 import { faker } from '@faker-js/faker';

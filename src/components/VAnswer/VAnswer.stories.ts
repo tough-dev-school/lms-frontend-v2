@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import { VAnswer } from '@/components/VAnswer';
+import VAnswer from '@/components/VAnswer/VAnswer.vue';
 import { mockAnswer } from '@/mocks/mockAnswer';
 import useUser from '@/stores/user';
 import { USER_1 } from '@/mocks/mockUserId';

@@ -1,6 +1,6 @@
 import { createTestingPinia } from '@pinia/testing';
 import { VueWrapper, mount, RouterLinkStub } from '@vue/test-utils';
-import { VAnswer } from '@/components/VAnswer';
+import VAnswer from '@/components/VAnswer/VAnswer.vue';
 import getName from '@/utils/getName';
 import type { VAvatar } from '@/components/VAvatar';
 import type { VHtmlContent } from '@/components/VHtmlContent';

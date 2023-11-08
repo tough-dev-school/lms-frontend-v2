@@ -1,5 +1,5 @@
 import { mount, VueWrapper } from '@vue/test-utils';
-import { VTextInput } from '@/components/VTextInput';
+import VTextInput from '@/components/VTextInput/VTextInput.vue';
 import { faker } from '@faker-js/faker';
 
 const defaultProps = {

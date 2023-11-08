@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-  import { VAnswerActionsDesktop } from '@/components/VAnswerActionsDesktop';
-  import { VAnswerActionsMobile } from '@/components/VAnswerActionsMobile';
+  import VAnswerActionsDesktop from '@/components/VAnswerActionsDesktop/VAnswerActionsDesktop.vue';
+  import VAnswerActionsMobile from '@/components/VAnswerActionsMobile/VAnswerActionsMobile.vue';
 
   const emit = defineEmits<{
     delete: [];

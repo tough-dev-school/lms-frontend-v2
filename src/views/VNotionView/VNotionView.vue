@@ -13,8 +13,8 @@
   import 'prismjs/components/prism-c.js';
   import 'prismjs/components/prism-cpp.js';
 
-  import { VCard } from '@/components/VCard';
-  import { VButton } from '@/components/VButton';
+  import VCard from '@/components/VCard/VCard.vue';
+  import VButton from '@/components/VButton/VButton.vue';
   import useMaterials from '@/stores/materials';
   import { useTitle } from '@vueuse/core';
   import getNotionTitle from '@/utils/getNotionTitle';

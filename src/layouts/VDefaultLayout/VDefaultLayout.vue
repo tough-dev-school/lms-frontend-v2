@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-  import { VProfileMenu } from '@/components/VProfileMenu';
-  import { VPreloader } from '@/components/VPreloader';
-  import { VToastFeed } from '@/components/VToastFeed';
+  import VProfileMenu from '@/components/VProfileMenu/VProfileMenu.vue';
+  import VPreloader from '@/components/VPreloader/VPreloader.vue';
+  import VToastFeed from '@/components/VToastFeed/VToastFeed.vue';
   import { useRoute } from 'vue-router';
   import { computed } from 'vue';
   import useLoading from '@/stores/loading';

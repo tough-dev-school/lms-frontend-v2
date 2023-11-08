@@ -1,4 +1,4 @@
-import { VAvatar } from '@/components/VAvatar';
+import VAvatar from '@/components/VAvatar/VAvatar.vue';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
 

@@ -4,7 +4,7 @@ to: src/<%= folder %>/<%= name %>/<%= name %>.test.ts
 
 import { mount, VueWrapper } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
-import { <%= name %> } from '.';
+import <%= name %> from './<%= name %>.vue';
 
 describe('<%= name %>', () => {
   let wrapper: VueWrapper<InstanceType<typeof <%= name %>>>;

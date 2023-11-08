@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import { VHeading } from '@/components/VHeading';
+import VHeading from '@/components/VHeading/VHeading.vue';
 
 export default {
   title: 'UI/VHeading',

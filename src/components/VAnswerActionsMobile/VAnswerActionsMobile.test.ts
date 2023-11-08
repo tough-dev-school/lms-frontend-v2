@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import { VAnswerActionsMobile } from '.';
-import { VCard } from '@/components/VCard';
+import VCard from '@/components/VCard/VCard.vue';
 
 describe('VAnswerActionsMobile', () => {
   let wrapper: VueWrapper<InstanceType<typeof VAnswerActionsMobile>>;

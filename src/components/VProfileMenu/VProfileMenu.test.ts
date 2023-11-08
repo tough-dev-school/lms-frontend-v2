@@ -1,5 +1,5 @@
 import { RouterLinkStub, mount, VueWrapper } from '@vue/test-utils';
-import { VProfileMenu } from '@/components/VProfileMenu';
+import VProfileMenu from '@/components/VProfileMenu/VProfileMenu.vue';
 import useUser from '@/stores/user';
 import useAuth from '@/stores/auth';
 import type { VAvatar } from '@/components/VAvatar';
