@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import { VAnswerActionsDesktop } from '.';
+import VAnswerActionsDesktop from './VAnswerActionsDesktop.vue';
 
 describe('VAnswerActionsDesktop', () => {
   let wrapper: VueWrapper<InstanceType<typeof VAnswerActionsDesktop>>;

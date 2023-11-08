@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import { VLoginResetView } from '.';
+import VLoginResetView from './VLoginResetView.vue';
 import type { VButton } from '@/components/VButton';
 import type { VTextInput } from '@/components/VTextInput';
 import { faker } from '@faker-js/faker';

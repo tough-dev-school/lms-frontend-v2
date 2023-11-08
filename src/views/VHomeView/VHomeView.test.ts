@@ -1,6 +1,6 @@
 import { RouterLinkStub, mount, VueWrapper } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
-import { VHomeView } from '.';
+import VHomeView from './VHomeView.vue';
 import useStudies from '@/stores/studies';
 import type { RouterLink } from 'vue-router';
 import { nextTick } from 'vue';

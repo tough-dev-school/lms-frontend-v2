@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import { VCertificatesView } from '.';
+import VCertificatesView from './VCertificatesView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import useDiplomas from '@/stores/diplomas';
 import { mockDiplomaSet, STATIC_DIPLOMAS } from '@/mocks/mockDiploma';

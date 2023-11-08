@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import { VCertificateCard } from '.';
+import VCertificateCard from './VCertificateCard.vue';
 import type { VCertificate } from '@/components/VCertificate';
 import { mockDiplomaData, mockDiplomaSet } from '@/mocks/mockDiploma';
 

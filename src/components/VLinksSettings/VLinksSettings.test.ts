@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import { VLinksSettings } from '.';
+import VLinksSettings from './VLinksSettings.vue';
 import type { VTextInput } from '@/components/VTextInput';
 import useUser from '@/stores/user';
 import { createTestingPinia } from '@pinia/testing';

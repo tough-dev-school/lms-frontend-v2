@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import { VPasswordSettings } from '.';
+import VPasswordSettings from './VPasswordSettings.vue';
 import type { VTextInput } from '@/components/VTextInput';
 import useAuth from '@/stores/auth';
 import { createTestingPinia } from '@pinia/testing';

@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import { VReactions } from '.';
+import VReactions from './VReactions.vue';
 import VCard from '@/components/VCard/VCard.vue';
 import { faker } from '@faker-js/faker';
 import { mockReaction } from '@/mocks/mockReaction';

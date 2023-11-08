@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import { VCertificatesView } from '.';
+import VCertificatesView from './VCertificatesView.vue';
 import type { VCertificateCard } from '@/components/VCertificateCard';
 import { createTestingPinia } from '@pinia/testing';
 import { mockDiplomaData, mockDiplomaSet } from '@/mocks/mockDiploma';

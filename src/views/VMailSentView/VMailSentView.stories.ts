@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import { VMailSentView } from '.';
+import VMailSentView from './VMailSentView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 
 export default {

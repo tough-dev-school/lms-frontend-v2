@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import { VCertificateSettings } from '.';
+import VCertificateSettings from './VCertificateSettings.vue';
 import type { VTextInput } from '@/components/VTextInput';
 import useUser from '@/stores/user';
 import { createTestingPinia } from '@pinia/testing';

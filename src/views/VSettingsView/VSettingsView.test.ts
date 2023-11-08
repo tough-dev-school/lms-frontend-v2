@@ -1,6 +1,6 @@
 import { mount, RouterLinkStub } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import { VSettingsView } from '.';
+import VSettingsView from './VSettingsView.vue';
 import type { RouterLink } from 'vue-router';
 
 const defaultProps = {};

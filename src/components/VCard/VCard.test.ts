@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import { VCard } from '.';
+import VCard from './VCard.vue';
 import { faker } from '@faker-js/faker';
 
 const defaultProps = {};
