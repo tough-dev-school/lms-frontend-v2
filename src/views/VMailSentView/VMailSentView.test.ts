@@ -1,20 +1,17 @@
 import { mount, VueWrapper } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
 import { faker } from '@faker-js/faker';
-
-const email = faker.internet.email({ provider: 'foobar.baz' });
-const getQuery = (email: string) => ({ query: { email } });
-const useRoute = vi.fn();
-
-vi.doMock('vue-router', () => ({
-  useRoute,
-}));
-
+import { useRoute } from 'vue-router';
 import VMailSentView from './VMailSentView.vue';
 import { getProviderById, type Provider } from '@brachkow/email-providers';
 
 const GMAIL = getProviderById('GMAIL') as Provider;
 const MAILRU = getProviderById('MAILRU') as Provider;
+
+const email = faker.internet.email({ provider: 'foobar.baz' });
+const getQuery = (email: string) => ({ query: { email } });
+
+vi.mock('vue-router');
 
 const gmailEmailQuery = getQuery('john@gmail.com');
 const mailruEmailQuery = getQuery('ivan@mail.ru');
