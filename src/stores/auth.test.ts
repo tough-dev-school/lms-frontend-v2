@@ -22,7 +22,6 @@ vi.mock('@/api/auth', () => {
 
 describe('toasts store', () => {
   let auth: ReturnType<typeof useAuth>;
-  let toasts: ReturnType<typeof useToasts>;
 
   beforeEach(() => {
     const app = createApp({});
@@ -31,7 +30,6 @@ describe('toasts store', () => {
     setActivePinia(pinia);
 
     auth = useAuth();
-    toasts = useToasts();
   });
 
   test('loginWithCredentials calls api with needed parameters', async () => {

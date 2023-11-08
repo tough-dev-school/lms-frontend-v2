@@ -2,8 +2,7 @@ import type { Meta, StoryFn } from '@storybook/vue3';
 import VHomeView from './VHomeView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import useStudies from '@/stores/studies';
-import { faker } from '@faker-js/faker';
-import { mockStudy, STATIC_STUDY } from '@/mocks/mockStudy';
+import { STATIC_STUDY } from '@/mocks/mockStudy';
 
 export default {
   title: 'App/VHomeView',
