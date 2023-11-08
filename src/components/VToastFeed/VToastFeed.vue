@@ -19,8 +19,8 @@
         v-for="message in messages"
         v-bind="message"
         :key="message.id"
-        @delete="handleDelete"
-        data-testid="toast" />
+        data-testid="toast"
+        @delete="handleDelete" />
     </TransitionGroup>
   </div>
 </template>

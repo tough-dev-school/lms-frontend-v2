@@ -61,14 +61,14 @@
       <VHeading tag="h2">Обсуждение</VHeading>
       <VFeedbackGuide />
       <VNewAnswer
-        :questionId="question.slug"
-        :parentId="answer.slug"
+        :question-id="question.slug"
+        :parent-id="answer.slug"
         @update="getData" />
       <VThread
         v-for="comment in answer.descendants"
         :key="comment.slug"
-        @update="getData"
-        :originalPost="comment" />
+        :original-post="comment"
+        @update="getData" />
     </section>
   </div>
   <VPreloader v-else />

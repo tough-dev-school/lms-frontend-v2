@@ -15,7 +15,7 @@
 </script>
 
 <template>
-  <main class="container pb-128" v-if="!loading.isLoading">
+  <main v-if="!loading.isLoading" class="container pb-128">
     <header
       class="flex flex-wrap justify-between items-center pt-16 pb-24 tablet:pb-64 gap-8">
       <RouterLink to="/">

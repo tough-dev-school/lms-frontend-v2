@@ -14,7 +14,7 @@
     data-testid="login-link"
     @change="mode = 'password'" />
   <VLoginPassword
-    data-testid="login-password"
     v-else-if="mode === 'password'"
+    data-testid="login-password"
     @change="mode = 'link'" />
 </template>

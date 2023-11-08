@@ -52,7 +52,7 @@
 <template>
   <VCard class="pb-32">
     <div class="mb-16 flex items-center gap-8">
-      <VAvatar data-testid="avatar" :userId="answer.author.uuid" />
+      <VAvatar data-testid="avatar" :user-id="answer.author.uuid" />
       <div>
         <div class="font-bold" data-testid="name">
           {{ getName(answer.author.firstName, answer.author.lastName) }}
@@ -72,14 +72,14 @@
     </div>
     <VHtmlContent :content="answer.text" data-testid="content" />
     <div
-      class="flex justify-start flex-wrap items-start gap-8 pt-16"
-      ref="parent">
+      ref="parent"
+      class="flex justify-start flex-wrap items-start gap-8 pt-16">
       <slot name="footer" />
       <button
-        class="answer-action box-content flex items-center justify-center text-[1.5rem]"
-        @click="togglePalette"
         v-if="!isOwn"
-        data-testid="open">
+        class="answer-action box-content flex items-center justify-center text-[1.5rem]"
+        data-testid="open"
+        @click="togglePalette">
         <MoodHappyIcon />
       </button>
       <VReactions

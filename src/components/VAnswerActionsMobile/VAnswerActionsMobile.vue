@@ -13,16 +13,16 @@
       <li class="text-base">
         <button
           class="link h-32 w-full px-8 text-left"
-          @click="emit('delete')"
-          data-testid="delete">
+          data-testid="delete"
+          @click="emit('delete')">
           Удалить
         </button>
       </li>
       <li class="text-base">
         <button
           class="link h-32 w-full px-8 text-left"
-          @click="emit('edit')"
-          data-testid="edit">
+          data-testid="edit"
+          @click="emit('edit')">
           Редактировать
         </button>
       </li>

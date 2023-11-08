@@ -10,7 +10,10 @@
     type?: ToastTypes;
   }
 
-  const props = withDefaults(defineProps<Props>(), { text: 'Ошибка!' });
+  const props = withDefaults(defineProps<Props>(), {
+    text: 'Ошибка!',
+    type: undefined,
+  });
 
   const emit = defineEmits<{
     delete: [id: string];
