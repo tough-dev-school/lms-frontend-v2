@@ -5,10 +5,9 @@ import type VCertificateCard from '@/components/VCertificateCard/VCertificateCar
 import { createTestingPinia } from '@pinia/testing';
 import { mockDiplomaData, mockDiplomaSet } from '@/mocks/mockDiploma';
 import useDiplomas from '@/stores/diplomas';
-import uniq from 'lodash/uniq';
+import { uniq, flatten } from 'lodash-es';
 import { nextTick } from 'vue';
 import { faker } from '@faker-js/faker';
-import { flatten } from 'lodash';
 
 const defaultProps = {};
 

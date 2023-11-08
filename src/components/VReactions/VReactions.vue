@@ -16,10 +16,9 @@
   import { computed, watch, ref, onMounted } from 'vue';
   import VReaction from './components/VReaction/VReaction.vue';
   import type { Reaction } from '@/types/homework';
-  import { groupBy } from 'lodash';
+  import { groupBy, debounce } from 'lodash-es';
   import useUser from '@/stores/user';
   import { uuid } from '@/utils/uuid';
-  import debounce from 'lodash/debounce';
 
   const props = withDefaults(defineProps<VReactionsProps>(), {
     open: false,

@@ -3,7 +3,7 @@ import VCertificatesView from './VCertificatesView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import useDiplomas from '@/stores/diplomas';
 import { mockDiplomaSet, STATIC_DIPLOMAS } from '@/mocks/mockDiploma';
-import { flatten } from 'lodash';
+import { flatten } from 'lodash-es';
 
 export default {
   title: 'App/VCertificatesView',

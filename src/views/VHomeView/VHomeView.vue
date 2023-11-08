@@ -18,7 +18,7 @@
           name: 'materials',
           params: { id: study.homePageSlug },
         }">
-        <VCard class="relative p-0 px-0 phone:px-0 tablet:px-0">
+        <VCard class="relative !p-0 !px-0">
           <VCover
             :name="study.name"
             :image="study.cover"

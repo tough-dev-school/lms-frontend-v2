@@ -4,7 +4,7 @@ import { createApp } from 'vue';
 import { setActivePinia } from 'pinia';
 import { createTestingPinia } from '@pinia/testing';
 import onResponseRejected from './onResponseRejected';
-import { cloneDeep } from 'lodash';
+import { cloneDeep } from 'lodash-es';
 import responseCaseMiddleware from './responseCaseMiddleware';
 import handleError from '@/utils/handleError';
 import type { AxiosError } from 'axios';

@@ -21,6 +21,7 @@
 
   const emit = defineEmits<{
     update: [];
+    mounted: [slug: string]; //# FIXME Does nothing — needed to fix interface mismatch type error
   }>();
 
   const homeworkStore = useHomework();
