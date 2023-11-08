@@ -156,52 +156,52 @@
 </script>
 
 <template>
-  <div class="bg-white dark:bg-dark-gray" ref="currentEditor">
+  <div ref="currentEditor" class="bg-white dark:bg-dark-gray">
     <FloatingMenu
+      v-if="editor"
       class="float-menu"
       :editor="editor"
-      :tippy-options="{ duration: 100 }"
-      v-if="editor">
+      :tippy-options="{ duration: 100 }">
       <button
-        @click="toggleHeading1"
         class="float-button"
         :class="{
           'float-button_active': editor.isActive('heading', { level: 1 }),
-        }">
+        }"
+        @click="toggleHeading1">
         <H1Icon />
       </button>
       <button
-        @click="toggleHeading2"
         class="float-button"
         :class="{
           'float-button_active': editor.isActive('heading', { level: 2 }),
-        }">
+        }"
+        @click="toggleHeading2">
         <H2Icon />
       </button>
       <button
-        @click="toggleHeading3"
         class="float-button"
         :class="{
           'float-button_active': editor.isActive('heading', { level: 3 }),
-        }">
+        }"
+        @click="toggleHeading3">
         <H3Icon />
       </button>
       <button
-        @click="toggleBlockquote"
         class="float-button"
-        :class="{ 'float-button_active': editor.isActive('blockquote') }">
+        :class="{ 'float-button_active': editor.isActive('blockquote') }"
+        @click="toggleBlockquote">
         <BlockquoteIcon />
       </button>
       <button
-        @click="toggleOrderedList"
         class="float-button"
-        :class="{ 'float-button_active': editor.isActive('orderedList') }">
+        :class="{ 'float-button_active': editor.isActive('orderedList') }"
+        @click="toggleOrderedList">
         <ListNumbersIcon />
       </button>
       <button
-        @click="toggleUnorderedList"
         class="float-button"
-        :class="{ 'float-button_active': editor.isActive('bulletList') }">
+        :class="{ 'float-button_active': editor.isActive('bulletList') }"
+        @click="toggleUnorderedList">
         <ListIcon />
       </button>
       <label class="float-button">
@@ -209,26 +209,26 @@
         <input
           class="visually-hidden"
           type="file"
-          @change="addImage($event)"
           accept="image/*"
           name="image"
+          @change="addImage($event)"
       /></label>
     </FloatingMenu>
     <BubbleMenu
+      v-if="editor"
       class="bubble-menu"
       :editor="editor"
-      :tippy-options="{ duration: 100 }"
-      v-if="editor">
+      :tippy-options="{ duration: 100 }">
       <button
-        @click="toggleBold"
         class="bubble-button"
-        :class="{ 'bubble-button_active': editor.isActive('bold') }">
+        :class="{ 'bubble-button_active': editor.isActive('bold') }"
+        @click="toggleBold">
         <BoldIcon />
       </button>
       <button
-        @click="toggleItalic"
         class="bubble-button"
-        :class="{ 'bubble-button_active': editor.isActive('italic') }">
+        :class="{ 'bubble-button_active': editor.isActive('italic') }"
+        @click="toggleItalic">
         <ItalicIcon />
       </button>
     </BubbleMenu>

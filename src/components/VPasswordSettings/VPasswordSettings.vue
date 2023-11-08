@@ -34,26 +34,26 @@
 <template>
   <VCard>
     <VHeading
+      v-if="!auth.token"
       class="mb-24"
       level="1"
-      v-if="!auth.token"
       data-testid="reset-heading"
       >Сброс пароля</VHeading
     >
-    <VHeading class="mb-24" level="2" v-else data-testid="change-heading"
+    <VHeading v-else class="mb-24" level="2" data-testid="change-heading"
       >Пароль</VHeading
     >
     <div class="flex flex-col items-start gap-16 tablet:gap-24">
       <VTextInput
+        v-model="newPassword1"
         type="password"
         label="Новый пароль"
-        data-testid="password1"
-        v-model="newPassword1" />
+        data-testid="password1" />
       <VTextInput
+        v-model="newPassword2"
         type="password"
         label="Повторите пароль"
-        data-testid="password2"
-        v-model="newPassword2" />
+        data-testid="password2" />
     </div>
     <template #footer>
       <VButton data-testid="save" @click="savePassword">Сохранить</VButton>

@@ -27,10 +27,10 @@
     </div>
     <template #footer>
       <a
+        v-if="emailProvider"
         class="flex-grow button"
         data-testid="open"
         :href="emailProvider.url"
-        v-if="emailProvider"
         >Открыть {{ emailProvider.label }}</a
       >
     </template>

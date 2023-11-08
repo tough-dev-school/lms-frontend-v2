@@ -24,7 +24,10 @@
 
   withDefaults(defineProps<Props>(), {
     modelValue: '',
-    tags: 'text',
+    type: 'text',
+    error: undefined,
+    tip: undefined,
+    label: undefined,
   });
 
   const emit = defineEmits<{
@@ -54,11 +57,11 @@
       data-testid="input"
       :value="modelValue"
       @input="handleInput" />
-    <div class="mt-4" v-if="tip || error">
+    <div v-if="tip || error" class="mt-4">
       <p v-if="tip" data-testid="tip" class="text-sub text-gray">{{ tip }}</p>
       <p
-        data-testid="error"
         v-if="error && error !== true"
+        data-testid="error"
         class="text-sub text-red">
         {{ error }}
       </p>

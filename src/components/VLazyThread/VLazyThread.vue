@@ -40,8 +40,8 @@
 
 <template>
   <VThread
-    :originalPost="{ ...originalPost, descendants }"
-    :customActions="customActions"
+    :original-post="{ ...originalPost, descendants }"
+    :custom-actions="customActions"
     @update="fetchComments"
     @reply="fetchComments" />
   <div v-if="isLoading" class="relative h-256">

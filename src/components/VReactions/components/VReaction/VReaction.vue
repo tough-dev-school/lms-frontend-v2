@@ -51,26 +51,26 @@
 
 <template>
   <div
-    @click="handleClick"
     class="answer-action-base flex-row inline-flex items-center gap-16 pl-8 pr-4 text-[1.25rem] min-w-[64px]"
     :class="{
       'answer-action-hover': !disabled,
       'cursor-not-allowed': disabled,
       '!border !border-gray': ownReaction,
-    }">
+    }"
+    @click="handleClick">
     <div class="flex h-24 w-24 items-center justify-center" data-testid="emoji">
       {{ emoji }}
     </div>
-    <div class="flex items-center pr-16" v-if="reactions.length > 0">
+    <div v-if="reactions.length > 0" class="flex items-center pr-16">
       <abbr
-        class="relative -mr-[12px] transition-all hover:z-50 hover:scale-125"
         v-for="author in orderedAuthors"
         :key="author.uuid"
+        class="relative -mr-[12px] transition-all hover:z-50 hover:scale-125"
         data-testid="author"
         :title="getName(author.firstName, author.lastName)">
         <VAvatar
           class="!w-24 !h-24"
-          :userId="author.uuid"
+          :user-id="author.uuid"
           data-testid="avatar" />
       </abbr>
     </div>

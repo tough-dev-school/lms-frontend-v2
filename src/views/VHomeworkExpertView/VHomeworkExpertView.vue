@@ -40,7 +40,7 @@
         <VLazyThread
           v-for="answer in answers"
           :key="answer.slug"
-          :originalPost="answer">
+          :original-post="answer">
         </VLazyThread>
       </div>
     </section>

@@ -47,16 +47,16 @@
       Именно в таком виде они отобразятся в сертификате.
     </div>
     <div class="flex flex-col items-start gap-16 tablet:gap-24">
-      <VTextInput data-testid="firstName" label="Имя" v-model="firstName" />
-      <VTextInput data-testid="lastName" label="Фамилия" v-model="lastName" />
+      <VTextInput v-model="firstName" data-testid="firstName" label="Имя" />
+      <VTextInput v-model="lastName" data-testid="lastName" label="Фамилия" />
       <VTextInput
+        v-model="firstNameEn"
         data-testid="firstNameEn"
-        label="Имя (на английском)"
-        v-model="firstNameEn" />
+        label="Имя (на английском)" />
       <VTextInput
+        v-model="lastNameEn"
         data-testid="lastNameEn"
-        label="Фамилия (на английском)"
-        v-model="lastNameEn" />
+        label="Фамилия (на английском)" />
       <fieldset class="flex flex-wrap gap-16">
         <legend class="Label">Пол</legend>
         <label class="cursor-pointer"
@@ -80,7 +80,7 @@
       </fieldset>
     </div>
     <template #footer>
-      <VButton @click="saveCertificate" data-testid="save">Сохранить</VButton>
+      <VButton data-testid="save" @click="saveCertificate">Сохранить</VButton>
     </template>
   </VCard>
 </template>

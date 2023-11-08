@@ -22,14 +22,14 @@
     <VHeading tag="h1">Мои сертификаты</VHeading>
     <div class="grid gap-24">
       <VCertificateCard
+        v-for="group in groupedDiplomas"
+        :key="group.course"
         data-testid="certificate"
         :certificates="group.certificates"
-        :course="group.course"
-        v-for="group in groupedDiplomas"
-        :key="group.course" />
+        :course="group.course" />
       <li
-        data-testid="empty"
         v-if="groupedDiplomas.length === 0"
+        data-testid="empty"
         class="flex h-128 flex-grow items-center justify-center rounded border border-dashed border-gray text-center text-gray">
         Нет сертификатов
       </li>

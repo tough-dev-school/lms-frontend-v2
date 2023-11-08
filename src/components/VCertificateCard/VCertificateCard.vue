@@ -18,9 +18,9 @@
     <ul class="grid gap-32 phone:grid-cols-2">
       <VCertificate
         v-for="certificate in certificates"
+        :key="certificate.slug"
         data-testid="certificate"
-        :certificate="certificate"
-        :key="certificate.slug" />
+        :certificate="certificate" />
     </ul>
   </VCard>
 </template>

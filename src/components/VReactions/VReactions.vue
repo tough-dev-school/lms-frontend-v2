@@ -130,9 +130,9 @@
     :key="emoji"
     :disabled="isDisabled(groupedReactions[emoji])"
     :emoji="emoji"
-    :userId="userStore.uuid"
+    :user-id="userStore.uuid"
     :reactions="groupedReactions[emoji]"
+    data-testid="reaction"
     @add="handleAdd"
-    @remove="handleRemove"
-    data-testid="reaction" />
+    @remove="handleRemove" />
 </template>

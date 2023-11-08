@@ -52,7 +52,7 @@
     <section>
       <VHeading tag="h2" class="mb-24">Ответ</VHeading>
 
-      <VCard class="mb-16 bg-yellow-light" v-if="answer">
+      <VCard v-if="answer" class="mb-16 bg-yellow-light">
         <VHeading tag="h3" class="mb-8"
           >Поделиться ссылкой на сделанную домашку</VHeading
         >
@@ -69,11 +69,11 @@
       </VCard>
 
       <VOwnAnswer
-        :answer="answer"
         v-if="answer"
-        @update="getData"
-        :questionId="questionId" />
-      <VNewAnswer v-else @update="getData" :questionId="questionId" />
+        :answer="answer"
+        :question-id="questionId"
+        @update="getData" />
+      <VNewAnswer v-else :question-id="questionId" @update="getData" />
     </section>
   </div>
   <VPreloader v-else />

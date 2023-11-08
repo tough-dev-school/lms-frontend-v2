@@ -61,12 +61,12 @@
   <VCard class="VNewAnswer pt-0">
     <VTextEditor
       v-model="text"
-      @send="sendPost"
       class="-mb-32 rounded-t border-offwhite dark:border-dark-black"
       data-testid="editor"
-      placeholder="Напишите ответ здесь" />
+      placeholder="Напишите ответ здесь"
+      @send="sendPost" />
     <template #footer>
-      <VButton @click="sendPost" :disabled="!allowSend" data-testid="button"
+      <VButton :disabled="!allowSend" data-testid="button" @click="sendPost"
         >Отправить</VButton
       >
     </template>

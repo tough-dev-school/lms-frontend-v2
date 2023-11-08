@@ -54,7 +54,7 @@
 </script>
 
 <template>
-  <VCard class="pt-32" v-if="materials.material">
+  <VCard v-if="materials.material" class="pt-32">
     <NotionRenderer v-bind="rendererProps" prism />
   </VCard>
   <div

@@ -7,5 +7,7 @@
 </script>
 
 <template>
-  <article v-html="content" class="prose dark:prose-invert" />
+  <!-- eslint-disable vue/no-v-html -->
+  <!-- #TODO Check for XSS-->
+  <article class="prose dark:prose-invert" v-html="content" />
 </template>
