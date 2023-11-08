@@ -3,10 +3,9 @@ dist/
 coverage/
 docker-compose.yml
 .husky/
-.prettierignore
-.lintstagedrc
 *.ejs.t
 .npmrc
 *.png
 *.svg
 *.jpg
+.*
