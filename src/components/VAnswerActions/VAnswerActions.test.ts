@@ -1,8 +1,8 @@
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import VAnswerActions from './VAnswerActions.vue';
-import type { VAnswerActionsDesktop } from '@/components/VAnswerActionsDesktop';
-import type { VAnswerActionsMobile } from '@/components/VAnswerActionsMobile';
+import type VAnswerActionsDesktop from '@/components/VAnswerActionsDesktop/VAnswerActionsDesktop.vue';
+import type VAnswerActionsMobile from '@/components/VAnswerActionsMobile/VAnswerActionsMobile.vue';
 
 describe('VAnswerActions', () => {
   let wrapper: VueWrapper<InstanceType<typeof VAnswerActions>>;
