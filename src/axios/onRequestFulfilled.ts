@@ -1,10 +1,10 @@
 import useAuth from '@/stores/auth';
-import type { AxiosRequestConfig } from 'axios';
+import type { InternalAxiosRequestConfig } from 'axios';
 import requestCaseMiddleware from './requestCaseMiddleware';
 import cloneDeep from 'lodash/cloneDeep';
 
 const onRequestFulfilled = (
-  request: AxiosRequestConfig,
+  request: InternalAxiosRequestConfig,
   enableCaseMiddleware = true,
 ) => {
   const auth = useAuth();
