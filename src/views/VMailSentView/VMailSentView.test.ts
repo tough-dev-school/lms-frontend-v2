@@ -36,7 +36,7 @@ describe('VMailSentView', () => {
   };
 
   beforeEach(() => {
-    useRoute.mockReturnValue(getQuery(email));
+    (useRoute as ReturnType<typeof vi.fn>).mockReturnValue(getQuery(email));
 
     mountWrapper();
   });
@@ -61,7 +61,7 @@ describe('VMailSentView', () => {
   });
 
   test('button is shown if email service is recognized', async () => {
-    useRoute.mockReturnValueOnce(
+    (useRoute as ReturnType<typeof vi.fn>).mockReturnValueOnce(
       faker.helpers.arrayElement([mailruEmailQuery, gmailEmailQuery]),
     );
     mountWrapper();
@@ -70,7 +70,7 @@ describe('VMailSentView', () => {
   });
 
   test('button has correct attributes for gmail', async () => {
-    useRoute.mockReturnValueOnce(gmailEmailQuery);
+    (useRoute as ReturnType<typeof vi.fn>).mockReturnValueOnce(gmailEmailQuery);
     mountWrapper();
 
     expect(getOpenWrapper().exists()).toBe(true);
@@ -79,7 +79,9 @@ describe('VMailSentView', () => {
   });
 
   test('button has correct attributes for mailru', async () => {
-    useRoute.mockReturnValueOnce(mailruEmailQuery);
+    (useRoute as ReturnType<typeof vi.fn>).mockReturnValueOnce(
+      mailruEmailQuery,
+    );
     mountWrapper();
 
     expect(getOpenWrapper().exists()).toBe(true);
