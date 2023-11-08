@@ -1,9 +1,9 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import { VReaction } from '.';
-import { VCard } from '@/components/VCard';
+import VReaction from './VReaction.vue';
+import VCard from '@/components/VCard/VCard.vue';
 import { mockReactionsData } from '@/components/VReactions/mocks/mockReactionsData';
 import { faker } from '@faker-js/faker';
-import { ALLOWED_REACTIONS } from '@/components/VReactions';
+import { ALLOWED_REACTIONS } from '@/components/VReactions/VReactions.vue';
 
 const userId = faker.string.uuid();
 const emoji = faker.helpers.arrayElement(ALLOWED_REACTIONS);

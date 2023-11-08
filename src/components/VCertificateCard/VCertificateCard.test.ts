@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import { VCertificateCard } from '.';
-import type { VCertificate } from '@/components/VCertificate';
+import VCertificateCard from './VCertificateCard.vue';
+import type VCertificate from '@/components/VCertificate/VCertificate.vue';
 import { mockDiplomaData, mockDiplomaSet } from '@/mocks/mockDiploma';
 
 const diplomas = mockDiplomaSet(mockDiplomaData());

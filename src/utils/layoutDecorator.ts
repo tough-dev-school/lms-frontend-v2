@@ -1,4 +1,4 @@
-import { VDefaultLayout } from '@/layouts/VDefaultLayout';
+import VDefaultLayout from '@/layouts/VDefaultLayout/VDefaultLayout.vue';
 import { mockMaterial } from '@/mocks/mockMaterial';
 import { mockQuestion, STATIC_QUESTION } from '@/mocks/mockQuestion';
 import { mockUserId, USER_1 } from '@/mocks/mockUserId';

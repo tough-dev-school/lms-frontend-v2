@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import { VAnswerActionsDesktop } from '@/components/VAnswerActionsDesktop';
+import VAnswerActionsDesktop from '@/components/VAnswerActionsDesktop/VAnswerActionsDesktop.vue';
 
 export default {
   title: 'AnswerActions/VAnswerActionsDesktop',

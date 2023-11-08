@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-  import { VHeading } from '@/components/VHeading';
-  import { VCard } from '@/components/VCard';
-  import { VPasswordSettings } from '@/components/VPasswordSettings';
-  import { VLinksSettings } from '@/components/VLinksSettings';
-  import { VCertificateSettings } from '@/components/VCertificateSettings';
+  import VHeading from '@/components/VHeading/VHeading.vue';
+  import VCard from '@/components/VCard/VCard.vue';
+  import VPasswordSettings from '@/components/VPasswordSettings/VPasswordSettings.vue';
+  import VLinksSettings from '@/components/VLinksSettings/VLinksSettings.vue';
+  import VCertificateSettings from '@/components/VCertificateSettings/VCertificateSettings.vue';
 </script>
 
 <template>

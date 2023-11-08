@@ -10,7 +10,7 @@ vi.doMock('vue-router', () => ({
   useRoute,
 }));
 
-import { VMailSentView } from '.';
+import VMailSentView from './VMailSentView.vue';
 import { getProviderById, type Provider } from '@brachkow/email-providers';
 
 const GMAIL = getProviderById('GMAIL') as Provider;

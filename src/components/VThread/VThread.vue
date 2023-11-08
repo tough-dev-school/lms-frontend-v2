@@ -1,12 +1,29 @@
+<script lang="ts">
+  import type { Thread } from '@/types/homework';
+  import type { MoodHappyIcon } from 'vue-tabler-icons';
+
+  export interface ThreadAction {
+    name?: string;
+    handle: (() => void) | null;
+    show: boolean;
+    icon: typeof MoodHappyIcon;
+    disabled?: boolean;
+  }
+
+  export interface VThreadProps {
+    originalPost: Thread;
+    customActions?: ThreadAction[];
+  }
+</script>
+
 <script lang="ts" setup>
-  import { VOwnAnswer } from '@/components/VOwnAnswer';
-  import { VAnswer } from '@/components/VAnswer';
-  import { VNewAnswer } from '@/components/VNewAnswer';
+  import VOwnAnswer from '@/components/VOwnAnswer/VOwnAnswer.vue';
+  import VAnswer from '@/components/VAnswer/VAnswer.vue';
+  import VNewAnswer from '@/components/VNewAnswer/VNewAnswer.vue';
   import { computed, ref } from 'vue';
   import { onClickOutside } from '@vueuse/core';
   import useUser from '@/stores/user';
   import { useRoute, useRouter } from 'vue-router';
-  import type { VThreadProps, ThreadAction } from '.';
   import { MessageCircleIcon, MessageCircleOffIcon } from 'vue-tabler-icons';
 
   const route = useRoute();

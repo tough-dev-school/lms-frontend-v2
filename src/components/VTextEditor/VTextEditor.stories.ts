@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import { VTextEditor } from '@/components/VTextEditor';
+import VTextEditor from '@/components/VTextEditor/VTextEditor.vue';
 
 export default {
   title: 'Forms/VTextEditor',

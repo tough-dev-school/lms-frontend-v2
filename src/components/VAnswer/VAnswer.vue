@@ -5,15 +5,15 @@
 </script>
 
 <script lang="ts" setup>
-  import { VAvatar } from '@/components/VAvatar';
+  import VAvatar from '@/components/VAvatar/VAvatar.vue';
   import { relativeDate } from '@/utils/date';
   import getName from '@/utils/getName';
   import type { Answer } from '@/types/homework';
-  import { VCard } from '@/components/VCard';
-  import { VHtmlContent } from '@/components/VHtmlContent';
+  import VCard from '@/components/VCard/VCard.vue';
+  import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
   import { computed, ref } from 'vue';
   import useUser from '@/stores/user';
-  import { VReactions } from '@/components/VReactions';
+  import VReactions from '@/components/VReactions/VReactions.vue';
   import type { ReactionEmoji } from '@/types/homework';
   import useHomework from '@/stores/homework';
   import { MoodHappyIcon } from 'vue-tabler-icons';

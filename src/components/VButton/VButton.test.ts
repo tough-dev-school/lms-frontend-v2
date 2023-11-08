@@ -1,4 +1,4 @@
-import { VButton } from '@/components/VButton';
+import VButton from '@/components/VButton/VButton.vue';
 import { mount, VueWrapper } from '@vue/test-utils';
 
 describe('VButton', () => {

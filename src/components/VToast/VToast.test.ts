@@ -1,6 +1,6 @@
 import { mount, VueWrapper } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
-import { VToast } from '@/components/VToast';
+import VToast from '@/components/VToast/VToast.vue';
 import { uuid } from '@/utils/uuid';
 
 const defaultProps = {

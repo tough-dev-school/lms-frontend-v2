@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import { VHeading } from '.';
+import VHeading from './VHeading.vue';
 import { faker } from '@faker-js/faker';
 
 const defaultProps = {};

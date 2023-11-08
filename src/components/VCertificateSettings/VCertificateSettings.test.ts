@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import { VCertificateSettings } from '.';
-import type { VTextInput } from '@/components/VTextInput';
+import VCertificateSettings from './VCertificateSettings.vue';
+import type VTextInput from '@/components/VTextInput/VTextInput.vue';
 import useUser from '@/stores/user';
 import { createTestingPinia } from '@pinia/testing';
 import { faker } from '@faker-js/faker';

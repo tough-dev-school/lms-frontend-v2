@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import { VAnswerActions } from '@/components/VAnswerActions';
+import VAnswerActions from '@/components/VAnswerActions/VAnswerActions.vue';
 import dayjs from 'dayjs';
 
 export default {

@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-  import { VAnswerActions } from '@/components/VAnswerActions';
-  import { VTextEditor } from '@/components/VTextEditor';
-  import { VButton } from '@/components/VButton';
+  import VAnswerActions from '@/components/VAnswerActions/VAnswerActions.vue';
+  import VTextEditor from '@/components/VTextEditor/VTextEditor.vue';
+  import VButton from '@/components/VButton/VButton.vue';
   import useHomework from '@/stores/homework';
   import { ref, onMounted, computed } from 'vue';
-  import { VAnswer } from '@/components/VAnswer';
-  import { VCard } from '@/components/VCard';
+  import VAnswer from '@/components/VAnswer/VAnswer.vue';
+  import VCard from '@/components/VCard/VCard.vue';
   import type { Answer, Thread, Comment } from '@/types/homework';
   import dayjs from 'dayjs';
 
