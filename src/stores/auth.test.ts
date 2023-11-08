@@ -3,7 +3,6 @@ import { createTestingPinia } from '@pinia/testing';
 import { loginWithCredentials, loginWithLink, sendLoginLink } from '@/api/auth';
 import { faker } from '@faker-js/faker';
 import useAuth from './auth';
-import useToasts from './toasts';
 import { createApp } from 'vue';
 
 const token = faker.string.uuid();
