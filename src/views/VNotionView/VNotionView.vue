@@ -84,53 +84,19 @@ support@tough-dev.school">
   @import 'vue3-notion/dist/style.css';
 
   .notion {
-    @apply text-black dark:text-white;
-  }
-
-  .notion-bookmark,
-  .notion-code {
-    @apply dark:bg-dark-black;
+    @apply text-black;
   }
 
   .notion-table-of-contents-item {
-    @apply underline dark:text-white dark:decoration-white;
-  }
-
-  .notion-page-link {
-    @apply dark:text-white dark:text-opacity-70;
+    @apply underline;
   }
 
   .notion-image-caption {
     color: inherit;
   }
 
-  .notion-bookmark div {
-    @apply dark:text-white;
-  }
-
   .notion-callout {
     @apply border-0;
-  }
-
-  .notion-red_background,
-  .notion-pink_background,
-  .notion-blue_background,
-  .notion-purple_background,
-  .notion-teal_background,
-  .notion-yellow_background,
-  .notion-orange_background,
-  .notion-brown_background,
-  .notion-gray_background,
-  .notion-red_background_co,
-  .notion-pink_background_co,
-  .notion-blue_background_co,
-  .notion-purple_background_co,
-  .notion-teal_background_co,
-  .notion-yellow_background_co,
-  .notion-orange_background_co,
-  .notion-brown_background_co,
-  .notion-gray_background_co {
-    @apply dark:text-black;
   }
 
   .notion-page-cover {

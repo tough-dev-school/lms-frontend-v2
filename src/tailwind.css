@@ -18,7 +18,7 @@
   }
 
   body {
-    @apply bg-offwhite font-body text-black dark:bg-dark-black dark:text-white;
+    @apply bg-offwhite font-body text-black;
   }
 }
 
@@ -35,7 +35,7 @@
     @apply prose-li:my-[0.25em];
     @apply prose-ul:my-[0.5em];
     @apply prose-h2:mt-[1.5em];
-    @apply text-black dark:text-white;
+    @apply text-black;
     --tw-prose-bullets: currentColor;
     max-width: 100%;
   }
@@ -51,7 +51,7 @@
   .link,
   .notion-link,
   .group-link {
-    @apply border-blue text-blue opacity-100 transition-colors  dark:border-lightblue dark:text-lightblue;
+    @apply border-blue text-blue opacity-100 transition-colors;
   }
 
   .link,
@@ -64,7 +64,7 @@
   }
 
   .float-card {
-    @apply overflow-hidden rounded-8 bg-white shadow dark:bg-dark-gray;
+    @apply overflow-hidden rounded-8 bg-white shadow;
   }
 
   .answer-action,

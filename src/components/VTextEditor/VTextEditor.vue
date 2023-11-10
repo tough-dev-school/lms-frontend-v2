@@ -156,7 +156,7 @@
 </script>
 
 <template>
-  <div ref="currentEditor" class="bg-white dark:bg-dark-gray">
+  <div ref="currentEditor" class="bg-white">
     <FloatingMenu
       v-if="editor"
       class="float-menu"
@@ -260,7 +260,7 @@
   }
 
   .ProseMirror {
-    @apply prose max-w-none rounded bg-white py-24 px-16 outline-none dark:prose-invert dark:bg-dark-gray tablet:px-32;
+    @apply prose max-w-none rounded bg-white py-24 px-16 outline-none   tablet:px-32;
   }
 
   .ProseMirror-focused {
