@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   // @ts-ignore
-  import { NotionRenderer } from 'vue-notion';
+  import { NotionRenderer } from '@/../../vue-notion';
   import { useRoute, useRouter } from 'vue-router';
   import { watch, computed } from 'vue';
 
@@ -81,7 +81,7 @@ support@tough-dev.school">
 </template>
 
 <style>
-  @import 'vue-notion/styles.css';
+  @import '@/../../vue-notion/styles.css';
 
   .notion {
     @apply text-black dark:text-white;
