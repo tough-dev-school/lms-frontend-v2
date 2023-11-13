@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-  import { VHeading } from '@/components/VHeading';
-  import { VCard } from '@/components/VCard';
+  import VHeading from '@/components/VHeading/VHeading.vue';
+  import VCard from '@/components/VCard/VCard.vue';
   import type { Diploma } from '@/types/diplomas';
-  import { VCertificate } from '@/components/VCertificate';
+  import VCertificate from '@/components/VCertificate/VCertificate.vue';
 
   export interface Props {
     course: string;
@@ -18,9 +18,9 @@
     <ul class="grid gap-32 phone:grid-cols-2">
       <VCertificate
         v-for="certificate in certificates"
+        :key="certificate.slug"
         data-testid="certificate"
-        :certificate="certificate"
-        :key="certificate.slug" />
+        :certificate="certificate" />
     </ul>
   </VCard>
 </template>

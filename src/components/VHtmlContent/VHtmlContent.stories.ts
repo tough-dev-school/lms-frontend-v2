@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import { VHtmlContent } from '@/components/VHtmlContent';
+import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
 import { mockContent } from '@/mocks/mockContent';
 
 export default {

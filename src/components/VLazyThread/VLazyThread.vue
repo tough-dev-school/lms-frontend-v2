@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import type { Answer, Comment } from '@/types/homework';
-  import { VThread, type ThreadAction } from '@/components/VThread';
-  import { VPreloader } from '@/components/VPreloader';
+  import VThread, { type ThreadAction } from '@/components/VThread/VThread.vue';
+  import VPreloader from '@/components/VPreloader/VPreloader.vue';
   import { getComments } from '@/api/homework';
   import { ref, computed } from 'vue';
   import { MessagesIcon, MessagesOffIcon } from 'vue-tabler-icons';
@@ -40,8 +40,8 @@
 
 <template>
   <VThread
-    :originalPost="{ ...originalPost, descendants }"
-    :customActions="customActions"
+    :original-post="{ ...originalPost, descendants }"
+    :custom-actions="customActions"
     @update="fetchComments"
     @reply="fetchComments" />
   <div v-if="isLoading" class="relative h-256">

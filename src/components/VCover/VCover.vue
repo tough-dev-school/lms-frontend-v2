@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { VHeading } from '@/components/VHeading';
+  import VHeading from '@/components/VHeading/VHeading.vue';
   import { computed } from 'vue';
 
   export interface Props {
@@ -36,8 +36,8 @@
         >
       </div>
       <img
-        :src="image"
         v-if="image"
+        :src="image"
         class="absolute top-0 left-0 right-0 h-full w-full object-fill"
         data-testid="image-cover" />
     </div>

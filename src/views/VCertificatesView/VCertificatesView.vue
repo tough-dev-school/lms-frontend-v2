@@ -1,9 +1,9 @@
 <script lang="ts" setup>
   import useDiplomas from '@/stores/diplomas';
-  import { VHeading } from '@/components/VHeading';
-  import { VCertificateCard } from '@/components/VCertificateCard';
+  import VHeading from '@/components/VHeading/VHeading.vue';
+  import VCertificateCard from '@/components/VCertificateCard/VCertificateCard.vue';
   import { computed } from 'vue';
-  import groupBy from 'lodash/groupBy';
+  import { groupBy } from 'lodash-es';
 
   const diplomas = useDiplomas();
 
@@ -22,14 +22,14 @@
     <VHeading tag="h1">Мои сертификаты</VHeading>
     <div class="grid gap-24">
       <VCertificateCard
+        v-for="group in groupedDiplomas"
+        :key="group.course"
         data-testid="certificate"
         :certificates="group.certificates"
-        :course="group.course"
-        v-for="group in groupedDiplomas"
-        :key="group.course" />
+        :course="group.course" />
       <li
-        data-testid="empty"
         v-if="groupedDiplomas.length === 0"
+        data-testid="empty"
         class="flex h-128 flex-grow items-center justify-center rounded border border-dashed border-gray text-center text-gray">
         Нет сертификатов
       </li>

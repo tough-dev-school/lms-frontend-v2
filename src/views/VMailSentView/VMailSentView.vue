@@ -1,20 +1,16 @@
 <script lang="ts" setup>
-  import { VHeading } from '@/components/VHeading';
-  import { VCard } from '@/components/VCard';
+  import VHeading from '@/components/VHeading/VHeading.vue';
+  import VCard from '@/components/VCard/VCard.vue';
   import { useRoute } from 'vue-router';
   import { computed } from 'vue';
-  import { KNOWN_EMAIL_PROVIDERS } from '.';
   import { useChatra } from '@/hooks/useChatra';
+  import { getProviderByEmail } from '@brachkow/email-providers';
 
   const route = useRoute();
 
   const email = computed(() => String(route.query.email));
 
-  const emailProvider = computed(() => {
-    return KNOWN_EMAIL_PROVIDERS.find((provider) => {
-      return email.value.includes(provider.keyword);
-    });
-  });
+  const emailProvider = computed(() => getProviderByEmail(email.value));
 
   const { chatra } = useChatra();
 </script>
@@ -31,10 +27,10 @@
     </div>
     <template #footer>
       <a
+        v-if="emailProvider"
         class="flex-grow button"
         data-testid="open"
         :href="emailProvider.url"
-        v-if="emailProvider"
         >Открыть {{ emailProvider.label }}</a
       >
     </template>

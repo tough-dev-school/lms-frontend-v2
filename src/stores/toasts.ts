@@ -1,5 +1,5 @@
+import { uuid } from '@/utils/uuid';
 import { defineStore } from 'pinia';
-import { nanoid } from 'nanoid';
 
 type VToastType = 'error' | 'success' | undefined;
 
@@ -12,7 +12,7 @@ export class VToastMessage {
   constructor(text: string, type: VToastType = undefined, lifetime = 5000) {
     this.text = text;
     this.type = type;
-    this.id = nanoid(8);
+    this.id = uuid();
     this.lifetime = lifetime;
   }
 }

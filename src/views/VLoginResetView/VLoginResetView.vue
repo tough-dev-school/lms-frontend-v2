@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-  import { VHeading } from '@/components/VHeading';
-  import { VButton } from '@/components/VButton';
-  import { VCard } from '@/components/VCard';
-  import { VTextInput } from '@/components/VTextInput';
+  import VHeading from '@/components/VHeading/VHeading.vue';
+  import VButton from '@/components/VButton/VButton.vue';
+  import VCard from '@/components/VCard/VCard.vue';
+  import VTextInput from '@/components/VTextInput/VTextInput.vue';
   import { ref } from 'vue';
   import useAuth from '@/stores/auth';
   import { useRouter } from 'vue-router';
@@ -22,10 +22,10 @@
   <VCard tag="form" @submit.prevent="handleResetRequest">
     <VHeading tag="h1" class="mb-32">Сброс пароля</VHeading>
     <VTextInput
+      v-model="email"
       label="Электронная почта"
       tip="Мы отправим ссылку для сброса пароля по этому адресу"
       type="email"
-      v-model="email"
       autocomplete="username"
       data-testid="email" />
     <template #footer>
@@ -38,9 +38,9 @@
       >
       <VButton
         appearance="link"
-        @click="router.push({ name: 'login' })"
         class="flex-grow"
-        data-testid="password">
+        data-testid="password"
+        @click="router.push({ name: 'login' })">
         Войти по паролю
       </VButton>
     </template>

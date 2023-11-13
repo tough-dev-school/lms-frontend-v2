@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { VToast } from '@/components/VToast';
+  import VToast from '@/components/VToast/VToast.vue';
   import useToasts from '@/stores/toasts';
   import { storeToRefs } from 'pinia';
 
@@ -19,8 +19,8 @@
         v-for="message in messages"
         v-bind="message"
         :key="message.id"
-        @delete="handleDelete"
-        data-testid="toast" />
+        data-testid="toast"
+        @delete="handleDelete" />
     </TransitionGroup>
   </div>
 </template>

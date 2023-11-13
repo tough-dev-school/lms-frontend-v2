@@ -1,7 +1,7 @@
 <script setup lang="ts">
-  import { VTextEditor } from '@/components/VTextEditor';
-  import { VButton } from '@/components/VButton';
-  import { VCard } from '@/components/VCard';
+  import VTextEditor from '@/components/VTextEditor/VTextEditor.vue';
+  import VButton from '@/components/VButton/VButton.vue';
+  import VCard from '@/components/VCard/VCard.vue';
   import { ref, computed, watch } from 'vue';
   import useHomework from '@/stores/homework';
 
@@ -61,12 +61,12 @@
   <VCard class="VNewAnswer pt-0">
     <VTextEditor
       v-model="text"
-      @send="sendPost"
       class="-mb-32 rounded-t border-offwhite dark:border-dark-black"
       data-testid="editor"
-      placeholder="Напишите ответ здесь" />
+      placeholder="Напишите ответ здесь"
+      @send="sendPost" />
     <template #footer>
-      <VButton @click="sendPost" :disabled="!allowSend" data-testid="button"
+      <VButton :disabled="!allowSend" data-testid="button" @click="sendPost"
         >Отправить</VButton
       >
     </template>

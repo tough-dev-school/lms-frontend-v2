@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-  import { VHeading } from '@/components/VHeading';
-  import { VButton } from '@/components/VButton';
-  import { VCard } from '@/components/VCard';
-  import { VTextInput } from '@/components/VTextInput';
+  import VHeading from '@/components/VHeading/VHeading.vue';
+  import VButton from '@/components/VButton/VButton.vue';
+  import VCard from '@/components/VCard/VCard.vue';
+  import VTextInput from '@/components/VTextInput/VTextInput.vue';
   import { ref } from 'vue';
   import useAuth from '@/stores/auth';
   import { useRouter } from 'vue-router';
@@ -24,20 +24,20 @@
   <VCard tag="form" @submit.prevent="loginWithEmail">
     <VHeading tag="h1" class="mb-32">Вход и регистрация</VHeading>
     <VTextInput
+      v-model="email"
       label="Электронная почта"
       tip="Мы отправим ссылку для входа по этому адресу"
       type="email"
-      autocomplete="username"
-      v-model="email" />
+      autocomplete="username" />
     <template #footer>
       <VButton type="submit" :disabled="!email" class="flex-grow"
         >Получить доступ</VButton
       >
       <VButton
-        @click="emit('change')"
         appearance="link"
         data-testid="to-password-mode"
-        class="flex-grow">
+        class="flex-grow"
+        @click="emit('change')">
         Войти через пароль
       </VButton>
     </template>

@@ -2,7 +2,7 @@ import axios from 'axios';
 import onRequestFulfilled from './onRequestFulfilled';
 import onResponseFulfilled from './onResponseFulfilled';
 import onResponseRejected from './onResponseRejected';
-import merge from 'lodash/merge';
+import { merge } from 'lodash-es';
 
 interface CustomAxiosInstanceConfig {
   useResponseCaseMiddleware: boolean;

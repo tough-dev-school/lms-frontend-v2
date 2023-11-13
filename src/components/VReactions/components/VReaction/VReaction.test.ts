@@ -1,10 +1,10 @@
 import { mount, VueWrapper } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
-import { VReaction, type VReactionProps } from '.';
-import { ALLOWED_REACTIONS } from '@/components/VReactions';
+import VReaction, { type VReactionProps } from './VReaction.vue';
+import { ALLOWED_REACTIONS } from '@/components/VReactions/VReactions.vue';
 import { mockReactionsData } from '../../mocks/mockReactionsData';
 import getName from '@/utils/getName';
-import type { VAvatar } from '@/components/VAvatar';
+import type VAvatar from '@/components/VAvatar/VAvatar.vue';
 
 const emoji = faker.helpers.arrayElement(ALLOWED_REACTIONS);
 const userId = faker.string.uuid();

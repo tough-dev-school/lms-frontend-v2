@@ -98,8 +98,16 @@ const useHomework = defineStore('homework', {
     async sendImage(file: File) {
       return await sendImage(file);
     },
-    async addReaction(answerId: string, reaction: ReactionEmoji) {
-      return await addReaction(answerId, reaction);
+    async addReaction({
+      answerId,
+      emoji,
+      slug,
+    }: {
+      answerId: string;
+      emoji: ReactionEmoji;
+      slug?: string;
+    }) {
+      return await addReaction({ answerId, emoji, slug });
     },
     async removeReaction(answerId: string, reactionId: string) {
       return await removeReaction(answerId, reactionId);

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-  import { VHeading } from '@/components/VHeading';
-  import { VCard } from '@/components/VCard';
-  import { VCover } from '@/components/VCover';
+  import VHeading from '@/components/VHeading/VHeading.vue';
+  import VCard from '@/components/VCard/VCard.vue';
+  import VCover from '@/components/VCover/VCover.vue';
   import useStudies from '@/stores/studies';
 
   const studies = useStudies();
@@ -9,7 +9,7 @@
 
 <template>
   <VHeading tag="h1" class="mb-32">Ваши курсы</VHeading>
-  <ul class="mb-32 flex flex-col gap-16" v-if="studies.items.length > 0">
+  <ul v-if="studies.items.length > 0" class="mb-32 flex flex-col gap-16">
     <li v-for="(study, index) in studies.items" :key="index">
       <RouterLink
         class="link"
@@ -18,7 +18,7 @@
           name: 'materials',
           params: { id: study.homePageSlug },
         }">
-        <VCard class="relative p-0 px-0 phone:px-0 tablet:px-0">
+        <VCard class="relative !p-0 !px-0">
           <VCover
             :name="study.name"
             :image="study.cover"

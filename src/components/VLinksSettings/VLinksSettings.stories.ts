@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import { VLinksSettings } from '@/components/VLinksSettings';
+import VLinksSettings from '@/components/VLinksSettings/VLinksSettings.vue';
 
 export default {
   title: 'Settings/VLinksSettings',

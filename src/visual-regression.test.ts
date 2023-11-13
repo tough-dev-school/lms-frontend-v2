@@ -120,7 +120,10 @@ describe('visual regression test for', () => {
   };
 
   test.each(tests)('%s', async (name, route, action, width, height) => {
-    await page.emulateMedia({ colorScheme: COLOR_SCHEME });
+    await page.emulateMedia({
+      colorScheme: COLOR_SCHEME,
+      reducedMotion: 'reduce',
+    });
     await page.setViewportSize({ width, height });
     await goto(route);
 

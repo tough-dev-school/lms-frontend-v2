@@ -1,7 +1,7 @@
 import onRequestFulfilled from './onRequestFulfilled';
 
 import requestCaseMiddleware from './requestCaseMiddleware';
-import type { AxiosRequestConfig } from 'axios';
+import type { InternalAxiosRequestConfig } from 'axios';
 import { faker } from '@faker-js/faker';
 import { createApp } from 'vue';
 import { setActivePinia } from 'pinia';
@@ -10,7 +10,7 @@ import useAuth from '@/stores/auth';
 
 vi.mock('./requestCaseMiddleware');
 
-const input = { data: {}, headers: {} } as AxiosRequestConfig;
+const input = { data: {}, headers: {} } as InternalAxiosRequestConfig;
 
 describe('onRequestFulfilled', () => {
   let authStore: any;

@@ -4,7 +4,7 @@ import { createApp } from 'vue';
 import { setActivePinia } from 'pinia';
 import { createTestingPinia } from '@pinia/testing';
 import type { AxiosResponse } from 'axios';
-import { cloneDeep } from 'lodash';
+import { cloneDeep } from 'lodash-es';
 
 vi.mock('./responseCaseMiddleware');
 

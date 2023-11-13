@@ -1,16 +1,16 @@
 <script lang="ts" setup>
-  import { VHeading } from '@/components/VHeading';
-  import { VAnswer } from '@/components/VAnswer';
-  import { VThread } from '@/components/VThread';
-  import { VFeedbackGuide } from '@/components/VFeedbackGuide';
+  import VHeading from '@/components/VHeading/VHeading.vue';
+  import VAnswer from '@/components/VAnswer/VAnswer.vue';
+  import VThread from '@/components/VThread/VThread.vue';
+  import VFeedbackGuide from '@/components/VFeedbackGuide/VFeedbackGuide.vue';
   import { computed, watch } from 'vue';
   import useHomework from '@/stores/homework';
   import { useRoute, useRouter } from 'vue-router';
   import { storeToRefs } from 'pinia';
-  import { VPreloader } from '@/components/VPreloader';
-  import { VHtmlContent } from '@/components/VHtmlContent';
-  import { VCard } from '@/components/VCard';
-  import { VNewAnswer } from '@/components/VNewAnswer';
+  import VPreloader from '@/components/VPreloader/VPreloader.vue';
+  import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
+  import VCard from '@/components/VCard/VCard.vue';
+  import VNewAnswer from '@/components/VNewAnswer/VNewAnswer.vue';
   import type { Thread } from '@/types/homework';
 
   const homework = useHomework();
@@ -61,14 +61,14 @@
       <VHeading tag="h2">Обсуждение</VHeading>
       <VFeedbackGuide />
       <VNewAnswer
-        :questionId="question.slug"
-        :parentId="answer.slug"
+        :question-id="question.slug"
+        :parent-id="answer.slug"
         @update="getData" />
       <VThread
         v-for="comment in answer.descendants"
         :key="comment.slug"
-        @update="getData"
-        :originalPost="comment" />
+        :original-post="comment"
+        @update="getData" />
     </section>
   </div>
   <VPreloader v-else />

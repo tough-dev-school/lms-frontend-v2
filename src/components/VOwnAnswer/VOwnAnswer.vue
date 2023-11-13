@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-  import { VAnswerActions } from '@/components/VAnswerActions';
-  import { VTextEditor } from '@/components/VTextEditor';
-  import { VButton } from '@/components/VButton';
+  import VAnswerActions from '@/components/VAnswerActions/VAnswerActions.vue';
+  import VTextEditor from '@/components/VTextEditor/VTextEditor.vue';
+  import VButton from '@/components/VButton/VButton.vue';
   import useHomework from '@/stores/homework';
   import { ref, onMounted, computed } from 'vue';
-  import { VAnswer } from '@/components/VAnswer';
-  import { VCard } from '@/components/VCard';
+  import VAnswer from '@/components/VAnswer/VAnswer.vue';
+  import VCard from '@/components/VCard/VCard.vue';
   import type { Answer, Thread, Comment } from '@/types/homework';
   import dayjs from 'dayjs';
 
@@ -63,7 +63,7 @@
 
 <template>
   <div v-if="!editMode">
-    <VAnswer @update="emit('update')" :answer="answer as Answer">
+    <VAnswer :answer="answer as Answer" @update="emit('update')">
       <template #header>
         <VAnswerActions
           v-if="isEditable"
@@ -78,10 +78,10 @@
   <VCard v-else class="px-0 pt-0 tablet:px-0">
     <VTextEditor
       v-model="text"
-      @send="updateAnswer"
-      class="mb-16 rounded-t border-b border-offwhite" />
+      class="mb-16 rounded-t border-b border-offwhite"
+      @send="updateAnswer" />
     <div class="flex flex-row-reverse px-32">
-      <VButton @click="updateAnswer" :disabled="isDisabled" class="h-32"
+      <VButton :disabled="isDisabled" class="h-32" @click="updateAnswer"
         >Сохранить</VButton
       >
     </div>

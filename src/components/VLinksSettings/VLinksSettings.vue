@@ -1,9 +1,9 @@
 <script lang="ts" setup>
   import { ref, onMounted } from 'vue';
-  import { VTextInput } from '@/components/VTextInput';
-  import { VButton } from '@/components/VButton';
-  import { VHeading } from '@/components/VHeading';
-  import { VCard } from '@/components/VCard';
+  import VTextInput from '@/components/VTextInput/VTextInput.vue';
+  import VButton from '@/components/VButton/VButton.vue';
+  import VHeading from '@/components/VHeading/VHeading.vue';
+  import VCard from '@/components/VCard/VCard.vue';
   import useUser from '@/stores/user';
 
   const linkedinUsername = ref('');
@@ -36,20 +36,20 @@
     <VHeading class="mb-24" tag="h2">Ссылки</VHeading>
     <div class="flex flex-col items-start gap-16 tablet:gap-24">
       <VTextInput
-        label="Ссылка на GitHub"
         v-model="githubUsername"
+        label="Ссылка на GitHub"
         data-testid="github" />
       <VTextInput
-        label="Ссылка на LinkedIn"
         v-model="linkedinUsername"
+        label="Ссылка на LinkedIn"
         data-testid="linkedin" />
       <VTextInput
-        label="Ссылка на Telegram"
         v-model="telegramUsername"
+        label="Ссылка на Telegram"
         data-testid="telegram" />
     </div>
     <template #footer>
-      <VButton @click="saveProfile" data-testid="save">Сохранить</VButton>
+      <VButton data-testid="save" @click="saveProfile">Сохранить</VButton>
     </template>
   </VCard>
 </template>

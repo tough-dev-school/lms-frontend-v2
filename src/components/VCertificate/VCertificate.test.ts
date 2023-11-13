@@ -1,8 +1,8 @@
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import { VCertificate } from '.';
+import VCertificate from './VCertificate.vue';
 import getCertificateLink from '@/utils/getCertificateLink';
-import merge from 'lodash/merge';
+import { merge } from 'lodash-es';
 import { mockDiplomaData } from '@/mocks/mockDiploma';
 
 const defaultProps = {

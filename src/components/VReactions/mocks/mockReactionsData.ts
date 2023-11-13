@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
-import { ALLOWED_REACTIONS } from '@/components/VReactions';
-import times from 'lodash/times';
+import { ALLOWED_REACTIONS } from '@/components/VReactions/VReactions.vue';
+import { times } from 'lodash-es';
 import { ReactionEmoji, type Reaction } from '@/types/homework';
 import { mockAuthorData } from '@/mocks/mockAuthorData';
 

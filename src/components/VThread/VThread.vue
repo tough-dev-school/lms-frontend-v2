@@ -1,12 +1,29 @@
+<script lang="ts">
+  import type { Thread } from '@/types/homework';
+  import type { MoodHappyIcon } from 'vue-tabler-icons';
+
+  export interface ThreadAction {
+    name?: string;
+    handle: (() => void) | null;
+    show: boolean;
+    icon: typeof MoodHappyIcon;
+    disabled?: boolean;
+  }
+
+  export interface VThreadProps {
+    originalPost: Thread;
+    customActions?: ThreadAction[];
+  }
+</script>
+
 <script lang="ts" setup>
-  import { VOwnAnswer } from '@/components/VOwnAnswer';
-  import { VAnswer } from '@/components/VAnswer';
-  import { VNewAnswer } from '@/components/VNewAnswer';
+  import VOwnAnswer from '@/components/VOwnAnswer/VOwnAnswer.vue';
+  import VAnswer from '@/components/VAnswer/VAnswer.vue';
+  import VNewAnswer from '@/components/VNewAnswer/VNewAnswer.vue';
   import { computed, ref } from 'vue';
   import { onClickOutside } from '@vueuse/core';
   import useUser from '@/stores/user';
   import { useRoute, useRouter } from 'vue-router';
-  import type { VThreadProps, ThreadAction } from '.';
   import { MessageCircleIcon, MessageCircleOffIcon } from 'vue-tabler-icons';
 
   const route = useRoute();
@@ -92,7 +109,7 @@
 
 <template>
   <div>
-    <div class="group" ref="target">
+    <div ref="target" class="group">
       <component
         :is="getRootComponent"
         v-bind="getRootComponentProps"
@@ -101,13 +118,13 @@
         @mounted="scrollToComment">
         <template #footer>
           <button
-            class="answer-action"
             v-for="(action, index) in actions.filter((action) => action.show)"
-            :class="{ 'cursor-auto opacity-50': !action.handle }"
             :key="index"
-            @click="action.handle"
+            class="answer-action"
+            :class="{ 'cursor-auto opacity-50': !action.handle }"
             :title="action.name"
-            :disabled="action.disabled">
+            :disabled="action.disabled"
+            @click="action.handle">
             <component :is="action.icon" />
           </button>
         </template>
@@ -115,17 +132,17 @@
       <div class="thread-ruler" :class="{ 'mt-16': replyMode }">
         <VNewAnswer
           v-show="replyMode"
-          :questionId="originalPost.question"
-          :parentId="originalPost.slug"
+          :question-id="originalPost.question"
+          :parent-id="originalPost.slug"
           @update="handleUpdate" />
       </div>
     </div>
-    <div class="thread-ruler mt-16" v-if="originalPost.descendants.length > 0">
+    <div v-if="originalPost.descendants.length > 0" class="thread-ruler mt-16">
       <VThread
         v-for="reply in originalPost.descendants"
-        :originalPost="reply"
-        @update="emit('update')"
-        :key="reply.slug" />
+        :key="reply.slug"
+        :original-post="reply"
+        @update="emit('update')" />
     </div>
   </div>
 </template>

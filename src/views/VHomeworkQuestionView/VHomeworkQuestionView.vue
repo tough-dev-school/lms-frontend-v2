@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-  import { VHtmlContent } from '@/components/VHtmlContent';
+  import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
   import useHomework from '@/stores/homework';
   import { useRoute } from 'vue-router';
   import { computed, onMounted, ref } from 'vue';
   import type { Ref } from 'vue';
   import { storeToRefs } from 'pinia';
-  import { VHeading } from '@/components/VHeading';
-  import { VPreloader } from '@/components/VPreloader';
-  import { VOwnAnswer } from '@/components/VOwnAnswer';
-  import { VNewAnswer } from '@/components/VNewAnswer';
-  import { VCard } from '@/components/VCard';
+  import VHeading from '@/components/VHeading/VHeading.vue';
+  import VPreloader from '@/components/VPreloader/VPreloader.vue';
+  import VOwnAnswer from '@/components/VOwnAnswer/VOwnAnswer.vue';
+  import VNewAnswer from '@/components/VNewAnswer/VNewAnswer.vue';
+  import VCard from '@/components/VCard/VCard.vue';
   import useUser from '@/stores/user';
 
   const route = useRoute();
@@ -52,7 +52,7 @@
     <section>
       <VHeading tag="h2" class="mb-24">Ответ</VHeading>
 
-      <VCard class="mb-16 bg-yellow-light" v-if="answer">
+      <VCard v-if="answer" class="mb-16 bg-yellow-light">
         <VHeading tag="h3" class="mb-8"
           >Поделиться ссылкой на сделанную домашку</VHeading
         >
@@ -69,11 +69,11 @@
       </VCard>
 
       <VOwnAnswer
-        :answer="answer"
         v-if="answer"
-        @update="getData"
-        :questionId="questionId" />
-      <VNewAnswer v-else @update="getData" :questionId="questionId" />
+        :answer="answer"
+        :question-id="questionId"
+        @update="getData" />
+      <VNewAnswer v-else :question-id="questionId" @update="getData" />
     </section>
   </div>
   <VPreloader v-else />

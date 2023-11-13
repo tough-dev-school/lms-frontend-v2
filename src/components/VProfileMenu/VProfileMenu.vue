@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import { ref, computed } from 'vue';
   import { onClickOutside } from '@vueuse/core';
-  import { VAvatar } from '@/components/VAvatar';
+  import VAvatar from '@/components/VAvatar/VAvatar.vue';
   import { useRouter } from 'vue-router';
   import useUser from '@/stores/user';
   import useAuth from '@/stores/auth';
@@ -97,12 +97,12 @@
 </script>
 
 <template>
-  <div class="relative" ref="menu">
+  <div ref="menu" class="relative">
     <div
       class="flex cursor-pointer items-center rounded-8 p-8 transition-colors hover:bg-gray hover:bg-opacity-10"
       :class="{ VProfileMenu__Button_Active: isOpen }"
-      @click="isOpen = !isOpen"
-      data-testid="button">
+      data-testid="button"
+      @click="isOpen = !isOpen">
       <VAvatar :user-id="userId" class="mr-8" data-testid="avatar" />
       <ul class="text-sub">
         <li class="leading-tight" data-testid="name">{{ name }}</li>
@@ -113,8 +113,8 @@
     </div>
     <Transition name="fade">
       <nav
-        class="float-card absolute right-0 z-10 translate-y-8"
         v-if="isOpen"
+        class="float-card absolute right-0 z-10 translate-y-8"
         data-testid="menu">
         <ul>
           <li
@@ -122,8 +122,8 @@
             :key="item.id">
             <button
               class="VProfileMenu__Item"
-              @click="handleItemClick(item.action)"
-              :data-testid="item.id">
+              :data-testid="item.id"
+              @click="handleItemClick(item.action)">
               <span class="link">{{ item.label }}</span>
             </button>
           </li>

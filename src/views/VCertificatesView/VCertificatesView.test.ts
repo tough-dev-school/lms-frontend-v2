@@ -1,14 +1,13 @@
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import { VCertificatesView } from '.';
-import type { VCertificateCard } from '@/components/VCertificateCard';
+import VCertificatesView from './VCertificatesView.vue';
+import type VCertificateCard from '@/components/VCertificateCard/VCertificateCard.vue';
 import { createTestingPinia } from '@pinia/testing';
 import { mockDiplomaData, mockDiplomaSet } from '@/mocks/mockDiploma';
 import useDiplomas from '@/stores/diplomas';
-import uniq from 'lodash/uniq';
+import { uniq, flatten } from 'lodash-es';
 import { nextTick } from 'vue';
 import { faker } from '@faker-js/faker';
-import { flatten } from 'lodash';
 
 const defaultProps = {};
 

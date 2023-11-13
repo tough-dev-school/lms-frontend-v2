@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import { VToast } from '@/components/VToast';
+import VToast from '@/components/VToast/VToast.vue';
 
 export default {
   title: 'Toasts/VToast',

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-  import { VLoginLink } from '@/components/VLoginLink';
-  import { VLoginPassword } from '@/components/VLoginPassword';
+  import VLoginLink from '@/components/VLoginLink/VLoginLink.vue';
+  import VLoginPassword from '@/components/VLoginPassword/VLoginPassword.vue';
   import { ref } from 'vue';
 
   export type Mode = 'link' | 'password';
@@ -14,7 +14,7 @@
     data-testid="login-link"
     @change="mode = 'password'" />
   <VLoginPassword
-    data-testid="login-password"
     v-else-if="mode === 'password'"
+    data-testid="login-password"
     @change="mode = 'link'" />
 </template>

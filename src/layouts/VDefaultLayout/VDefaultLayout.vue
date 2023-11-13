@@ -1,9 +1,9 @@
 <script lang="ts" setup>
   // #TODO Remove test message when new-notion is merged
 
-  import { VProfileMenu } from '@/components/VProfileMenu';
-  import { VPreloader } from '@/components/VPreloader';
-  import { VToastFeed } from '@/components/VToastFeed';
+  import VProfileMenu from '@/components/VProfileMenu/VProfileMenu.vue';
+  import VPreloader from '@/components/VPreloader/VPreloader.vue';
+  import VToastFeed from '@/components/VToastFeed/VToastFeed.vue';
   import { useRoute } from 'vue-router';
   import { computed } from 'vue';
   import useLoading from '@/stores/loading';
@@ -21,7 +21,7 @@
 </script>
 
 <template>
-  <main class="container pb-128" v-if="!loading.isLoading">
+  <main v-if="!loading.isLoading" class="container pb-128">
     <p
       v-if="isNotionTest"
       class="p-8 px-16 bg-lightgray text-black rounded mt-16">
@@ -32,7 +32,7 @@
         >сюда</a
       >.
     </p>
-    <header class="flex justify-end pt-16 pb-24 tablet:pb-64" v-if="hasHeader">
+    <header v-if="hasHeader" class="flex justify-end pt-16 pb-24 tablet:pb-64">
       <VProfileMenu class="w-full tablet:w-auto" />
     </header>
     <slot />

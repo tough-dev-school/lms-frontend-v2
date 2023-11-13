@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import { VNotionView } from '.';
+import VNotionView from './VNotionView.vue';
 import useMaterials from '@/stores/materials';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import { mockMaterial } from '@/mocks/mockMaterial';
