@@ -81,7 +81,7 @@ support@tough-dev.school">
 </template>
 
 <style>
-  @import 'vue-notion/src/styles.css';
+  @import 'vue-notion/styles.css';
 
   .notion {
     @apply text-black dark:text-white;
