@@ -50,9 +50,9 @@
     "turndown": "^7.1.2",
     "uuid": "^9.0.1",
     "vue": "^3.3.8",
+    "vue-notion": "github:tough-dev-school/vue-notion",
     "vue-router": "^4.2.5",
-    "vue-tabler-icons": "^2.21.0",
-    "vue-notion": "link:../vue-notion"
+    "vue-tabler-icons": "^2.21.0"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
