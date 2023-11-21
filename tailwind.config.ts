@@ -65,8 +65,8 @@ const config: Config = {
     },
     spacing: {
       inherit: 'inherit',
-      0: 0,
-      4: 4,
+      '0': '0px',
+      '4': '4px',
       ...spacing(8, 512),
     },
     extend: {
