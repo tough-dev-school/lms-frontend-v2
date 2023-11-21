@@ -12,7 +12,7 @@ import * as Sentry from '@sentry/vue';
 import { BrowserTracing } from '@sentry/tracing';
 
 import './fonts.css';
-import './tailwind.css';
+import './style.css';
 
 const app = createApp(App);
 
