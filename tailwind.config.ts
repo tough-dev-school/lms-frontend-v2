@@ -1,7 +1,9 @@
-const spacing = (base, limit, unit = 'px') => {
+import { type Config } from 'tailwindcss';
+
+const spacing = (base: number, limit: number, unit = 'px') => {
   const output = {};
   let n = 1;
-  let value;
+  let value: number;
 
   do {
     value = base * n;
@@ -12,8 +14,7 @@ const spacing = (base, limit, unit = 'px') => {
   return output;
 };
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+const config: Config = {
   darkMode: 'class',
   content: ['./index.html', './src/**/*.{js,ts,vue,jsx,tsx}'],
   theme: {
@@ -75,3 +76,5 @@ module.exports = {
   },
   plugins: [require('@tailwindcss/typography')],
 };
+
+export default config;
