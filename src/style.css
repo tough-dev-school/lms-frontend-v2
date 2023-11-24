@@ -15,6 +15,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    @apply text-base;
   }
 
   body {
