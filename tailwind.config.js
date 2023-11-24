@@ -48,10 +48,10 @@ module.exports = {
       transparent: { DEFAULT: 'transparent' },
     },
     fontSize: {
-      sub: 'clamp(14px, 0.833vw, 16px)',
-      base: 'clamp(16px, 0.937vw, 18px)',
-      h1: 'clamp(1.875rem, 1.875vw, 36px)',
-      h2: 'clamp(1.3rem, 1.458vw, 28px)',
+      sub: 'clamp(14px, 1.25vw, 16px)',
+      base: 'clamp(16px, 1.5vw, 18px)',
+      h1: 'clamp(28px, 2.5vw, 36px)',
+      h2: 'clamp(22px, 2.0vw, 28px)',
       h3: '1.25rem',
     },
     borderRadius: {
