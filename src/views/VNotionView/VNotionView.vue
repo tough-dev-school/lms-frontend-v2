@@ -84,7 +84,7 @@ support@tough-dev.school">
   @import 'vue3-notion/dist/style.css';
 
   .notion {
-    @apply text-black dark:text-white;
+    @apply text-black dark:text-white text-base;
   }
 
   .notion-bookmark,
