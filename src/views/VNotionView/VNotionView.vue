@@ -1,6 +1,7 @@
 <script lang="ts" setup>
   // @ts-ignore
-  import { NotionRenderer } from 'vue-notion';
+  import { NotionRenderer as NewNotionRenderer } from '@/../../vue-notion';
+  import { NotionRenderer as OldNotionRenderer } from 'vue3-notion';
   import { useRoute, useRouter } from 'vue-router';
   import { watch, computed } from 'vue';
 
@@ -51,11 +52,24 @@
       },
     };
   });
+
+  const NotionRenderer = computed(() => {
+    const MATERIALS_WHITELIST: string[] = [];
+
+    if (
+      MATERIALS_WHITELIST.length > 0 &&
+      !MATERIALS_WHITELIST.includes(String(route.params.id))
+    ) {
+      return OldNotionRenderer;
+    } else {
+      return NewNotionRenderer;
+    }
+  });
 </script>
 
 <template>
   <VCard v-if="materials.material" class="pt-32">
-    <NotionRenderer v-bind="rendererProps" prism />
+    <component :is="NotionRenderer" v-bind="rendererProps" prism />
   </VCard>
   <div
     v-else-if="!materials.material"
@@ -81,11 +95,7 @@ support@tough-dev.school">
 </template>
 
 <style>
-  @import 'vue-notion/styles.css';
-
-  .notion {
-    @apply text-black dark:text-white;
-  }
+  @import '@/../../vue-notion/styles.css';
 
   .notion-page-cover {
     margin: 0;
@@ -94,25 +104,8 @@ support@tough-dev.school">
     @apply aspect-[5/2];
   }
 
-  .notion-bookmark,
-  .notion-code {
-    @apply dark:bg-dark-black;
-  }
-
-  .notion-table-of-contents-item {
-    @apply underline dark:text-white dark:decoration-white;
-  }
-
-  .notion-page-link {
-    @apply dark:text-white dark:text-opacity-70;
-  }
-
   .notion-image-caption {
     color: inherit;
-  }
-
-  .notion-bookmark div {
-    @apply dark:text-white;
   }
 
   .notion-callout {
@@ -121,27 +114,6 @@ support@tough-dev.school">
 
   .notion-simple-table-data {
     position: initial;
-  }
-
-  .notion-red_background,
-  .notion-pink_background,
-  .notion-blue_background,
-  .notion-purple_background,
-  .notion-teal_background,
-  .notion-yellow_background,
-  .notion-orange_background,
-  .notion-brown_background,
-  .notion-gray_background,
-  .notion-red_background_co,
-  .notion-pink_background_co,
-  .notion-blue_background_co,
-  .notion-purple_background_co,
-  .notion-teal_background_co,
-  .notion-yellow_background_co,
-  .notion-orange_background_co,
-  .notion-brown_background_co,
-  .notion-gray_background_co {
-    @apply dark:text-black;
   }
 
   .notion-page,
