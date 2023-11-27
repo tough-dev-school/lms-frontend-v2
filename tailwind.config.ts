@@ -26,13 +26,6 @@ const config: Config = {
       phone: '560px',
       tablet: '768px',
     },
-    container: {
-      center: true,
-      padding: {
-        DEFAULT: '8px',
-        tablet: '16px',
-      },
-    },
     colors: {
       'darkmode-layer1': { DEFAULT: '#1d2021' },
       'darkmode-layer2': { DEFAULT: '#3c3836' },
