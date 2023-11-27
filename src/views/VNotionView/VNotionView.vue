@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   // @ts-ignore
-  import { NotionRenderer as NewNotionRenderer } from '@/../../vue-notion';
+  import { NotionRenderer as NewNotionRenderer } from 'vue-notion';
   import { NotionRenderer as OldNotionRenderer } from 'vue3-notion';
   import { useRoute, useRouter } from 'vue-router';
   import { watch, computed } from 'vue';
@@ -95,7 +95,7 @@ support@tough-dev.school">
 </template>
 
 <style>
-  @import '@/../../vue-notion/styles.css';
+  @import 'vue-notion/styles.css';
 
   .notion-page-cover {
     margin: 0;
