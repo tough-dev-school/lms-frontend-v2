@@ -25,13 +25,6 @@ module.exports = {
       phone: '560px',
       tablet: '768px',
     },
-    container: {
-      center: true,
-      padding: {
-        DEFAULT: '8px',
-        tablet: '16px',
-      },
-    },
     colors: {
       offwhite: { DEFAULT: '#faf9f8' },
       black: { DEFAULT: '#000000' },

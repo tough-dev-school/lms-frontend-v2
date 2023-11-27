@@ -81,6 +81,10 @@
   .answer-action-disabled {
     @apply disabled:hover:bg-offwhite disabled:hover:border-offwhite disabled:opacity-50 disabled:cursor-not-allowed;
   }
+
+  .container-fluid {
+    @apply tablet:px-16 px-8 max-w-[768px] mx-auto;
+  }
 }
 
 @layer utilities {
