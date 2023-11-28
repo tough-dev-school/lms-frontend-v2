@@ -15,7 +15,8 @@
 
 <style>
   .v-popper--theme-dropdown .v-popper__inner.v-popper__inner {
-    @apply float-card border-none shadow;
+    @apply overflow-hidden rounded-8 bg-white dark:bg-darkmode-layer2 shadow;
+    @apply border-none shadow;
   }
 
   .v-popper__arrow-container {

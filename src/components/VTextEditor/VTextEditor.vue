@@ -156,7 +156,7 @@
 </script>
 
 <template>
-  <div ref="currentEditor" class="bg-white">
+  <div ref="currentEditor">
     <FloatingMenu
       v-if="editor"
       class="float-menu"
@@ -239,28 +239,26 @@
 <style>
   .bubble-menu,
   .float-menu {
-    @apply flex rounded;
+    @apply flex rounded-8;
   }
 
-  .bubble-menu {
+  .bubble-menu,
+  .float-menu {
     @apply bg-black text-white;
+    @apply dark:bg-darkmode-white dark:text-darkmode-border;
   }
 
   .bubble-button,
   .float-button {
-    @apply flex h-32 items-center justify-center px-8 first:pl-16 last:pr-16 hover:bg-white hover:bg-opacity-20;
+    @apply rounded-8 flex h-32 items-center justify-center px-8 hover:bg-white hover:bg-opacity-20;
   }
 
   .bubble-button_active {
     @apply bg-white bg-opacity-20;
   }
 
-  .float-menu {
-    @apply bg-white text-black;
-  }
-
   .ProseMirror {
-    @apply prose max-w-none rounded bg-white py-24 px-16 outline-none   tablet:px-32;
+    @apply prose max-w-none rounded py-24 px-16 outline-none   tablet:px-32;
   }
 
   .ProseMirror-focused {

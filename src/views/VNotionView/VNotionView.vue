@@ -84,7 +84,7 @@ support@tough-dev.school">
   @import 'vue3-notion/dist/style.css';
 
   .notion {
-    @apply text-black;
+    @apply text-black dark:text-darkmode-white;
   }
 
   .notion-table-of-contents-item {
@@ -96,7 +96,7 @@ support@tough-dev.school">
   }
 
   .notion-callout {
-    @apply border-0;
+    @apply border-0 dark:text-black;
   }
 
   .notion-page-cover {

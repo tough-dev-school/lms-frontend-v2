@@ -21,7 +21,7 @@
 </script>
 
 <template>
-  <div class="flex">
+  <div class="flex text-black">
     <label
       v-for="(option, index) in options"
       :key="index"
@@ -41,11 +41,12 @@
 
 <style scoped>
   .RadioSwitch__Button {
-    @apply border-y px-8 py-8 gap-4 flex border-gray bg-offwhite cursor-pointer transition-colors;
+    @apply border-y px-8 py-8 gap-4 flex border-gray bg-offwhite  cursor-pointer transition-colors;
+    @apply dark:bg-darkmode-white dark:border-darkmode-border;
     @apply first:rounded-l-4 first:border-l last:rounded-r-4 last:border-r;
   }
 
   .RadioSwitch__Button_Active {
-    @apply bg-yellow;
+    @apply bg-yellow dark:bg-yellow;
   }
 </style>

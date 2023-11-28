@@ -42,7 +42,7 @@
 
 <template>
   <label class="w-full">
-    <div class="mb-8 text-gray empty:hidden" data-testid="label">
+    <div class="mb-8 empty:hidden" data-testid="label">
       <slot name="label">
         {{ label }}
       </slot>
@@ -50,8 +50,9 @@
     <input
       :type="type"
       v-bind="$attrs"
-      class="leading-1.5 block h-module w-full rounded border border-gray bg-offwhite p-module px-16 text-black placeholder:text-gray focus:border-blue focus:outline-none"
       :class="{
+        'leading-1.5 block h-module w-full rounded border border-gray bg-offwhite p-module px-16 text-black placeholder:text-gray focus:border-blue focus:outline-none': true,
+        'dark:bg-darkmode-white dark:border-darkmode-border': true,
         'border-red': error,
       }"
       data-testid="input"
