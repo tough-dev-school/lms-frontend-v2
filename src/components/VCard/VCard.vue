@@ -12,7 +12,7 @@
   <component
     :is="tag"
     :class="{
-      'overflow-hidden rounded bg-white  p-24 pt-16 border border-gray ': true,
+      'overflow-hidden rounded bg-white p-24 border border-gray ': true,
       'dark:border-darkmode-border dark:bg-darkmode-layer2': true,
     }">
     <slot />
