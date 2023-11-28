@@ -20,7 +20,6 @@
   <div :class="{ dark: isDark }" style="height: 100%">
     <div class="body" style="height: 100%">
       <VDefaultLayout>
-        <div class="dark:block hidden">It is darkmode</div>
         <RouterView />
       </VDefaultLayout>
     </div>
