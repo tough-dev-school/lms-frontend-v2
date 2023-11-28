@@ -59,7 +59,7 @@
           {{ getName(answer.author.firstName, answer.author.lastName) }}
           <span
             v-if="isOwn"
-            class="h-16 rounded-8 bg-yellow px-4 text-sub font-normal text-white"
+            class="h-16 rounded-8 bg-yellow px-4 text-sub font-normal text-black"
             data-testid="own-badge"
             >вы</span
           >

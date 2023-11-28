@@ -13,7 +13,7 @@
 
 <template>
   <div
-    class="container-fluid fixed right-0 top-16 left-0 flex flex-col items-center gap-8">
+    class="container-fluid fixed right-0 top-16 left-0 flex flex-col items-center gap-8 pointer-events-none">
     <TransitionGroup name="toast">
       <VToast
         v-for="message in messages"
