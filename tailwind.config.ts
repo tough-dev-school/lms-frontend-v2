@@ -35,7 +35,7 @@ const config: Config = {
       'darkmode-red': { DEFAULT: '#fb4934' },
       black: { DEFAULT: '#000000' },
       blue: { DEFAULT: '#3f5dff', hover: '#0024de' },
-      gray: { DEFAULT: '#9a9a9a' },
+      gray: { DEFAULT: 'rgb(218, 216, 206)' },
       green: { DEFAULT: 'rgb(35, 207, 104)' },
       lightblue: { DEFAULT: '#ADD8E6', hover: '#0024de' },
       lightgray: { DEFAULT: '#e3e3e3' },

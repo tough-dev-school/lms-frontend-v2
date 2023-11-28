@@ -11,10 +11,16 @@
 <template>
   <component
     :is="tag"
-    class="overflow-hidden rounded bg-white dark:bg-darkmode-layer2 p-16 shadow phone:px-24 tablet:px-32">
+    :class="{
+      'overflow-hidden rounded bg-white  p-24 pt-16 border border-gray ': true,
+      'dark:border-darkmode-border dark:bg-darkmode-layer2': true,
+    }">
     <slot />
     <footer
-      class="grow-children mt-32 flex flex-wrap justify-end gap-8 border-t border-gray border-opacity-20 pt-16 empty:hidden phone:gap-16 phone:pt-24 phone:pb-16">
+      :class="{
+        'grow-children mt-32 flex flex-wrap justify-end gap-8 empty:hidden phone:gap-16 ': true,
+        'dark:border-darkmode-white dark:border-opacity-100': true,
+      }">
       <slot name="footer" />
     </footer>
   </component>
