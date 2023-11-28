@@ -1,7 +1,9 @@
-const spacing = (base, limit, unit = 'px') => {
+import { type Config } from 'tailwindcss';
+
+const spacing = (base: number, limit: number, unit = 'px') => {
   const output = {};
   let n = 1;
-  let value;
+  let value: number;
 
   do {
     value = base * n;
@@ -12,8 +14,7 @@ const spacing = (base, limit, unit = 'px') => {
   return output;
 };
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+const config: Config = {
   darkMode: 'class',
   content: ['./index.html', './src/**/*.{js,ts,vue,jsx,tsx}'],
   theme: {
@@ -25,27 +26,24 @@ module.exports = {
       phone: '560px',
       tablet: '768px',
     },
-    container: {
-      center: true,
-      padding: {
-        DEFAULT: '8px',
-        tablet: '16px',
-      },
-    },
     colors: {
-      offwhite: { DEFAULT: '#faf9f8' },
+      'darkmode-layer1': { DEFAULT: '#1d2021' },
+      'darkmode-layer2': { DEFAULT: '#3c3836' },
+      'darkmode-white': { DEFAULT: '#ebdbb2' },
+      'darkmode-border': { DEFAULT: '#665c54' },
+      'darkmode-blue': { DEFAULT: '#83a598' },
+      'darkmode-red': { DEFAULT: '#fb4934' },
       black: { DEFAULT: '#000000' },
+      blue: { DEFAULT: '#3f5dff', hover: '#0024de' },
+      gray: { DEFAULT: 'rgb(218, 216, 206)' },
+      green: { DEFAULT: 'rgb(35, 207, 104)' },
+      lightblue: { DEFAULT: '#ADD8E6', hover: '#0024de' },
+      lightgray: { DEFAULT: '#e3e3e3' },
+      offwhite: { DEFAULT: '#faf9f8' },
+      red: { DEFAULT: '#ff5d29' },
+      transparent: { DEFAULT: 'transparent' },
       white: { DEFAULT: '#FFFFFF' },
       yellow: { DEFAULT: '#ffb800', hover: '#ffa800', light: '#fff9eb' },
-      blue: { DEFAULT: '#3f5dff', hover: '#0024de' },
-      lightblue: { DEFAULT: '#ADD8E6', hover: '#0024de' },
-      gray: { DEFAULT: '#9a9a9a' },
-      red: { DEFAULT: '#ff5d29' },
-      green: { DEFAULT: 'rgb(35, 207, 104)' },
-      'dark-black': { DEFAULT: '#1C1B22' },
-      'dark-gray': { DEFAULT: '#4a4a4a' },
-      lightgray: { DEFAULT: '#e3e3e3' },
-      transparent: { DEFAULT: 'transparent' },
     },
     fontSize: {
       sub: '14px',
@@ -64,8 +62,8 @@ module.exports = {
     },
     spacing: {
       inherit: 'inherit',
-      0: 0,
-      4: 4,
+      '0': '0px',
+      '4': '4px',
       ...spacing(8, 512),
     },
     extend: {
@@ -75,3 +73,5 @@ module.exports = {
   },
   plugins: [require('@tailwindcss/typography')],
 };
+
+export default config;

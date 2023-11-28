@@ -1,5 +1,5 @@
 import '../src/fonts.css';
-import '../src/tailwind.css';
+import '../src/style.css';
 
 import { setup } from '@storybook/vue3';
 import { createPinia } from 'pinia';

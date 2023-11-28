@@ -34,7 +34,7 @@
 
 <template>
   <div
-    class="cursor-pointer rounded-8 p-16 shadow"
+    class="cursor-pointer rounded-8 p-16 shadow text-black pointer-events-auto"
     :class="{
       'bg-white': !type,
       'bg-red': type === 'error',

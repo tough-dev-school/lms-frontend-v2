@@ -11,7 +11,7 @@ import 'floating-vue/dist/style.css';
 import * as Sentry from '@sentry/vue';
 
 import './fonts.css';
-import './tailwind.css';
+import './style.css';
 
 const app = createApp(App);
 

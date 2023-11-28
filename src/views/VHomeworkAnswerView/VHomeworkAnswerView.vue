@@ -51,7 +51,7 @@
   <div v-if="question !== undefined && answer !== undefined">
     <section class="mb-64 flex flex-col gap-24">
       <VHeading tag="h1">{{ question.name }}</VHeading>
-      <VCard tag="details">
+      <VCard tag="details" class="pt-24">
         <summary>Показать задание</summary>
         <VHtmlContent :content="question.text" class="mt-16" />
       </VCard>

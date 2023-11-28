@@ -4,6 +4,7 @@
   import VPasswordSettings from '@/components/VPasswordSettings/VPasswordSettings.vue';
   import VLinksSettings from '@/components/VLinksSettings/VLinksSettings.vue';
   import VCertificateSettings from '@/components/VCertificateSettings/VCertificateSettings.vue';
+  import VPreferencesSettings from '@/components/VPreferencesSettings/VPreferencesSettings.vue';
 </script>
 
 <template>
@@ -11,6 +12,14 @@
     <VHeading tag="h1">Настройки</VHeading>
     <VCard>
       <ul>
+        <li>
+          <RouterLink
+            class="link"
+            :to="{ name: 'settings', hash: '#preferences' }"
+            data-testid="preferences-link"
+            >Настройки</RouterLink
+          >
+        </li>
         <li>
           <RouterLink
             class="link"
@@ -37,6 +46,7 @@
         </li>
       </ul>
     </VCard>
+    <VPreferencesSettings id="preferences" data-testid="preferences-settings" />
     <VLinksSettings id="links" data-testid="links-settings" />
     <VPasswordSettings id="password" data-testid="password-settings" />
     <VCertificateSettings id="certificate" data-testid="certificate-settings" />
