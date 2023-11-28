@@ -232,7 +232,7 @@
         <ItalicIcon />
       </button>
     </BubbleMenu>
-    <EditorContent :editor="editor" class="EditorContent" />
+    <EditorContent :editor="editor" class="EditorContent prose" />
   </div>
 </template>
 
@@ -258,7 +258,7 @@
   }
 
   .ProseMirror {
-    @apply prose max-w-none rounded py-24 px-16 outline-none   tablet:px-32;
+    @apply max-w-none rounded py-24 px-16 outline-none tablet:px-32;
   }
 
   .ProseMirror-focused {
