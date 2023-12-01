@@ -54,24 +54,29 @@
     };
   });
 
-  const NotionRenderer = computed(() => {
-    const MATERIALS_WHITELIST: string[] = [];
+  const isNewRender = computed(() => {
+    const MATERIALS_WHITELIST: string[] = [
+      '2b333be410e64c178ef46fc1d24bc3ae',
+      '3ec0494719004d709f70081fcd0040d8',
+    ];
 
-    if (
-      MATERIALS_WHITELIST.length > 0 &&
-      !MATERIALS_WHITELIST.includes(String(route.params.id))
-    ) {
-      return OldNotionRenderer;
-    } else {
-      return NewNotionRenderer;
-    }
+    return MATERIALS_WHITELIST.includes(String(route.params.id));
+  });
+
+  const NotionRenderer = computed(() => {
+    return isNewRender.value ? NewNotionRenderer : OldNotionRenderer;
   });
 </script>
 
 <template>
-  <VCard v-if="materials.material" class="pt-32">
-    <component :is="NotionRenderer" v-bind="rendererProps" prism />
-  </VCard>
+  <template v-if="materials.material">
+    <VCard class="pt-32">
+      <component :is="NotionRenderer" v-bind="rendererProps" prism />
+    </VCard>
+    <div v-if="isNewRender" class="text-xs p-4 text-center opacity-20">
+      new render
+    </div>
+  </template>
   <div
     v-else-if="!materials.material"
     class="center flex max-w-[400px] flex-col text-center">
