@@ -59,6 +59,7 @@
       '2b333be410e64c178ef46fc1d24bc3ae',
       '3ec0494719004d709f70081fcd0040d8',
       'bff4654a65054375a6f9caaf574c3a75',
+      '05797ac75d614b66895b5c7fb5bfa019',
     ];
 
     return MATERIALS_WHITELIST.includes(String(route.params.id));
