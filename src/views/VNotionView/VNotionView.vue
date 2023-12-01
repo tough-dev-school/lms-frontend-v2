@@ -58,6 +58,7 @@
     const MATERIALS_WHITELIST: string[] = [
       '2b333be410e64c178ef46fc1d24bc3ae',
       '3ec0494719004d709f70081fcd0040d8',
+      'bff4654a65054375a6f9caaf574c3a75',
     ];
 
     return MATERIALS_WHITELIST.includes(String(route.params.id));
