@@ -600,14 +600,16 @@
       margin-top: -42px;
     }
 
-    .notion-page-icon-cover img {
+    .notion-page-icon-cover img.notion-page-icon {
       border-radius: 3px;
       width: 124px;
       height: 124px;
       margin: 8px;
+      max-width: 100%;
+      max-height: 100%;
     }
 
-    .notion-page-icon-offset img {
+    .notion-page-icon-offset img.notion-page-icon {
       margin-top: -80px;
     }
 
