@@ -81,8 +81,8 @@ dependencies:
     specifier: ^3.3.8
     version: 3.3.8(typescript@5.2.2)
   vue-notion:
-    specifier: github:tough-dev-school/vue-notion#1.0.1
-    version: github.com/tough-dev-school/vue-notion/345bef4cc3bd50329319c43cbf1ff0307e25264f(@janniks/vue3-katex@0.6.0-rc.5.1)(vue@3.3.8)
+    specifier: github:tough-dev-school/vue-notion#1.0.2
+    version: github.com/tough-dev-school/vue-notion/f31d6465f758cccdeff7f63a45ac8801b3bd2b0e(@janniks/vue3-katex@0.6.0-rc.5.1)(vue@3.3.8)
   vue-router:
     specifier: ^4.2.5
     version: 4.2.5(vue@3.3.8)
@@ -4048,7 +4048,7 @@ packages:
       ts-dedent: 2.2.0
       type-fest: 2.19.0
       vue: 3.3.8(typescript@5.2.2)
-      vue-component-type-helpers: 1.8.22
+      vue-component-type-helpers: 1.8.25
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -11672,8 +11672,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /vue-component-type-helpers@1.8.22:
-    resolution: {integrity: sha512-LK3wJHs3vJxHG292C8cnsRusgyC5SEZDCzDCD01mdE/AoREFMl2tzLRuzwyuEsOIz13tqgBcnvysN3Lxsa14Fw==}
+  /vue-component-type-helpers@1.8.25:
+    resolution: {integrity: sha512-NCA6sekiJIMnMs4DdORxATXD+/NRkQpS32UC+I1KQJUasx+Z7MZUb3Y+MsKsFmX+PgyTYSteb73JW77AibaCCw==}
     dev: true
 
   /vue-component-type-helpers@1.8.4:
@@ -12168,11 +12168,11 @@ packages:
     engines: {node: '>=12.20'}
     dev: true
 
-  github.com/tough-dev-school/vue-notion/345bef4cc3bd50329319c43cbf1ff0307e25264f(@janniks/vue3-katex@0.6.0-rc.5.1)(vue@3.3.8):
-    resolution: {tarball: https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/345bef4cc3bd50329319c43cbf1ff0307e25264f}
-    id: github.com/tough-dev-school/vue-notion/345bef4cc3bd50329319c43cbf1ff0307e25264f
+  github.com/tough-dev-school/vue-notion/f31d6465f758cccdeff7f63a45ac8801b3bd2b0e(@janniks/vue3-katex@0.6.0-rc.5.1)(vue@3.3.8):
+    resolution: {tarball: https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/f31d6465f758cccdeff7f63a45ac8801b3bd2b0e}
+    id: github.com/tough-dev-school/vue-notion/f31d6465f758cccdeff7f63a45ac8801b3bd2b0e
     name: vue-notion
-    version: 1.0.1
+    version: 1.0.2
     peerDependencies:
       '@janniks/vue3-katex': ^0.6.0-rc.5.1
       vue: ^3.2.45
