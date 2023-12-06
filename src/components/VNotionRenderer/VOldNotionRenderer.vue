@@ -1,3 +1,5 @@
+<!-- FIXME: Remove after public test -->
+
 <script lang="ts" setup>
   import { NotionRenderer } from 'vue3-notion';
 
