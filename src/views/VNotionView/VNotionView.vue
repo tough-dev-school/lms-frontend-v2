@@ -5,35 +5,22 @@
 </script>
 
 <script lang="ts" setup>
-  // @ts-ignore
-  import { NotionRenderer as NewNotionRenderer } from 'vue-notion';
-  // @ts-ignore
-  import { NotionRenderer as OldNotionRenderer } from 'vue3-notion';
   import { useRoute, useRouter } from 'vue-router';
   import { watch, computed } from 'vue';
-
-  import 'prismjs';
-  import 'prismjs/themes/prism.css';
-  import 'prismjs/components/prism-typescript.js';
-  import 'prismjs/components/prism-ruby.js';
-  import 'prismjs/components/prism-python.js';
-  import 'prismjs/components/prism-bash.js';
-  import 'prismjs/components/prism-c.js';
-  import 'prismjs/components/prism-cpp.js';
-
   import VCard from '@/components/VCard/VCard.vue';
   import VButton from '@/components/VButton/VButton.vue';
   import useMaterials from '@/stores/materials';
   import { useTitle } from '@vueuse/core';
   import getNotionTitle from '@/utils/getNotionTitle';
   import { useChatra } from '@/hooks/useChatra';
+  import VNotionRenderer from '@/components/VNotionRenderer/VNotionRenderer.vue';
 
   const router = useRouter();
   const materials = useMaterials();
   const title = useTitle();
   const route = useRoute();
 
-  const props = withDefaults(defineProps<VNotionView>(), { forceNew: false });
+  withDefaults(defineProps<VNotionView>(), { forceNew: false });
 
   watch(
     () => route.params.id,
@@ -61,35 +48,16 @@
       },
     };
   });
-
-  const isNewRender = computed(() => {
-    const MATERIALS_WHITELIST: string[] = [
-      '2b333be410e64c178ef46fc1d24bc3ae',
-      '3ec0494719004d709f70081fcd0040d8',
-      'bff4654a65054375a6f9caaf574c3a75',
-      '05797ac75d614b66895b5c7fb5bfa019',
-      '67104a06964f40818ff88fe25d7dc20d',
-      'a3cca3c25f934817a9500d39c5aeb81a',
-    ];
-
-    return (
-      props.forceNew || MATERIALS_WHITELIST.includes(String(route.params.id))
-    );
-  });
-
-  const NotionRenderer = computed(() => {
-    return isNewRender.value ? NewNotionRenderer : OldNotionRenderer;
-  });
 </script>
 
 <template>
   <template v-if="materials.material">
     <VCard class="pt-32">
-      <component :is="NotionRenderer" v-bind="rendererProps" prism />
+      <VNotionRenderer
+        :id="String(route.params.id)"
+        :renderer-props="rendererProps"
+        :force-new="forceNew" />
     </VCard>
-    <div v-if="isNewRender" class="text-xs p-4 text-center opacity-20">
-      new render
-    </div>
   </template>
   <div
     v-else-if="!materials.material"
@@ -115,8 +83,6 @@ support@tough-dev.school">
 </template>
 
 <style>
-  @import 'vue-notion/styles.css';
-
   .notion-page-cover {
     margin: 0;
     width: 100%;
