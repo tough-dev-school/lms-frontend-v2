@@ -528,7 +528,6 @@
       display: inline-flex;
       width: 100%;
       border-radius: 3px;
-      border-width: 1px;
       align-items: center;
       box-sizing: border-box;
       margin: 4px 0;
@@ -754,7 +753,6 @@
     }
 
     .notion-simple-table-header {
-      background: rgb(247, 246, 243);
       font-weight: 500;
     }
 
