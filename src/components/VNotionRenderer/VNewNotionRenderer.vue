@@ -807,5 +807,10 @@
       background: rgb(46, 170, 220)
         url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' class='check' style='width: 12px; height: 12px; display: block; fill: white; flex-shrink: 0; backface-visibility: hidden;'%3E%3Cpolygon points='5.5 11.9993304 14 3.49933039 12.5 2 5.5 8.99933039 1.5 4.9968652 0 6.49933039'%3E%3C/polygon%3E%3C/svg%3E");
     }
+
+    .table-of-contents-item.table-of-contents-item.table-of-contents-item {
+      display: grid;
+      gap: 8px;
+    }
   }
 </style>
