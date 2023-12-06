@@ -1,6 +1,7 @@
 <!-- FIXME: Remove after public test -->
 
 <script lang="ts" setup>
+  // @ts-ignore
   import { NotionRenderer } from 'vue3-notion';
 
   defineProps<{ rendererProps: any }>();
