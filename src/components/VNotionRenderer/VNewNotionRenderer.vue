@@ -334,7 +334,8 @@
       max-width: 100vw;
     }
 
-    .notion-asset-wrapper img {
+    .notion-asset-wrapper img,
+    .notion-asset-wrapper div {
       width: 100%;
       height: 100%;
       max-height: 100%;
