@@ -52,7 +52,7 @@
     "vue": "^3.3.8",
     "vue-router": "^4.2.5",
     "vue-tabler-icons": "^2.21.0",
-    "vue3-notion": "github:tough-dev-school/vue3-notion"
+    "vue3-notion": "^0.1.45"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
