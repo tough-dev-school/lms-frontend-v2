@@ -1,29 +1,26 @@
+<script lang="ts">
+  export interface VNotionView {
+    forceNew?: boolean;
+  }
+</script>
+
 <script lang="ts" setup>
-  // @ts-ignore
-  import { NotionRenderer } from 'vue3-notion';
   import { useRoute, useRouter } from 'vue-router';
   import { watch, computed } from 'vue';
-
-  import 'prismjs';
-  import 'prismjs/themes/prism.css';
-  import 'prismjs/components/prism-typescript.js';
-  import 'prismjs/components/prism-ruby.js';
-  import 'prismjs/components/prism-python.js';
-  import 'prismjs/components/prism-bash.js';
-  import 'prismjs/components/prism-c.js';
-  import 'prismjs/components/prism-cpp.js';
-
   import VCard from '@/components/VCard/VCard.vue';
   import VButton from '@/components/VButton/VButton.vue';
   import useMaterials from '@/stores/materials';
   import { useTitle } from '@vueuse/core';
   import getNotionTitle from '@/utils/getNotionTitle';
   import { useChatra } from '@/hooks/useChatra';
+  import VNotionRenderer from '@/components/VNotionRenderer/VNotionRenderer.vue';
 
   const router = useRouter();
   const materials = useMaterials();
   const title = useTitle();
   const route = useRoute();
+
+  withDefaults(defineProps<VNotionView>(), { forceNew: false });
 
   watch(
     () => route.params.id,
@@ -54,9 +51,14 @@
 </script>
 
 <template>
-  <VCard v-if="materials.material" class="pt-32">
-    <NotionRenderer v-bind="rendererProps" prism />
-  </VCard>
+  <template v-if="materials.material">
+    <VCard class="pt-32">
+      <VNotionRenderer
+        :id="String(route.params.id)"
+        :renderer-props="rendererProps"
+        :force-new="forceNew" />
+    </VCard>
+  </template>
   <div
     v-else-if="!materials.material"
     class="center flex max-w-[400px] flex-col text-center">
@@ -81,61 +83,23 @@ support@tough-dev.school">
 </template>
 
 <style>
-  @import 'vue3-notion/dist/style.css';
-
-  .notion {
-    @apply text-black dark:text-white;
-  }
-
-  .notion-bookmark,
-  .notion-code {
-    @apply dark:bg-dark-black;
-  }
-
-  .notion-table-of-contents-item {
-    @apply underline dark:text-white dark:decoration-white;
-  }
-
-  .notion-page-link {
-    @apply dark:text-white dark:text-opacity-70;
+  .notion-page-cover {
+    margin: 0;
+    width: 100%;
+    height: auto;
+    @apply aspect-[5/2];
   }
 
   .notion-image-caption {
     color: inherit;
   }
 
-  .notion-bookmark div {
-    @apply dark:text-white;
-  }
-
   .notion-callout {
-    @apply border-0;
+    @apply border-0 items-start;
   }
 
-  .notion-red_background,
-  .notion-pink_background,
-  .notion-blue_background,
-  .notion-purple_background,
-  .notion-teal_background,
-  .notion-yellow_background,
-  .notion-orange_background,
-  .notion-brown_background,
-  .notion-gray_background,
-  .notion-red_background_co,
-  .notion-pink_background_co,
-  .notion-blue_background_co,
-  .notion-purple_background_co,
-  .notion-teal_background_co,
-  .notion-yellow_background_co,
-  .notion-orange_background_co,
-  .notion-brown_background_co,
-  .notion-gray_background_co {
-    @apply dark:text-black;
-  }
-
-  .notion-page-cover {
-    width: var(--notion-max-width);
-    margin: 0 auto;
+  .notion-simple-table-data {
+    position: initial;
   }
 
   .notion-page,

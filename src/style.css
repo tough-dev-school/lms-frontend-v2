@@ -49,13 +49,11 @@
   }
 
   .link,
-  .notion-link,
   .group-link {
-    @apply border-blue text-blue opacity-100 transition-colors  dark:border-lightblue dark:text-lightblue;
+    @apply border-blue text-blue opacity-100 transition-colors;
   }
 
-  .link,
-  .notion-link {
+  .link {
     @apply hover:border-red hover:text-red;
   }
 
@@ -80,6 +78,10 @@
   .answer-action,
   .answer-action-disabled {
     @apply disabled:hover:bg-offwhite disabled:hover:border-offwhite disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .container-fluid {
+    @apply tablet:px-16 px-8 max-w-[768px] mx-auto;
   }
 }
 

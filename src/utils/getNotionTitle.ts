@@ -1,19 +1,19 @@
-// @ts-ignore
-import type { BlockMap, Block } from 'vue3-notion/src/lib/types';
+import type { BlockMap } from '@/types/materials';
 import idToUuid from './idToUuid';
 
 const getNotionTitle = (materialId: string, material: BlockMap) => {
   // as api is unofficial and poorly typed we just assume title value is a nested array and then flatten it with the magic number to convert it into string
-  const getBlockTitle = (block: Block): string | undefined =>
+  const getBlockTitle = (block: any): string | undefined =>
     block?.value?.properties?.title?.flat(100).join('');
 
   const blockId = idToUuid(materialId);
   const firstBlockId = Object.keys(material)[0];
 
-  if (getBlockTitle(material[blockId])) return getBlockTitle(material[blockId]);
-  // using title of the first block as fallback title
-  else if (material[firstBlockId]?.value?.type === 'page')
-    return getBlockTitle(material[firstBlockId]);
+  if (getBlockTitle(material[blockId])) {
+    return getBlockTitle(material[blockId]);
+  } else if (material[firstBlockId]?.value?.type === 'page') {
+    return getBlockTitle(material[firstBlockId]); // using title of the first block as fallback title
+  }
   return undefined;
 };
 
