@@ -6,7 +6,7 @@
 
 <script lang="ts" setup>
   import { useRoute, useRouter } from 'vue-router';
-  import { watch, computed } from 'vue';
+  import { watch } from 'vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VButton from '@/components/VButton/VButton.vue';
   import useMaterials from '@/stores/materials';
