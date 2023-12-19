@@ -1,11 +1,13 @@
 <script lang="ts">
   export interface VNotionViewProps {
-    id: string;
-    rendererProps: any;
+    blockMap: any;
   }
 </script>
 
 <script lang="ts" setup>
+  // @ts-nocheck
+  import { NotionRenderer } from 'vue-notion';
+
   import 'prismjs';
   import 'prismjs/themes/prism.css';
   import 'prismjs/components/prism-typescript.js';
@@ -14,10 +16,21 @@
   import 'prismjs/components/prism-bash.js';
   import 'prismjs/components/prism-c.js';
   import 'prismjs/components/prism-cpp.js';
+
+  const mapPageUrl = (id: string) => `/materials/${id}`;
 </script>
 
 <template>
-  <NotionRenderer class="NotionRenderer_New" v-bind="rendererProps" prism />
+  <NotionRenderer
+    :block-map="blockMap"
+    :map-page-url="mapPageUrl"
+    :page-link-options="{
+      component: 'RouterLink',
+      href: 'to',
+    }"
+    :full-page="true"
+    v-bind="rendererProps"
+    prism />
 </template>
 
 <style>

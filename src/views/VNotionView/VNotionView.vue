@@ -34,29 +34,13 @@
     { immediate: true },
   );
 
-  const mapPageUrl = (id: string) => `/materials/${id}`;
   const { chatra } = useChatra();
-
-  const rendererProps = computed(() => {
-    return {
-      blockMap: materials.material,
-      mapPageUrl,
-      fullPage: true,
-      pageLinkOptions: {
-        component: 'RouterLink',
-        href: 'to',
-      },
-    };
-  });
 </script>
 
 <template>
   <template v-if="materials.material">
     <VCard class="pt-32">
-      <VNotionRenderer
-        :id="String(route.params.id)"
-        :renderer-props="rendererProps"
-        :force-new="forceNew" />
+      <VNotionRenderer :block-map="materials.material" />
     </VCard>
   </template>
   <div
