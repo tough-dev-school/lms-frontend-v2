@@ -6,7 +6,7 @@
 
 <script lang="ts" setup>
   import { useRoute, useRouter } from 'vue-router';
-  import { watch, computed } from 'vue';
+  import { watch } from 'vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VButton from '@/components/VButton/VButton.vue';
   import useMaterials from '@/stores/materials';
@@ -34,29 +34,13 @@
     { immediate: true },
   );
 
-  const mapPageUrl = (id: string) => `/materials/${id}`;
   const { chatra } = useChatra();
-
-  const rendererProps = computed(() => {
-    return {
-      blockMap: materials.material,
-      mapPageUrl,
-      fullPage: true,
-      pageLinkOptions: {
-        component: 'RouterLink',
-        href: 'to',
-      },
-    };
-  });
 </script>
 
 <template>
   <template v-if="materials.material">
     <VCard class="pt-32">
-      <VNotionRenderer
-        :id="String(route.params.id)"
-        :renderer-props="rendererProps"
-        :force-new="forceNew" />
+      <VNotionRenderer :block-map="materials.material" />
     </VCard>
   </template>
   <div
