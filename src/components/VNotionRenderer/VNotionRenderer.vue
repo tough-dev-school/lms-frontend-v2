@@ -29,7 +29,6 @@
       href: 'to',
     }"
     :full-page="true"
-    v-bind="rendererProps"
     prism />
 </template>
 
