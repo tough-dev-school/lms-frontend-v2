@@ -81,8 +81,8 @@ dependencies:
     specifier: ^3.3.8
     version: 3.3.8(typescript@5.2.2)
   vue-notion:
-    specifier: github:tough-dev-school/vue-notion#1.0.2
-    version: github.com/tough-dev-school/vue-notion/f31d6465f758cccdeff7f63a45ac8801b3bd2b0e(@janniks/vue3-katex@0.6.0-rc.5.1)(vue@3.3.8)
+    specifier: github:tough-dev-school/vue-notion#2.0.0
+    version: github.com/tough-dev-school/vue-notion/af6a6873f6add5cf84363caff63cce88734b6dc7(@janniks/vue3-katex@0.6.0-rc.5.1)(vue@3.3.8)
   vue-router:
     specifier: ^4.2.5
     version: 4.2.5(vue@3.3.8)
@@ -12171,11 +12171,11 @@ packages:
     engines: {node: '>=12.20'}
     dev: true
 
-  github.com/tough-dev-school/vue-notion/f31d6465f758cccdeff7f63a45ac8801b3bd2b0e(@janniks/vue3-katex@0.6.0-rc.5.1)(vue@3.3.8):
-    resolution: {tarball: https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/f31d6465f758cccdeff7f63a45ac8801b3bd2b0e}
-    id: github.com/tough-dev-school/vue-notion/f31d6465f758cccdeff7f63a45ac8801b3bd2b0e
+  github.com/tough-dev-school/vue-notion/af6a6873f6add5cf84363caff63cce88734b6dc7(@janniks/vue3-katex@0.6.0-rc.5.1)(vue@3.3.8):
+    resolution: {tarball: https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/af6a6873f6add5cf84363caff63cce88734b6dc7}
+    id: github.com/tough-dev-school/vue-notion/af6a6873f6add5cf84363caff63cce88734b6dc7
     name: vue-notion
-    version: 1.0.2
+    version: 2.0.0
     peerDependencies:
       '@janniks/vue3-katex': ^0.6.0-rc.5.1
       vue: ^3.2.45
