@@ -1,7 +1,9 @@
-const spacing = (base, limit, unit = 'px') => {
-  const output = {};
+const spacing = (base: number, limit: number, unit = 'px') => {
+  const output: {
+    [key: string]: string;
+  } = {};
   let n = 1;
-  let value;
+  let value: number;
 
   do {
     value = base * n;
