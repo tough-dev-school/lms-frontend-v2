@@ -31,8 +31,8 @@ if (process.env.NODE_ENV === 'production') {
       /^https:\/\/lms\.tough-dev\.school\/api\//,
       /^http:\/\/127\.0\.0\.1:8000\//,
     ],
-    replaysSessionSampleRate: 0.1,
-    replaysOnErrorSampleRate: 1.0,
+    replaysSessionSampleRate: 0,
+    replaysOnErrorSampleRate: 0.8,
   });
 }
 
