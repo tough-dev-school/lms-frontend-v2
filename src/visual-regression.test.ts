@@ -17,6 +17,7 @@ type Viewport = [number, number];
 const VIEWPORTS: Viewport[] = [
   [1440, 900],
   [768, 1024],
+  [390, 840],
   [320, 560],
 ];
 
