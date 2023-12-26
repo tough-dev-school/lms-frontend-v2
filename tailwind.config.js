@@ -22,6 +22,7 @@ module.exports = {
       body: ['PT Root UI', 'sans-serif'],
     },
     screens: {
+      se: '370px',
       phone: '560px',
       tablet: '768px',
     },

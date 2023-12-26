@@ -14,7 +14,7 @@
   <header
     class="flex flex-wrap justify-between items-center pt-16 pb-24 tablet:pb-64 gap-8">
     <RouterLink to="/">
-      <div class="flex gap-8 p-8 items-end">
+      <div class="se:flex hidden gap-8 p-8 items-end">
         <img src="/logo.svg" class="h-32" />
         <img src="/logo-text.svg" class="h-[28px] phone:block hidden" />
       </div>
