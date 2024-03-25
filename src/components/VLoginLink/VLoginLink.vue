@@ -11,10 +11,16 @@
   const router = useRouter();
 
   const email = ref('');
+  const disabled = ref(false);
 
   const loginWithEmail = async () => {
-    await auth.loginWithEmail(email.value);
-    router.push({ name: 'mail-sent', query: { email: email.value } });
+    try {
+      disabled.value = true;
+      await auth.loginWithEmail(email.value);
+      router.push({ name: 'mail-sent', query: { email: email.value } });
+    } catch (e) {
+      disabled.value = false;
+    }
   };
 
   const emit = defineEmits<{ change: [] }>();
@@ -30,7 +36,7 @@
       type="email"
       autocomplete="username" />
     <template #footer>
-      <VButton type="submit" :disabled="!email" class="flex-grow"
+      <VButton type="submit" :disabled="disabled || !email" class="flex-grow"
         >Получить доступ</VButton
       >
       <VButton
