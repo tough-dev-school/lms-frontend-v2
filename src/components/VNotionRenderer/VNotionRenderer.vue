@@ -124,9 +124,11 @@
 
   .notion-copy-link-container {
     @apply absolute;
-    @apply left-[-.8em];
     @apply top-[0.3em];
     @apply cursor-pointer;
+
+    left: max(-24px, -1em);
+    padding-right: 4px;
   }
 
   .notion-copy-link-container svg {
