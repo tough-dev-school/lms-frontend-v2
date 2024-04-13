@@ -7,6 +7,7 @@
 <script lang="ts" setup>
   // @ts-nocheck
   import { NotionRenderer } from 'vue-notion';
+  import { useNotionCopyLink } from '@/hooks/useNotionCopyLink';
 
   import 'prismjs';
   import 'prismjs/themes/prism.css';
@@ -18,6 +19,8 @@
   import 'prismjs/components/prism-cpp.js';
 
   const mapPageUrl = (id: string) => `/materials/${id}`;
+
+  useNotionCopyLink('.notion-h1, .notion-h2, .notion-h3');
 </script>
 
 <template>
@@ -119,6 +122,30 @@
     font-weight: 600;
   }
 
+  .notion-copy-link-container {
+    @apply absolute;
+    @apply left-[-.8em];
+    @apply top-[0.3em];
+    @apply cursor-pointer;
+  }
+
+  .notion-copy-link-container svg {
+    width: max(20px, 0.8em);
+    height: max(20px, 0.8em);
+  }
+
+  @media only screen and (max-width: 730px) {
+    .notion-copy-link-container {
+      @apply left-[-18px];
+      @apply top-[8px];
+    }
+
+    .notion-copy-link-container svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
   .notion-title {
     font-size: 2.5em;
     font-weight: 700;
@@ -129,6 +156,7 @@
   .notion-h1,
   .notion-h2,
   .notion-h3 {
+    position: relative;
     font-weight: 600;
     line-height: 1.3;
     padding: 3px 2px;
@@ -832,3 +860,4 @@
     gap: 8px;
   }
 </style>
+@/hooks/useNotionCopyLink
