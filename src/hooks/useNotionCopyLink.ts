@@ -31,7 +31,8 @@ export const useNotionCopyLink = (selector: string) => {
     try {
       await navigator.clipboard.writeText(text);
       showCheckIcon(listener);
-      window.location.hash = text.split('#')[1];
+      const newHash = text.split('#')[1];
+      history.pushState({}, '', `#${newHash}`);
     } catch (err) {
       console.error('Ошибка при копировании текста: ', err);
     }
