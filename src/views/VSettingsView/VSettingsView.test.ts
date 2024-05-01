@@ -48,14 +48,17 @@ describe('VSettingsView', () => {
   };
 
   test('has table of contents', () => {
-    expect(getLinksLink().props().to.hash).toBe(
-      `#${getLinksSettings().element.id}`,
-    );
-    expect(getPasswordLink().props().to.hash).toBe(
-      `#${getPasswordSettings().element.id}`,
-    );
-    expect(getCertificateLink().props().to.hash).toBe(
-      `#${getCertificateSettings().element.id}`,
-    );
+    expect(getLinksLink().props().to).toEqual({
+      name: 'settings',
+      hash: `#${getLinksSettings().element.id}`,
+    });
+    expect(getPasswordLink().props().to).toEqual({
+      name: 'settings',
+      hash: `#${getPasswordSettings().element.id}`,
+    });
+    expect(getCertificateLink().props().to).toEqual({
+      name: 'settings',
+      hash: `#${getCertificateSettings().element.id}`,
+    });
   });
 });
