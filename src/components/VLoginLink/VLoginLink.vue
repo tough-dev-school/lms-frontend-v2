@@ -29,12 +29,6 @@
 <template>
   <VCard tag="form" @submit.prevent="loginWithEmail">
     <VHeading tag="h1" class="mb-32">Вход и регистрация</VHeading>
-    <VTextInput
-      v-model="email"
-      label="Электронная почта"
-      tip="Мы отправим ссылку для входа по этому адресу"
-      type="email"
-      autocomplete="username" />
     <template #footer>
       <VButton type="submit" :disabled="disabled || !email" class="flex-grow"
         >Получить доступ</VButton
