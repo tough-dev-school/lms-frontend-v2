@@ -26,17 +26,17 @@ jobs:
               core.setFailed(`Request failed with error ${err}`)
             }
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           repository: ${{ fromJSON(steps.get-pr.outputs.result).head.repo.full_name }}
           ref: ${{ fromJSON(steps.get-pr.outputs.result).head.sha }}
 
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v3
         with:
-          version: 8
+          version: latest
 
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version-file: '.node-version'
           cache: 'pnpm'
