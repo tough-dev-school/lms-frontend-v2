@@ -8,11 +8,11 @@ jobs:
 
     steps:
       - name: Checkout 🛎
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - uses: pnpm/action-setup@v2
         with:
-          version: 8
+          version: latest
 
       - name: Use Node.js
         uses: actions/setup-node@v3
@@ -36,7 +36,7 @@ jobs:
         run: pnpm run build
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dist
           path: dist
@@ -49,12 +49,12 @@ jobs:
       - name: Checkout 🛎
         uses: actions/checkout@v3
 
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v3
         with:
-          version: 8
+          version: latest
 
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version-file: '.node-version'
           cache: 'pnpm'
@@ -71,10 +71,10 @@ jobs:
     if: ${{ github.ref == 'refs/heads/main' }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Download build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist
