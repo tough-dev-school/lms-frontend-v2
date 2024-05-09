@@ -6,7 +6,7 @@ export async function onRequest(context) {
   if (pathname.startsWith('/api/')) {
     return new Response.redirect(
       'https://app.tough-dev.school' + pathname,
-      '200',
+      '304',
     );
   }
 
