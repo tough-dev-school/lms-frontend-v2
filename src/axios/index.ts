@@ -23,7 +23,10 @@ export const createCustomAxiosInstance = (
     userConfig,
   ) as CustomAxiosInstanceConfig;
 
-  const instance = axios.create();
+  const instance = axios.create({
+    baseURL:
+      import.meta.env.VITE_API_BASE_URL ?? 'https://app.tough-dev.school',
+  });
 
   const { useResponseCaseMiddleware, useRequestCaseMiddleware } = config;
 
