@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@brachkow/email-providers": "^1.2.0",
+    "@flaregun-net/proxyflare-for-pages": "^0.1.0",
     "@formkit/auto-animate": "^0.8.1",
     "@sentry/tracing": "^7.79.0",
     "@sentry/vue": "^7.79.0",

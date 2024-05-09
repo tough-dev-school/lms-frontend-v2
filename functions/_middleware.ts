@@ -1,14 +1,19 @@
-// @ts-nocheck
-import { PagesFunction } from '@cloudflare/workers-types';
+import proxyflare from '@flaregun-net/proxyflare-for-pages';
 
-export const onRequest: PagesFunction = async (context) => {
-  const { request, next } = context;
-  const res = await next();
-  const { pathname } = new URL(request.url);
-
-  if (pathname.startsWith('/api/')) {
-    return Response.redirect('https://app.tough-dev.school' + pathname, 304);
-  }
-
-  return res;
-};
+export const onRequest: PagesFunction[] = [
+  (context) =>
+    proxyflare({
+      config: {
+        global: { debug: true },
+        routes: [
+          {
+            from: {
+              pattern: 'lms-frontend-v2.pages.dev',
+              alsoMatchWWWSubdomain: true,
+            },
+            to: { url: 'https://app.tough-dev.school/api/' },
+          },
+        ],
+      },
+    })(context),
+];
