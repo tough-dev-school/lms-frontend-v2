@@ -4,7 +4,7 @@ export async function onRequest(context) {
   const { pathname } = new URL(request.url);
 
   if (pathname.startsWith('/api/')) {
-    return new Response.redirect('http://example.com', '304');
+    return res.redirect('http://example.com', '304');
   }
 
   return res;
