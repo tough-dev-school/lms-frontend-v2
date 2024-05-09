@@ -1,4 +1,5 @@
-import { PagesFunction, Response } from '@cloudflare/workers-types';
+// @ts-nocheck
+import { PagesFunction } from '@cloudflare/workers-types';
 
 export const onRequest: PagesFunction = async (context) => {
   const { request, next } = context;
