@@ -1,7 +1,7 @@
 //@ts-nocheck
 import { PagesFunction } from '@cloudflare/workers-types';
 
-// const API_URL = 'https://app.tough-dev.school';
+const API_URL = 'https://app.tough-dev.school';
 
 export const onRequestOptions: PagesFunction = async () => {
   return new Response(null, {
@@ -15,8 +15,8 @@ export const onRequestOptions: PagesFunction = async () => {
   });
 };
 
-export const onRequest: PagesFunction = async ({ next }) => {
-  const response = await next();
+export const onRequest: PagesFunction = async (context) => {
+  const response = await fetch(API_URL + new URL(context.request.url).pathname);
   response.headers.set('Access-Control-Allow-Origin', '*');
   response.headers.set('Access-Control-Max-Age', '86400');
   return response;
