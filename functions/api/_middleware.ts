@@ -22,12 +22,9 @@ export const onRequest: PagesFunction = async (context) => {
     new Request(targetUrl, context.request),
   );
 
-  const mutableResponse = new Response(
-    immutableResponse.body,
-    immutableResponse,
-  );
+  const response = new Response(immutableResponse.body, immutableResponse);
 
-  mutableResponse.headers.set('Access-Control-Allow-Origin', '*');
-  mutableResponse.headers.set('Access-Control-Max-Age', '86400');
-  return mutableResponse;
+  response.headers.set('Access-Control-Allow-Origin', '*');
+  response.headers.set('Access-Control-Max-Age', '86400');
+  return response;
 };
