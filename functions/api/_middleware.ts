@@ -16,8 +16,10 @@ export const onRequestOptions: PagesFunction = async () => {
 };
 
 export const onRequest: PagesFunction = async (context) => {
+  const targetUrl = API_URL + new URL(context.request.url).pathname;
+
   const immutableResponse = await fetch(
-    API_URL + new URL(context.request.url).pathname,
+    new Request(targetUrl, context.request),
   );
 
   const mutableResponse = new Response(
