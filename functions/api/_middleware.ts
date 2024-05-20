@@ -1,4 +1,7 @@
-export const onRequestOptions = async () => {
+//@ts-nocheck
+import { PagesFunction } from '@cloudflare/workers-types';
+
+export const onRequestOptions: PagesFunction = async () => {
   return new Response(null, {
     status: 204,
     headers: {
@@ -10,7 +13,7 @@ export const onRequestOptions = async () => {
   });
 };
 
-export const onRequest = async ({ next }) => {
+export const onRequest: PagesFunction = async ({ next }) => {
   const response = await next();
   response.headers.set('Access-Control-Allow-Origin', '*');
   response.headers.set('Access-Control-Max-Age', '86400');
