@@ -16,8 +16,16 @@ export const onRequestOptions: PagesFunction = async () => {
 };
 
 export const onRequest: PagesFunction = async (context) => {
-  const response = await fetch(API_URL + new URL(context.request.url).pathname);
-  response.headers.set('Access-Control-Allow-Origin', '*');
-  response.headers.set('Access-Control-Max-Age', '86400');
-  return response;
+  const immutableResponse = await fetch(
+    API_URL + new URL(context.request.url).pathname,
+  );
+
+  const mutableResponse = new Response(
+    immutableResponse.body,
+    immutableResponse,
+  );
+
+  mutableResponse.headers.set('Access-Control-Allow-Origin', '*');
+  mutableResponse.headers.set('Access-Control-Max-Age', '86400');
+  return mutableResponse;
 };
