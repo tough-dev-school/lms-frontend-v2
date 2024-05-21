@@ -6,7 +6,7 @@ const ALLOWED_ORIGIN = 'lms-frontend-v2.pages.dev';
 
 const getAllowedOrigin = (url: string) => {
   const hostname = new URL(url).hostname;
-  hostname.endsWith(ALLOWED_ORIGIN) ? hostname : '';
+  return hostname.endsWith(ALLOWED_ORIGIN) ? hostname : '';
 };
 
 export const onRequestOptions: PagesFunction = async (context) => {
