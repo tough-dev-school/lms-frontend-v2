@@ -38,6 +38,7 @@ export const onRequestOptions: PagesFunction = async (context) => {
 };
 
 export const onRequest: PagesFunction = async (context) => {
+  console.log('Rewrites', rewrites(context.request.url));
   const rewriteKey = getRewriteKey(context.request.url);
 
   if (rewriteKey) {
@@ -45,6 +46,7 @@ export const onRequest: PagesFunction = async (context) => {
       rewriteKey,
       rewrites(rewriteKey)[rewriteKey],
     );
+    console.log(`${context.request.url} -> ${newUrl}`);
     const immutableResponse = await fetch(new Request(newUrl, context.request));
     const response = new Response(immutableResponse.body, immutableResponse);
 
