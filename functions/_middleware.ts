@@ -1,20 +1,26 @@
-//@ts-nocheck
+// #FIXME Remove the ts-expect-error comments after @cloudflare/workers-types will be fixed
+
 import { PagesFunction } from '@cloudflare/workers-types';
 
-const ALLOWED_ORIGIN = 'lms-frontend-v2.pages.dev';
+// Describe your allowed origins
+const ALLOWED_ORIGINS = ['lms-frontend-v2.pages.dev'];
 
-const rewrites = (url: string) => ({
+const isAllowedOrigin = (url: string) => {
+  return ALLOWED_ORIGINS.find((allowedOrigin) =>
+    new URL(url).origin.endsWith(allowedOrigin),
+  );
+};
+
+// Describe your rewrites
+const getRewrites = (url: string): Record<string, string> => ({
   [`${new URL(url).origin}/api/`]: 'https://app.tough-dev.school/api/',
 });
 
 const getRewriteKey = (url: string) => {
-  return Object.keys(rewrites(url)).find((key) => url.startsWith(key));
+  return Object.keys(getRewrites(url)).find((key) => url.startsWith(key));
 };
 
-const isAllowedOrigin = (url: string) => {
-  return new URL(url).origin.endsWith(ALLOWED_ORIGIN);
-};
-
+//@ts-expect-error
 export const onRequestOptions: PagesFunction = async (context) => {
   const rewriteKey = getRewriteKey(context.request.url);
 
@@ -37,16 +43,18 @@ export const onRequestOptions: PagesFunction = async (context) => {
   return await context.next();
 };
 
+//@ts-expect-error
 export const onRequest: PagesFunction = async (context) => {
-  console.log('Rewrites', rewrites(context.request.url));
+  console.log('Rewrites', getRewrites(context.request.url));
   const rewriteKey = getRewriteKey(context.request.url);
 
   if (rewriteKey) {
     const newUrl = context.request.url.replace(
       rewriteKey,
-      rewrites(rewriteKey)[rewriteKey],
+      getRewrites(rewriteKey)[rewriteKey],
     );
     console.log(`${context.request.url} -> ${newUrl}`);
+    //@ts-expect-error
     const immutableResponse = await fetch(new Request(newUrl, context.request));
     const response = new Response(immutableResponse.body, immutableResponse);
 
