@@ -1,8 +1,21 @@
 //@ts-nocheck
 import { PagesFunction } from '@cloudflare/workers-types';
 
-const API_URL = 'https://app.tough-dev.school';
 const ALLOWED_ORIGIN = 'lms-frontend-v2.pages.dev';
+
+const rewrite = (url: string) => {
+  const REWRITES = {
+    [`${url}/api/`]: 'https://app.tough-dev.school/api/',
+  };
+
+  const rewriteKey = Object.keys(REWRITES).find((key) => url.startsWith(key));
+
+  if (rewriteKey) {
+    return url.replace(rewriteKey, REWRITES[rewriteKey]);
+  }
+
+  return url;
+};
 
 const isAllowedOrigin = (url: string) => {
   return new URL(url).hostname.endsWith(ALLOWED_ORIGIN);
@@ -26,7 +39,7 @@ export const onRequestOptions: PagesFunction = async (context) => {
 };
 
 export const onRequest: PagesFunction = async (context) => {
-  const targetUrl = API_URL + new URL(context.request.url).pathname;
+  const targetUrl = rewrite(context.request.url);
 
   const immutableResponse = await fetch(
     new Request(targetUrl, context.request),
