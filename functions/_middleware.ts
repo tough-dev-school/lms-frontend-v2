@@ -4,7 +4,7 @@ import { PagesFunction } from '@cloudflare/workers-types';
 const ALLOWED_ORIGIN = 'lms-frontend-v2.pages.dev';
 
 const rewrites = (url: string) => ({
-  [`${new URL(url).hostname}/api/`]: 'https://app.tough-dev.school/api/',
+  [`${new URL(url).origin}/api/`]: 'https://app.tough-dev.school/api/',
 });
 
 const getRewriteKey = (url: string) => {
@@ -12,7 +12,7 @@ const getRewriteKey = (url: string) => {
 };
 
 const isAllowedOrigin = (url: string) => {
-  return new URL(url).hostname.endsWith(ALLOWED_ORIGIN);
+  return new URL(url).origin.endsWith(ALLOWED_ORIGIN);
 };
 
 export const onRequestOptions: PagesFunction = async (context) => {
