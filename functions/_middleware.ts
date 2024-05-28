@@ -5,7 +5,7 @@ const ALLOWED_ORIGIN = 'lms-frontend-v2.pages.dev';
 
 const rewrite = (url: string) => {
   const REWRITES = {
-    [`${url}/api/`]: 'https://app.tough-dev.school/api/',
+    [`${new URL(url).hostname}/api/`]: 'https://app.tough-dev.school/api/',
   };
 
   const rewriteKey = Object.keys(REWRITES).find((key) => url.startsWith(key));
@@ -39,10 +39,8 @@ export const onRequestOptions: PagesFunction = async (context) => {
 };
 
 export const onRequest: PagesFunction = async (context) => {
-  const targetUrl = rewrite(context.request.url);
-
   const immutableResponse = await fetch(
-    new Request(targetUrl, context.request),
+    new Request(rewrite(context.request.url), context.request),
   );
   const response = new Response(immutableResponse.body, immutableResponse);
 
