@@ -12,17 +12,22 @@ const isAllowedOrigin = (url: string) => {
 };
 
 // Describe your rewrites
-const getRewrites = (url: string): Record<string, string> => ({
-  [`${new URL(url).origin}/api/`]: 'https://app.tough-dev.school/api/',
-});
+const getRewrites = (url: string): Record<string, string> => {
+  const rewrites = {
+    [`${new URL(url).origin}/api/`]: 'https://app.tough-dev.school/api/',
+  };
+  console.log('Using rewrites:', rewrites);
+  return rewrites;
+};
 
-const getRewriteKey = (url: string) => {
-  return Object.keys(getRewrites(url)).find((key) => url.startsWith(key));
+const getRewriteKey = (url: string, rewrites: Record<string, string>) => {
+  return Object.keys(rewrites).find((key) => url.startsWith(key));
 };
 
 //@ts-expect-error
 export const onRequestOptions: PagesFunction = async (context) => {
-  const rewriteKey = getRewriteKey(context.request.url);
+  const rewrites = getRewrites(context.request.url);
+  const rewriteKey = getRewriteKey(context.request.url, rewrites);
 
   if (rewriteKey) {
     const response = new Response(null, {
@@ -45,13 +50,13 @@ export const onRequestOptions: PagesFunction = async (context) => {
 
 //@ts-expect-error
 export const onRequest: PagesFunction = async (context) => {
-  console.log('Rewrites', getRewrites(context.request.url));
-  const rewriteKey = getRewriteKey(context.request.url);
+  const rewrites = getRewrites(context.request.url);
+  const rewriteKey = getRewriteKey(context.request.url, rewrites);
 
   if (rewriteKey) {
     const newUrl = context.request.url.replace(
       rewriteKey,
-      getRewrites(rewriteKey)[rewriteKey],
+      rewrites[rewriteKey],
     );
     console.log(`${context.request.url} -> ${newUrl}`);
     //@ts-expect-error
