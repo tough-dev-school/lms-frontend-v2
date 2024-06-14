@@ -136,7 +136,7 @@ describe('user store', () => {
   });
 
   test('setAvatar calls api with data', async () => {
-    await user.setData(null);
+    await user.setAvatar(null);
 
     expect(setAvatar).toHaveBeenCalledTimes(1);
     expect(setAvatar).toBeCalledWith(null);

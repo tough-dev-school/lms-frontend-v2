@@ -7,30 +7,30 @@
   import useUser from '@/stores/user';
 
   const user = useUser();
-  const avatar = ref('');
-  const file = ref(null);
+  const avatar = ref();
+  const file = ref();
   const showCropper = ref(false);
 
   const update = () => {
-    avatar.value = user.avatar;
+    avatar.value = user.avatar!;
   };
 
   const deleteAvatar = async () => {
-    avatar.value = null;
-    file.value = null;
+    avatar.value = undefined;
+    file.value = undefined;
   };
 
   const saveProfile = async () => {
-    await user.setAvatar(file.value || avatar.value);
+    await user.setAvatar(file.value || null);
     update();
   };
 
-  const showPreview = async (cropperInstance) => {
-    avatar.value = cropperInstance.getCroppedCanvas().toDataURL();
+  const showPreview = async (cropperInstance: any) => {
+    avatar.value = cropperInstance!.getCroppedCanvas()!.toDataURL();
 
     const response = await fetch(avatar.value);
-    const blob = await response.blob();
-    file.value = new File([blob], 'avatar.png');
+    const blob: Blob = await response.blob();
+    (file.value as File) = new File([blob], 'avatar.png');
   };
 
   const isSaveButtonDisabled = computed(() => avatar.value == user.avatar);

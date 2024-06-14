@@ -14,13 +14,14 @@ export const setUser = async (data: EditableUserData): Promise<User> => {
 };
 
 export const setAvatar = async (avatar: File | null): Promise<User> => {
-  let data: object | FormData = { avatar };
   const url = '/api/v2/users/me/';
 
-  if (avatar) {
-    data = new FormData();
-    data.append('avatar', avatar);
+  if (!avatar) {
+    return (await axios.patch(url, { avatar })).data as User;
   }
+
+  const data = new FormData() as FormData;
+  data.append('avatar', avatar);
 
   return (await axios.patch(url, data)).data as User;
 };
