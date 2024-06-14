@@ -10,6 +10,17 @@ export const getUser: () => Promise<User> = async () => {
 
 export const setUser = async (data: EditableUserData): Promise<User> => {
   const url = '/api/v2/users/me/';
+  return (await axios.patch(url, data)).data as User;
+};
+
+export const setAvatar = async (avatar: File | null): Promise<User> => {
+  let data: object | FormData = { avatar };
+  const url = '/api/v2/users/me/';
+
+  if (avatar) {
+    data = new FormData();
+    data.append('avatar', avatar);
+  }
 
   return (await axios.patch(url, data)).data as User;
 };

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { setUser, getUser } from '@/api/users';
+import { setUser, getUser, setAvatar } from '@/api/users';
 import useToasts from '@/stores/toasts';
 import type { User, EditableUserData } from '@/types/users';
 import getName from '@/utils/getName';
@@ -20,6 +20,7 @@ const useUser = defineStore('user', {
       linkedinUsername: '',
       githubUsername: '',
       telegramUsername: '',
+      avatar: undefined,
     };
   },
   getters: {
@@ -44,6 +45,7 @@ const useUser = defineStore('user', {
           linkedinUsername,
           githubUsername,
           telegramUsername,
+          avatar,
         } = user;
 
         this.id = id;
@@ -57,6 +59,7 @@ const useUser = defineStore('user', {
         this.linkedinUsername = linkedinUsername;
         this.githubUsername = githubUsername;
         this.telegramUsername = telegramUsername;
+        this.avatar = avatar;
       } catch (error: any) {}
     },
     async setData(updates: EditableUserData) {
@@ -66,6 +69,16 @@ const useUser = defineStore('user', {
         });
 
         await setUser(data);
+
+        const toasts = useToasts();
+        toasts.addMessage('Данные сохранены!', 'success');
+
+        await this.getData();
+      } catch (error: any) {}
+    },
+    async setAvatar(avatar: File | null) {
+      try {
+        await setAvatar(avatar);
 
         const toasts = useToasts();
         toasts.addMessage('Данные сохранены!', 'success');

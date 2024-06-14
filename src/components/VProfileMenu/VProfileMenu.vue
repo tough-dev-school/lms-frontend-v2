@@ -103,7 +103,11 @@
       :class="{ VProfileMenu__Button_Active: isOpen }"
       data-testid="button"
       @click="isOpen = !isOpen">
-      <VAvatar :user-id="userId" class="mr-8" data-testid="avatar" />
+      <VAvatar
+        :user-id="userId"
+        class="mr-8"
+        :image="user.avatar"
+        data-testid="avatar" />
       <ul class="text-sub">
         <li class="leading-tight" data-testid="name">{{ name }}</li>
         <li class="leading-tight text-gray" data-testid="username">

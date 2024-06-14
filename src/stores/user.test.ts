@@ -5,7 +5,7 @@ import useToasts from '@/stores/toasts';
 import useUser from '@/stores/user';
 import { setActivePinia } from 'pinia';
 import { createTestingPinia } from '@pinia/testing';
-import { setUser, getUser } from '@/api/users';
+import { setUser, getUser, setAvatar } from '@/api/users';
 import { faker } from '@faker-js/faker';
 import type { Gender } from '@/types/users';
 
@@ -13,6 +13,7 @@ vi.mock('@/api/users', () => {
   return {
     setUser: vi.fn(),
     getUser: vi.fn(),
+    setAvatar: vi.fn(),
   };
 });
 
@@ -132,5 +133,12 @@ describe('user store', () => {
     user.name;
 
     expect(getName).toHaveBeenCalledTimes(1);
+  });
+
+  test('setAvatar calls api with data', async () => {
+    await user.setData(null);
+
+    expect(setAvatar).toHaveBeenCalledTimes(1);
+    expect(setAvatar).toBeCalledWith(null);
   });
 });
