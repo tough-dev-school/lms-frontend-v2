@@ -49,8 +49,14 @@
       :upload-handler="showPreview" />
     <div class="flex gap-16">
       <VAvatar :user-id="user.uuid" :image="avatar" size="md" />
-      <button class="link p-6" @click="showCropper = true">Загрузить</button>
-      <button v-if="avatar" class="p-6 hover:text-red" @click="deleteAvatar">
+      <button data-testid="upload" class="link p-6" @click="showCropper = true">
+        Загрузить
+      </button>
+      <button
+        v-if="avatar"
+        data-testid="delete"
+        class="p-6 hover:text-red"
+        @click="deleteAvatar">
         Удалить
       </button>
     </div>
