@@ -1,5 +1,6 @@
 <script lang="ts" setup>
   import { minidenticon } from 'minidenticons';
+  import { computed } from 'vue';
 
   export interface Props {
     userId: string;
