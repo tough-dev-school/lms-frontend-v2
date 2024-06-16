@@ -1,6 +1,5 @@
 <script lang="ts" setup>
   import { minidenticon } from 'minidenticons';
-  import { computed } from 'vue';
 
   export interface Props {
     userId: string;
@@ -20,24 +19,20 @@
         minidenticon(props.userId, 100, 50),
       )}`,
   );
-
-  const classes = computed(() => ({
-    flex: true,
-    'items-center': true,
-    'justify-center': true,
-    'rounded-full': true,
-    'bg-back': !props.image,
-    'object-cover': true,
-    'p-4': !props.image,
-    'h-32': props.size == 'sm',
-    'w-32': props.size == 'sm',
-    'h-72': props.size == 'md',
-    'w-72': props.size == 'md',
-  }));
 </script>
 
 <template>
-  <img :class="classes" :src="image || defaultAvatar" />
+  <img
+    :class="{
+      'bg-back': !image,
+      'p-4': !image,
+      'h-32': size === 'sm',
+      'w-32': size === 'sm',
+      'h-72': size === 'md',
+      'w-72': size === 'md',
+    }"
+    class="flex items-center justify-center rounded-full object-cover"
+    :src="image || defaultAvatar" />
 </template>
 
 <style scoped>
