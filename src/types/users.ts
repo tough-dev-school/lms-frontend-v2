@@ -12,6 +12,7 @@ export interface User {
   linkedinUsername: string;
   githubUsername: string;
   telegramUsername: string;
+  avatar?: string;
 }
 
 type EditableUserDataProperties =

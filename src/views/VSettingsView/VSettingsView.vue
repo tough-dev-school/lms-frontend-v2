@@ -4,6 +4,7 @@
   import VPasswordSettings from '@/components/VPasswordSettings/VPasswordSettings.vue';
   import VLinksSettings from '@/components/VLinksSettings/VLinksSettings.vue';
   import VCertificateSettings from '@/components/VCertificateSettings/VCertificateSettings.vue';
+  import VAvatarSettings from '@/components/VAvatarSettings/VAvatarSettings.vue';
 </script>
 
 <template>
@@ -35,10 +36,19 @@
             >Данные для диплома</RouterLink
           >
         </li>
+        <li>
+          <RouterLink
+            class="link"
+            :to="{ name: 'settings', hash: '#avatar' }"
+            data-testid="avatar-link"
+            >Аватар</RouterLink
+          >
+        </li>
       </ul>
     </VCard>
     <VLinksSettings id="links" data-testid="links-settings" />
     <VPasswordSettings id="password" data-testid="password-settings" />
     <VCertificateSettings id="certificate" data-testid="certificate-settings" />
+    <VAvatarSettings id="avatar" data-testid="avatar-settings" />
   </div>
 </template>

@@ -10,6 +10,8 @@ import 'floating-vue/dist/style.css';
 
 import * as Sentry from '@sentry/vue';
 
+import AvatarCropper from 'vue-avatar-cropper';
+
 import './fonts.css';
 import './style.css';
 
@@ -37,6 +39,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use(FloatingVue);
+app.use(AvatarCropper);
 
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
