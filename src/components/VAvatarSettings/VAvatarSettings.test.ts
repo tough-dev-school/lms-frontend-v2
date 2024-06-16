@@ -43,7 +43,7 @@ describe('VAvatarSettings', () => {
   });
 
   test('Should show delete button when avatar is filled', async () => {
-    wrapper.vm.avatar = faker.image.avatar();
+    (wrapper.vm as any).avatar = faker.image.avatar();
 
     await wrapper.vm.$nextTick();
     expect(getDeleteButton().exists()).toBe(true);
@@ -54,13 +54,13 @@ describe('VAvatarSettings', () => {
   });
 
   test('Should reset avatar on delete button click', async () => {
-    wrapper.vm.avatar = faker.image.avatar();
+    (wrapper.vm as any).avatar = faker.image.avatar();
     await wrapper.vm.$nextTick();
 
     const button = getDeleteButton();
     await button.trigger('click');
 
-    expect(wrapper.vm.avatar).toBe(undefined);
+    expect((wrapper.vm as any).avatar).toBe(undefined);
   });
 
   test('Should show cropper on upload button click', async () => {
@@ -68,7 +68,7 @@ describe('VAvatarSettings', () => {
 
     await button.trigger('click');
 
-    expect(wrapper.vm.showCropper).toBe(true);
+    expect((wrapper.vm as any).showCropper).toBe(true);
   });
 
   test('Should call setAvatar with null on save button click', async () => {
@@ -83,7 +83,7 @@ describe('VAvatarSettings', () => {
     const button = getSaveButton();
     const file = new File(['(⌐□_□)'], 'avatar.png', { type: 'image/png' });
 
-    wrapper.vm.file = file;
+    (wrapper.vm as any).file = file;
     await wrapper.vm.$nextTick();
 
     await button.trigger('click');
