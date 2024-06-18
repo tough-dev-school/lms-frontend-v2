@@ -71,6 +71,7 @@
         <VAvatar
           class="!w-24 !h-24"
           :user-id="author.uuid"
+          :image="author.avatar"
           data-testid="avatar" />
       </abbr>
     </div>

@@ -4,13 +4,17 @@
 
   export interface Props {
     userId: string;
+    image?: string;
+    size?: 'sm' | 'md';
   }
 
   const props = withDefaults(defineProps<Props>(), {
     userId: '',
+    image: '',
+    size: 'sm',
   });
 
-  const image = computed(
+  const defaultAvatar = computed(
     () =>
       `data:image/svg+xml;utf8,${encodeURIComponent(
         minidenticon(props.userId, 100, 50),
@@ -20,8 +24,16 @@
 
 <template>
   <img
-    class="flex h-32 w-32 items-center justify-center rounded-full bg-black object-cover p-4"
-    :src="image" />
+    :class="{
+      'bg-back': !image,
+      'p-4': !image,
+      'h-32': size === 'sm',
+      'w-32': size === 'sm',
+      'h-72': size === 'md',
+      'w-72': size === 'md',
+    }"
+    class="flex items-center justify-center rounded-full object-cover"
+    :src="image || defaultAvatar" />
 </template>
 
 <style scoped>

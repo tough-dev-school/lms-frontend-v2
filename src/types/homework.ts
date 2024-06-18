@@ -13,6 +13,7 @@ export interface Author {
   uuid: string;
   firstName: string;
   lastName: string;
+  avatar?: string;
 }
 
 export interface Reaction {

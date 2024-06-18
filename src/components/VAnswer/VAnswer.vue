@@ -53,7 +53,10 @@
 <template>
   <VCard class="pb-32">
     <div class="mb-16 flex items-center gap-8">
-      <VAvatar data-testid="avatar" :user-id="answer.author.uuid" />
+      <VAvatar
+        data-testid="avatar"
+        :user-id="answer.author.uuid"
+        :image="answer.author.avatar" />
       <div>
         <div class="font-bold" data-testid="name">
           {{ getName(answer.author.firstName, answer.author.lastName) }}
