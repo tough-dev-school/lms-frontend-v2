@@ -7,6 +7,8 @@
 <script lang="ts" setup>
   // @ts-nocheck
   import { NotionRenderer } from 'vue-notion';
+  import { onMounted } from 'vue';
+  import { useEventListener } from '@vueuse/core';
 
   import 'prismjs';
   import 'prismjs/themes/prism.css';
@@ -18,6 +20,39 @@
   import 'prismjs/components/prism-cpp.js';
 
   const mapPageUrl = (id: string) => `/materials/${id}`;
+
+  onMounted(() => {
+    /**
+     * This is fucking hack to be able to check checkboxes and save state to localStorage that rendered via NotionRenderer
+     */
+
+    document
+      .querySelectorAll('.notion-checkbox-wrapper input')
+      .forEach((checkbox) => {
+        // All checkboxes are disabled by default
+        checkbox.disabled = false;
+
+        // set checked state from localStorage
+        const id = checkbox.parentElement.parentElement.id;
+        checkbox.checked = !!localStorage.getItem(`notion-checkbox-${id}`);
+      });
+
+    useEventListener(document, 'change', (e) => {
+      if (
+        e.target.parentElement.classList.contains('notion-checkbox-wrapper')
+      ) {
+        // label element id
+        const id = checkbox.parentElement.parentElement.id;
+
+        // Save state to localStorage
+        if (e.target.checked) {
+          localStorage.setItem(`notion-checkbox-${id}`, '1');
+        } else {
+          localStorage.removeItem(`notion-checkbox-${id}`);
+        }
+      }
+    });
+  });
 </script>
 
 <template>
