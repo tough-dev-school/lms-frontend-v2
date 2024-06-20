@@ -9,6 +9,7 @@
   import { NotionRenderer } from 'vue-notion';
   import { onMounted } from 'vue';
   import { useEventListener } from '@vueuse/core';
+  import { useRoute } from 'vue-router';
 
   import 'prismjs';
   import 'prismjs/themes/prism.css';
@@ -20,6 +21,9 @@
   import 'prismjs/components/prism-cpp.js';
 
   const mapPageUrl = (id: string) => `/materials/${id}`;
+  const mapBlockId = (id: string) => `${route.params.id}-${id}}`;
+
+  const route = useRoute();
 
   onMounted(() => {
     /**
@@ -34,7 +38,7 @@
 
         // set checked state from localStorage
         const id = checkbox.parentElement.parentElement.id;
-        checkbox.checked = !!localStorage.getItem(`notion-checkbox-${id}`);
+        checkbox.checked = !!localStorage.getItem(mapBlockId(id));
       });
 
     useEventListener(document, 'change', (e) => {
@@ -42,13 +46,13 @@
         e.target.parentElement.classList.contains('notion-checkbox-wrapper')
       ) {
         // label element id
-        const id = checkbox.parentElement.parentElement.id;
+        const id = e.target.parentElement.parentElement.id;
 
         // Save state to localStorage
         if (e.target.checked) {
-          localStorage.setItem(`notion-checkbox-${id}`, '1');
+          localStorage.setItem(mapBlockId(id), '1');
         } else {
-          localStorage.removeItem(`notion-checkbox-${id}`);
+          localStorage.removeItem(mapBlockId(id));
         }
       }
     });
