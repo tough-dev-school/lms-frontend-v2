@@ -88,6 +88,12 @@ describe('VNewAnswer', () => {
     expect(getButtonWrapper().attributes()['disabled']).toBe('true');
   });
 
+  test('send button is disabled while loading', () => {
+    (wrapper.vm as any).isLoading = true;
+
+    expect(getButtonWrapper().attributes()['disabled']).toBe('true');
+  });
+
   test('disallow sending of empty paragraphs', async () => {
     const tagName = faker.lorem.word();
 

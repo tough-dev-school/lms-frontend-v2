@@ -16,6 +16,8 @@
   }>();
   const homework = useHomework();
 
+  const isLoading = ref(false);
+
   const getInitialValue = () => {
     if (props.parentId && localStorage.getItem(props.parentId)) {
       return localStorage.getItem(props.parentId) as string;
@@ -39,11 +41,15 @@
   const sendPost = async () => {
     if (!allowSend.value) return;
 
+    isLoading.value = true;
+
     const answer = await homework.postAnswer({
       text: text.value,
       questionId: props.questionId,
       parentId: props.parentId,
     });
+
+    isLoading.value = false;
 
     if (answer) {
       emit('update', answer.slug);
@@ -66,9 +72,12 @@
       placeholder="Напишите ответ здесь"
       @send="sendPost" />
     <template #footer>
-      <VButton :disabled="!allowSend" data-testid="button" @click="sendPost"
-        >Отправить</VButton
-      >
+      <VButton
+        :disabled="!allowSend || isLoading"
+        data-testid="button"
+        @click="sendPost">
+        Отправить
+      </VButton>
     </template>
   </VCard>
 </template>
