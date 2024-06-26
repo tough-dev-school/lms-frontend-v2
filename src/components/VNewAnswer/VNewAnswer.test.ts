@@ -89,7 +89,7 @@ describe('VNewAnswer', () => {
   });
 
   test('send button is disabled while loading', () => {
-    wrapper.vm.isLoading = true;
+    (wrapper.vm as any).isLoading = true;
 
     expect(getButtonWrapper().attributes()['disabled']).toBe('true');
   });
