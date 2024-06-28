@@ -34,23 +34,21 @@ const useHomework = defineStore('homework', {
   },
   actions: {
     removeAnswerFromTree(slug: string) {
-      const recursiveRemove = (answers: Answer[] | Thread[] | Comment[]) => {
+      const recursiveRemove = (answers: Comment[]) => {
         return answers.filter((item) => {
           if (item.slug === slug) {
             return false;
           }
 
-          if ((item as Thread).descendants) {
-            (item as Thread).descendants = recursiveRemove(
-              (item as Thread).descendants,
-            );
+          if (item.descendants) {
+            item.descendants = recursiveRemove(item.descendants);
           }
 
           return true;
         });
       };
 
-      this.answers = recursiveRemove(this.answers);
+      this.answers = recursiveRemove(this.answers as Comment[]);
     },
     replaceAnswer(
       answer: Answer | Comment,

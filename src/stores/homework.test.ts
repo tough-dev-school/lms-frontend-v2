@@ -17,6 +17,7 @@ import { mockAnswer } from '@/mocks/mockAnswer';
 import { mockThread } from '@/mocks/mockThread';
 import { mockQuestion } from '@/mocks/mockQuestion';
 import { mockComment } from '@/mocks/mockComment';
+import type { Thread } from '@/types/homework';
 
 vi.mock('@/api/homework', () => {
   return {
@@ -255,7 +256,7 @@ describe('homework store', () => {
       homework.removeAnswerFromTree(childAnswer.slug);
 
       expect(homework.answers).toStrictEqual([yaAnswer, answer]);
-      expect(homework.answers[0].descendants).toHaveLength(0);
+      expect((homework.answers[0] as Thread).descendants).toHaveLength(0);
     });
   });
 
