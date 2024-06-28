@@ -31,7 +31,7 @@
 
   const user = useUser();
   const emit = defineEmits<{
-    update: [];
+    update: [slug: string];
     reply: [];
   }>();
   const replyMode = ref(false);
@@ -80,7 +80,7 @@
 
   const handleUpdate = async (slug: string) => {
     replyMode.value = false;
-    emit('update');
+    emit('update', slug);
 
     prepareForScroll(slug);
   };
@@ -114,7 +114,7 @@
         :is="getRootComponent"
         v-bind="getRootComponentProps"
         :id="getRootComponentProps.answer.slug"
-        @update="emit('update')"
+        @update="emit('update', originalPost.slug)"
         @mounted="scrollToComment">
         <template #footer>
           <button
@@ -137,12 +137,11 @@
           @update="handleUpdate" />
       </div>
     </div>
-    <div v-if="originalPost.descendants.length > 0" class="thread-ruler mt-16">
+    <div v-if="originalPost.descendants?.length > 0" class="thread-ruler mt-16">
       <VThread
         v-for="reply in originalPost.descendants"
         :key="reply.slug"
-        :original-post="reply"
-        @update="emit('update')" />
+        :original-post="reply" />
     </div>
   </div>
 </template>

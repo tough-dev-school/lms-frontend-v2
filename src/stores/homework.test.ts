@@ -17,6 +17,7 @@ import { mockAnswer } from '@/mocks/mockAnswer';
 import { mockThread } from '@/mocks/mockThread';
 import { mockQuestion } from '@/mocks/mockQuestion';
 import { mockComment } from '@/mocks/mockComment';
+import type { Thread } from '@/types/homework';
 
 vi.mock('@/api/homework', () => {
   return {
@@ -147,6 +148,15 @@ describe('homework store', () => {
     expect(result).toStrictEqual(postData);
   });
 
+  test('postAnswer appends answer', async () => {
+    homework.appendAnswer = vi.fn();
+
+    const result = await homework.postAnswer({ text, questionId, parentId });
+
+    expect(homework.appendAnswer).toHaveBeenCalledTimes(1);
+    expect(homework.appendAnswer).toHaveBeenCalledWith(result);
+  });
+
   test('postAnswer shows toast on success', async () => {
     await homework.postAnswer({ text, questionId, parentId });
 
@@ -180,6 +190,15 @@ describe('homework store', () => {
     expect(toasts.addMessage).not.toHaveBeenCalled();
   });
 
+  test('deleteAnswer removes answer from tree', async () => {
+    homework.removeAnswerFromTree = vi.fn();
+
+    await homework.deleteAnswer(answerId);
+
+    expect(homework.removeAnswerFromTree).toHaveBeenCalledTimes(1);
+    expect(homework.removeAnswerFromTree).toHaveBeenCalledWith(answerId);
+  });
+
   test('updateAnswer calls api', async () => {
     await homework.updateAnswer(answerId, text);
 
@@ -198,5 +217,132 @@ describe('homework store', () => {
     await homework.updateAnswer(answerId, text);
 
     expect(toasts.addMessage).not.toHaveBeenCalled();
+  });
+
+  test('updateAnswer replaces answer', async () => {
+    homework.replaceAnswer = vi.fn();
+
+    const result = await homework.updateAnswer(answerId, text);
+
+    expect(homework.replaceAnswer).toHaveBeenCalledTimes(1);
+    expect(homework.replaceAnswer).toHaveBeenCalledWith(result);
+  });
+
+  describe('removeAnswerFromTree', () => {
+    const answer = mockAnswer();
+    const childAnswer = mockComment(mockAnswer());
+    const yaAnswer = mockComment({
+      ...mockThread(),
+      descendants: [childAnswer],
+    });
+
+    beforeEach(() => {
+      homework.$patch({ answers: [yaAnswer, answer] });
+    });
+
+    test('removes answer', () => {
+      homework.removeAnswerFromTree(answer.slug);
+
+      expect(homework.answers).toStrictEqual([yaAnswer]);
+    });
+
+    test('removes another answer', () => {
+      homework.removeAnswerFromTree(yaAnswer.slug);
+
+      expect(homework.answers).toStrictEqual([answer]);
+    });
+
+    test('removes child answer', () => {
+      homework.removeAnswerFromTree(childAnswer.slug);
+
+      expect(homework.answers).toStrictEqual([yaAnswer, answer]);
+      expect((homework.answers[0] as Thread).descendants).toHaveLength(0);
+    });
+  });
+
+  describe('replaceAnswer', () => {
+    test('replaces answer without parent', () => {
+      const answer = mockAnswer();
+      homework.$patch({ answers: [mockAnswer({ slug: answer.slug })] });
+
+      homework.replaceAnswer(answer);
+
+      expect(homework.answers).toStrictEqual([answer]);
+    });
+
+    test('replace answer deepens the tree', () => {
+      const answer = mockComment({ ...mockAnswer() });
+      const parent = mockComment({
+        ...mockThread(),
+        descendants: [mockComment({ ...mockAnswer(), slug: answer.slug })],
+      });
+      homework.$patch({ answers: [parent] });
+
+      homework.replaceAnswer(answer);
+
+      expect(parent.descendants[0]).toStrictEqual(answer);
+    });
+  });
+
+  describe('appendAnswer', () => {
+    test('appends new answer without parent', () => {
+      const newAnswer = mockAnswer();
+
+      homework.appendAnswer(newAnswer);
+
+      expect(homework.answers).toStrictEqual([newAnswer]);
+    });
+
+    test('appends new answer to the first one', () => {
+      const answer = mockThread();
+      const yaAnswer = mockThread();
+      const newAnswer = mockComment({ ...mockAnswer(), parent: answer.slug });
+      homework.$patch({ answers: [answer, yaAnswer] });
+
+      homework.appendAnswer(newAnswer);
+
+      expect(answer.descendants[0]).toStrictEqual(newAnswer);
+    });
+
+    test('appends new answer to the last one', () => {
+      const answer = mockThread();
+      const yaAnswer = mockThread();
+      const newAnswer = mockComment({ ...mockAnswer(), parent: yaAnswer.slug });
+      homework.$patch({ answers: [answer, yaAnswer] });
+
+      homework.appendAnswer(newAnswer);
+
+      expect(yaAnswer.descendants[0]).toStrictEqual(newAnswer);
+    });
+
+    test('appends new answer to the nested one', () => {
+      const comment = mockComment(mockThread());
+      const answer = mockComment({ ...mockThread(), descendants: [comment] });
+      const newAnswer = mockComment({ ...mockAnswer(), parent: comment.slug });
+      homework.$patch({ answers: [answer] });
+
+      homework.appendAnswer(newAnswer);
+
+      expect(comment.descendants[0]).toStrictEqual(newAnswer);
+    });
+  });
+
+  describe('refetchAnswerById', () => {
+    test('calls getAnswer', async () => {
+      await homework.refetchAnswerById(answerId);
+
+      expect(getAnswer).toHaveBeenCalledTimes(1);
+      expect(getAnswer).toHaveBeenCalledWith(answerId);
+    });
+
+    test('replaces answer', async () => {
+      const answer = mockAnswer();
+      (getAnswer as ReturnType<typeof vi.fn>).mockResolvedValue(answer);
+
+      await homework.refetchAnswerById(answerId);
+
+      expect(homework.replaceAnswer).toHaveBeenCalledTimes(1);
+      expect(homework.replaceAnswer).toHaveBeenCalledWith(answer);
+    });
   });
 });

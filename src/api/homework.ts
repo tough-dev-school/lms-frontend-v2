@@ -86,7 +86,9 @@ export const deleteAnswer = async (answerId: string) => {
 export const updateAnswer = async (answerId: string, text: string) => {
   const url = `/api/v2/homework/answers/${answerId}/`;
 
-  await axios.patch(url, { text: htmlToMarkdown(text) });
+  return (await axios.patch(url, { text: htmlToMarkdown(text) })).data as
+    | Answer
+    | Comment;
 };
 
 export const sendImage = async (file: File) => {
