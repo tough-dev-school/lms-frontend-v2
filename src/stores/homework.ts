@@ -37,21 +37,21 @@ const useHomework = defineStore('homework', {
       answer: Answer | Thread | Comment,
       answers?: Answer[] | Thread[] | Comment[],
     ) {
-      if (!answer.parent) {
-        return this.answers.push(answer);
+      if (!(answer as Comment).parent) {
+        return this.answers.push(answer as Thread);
       }
 
       (answers || this.answers).forEach((item) => {
-        if (!item.descendants) {
-          item.descendants = [];
+        if (!(item as Thread).descendants) {
+          (item as Thread).descendants = [];
         }
 
-        if (item.slug === answer.parent) {
-          return item.descendants.push(answer);
+        if (item.slug === (answer as Comment).parent) {
+          return (item as Thread).descendants.push(answer as Comment);
         }
 
-        if (item.descendants.length > 0) {
-          this.appendAnswer(answer, item.descendants);
+        if ((item as Thread).descendants.length > 0) {
+          this.appendAnswer(answer, (item as Thread).descendants);
         }
       });
     },

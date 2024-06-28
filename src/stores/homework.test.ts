@@ -17,6 +17,7 @@ import { mockAnswer } from '@/mocks/mockAnswer';
 import { mockThread } from '@/mocks/mockThread';
 import { mockQuestion } from '@/mocks/mockQuestion';
 import { mockComment } from '@/mocks/mockComment';
+import type { Thread } from '@/types/homework';
 
 vi.mock('@/api/homework', () => {
   return {
@@ -219,30 +220,30 @@ describe('homework store', () => {
     });
 
     test('appends new answer to the first one', () => {
-      const answer = mockAnswer();
-      const yaAnswer = mockAnswer();
-      const newAnswer = mockAnswer({ ...mockAnswer(), parent: answer.slug });
+      const answer = mockThread();
+      const yaAnswer = mockThread();
+      const newAnswer = mockComment({ ...mockAnswer(), parent: answer.slug });
       homework.$patch({ answers: [answer, yaAnswer] });
 
       homework.appendAnswer(newAnswer);
 
-      expect(homework.answers[0].descendants[0]).toStrictEqual(newAnswer);
+      expect(answer.descendants[0]).toStrictEqual(newAnswer);
     });
 
     test('appends new answer to the last one', () => {
-      const answer = mockAnswer();
-      const yaAnswer = mockAnswer();
-      const newAnswer = mockAnswer({ ...mockAnswer(), parent: yaAnswer.slug });
+      const answer = mockThread();
+      const yaAnswer = mockThread();
+      const newAnswer = mockComment({ ...mockAnswer(), parent: yaAnswer.slug });
       homework.$patch({ answers: [answer, yaAnswer] });
 
       homework.appendAnswer(newAnswer);
 
-      expect(homework.answers[1].descendants[0]).toStrictEqual(newAnswer);
+      expect(yaAnswer.descendants[0]).toStrictEqual(newAnswer);
     });
 
     test('appends new answer to the nested one', () => {
       const comment = mockComment(mockThread());
-      const answer = mockThread({ ...mockThread(), descendants: [comment] });
+      const answer = mockComment({ ...mockThread(), descendants: [comment] });
       const newAnswer = mockComment({ ...mockAnswer(), parent: comment.slug });
       homework.$patch({ answers: [answer] });
 
