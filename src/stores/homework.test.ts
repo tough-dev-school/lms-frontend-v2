@@ -209,6 +209,39 @@ describe('homework store', () => {
     expect(toasts.addMessage).not.toHaveBeenCalled();
   });
 
+  test('updateAnswer replaces answer', async () => {
+    homework.replaceAnswer = vi.fn();
+
+    const result = await homework.updateAnswer(answerId, text);
+
+    expect(homework.replaceAnswer).toHaveBeenCalledTimes(1);
+    expect(homework.replaceAnswer).toHaveBeenCalledWith(result);
+  });
+
+  describe('replaceAnswer', () => {
+    test('replaces answer without parent', () => {
+      const answer = mockAnswer();
+      homework.$patch({ answers: [mockAnswer({ slug: answer.slug })] });
+
+      homework.replaceAnswer(answer);
+
+      expect(homework.answers).toStrictEqual([answer]);
+    });
+
+    test('replace answer deepens the tree', () => {
+      const answer = mockComment({ ...mockAnswer() });
+      const parent = mockComment({
+        ...mockThread(),
+        descendants: [mockComment({ ...mockAnswer(), slug: answer.slug })],
+      });
+      homework.$patch({ answers: [parent] });
+
+      homework.replaceAnswer(answer);
+
+      expect(parent.descendants[0]).toStrictEqual(answer);
+    });
+  });
+
   describe('appendAnswer', () => {
     test('appends new answer without parent', () => {
       const newAnswer = mockAnswer();

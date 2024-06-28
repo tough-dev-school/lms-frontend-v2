@@ -33,6 +33,20 @@ const useHomework = defineStore('homework', {
     };
   },
   actions: {
+    replaceAnswer(
+      answer: Answer | Comment,
+      answers?: Answer[] | Thread[] | Comment[],
+    ) {
+      (answers || this.answers).forEach((item) => {
+        if (item.slug === answer.slug) {
+          return Object.assign(item, answer);
+        }
+
+        if ((item as Thread).descendants) {
+          this.replaceAnswer(answer, (item as Thread).descendants);
+        }
+      });
+    },
     appendAnswer(
       answer: Answer | Thread | Comment,
       answers?: Answer[] | Thread[] | Comment[],
@@ -120,7 +134,8 @@ const useHomework = defineStore('homework', {
     async updateAnswer(answerId: string, text: string) {
       const toasts = useToasts();
       try {
-        await updateAnswer(answerId, text);
+        const result = await updateAnswer(answerId, text);
+        this.replaceAnswer(result);
         toasts.addMessage('Сообщение отправлено', 'success');
       } catch (error: any) {}
     },
