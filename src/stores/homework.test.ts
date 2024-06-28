@@ -17,7 +17,6 @@ import { mockAnswer } from '@/mocks/mockAnswer';
 import { mockThread } from '@/mocks/mockThread';
 import { mockQuestion } from '@/mocks/mockQuestion';
 import { mockComment } from '@/mocks/mockComment';
-import type { Thread } from '@/types/homework';
 
 vi.mock('@/api/homework', () => {
   return {
