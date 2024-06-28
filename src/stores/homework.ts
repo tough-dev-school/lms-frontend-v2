@@ -10,7 +10,13 @@ import {
   addReaction,
   removeReaction,
 } from '@/api/homework';
-import type { Answer, Question, ReactionEmoji, Thread } from '@/types/homework';
+import type {
+  Answer,
+  Comment,
+  Question,
+  ReactionEmoji,
+  Thread,
+} from '@/types/homework';
 import useToasts from '@/stores/toasts';
 import getThreads from '@/utils/getThreads';
 
@@ -27,6 +33,28 @@ const useHomework = defineStore('homework', {
     };
   },
   actions: {
+    appendAnswer(
+      answer: Answer | Thread | Comment,
+      answers?: Answer[] | Thread[] | Comment[],
+    ) {
+      if (!answer.parent) {
+        return this.answers.push(answer);
+      }
+
+      (answers || this.answers).forEach((item) => {
+        if (!item.descendants) {
+          item.descendants = [];
+        }
+
+        if (item.slug === answer.parent) {
+          return item.descendants.push(answer);
+        }
+
+        if (item.descendants.length > 0) {
+          this.appendAnswer(answer, item.descendants);
+        }
+      });
+    },
     async getQuestion(questionId: string) {
       try {
         this.question = await getQuestion(questionId);
@@ -78,6 +106,7 @@ const useHomework = defineStore('homework', {
       try {
         const answer = await postAnswer({ text, questionId, parentId });
         toasts.addMessage('Сообщение добавлено', 'success');
+        this.appendAnswer(answer);
         return answer;
       } catch (error: any) {}
     },

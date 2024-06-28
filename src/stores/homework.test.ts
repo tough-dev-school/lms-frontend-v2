@@ -147,6 +147,15 @@ describe('homework store', () => {
     expect(result).toStrictEqual(postData);
   });
 
+  test('postAnswer appends answer', async () => {
+    homework.appendAnswer = vi.fn();
+
+    const result = await homework.postAnswer({ text, questionId, parentId });
+
+    expect(homework.appendAnswer).toHaveBeenCalledTimes(1);
+    expect(homework.appendAnswer).toHaveBeenCalledWith(result);
+  });
+
   test('postAnswer shows toast on success', async () => {
     await homework.postAnswer({ text, questionId, parentId });
 
@@ -198,5 +207,48 @@ describe('homework store', () => {
     await homework.updateAnswer(answerId, text);
 
     expect(toasts.addMessage).not.toHaveBeenCalled();
+  });
+
+  describe('appendAnswer', () => {
+    test('appends new answer without parent', () => {
+      const newAnswer = mockAnswer();
+
+      homework.appendAnswer(newAnswer);
+
+      expect(homework.answers).toStrictEqual([newAnswer]);
+    });
+
+    test('appends new answer to the first one', () => {
+      const answer = mockAnswer();
+      const yaAnswer = mockAnswer();
+      const newAnswer = mockAnswer({ ...mockAnswer(), parent: answer.slug });
+      homework.$patch({ answers: [answer, yaAnswer] });
+
+      homework.appendAnswer(newAnswer);
+
+      expect(homework.answers[0].descendants[0]).toStrictEqual(newAnswer);
+    });
+
+    test('appends new answer to the last one', () => {
+      const answer = mockAnswer();
+      const yaAnswer = mockAnswer();
+      const newAnswer = mockAnswer({ ...mockAnswer(), parent: yaAnswer.slug });
+      homework.$patch({ answers: [answer, yaAnswer] });
+
+      homework.appendAnswer(newAnswer);
+
+      expect(homework.answers[1].descendants[0]).toStrictEqual(newAnswer);
+    });
+
+    test('appends new answer to the nested one', () => {
+      const comment = mockComment(mockThread());
+      const answer = mockThread({ ...mockThread(), descendants: [comment] });
+      const newAnswer = mockComment({ ...mockAnswer(), parent: comment.slug });
+      homework.$patch({ answers: [answer] });
+
+      homework.appendAnswer(newAnswer);
+
+      expect(comment.descendants[0]).toStrictEqual(newAnswer);
+    });
   });
 });

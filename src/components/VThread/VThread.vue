@@ -137,12 +137,11 @@
           @update="handleUpdate" />
       </div>
     </div>
-    <div v-if="originalPost.descendants.length > 0" class="thread-ruler mt-16">
+    <div v-if="originalPost.descendants?.length > 0" class="thread-ruler mt-16">
       <VThread
         v-for="reply in originalPost.descendants"
         :key="reply.slug"
-        :original-post="reply"
-        @update="emit('update')" />
+        :original-post="reply" />
     </div>
   </div>
 </template>

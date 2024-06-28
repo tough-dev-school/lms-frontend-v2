@@ -38,8 +38,10 @@
     if (slug) prepareForScroll(slug);
   };
 
+  const answerId = computed(() => route.params.answerId);
+
   watch(
-    () => route.params,
+    answerId,
     async () => {
       await getData();
     },
@@ -55,7 +57,7 @@
         <summary>Показать задание</summary>
         <VHtmlContent :content="question.text" class="mt-16" />
       </VCard>
-      <VAnswer :answer="answer" @update="getData" />
+      <VAnswer :answer="answer" @update="prepareForScroll" />
     </section>
     <section class="flex flex-col gap-24">
       <VHeading tag="h2">Обсуждение</VHeading>
@@ -63,12 +65,12 @@
       <VNewAnswer
         :question-id="question.slug"
         :parent-id="answer.slug"
-        @update="getData" />
+        @update="prepareForScroll" />
       <VThread
         v-for="comment in answer.descendants"
         :key="comment.slug"
         :original-post="comment"
-        @update="getData" />
+        @update="prepareForScroll" />
     </section>
   </div>
   <VPreloader v-else />
