@@ -33,6 +33,25 @@ const useHomework = defineStore('homework', {
     };
   },
   actions: {
+    removeAnswerFromTree(slug: string) {
+      const recursiveRemove = (answers: Answer[] | Thread[] | Comment[]) => {
+        return answers.filter((item) => {
+          if (item.slug === slug) {
+            return false;
+          }
+
+          if ((item as Thread).descendants) {
+            (item as Thread).descendants = recursiveRemove(
+              (item as Thread).descendants,
+            );
+          }
+
+          return true;
+        });
+      };
+
+      this.answers = recursiveRemove(this.answers);
+    },
     replaceAnswer(
       answer: Answer | Comment,
       answers?: Answer[] | Thread[] | Comment[],
@@ -128,6 +147,7 @@ const useHomework = defineStore('homework', {
       const toasts = useToasts();
       try {
         await deleteAnswer(answerId);
+        this.removeAnswerFromTree(answerId);
         toasts.addMessage('Сообщение удалено', 'success');
       } catch (error: any) {}
     },

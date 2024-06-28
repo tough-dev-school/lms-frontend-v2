@@ -189,6 +189,15 @@ describe('homework store', () => {
     expect(toasts.addMessage).not.toHaveBeenCalled();
   });
 
+  test('deleteAnswer removes answer from tree', async () => {
+    homework.removeAnswerFromTree = vi.fn();
+
+    await homework.deleteAnswer(answerId);
+
+    expect(homework.removeAnswerFromTree).toHaveBeenCalledTimes(1);
+    expect(homework.removeAnswerFromTree).toHaveBeenCalledWith(answerId);
+  });
+
   test('updateAnswer calls api', async () => {
     await homework.updateAnswer(answerId, text);
 
@@ -216,6 +225,38 @@ describe('homework store', () => {
 
     expect(homework.replaceAnswer).toHaveBeenCalledTimes(1);
     expect(homework.replaceAnswer).toHaveBeenCalledWith(result);
+  });
+
+  describe('removeAnswerFromTree', () => {
+    const answer = mockAnswer();
+    const childAnswer = mockComment(mockAnswer());
+    const yaAnswer = mockComment({
+      ...mockThread(),
+      descendants: [childAnswer],
+    });
+
+    beforeEach(() => {
+      homework.$patch({ answers: [yaAnswer, answer] });
+    });
+
+    test('removes answer', () => {
+      homework.removeAnswerFromTree(answer.slug);
+
+      expect(homework.answers).toStrictEqual([yaAnswer]);
+    });
+
+    test('removes another answer', () => {
+      homework.removeAnswerFromTree(yaAnswer.slug);
+
+      expect(homework.answers).toStrictEqual([answer]);
+    });
+
+    test('removes child answer', () => {
+      homework.removeAnswerFromTree(childAnswer.slug);
+
+      expect(homework.answers).toStrictEqual([yaAnswer, answer]);
+      expect(homework.answers[0].descendants).toHaveLength(0);
+    });
   });
 
   describe('replaceAnswer', () => {
