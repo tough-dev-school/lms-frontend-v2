@@ -326,4 +326,23 @@ describe('homework store', () => {
       expect(comment.descendants[0]).toStrictEqual(newAnswer);
     });
   });
+
+  describe('refetchAnswerById', () => {
+    test('calls getAnswer', async () => {
+      await homework.refetchAnswerById(answerId);
+
+      expect(getAnswer).toHaveBeenCalledTimes(1);
+      expect(getAnswer).toHaveBeenCalledWith(answerId);
+    });
+
+    test('replaces answer', async () => {
+      const answer = mockAnswer();
+      (getAnswer as ReturnType<typeof vi.fn>).mockResolvedValue(answer);
+
+      await homework.refetchAnswerById(answerId);
+
+      expect(homework.replaceAnswer).toHaveBeenCalledTimes(1);
+      expect(homework.replaceAnswer).toHaveBeenCalledWith(answer);
+    });
+  });
 });

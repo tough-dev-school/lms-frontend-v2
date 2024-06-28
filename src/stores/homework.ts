@@ -56,6 +56,7 @@ const useHomework = defineStore('homework', {
     ) {
       (answers || this.answers).forEach((item) => {
         if (item.slug === answer.slug) {
+          console.log(answer, item);
           return Object.assign(item, answer);
         }
 
@@ -111,6 +112,12 @@ const useHomework = defineStore('homework', {
         } else {
           this.answers = answers;
         }
+      } catch (error: any) {}
+    },
+    async refetchAnswerById(answerId: string) {
+      try {
+        const answer = await getAnswer(answerId);
+        this.replaceAnswer(answer);
       } catch (error: any) {}
     },
     async getAnswerById(answerId: string, threads = false) {
@@ -169,10 +176,14 @@ const useHomework = defineStore('homework', {
       emoji: ReactionEmoji;
       slug?: string;
     }) {
-      return await addReaction({ answerId, emoji, slug });
+      const result = await addReaction({ answerId, emoji, slug });
+      await this.refetchAnswerById(answerId);
+      return result;
     },
     async removeReaction(answerId: string, reactionId: string) {
-      return await removeReaction(answerId, reactionId);
+      const result = await removeReaction(answerId, reactionId);
+      await this.refetchAnswerById(answerId);
+      return result;
     },
   },
 });
