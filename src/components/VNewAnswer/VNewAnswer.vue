@@ -19,13 +19,11 @@
   const isLoading = ref(false);
 
   const getInitialValue = () => {
-    if (props.parentId && localStorage.getItem(props.parentId)) {
-      return localStorage.getItem(props.parentId) as string;
-    } else if (localStorage.getItem(props.questionId)) {
-      return localStorage.getItem(props.questionId) as string;
-    } else {
-      return '';
+    if (props.parentId) {
+      return (localStorage.getItem(props.parentId) as string) || '';
     }
+
+    return (localStorage.getItem(props.questionId) as string) || '';
   };
 
   const text = ref(getInitialValue());
