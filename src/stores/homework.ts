@@ -9,10 +9,12 @@ import {
   getAnswer,
   addReaction,
   removeReaction,
+  getCrossChecks,
 } from '@/api/homework';
 import type {
   Answer,
   Comment,
+  CrossCheck,
   Question,
   ReactionEmoji,
   Thread,
@@ -23,6 +25,7 @@ import getThreads from '@/utils/getThreads';
 interface State {
   question: Question | undefined;
   answers: Answer[] | Thread[];
+  crosschecks: CrossCheck[];
 }
 
 const useHomework = defineStore('homework', {
@@ -30,6 +33,7 @@ const useHomework = defineStore('homework', {
     return {
       question: undefined,
       answers: [],
+      crosschecks: [],
     };
   },
   actions: {
@@ -184,6 +188,11 @@ const useHomework = defineStore('homework', {
       const result = await removeReaction(answerId, reactionId);
       await this.refetchAnswerById(answerId);
       return result;
+    },
+    async getCrossChecks(questionId: string) {
+      try {
+        this.crosschecks = await getCrossChecks(questionId);
+      } catch (error: any) {}
     },
   },
 });

@@ -56,3 +56,13 @@ export interface Comments {
   slug: string;
   descendants: Comment[];
 }
+
+export interface CrossCheckAnswer {
+  author: Author;
+  url: string;
+}
+
+export interface CrossCheck {
+  is_checked: boolean;
+  answer: CrossCheckAnswer;
+}
