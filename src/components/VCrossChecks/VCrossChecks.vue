@@ -1,5 +1,4 @@
 <script setup lang="ts">
-  import { computed } from 'vue';
   import getName from '@/utils/getName';
 
   import type { CrossCheck } from '@/types/homework';
@@ -8,9 +7,21 @@
     crosschecks: CrossCheck[];
   }>();
 
-  const notCheckedCrossChecks = computed(() => {
-    return props.crosschecks.filter((crosscheck) => !crosscheck.is_checked);
-  });
+  const getCrossCheckState = (isChecked: bool) => {
+    if (isChecked) {
+      return 'проверено';
+    }
+
+    return 'не проверено';
+  };
+
+  const getStudentName = (firstName: string, lastName: string, index: int) => {
+    if (firstName || lastName) {
+      return getName(firstName, lastName);
+    }
+
+    return `Студент ${index + 1}`;
+  };
 </script>
 
 <template>
@@ -20,19 +31,18 @@
     <p class="mb-8">Выберите работу коллеги по курсу для проверки:</p>
     <ul class="mb-16">
       <li
-        v-for="crosscheck in notCheckedCrossChecks"
+        v-for="(crosscheck, index) in notCheckedCrossChecks"
         :key="crosscheck.answer.url"
         data-testid="crosscheck">
         <router-link class="link" :to="crosscheck.answer.url"
           >{{
-            getName(
-              crosscheck.answer.author.firstName,
-              crosscheck.answer.author.lastName,
+            getStudentName(
+              crosscheck.answer.author.first_name,
+              crosscheck.answer.author.last_name,
+              index,
             )
           }}
-          ({{
-            crosscheck.is_checked ? 'проверено' : 'не проверено'
-          }})</router-link
+          ({{ getCrossCheckState(crosscheck.is_checked) }})</router-link
         >
       </li>
     </ul>
