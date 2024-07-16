@@ -1,11 +1,16 @@
 <script setup lang="ts">
+  import { computed } from 'vue';
   import getName from '@/utils/getName';
 
   import type { CrossCheck } from '@/types/homework';
 
-  defineProps<{
+  const props = defineProps<{
     crosschecks: CrossCheck[];
   }>();
+
+  const nonCheckedCrossChecks = computed(() => {
+    return props.crosschecks.filter((crosscheck) => !crosscheck.is_checked);
+  });
 
   const getCrossCheckState = (isChecked: bool) => {
     if (isChecked) {
@@ -26,7 +31,7 @@
 
 <template>
   <div
-    v-if="notCheckedCrossChecks.length > 0"
+    v-if="nonCheckedCrossChecks.length > 0"
     class="overflow-hidden rounded bg-white p-16 shadow dark:bg-dark-gray phone:px-24 tablet:px-32 bg-yellow-light">
     <p class="mb-8">Выберите работу коллеги по курсу для проверки:</p>
     <ul class="mb-16">
