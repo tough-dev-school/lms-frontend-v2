@@ -3,7 +3,7 @@
 
   import type { CrossCheck } from '@/types/homework';
 
-  const props = defineProps<{
+  defineProps<{
     crosschecks: CrossCheck[];
   }>();
 
