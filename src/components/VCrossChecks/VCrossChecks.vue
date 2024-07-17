@@ -12,7 +12,7 @@
     return props.crosschecks.filter((crosscheck) => !crosscheck.is_checked);
   });
 
-  const getCrossCheckState = (isChecked: bool) => {
+  const getCrossCheckState = (isChecked: boolean) => {
     if (isChecked) {
       return 'проверено';
     }
@@ -20,7 +20,11 @@
     return 'не проверено';
   };
 
-  const getStudentName = (firstName: string, lastName: string, index: int) => {
+  const getStudentName = (
+    firstName: string,
+    lastName: string,
+    index: number,
+  ) => {
     if (firstName || lastName) {
       return getName(firstName, lastName);
     }
@@ -42,8 +46,8 @@
         <router-link class="link" :to="crosscheck.answer.url"
           >{{
             getStudentName(
-              crosscheck.answer.author.first_name,
-              crosscheck.answer.author.last_name,
+              crosscheck.answer.author.firstName,
+              crosscheck.answer.author.lastName,
               index,
             )
           }}
