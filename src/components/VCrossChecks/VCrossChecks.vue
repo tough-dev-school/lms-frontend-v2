@@ -25,7 +25,7 @@
       return getName(firstName, lastName);
     }
 
-    return `Студент ${index + 1}`;
+    return `Коллега ${index + 1}`;
   };
 </script>
 
@@ -33,10 +33,10 @@
   <div
     v-if="nonCheckedCrossChecks.length > 0"
     class="overflow-hidden rounded bg-white p-16 shadow dark:bg-dark-gray phone:px-24 tablet:px-32 bg-yellow-light">
-    <p class="mb-8">Выберите работу коллеги по курсу для проверки:</p>
-    <ul class="mb-16">
+    <p class="font-bold mb-8">Выберите работу коллеги по курсу для проверки:</p>
+    <ol class="list-decimal list-inside mb-16">
       <li
-        v-for="(crosscheck, index) in notCheckedCrossChecks"
+        v-for="(crosscheck, index) in crosschecks"
         :key="crosscheck.answer.url"
         data-testid="crosscheck">
         <router-link class="link" :to="crosscheck.answer.url"
@@ -50,10 +50,10 @@
           ({{ getCrossCheckState(crosscheck.is_checked) }})</router-link
         >
       </li>
-    </ul>
-    <p class="font-bold">
-      Вы не сможете посмотреть проверки вашей домашки, пока не проверите работы
-      коллег
+    </ol>
+    <p>
+      <b>Напоминаем:</b> ответы на вашу домашку от других студентов будут
+      доступны после того, как вы проверите работы коллег из списка выше.
     </p>
   </div>
 </template>
