@@ -11,6 +11,7 @@ import {
   updateAnswer,
   getAnswers,
   getAnswer,
+  getCrossChecks,
 } from '@/api/homework';
 import getThreads from '@/utils/getThreads';
 import { mockAnswer } from '@/mocks/mockAnswer';
@@ -18,6 +19,7 @@ import { mockThread } from '@/mocks/mockThread';
 import { mockQuestion } from '@/mocks/mockQuestion';
 import { mockComment } from '@/mocks/mockComment';
 import type { Thread } from '@/types/homework';
+import { mockCrossCheck } from '@/mocks/mockCrossCheck';
 
 vi.mock('@/api/homework', () => {
   return {
@@ -27,6 +29,7 @@ vi.mock('@/api/homework', () => {
     updateAnswer: vi.fn(),
     getAnswers: vi.fn(),
     getAnswer: vi.fn(),
+    getCrossChecks: vi.fn(),
   };
 });
 vi.mock('@/utils/getThreads');
@@ -39,6 +42,7 @@ const answerId = faker.string.uuid();
 
 const answerData = mockAnswer();
 const answersData = faker.helpers.multiple(mockAnswer, { count: 3 });
+const crosschecksData = faker.helpers.multiple(mockCrossCheck, { count: 3 });
 const threadsData = mockThread();
 const postData = mockComment({ ...mockThread(), parent: parentId });
 const questionData = mockQuestion();
@@ -60,6 +64,9 @@ describe('homework store', () => {
     (getAnswers as ReturnType<typeof vi.fn>).mockReturnValue(answersData);
     (getThreads as ReturnType<typeof vi.fn>).mockReturnValue(threadsData);
     (postAnswer as ReturnType<typeof vi.fn>).mockReturnValue(postData);
+    (getCrossChecks as ReturnType<typeof vi.fn>).mockReturnValue(
+      crosschecksData,
+    );
   });
 
   test('homework question is initially empty', () => {
@@ -108,6 +115,14 @@ describe('homework store', () => {
 
     expect(getThreads).not.toHaveBeenCalled();
     expect(homework.answers).toStrictEqual(answersData);
+  });
+
+  test('getCrossChecks', async () => {
+    await homework.getCrossChecks(questionId);
+
+    expect(getCrossChecks).toHaveBeenCalledTimes(1);
+    expect(getCrossChecks).toHaveBeenCalledWith(questionId);
+    expect(homework.crosschecks).toStrictEqual(crosschecksData);
   });
 
   test('getAnswerById calls getAnswer', async () => {

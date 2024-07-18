@@ -12,9 +12,10 @@
   import VCard from '@/components/VCard/VCard.vue';
   import VNewAnswer from '@/components/VNewAnswer/VNewAnswer.vue';
   import type { Thread } from '@/types/homework';
+  import VCrossChecks from '@/components/VCrossChecks/VCrossChecks.vue';
 
   const homework = useHomework();
-  const { question, answers } = storeToRefs(homework);
+  const { question, answers, crosschecks } = storeToRefs(homework);
   const route = useRoute();
   const router = useRouter();
 
@@ -34,6 +35,7 @@
     if (!answer.value) return;
     const questionId = answer.value.question;
     await homework.getQuestion(questionId);
+    await homework.getCrossChecks(questionId);
 
     if (slug) prepareForScroll(slug);
   };
@@ -66,6 +68,7 @@
         :question-id="question.slug"
         :parent-id="answer.slug"
         @update="prepareForScroll" />
+      <VCrossChecks :crosschecks="crosschecks" />
       <VThread
         v-for="comment in answer.descendants"
         :key="comment.slug"

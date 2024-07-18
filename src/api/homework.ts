@@ -6,6 +6,7 @@ import type {
   Comment,
   Reaction,
   ReactionEmoji,
+  CrossCheck,
 } from '@/types/homework';
 import htmlToMarkdown from '@/utils/htmlToMarkdown';
 
@@ -122,4 +123,10 @@ export const removeReaction = async (answerId: string, reactionId: string) => {
   const url = `/api/v2/homework/answers/${answerId}/reactions/${reactionId}/`;
 
   await axios.delete(url);
+};
+
+export const getCrossChecks = async (questionId: string) => {
+  const url = `/api/v2/homework/crosschecks/?question=${questionId}`;
+
+  return (await axios.get(url)).data as CrossCheck[];
 };
