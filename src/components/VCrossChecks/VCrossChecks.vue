@@ -43,7 +43,7 @@
         v-for="(crosscheck, index) in crosschecks"
         :key="crosscheck.answer.url"
         data-testid="crosscheck">
-        <router-link class="link" :to="crosscheck.answer.url"
+        <a class="link" :href="crosscheck.answer.url"
           >{{
             getStudentName(
               crosscheck.answer.author.firstName,
@@ -51,7 +51,7 @@
               index,
             )
           }}
-          ({{ getCrossCheckState(crosscheck.is_checked) }})</router-link
+          ({{ getCrossCheckState(crosscheck.is_checked) }})</a
         >
       </li>
     </ol>
