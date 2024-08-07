@@ -6,7 +6,7 @@ export const mockCrossCheck = (
   payload: Partial<CrossCheck> = {},
 ): CrossCheck => {
   return {
-    is_checked: false,
+    isChecked: false,
     answer: {
       url: faker.internet.url(),
       author: mockAuthor(),
