@@ -9,7 +9,7 @@
   }>();
 
   const nonCheckedCrossChecks = computed(() => {
-    return props.crosschecks.filter((crosscheck) => !crosscheck.is_checked);
+    return props.crosschecks.filter((crosscheck) => !crosscheck.isChecked);
   });
 
   const getCrossCheckState = (isChecked: boolean) => {

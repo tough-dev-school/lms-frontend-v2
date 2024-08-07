@@ -63,6 +63,6 @@ export interface CrossCheckAnswer {
 }
 
 export interface CrossCheck {
-  is_checked: boolean;
+  isChecked: boolean;
   answer: CrossCheckAnswer;
 }
