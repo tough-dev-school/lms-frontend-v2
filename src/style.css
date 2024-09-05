@@ -33,8 +33,11 @@
   .prose {
     @apply prose-p:my-[0.5em];
     @apply prose-li:my-[0.25em];
-    @apply prose-ul:my-[0.5em];
+    @apply prose-ol:my-[0.25em];
+    @apply prose-ul:my-[0.25em];
+    @apply prose-h1:mt-[1em];
     @apply prose-h2:mt-[1.5em];
+    @apply prose-li:prose-p:my-0;
     @apply text-black dark:text-white;
     --tw-prose-bullets: currentColor;
     max-width: 100%;
