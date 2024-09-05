@@ -384,6 +384,7 @@
 
   .notion-asset-wrapper {
     margin: 0.5rem 0;
+    margin-bottom: 0.8rem;
     max-width: 100vw;
     min-width: 100%;
     align-self: center;
