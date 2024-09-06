@@ -16,6 +16,7 @@ const onRequestFulfilled = (
   // Manage authorization via pinia
   if (auth.token) {
     request.headers.Authorization = `Bearer ${auth.token}`;
+    request.headers.frkn = '1';
   }
 
   // Convert data keys to target case
