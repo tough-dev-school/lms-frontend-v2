@@ -132,12 +132,6 @@ support@tough-dev.school">
     width: 100%;
   }
 
-  .notion-hr {
-    height: 1px;
-    background-color: var(--fg-color-0);
-    border: none;
-  }
-
   img.notion-page-icon {
     max-width: 100%;
     max-height: 100%;
