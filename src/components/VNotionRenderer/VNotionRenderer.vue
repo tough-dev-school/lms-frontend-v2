@@ -268,16 +268,33 @@
   .notion-link {
     color: inherit;
     word-break: break-word;
-    text-decoration: underline;
-    text-decoration-color: inherit;
-    opacity: 70%;
+    text-decoration: none;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 100% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: opacity 0.3s;
+    position: relative;
+    opacity: 0.7;
     transition: opacity 100ms ease-in;
   }
-
-  .notion-link:hover {
+  .notion-link:has(> span) {
+    background-image: none;
+  }
+  .notion-link > span {
+    opacity: inherit;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 100% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+  }
+  .notion-link:hover,
+  .notion-link:hover > span {
     opacity: 100%;
   }
-
+  .notion-link span {
+    color: inherit;
+  }
   .notion-blank {
     min-height: 1rem;
     padding: 3px 2px;
@@ -869,6 +886,7 @@
 
   .table-of-contents-item.table-of-contents-item.table-of-contents-item {
     display: grid;
+    place-items: start;
     gap: 8px;
   }
 </style>
