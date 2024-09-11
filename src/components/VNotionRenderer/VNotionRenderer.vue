@@ -267,6 +267,7 @@
   }
 
   .notion-link {
+    display: inline-block;
     color: inherit;
     word-break: break-word;
     text-decoration: none;
@@ -275,11 +276,12 @@
     transition: opacity 100ms ease-in;
   }
 
+  .notion-link::after,
   .notion-link span::after {
     content: '';
     position: absolute;
     left: 0;
-    bottom: -0.1em;
+    bottom: 0;
     width: 100%;
     height: 1px;
     transform: scaleY(0.5);
@@ -293,9 +295,18 @@
     opacity: 100%;
   }
 
+  .notion-link:has(> span)::after {
+    content: none;
+  }
+
   .notion-link span {
     color: inherit;
   }
+
+  .notion-link span {
+    color: inherit;
+  }
+
   .notion-blank {
     min-height: 1rem;
     padding: 3px 2px;
@@ -887,6 +898,7 @@
 
   .table-of-contents-item.table-of-contents-item.table-of-contents-item {
     display: grid;
+    place-items: baseline;
     gap: 8px;
   }
 </style>
