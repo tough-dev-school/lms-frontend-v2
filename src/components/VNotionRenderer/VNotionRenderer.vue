@@ -265,19 +265,37 @@
     border-bottom-width: 0;
     border-color: rgba(55, 53, 47, 0.09);
   }
+
   .notion-link {
     color: inherit;
     word-break: break-word;
-    text-decoration: underline;
-    text-decoration-color: inherit;
+    text-decoration: none;
+    position: relative;
+    opacity: 0.7;
+    transition: opacity 100ms ease-in;
+  }
+
+  .notion-link span::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -0.1em;
+    width: 100%;
+    height: 1px;
+    transform: scaleY(0.5);
+    background-color: currentColor;
     opacity: 70%;
     transition: opacity 100ms ease-in;
   }
 
-  .notion-link:hover {
+  .notion-link:hover,
+  .notion-link:hover::after {
     opacity: 100%;
   }
 
+  .notion-link span {
+    color: inherit;
+  }
   .notion-blank {
     min-height: 1rem;
     padding: 3px 2px;
