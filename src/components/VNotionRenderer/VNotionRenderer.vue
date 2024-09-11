@@ -886,6 +886,7 @@
 
   .table-of-contents-item.table-of-contents-item.table-of-contents-item {
     display: grid;
+    place-items: start;
     gap: 8px;
   }
 </style>
