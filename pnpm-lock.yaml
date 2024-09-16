@@ -87,8 +87,8 @@ importers:
         specifier: ^6.1.1
         version: 6.1.1(vue@3.3.8(typescript@5.2.2))
       vue-notion:
-        specifier: github:tough-dev-school/vue-notion#2.0.1
-        version: https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/897aa5757521aa40671d0625a3e6a505acb296e1(@janniks/vue3-katex@0.6.0-rc.5.1(katex@0.16.10)(vue@3.3.8(typescript@5.2.2)))(vue@3.3.8(typescript@5.2.2))
+        specifier: github:tough-dev-school/vue-notion#2.0.5
+        version: https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/881f0d06883ef36ec9aae22318008c52550d4227(@janniks/vue3-katex@0.6.0-rc.5.1(katex@0.16.10)(vue@3.3.8(typescript@5.2.2)))(vue@3.3.8(typescript@5.2.2))
       vue-router:
         specifier: ^4.2.5
         version: 4.2.5(vue@3.3.8(typescript@5.2.2))
@@ -6667,8 +6667,8 @@ packages:
   vue-component-type-helpers@1.8.4:
     resolution: {integrity: sha512-6bnLkn8O0JJyiFSIF0EfCogzeqNXpnjJ0vW/SZzNHfe6sPx30lTtTXlE5TFs2qhJlAtDFybStVNpL73cPe3OMQ==}
 
-  vue-component-type-helpers@2.0.21:
-    resolution: {integrity: sha512-3NaicyZ7N4B6cft4bfb7dOnPbE9CjLcx+6wZWAg5zwszfO4qXRh+U52dN5r5ZZfc6iMaxKCEcoH9CmxxoFZHLg==}
+  vue-component-type-helpers@2.1.6:
+    resolution: {integrity: sha512-ng11B8B/ZADUMMOsRbqv0arc442q7lifSubD0v8oDXIFoMg/mXwAPUunrroIDkY+mcD0dHKccdaznSVp8EoX3w==}
 
   vue-demi@0.14.5:
     resolution: {integrity: sha512-o9NUVpl/YlsGJ7t+xuqJKx8EBGf1quRhCiT6D/J0pfwmk9zUwYkC7yrF4SZCe6fETvSM3UNL2edcbYrSyc4QHA==}
@@ -6718,9 +6718,9 @@ packages:
       vue:
         optional: true
 
-  vue-notion@https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/897aa5757521aa40671d0625a3e6a505acb296e1:
-    resolution: {tarball: https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/897aa5757521aa40671d0625a3e6a505acb296e1}
-    version: 2.0.1
+  vue-notion@https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/881f0d06883ef36ec9aae22318008c52550d4227:
+    resolution: {tarball: https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/881f0d06883ef36ec9aae22318008c52550d4227}
+    version: 2.0.5
     peerDependencies:
       '@janniks/vue3-katex': ^0.6.0-rc.5.1
       vue: ^3.2.45
@@ -9456,7 +9456,7 @@ snapshots:
       ts-dedent: 2.2.0
       type-fest: 2.19.0
       vue: 3.3.8(typescript@5.2.2)
-      vue-component-type-helpers: 2.0.21
+      vue-component-type-helpers: 2.1.6
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -14261,7 +14261,7 @@ snapshots:
 
   vue-component-type-helpers@1.8.4: {}
 
-  vue-component-type-helpers@2.0.21: {}
+  vue-component-type-helpers@2.1.6: {}
 
   vue-demi@0.14.5(vue@3.3.8(typescript@5.2.2)):
     dependencies:
@@ -14313,7 +14313,7 @@ snapshots:
     optionalDependencies:
       vue: 3.3.8(typescript@5.2.2)
 
-  vue-notion@https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/897aa5757521aa40671d0625a3e6a505acb296e1(@janniks/vue3-katex@0.6.0-rc.5.1(katex@0.16.10)(vue@3.3.8(typescript@5.2.2)))(vue@3.3.8(typescript@5.2.2)):
+  vue-notion@https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/881f0d06883ef36ec9aae22318008c52550d4227(@janniks/vue3-katex@0.6.0-rc.5.1(katex@0.16.10)(vue@3.3.8(typescript@5.2.2)))(vue@3.3.8(typescript@5.2.2)):
     dependencies:
       '@janniks/vue3-katex': 0.6.0-rc.5.1(katex@0.16.10)(vue@3.3.8(typescript@5.2.2))
       defu: 6.1.2
