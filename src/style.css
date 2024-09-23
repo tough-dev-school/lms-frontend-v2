@@ -17,8 +17,8 @@
     scroll-behavior: smooth;
   }
 
-  body {
-    @apply bg-offwhite font-body text-black dark:bg-dark-black dark:text-white;
+  .body {
+    @apply bg-offwhite font-body text-black dark:bg-darkmode-layer1 dark:text-darkmode-white min-h-screen;
   }
 }
 
@@ -37,9 +37,13 @@
     @apply prose-ul:my-[0.5em];
     @apply prose-h1:mt-[1em];
     @apply prose-h2:mt-[1.5em];
-    @apply text-black dark:text-white;
+    @apply !text-black dark:!text-darkmode-white;
     --tw-prose-bullets: currentColor;
     max-width: 100%;
+  }
+
+  .prose * {
+    @apply !text-black dark:!text-darkmode-white marker:dark:!text-darkmode-white;
   }
 
   .prose li > p {
@@ -58,18 +62,21 @@
   .link,
   .group-link {
     @apply border-blue text-blue opacity-100 transition-colors;
+    @apply dark:border-darkmode-blue dark:text-darkmode-blue;
   }
 
   .link {
     @apply hover:border-red hover:text-red;
+    @apply dark:hover:border-darkmode-red dark:hover:text-darkmode-red;
   }
 
   .group-link {
     @apply group-hover:border-red group-hover:text-red;
+    @apply dark:hover:border-darkmode-red dark:hover:text-darkmode-red;
   }
 
   .float-card {
-    @apply overflow-hidden rounded-8 bg-white shadow dark:bg-dark-gray;
+    @apply overflow-hidden rounded-8 bg-white dark:bg-darkmode-layer2 shadow;
   }
 
   .answer-action,

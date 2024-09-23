@@ -65,7 +65,7 @@
   <VCard class="VNewAnswer pt-0">
     <VTextEditor
       v-model="text"
-      class="-mb-32 rounded-t border-offwhite dark:border-dark-black"
+      class="-mb-32 rounded-t border-offwhite dark:border-darkmode-border"
       data-testid="editor"
       placeholder="Напишите ответ здесь"
       @send="sendPost" />

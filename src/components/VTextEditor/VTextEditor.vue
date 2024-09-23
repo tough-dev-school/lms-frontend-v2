@@ -232,7 +232,7 @@
         <ItalicIcon />
       </button>
     </BubbleMenu>
-    <EditorContent :editor="editor" class="EditorContent" />
+    <EditorContent :editor="editor" class="EditorContent prose" />
   </div>
 </template>
 
