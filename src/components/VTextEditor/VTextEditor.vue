@@ -156,7 +156,7 @@
 </script>
 
 <template>
-  <div ref="currentEditor" class="bg-white dark:bg-dark-gray">
+  <div ref="currentEditor" class="bg-white dark:bg-darkmode-layer2">
     <FloatingMenu
       v-if="editor"
       class="float-menu"
@@ -243,7 +243,7 @@
   }
 
   .bubble-menu {
-    @apply bg-black text-white;
+    @apply bg-black text-white dark:bg-darkmode-layer1 dark:text-darkmode-white;
   }
 
   .bubble-button,
@@ -256,11 +256,11 @@
   }
 
   .float-menu {
-    @apply bg-white text-black;
+    @apply bg-white text-black dark:bg-darkmode-layer3 dark:text-darkmode-white;
   }
 
   .ProseMirror {
-    @apply prose max-w-none rounded bg-white py-24 px-16 outline-none dark:prose-invert dark:bg-dark-gray tablet:px-32;
+    @apply prose max-w-none rounded bg-white py-24 px-16 outline-none dark:prose-invert dark:bg-darkmode-layer2 tablet:px-32;
   }
 
   .ProseMirror-focused {
