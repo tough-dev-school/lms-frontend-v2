@@ -20,7 +20,7 @@
         class="visually-hidden"
         :value="option.value"
         @click="emit('update:modelValue', option.value)" />
-      <component :is="option.icon" />
+      <component :is="option.icon" class="phone:w-24 w-16" />
       {{ option.label }}
     </label>
   </div>
@@ -28,7 +28,7 @@
 
 <style scoped>
   .RadioSwitch__Button {
-    @apply border-y px-8 py-8 gap-4 flex border-gray bg-offwhite  cursor-pointer transition-colors;
+    @apply border-y px-8 py-8 gap-4 flex border-gray bg-offwhite  cursor-pointer transition-colors whitespace-nowrap;
     @apply dark:bg-darkmode-white dark:border-darkmode-border;
     @apply first:rounded-l-4 first:border-l last:rounded-r-4 last:border-r;
   }
