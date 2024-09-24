@@ -30,7 +30,6 @@ export const mockMaterial = (): BlockMap => {
           '3047ea5c-d024-4005-bf16-c39436b25ebe',
           '068817fb-2f46-4fc4-9938-619220c8da40',
           '2a7b12a0-d707-4f31-9f28-99e98ee88e30',
-          '2dd41fb9-8294-4d68-bf76-a4cddc789763',
           'fdaf4f4a-39c9-43a7-8541-126cbb0c1380',
           '63e671a1-38b8-4dc7-8177-0ba5be082410',
           '227c1f36-fc4a-41a5-985d-635185d405ef',
