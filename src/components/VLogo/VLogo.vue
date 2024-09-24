@@ -31,7 +31,7 @@
         viewBox="0 0 585 218"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        class="h-[28px]">
+        class="h-[28px] phone:block hidden">
         <path
           d="M3.64685 52.5615V0.931636H13.8248V42.9732H29.9777V0.931636H40.1567V42.9732H56.3096V0.931636H66.4875V52.5615H3.64685Z"
           class="logo-black" />
