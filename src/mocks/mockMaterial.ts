@@ -571,32 +571,6 @@ export const mockMaterial = (): BlockMap => {
         parent_table: 'block',
       },
     },
-    '2dd41fb9-8294-4d68-bf76-a4cddc789763': {
-      value: {
-        id: '2dd41fb9-8294-4d68-bf76-a4cddc789763',
-        type: 'video',
-        properties: {
-          source: [['https://www.youtube.com/watch?v=jNQXAC9IVRw']],
-        },
-        format: {
-          block_width: 640,
-          block_height: 480,
-          display_source:
-            'https://www.youtube.com/embed/jNQXAC9IVRw?feature=oembed',
-          block_full_width: false,
-          block_page_width: true,
-          block_aspect_ratio: 0.75,
-          copied_from_pointer: {
-            id: '2efe73b6-1bfc-48ba-bdf1-6c412157efb2',
-            table: 'block',
-            spaceId: '42cb2fe6-5e2d-45ff-b057-1430773db711',
-          },
-          block_preserve_scale: true,
-        },
-        parent_id: 'cf1379bf-bf5a-41f9-942f-31dd4253c178',
-        parent_table: 'block',
-      },
-    },
     'fdaf4f4a-39c9-43a7-8541-126cbb0c1380': {
       value: {
         id: 'fdaf4f4a-39c9-43a7-8541-126cbb0c1380',
