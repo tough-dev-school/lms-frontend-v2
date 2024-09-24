@@ -36,9 +36,9 @@
   <div
     class="cursor-pointer rounded-8 p-16 shadow"
     :class="{
-      'bg-white': !type,
-      'bg-red': type === 'error',
-      'bg-green': type === 'success',
+      'bg-white dark:bg-darkmode-white dark:text-darkmode-layer1': !type,
+      'bg-red dark:bg-darkmode-red': type === 'error',
+      'bg-green dark:bg-darkmode-green': type === 'success',
     }"
     @click="emit('delete', id)">
     {{ text }}
