@@ -10,3 +10,9 @@ export interface VRadioSwitchProps {
   modelValue: string;
   options: RadioOption[];
 }
+
+export enum DarkMode {
+  Auto = 'auto',
+  Light = 'light',
+  Dark = 'dark',
+}

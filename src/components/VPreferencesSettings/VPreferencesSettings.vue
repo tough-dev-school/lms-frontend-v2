@@ -2,21 +2,14 @@
   import VHeading from '@/components/VHeading/VHeading.vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VRadioSwitch from '@/components/VRadioSwitch/VRadioSwitch.vue';
-  import usePreferencesStore, { DarkMode } from '@/stores/preferences';
-  import { computed } from 'vue';
   import { MoonFilledIcon, DevicesIcon, SunFilledIcon } from 'vue-tabler-icons';
   import type { RadioOption } from '@/types/preferences';
-
-  const preferencesStore = usePreferencesStore();
-
-  const darkMode = computed<DarkMode>({
-    get: () => preferencesStore.darkMode,
-    set: (mode: DarkMode) => preferencesStore.setDarkMode(mode),
-  });
+  import { DarkMode } from '@/types/preferences';
+  import { useColorMode } from '@vueuse/core';
 
   const darkModeOptions: RadioOption[] = [
     {
-      value: DarkMode.System,
+      value: DarkMode.Auto,
       label: 'Как в системе',
       icon: DevicesIcon,
     },
@@ -31,13 +24,15 @@
       icon: MoonFilledIcon,
     },
   ];
+
+  const { store } = useColorMode();
 </script>
 
 <template>
   <VCard>
     <VHeading class="mb-24" tag="h2">Настройки темы</VHeading>
     <div class="flex flex-wrap gap-16">
-      <VRadioSwitch v-model="darkMode" :options="darkModeOptions" />
+      <VRadioSwitch v-model="store" :options="darkModeOptions" />
     </div>
   </VCard>
 </template>
