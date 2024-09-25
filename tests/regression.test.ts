@@ -151,7 +151,7 @@ describe('visual regression test for', () => {
       expect(image).toMatchImageSnapshot({
         comparisonMethod: 'ssim',
         customDiffConfig: {
-          ssim: 'fast',
+          ssim: 'bezkrovny',
         },
         failureThreshold: Math.pow(16, 2),
         failureThresholdType: 'pixel',
