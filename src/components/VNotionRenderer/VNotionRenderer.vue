@@ -304,10 +304,12 @@
     opacity: 0.7;
     transition: opacity 100ms ease-in;
   }
-  .notion-link:has(> span) {
+  .notion-link:has(> span),
+  .notion-link:has(> b) {
     background-image: none;
   }
-  .notion-link > span {
+  .notion-link > span,
+  .notion-link > b span {
     opacity: inherit;
     background-image: linear-gradient(currentColor, currentColor);
     background-size: 100% 1px;
@@ -317,9 +319,6 @@
   .notion-link:hover,
   .notion-link:hover > span {
     opacity: 100%;
-  }
-  .notion-link span {
-    color: inherit;
   }
   .notion-blank {
     min-height: 1rem;
