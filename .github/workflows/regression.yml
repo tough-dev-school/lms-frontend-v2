@@ -25,7 +25,7 @@ jobs:
       - name: Install playwright browsers 😈
         run: npx playwright install
 
-      - name: Run visual tests for light mode 🌞
+      - name: Run visual tests 📸
         run: pnpm run test:visual
 
       - name: Saving test results 📥
