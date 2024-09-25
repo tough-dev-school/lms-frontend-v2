@@ -8,7 +8,7 @@
 </script>
 
 <template>
-  <div class="flex text-black">
+  <div class="flex flex-wrap phone:w-auto w-full text-black phone:gap-0 gap-4">
     <label
       v-for="(option, index) in options"
       :key="index"
@@ -20,7 +20,7 @@
         class="visually-hidden"
         :value="option.value"
         @click="emit('update:modelValue', option.value)" />
-      <component :is="option.icon" class="phone:w-24 w-16" />
+      <component :is="option.icon" />
       {{ option.label }}
     </label>
   </div>
@@ -28,9 +28,7 @@
 
 <style scoped>
   .RadioSwitch__Button {
-    @apply border-y px-8 py-8 gap-4 flex border-gray bg-offwhite  cursor-pointer transition-colors whitespace-nowrap;
-    @apply dark:bg-darkmode-white dark:border-darkmode-border;
-    @apply first:rounded-l-4 first:border-l last:rounded-r-4 last:border-r;
+    @apply border phone:border-y p-8 gap-4 flex border-gray bg-offwhite  cursor-pointer transition-colors whitespace-nowrap dark:bg-darkmode-white dark:border-darkmode-border phone:first:rounded-l-4 phone:first:border-l phone:last:rounded-r-4 last:border-r phone:first:w-auto first:w-full flex-grow phone:rounded-0 rounded-4;
   }
   .RadioSwitch__Button_Active {
     @apply bg-yellow dark:bg-yellow;
