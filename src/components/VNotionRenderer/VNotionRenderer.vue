@@ -521,6 +521,8 @@
     display: flex;
     overflow: hidden;
     user-select: none;
+
+    @apply dark:border-darkmode-border;
   }
 
   .notion-bookmark > div:first-child {
@@ -528,7 +530,7 @@
     padding: 12px 14px 14px;
     overflow: hidden;
     text-align: left;
-    color: rgb(55, 53, 47);
+    color: inherit;
   }
 
   .notion-bookmark-title {
