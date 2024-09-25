@@ -7,7 +7,7 @@ export default mergeConfig(
   defineConfig({
     test: {
       globals: true,
-      include: ['./src/visual-regression.test.ts'],
+      include: ['./tests/regression.test.ts'],
       testTimeout: 180000,
     },
   }),

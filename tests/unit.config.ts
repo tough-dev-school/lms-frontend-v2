@@ -9,7 +9,7 @@ export default mergeConfig(
       globals: true,
       mockReset: true,
       environment: 'jsdom',
-      exclude: [...configDefaults.exclude, './src/visual-regression.test.ts'],
+      exclude: [...configDefaults.exclude, './tests/regression.test.ts'],
       coverage: {
         provider: 'istanbul',
         extension: ['.ts', '.js', '.vue'],
