@@ -1,0 +1,8 @@
+* @brachkow
+.* @brachkow
+!docker-compose.yml @brachkow
+!Dockerfile @brachkow
+
+.github/workflows/ci.yml @f213
+docker-compose.yml @f213
+Dockerfile @f213
