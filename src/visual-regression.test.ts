@@ -121,14 +121,12 @@ describe('visual regression test for', () => {
     });
   };
 
+  let testIndex = 0;
+
   test.each(tests)(
     '%s',
     async (name, route, action, width, height, colorScheme) => {
-      await page.emulateMedia({
-        colorScheme,
-        reducedMotion: 'reduce',
-      });
-
+      console.log(`Running test ${++testIndex} of ${tests.length}: ${name}`);
       await page.setViewportSize({ width, height });
       await goto(route);
 
@@ -136,6 +134,7 @@ describe('visual regression test for', () => {
         await page.evaluate(() => {
           document.documentElement.classList.add('dark');
         });
+        await page.waitForTimeout(100);
       }
 
       await action();

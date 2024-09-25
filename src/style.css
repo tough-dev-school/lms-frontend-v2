@@ -62,7 +62,7 @@
   .link,
   .group-link {
     @apply border-blue text-blue opacity-100 transition-colors;
-    @apply dark:border-darkmode-blue dark:text-darkmode-blue;
+    @apply dark:border-darkmode-blue dark:text-darkmode-blue dark:opacity-100;
   }
 
   .link {
@@ -81,7 +81,7 @@
 
   .answer-action,
   .answer-action-base {
-    @apply rounded-8 text-dark-gray text-sub flex flex-col justify-center items-center px-16 py-4 box-content border border-offwhite cursor-pointer bg-offwhite transition-colors dark:bg-darkmode-layer3 dark:border-darkmode-layer3 dark:text-darkmode-white;
+    @apply rounded-8 text-dark-gray text-sub flex flex-col justify-center items-center px-16 py-4 box-content border border-offwhite cursor-pointer bg-offwhite transition-colors dark:bg-darkmode-layer3 dark:border-darkmode-layer3 dark:text-darkmode-white dark:opacity-100;
   }
 
   .answer-action,
@@ -91,7 +91,7 @@
 
   .answer-action,
   .answer-action-disabled {
-    @apply disabled:hover:bg-offwhite disabled:hover:border-offwhite disabled:opacity-50 disabled:cursor-not-allowed dark:disabled:hover:bg-darkmode-layer3 dark:disabled:hover:border-darkmode-border;
+    @apply disabled:hover:bg-offwhite disabled:hover:border-offwhite disabled:opacity-50 disabled:cursor-not-allowed dark:disabled:hover:bg-darkmode-layer3 dark:disabled:hover:border-darkmode-border dark:disabled:opacity-50;
   }
 
   .container-fluid {
