@@ -81,12 +81,12 @@
 
   .answer-action,
   .answer-action-base {
-    @apply rounded-8 text-dark-gray text-sub flex flex-col justify-center items-center px-16 py-4 box-content border border-offwhite cursor-pointer bg-offwhite transition-colors dark:bg-darkmode-layer3 dark:border-darkmode-border dark:text-darkmode-white;
+    @apply rounded-8 text-dark-gray text-sub flex flex-col justify-center items-center px-16 py-4 box-content border border-offwhite cursor-pointer bg-offwhite transition-colors dark:bg-darkmode-layer3 dark:border-darkmode-layer3 dark:text-darkmode-white;
   }
 
   .answer-action,
   .answer-action-hover {
-    @apply hover:bg-lightgray hover:border-lightgray dark:hover:bg-darkmode-layer1 dark:hover:border-darkmode-border;
+    @apply hover:bg-lightgray hover:border-lightgray dark:hover:bg-darkmode-layer1 dark:hover:border-darkmode-layer3;
   }
 
   .answer-action,
