@@ -1,6 +1,7 @@
 {
   "name": "lms-frontend-v2",
   "version": "0.0.0",
+  "packageManager": "pnpm@9.11.0",
   "scripts": {
     "dev": "vite",
     "build": "run-p check:type build-only",
