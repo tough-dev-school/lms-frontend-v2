@@ -36,7 +36,7 @@
 <template>
   <div
     v-if="nonCheckedCrossChecks.length > 0"
-    class="overflow-hidden rounded bg-white p-16 shadow dark:bg-dark-gray phone:px-24 tablet:px-32 bg-yellow-light">
+    class="overflow-hidden rounded bg-white p-16 shadow dark:bg-dark-gray phone:px-24 tablet:px-32">
     <p class="font-bold mb-8">Выберите работу коллеги по курсу для проверки:</p>
     <ol class="list-decimal list-inside mb-16">
       <li

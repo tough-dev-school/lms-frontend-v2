@@ -5,6 +5,7 @@
   import VLinksSettings from '@/components/VLinksSettings/VLinksSettings.vue';
   import VCertificateSettings from '@/components/VCertificateSettings/VCertificateSettings.vue';
   import VAvatarSettings from '@/components/VAvatarSettings/VAvatarSettings.vue';
+  import VPreferencesSettings from '@/components/VPreferencesSettings/VPreferencesSettings.vue';
 </script>
 
 <template>
@@ -44,11 +45,20 @@
             >Аватар</RouterLink
           >
         </li>
+        <li>
+          <RouterLink
+            class="link"
+            :to="{ name: 'settings', hash: '#preferences' }"
+            data-testid="preferences-link"
+            >Настройки темы</RouterLink
+          >
+        </li>
       </ul>
     </VCard>
     <VLinksSettings id="links" data-testid="links-settings" />
     <VPasswordSettings id="password" data-testid="password-settings" />
     <VCertificateSettings id="certificate" data-testid="certificate-settings" />
     <VAvatarSettings id="avatar" data-testid="avatar-settings" />
+    <VPreferencesSettings id="preferences" data-testid="preferences-settings" />
   </div>
 </template>

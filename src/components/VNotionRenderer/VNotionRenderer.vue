@@ -88,35 +88,57 @@
     margin-block-start: 0px;
     margin-block-end: 0px;
   }
-
   .notion-red {
     color: rgb(224, 62, 62);
   }
   .notion-pink {
     color: rgb(173, 26, 114);
   }
+  .dark .notion-pink {
+    color: rgb(255, 192, 203);
+  }
   .notion-blue {
     color: rgb(11, 110, 153);
+  }
+  .dark .notion-blue {
+    color: rgb(191, 219, 255);
   }
   .notion-purple {
     color: rgb(105, 64, 165);
   }
+  .dark .notion-purple {
+    color: rgb(213, 210, 255);
+  }
   .notion-teal {
     color: rgb(15, 123, 108);
+  }
+  .dark .notion-teal {
+    color: rgb(191, 219, 255);
   }
   .notion-yellow {
     color: rgb(223, 171, 1);
   }
+  .dark .notion-yellow {
+    color: rgb(255, 229, 100);
+  }
   .notion-orange {
     color: rgb(217, 115, 13);
+  }
+  .dark .notion-orange {
+    color: rgb(255, 183, 77);
   }
   .notion-brown {
     color: rgb(100, 71, 58);
   }
+  .dark .notion-brown {
+    color: rgb(209, 198, 185);
+  }
   .notion-gray {
     color: rgb(155, 154, 151);
   }
-
+  .dark .notion-gray {
+    color: rgb(191, 191, 191);
+  }
   .notion-red_background,
   .notion-red_background_co {
     background-color: rgba(224, 62, 62, 0.25);
@@ -152,6 +174,10 @@
   .notion-gray_background,
   .notion-gray_background_co {
     background-color: rgba(155, 154, 151, 0.25);
+  }
+
+  .dark .notion-callout {
+    background-color: #282828;
   }
 
   .notion b {
@@ -494,6 +520,8 @@
     display: flex;
     overflow: hidden;
     user-select: none;
+
+    @apply dark:border-darkmode-border;
   }
 
   .notion-bookmark > div:first-child {
@@ -501,7 +529,7 @@
     padding: 12px 14px 14px;
     overflow: hidden;
     text-align: left;
-    color: rgb(55, 53, 47);
+    color: inherit;
   }
 
   .notion-bookmark-title {
@@ -759,7 +787,6 @@
     align-items: center;
     justify-content: center;
     white-space: nowrap;
-
     color: rgb(55, 53, 47);
     text-decoration: none;
     margin: 1px 0px;
@@ -883,6 +910,13 @@
       url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' class='check' style='width: 12px; height: 12px; display: block; fill: white; flex-shrink: 0; backface-visibility: hidden;'%3E%3Cpolygon points='5.5 11.9993304 14 3.49933039 12.5 2 5.5 8.99933039 1.5 4.9968652 0 6.49933039'%3E%3C/polygon%3E%3C/svg%3E");
   }
 
+  .dark .notion-to-do-item input[type='checkbox'] {
+    @apply border-darkmode-border;
+  }
+
+  .dark .notion-to-do-item input[type='checkbox']:checked {
+    @apply border-darkmode-blue bg-darkmode-blue;
+  }
   .table-of-contents-item.table-of-contents-item.table-of-contents-item {
     display: grid;
     place-items: start;

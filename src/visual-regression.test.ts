@@ -10,7 +10,7 @@ interface Scenario {
 
 type ColorScheme = 'light' | 'dark';
 
-type Test = [string, string, () => Promise<void>, number, number];
+type Test = [string, string, () => Promise<void>, number, number, ColorScheme];
 
 type Viewport = [number, number];
 
@@ -21,9 +21,7 @@ const VIEWPORTS: Viewport[] = [
   [320, 560],
 ];
 
-const COLOR_SCHEME = (
-  process.env.COLOR_SCHEME ? process.env.COLOR_SCHEME : 'light'
-) as ColorScheme;
+const COLOR_SCHEMES: ColorScheme[] = ['light', 'dark'];
 
 describe('visual regression test for', () => {
   let browser: playwright.Browser;
@@ -99,13 +97,16 @@ describe('visual regression test for', () => {
 
   scenarios.forEach((test) => {
     VIEWPORTS.forEach((viewport) => {
-      tests.push([
-        `${test.name} — ${viewport[0]}×${viewport[1]} ${COLOR_SCHEME}`,
-        test.path,
-        test.action ? test.action : async () => {},
-        viewport[0],
-        viewport[1],
-      ]);
+      COLOR_SCHEMES.forEach((colorScheme) => {
+        tests.push([
+          `${test.name} — ${viewport[0]}×${viewport[1]} ${colorScheme}`,
+          test.path,
+          test.action ? test.action : async () => {},
+          viewport[0],
+          viewport[1],
+          colorScheme,
+        ]);
+      });
     });
   });
 
@@ -120,24 +121,33 @@ describe('visual regression test for', () => {
     });
   };
 
-  test.each(tests)('%s', async (name, route, action, width, height) => {
-    await page.emulateMedia({
-      colorScheme: COLOR_SCHEME,
-      reducedMotion: 'reduce',
-    });
-    await page.setViewportSize({ width, height });
-    await goto(route);
+  let testIndex = 0;
 
-    await action();
-    const image = await page.screenshot({ fullPage: true });
+  test.each(tests)(
+    '%s',
+    async (name, route, action, width, height, colorScheme) => {
+      console.log(`Running test ${++testIndex} of ${tests.length}: ${name}`);
+      await page.setViewportSize({ width, height });
+      await goto(route);
 
-    expect(image).toMatchImageSnapshot({
-      comparisonMethod: 'ssim',
-      customDiffConfig: {
-        ssim: 'fast',
-      },
-      failureThreshold: Math.pow(16, 2),
-      failureThresholdType: 'pixel',
-    });
-  });
+      if (colorScheme === 'dark') {
+        await page.evaluate(() => {
+          document.documentElement.classList.add('dark');
+        });
+        await page.waitForTimeout(100);
+      }
+
+      await action();
+      const image = await page.screenshot({ fullPage: true });
+
+      expect(image).toMatchImageSnapshot({
+        comparisonMethod: 'ssim',
+        customDiffConfig: {
+          ssim: 'fast',
+        },
+        failureThreshold: Math.pow(16, 2),
+        failureThresholdType: 'pixel',
+      });
+    },
+  );
 });

@@ -55,7 +55,7 @@
     :class="{
       'answer-action-hover': !disabled,
       'cursor-not-allowed': disabled,
-      '!border !border-gray': ownReaction,
+      '!border !border-gray dark:!border-darkmode-border': ownReaction,
     }"
     @click="handleClick">
     <div class="flex h-24 w-24 items-center justify-center" data-testid="emoji">

@@ -58,7 +58,9 @@
         :user-id="answer.author.uuid"
         :image="answer.author.avatar" />
       <div>
-        <div class="font-bold" data-testid="name">
+        <div
+          class="font-bold text-black dark:text-darkmode-white"
+          data-testid="name">
           {{ getName(answer.author.firstName, answer.author.lastName) }}
           <span
             v-if="isOwn"
