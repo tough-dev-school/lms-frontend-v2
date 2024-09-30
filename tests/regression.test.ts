@@ -110,16 +110,21 @@ describe('visual regression test for', () => {
     });
   });
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     browser = await playwright.chromium.launch();
+  });
+
+  afterAll(async () => {
+    await browser.close();
+  });
+
+  beforeEach(async () => {
     page = await browser.newPage();
   });
 
-  const goto = (route: string) => {
-    return page.goto(`http://localhost:3000${route}`, {
-      waitUntil: 'networkidle',
-    });
-  };
+  afterEach(async () => {
+    await page.close();
+  });
 
   let testIndex = 0;
 
@@ -128,7 +133,10 @@ describe('visual regression test for', () => {
     async (name, route, action, width, height, colorScheme) => {
       console.log(`Running test ${++testIndex} of ${tests.length}: ${name}`);
       await page.setViewportSize({ width, height });
-      await goto(route);
+
+      await page.goto(`http://localhost:3000${route}`, {
+        waitUntil: 'networkidle',
+      });
 
       if (colorScheme === 'dark') {
         await page.evaluate(() => {
@@ -143,7 +151,7 @@ describe('visual regression test for', () => {
       expect(image).toMatchImageSnapshot({
         comparisonMethod: 'ssim',
         customDiffConfig: {
-          ssim: 'fast',
+          ssim: 'bezkrovny',
         },
         failureThreshold: Math.pow(16, 2),
         failureThresholdType: 'pixel',

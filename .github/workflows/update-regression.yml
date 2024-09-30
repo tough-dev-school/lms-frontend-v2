@@ -1,5 +1,5 @@
-name: Regression tests
-on: [push]
+name: Update regression tests snapshots
+on: workflow_dispatch
 
 jobs:
   regression:
@@ -25,21 +25,12 @@ jobs:
       - name: Install playwright browsers
         run: pnpm playwright install
 
-      - name: Run visual regression tests
-        run: pnpm run test:regression
+      - name: Run regression tests
+        run: pnpm run test:regression:update
 
-      - name: Saving diffs 📥
-        if: failure()
+      - name: Saving screenshots 📥
         uses: actions/upload-artifact@v4
         with:
-          name: diff
-          path: tests/__image_snapshots__/__diff_output__
-          retention-days: 14
-
-      - name: Saving failure 📥
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: received
-          path: tests/__image_snapshots__/__received_output__
+          name: updated-screenshots
+          path: tests/__image_snapshots__/
           retention-days: 14

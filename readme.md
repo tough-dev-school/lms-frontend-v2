@@ -14,6 +14,15 @@ docker compose up
 
 Так же нужно будет войти в [GitHub Container registry](https://docs.github.com/en/packages/guides/configuring-docker-for-use-with-github-packages#authenticating-with-a-personal-access-token), обратите внимание что нужно войти в ` https://ghcr.io`, а не в `https://docker.pkg.github.com`.
 
-## Wiki
+## Тесты на визульную регрессию
 
-- [Как работают тесты на визуальную регрессию](https://github.com/tough-dev-school/lms-frontend-v2/wiki/%D0%9A%D0%B0%D0%BA-%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0%D1%8E%D1%82-%D1%82%D0%B5%D1%81%D1%82%D1%8B-%D0%BD%D0%B0-%D0%B2%D0%B8%D0%B7%D1%83%D0%B0%D0%BB%D1%8C%D0%BD%D1%83%D1%8E-%D1%80%D0%B5%D0%B3%D1%80%D0%B5%D1%81%D1%81%D0%B8%D1%8E)
+Если ветка содержит визуальные изменения, тест на регрессию не пройдет. Чтобы исправить тест, выполните следующие шаги:
+
+1. Перейдите на вкладку “Summary” неудачного задания и скачайте файл `diff.zip` внизу.
+2. В скачанном архиве проверьте различия. Если различия неожиданны — исправьте их. Если различия ожидаемы, вам нужно сгенерировать новые скриншоты, включая эти изменения.
+3. Перейдите к [экшену обновления](https://github.com/tough-dev-school/lms-frontend-v2/actions/workflows/update-regression.yml) и запустите его для вашей ветки.
+4. Перейдите на вкладку “Summary” задания обновления и скачайте файл `updated-screenshots.zip` внизу.
+5. На вашем компьютере замените изображения в `tests/image_snapshots/` на изображения из `updated-screenshots.zip` и зафиксируйте эти изменения в вашей ветке.
+6. CI будет исправлен.
+
+Если вам нужно добавить новые тесты, добавьте новый маршрут в массив pages и выполните шаги 3-5.
