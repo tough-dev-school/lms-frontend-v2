@@ -71,6 +71,7 @@
           event.dataTransfer.files &&
           event.dataTransfer.files[0]
         ) {
+          isImageLoading.value = true;
           const file = event.dataTransfer.files[0];
 
           homework.sendImage(file).then(({ image }) => {
@@ -84,6 +85,7 @@
               const transaction = view.state.tr.insert(coordinates.pos, node);
               view.dispatch(transaction);
             }
+            isImageLoading.value = false;
           });
 
           return true;
