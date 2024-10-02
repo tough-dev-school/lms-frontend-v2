@@ -22,6 +22,7 @@
   import useHomework from '@/stores/homework';
   import { onBeforeUnmount, watch, withDefaults, ref } from 'vue';
   import { onKeyDown, useKeyModifier, useFocusWithin } from '@vueuse/core';
+  import VLoader from '@/components/VLoader/VLoader.vue';
 
   export interface Props {
     modelValue: string;
@@ -34,6 +35,7 @@
   });
 
   const currentEditor = ref();
+  const isImageLoading = ref(false);
   const { focused } = useFocusWithin(currentEditor);
 
   const emit = defineEmits<{
@@ -141,6 +143,7 @@
   };
 
   const addImage = async (event: Event) => {
+    isImageLoading.value = true;
     if (event.target) {
       const file = (event.target as HTMLInputElement).files?.[0];
       if (file) {
@@ -148,6 +151,7 @@
         editor.commands.setImage({ src: image });
       }
     }
+    isImageLoading.value = false;
   };
 
   onBeforeUnmount(() => {
@@ -232,6 +236,9 @@
         <ItalicIcon />
       </button>
     </BubbleMenu>
+    <div v-if="isImageLoading" class="p-32">
+      <VLoader />
+    </div>
     <EditorContent :editor="editor" class="EditorContent prose" />
   </div>
 </template>
