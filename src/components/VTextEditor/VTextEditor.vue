@@ -71,6 +71,8 @@
           event.dataTransfer.files &&
           event.dataTransfer.files[0]
         ) {
+          const loaderFieldHeightInPx = 104;
+
           isImageLoading.value = true;
           const file = event.dataTransfer.files[0];
 
@@ -78,7 +80,7 @@
             const { schema } = view.state;
             const coordinates = view.posAtCoords({
               left: event.clientX,
-              top: event.clientY,
+              top: event.clientY + loaderFieldHeightInPx,
             });
             if (coordinates) {
               const node = schema.nodes.image.create({ src: image });
