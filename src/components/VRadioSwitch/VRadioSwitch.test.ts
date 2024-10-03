@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 import { describe, test, expect } from 'vitest';
 import VRadioSwitch from './VRadioSwitch.vue';
 import { SunFilledIcon, MoonFilledIcon } from 'vue-tabler-icons';
@@ -10,7 +10,7 @@ describe('VRadioSwitch', () => {
   ];
 
   test('renders all options', () => {
-    const wrapper = mount(VRadioSwitch, {
+    const wrapper = shallowMount(VRadioSwitch, {
       props: {
         options,
         modelValue: 'option1',
@@ -30,7 +30,7 @@ describe('VRadioSwitch', () => {
   });
 
   test('highlights active option', () => {
-    const wrapper = mount(VRadioSwitch, {
+    const wrapper = shallowMount(VRadioSwitch, {
       props: {
         options,
         modelValue: 'option2',
@@ -49,7 +49,7 @@ describe('VRadioSwitch', () => {
   });
 
   test('emits update:modelValue event on click', async () => {
-    const wrapper = mount(VRadioSwitch, {
+    const wrapper = shallowMount(VRadioSwitch, {
       props: {
         options,
         modelValue: 'option1',

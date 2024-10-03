@@ -60,7 +60,6 @@ const useHomework = defineStore('homework', {
     ) {
       (answers || this.answers).forEach((item) => {
         if (item.slug === answer.slug) {
-          console.log(answer, item);
           return Object.assign(item, answer);
         }
 

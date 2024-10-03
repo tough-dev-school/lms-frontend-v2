@@ -27,6 +27,7 @@ describe('VAvatarSettings', () => {
         ],
         stubs: {
           VCard: false,
+          AvatarCropper: true,
         },
       },
     });
