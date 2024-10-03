@@ -1,4 +1,4 @@
-import { mount, VueWrapper } from '@vue/test-utils';
+import { mount, RouterLinkStub, VueWrapper } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
 import VHeader from './VHeader.vue';
 import { useRoute } from 'vue-router';
@@ -9,7 +9,14 @@ describe('VHeader', () => {
   let wrapper: VueWrapper<InstanceType<typeof VHeader>>;
 
   const mountComponent = () => {
-    wrapper = mount(VHeader, { shallow: true });
+    wrapper = mount(VHeader, {
+      shallow: true,
+      global: {
+        stubs: {
+          RouterLink: RouterLinkStub,
+        },
+      },
+    });
   };
 
   beforeEach(() => {
@@ -20,12 +27,12 @@ describe('VHeader', () => {
     mountComponent();
   });
 
-  const getLogoWrapper = () => wrapper.find('[data-testid="logo"]');
+  const getLogoWrapper = () => wrapper.findComponent(RouterLinkStub);
   const getProfileMenuWrapper = () => wrapper.find('[data-testid="profile"]');
 
   test('has logo that leads to home page', () => {
     expect(getLogoWrapper().exists()).toBe(true);
-    expect(getLogoWrapper().attributes('to')).toBe('/');
+    expect(getLogoWrapper().props().to).toBe('/');
   });
 
   test('has profile menu if route is private', () => {
