@@ -290,6 +290,8 @@
     border-top-width: 1px;
     border-bottom-width: 0;
     border-color: rgba(55, 53, 47, 0.09);
+
+    @apply dark:border-darkmode-border;
   }
   .notion-link {
     color: inherit;
@@ -333,11 +335,14 @@
     height: 30px;
     margin: 1px 0px;
     transition: background 120ms ease-in 0s;
+    @apply dark:text-darkmode-white;
   }
   .notion-page-link:hover {
     background: rgba(55, 53, 47, 0.08);
   }
-
+  .dark .notion-page-link:hover {
+    @apply bg-darkmode-layer3;
+  }
   .notion-page-icon {
     line-height: 1.4;
     margin-right: 4px;
@@ -366,6 +371,8 @@
     line-height: 1.3;
     border-bottom: 1px solid rgba(55, 53, 47, 0.16);
     margin: 1px 0px;
+
+    @apply dark:border-b-darkmode-border;
   }
 
   .notion-inline-code {
