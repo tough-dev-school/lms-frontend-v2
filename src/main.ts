@@ -22,10 +22,8 @@ if (process.env.NODE_ENV === 'production') {
     app,
     dsn: 'https://4bd3741410104a88a731d82ee59341b0@o47144.ingest.sentry.io/4504038554664960',
     integrations: [
-      new Sentry.BrowserTracing({
-        routingInstrumentation: Sentry.vueRouterInstrumentation(router),
-      }),
-      new Sentry.Replay(),
+      Sentry.browserTracingIntegration({ router }),
+      Sentry.replayIntegration(),
     ],
     tracesSampleRate: 1.0,
     tracePropagationTargets: [
