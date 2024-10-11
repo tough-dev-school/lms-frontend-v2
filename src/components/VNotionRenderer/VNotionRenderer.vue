@@ -25,6 +25,8 @@
 
   const route = useRoute();
 
+  defineProps<VNotionViewProps>();
+
   onMounted(() => {
     /**
      * This is fucking hack to be able to check checkboxes and save state to localStorage that rendered via NotionRenderer
