@@ -6,7 +6,7 @@
 
 <script lang="ts" setup>
   import { useRoute, useRouter } from 'vue-router';
-  import { ref, watch } from 'vue';
+  import { watch } from 'vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VButton from '@/components/VButton/VButton.vue';
   import useMaterials from '@/stores/materials';
@@ -19,10 +19,8 @@
   const materials = useMaterials();
   const title = useTitle();
   const route = useRoute();
-  const loadedWithNewRoute = ref(false);
 
   withDefaults(defineProps<VNotionView>(), { forceNew: false });
-
   watch(
     () => route.params.id,
     async () => {
@@ -31,7 +29,6 @@
         const notionTitle = getNotionTitle(materialId, materials.material);
         if (notionTitle) title.value = notionTitle;
       }
-      loadedWithNewRoute.value = true;
     },
     { immediate: true },
   );
@@ -41,7 +38,7 @@
 
 <template>
   <template v-if="materials.material">
-    <VCard v-if="loadedWithNewRoute" class="pt-32">
+    <VCard class="pt-32">
       <VNotionRenderer :block-map="materials.material" />
     </VCard>
   </template>
