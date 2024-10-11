@@ -21,7 +21,7 @@
   const route = useRoute();
   const loadedWithNewRoute = ref(false);
 
-  withDefaults(defineProps<VNotionView>(), { forceNew: true });
+  withDefaults(defineProps<VNotionView>(), { forceNew: false });
 
   watch(
     () => route.params.id,
