@@ -28,7 +28,6 @@
   "dependencies": {
     "@brachkow/email-providers": "^1.2.0",
     "@formkit/auto-animate": "^0.8.1",
-    "@sentry/tracing": "^7.114.0",
     "@sentry/vue": "^8.34.0",
     "@tiptap/extension-bubble-menu": "^2.1.12",
     "@tiptap/extension-image": "^2.1.12",
