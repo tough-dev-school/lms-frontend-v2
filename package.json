@@ -51,7 +51,7 @@
     "uuid": "^9.0.1",
     "vue": "^3.3.8",
     "vue-avatar-cropper": "^6.1.1",
-    "vue-notion": "github:tough-dev-school/vue-notion#2.0.5",
+    "vue-notion": "github:tough-dev-school/vue-notion#2.0.6",
     "vue-router": "^4.4.5",
     "vue-tabler-icons": "^2.21.0"
   },
