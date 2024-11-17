@@ -112,6 +112,24 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+  sentry-release:
+    needs: build-docker-image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Create Sentry release
+        uses: getsentry/action-release@v1
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+          sourcemaps: './dist'
+
   deploy:
     needs: build-docker-image
     runs-on: ubuntu-latest
