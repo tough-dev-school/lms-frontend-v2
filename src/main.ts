@@ -20,12 +20,12 @@ const app = createApp(App);
 if (process.env.NODE_ENV === 'production') {
   Sentry.init({
     app,
-    dsn: 'https://4bd3741410104a88a731d82ee59341b0@o47144.ingest.sentry.io/4504038554664960',
+    dsn: 'https://c7d16bbe0bff41929238c6fefc3c6da0@app.glitchtip.com/10541',
     integrations: [
       Sentry.browserTracingIntegration({ router }),
       Sentry.captureConsoleIntegration(),
     ],
-    tracesSampleRate: 1.0,
+    tracesSampleRate: 0.5,
     tracePropagationTargets: [
       'localhost',
       /^https:\/\/lms\.tough-dev\.school\/api\//,
