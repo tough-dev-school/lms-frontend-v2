@@ -32,66 +32,66 @@ describe('visual regression test for', () => {
   const scenarios: Scenario[] = [
     {
       name: 'Login — email login',
-      path: `/iframe.html?id=app-vloginview--default&viewMode=story`,
+      path: `/iframe?id=app-vloginview--default&viewMode=story`,
     },
     {
       name: 'Login — password login',
-      path: `/iframe.html?id=app-vloginview--default&viewMode=story`,
+      path: `/iframe?id=app-vloginview--default&viewMode=story`,
       action: async () => {
         await page.click('[data-testid="to-password-mode"]');
       },
     },
     {
       name: 'Login — reset password',
-      path: `/iframe.html?id=app-vloginresetview--default&viewMode=story`,
+      path: `/iframe?id=app-vloginresetview--default&viewMode=story`,
     },
     {
       name: 'Login — change password',
-      path: `/iframe.html?id=app-vloginchangeview--default&viewMode=story`,
+      path: `/iframe?id=app-vloginchangeview--default&viewMode=story`,
     },
     {
       name: 'Login — mail sent',
-      path: '/iframe.html?id=app-vmailsentview--default&viewMode=story',
+      path: '/iframe?id=app-vmailsentview--default&viewMode=story',
     },
     {
       name: 'Certificates',
-      path: `/iframe.html?id=app-vcertificatesview--default&viewMode=story`,
+      path: `/iframe?id=app-vcertificatesview--default&viewMode=story`,
     },
     {
       name: 'No Certificates',
-      path: `/iframe.html?id=app-vcertificatesview--empty&viewMode=story`,
+      path: `/iframe?id=app-vcertificatesview--empty&viewMode=story`,
     },
     {
       name: 'Settings',
-      path: `/iframe.html?id=app-vsettingsview--default&viewMode=story`,
+      path: `/iframe?id=app-vsettingsview--default&viewMode=story`,
     },
     {
       name: 'Materials',
-      path: '/iframe.html?id=app-vnotionview--default&viewMode=story',
+      path: '/iframe?id=app-vnotionview--default&viewMode=story',
     },
     {
       name: 'Materials Missing',
-      path: '/iframe.html?id=app-vnotionview--empty&viewMode=story',
+      path: '/iframe?id=app-vnotionview--empty&viewMode=story',
     },
     {
       name: 'HomeworkAnswers',
-      path: `/iframe.html?id=app-vhomeworkanswerview--default&viewMode=story`,
+      path: `/iframe?id=app-vhomeworkanswerview--default&viewMode=story`,
     },
     {
       name: 'HomeworkExpert',
-      path: '/iframe.html?id=app-vhomeworkexpertview--default&viewMode=story',
+      path: '/iframe?id=app-vhomeworkexpertview--default&viewMode=story',
     },
     {
       name: 'HomeworkQuestion',
-      path: '/iframe.html?id=app-vhomeworkquestionview--default&viewMode=story',
+      path: '/iframe?id=app-vhomeworkquestionview--default&viewMode=story',
     },
     {
       name: 'Homepage',
-      path: '/iframe.html?id=app-vhomeview--default&viewMode=story',
+      path: '/iframe?id=app-vhomeview--default&viewMode=story',
     },
     {
       name: 'Empty Homepage',
-      path: '/iframe.html?id=app-vhomeview--empty&viewMode=story',
+      path: '/iframe?id=app-vhomeview--empty&viewMode=story',
     },
   ];
 
