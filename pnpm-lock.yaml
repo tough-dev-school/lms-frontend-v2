@@ -219,9 +219,6 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
-      sass:
-        specifier: ^1.69.5
-        version: 1.69.5
       storybook:
         specifier: ^7.5.3
         version: 7.5.3
@@ -11898,7 +11895,8 @@ snapshots:
 
   ignore@5.2.4: {}
 
-  immutable@4.3.4: {}
+  immutable@4.3.4:
+    optional: true
 
   import-fresh@3.3.0:
     dependencies:
@@ -13566,7 +13564,8 @@ snapshots:
     dependencies:
       chokidar: 3.5.3
       immutable: 4.3.4
-      source-map-js: 1.0.2
+      source-map-js: 1.2.1
+    optional: true
 
   saxes@6.0.0:
     dependencies:
