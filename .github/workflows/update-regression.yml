@@ -25,8 +25,11 @@ jobs:
       - name: Install playwright browsers
         run: pnpm playwright install chromium
 
+      - name: Build storybook
+        run: pnpm run storybook:build
+
       - name: Run storybook
-        run: pnpm run storybook &
+        run: pnpm run storybook:preview &
 
       - name: Run regression tests
         run: pnpm run test:regression:update
