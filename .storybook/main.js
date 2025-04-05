@@ -14,9 +14,6 @@ module.exports = {
   core: {
     disableTelemetry: true,
   },
-  features: {
-    storyStoreV7: true,
-  },
   staticDirs: ['../public'],
   async viteFinal(config, { configType }) {
     return mergeConfig(config, {
@@ -27,7 +24,5 @@ module.exports = {
       },
     });
   },
-  docs: {
-    autodocs: false,
-  },
+  docs: {},
 };
