@@ -99,6 +99,8 @@
   });
 
   const getRootComponentProps = computed(() => {
+    // #FIXME: fix type
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const rootComponentProps: any = { answer: props.originalPost };
 
     rootComponentProps.questionId = props.originalPost.question;
@@ -124,7 +126,7 @@
             :class="{ 'cursor-auto opacity-50': !action.handle }"
             :title="action.name"
             :disabled="action.disabled"
-            @click="action.handle">
+            @click="action.handle ? action.handle : () => {}">
             <component :is="action.icon" />
           </button>
         </template>

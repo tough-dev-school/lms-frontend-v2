@@ -26,7 +26,7 @@ const Template: StoryFn = (args) => ({
 export const Default = {
   render: Template,
   args: {
-    reactions: faker.helpers.multiple(mockReaction, { count: 15 }),
+    reactions: faker.helpers.multiple(() => mockReaction(), { count: 15 }),
     open: false,
     disabled: false,
   },
@@ -35,7 +35,7 @@ export const Default = {
 export const Open = {
   render: Template,
   args: {
-    reactions: faker.helpers.multiple(mockReaction, { count: 15 }),
+    reactions: faker.helpers.multiple(() => mockReaction(), { count: 15 }),
     open: true,
     disabled: false,
   },
@@ -44,7 +44,7 @@ export const Open = {
 export const Disabled = {
   render: Template,
   args: {
-    reactions: faker.helpers.multiple(mockReaction, { count: 15 }),
+    reactions: faker.helpers.multiple(() => mockReaction(), { count: 15 }),
     open: true,
     disabled: true,
   },

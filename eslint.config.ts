@@ -21,8 +21,9 @@ const gitignorePath = path.resolve(__dirname, '.gitignore');
 
 export default defineConfigWithVueTs(
   includeIgnoreFile(gitignorePath),
-  vueTsConfigs.recommended,
   pluginVue.configs['flat/recommended'],
+  vueTsConfigs.recommended,
+  ...pluginStorybook.configs['flat/recommended'],
   {
     name: 'app/files-to-lint',
     files: ['**/*.{ts,mts,tsx,vue}'],
@@ -35,10 +36,6 @@ export default defineConfigWithVueTs(
   {
     ...pluginVitest.configs.recommended,
     files: ['**/*.{test,spec}.{js,ts,jsx,tsx}'],
-  },
-  {
-    ...pluginStorybook.configs['flat/recommended'],
-    files: ['**/*.stories.ts', '**/*.stories.tsx'],
   },
   skipFormatting,
 );

@@ -41,8 +41,10 @@ const authorId = faker.string.uuid();
 const answerId = faker.string.uuid();
 
 const answerData = mockAnswer();
-const answersData = faker.helpers.multiple(mockAnswer, { count: 3 });
-const crosschecksData = faker.helpers.multiple(mockCrossCheck, { count: 3 });
+const answersData = faker.helpers.multiple(() => mockAnswer(), { count: 3 });
+const crosschecksData = faker.helpers.multiple(() => mockCrossCheck(), {
+  count: 3,
+});
 const threadsData = mockThread();
 const postData = mockComment({ ...mockThread(), parent: parentId });
 const questionData = mockQuestion();

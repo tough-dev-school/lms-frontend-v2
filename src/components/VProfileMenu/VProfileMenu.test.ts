@@ -46,7 +46,7 @@ describe('VProfileMenu', () => {
 
     studies = useStudies();
     studies.$patch({
-      items: faker.helpers.multiple(mockStudy, { count: 3 }),
+      items: faker.helpers.multiple(() => mockStudy(), { count: 3 }),
     });
 
     auth = useAuth();
@@ -159,10 +159,6 @@ describe('VProfileMenu', () => {
     expect(routerPushMock).toHaveBeenCalledWith({ name: 'login' });
   });
 
-  test('Menu must be closed after click on item', async () => {
-    await getButtonWrapper().trigger('click');
-  });
-
   test('Has link to certificates if no needed data', async () => {
     await getButtonWrapper().trigger('click');
 
@@ -204,7 +200,9 @@ describe('VProfileMenu', () => {
     const NUMBER_OF_MATERIALS = 2;
 
     studies.$patch({
-      items: faker.helpers.multiple(mockStudy, { count: NUMBER_OF_MATERIALS }),
+      items: faker.helpers.multiple(() => mockStudy(), {
+        count: NUMBER_OF_MATERIALS,
+      }),
     });
 
     await getButtonWrapper().trigger('click');
@@ -215,7 +213,7 @@ describe('VProfileMenu', () => {
 
   test('Has max of 3 materials', async () => {
     studies.$patch({
-      items: faker.helpers.multiple(mockStudy, { count: 10 }),
+      items: faker.helpers.multiple(() => mockStudy(), { count: 10 }),
     });
 
     await getButtonWrapper().trigger('click');

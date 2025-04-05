@@ -29,7 +29,7 @@ describe('studies store', () => {
   });
 
   test('getData sets items', async () => {
-    const studiesData = faker.helpers.multiple(mockStudy, { count: 3 });
+    const studiesData = faker.helpers.multiple(() => mockStudy(), { count: 3 });
     (getStudies as ReturnType<typeof vi.fn>).mockResolvedValue(studiesData);
 
     await studies.getData();

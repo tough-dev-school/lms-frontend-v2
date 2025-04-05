@@ -8,7 +8,7 @@ import { mockThread } from '@/mocks/mockThread';
 import { mockComments } from '@/mocks/mockComments';
 import { mockComment } from '@/mocks/mockComment';
 
-const answers = faker.helpers.multiple(mockAnswer, {
+const answers = faker.helpers.multiple(() => mockAnswer(), {
   count: { min: 3, max: 10 },
 });
 

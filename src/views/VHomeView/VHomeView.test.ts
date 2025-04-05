@@ -7,7 +7,7 @@ import { nextTick } from 'vue';
 import { faker } from '@faker-js/faker';
 import { mockStudy } from '@/mocks/mockStudy';
 
-const defaultStudies = faker.helpers.multiple(mockStudy, { count: 3 });
+const defaultStudies = faker.helpers.multiple(() => mockStudy(), { count: 3 });
 
 describe('VHomeView', () => {
   let wrapper: VueWrapper<InstanceType<typeof VHomeView>>;
