@@ -27,47 +27,14 @@
 <template>
   <VBreadcrumbs :items="breadcrumbs" />
   <div>
-    <div class="flex items-center gap-16 mb-32">
-      <RouterLink :to="{ name: 'modules' }" class="link">
-        ← Назад к модулям
-      </RouterLink>
-      <VHeading tag="h1">Все уроки</VHeading>
-    </div>
-
+    <VHeading tag="h1">Все уроки</VHeading>
     <div v-if="lessons.length > 0" class="grid gap-24">
       <VCard v-for="lesson in lessons" :key="lesson.id">
         <VHeading tag="h2" class="mb-8">{{ lesson.name }}</VHeading>
 
         <pre>{{ JSON.stringify(lesson, null, 2) }}</pre>
-
-        <div v-if="lesson.material" class="mt-16">
-          <h3 class="text-lg font-semibold mb-2">Материалы</h3>
-          <RouterLink
-            :to="{
-              name: 'materials',
-              params: { id: lesson.material.id },
-            }"
-            class="link">
-            {{ lesson.material.title }}
-          </RouterLink>
-        </div>
-
-        <!-- Render homework info -->
-        <div v-if="lesson.homework" class="mt-16">
-          <h3 class="text-lg font-semibold mb-2">Домашнее задание</h3>
-          <RouterLink
-            :to="{
-              name: 'homework-question',
-              params: { questionId: lesson.homework.question.slug },
-            }"
-            class="link">
-            {{ lesson.homework.question.name }}
-          </RouterLink>
-          <p class="mt-2">Дедлайн: {{ lesson.homework.question.deadline }}</p>
-        </div>
       </VCard>
     </div>
-
     <p v-else data-testid="empty" class="mb-16 text-center">
       Нет доступных уроков.
     </p>

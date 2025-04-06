@@ -31,9 +31,8 @@
     <RouterLink
       v-for="module in modules"
       :key="module.id"
-      :to="{ name: 'lessons', params: { moduleId: module.id } }"
-      class="link">
-      <VCard class="relative">
+      :to="{ name: 'lessons', params: { moduleId: module.id } }">
+      <VCard>
         <VHeading tag="h2">{{ module.name }}</VHeading>
         <pre>{{ JSON.stringify(module, null, 2) }}</pre>
       </VCard>
