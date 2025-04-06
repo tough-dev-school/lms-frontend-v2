@@ -15,7 +15,7 @@
 <template>
   <component
     :is="tag"
-    class="font-display font-bold"
+    class="font-display"
     :class="{
       'text-h1': tag === 'h1',
       'text-h2': tag === 'h2',
