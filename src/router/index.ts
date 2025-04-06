@@ -152,6 +152,12 @@ const router = createRouter({
 
 router.beforeEach(
   async (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
+    const auth = useAuth();
+
+    if (to.meta.isPublic && auth.token) {
+      return { name: 'home' };
+    }
+
     // Redirect to exisiting route if route does not exist
     if (!to.name) {
       return { name: 'home' };
