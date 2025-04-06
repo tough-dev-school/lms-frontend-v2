@@ -17,7 +17,7 @@
   import VReaction from './components/VReaction/VReaction.vue';
   import type { Reaction } from '@/types/homework';
   import { groupBy, debounce } from 'lodash-es';
-  import useUser from '@/stores/user';
+  import { useUserQuery } from '@/query';
   import { uuid } from '@/utils/uuid';
 
   const props = withDefaults(defineProps<VReactionsProps>(), {
@@ -31,7 +31,7 @@
     close: [];
   }>();
 
-  const userStore = useUser();
+  const { data: user } = useUserQuery();
 
   const localReactions = ref<Reaction[]>([]);
 
@@ -53,13 +53,15 @@
     if (reactions === undefined) reactions = [];
 
     // Reaction that is set can't be disabled
-    if (reactions.find((reaction) => reaction.author.uuid === userStore.uuid)) {
+    if (
+      reactions.find((reaction) => reaction.author.uuid === user.value?.uuid)
+    ) {
       return false;
     }
 
     const isUnderLimit =
       localReactions.value.filter(
-        (reaction) => reaction.author.uuid === userStore.uuid,
+        (reaction) => reaction.author.uuid === user.value?.uuid,
       ).length < MAX_REACTIONS;
 
     if (isUnderLimit) return false;
@@ -90,12 +92,14 @@
   });
 
   const optimisticallyAdd = (emoji: ReactionEmoji, slug: string) => {
+    if (!user.value) return;
+
     const reaction: Reaction = {
       slug,
       author: {
-        uuid: userStore.uuid,
-        firstName: userStore.firstName,
-        lastName: userStore.lastName,
+        uuid: user.value.uuid,
+        firstName: user.value.firstName,
+        lastName: user.value.lastName,
       },
       emoji,
       answer: props.answerId,
@@ -124,14 +128,16 @@
 </script>
 
 <template>
-  <VReaction
-    v-for="emoji in emojiSet"
-    :key="emoji"
-    :disabled="isDisabled(groupedReactions[emoji])"
-    :emoji="emoji"
-    :user-id="userStore.uuid"
-    :reactions="groupedReactions[emoji]"
-    data-testid="reaction"
-    @add="handleAdd"
-    @remove="handleRemove" />
+  <template v-if="user">
+    <VReaction
+      v-for="emoji in emojiSet"
+      :key="emoji"
+      :disabled="isDisabled(groupedReactions[emoji])"
+      :emoji="emoji"
+      :user-id="user.uuid"
+      :reactions="groupedReactions[emoji]"
+      data-testid="reaction"
+      @add="handleAdd"
+      @remove="handleRemove" />
+  </template>
 </template>

@@ -3,9 +3,8 @@
   import { onClickOutside } from '@vueuse/core';
   import VAvatar from '@/components/VAvatar/VAvatar.vue';
   import { useRouter } from 'vue-router';
-  import useUser from '@/stores/user';
   import useAuth from '@/stores/auth';
-  import { storeToRefs } from 'pinia';
+  import { useUserQuery } from '@/query';
 
   export interface ProfileMenuItem {
     label: string;
@@ -17,18 +16,20 @@
   const isOpen = ref(false);
   const menu = ref(null);
   const router = useRouter();
-  const user = useUser();
+
+  const { data: user } = useUserQuery();
+
   const auth = useAuth();
-  const { username, name, uuid: userId } = storeToRefs(user);
 
   onClickOutside(menu, () => (isOpen.value = false));
 
   const hasCertificateData = computed(
     () =>
-      !!user.firstName &&
-      !!user.lastName &&
-      !!user.firstNameEn &&
-      !!user.lastNameEn,
+      user.value &&
+      !!user.value.firstName &&
+      !!user.value.lastName &&
+      !!user.value.firstNameEn &&
+      !!user.value.lastNameEn,
   );
 
   const handleItemClick = (action: () => void) => {
@@ -86,18 +87,18 @@
       data-testid="button"
       @click="isOpen = !isOpen">
       <VAvatar
-        :user-id="userId"
+        :user-id="user?.uuid"
         class="mr-8"
-        :image="user.avatar"
+        :image="user?.avatar"
         data-testid="avatar" />
       <ul class="text-sub">
         <li
           class="leading-tight text-black dark:text-darkmode-white"
           data-testid="name">
-          {{ name }}
+          {{ user?.firstName }} {{ user?.lastName }}
         </li>
         <li class="leading-tight text-gray" data-testid="username">
-          {{ username }}
+          {{ user?.username }}
         </li>
       </ul>
     </div>

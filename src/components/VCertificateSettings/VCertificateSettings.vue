@@ -3,39 +3,32 @@
   import VButton from '@/components/VButton/VButton.vue';
   import VHeading from '@/components/VHeading/VHeading.vue';
   import VCard from '@/components/VCard/VCard.vue';
-  import useUser from '@/stores/user';
   import type { Gender } from '@/types/users';
-  import { ref, onMounted } from 'vue';
+  import { ref, onBeforeMount } from 'vue';
+  import { useQueryClient } from '@tanstack/vue-query';
+  import { fetchUserQuery, useUpdateUserMutation } from '@/query';
 
-  const user = useUser();
+  const queryClient = useQueryClient();
 
-  const firstName = ref('');
-  const lastName = ref('');
-  const firstNameEn = ref('');
-  const lastNameEn = ref('');
-  const gender = ref<Gender>(undefined);
+  const data = ref<{
+    firstName: string;
+    lastName: string;
+    firstNameEn: string;
+    lastNameEn: string;
+    gender: Gender;
+  }>({
+    firstName: '',
+    lastName: '',
+    firstNameEn: '',
+    lastNameEn: '',
+    gender: undefined,
+  });
 
-  const update = () => {
-    firstName.value = user.firstName;
-    lastName.value = user.lastName;
-    firstNameEn.value = user.firstNameEn;
-    lastNameEn.value = user.lastNameEn;
-    gender.value = user.gender;
-  };
+  const { mutateAsync: updateUser } = useUpdateUserMutation();
 
-  const saveCertificate = async () => {
-    await user.setData({
-      firstName: firstName.value,
-      lastName: lastName.value,
-      firstNameEn: firstNameEn.value,
-      lastNameEn: lastNameEn.value,
-      gender: gender.value,
-    });
-    update();
-  };
-
-  onMounted(async () => {
-    update();
+  onBeforeMount(async () => {
+    const currentUserData = await fetchUserQuery(queryClient);
+    data.value = currentUserData;
   });
 </script>
 
@@ -47,14 +40,20 @@
       Именно в таком виде они отобразятся в сертификате.
     </div>
     <div class="flex flex-col items-start gap-16 tablet:gap-24">
-      <VTextInput v-model="firstName" data-testid="firstName" label="Имя" />
-      <VTextInput v-model="lastName" data-testid="lastName" label="Фамилия" />
       <VTextInput
-        v-model="firstNameEn"
+        v-model="data.firstName"
+        data-testid="firstName"
+        label="Имя" />
+      <VTextInput
+        v-model="data.lastName"
+        data-testid="lastName"
+        label="Фамилия" />
+      <VTextInput
+        v-model="data.firstNameEn"
         data-testid="firstNameEn"
         label="Имя (на английском)" />
       <VTextInput
-        v-model="lastNameEn"
+        v-model="data.lastNameEn"
         data-testid="lastNameEn"
         label="Фамилия (на английском)" />
       <fieldset class="flex flex-wrap gap-16">
@@ -64,8 +63,8 @@
             type="radio"
             name="gender"
             data-testid="gender-male"
-            :checked="gender === 'male'"
-            @click="gender = 'male'" />
+            :checked="data.gender === 'male'"
+            @click="data.gender = 'male'" />
           Мужской</label
         >
         <label class="cursor-pointer"
@@ -73,14 +72,14 @@
             type="radio"
             name="gender"
             data-testid="gender-female"
-            :checked="gender === 'female'"
-            @click="gender = 'female'" />
+            :checked="data.gender === 'female'"
+            @click="data.gender = 'female'" />
           Женский</label
         >
       </fieldset>
     </div>
     <template #footer>
-      <VButton data-testid="save" @click="saveCertificate">Сохранить</VButton>
+      <VButton data-testid="save" @click="updateUser">Сохранить</VButton>
     </template>
   </VCard>
 </template>

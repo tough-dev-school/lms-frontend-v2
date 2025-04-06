@@ -4,7 +4,6 @@ import {
   type RouteLocationNormalized,
 } from 'vue-router';
 import useAuth from '@/stores/auth';
-import useUser from '@/stores/user';
 import useMaterials from '@/stores/materials';
 import useDiplomas from '@/stores/diplomas';
 import useLoading from '@/stores/loading';
@@ -36,11 +35,6 @@ const isAuthorized = () => {
   const auth = useAuth();
 
   return !!auth.token;
-};
-
-const fetchMainUserData = async () => {
-  const user = useUser();
-  await user.getData();
 };
 
 const disallowAuthorized = () => {
@@ -158,11 +152,6 @@ const router = createRouter({
 
 router.beforeEach(
   async (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
-    // Get main data if authorized
-    if (isAuthorized()) {
-      await fetchMainUserData();
-    }
-
     // Redirect to exisiting route if route does not exist
     if (!to.name) {
       return { name: 'home' };

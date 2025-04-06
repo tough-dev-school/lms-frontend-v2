@@ -20,16 +20,19 @@
   import VOwnAnswer from '@/components/VOwnAnswer/VOwnAnswer.vue';
   import VAnswer from '@/components/VAnswer/VAnswer.vue';
   import VNewAnswer from '@/components/VNewAnswer/VNewAnswer.vue';
-  import { computed, ref } from 'vue';
+  import { computed, ref, onBeforeMount } from 'vue';
   import { onClickOutside } from '@vueuse/core';
-  import useUser from '@/stores/user';
   import { useRoute, useRouter } from 'vue-router';
   import { MessageCircleIcon, MessageCircleOffIcon } from 'vue-tabler-icons';
+  import { useQueryClient } from '@tanstack/vue-query';
+  import type { User } from '@/types/users';
+  import { fetchUserQuery } from '@/query';
 
   const route = useRoute();
   const router = useRouter();
+  const queryClient = useQueryClient();
+  const user = ref<User>();
 
-  const user = useUser();
   const emit = defineEmits<{
     update: [slug: string];
     reply: [];
@@ -93,7 +96,9 @@
 
   const getRootComponent = computed(() => {
     const rootComponent =
-      props.originalPost.author.uuid !== user.uuid ? VAnswer : VOwnAnswer;
+      props.originalPost.author.uuid !== user.value?.uuid
+        ? VAnswer
+        : VOwnAnswer;
 
     return rootComponent;
   });
@@ -104,6 +109,11 @@
     rootComponentProps.questionId = props.originalPost.question;
 
     return rootComponentProps;
+  });
+
+  onBeforeMount(async () => {
+    const currentUserData = await fetchUserQuery(queryClient);
+    user.value = currentUserData;
   });
 </script>
 
@@ -124,7 +134,7 @@
             :class="{ 'cursor-auto opacity-50': !action.handle }"
             :title="action.name"
             :disabled="action.disabled"
-            @click="action.handle">
+            @click="action.handle ? action.handle() : null">
             <component :is="action.icon" />
           </button>
         </template>

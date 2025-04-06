@@ -1,33 +1,33 @@
 <script lang="ts" setup>
-  import { ref, onMounted } from 'vue';
+  import { ref, onBeforeMount } from 'vue';
   import VTextInput from '@/components/VTextInput/VTextInput.vue';
   import VButton from '@/components/VButton/VButton.vue';
   import VHeading from '@/components/VHeading/VHeading.vue';
   import VCard from '@/components/VCard/VCard.vue';
-  import useUser from '@/stores/user';
+  import { useUpdateUserMutation, fetchUserQuery } from '@/query';
+  import { useQueryClient } from '@tanstack/vue-query';
 
-  const linkedinUsername = ref('');
-  const githubUsername = ref('');
-  const telegramUsername = ref('');
-  const user = useUser();
+  const data = ref({
+    linkedinUsername: '',
+    githubUsername: '',
+    telegramUsername: '',
+  });
 
-  const update = () => {
-    linkedinUsername.value = user.linkedinUsername;
-    githubUsername.value = user.githubUsername;
-    telegramUsername.value = user.telegramUsername;
-  };
+  const queryClient = useQueryClient();
+
+  const { mutateAsync: updateUser } = useUpdateUserMutation();
 
   const saveProfile = async () => {
-    await user.setData({
-      linkedinUsername: linkedinUsername.value,
-      githubUsername: githubUsername.value,
-      telegramUsername: telegramUsername.value,
+    await updateUser({
+      linkedinUsername: data.value.linkedinUsername,
+      githubUsername: data.value.githubUsername,
+      telegramUsername: data.value.telegramUsername,
     });
-    update();
   };
 
-  onMounted(() => {
-    update();
+  onBeforeMount(async () => {
+    const currentUserData = await fetchUserQuery(queryClient);
+    data.value = currentUserData;
   });
 </script>
 
@@ -36,15 +36,15 @@
     <VHeading class="mb-24" tag="h2">Ссылки</VHeading>
     <div class="flex flex-col items-start gap-16 tablet:gap-24">
       <VTextInput
-        v-model="githubUsername"
+        v-model="data.githubUsername"
         label="Ссылка на GitHub"
         data-testid="github" />
       <VTextInput
-        v-model="linkedinUsername"
+        v-model="data.linkedinUsername"
         label="Ссылка на LinkedIn"
         data-testid="linkedin" />
       <VTextInput
-        v-model="telegramUsername"
+        v-model="data.telegramUsername"
         label="Ссылка на Telegram"
         data-testid="telegram" />
     </div>

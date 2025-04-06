@@ -52,6 +52,18 @@ setup((app) => {
   );
   app.use(FloatingVue);
   app.use(createPinia());
+  app.use(VueQueryPlugin, {
+  enableDevtoolsV6Plugin: true,
+  queryClientConfig: {
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        staleTime: Infinity,
+        retry: false,
+      },
+    },
+    },
+  });
 });
 
 /** @type { import('@storybook/vue3').Preview } */
