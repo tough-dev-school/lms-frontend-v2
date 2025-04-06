@@ -28,6 +28,8 @@ const VLoginChangeView = () =>
   import('@/views/VLoginChangeView/VLoginChangeView.vue');
 const VCertificatesView = () =>
   import('@/views/VCertificatesView/VCertificatesView.vue');
+const VModulesView = () => import('@/views/VModulesView/VModulesView.vue');
+const VLessonsView = () => import('@/views/VLessonsView/VLessonsView.vue');
 import loginByToken from '@/router/loginByToken';
 import loginById from '@/router/loginById';
 
@@ -58,6 +60,16 @@ export const routes = [
     path: '/settings',
     name: 'settings',
     component: VSettingsView,
+  },
+  {
+    path: '/:courseId/modules',
+    name: 'modules',
+    component: VModulesView,
+  },
+  {
+    path: '/:courseId/module/:moduleId/lessons',
+    name: 'lessons',
+    component: VLessonsView,
   },
   {
     path: '/login',
