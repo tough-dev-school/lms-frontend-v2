@@ -5,7 +5,6 @@
   import { useRouter } from 'vue-router';
   import useUser from '@/stores/user';
   import useAuth from '@/stores/auth';
-  import useStudies from '@/stores/studies';
   import { storeToRefs } from 'pinia';
 
   export interface ProfileMenuItem {
@@ -20,7 +19,6 @@
   const router = useRouter();
   const user = useUser();
   const auth = useAuth();
-  const studies = useStudies();
   const { username, name, uuid: userId } = storeToRefs(user);
 
   onClickOutside(menu, () => (isOpen.value = false));
@@ -32,21 +30,6 @@
       !!user.firstNameEn &&
       !!user.lastNameEn,
   );
-
-  const studiesAsMenuItems = computed<ProfileMenuItem[]>(() => {
-    return studies.items.slice(0, 3).map((study) => {
-      return {
-        label: study.name.replace(/\(.*\)/, '').trim(),
-        action: () => {
-          router.push({
-            name: 'materials',
-            params: { id: study.homePageSlug },
-          });
-        },
-        id: `material-${study.id}`,
-      };
-    });
-  });
 
   const handleItemClick = (action: () => void) => {
     action();
@@ -61,7 +44,6 @@
       },
       id: 'home',
     },
-    ...studiesAsMenuItems.value,
     {
       label: 'Сертификаты',
       action: () => {

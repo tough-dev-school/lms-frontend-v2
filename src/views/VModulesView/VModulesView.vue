@@ -3,18 +3,19 @@
   import VCard from '@/components/VCard/VCard.vue';
   import VBreadcrumbs from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
   import { ref, onMounted } from 'vue';
-  import { getModules } from '@/api/lms';
-  import type { Module } from '@/types/lms';
   import { RouterLink, useRoute } from 'vue-router';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
+  import { useModulesQuery } from '@/query';
 
-  const modules = ref<Module[]>([]);
   const route = useRoute();
   const courseId = ref<number>(0);
 
+  const { data: modules } = useModulesQuery(() =>
+    parseInt(route.params.courseId.toString()),
+  );
+
   onMounted(async () => {
     courseId.value = parseInt(route.params.courseId.toString());
-    modules.value = await getModules({ courseId: courseId.value });
   });
 
   const breadcrumbs: Breadcrumb[] = [
@@ -27,7 +28,7 @@
   <VBreadcrumbs :items="breadcrumbs" />
   <VHeading tag="h1" class="mb-32">Модули</VHeading>
 
-  <div v-if="modules.length > 0" class="grid gap-16">
+  <div v-if="modules && modules.length > 0" class="grid gap-16">
     <RouterLink
       v-for="module in modules"
       :key="module.id"

@@ -2,16 +2,16 @@
   import VHeading from '@/components/VHeading/VHeading.vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VBreadcrumbs from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
-  import VButton from '@/components/VButton/VButton.vue';
-  import { ref, onMounted } from 'vue';
+  import { onMounted } from 'vue';
   import { getLessons } from '@/api/lms';
-  import type { Lesson } from '@/types/lms';
-  import { RouterLink, useRoute } from 'vue-router';
+  import { useRoute } from 'vue-router';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
+  import { useLessonsQuery } from '@/query';
 
   const route = useRoute();
   const moduleId = Number(route.params.moduleId);
-  const lessons = ref<Lesson[]>([]);
+
+  const { data: lessons } = useLessonsQuery(moduleId);
 
   onMounted(async () => {
     lessons.value = await getLessons({ moduleId });
@@ -28,7 +28,7 @@
   <VBreadcrumbs :items="breadcrumbs" />
   <div>
     <VHeading tag="h1">Все уроки</VHeading>
-    <div v-if="lessons.length > 0" class="grid gap-24">
+    <div v-if="lessons && lessons.length > 0" class="grid gap-24">
       <VCard v-for="lesson in lessons" :key="lesson.id">
         <VHeading tag="h2" class="mb-8">{{ lesson.name }}</VHeading>
 
