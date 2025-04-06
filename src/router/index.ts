@@ -161,9 +161,10 @@ const router = createRouter({
 
 router.beforeEach(
   async (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
-    // Get main data if authorized
-    if (isAuthorized()) {
-      await fetchMainUserData();
+    const auth = useAuth();
+
+    if (to.meta.isPublic && auth.token) {
+      return { name: 'home' };
     }
 
     // Redirect to exisiting route if route does not exist
