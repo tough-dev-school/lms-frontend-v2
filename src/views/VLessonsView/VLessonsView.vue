@@ -2,8 +2,6 @@
   import VHeading from '@/components/VHeading/VHeading.vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VBreadcrumbs from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
-  import { onMounted } from 'vue';
-  import { getLessons } from '@/api/lms';
   import { useRoute } from 'vue-router';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
   import { useLessonsQuery } from '@/query';
@@ -12,10 +10,6 @@
   const moduleId = Number(route.params.moduleId);
 
   const { data: lessons } = useLessonsQuery(moduleId);
-
-  onMounted(async () => {
-    lessons.value = await getLessons({ moduleId });
-  });
 
   const breadcrumbs: Breadcrumb[] = [
     { name: 'Мои курсы', to: { name: 'home' } },
