@@ -11,26 +11,26 @@
   import type { Answer } from '@/types/homework';
   import VCard from '@/components/VCard/VCard.vue';
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
-  import { computed, ref } from 'vue';
-  import useUser from '@/stores/user';
+  import { onBeforeMount, ref } from 'vue';
   import VReactions from '@/components/VReactions/VReactions.vue';
   import type { ReactionEmoji } from '@/types/homework';
   import useHomework from '@/stores/homework';
   import { MoodHappyIcon } from 'vue-tabler-icons';
   import { useAutoAnimate } from '@formkit/auto-animate/vue';
+  import { fetchUserQuery } from '@/query';
+  import { useQueryClient } from '@tanstack/vue-query';
 
   const emit = defineEmits<{
     update: [];
     mounted: [slug: string]; //# FIXME Does nothing — needed to fix interface mismatch type error
   }>();
 
+  const queryClient = useQueryClient();
+
   const homeworkStore = useHomework();
-  const userStore = useUser();
   const props = defineProps<VAnswerProps>();
 
-  const isOwn = computed(() => {
-    return props.answer.author.uuid === userStore.uuid;
-  });
+  const isOwn = ref(false);
 
   const isPaletteOpen = ref(false);
 
@@ -48,15 +48,18 @@
   const closePalette = () => (isPaletteOpen.value = false);
 
   const [parent] = useAutoAnimate();
+
+  onBeforeMount(async () => {
+    const yourUser = await fetchUserQuery(queryClient);
+
+    isOwn.value = props.answer.author.uuid === yourUser.uuid;
+  });
 </script>
 
 <template>
   <VCard class="pb-32">
     <div class="mb-16 flex items-center gap-8">
-      <VAvatar
-        data-testid="avatar"
-        :user-id="answer.author.uuid"
-        :image="answer.author.avatar" />
+      <VAvatar data-testid="avatar" :user="answer.author" />
       <div>
         <div
           class="font-bold text-black dark:text-darkmode-white"

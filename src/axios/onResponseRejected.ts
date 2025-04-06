@@ -10,10 +10,9 @@ const onResponseRejected = (
   const auth = useAuth();
 
   if (error.response) {
-    if (error.response.status === 401) {
-      auth.resetAuth();
-      window.location.href = window.origin;
-    }
+    if (error.response.status === 401 && auth.token) auth.resetAuth();
+
+    if (error.response.status === 401) return; // We don't need toast for 401 errors
 
     // Convert data keys to target case
     if (error.response.data) {

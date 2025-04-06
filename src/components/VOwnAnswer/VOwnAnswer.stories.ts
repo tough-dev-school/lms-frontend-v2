@@ -3,9 +3,10 @@ import VOwnAnswer from '@/components/VOwnAnswer/VOwnAnswer.vue';
 import { faker } from '@faker-js/faker';
 import dayjs from 'dayjs';
 import { mockAnswer } from '@/mocks/mockAnswer';
-import useUser from '@/stores/user';
 import { USER_1 } from '@/mocks/mockUserId';
 import { STATIC_AUTHOR_1 } from '@/mocks/mockAuthor';
+import { useQueryClient } from '@tanstack/vue-query';
+import { userKeys } from '@/query';
 
 export default {
   title: 'Answer/VOwnAnswer',
@@ -21,9 +22,8 @@ answer.created = dayjs().subtract(1, 'year').toISOString();
 const Template: StoryFn = (args) => ({
   components: { VOwnAnswer },
   setup() {
-    const user = useUser();
-
-    user.$patch({
+    const queryClient = useQueryClient();
+    queryClient.setQueryData(userKeys.me(), {
       uuid: userId,
     });
 

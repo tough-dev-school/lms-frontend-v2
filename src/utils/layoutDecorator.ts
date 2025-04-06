@@ -2,10 +2,11 @@ import VDefaultLayout from '@/layouts/VDefaultLayout/VDefaultLayout.vue';
 import { mockMaterial } from '@/mocks/mockMaterial';
 import { mockQuestion, STATIC_QUESTION } from '@/mocks/mockQuestion';
 import { mockUserId, USER_1 } from '@/mocks/mockUserId';
+import { userKeys } from '@/query';
 import useHomework from '@/stores/homework';
 import useMaterials from '@/stores/materials';
 import useToasts from '@/stores/toasts';
-import useUser from '@/stores/user';
+import { useQueryClient } from '@tanstack/vue-query';
 
 const layoutDecorator = (story: any, layout: any) => ({
   components: { layout, story },
@@ -14,8 +15,8 @@ const layoutDecorator = (story: any, layout: any) => ({
     const toasts = useToasts();
     toasts.disable();
 
-    const user = useUser();
-    user.$patch({
+    const queryClient = useQueryClient();
+    queryClient.setQueryData(userKeys.me(), {
       id: '',
       uuid: mockUserId(USER_1),
       username: 'johndoe@demo.com',

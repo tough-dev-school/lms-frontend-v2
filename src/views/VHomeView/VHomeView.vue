@@ -2,21 +2,22 @@
   import VHeading from '@/components/VHeading/VHeading.vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VCover from '@/components/VCover/VCover.vue';
-  import useStudies from '@/stores/studies';
+  import { RouterLink } from 'vue-router';
+  import { useStudiesQuery } from '@/query';
 
-  const studies = useStudies();
+  const { data: studies } = useStudiesQuery();
 </script>
 
 <template>
-  <VHeading tag="h1" class="mb-32">Ваши курсы</VHeading>
-  <ul v-if="studies.items.length > 0" class="mb-32 flex flex-col gap-16">
-    <li v-for="(study, index) in studies.items" :key="index">
+  <VHeading tag="h1" class="mb-32">Мои курсы</VHeading>
+  <ul v-if="studies && studies.length > 0" class="mb-32 flex flex-col gap-16">
+    <li v-for="(study, index) in studies" :key="index">
       <RouterLink
         class="link"
         data-testid="study"
         :to="{
-          name: 'materials',
-          params: { id: study.homePageSlug },
+          name: 'modules',
+          params: { courseId: study.id },
         }">
         <VCard class="relative !p-0 !px-0">
           <VCover

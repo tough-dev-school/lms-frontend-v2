@@ -4,8 +4,6 @@ import {
   type RouteLocationNormalized,
 } from 'vue-router';
 import useAuth from '@/stores/auth';
-import useUser from '@/stores/user';
-import useStudies from '@/stores/studies';
 import useMaterials from '@/stores/materials';
 import useDiplomas from '@/stores/diplomas';
 import useLoading from '@/stores/loading';
@@ -28,6 +26,8 @@ const VLoginChangeView = () =>
   import('@/views/VLoginChangeView/VLoginChangeView.vue');
 const VCertificatesView = () =>
   import('@/views/VCertificatesView/VCertificatesView.vue');
+const VModulesView = () => import('@/views/VModulesView/VModulesView.vue');
+const VLessonsView = () => import('@/views/VLessonsView/VLessonsView.vue');
 import loginByToken from '@/router/loginByToken';
 import loginById from '@/router/loginById';
 
@@ -35,13 +35,6 @@ const isAuthorized = () => {
   const auth = useAuth();
 
   return !!auth.token;
-};
-
-const fetchMainUserData = async () => {
-  const user = useUser();
-  const studies = useStudies();
-  await user.getData();
-  await studies.getData();
 };
 
 const disallowAuthorized = () => {
@@ -58,6 +51,16 @@ export const routes = [
     path: '/settings',
     name: 'settings',
     component: VSettingsView,
+  },
+  {
+    path: '/:courseId/modules',
+    name: 'modules',
+    component: VModulesView,
+  },
+  {
+    path: '/:courseId/module/:moduleId/lessons',
+    name: 'lessons',
+    component: VLessonsView,
   },
   {
     path: '/login',
@@ -149,9 +152,10 @@ const router = createRouter({
 
 router.beforeEach(
   async (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
-    // Get main data if authorized
-    if (isAuthorized()) {
-      await fetchMainUserData();
+    const auth = useAuth();
+
+    if (to.meta.isPublic && auth.token) {
+      return { name: 'home' };
     }
 
     // Redirect to exisiting route if route does not exist

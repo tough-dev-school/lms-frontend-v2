@@ -1,8 +1,9 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
 import VHomeView from './VHomeView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
-import useStudies from '@/stores/studies';
 import { STATIC_STUDY } from '@/mocks/mockStudy';
+import { studiesKeys } from '@/query';
+import { useQueryClient } from '@tanstack/vue-query';
 
 export default {
   title: 'App/VHomeView',
@@ -23,10 +24,9 @@ export const Default = {
   decorators: [
     () => ({
       setup() {
-        const studies = useStudies();
-        studies.$patch({
-          items: [STATIC_STUDY],
-        });
+        const queryClient = useQueryClient();
+
+        queryClient.setQueryData(studiesKeys.all(), [STATIC_STUDY]);
       },
       template: '<story />',
     }),
@@ -38,8 +38,9 @@ export const Empty = {
   decorators: [
     () => ({
       setup() {
-        const studies = useStudies();
-        studies.items = [];
+        const queryClient = useQueryClient();
+
+        queryClient.setQueryData(studiesKeys.all(), []);
       },
       template: '<story />',
     }),

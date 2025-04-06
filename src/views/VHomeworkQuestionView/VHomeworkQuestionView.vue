@@ -10,11 +10,11 @@
   import VOwnAnswer from '@/components/VOwnAnswer/VOwnAnswer.vue';
   import VNewAnswer from '@/components/VNewAnswer/VNewAnswer.vue';
   import VCard from '@/components/VCard/VCard.vue';
-  import useUser from '@/stores/user';
+  import { useUserQuery } from '@/query';
 
   const route = useRoute();
   const homework = useHomework();
-  const user = useUser();
+  const { data: user } = useUserQuery();
 
   const { question, answers } = storeToRefs(homework);
   const questionId: Ref<string | undefined> = ref(undefined);
@@ -28,7 +28,7 @@
     await homework.getQuestion(questionId.value);
     await homework.getAnswers({
       questionId: questionId.value,
-      authorId: user.uuid,
+      authorId: user.value?.uuid,
     });
   };
 

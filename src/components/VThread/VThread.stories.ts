@@ -2,11 +2,12 @@ import type { Meta, StoryFn } from '@storybook/vue3';
 import VThread from '@/components/VThread/VThread.vue';
 import dayjs from 'dayjs';
 import { faker } from '@faker-js/faker';
-import useUser from '@/stores/user';
 import { mockThread } from '@/mocks/mockThread';
 import { mockComments } from '@/mocks/mockComments';
 import { mockComment } from '@/mocks/mockComment';
 import { mockAnswer } from '@/mocks/mockAnswer';
+import { useQueryClient } from '@tanstack/vue-query';
+import { userKeys } from '@/query';
 
 const originalPost = mockThread();
 originalPost.created = dayjs().toISOString();
@@ -28,8 +29,8 @@ export default {
 const Template: StoryFn = (args) => ({
   components: { VThread },
   setup() {
-    const user = useUser();
-    user.$patch({
+    const queryClient = useQueryClient();
+    queryClient.setQueryData(userKeys.me(), {
       uuid: userId,
     });
     return { args };

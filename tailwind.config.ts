@@ -20,7 +20,7 @@ module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,vue,jsx,tsx}'],
   theme: {
     fontFamily: {
-      display: ['PT Root UI', 'sans-serif'],
+      display: ['Inter', 'PT Root UI', 'sans-serif'],
       body: ['PT Root UI', 'sans-serif'],
     },
     screens: {
@@ -53,13 +53,23 @@ module.exports = {
       'darkmode-orange': { DEFAULT: '#d65d0e' },
       'darkmode-yellow': { DEFAULT: '#d79921' },
       'darkmode-purple': { DEFAULT: '#b16286' },
+      'accent-yellow': { DEFAULT: '#ffb800' },
+      'accent-orange': { DEFAULT: '#FF7300' },
+      'accent-green': { DEFAULT: '#8BD460' },
+      'accent-blue': { DEFAULT: '#7AB8F1' },
     },
     fontSize: {
       sub: '14px',
       base: '16px',
-      h1: 'clamp(1.875rem, 5vw, 36px)',
-      h2: 'clamp(1.3rem, 3.5vw, 28px)',
-      h3: '1.25rem',
+      h1: [
+        'clamp(1.875rem, 5vw, 36px)',
+        { letterSpacing: '-0.03em', fontWeight: '800' },
+      ],
+      h2: [
+        'clamp(1.3rem, 3.5vw, 28px)',
+        { letterSpacing: '-0.03em', fontWeight: '800' },
+      ],
+      h3: ['1.25rem', { letterSpacing: '-0.03em', fontWeight: '800' }],
     },
     borderRadius: {
       0: '0px',
