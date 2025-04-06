@@ -3,6 +3,7 @@
   import VCard from '@/components/VCard/VCard.vue';
   import VCover from '@/components/VCover/VCover.vue';
   import useStudies from '@/stores/studies';
+  import { RouterLink } from 'vue-router';
 
   const studies = useStudies();
 </script>
@@ -15,8 +16,8 @@
         class="link"
         data-testid="study"
         :to="{
-          name: 'materials',
-          params: { id: study.homePageSlug },
+          name: 'modules',
+          params: { courseId: study.id },
         }">
         <VCard class="relative !p-0 !px-0">
           <VCover
