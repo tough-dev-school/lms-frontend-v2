@@ -39,7 +39,7 @@ importers:
         specifier: ^2.1.12
         version: 2.1.12(@tiptap/core@2.1.12(@tiptap/pm@2.1.12))(@tiptap/pm@2.1.12)(vue@3.3.8(typescript@5.2.2))
       '@vueuse/core':
-        specifier: ^10.5.0
+        specifier: ^10.6.1
         version: 10.6.1(vue@3.3.8(typescript@5.2.2))
       axios:
         specifier: ^1.6.1
@@ -57,7 +57,7 @@ importers:
         specifier: ^9.18.1
         version: 9.18.1(eslint@8.53.0)
       floating-vue:
-        specifier: ^2.0.0-beta.24
+        specifier: 2.0.0-beta.24
         version: 2.0.0-beta.24(vue@3.3.8(typescript@5.2.2))
       lodash-es:
         specifier: ^4.17.21
@@ -193,7 +193,7 @@ importers:
         specifier: ^22.1.0
         version: 22.1.0
       lint-staged:
-        specifier: ^15.0.2
+        specifier: ^15.1.0
         version: 15.1.0
       npm-run-all:
         specifier: ^4.1.5
@@ -205,7 +205,7 @@ importers:
         specifier: ^8.4.31
         version: 8.4.31
       prettier:
-        specifier: ^3.0.3
+        specifier: ^3.1.0
         version: 3.1.0
       prettier-plugin-tailwindcss:
         specifier: ^0.5.7
@@ -2178,12 +2178,6 @@ packages:
   camelcase@8.0.0:
     resolution: {integrity: sha512-8WB3Jcas3swSvjIeA2yvCJ+Miyz5l1ZmB6HFb9R1317dt9LCQoswg/BGrmAmkWVEszSrrg4RwmO46qIm2OEnSA==}
     engines: {node: '>=16'}
-
-  caniuse-lite@1.0.30001506:
-    resolution: {integrity: sha512-6XNEcpygZMCKaufIcgpQNZNf00GEqc7VQON+9Rd0K1bMYo8xhMZRAo5zpbnbMNizi4YNgIDAFrdykWsvY3H4Hw==}
-
-  caniuse-lite@1.0.30001561:
-    resolution: {integrity: sha512-NTt0DNoKe958Q0BE0j0c1V9jbUzhBxHIEJy7asmGrpE0yG63KTV7PLHPnK2E1O9RsQrQ081I3NLuXGS6zht3cw==}
 
   caniuse-lite@1.0.30001712:
     resolution: {integrity: sha512-MBqPpGYYdQ7/hfKiet9SCI+nmN5/hp4ZzveOJubl5DTAMa5oggjAuoi0Z4onBpKPFI2ePGnQuQIzF3VxDjDJig==}
@@ -6976,7 +6970,7 @@ snapshots:
   autoprefixer@10.4.16(postcss@8.4.31):
     dependencies:
       browserslist: 4.22.1
-      caniuse-lite: 1.0.30001561
+      caniuse-lite: 1.0.30001712
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -7051,14 +7045,14 @@ snapshots:
 
   browserslist@4.21.9:
     dependencies:
-      caniuse-lite: 1.0.30001506
+      caniuse-lite: 1.0.30001712
       electron-to-chromium: 1.4.435
       node-releases: 2.0.12
       update-browserslist-db: 1.0.11(browserslist@4.21.9)
 
   browserslist@4.22.1:
     dependencies:
-      caniuse-lite: 1.0.30001561
+      caniuse-lite: 1.0.30001712
       electron-to-chromium: 1.4.581
       node-releases: 2.0.13
       update-browserslist-db: 1.0.13(browserslist@4.22.1)
@@ -7099,10 +7093,6 @@ snapshots:
   camelcase@7.0.1: {}
 
   camelcase@8.0.0: {}
-
-  caniuse-lite@1.0.30001506: {}
-
-  caniuse-lite@1.0.30001561: {}
 
   caniuse-lite@1.0.30001712: {}
 
