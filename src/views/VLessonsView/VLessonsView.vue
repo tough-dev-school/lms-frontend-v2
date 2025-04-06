@@ -1,10 +1,13 @@
 <script lang="ts" setup>
   import VHeading from '@/components/VHeading/VHeading.vue';
   import VCard from '@/components/VCard/VCard.vue';
+  import VBreadcrumbs from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
+  import VButton from '@/components/VButton/VButton.vue';
   import { ref, onMounted } from 'vue';
   import { getLessons } from '@/api/lms';
   import type { Lesson } from '@/types/lms';
   import { RouterLink, useRoute } from 'vue-router';
+  import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
 
   const route = useRoute();
   const moduleId = Number(route.params.moduleId);
@@ -13,9 +16,16 @@
   onMounted(async () => {
     lessons.value = await getLessons({ moduleId });
   });
+
+  const breadcrumbs: Breadcrumb[] = [
+    { name: 'Мои курсы', to: { name: 'home' } },
+    { name: 'COURSENAME', to: { name: 'modules' } },
+    { name: 'LESSONNAME' },
+  ];
 </script>
 
 <template>
+  <VBreadcrumbs :items="breadcrumbs" />
   <div>
     <div class="flex items-center gap-16 mb-32">
       <RouterLink :to="{ name: 'modules' }" class="link">

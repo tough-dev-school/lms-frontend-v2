@@ -2,13 +2,18 @@
   import VHeading from '@/components/VHeading/VHeading.vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VCover from '@/components/VCover/VCover.vue';
+  import VBreadcrumbs from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
   import useStudies from '@/stores/studies';
   import { RouterLink } from 'vue-router';
+  import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
 
   const studies = useStudies();
+
+  const breadcrumbs: Breadcrumb[] = [{ name: 'Главная' }];
 </script>
 
 <template>
+  <VBreadcrumbs :items="breadcrumbs" />
   <VHeading tag="h1" class="mb-32">Мои курсы</VHeading>
   <ul v-if="studies.items.length > 0" class="mb-32 flex flex-col gap-16">
     <li v-for="(study, index) in studies.items" :key="index">
