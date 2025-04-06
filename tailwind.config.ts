@@ -53,6 +53,10 @@ module.exports = {
       'darkmode-orange': { DEFAULT: '#d65d0e' },
       'darkmode-yellow': { DEFAULT: '#d79921' },
       'darkmode-purple': { DEFAULT: '#b16286' },
+      'accent-yellow': { DEFAULT: '#ffb800' },
+      'accent-orange': { DEFAULT: '#FF7300' },
+      'accent-green': { DEFAULT: '#8BD460' },
+      'accent-blue': { DEFAULT: '#7AB8F1' },
     },
     fontSize: {
       sub: '14px',
