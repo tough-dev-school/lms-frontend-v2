@@ -1,23 +1,30 @@
 <script lang="ts" setup>
   import VHeading from '@/components/VHeading/VHeading.vue';
   import VCard from '@/components/VCard/VCard.vue';
+  import VBreadcrumbs from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
   import { ref, onMounted } from 'vue';
   import { getModules } from '@/api/lms';
   import type { Module } from '@/types/lms';
   import { RouterLink, useRoute } from 'vue-router';
+  import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
 
   const modules = ref<Module[]>([]);
-
   const route = useRoute();
+  const courseId = ref<number>(0);
 
   onMounted(async () => {
-    const courseId = route.params.courseId.toString();
-
-    modules.value = await getModules({ courseId: parseInt(courseId) });
+    courseId.value = parseInt(route.params.courseId.toString());
+    modules.value = await getModules({ courseId: courseId.value });
   });
+
+  const breadcrumbs: Breadcrumb[] = [
+    { name: 'Главная', to: { name: 'home' } },
+    { name: 'COURSENAME' },
+  ];
 </script>
 
 <template>
+  <VBreadcrumbs :items="breadcrumbs" />
   <VHeading tag="h1" class="mb-32">Модули</VHeading>
 
   <div v-if="modules.length > 0" class="grid gap-16">
