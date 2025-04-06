@@ -30,6 +30,7 @@
     "@brachkow/email-providers": "^1.2.0",
     "@formkit/auto-animate": "^0.8.1",
     "@sentry/vue": "^8.34.0",
+    "@tanstack/vue-query": "^5.71.10",
     "@tiptap/extension-bubble-menu": "^2.1.12",
     "@tiptap/extension-image": "^2.1.12",
     "@tiptap/extension-placeholder": "^2.1.12",
