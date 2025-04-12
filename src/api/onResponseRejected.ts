@@ -12,22 +12,22 @@ const onResponseRejected = (
   if (error.response) {
     if (error.response.status === 401 && auth.token) auth.resetAuth();
 
-    if (error.response.status === 401) return; // We don't need toast for 401 errors
+    if (error.response.status !== 401) {
+      // Convert data keys to target case
+      if (error.response.data) {
+        error.response.data = responseCaseMiddleware(
+          error.response.data as any,
+          enableCaseMiddleware,
+        );
+      }
 
-    // Convert data keys to target case
-    if (error.response.data) {
-      error.response.data = responseCaseMiddleware(
-        error.response.data as any,
-        enableCaseMiddleware,
-      );
+      // Handle error with default or custom message
+      const isJson =
+        error.response.headers['content-type'] ===
+        'application/json; charset=utf-8';
+
+      isJson ? handleError(error) : handleError();
     }
-
-    // Handle error with default or custom message
-    const isJson =
-      error.response.headers['content-type'] ===
-      'application/json; charset=utf-8';
-
-    isJson ? handleError(error) : handleError();
   }
 
   return Promise.reject(error);
