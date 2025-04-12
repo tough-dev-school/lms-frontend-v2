@@ -1,9 +1,13 @@
-import onResponseRejected from '@/axios/onResponseRejected';
+import onResponseRejected from './onResponseRejected';
 import { Api, HttpClient } from './generated-api';
-import onResponseFulfilled from '@/axios/onResponseFulfilled';
-import onRequestFulfilled from '@/axios/onRequestFulfilled';
-import type { CustomAxiosInstanceConfig } from '@/axios/index';
+import onResponseFulfilled from './onResponseFulfilled';
+import onRequestFulfilled from './onRequestFulfilled';
 import { merge } from 'lodash-es';
+
+export interface CustomAxiosInstanceConfig {
+  useResponseCaseMiddleware: boolean;
+  useRequestCaseMiddleware: boolean;
+}
 
 export const createHttpClient = (
   customConfig: Partial<CustomAxiosInstanceConfig> = {},
@@ -40,4 +44,4 @@ export const createHttpClient = (
 const defaultHttpClient = createHttpClient();
 export const axios = defaultHttpClient.instance;
 export const { api } = new Api(defaultHttpClient);
-export default api;
+export default axios;

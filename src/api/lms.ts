@@ -1,6 +1,6 @@
 import type { Lesson, Module } from '@/types/lms';
 import type { PaginantedCollection } from '@/types/api-utility';
-import axios from '@/axios';
+import axios from './index';
 
 export const getLessons = async ({ moduleId }: { moduleId?: number } = {}) => {
   const url = new URL(`/api/v2/lms/lessons/`, window.location.origin);
