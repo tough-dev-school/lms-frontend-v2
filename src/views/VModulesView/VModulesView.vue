@@ -22,6 +22,18 @@
     { name: 'Главная', to: { name: 'home' } },
     { name: 'COURSENAME' },
   ];
+
+  const cardClass = (number: number) => {
+    // Sadly, Tailwind will strip dynamic classes, so we need to do this manually
+    const colors = [
+      '!bg-accent-yellow dark:!bg-accent-yellow',
+      '!bg-accent-orange dark:!bg-accent-orange',
+      '!bg-accent-green dark:!bg-accent-green',
+      '!bg-accent-blue dark:!bg-accent-blue',
+    ];
+
+    return colors[number % colors.length];
+  };
 </script>
 
 <template>
@@ -30,12 +42,20 @@
 
   <div v-if="modules && modules.length > 0" class="grid gap-16">
     <RouterLink
-      v-for="module in modules"
+      v-for="(module, index) in [
+        modules,
+        modules,
+        modules,
+        modules,
+        modules,
+        modules,
+        modules,
+        modules,
+      ].flat()"
       :key="module.id"
       :to="{ name: 'lessons', params: { moduleId: module.id } }">
-      <VCard>
+      <VCard :class="[cardClass(index), 'text-black']">
         <VHeading tag="h2">{{ module.name }}</VHeading>
-        <pre>{{ JSON.stringify(module, null, 2) }}</pre>
       </VCard>
     </RouterLink>
   </div>
