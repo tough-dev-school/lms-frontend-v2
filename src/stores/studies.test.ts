@@ -3,6 +3,7 @@ import useStudies from './studies';
 import { getStudies } from '@/api/studies';
 import { mockStudy } from '@/mocks/mockStudy';
 import { faker } from '@faker-js/faker';
+import { vi, describe, beforeEach, expect, test } from 'vitest';
 
 vi.mock('@/api/studies', () => {
   return {

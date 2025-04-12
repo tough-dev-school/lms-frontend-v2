@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-
+import { vi, describe, beforeEach, expect, test } from 'vitest';
 import getName from './getName';
 
 const firstName = faker.person.firstName();

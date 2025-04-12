@@ -1,3 +1,4 @@
+import { vi, describe, beforeEach, expect, test } from 'vitest';
 import { mount, VueWrapper } from '@vue/test-utils';
 import VTextInput from '@/components/VTextInput/VTextInput.vue';
 import { faker } from '@faker-js/faker';

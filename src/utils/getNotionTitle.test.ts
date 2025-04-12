@@ -1,7 +1,7 @@
 // @ts-nocheck
 // #FIXME Remove ts-nocheck
 import { faker } from '@faker-js/faker';
-
+import { describe, expect, test } from 'vitest';
 import getNotionTitle from './getNotionTitle';
 
 const title = faker.lorem.sentence();

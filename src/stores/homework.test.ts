@@ -20,6 +20,7 @@ import { mockQuestion } from '@/mocks/mockQuestion';
 import { mockComment } from '@/mocks/mockComment';
 import type { Thread } from '@/types/homework';
 import { mockCrossCheck } from '@/mocks/mockCrossCheck';
+import { vi, describe, beforeEach, expect, test } from 'vitest';
 
 vi.mock('@/api/homework', () => {
   return {

@@ -8,6 +8,7 @@ import { createTestingPinia } from '@pinia/testing';
 import { setUser, getUser, setAvatar } from '@/api/users';
 import { faker } from '@faker-js/faker';
 import type { Gender } from '@/types/users';
+import { vi, describe, beforeEach, expect, test } from 'vitest';
 
 vi.mock('@/api/users', () => {
   return {

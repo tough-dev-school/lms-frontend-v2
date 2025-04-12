@@ -4,6 +4,7 @@ import { loginWithCredentials, loginWithLink, sendLoginLink } from '@/api/auth';
 import { faker } from '@faker-js/faker';
 import useAuth from './auth';
 import { createApp } from 'vue';
+import { vi, describe, beforeEach, expect, test } from 'vitest';
 
 const token = faker.string.uuid();
 const passwordlessToken = faker.string.uuid();
