@@ -1,3 +1,4 @@
+import { describe, beforeEach, expect, test } from 'vitest';
 import { toMatchImageSnapshot } from 'jest-image-snapshot';
 import playwright from 'playwright';
 expect.extend({ toMatchImageSnapshot });

@@ -8,6 +8,7 @@ import useDiplomas from '@/stores/diplomas';
 import { uniq, flatten } from 'lodash-es';
 import { nextTick } from 'vue';
 import { faker } from '@faker-js/faker';
+import { vi, describe, beforeEach, expect, test } from 'vitest';
 
 const defaultProps = {};
 

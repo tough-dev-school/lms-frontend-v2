@@ -1,3 +1,4 @@
+import { describe, beforeEach, expect, test } from 'vitest';
 import VButton from '@/components/VButton/VButton.vue';
 import { mount, VueWrapper } from '@vue/test-utils';
 

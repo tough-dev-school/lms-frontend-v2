@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-
+import { vi, describe, beforeEach, expect, test } from 'vitest';
 import loginById from './loginById';
 import useAuth from '@/stores/auth';
 import type { RouteLocationNormalized } from 'vue-router';

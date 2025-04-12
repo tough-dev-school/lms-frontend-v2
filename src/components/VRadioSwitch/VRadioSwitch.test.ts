@@ -1,5 +1,5 @@
+import { describe, expect, test } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
-import { describe, test, expect } from 'vitest';
 import VRadioSwitch from './VRadioSwitch.vue';
 import { SunFilledIcon, MoonFilledIcon } from 'vue-tabler-icons';
 
