@@ -1,5 +1,5 @@
 import useAuth from '@/stores/auth';
-
+import { vi } from 'vitest';
 import { createApp } from 'vue';
 import { setActivePinia } from 'pinia';
 import { createTestingPinia } from '@pinia/testing';
@@ -38,7 +38,7 @@ describe('custom axios', () => {
     onResponseRejected(
       cloneDeep(defaultError) as unknown as AxiosError,
       true,
-    ).catch(() => {});
+    )?.catch(() => {});
 
     expect(responseCaseMiddleware).toHaveBeenCalledTimes(1);
     expect(responseCaseMiddleware).toHaveBeenCalledWith(
@@ -51,7 +51,7 @@ describe('custom axios', () => {
     onResponseRejected(
       cloneDeep(defaultError) as unknown as AxiosError,
       false,
-    ).catch(() => {});
+    )?.catch(() => {});
 
     expect(responseCaseMiddleware).toHaveBeenCalledTimes(1);
     expect(responseCaseMiddleware).toHaveBeenCalledWith(
@@ -64,7 +64,7 @@ describe('custom axios', () => {
     const error = cloneDeep(defaultError);
     error.response.status = 400;
 
-    onResponseRejected(error as unknown as AxiosError, true).catch(() => {});
+    onResponseRejected(error as unknown as AxiosError, true)?.catch(() => {});
 
     expect(auth.resetAuth).toHaveBeenCalledTimes(0);
   });
@@ -73,7 +73,7 @@ describe('custom axios', () => {
     const error = cloneDeep(defaultError);
     error.response.status = 401;
 
-    onResponseRejected(error as unknown as AxiosError, true).catch(() => {});
+    onResponseRejected(error as unknown as AxiosError, true)?.catch(() => {});
 
     expect(auth.resetAuth).toHaveBeenCalledTimes(1);
   });
@@ -82,7 +82,7 @@ describe('custom axios', () => {
     const error = cloneDeep(defaultError);
     error.response.headers['content-type'] = 'application/json; charset=utf-8';
 
-    onResponseRejected(error as unknown as AxiosError, true).catch(() => {});
+    onResponseRejected(error as unknown as AxiosError, true)?.catch(() => {});
 
     expect(handleError).toHaveBeenCalledTimes(1);
     expect(handleError).toHaveBeenCalledWith(error);
@@ -91,7 +91,7 @@ describe('custom axios', () => {
   test('calls handleError without error non-json errors', () => {
     const error = cloneDeep(defaultError);
 
-    onResponseRejected(error as unknown as AxiosError, true).catch(() => {});
+    onResponseRejected(error as unknown as AxiosError, true)?.catch(() => {});
 
     expect(handleError).toHaveBeenCalledTimes(1);
     expect(handleError).toHaveBeenCalledWith();
