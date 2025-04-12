@@ -33,12 +33,6 @@ const VLessonsView = () => import('@/views/VLessonsView/VLessonsView.vue');
 import loginByToken from '@/router/loginByToken';
 import loginById from '@/router/loginById';
 
-const isAuthorized = () => {
-  const auth = useAuth();
-
-  return !!auth.token;
-};
-
 const fetchMainUserData = async () => {
   const user = useUser();
   const studies = useStudies();
@@ -47,7 +41,9 @@ const fetchMainUserData = async () => {
 };
 
 const disallowAuthorized = () => {
-  if (isAuthorized()) return { name: 'home' };
+  const auth = useAuth();
+
+  if (auth.token) return { name: 'home' };
 };
 
 export const routes = [
@@ -163,7 +159,11 @@ router.beforeEach(
   async (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
     const auth = useAuth();
 
-    if (to.meta.isPublic && auth.token) {
+    if (auth.token) {
+      await fetchMainUserData();
+    }
+
+    if (to.meta.isPublic && !auth.token) {
       return { name: 'home' };
     }
 
@@ -173,7 +173,7 @@ router.beforeEach(
     }
 
     // Redirect to /login if unauthorized and route is not public
-    if (!(isAuthorized() || to.meta.isPublic)) {
+    if (!(auth.token || to.meta.isPublic)) {
       let query = {};
 
       if (to.fullPath !== '/') {
