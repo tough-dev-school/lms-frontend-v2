@@ -13,10 +13,9 @@
 </script>
 
 <template>
-  <VBreadcrumbs :items="breadcrumbs" />
   <VHeading tag="h1" class="mb-32">Мои курсы</VHeading>
-  <ul v-if="studies.items.length > 0" class="mb-32 flex flex-col gap-16">
-    <li v-for="(study, index) in studies.items" :key="index">
+  <ul v-if="studies && studies.length > 0" class="mb-32 flex flex-col gap-16">
+    <li v-for="(study, index) in studies" :key="index">
       <RouterLink
         class="link"
         data-testid="study"

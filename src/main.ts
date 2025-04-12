@@ -47,7 +47,6 @@ app.use(VueQueryPlugin, {
 
 app.use(FloatingVue);
 app.use(AvatarCropper);
-app.use(VueQueryPlugin);
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
 app.use(pinia);
