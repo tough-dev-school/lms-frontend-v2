@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/vue-query';
 import { getStudies } from '@/api/studies';
-import { getLessons, getModules } from '@/api/lms';
 import type { MaybeRefOrGetter } from 'vue';
 import { computed } from 'vue';
 import { toValue } from 'vue';
+import { api } from '@/api';
 
 export const studiesKeys = {
   all: () => ['studies'],
