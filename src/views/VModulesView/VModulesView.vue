@@ -42,16 +42,7 @@
 
   <div v-if="modules && modules.length > 0" class="grid gap-16">
     <RouterLink
-      v-for="(module, index) in [
-        modules,
-        modules,
-        modules,
-        modules,
-        modules,
-        modules,
-        modules,
-        modules,
-      ].flat()"
+      v-for="(module, index) in modules"
       :key="module.id"
       :to="{ name: 'lessons', params: { moduleId: module.id } }">
       <VCard :class="[cardClass(index), 'text-black']">
