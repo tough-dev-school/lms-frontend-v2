@@ -1,4 +1,4 @@
-import { vi, describe, beforeEach, expect, test } from 'vitest';
+import { vi, describe, expect, test } from 'vitest';
 import responseCaseMiddleware from './responseCaseMiddleware';
 import camelcaseKeys from 'camelcase-keys';
 import {

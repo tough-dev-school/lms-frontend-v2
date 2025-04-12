@@ -1,4 +1,4 @@
-import { vi, describe, beforeEach, expect, test } from 'vitest';
+import { describe, beforeEach, expect, test } from 'vitest';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
 import VReaction, { type VReactionProps } from './VReaction.vue';

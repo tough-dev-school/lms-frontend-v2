@@ -1,4 +1,4 @@
-import { vi, describe, beforeEach, expect, test } from 'vitest';
+import { describe, beforeEach, expect, test } from 'vitest';
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import VAnswerActions from './VAnswerActions.vue';
