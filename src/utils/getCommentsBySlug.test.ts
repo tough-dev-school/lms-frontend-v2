@@ -5,6 +5,7 @@ import { mockThread } from '@/mocks/mockThread';
 import { mockAnswer } from '@/mocks/mockAnswer';
 import { mockComments } from '@/mocks/mockComments';
 import { mockComment } from '@/mocks/mockComment';
+import { describe, expect, test } from 'vitest';
 
 describe('getCommentsBySlug', () => {
   test('getCommentsBySlug returns array if nothing found', () => {

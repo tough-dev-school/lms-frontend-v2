@@ -1,3 +1,4 @@
+import { vi, describe, beforeEach, expect, test } from 'vitest';
 import { mount, RouterLinkStub, VueWrapper } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
 import VHeader from './VHeader.vue';

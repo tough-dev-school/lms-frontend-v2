@@ -1,3 +1,4 @@
+import { describe, beforeEach, expect, test } from 'vitest';
 import { mount, RouterLinkStub } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import VSettingsView from './VSettingsView.vue';

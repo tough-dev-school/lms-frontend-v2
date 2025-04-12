@@ -3,6 +3,7 @@ import useMaterials from './materials';
 import { getMaterial } from '@/api/materials';
 import { faker } from '@faker-js/faker';
 import { mockMaterial } from '@/mocks/mockMaterial';
+import { vi, describe, beforeEach, expect, test } from 'vitest';
 
 vi.mock('@/api/materials', () => {
   return {

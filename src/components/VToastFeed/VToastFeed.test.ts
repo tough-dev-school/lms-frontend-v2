@@ -4,6 +4,7 @@ import { faker } from '@faker-js/faker';
 import useToasts, { VToastMessage } from '@/stores/toasts';
 import type VToast from '@/components/VToast/VToast.vue';
 import { createTestingPinia } from '@pinia/testing';
+import { vi, describe, beforeEach, expect, test } from 'vitest';
 
 const MESSAGES = 10;
 
