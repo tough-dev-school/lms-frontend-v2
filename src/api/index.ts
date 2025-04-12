@@ -40,3 +40,4 @@ export const createHttpClient = (
 const defaultHttpClient = createHttpClient();
 export const axios = defaultHttpClient.instance;
 export const { api } = new Api(defaultHttpClient);
+export default api;
