@@ -1,5 +1,5 @@
 import type { Author } from '@/types/homework';
-import responseCaseMiddleware from '@/axios/responseCaseMiddleware';
+import responseCaseMiddleware from '@/api/responseCaseMiddleware';
 import { faker } from '@faker-js/faker';
 
 export const mockAuthorData = ({
