@@ -24,7 +24,8 @@
     "prepare": "husky install",
     "add:component": "pnpx hygen new component --folder components --name",
     "add:view": "pnpx hygen new component --folder views --name",
-    "add:layout": "pnpx hygen new component --folder layouts --name"
+    "add:layout": "pnpx hygen new component --folder layouts --name",
+    "generate-sdk": "node --experimental-strip-types generate-sdk.ts"
   },
   "dependencies": {
     "@brachkow/email-providers": "^1.2.0",
@@ -97,6 +98,7 @@
     "prettier-plugin-tailwindcss": "^0.5.7",
     "serve": "^14.2.4",
     "storybook": "^8.6.12",
+    "swagger-typescript-api": "^13.1.0",
     "tailwindcss": "^3.3.5",
     "typescript": "~5.2.2",
     "vite": "^4.5.0",
