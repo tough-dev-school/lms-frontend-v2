@@ -5,12 +5,12 @@ import {
   type QueryClient,
 } from '@tanstack/vue-query';
 import { getStudies } from '@/api/studies';
-import { getLessons, getModules } from '@/api/lms';
 import { getUser, setUser, setAvatar } from '@/api/users';
 import type { MaybeRefOrGetter } from 'vue';
 import { computed } from 'vue';
 import { toValue } from 'vue';
 import type { EditableUserData } from '@/types/users';
+import { api } from '@/api';
 
 export const studiesKeys = {
   all: () => ['studies'],
@@ -45,7 +45,8 @@ export const useStudiesQuery = () => {
 const lessonsOptions = (moduleId: number | undefined) => {
   return {
     queryKey: lmsKeys.lessons(moduleId),
-    queryFn: () => getLessons({ moduleId }),
+    queryFn: async () =>
+      (await api.lmsLessonsList({ module: moduleId })).results,
   };
 };
 
@@ -60,7 +61,8 @@ export const useLessonsQuery = (
 const modulesOptions = (courseId: number | undefined) => {
   return {
     queryKey: lmsKeys.modules(courseId),
-    queryFn: () => getModules({ courseId }),
+    queryFn: async () =>
+      (await api.lmsModulesList({ course: courseId })).results,
   };
 };
 
