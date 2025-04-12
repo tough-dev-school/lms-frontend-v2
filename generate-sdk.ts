@@ -11,8 +11,17 @@ writeFileSync(SWAGGER_FILE, JSON.stringify(openapiData, null, 2));
 
 await generateApi({
   input: SWAGGER_FILE,
-  output: resolve(process.cwd(), './src/api/generated/'),
+  output: resolve(process.cwd(), './src/api/'),
   httpClientType: 'axios',
+  singleHttpClient: true,
+  extractEnums: true,
+  extractRequestBody: true,
+  extractRequestParams: true,
+  extractResponseBody: true,
+  extractResponseError: true,
+  extractResponses: true,
+  unwrapResponseData: true,
+  fileName: 'generated-api',
 });
 
 rmSync(SWAGGER_FILE);
