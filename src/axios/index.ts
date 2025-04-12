@@ -4,7 +4,7 @@ import onResponseFulfilled from './onResponseFulfilled';
 import onResponseRejected from './onResponseRejected';
 import { merge } from 'lodash-es';
 
-interface CustomAxiosInstanceConfig {
+export interface CustomAxiosInstanceConfig {
   useResponseCaseMiddleware: boolean;
   useRequestCaseMiddleware: boolean;
 }
