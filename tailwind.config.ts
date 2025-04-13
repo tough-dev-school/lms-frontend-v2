@@ -53,7 +53,7 @@ module.exports = {
       'darkmode-orange': { DEFAULT: '#d65d0e' },
       'darkmode-yellow': { DEFAULT: '#d79921' },
       'darkmode-purple': { DEFAULT: '#b16286' },
-      'accent-yellow': { DEFAULT: '#ffb800' },
+      'accent-yellow': { DEFAULT: '#F7CA45' },
       'accent-orange': { DEFAULT: '#FF7300' },
       'accent-green': { DEFAULT: '#8BD460' },
       'accent-blue': { DEFAULT: '#7AB8F1' },
@@ -84,6 +84,7 @@ module.exports = {
       inherit: 'inherit',
       0: 0,
       4: 4,
+      10: 10,
       ...spacing(8, 512),
     },
     extend: {
