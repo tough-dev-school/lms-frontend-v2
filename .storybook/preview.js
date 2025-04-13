@@ -1,12 +1,12 @@
 import '../src/fonts.css';
 import '../src/style.css';
-
 import { setup } from '@storybook/vue3';
 import { createPinia } from 'pinia';
 import { routes } from '@/router';
 import FloatingVue from 'floating-vue';
 import 'floating-vue/dist/style.css';
 import { createRouter, createWebHistory } from 'vue-router';
+import { VueQueryPlugin } from '@tanstack/vue-query';
 
 const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },

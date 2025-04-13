@@ -12,6 +12,10 @@ const useStudies = defineStore('studies', {
       items: [],
     };
   },
+  getters: {
+    getStudyById: (state) => (id: number) =>
+      state.items.find((item) => item.id === id),
+  },
   actions: {
     async getData() {
       try {
