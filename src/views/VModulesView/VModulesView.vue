@@ -2,26 +2,31 @@
   import VHeading from '@/components/VHeading/VHeading.vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VBreadcrumbs from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
-  import { ref, onMounted } from 'vue';
+  import { ref, onBeforeMount, computed } from 'vue';
   import { RouterLink, useRoute } from 'vue-router';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
   import { useModulesQuery } from '@/query';
+  import useStudies from '@/stores/studies';
 
   const route = useRoute();
   const courseId = ref<number>(0);
+
+  const { getStudyById } = useStudies();
+
+  const courseName = computed(() => getStudyById(courseId.value)?.name);
 
   const { data: modules } = useModulesQuery(() =>
     parseInt(route.params.courseId.toString()),
   );
 
-  onMounted(async () => {
+  onBeforeMount(async () => {
     courseId.value = parseInt(route.params.courseId.toString());
   });
 
-  const breadcrumbs: Breadcrumb[] = [
+  const breadcrumbs = computed<Breadcrumb[]>(() => [
     { name: 'Главная', to: { name: 'home' } },
-    { name: 'COURSENAME' },
-  ];
+    { name: courseName.value ? courseName.value : 'Материалы курса' },
+  ]);
 
   const cardClass = (number: number) => {
     // Sadly, Tailwind will strip dynamic classes, so we need to do this manually
@@ -38,14 +43,15 @@
 
 <template>
   <VBreadcrumbs :items="breadcrumbs" />
-  <VHeading tag="h1" class="mb-32">Модули</VHeading>
-
-  <div v-if="modules && modules.length > 0" class="grid gap-16">
+  <VHeading tag="h1" class="mb-32">{{ courseName }}</VHeading>
+  <div
+    v-if="modules && modules.length > 0"
+    class="grid gap-16 tablet:gap-32 phone:gap-24">
     <RouterLink
       v-for="(module, index) in modules"
       :key="module.id"
       :to="{ name: 'lessons', params: { moduleId: module.id } }">
-      <VCard :class="[cardClass(index), 'text-black']">
+      <VCard :class="[cardClass(index), 'text-black min-h-120']">
         <VHeading tag="h2">{{ module.name }}</VHeading>
       </VCard>
     </RouterLink>
