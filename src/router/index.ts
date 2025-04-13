@@ -73,7 +73,7 @@ export const routes = [
     component: VLoginView,
     beforeEnter: [disallowAuthorized],
     meta: {
-      isPublic: true,
+      unauthorizedOnly: true,
     },
   },
   {
@@ -82,7 +82,7 @@ export const routes = [
     component: VMailSentView,
     beforeEnter: [disallowAuthorized],
     meta: {
-      isPublic: true,
+      unauthorizedOnly: true,
     },
   },
   {
@@ -91,7 +91,7 @@ export const routes = [
     component: VLoginResetView,
     beforeEnter: [disallowAuthorized],
     meta: {
-      isPublic: true,
+      unauthorizedOnly: true,
     },
   },
   {
@@ -100,7 +100,7 @@ export const routes = [
     component: VLoginChangeView,
     beforeEnter: [disallowAuthorized],
     meta: {
-      isPublic: true,
+      unauthorizedOnly: true,
     },
   },
   {
@@ -109,7 +109,7 @@ export const routes = [
     component: VLoadingView,
     beforeEnter: [loginByToken],
     meta: {
-      isPublic: true,
+      unauthorizedOnly: true,
     },
   },
   {
@@ -159,11 +159,13 @@ router.beforeEach(
   async (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
     const auth = useAuth();
 
+    // Fetch main user data if token exists
+    // #FIXME: this must be replaced with vue query subscriptions
     if (auth.token) {
       await fetchMainUserData();
     }
 
-    if (to.meta.isPublic && !auth.token) {
+    if (to.meta.unauthorizedOnly && auth.token) {
       return { name: 'home' };
     }
 
@@ -173,7 +175,7 @@ router.beforeEach(
     }
 
     // Redirect to /login if unauthorized and route is not public
-    if (!(auth.token || to.meta.isPublic)) {
+    if (!(auth.token || to.meta.unauthorizedOnly)) {
       let query = {};
 
       if (to.fullPath !== '/') {
@@ -186,6 +188,7 @@ router.beforeEach(
       };
     }
 
+    // #FIXME: this must be replaced with vue query subscriptions
     if (to.name === 'materials' && to.params.id !== from.params.id) {
       const materials = useMaterials();
       const loading = useLoading();
@@ -196,6 +199,7 @@ router.beforeEach(
       loading.isLoading = false;
     }
 
+    // #FIXME: this must be replaced with vue query subscriptions
     if (to.name === 'certificates') {
       const diplomas = useDiplomas();
 
