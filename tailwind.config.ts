@@ -29,7 +29,7 @@ module.exports = {
       tablet: '768px',
     },
     colors: {
-      offwhite: { DEFAULT: '#faf9f8' },
+      offwhite: { DEFAULT: '#F2EFDA' },
       black: { DEFAULT: '#000000' },
       white: { DEFAULT: '#FFFFFF' },
       yellow: { DEFAULT: '#ffb800', hover: '#ffa800', light: '#fff9eb' },
