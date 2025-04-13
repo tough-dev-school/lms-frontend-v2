@@ -10,7 +10,7 @@ const onResponseRejected = (
   const auth = useAuth();
 
   if (error.response) {
-    if (error.response.status === 401 && auth.token) auth.resetAuth();
+    if (error.response.status === 401 && auth.token) auth.removeToken();
 
     if (error.response.status !== 401) {
       // Convert data keys to target case

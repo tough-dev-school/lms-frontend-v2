@@ -69,7 +69,7 @@
     {
       label: 'Выйти',
       action: () => {
-        auth.resetAuth();
+        auth.removeToken();
         router.push({ name: 'login' });
         isOpen.value = false;
       },

@@ -81,7 +81,7 @@ const useAuth = defineStore('auth', {
         await requestReset(email);
       } catch (error: any) {}
     },
-    resetAuth() {
+    removeToken() {
       this.token = undefined;
     },
   },

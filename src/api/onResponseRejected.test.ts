@@ -66,7 +66,7 @@ describe('custom axios', () => {
 
     onResponseRejected(error as unknown as AxiosError, true).catch(() => {});
 
-    expect(auth.resetAuth).toHaveBeenCalledTimes(0);
+    expect(auth.removeToken).toHaveBeenCalledTimes(0);
   });
 
   test('logout on 401', () => {
@@ -75,7 +75,7 @@ describe('custom axios', () => {
 
     onResponseRejected(error as unknown as AxiosError, true).catch(() => {});
 
-    expect(auth.resetAuth).toHaveBeenCalledTimes(1);
+    expect(auth.removeToken).toHaveBeenCalledTimes(1);
   });
 
   test('calls handleError with error for json errors', () => {

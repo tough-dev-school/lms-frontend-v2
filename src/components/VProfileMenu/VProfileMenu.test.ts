@@ -149,7 +149,7 @@ describe('VProfileMenu', () => {
     await getButtonWrapper().trigger('click');
     await getLogoutWrapper().trigger('click');
 
-    expect(auth.resetAuth).toHaveBeenCalledTimes(1);
+    expect(auth.removeToken).toHaveBeenCalledTimes(1);
   });
 
   test('Click on logout opens login', async () => {
