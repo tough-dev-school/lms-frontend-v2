@@ -24,7 +24,6 @@
             :name="study.name"
             :image="study.cover"
             class="hidden phone:flex" />
-          <p class="p-16">{{ study.name }}</p>
         </VCard>
       </RouterLink>
     </li>
