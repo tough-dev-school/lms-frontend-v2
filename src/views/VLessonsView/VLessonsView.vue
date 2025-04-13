@@ -2,28 +2,58 @@
   import VHeading from '@/components/VHeading/VHeading.vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VBreadcrumbs from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
-  import { useRoute } from 'vue-router';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
-  import { useLessonsQuery } from '@/query';
-  import VButton from '@/components/VButton/VButton.vue';
+  import { useLessonsQuery, fetchModules } from '@/query';
   import VTag from '@/components/VTag/VTag.vue';
+  import useStudies from '@/stores/studies';
+  import { onBeforeMount, computed, ref } from 'vue';
+  import { useRouteParams } from '@vueuse/router';
+  import { useQueryClient } from '@tanstack/vue-query';
 
-  const route = useRoute();
-  const moduleId = Number(route.params.moduleId);
+  const queryClient = useQueryClient();
+  const courseId = useRouteParams('courseId', '0', {
+    transform: (value) => parseInt(value),
+  });
+  const moduleId = useRouteParams('moduleId', '0', {
+    transform: (value) => parseInt(value),
+  });
+
+  const { getStudyById } = useStudies();
+
+  const courseName = computed(() => getStudyById(courseId.value)?.name);
+  const moduleName = ref('');
 
   const { data: lessons } = useLessonsQuery(moduleId);
 
-  const breadcrumbs: Breadcrumb[] = [
-    { name: 'Мои курсы', to: { name: 'home' } },
-    { name: 'COURSENAME', to: { name: 'modules' } },
-    { name: 'LESSONNAME' },
-  ];
+  const breadcrumbs = computed<Breadcrumb[]>(() => [
+    { name: 'Главная', to: { name: 'home' } },
+    {
+      name: courseName.value ? courseName.value : 'Материалы курса',
+      to: { name: 'modules', params: { courseId: courseId.value } },
+    },
+    {
+      name: moduleName.value,
+      to: {
+        name: 'lessons',
+        params: { courseId: courseId.value, moduleId: moduleId.value },
+      },
+    },
+  ]);
+
+  onBeforeMount(async () => {
+    const modules = await fetchModules(queryClient, {
+      courseId: courseId.value,
+    });
+
+    moduleName.value =
+      modules.find((module) => module.id === moduleId.value)?.name ?? '';
+  });
 </script>
 
 <template>
   <VBreadcrumbs :items="breadcrumbs" />
   <div class="VLessonsView gap-32 flex flex-col">
-    <VHeading tag="h1">Все уроки</VHeading>
+    <VHeading tag="h1">{{ moduleName }}</VHeading>
     <div v-if="lessons && lessons.length > 0" class="VLessonsView__Layout">
       <VCard
         v-for="lesson in lessons"
@@ -35,7 +65,7 @@
         <div class="flex flex-col gap-10">
           <div class="flex flex-col gap-16">
             <div class="empty:hidden gap-8 flex flex-wrap">
-              <VTag v-if="lesson.homework.question.deadline"
+              <VTag v-if="lesson.homework?.question.deadline"
                 >Дедлайн {{ lesson.homework.question.deadline }}</VTag
               >
             </div>
@@ -52,16 +82,27 @@
               </tr>
             </table>
           </div>
-          <VButton
+          <RouterLink
             v-if="lesson.material"
-            class="VLessonsView__Button bg-white rounded-8"
-            >Открыть материалы</VButton
-          >
-          <VButton
+            class="button VLessonsView__Button"
+            :to="{
+              name: 'materials',
+              params: {
+                id: lesson.material.id,
+              },
+            }">
+            Открыть материалы
+          </RouterLink>
+
+          <RouterLink
             v-if="lesson.homework"
-            class="VLessonsView__Button bg-white rounded-8"
-            >Отправить домашку</VButton
-          >
+            class="button VLessonsView__Button"
+            :to="{
+              name: 'homework-question',
+              params: { questionId: lesson.homework.question.slug },
+            }">
+            Отправить домашку
+          </RouterLink>
         </div>
       </VCard>
     </div>
@@ -85,6 +126,7 @@
     }
     &__Button {
       --module: 40px;
+      @apply bg-white rounded-8;
     }
   }
 </style>

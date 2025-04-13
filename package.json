@@ -39,6 +39,7 @@
     "@tiptap/starter-kit": "^2.1.12",
     "@tiptap/vue-3": "^2.1.12",
     "@vueuse/core": "^10.6.1",
+    "@vueuse/router": "^13.1.0",
     "axios": "^1.6.1",
     "camelcase-keys": "^9.1.2",
     "dayjs": "^1.11.10",

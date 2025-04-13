@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/vue-query';
+import { QueryClient, useQuery } from '@tanstack/vue-query';
 import { getStudies } from '@/api/studies';
 import type { MaybeRefOrGetter } from 'vue';
 import { computed } from 'vue';
@@ -53,6 +53,11 @@ const modulesOptions = (courseId: number | undefined) => {
       (await api.lmsModulesList({ course: courseId, page_size: 100 })).results,
   };
 };
+
+export const fetchModules = async (
+  queryClient: QueryClient,
+  { courseId }: { courseId: number },
+) => queryClient.fetchQuery(modulesOptions(courseId));
 
 export const useModulesQuery = (
   courseId: MaybeRefOrGetter<number | undefined>,

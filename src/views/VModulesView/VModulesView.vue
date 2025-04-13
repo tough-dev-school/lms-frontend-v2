@@ -2,14 +2,17 @@
   import VHeading from '@/components/VHeading/VHeading.vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VBreadcrumbs from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
-  import { ref, onBeforeMount, computed } from 'vue';
+  import { computed } from 'vue';
   import { RouterLink, useRoute } from 'vue-router';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
   import { useModulesQuery } from '@/query';
   import useStudies from '@/stores/studies';
-
+  import { useRouteParams } from '@vueuse/router';
   const route = useRoute();
-  const courseId = ref<number>(0);
+
+  const courseId = useRouteParams('courseId', '0', {
+    transform: (value) => parseInt(value),
+  });
 
   const { getStudyById } = useStudies();
 
@@ -18,15 +21,6 @@
   const { data: modules } = useModulesQuery(() =>
     parseInt(route.params.courseId.toString()),
   );
-
-  onBeforeMount(async () => {
-    courseId.value = parseInt(route.params.courseId.toString());
-  });
-
-  const breadcrumbs = computed<Breadcrumb[]>(() => [
-    { name: 'Главная', to: { name: 'home' } },
-    { name: courseName.value ? courseName.value : 'Материалы курса' },
-  ]);
 
   const cardClass = (number: number) => {
     // Sadly, Tailwind will strip dynamic classes, so we need to do this manually
@@ -39,6 +33,14 @@
 
     return colors[number % colors.length];
   };
+
+  const breadcrumbs = computed<Breadcrumb[]>(() => [
+    { name: 'Главная', to: { name: 'home' } },
+    {
+      name: courseName.value ? courseName.value : 'Материалы курса',
+      to: { name: 'modules', params: { courseId: courseId.value } },
+    },
+  ]);
 </script>
 
 <template>
@@ -52,7 +54,7 @@
       :key="module.id"
       :to="{ name: 'lessons', params: { moduleId: module.id } }">
       <VCard :class="[cardClass(index), 'text-black min-h-120']">
-        <VHeading tag="h2">{{ module.name }}</VHeading>
+        <VHeading tag="h3">{{ module.name }}</VHeading>
       </VCard>
     </RouterLink>
   </div>
