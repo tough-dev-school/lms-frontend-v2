@@ -10,7 +10,9 @@
 
 <template>
   <VHeading tag="h1" class="mb-32">Мои курсы</VHeading>
-  <ul v-if="studies.items.length > 0" class="mb-32 flex flex-col gap-16">
+  <ul
+    v-if="studies.items.length > 0"
+    class="grid gap-16 tablet:gap-32 phone:gap-24 mb-64">
     <li v-for="(study, index) in studies.items" :key="index">
       <RouterLink
         class="link"
