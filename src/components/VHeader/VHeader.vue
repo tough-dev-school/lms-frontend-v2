@@ -7,7 +7,7 @@
   const route = useRoute();
 
   const hasProfile = computed(() => {
-    return !route.meta.isPublic;
+    return !route.meta.unauthorizedOnly;
   });
 </script>
 
