@@ -10,26 +10,6 @@ import useMaterials from '@/stores/materials';
 import useDiplomas from '@/stores/diplomas';
 import useLoading from '@/stores/loading';
 
-const VHomeView = () => import('@/views/VHomeView/VHomeView.vue');
-const VMailSentView = () => import('@/views/VMailSentView/VMailSentView.vue');
-const VSettingsView = () => import('@/views/VSettingsView/VSettingsView.vue');
-const VLoginView = () => import('@/views/VLoginView/VLoginView.vue');
-const VLoadingView = () => import('@/views/VLoadingView/VLoadingView.vue');
-const VNotionView = () => import('@/views/VNotionView/VNotionView.vue');
-const VHomeworkQuestionView = () =>
-  import('@/views/VHomeworkQuestionView/VHomeworkQuestionView.vue');
-const VHomeworkExpertView = () =>
-  import('@/views/VHomeworkExpertView/VHomeworkExpertView.vue');
-const VHomeworkAnswerView = () =>
-  import('@/views/VHomeworkAnswerView/VHomeworkAnswerView.vue');
-const VLoginResetView = () =>
-  import('@/views/VLoginResetView/VLoginResetView.vue');
-const VLoginChangeView = () =>
-  import('@/views/VLoginChangeView/VLoginChangeView.vue');
-const VCertificatesView = () =>
-  import('@/views/VCertificatesView/VCertificatesView.vue');
-const VModulesView = () => import('@/views/VModulesView/VModulesView.vue');
-const VLessonsView = () => import('@/views/VLessonsView/VLessonsView.vue');
 import loginByToken from '@/router/loginByToken';
 import loginById from '@/router/loginById';
 
@@ -50,27 +30,27 @@ export const routes = [
   {
     path: '/',
     name: 'home',
-    component: VHomeView,
+    component: () => import('@/views/VHomeView/VHomeView.vue'),
   },
   {
     path: '/settings',
     name: 'settings',
-    component: VSettingsView,
+    component: () => import('@/views/VSettingsView/VSettingsView.vue'),
   },
   {
     path: '/:courseId/modules',
     name: 'modules',
-    component: VModulesView,
+    component: () => import('@/views/VModulesView/VModulesView.vue'),
   },
   {
     path: '/:courseId/module/:moduleId/lessons',
     name: 'lessons',
-    component: VLessonsView,
+    component: () => import('@/views/VLessonsView/VLessonsView.vue'),
   },
   {
     path: '/login',
     name: 'login',
-    component: VLoginView,
+    component: () => import('@/views/VLoginView/VLoginView.vue'),
     beforeEnter: [disallowAuthorized],
     meta: {
       unauthorizedOnly: true,
@@ -79,7 +59,7 @@ export const routes = [
   {
     path: '/login/mail-sent',
     name: 'mail-sent',
-    component: VMailSentView,
+    component: () => import('@/views/VMailSentView/VMailSentView.vue'),
     beforeEnter: [disallowAuthorized],
     meta: {
       unauthorizedOnly: true,
@@ -88,7 +68,7 @@ export const routes = [
   {
     path: '/login/reset',
     name: 'login-reset',
-    component: VLoginResetView,
+    component: () => import('@/views/VLoginResetView/VLoginResetView.vue'),
     beforeEnter: [disallowAuthorized],
     meta: {
       unauthorizedOnly: true,
@@ -97,7 +77,7 @@ export const routes = [
   {
     path: '/auth/password/reset/:uid/:token/',
     name: 'login-change',
-    component: VLoginChangeView,
+    component: () => import('@/views/VLoginChangeView/VLoginChangeView.vue'),
     beforeEnter: [disallowAuthorized],
     meta: {
       unauthorizedOnly: true,
@@ -106,7 +86,7 @@ export const routes = [
   {
     path: '/auth/passwordless/:passwordlessToken',
     name: 'token',
-    component: VLoadingView,
+    component: () => import('@/views/VLoadingView/VLoadingView.vue'),
     beforeEnter: [loginByToken],
     meta: {
       unauthorizedOnly: true,
@@ -115,33 +95,36 @@ export const routes = [
   {
     path: '/auth/as/:userId',
     name: 'auth-as',
-    component: VLoadingView,
+    component: () => import('@/views/VLoadingView/VLoadingView.vue'),
     beforeEnter: [loginById],
   },
   {
     path: '/materials/:id',
     name: 'materials',
-    component: VNotionView,
+    component: () => import('@/views/VNotionView/VNotionView.vue'),
   },
   {
     path: '/homework/questions/:questionId',
     name: 'homework-question',
-    component: VHomeworkQuestionView,
+    component: () =>
+      import('@/views/VHomeworkQuestionView/VHomeworkQuestionView.vue'),
   },
   {
     path: '/homework/question-admin/:questionId',
     name: 'homework-expert',
-    component: VHomeworkExpertView,
+    component: () =>
+      import('@/views/VHomeworkExpertView/VHomeworkExpertView.vue'),
   },
   {
     path: '/homework/answers/:answerId',
     name: 'homework-answer',
-    component: VHomeworkAnswerView,
+    component: () =>
+      import('@/views/VHomeworkAnswerView/VHomeworkAnswerView.vue'),
   },
   {
     path: '/certificates',
     name: 'certificates',
-    component: VCertificatesView,
+    component: () => import('@/views/VCertificatesView/VCertificatesView.vue'),
   },
 ];
 
