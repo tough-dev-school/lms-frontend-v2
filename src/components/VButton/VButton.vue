@@ -14,7 +14,7 @@
 
 <template>
   <button
-    class="h-module min-w-[240px]"
+    class="h-module min-w-[280px]"
     type="button"
     :class="{
       button: appearance === 'button',
