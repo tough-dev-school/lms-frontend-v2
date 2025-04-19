@@ -52,8 +52,8 @@
 
 <template>
   <VBreadcrumbs :items="breadcrumbs" />
+  <VHeading tag="h1">{{ moduleName }}</VHeading>
   <div class="VLessonsView gap-32 flex flex-col">
-    <VHeading tag="h1">{{ moduleName }}</VHeading>
     <div v-if="lessons && lessons.length > 0" class="VLessonsView__Layout">
       <VCard
         v-for="lesson in lessons"

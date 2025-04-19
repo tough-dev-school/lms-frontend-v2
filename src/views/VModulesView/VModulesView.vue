@@ -45,10 +45,8 @@
 
 <template>
   <VBreadcrumbs :items="breadcrumbs" />
-  <VHeading tag="h1" class="mb-32">{{ courseName }}</VHeading>
-  <div
-    v-if="modules && modules.length > 0"
-    class="grid gap-16 tablet:gap-32 phone:gap-24">
+  <VHeading tag="h1">{{ courseName }}</VHeading>
+  <template v-if="modules && modules.length > 0">
     <RouterLink
       v-for="(module, index) in modules"
       :key="module.id"
@@ -57,7 +55,7 @@
         <VHeading tag="h3">{{ module.name }}</VHeading>
       </VCard>
     </RouterLink>
-  </div>
+  </template>
 
   <p v-else data-testid="empty" class="mb-16 text-center">
     Нет доступных модулей.
