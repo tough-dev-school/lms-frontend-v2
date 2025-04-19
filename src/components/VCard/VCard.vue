@@ -7,6 +7,10 @@
     title?: string;
   }
 
+  defineOptions({
+    inheritAttrs: false,
+  });
+
   withDefaults(defineProps<Props>(), { tag: 'div', title: undefined });
 </script>
 
@@ -15,10 +19,12 @@
     <VHeading v-if="title" tag="h2">{{ title }}</VHeading>
     <component
       :is="tag"
+      v-bind="$attrs"
       class="overflow-hidden rounded bg-white p-16 phone:p-24 dark:bg-darkmode-layer2">
       <slot />
       <footer
-        class="grow-children mt-32 flex flex-wrap justify-start gap-8 border-t border-gray border-opacity-20 pt-16 empty:hidden phone:gap-16 phone:pt-24 phone:pb-16">
+        v-if="$slots.footer"
+        class="grow-children mt-32 flex flex-wrap justify-start gap-8 phone:gap-16">
         <slot name="footer" />
       </footer>
     </component>
