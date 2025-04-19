@@ -1,14 +1,5 @@
 <script lang="ts" setup>
   import VLogo from '@/components/VLogo/VLogo.vue';
-  import VProfileMenu from '@/components/VProfileMenu/VProfileMenu.vue';
-  import { computed } from 'vue';
-  import { useRoute } from 'vue-router';
-
-  const route = useRoute();
-
-  const hasProfile = computed(() => {
-    return !route.meta.unauthorizedOnly;
-  });
 </script>
 
 <template>
@@ -17,6 +8,6 @@
     <RouterLink to="/" data-testid="logo" class="se:block hidden">
       <VLogo />
     </RouterLink>
-    <VProfileMenu v-if="hasProfile" data-testid="profile" />
+    <slot />
   </header>
 </template>

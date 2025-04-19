@@ -1,6 +1,5 @@
 <script lang="ts" setup>
   import { onMounted, ref, computed } from 'vue';
-  import VHeading from '@/components/VHeading/VHeading.vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VAvatar from '@/components/VAvatar/VAvatar.vue';
   import VButton from '@/components/VButton/VButton.vue';

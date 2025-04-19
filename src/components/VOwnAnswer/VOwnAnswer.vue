@@ -5,7 +5,6 @@
   import useHomework from '@/stores/homework';
   import { ref, onMounted, computed } from 'vue';
   import VAnswer from '@/components/VAnswer/VAnswer.vue';
-  import VCard from '@/components/VCard/VCard.vue';
   import type { Answer, Thread, Comment } from '@/types/homework';
   import dayjs from 'dayjs';
 

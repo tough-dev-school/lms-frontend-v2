@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-  import VHeading from '@/components/VHeading/VHeading.vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VRadioSwitch from '@/components/VRadioSwitch/VRadioSwitch.vue';
   import { MoonFilledIcon, DevicesIcon, SunFilledIcon } from 'vue-tabler-icons';

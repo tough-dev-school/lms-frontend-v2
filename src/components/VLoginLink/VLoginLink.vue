@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-  import VHeading from '@/components/VHeading/VHeading.vue';
   import VButton from '@/components/VButton/VButton.vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VTextInput from '@/components/VTextInput/VTextInput.vue';

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 
-interface State {
+export interface State {
   isLoading: boolean;
 }
 

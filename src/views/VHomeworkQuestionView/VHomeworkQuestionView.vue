@@ -1,30 +1,29 @@
 <script lang="ts" setup>
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
   import useHomework from '@/stores/homework';
-  import { useRoute } from 'vue-router';
-  import { computed, onMounted, ref } from 'vue';
-  import type { Ref } from 'vue';
+  import { computed, onMounted } from 'vue';
   import { storeToRefs } from 'pinia';
   import VHeading from '@/components/VHeading/VHeading.vue';
-  import VPreloader from '@/components/VPreloader/VPreloader.vue';
   import VOwnAnswer from '@/components/VOwnAnswer/VOwnAnswer.vue';
   import VNewAnswer from '@/components/VNewAnswer/VNewAnswer.vue';
-  import VCard from '@/components/VCard/VCard.vue';
   import useUser from '@/stores/user';
+  import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
+  import { useRouteParams } from '@vueuse/router';
 
-  const route = useRoute();
   const homework = useHomework();
   const user = useUser();
 
+  const questionId = useRouteParams('questionId', '', {
+    transform: (value) => String(value),
+  });
+
   const { question, answers } = storeToRefs(homework);
-  const questionId: Ref<string | undefined> = ref(undefined);
 
   const answer = computed(() => {
     return answers.value.at(-1);
   });
 
   const getData = async () => {
-    questionId.value = String(route.params.questionId);
     await homework.getQuestion(questionId.value);
     await homework.getAnswers({
       questionId: questionId.value,
@@ -44,15 +43,10 @@
 </script>
 
 <template>
-  <div
-    v-if="question !== undefined && questionId"
-    class="VHomeworkQuestionView">
-    <VHeading tag="h1">{{ question.name }}</VHeading>
-    <VHtmlContent :content="question.text" />
-
+  <VLoggedLayout title="Домашнее задание">
+    <VHtmlContent v-if="question" :content="question.text" />
     <section>
       <VHeading tag="h2" class="mb-24">Ответ</VHeading>
-
       <div v-if="answer" class="mb-16 bg-yellow-light">
         <VHeading tag="h3" class="mb-8"
           >Поделиться ссылкой на сделанную домашку</VHeading
@@ -68,14 +62,12 @@
           >{{ answerLink }}</RouterLink
         >
       </div>
-
       <VOwnAnswer
-        v-if="answer"
+        v-if="question && answer"
         :answer="answer"
         :question-id="questionId"
         @update="getData" />
       <VNewAnswer v-else :question-id="questionId" @update="getData" />
     </section>
-  </div>
-  <VPreloader v-else />
+  </VLoggedLayout>
 </template>

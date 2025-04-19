@@ -7,12 +7,12 @@
   import useHomework from '@/stores/homework';
   import { useRoute, useRouter } from 'vue-router';
   import { storeToRefs } from 'pinia';
-  import VPreloader from '@/components/VPreloader/VPreloader.vue';
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VNewAnswer from '@/components/VNewAnswer/VNewAnswer.vue';
   import type { Thread } from '@/types/homework';
   import VCrossChecks from '@/components/VCrossChecks/VCrossChecks.vue';
+  import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
 
   const homework = useHomework();
   const { question, answers, crosschecks } = storeToRefs(homework);
@@ -52,8 +52,8 @@
 </script>
 
 <template>
-  <div v-if="question !== undefined && answer !== undefined">
-    <section class="mb-64 flex flex-col gap-24">
+  <VLoggedLayout>
+    <section v-if="question && answer" class="mb-64 flex flex-col gap-24">
       <VHeading tag="h1">{{ question.name }}</VHeading>
       <VCard tag="details">
         <summary>Показать задание</summary>
@@ -61,7 +61,7 @@
       </VCard>
       <VAnswer :answer="answer" />
     </section>
-    <section class="flex flex-col gap-24">
+    <section v-if="question && answer" class="flex flex-col gap-24">
       <VHeading tag="h2">Обсуждение</VHeading>
       <VFeedbackGuide />
       <VNewAnswer
@@ -75,6 +75,5 @@
         :original-post="comment"
         @update="prepareForScroll" />
     </section>
-  </div>
-  <VPreloader v-else />
+  </VLoggedLayout>
 </template>

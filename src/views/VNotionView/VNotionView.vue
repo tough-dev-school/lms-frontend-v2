@@ -14,6 +14,7 @@
   import getNotionTitle from '@/utils/getNotionTitle';
   import { useChatra } from '@/hooks/useChatra';
   import VNotionRenderer from '@/components/VNotionRenderer/VNotionRenderer.vue';
+  import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
 
   const router = useRouter();
   const materials = useMaterials();
@@ -37,32 +38,34 @@
 </script>
 
 <template>
-  <template v-if="materials.material">
-    <VCard class="pt-32">
-      <VNotionRenderer :block-map="materials.material" />
-    </VCard>
-  </template>
-  <div
-    v-else-if="!materials.material"
-    class="center flex max-w-[400px] flex-col text-center">
-    <p>Материал не найден :(</p>
-    <p>
-      Если кажется что здесь какая-то ошибка напишите
-      <button class="link" @click="chatra('openChat', true)">
-        в чат в углу экрана
-      </button>
-      или на
-      <a
-        class="link"
-        href="mailto:
-support@tough-dev.school">
-        support@tough-dev.school</a
+  <VLoggedLayout>
+    <template v-if="materials.material">
+      <VCard class="pt-32">
+        <VNotionRenderer :block-map="materials.material" />
+      </VCard>
+    </template>
+    <div
+      v-else-if="!materials.material"
+      class="center flex max-w-[400px] flex-col text-center">
+      <p>Материал не найден :(</p>
+      <p>
+        Если кажется что здесь какая-то ошибка напишите
+        <button class="link" @click="chatra('openChat', true)">
+          в чат в углу экрана
+        </button>
+        или на
+        <a
+          class="link"
+          href="mailto:
+    support@tough-dev.school">
+          support@tough-dev.school</a
+        >
+      </p>
+      <VButton appearance="link" @click="router.push({ name: 'home' })"
+        >На главную</VButton
       >
-    </p>
-    <VButton appearance="link" @click="router.push({ name: 'home' })"
-      >На главную</VButton
-    >
-  </div>
+    </div>
+  </VLoggedLayout>
 </template>
 
 <style>

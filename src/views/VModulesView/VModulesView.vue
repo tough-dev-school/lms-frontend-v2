@@ -1,13 +1,14 @@
 <script lang="ts" setup>
   import VHeading from '@/components/VHeading/VHeading.vue';
   import VCard from '@/components/VCard/VCard.vue';
-  import VBreadcrumbs from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
   import { computed } from 'vue';
   import { RouterLink, useRoute } from 'vue-router';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
   import { useModulesQuery } from '@/query';
   import useStudies from '@/stores/studies';
   import { useRouteParams } from '@vueuse/router';
+  import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
+
   const route = useRoute();
 
   const courseId = useRouteParams('courseId', '0', {
@@ -44,20 +45,20 @@
 </script>
 
 <template>
-  <VBreadcrumbs :items="breadcrumbs" />
-  <VHeading tag="h1">{{ courseName }}</VHeading>
-  <template v-if="modules && modules.length > 0">
-    <RouterLink
-      v-for="(module, index) in modules"
-      :key="module.id"
-      :to="{ name: 'lessons', params: { moduleId: module.id } }">
-      <VCard :class="[cardClass(index), 'text-black min-h-120']">
-        <VHeading tag="h3">{{ module.name }}</VHeading>
-      </VCard>
-    </RouterLink>
-  </template>
+  <VLoggedLayout title="Модули" :breadcrumbs="breadcrumbs">
+    <template v-if="modules && modules.length > 0">
+      <RouterLink
+        v-for="(module, index) in modules"
+        :key="module.id"
+        :to="{ name: 'lessons', params: { moduleId: module.id } }">
+        <VCard :class="[cardClass(index), 'text-black min-h-120']">
+          <VHeading tag="h3">{{ module.name }}</VHeading>
+        </VCard>
+      </RouterLink>
+    </template>
 
-  <p v-else data-testid="empty" class="mb-16 text-center">
-    Нет доступных модулей.
-  </p>
+    <p v-else data-testid="empty" class="mb-16 text-center">
+      Нет доступных модулей.
+    </p>
+  </VLoggedLayout>
 </template>

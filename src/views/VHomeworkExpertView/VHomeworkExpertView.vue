@@ -4,23 +4,25 @@
   import VCard from '@/components/VCard/VCard.vue';
   import { watch } from 'vue';
   import useHomework from '@/stores/homework';
-  import { useRoute } from 'vue-router';
   import { storeToRefs } from 'pinia';
-  import VPreloader from '@/components/VPreloader/VPreloader.vue';
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
+  import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
+  import { useRouteParams } from '@vueuse/router';
 
   const homework = useHomework();
   const { question, answers } = storeToRefs(homework);
-  const route = useRoute();
+
+  const questionId = useRouteParams('questionId', '', {
+    transform: (value) => String(value),
+  });
 
   const getData = async () => {
-    const questionId = String(route.params.questionId);
-    await homework.getQuestion(questionId);
-    await homework.getAnswers({ questionId });
+    await homework.getQuestion(questionId.value);
+    await homework.getAnswers({ questionId: questionId.value });
   };
 
   watch(
-    () => route.params,
+    () => questionId.value,
     async () => {
       await getData();
     },
@@ -29,8 +31,8 @@
 </script>
 
 <template>
-  <div v-if="question !== undefined && answers.length > 0">
-    <VCard class="mb-64" :title="question.name">
+  <VLoggedLayout>
+    <VCard v-if="question" class="mb-64" :title="question.name">
       <VHtmlContent :content="question.text" class="mt-8" />
     </VCard>
     <section>
@@ -43,6 +45,5 @@
         </VLazyThread>
       </div>
     </section>
-  </div>
-  <VPreloader v-else />
+  </VLoggedLayout>
 </template>

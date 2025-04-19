@@ -1,9 +1,9 @@
 <script lang="ts" setup>
   import useDiplomas from '@/stores/diplomas';
-  import VHeading from '@/components/VHeading/VHeading.vue';
   import VCertificateCard from '@/components/VCertificateCard/VCertificateCard.vue';
   import { computed } from 'vue';
   import { groupBy } from 'lodash-es';
+  import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
 
   const diplomas = useDiplomas();
 
@@ -18,17 +18,18 @@
 </script>
 
 <template>
-  <VHeading tag="h1">Мои сертификаты</VHeading>
-  <VCertificateCard
-    v-for="group in groupedDiplomas"
-    :key="group.course"
-    data-testid="certificate"
-    :certificates="group.certificates"
-    :course="group.course" />
-  <li
-    v-if="groupedDiplomas.length === 0"
-    data-testid="empty"
-    class="flex h-128 flex-grow items-center justify-center rounded border border-dashed border-gray text-center text-gray">
-    Нет сертификатов
-  </li>
+  <VLoggedLayout title="Мои сертификаты">
+    <VCertificateCard
+      v-for="group in groupedDiplomas"
+      :key="group.course"
+      data-testid="certificate"
+      :certificates="group.certificates"
+      :course="group.course" />
+    <li
+      v-if="groupedDiplomas.length === 0"
+      data-testid="empty"
+      class="flex h-128 flex-grow items-center justify-center rounded border border-dashed border-gray text-center text-gray">
+      Нет сертификатов
+    </li>
+  </VLoggedLayout>
 </template>

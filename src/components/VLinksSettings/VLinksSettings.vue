@@ -2,7 +2,6 @@
   import { ref, onMounted } from 'vue';
   import VTextInput from '@/components/VTextInput/VTextInput.vue';
   import VButton from '@/components/VButton/VButton.vue';
-  import VHeading from '@/components/VHeading/VHeading.vue';
   import VCard from '@/components/VCard/VCard.vue';
   import useUser from '@/stores/user';
 
