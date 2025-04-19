@@ -18,21 +18,17 @@
 </script>
 
 <template>
-  <main class="grid gap-24">
-    <VHeading tag="h1">Мои сертификаты</VHeading>
-    <div class="grid gap-24">
-      <VCertificateCard
-        v-for="group in groupedDiplomas"
-        :key="group.course"
-        data-testid="certificate"
-        :certificates="group.certificates"
-        :course="group.course" />
-      <li
-        v-if="groupedDiplomas.length === 0"
-        data-testid="empty"
-        class="flex h-128 flex-grow items-center justify-center rounded border border-dashed border-gray text-center text-gray">
-        Нет сертификатов
-      </li>
-    </div>
-  </main>
+  <VHeading tag="h1">Мои сертификаты</VHeading>
+  <VCertificateCard
+    v-for="group in groupedDiplomas"
+    :key="group.course"
+    data-testid="certificate"
+    :certificates="group.certificates"
+    :course="group.course" />
+  <li
+    v-if="groupedDiplomas.length === 0"
+    data-testid="empty"
+    class="flex h-128 flex-grow items-center justify-center rounded border border-dashed border-gray text-center text-gray">
+    Нет сертификатов
+  </li>
 </template>

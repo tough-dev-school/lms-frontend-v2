@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-  import VHeading from '@/components/VHeading/VHeading.vue';
   import VCard from '@/components/VCard/VCard.vue';
   import type { Diploma } from '@/types/diplomas';
   import VCertificate from '@/components/VCertificate/VCertificate.vue';
@@ -13,7 +12,7 @@
 </script>
 
 <template>
-  <VCard tag="section" class="grid gap-16" title="Курс «{{ course }}»">
+  <VCard tag="section" class="grid gap-16" :title="`Курс «${course}»`">
     <ul class="grid gap-32 phone:grid-cols-2">
       <VCertificate
         v-for="certificate in certificates"
