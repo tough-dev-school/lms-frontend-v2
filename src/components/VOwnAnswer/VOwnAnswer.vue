@@ -75,7 +75,7 @@
       </template>
     </VAnswer>
   </div>
-  <VCard v-else class="px-0 pt-0 tablet:px-0">
+  <div v-else class="px-0 pt-0 tablet:px-0">
     <VTextEditor
       v-model="text"
       class="mb-16 rounded-t border-b border-offwhite"
@@ -85,5 +85,5 @@
         >Сохранить</VButton
       >
     </div>
-  </VCard>
+  </div>
 </template>

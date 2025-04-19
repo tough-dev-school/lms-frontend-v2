@@ -62,22 +62,21 @@
 </script>
 
 <template>
-  <VCard class="VNewAnswer pt-0">
+  <div class="VNewAnswer pt-0 gap-8 flex flex-wrap">
     <VTextEditor
       v-model="text"
-      class="-mb-32 rounded-t border-offwhite dark:border-darkmode-border"
       data-testid="editor"
+      class="w-full"
       placeholder="Напишите ответ здесь"
       @send="sendPost" />
-    <template #footer>
-      <VButton
-        :disabled="!allowSend || isLoading"
-        data-testid="button"
-        @click="sendPost">
-        Отправить
-      </VButton>
-    </template>
-  </VCard>
+
+    <VButton
+      :disabled="!allowSend || isLoading"
+      data-testid="button"
+      @click="sendPost">
+      Отправить
+    </VButton>
+  </div>
 </template>
 
 <style>
