@@ -19,8 +19,7 @@
 </script>
 
 <template>
-  <VCard tag="form" @submit.prevent="handleResetRequest">
-    <VHeading tag="h1" class="mb-32">Сброс пароля</VHeading>
+  <VCard tag="form" title="Сброс пароля" @submit.prevent="handleResetRequest">
     <VTextInput
       v-model="email"
       label="Электронная почта"

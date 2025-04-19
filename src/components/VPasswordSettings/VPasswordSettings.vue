@@ -32,17 +32,7 @@
 </script>
 
 <template>
-  <VCard>
-    <VHeading
-      v-if="!auth.token"
-      class="mb-24"
-      level="1"
-      data-testid="reset-heading"
-      >Сброс пароля</VHeading
-    >
-    <VHeading v-else class="mb-24" level="2" data-testid="change-heading"
-      >Пароль</VHeading
-    >
+  <VCard :title="!auth.token ? 'Сброс пароля' : 'Пароль'">
     <div class="flex flex-col items-start gap-16 tablet:gap-24">
       <VTextInput
         v-model="newPassword1"

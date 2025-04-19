@@ -13,8 +13,7 @@
 </script>
 
 <template>
-  <VCard tag="section" class="grid gap-16">
-    <VHeading tag="h2" data-testid="name">Курс «{{ course }}»</VHeading>
+  <VCard tag="section" class="grid gap-16" title="Курс «{{ course }}»">
     <ul class="grid gap-32 phone:grid-cols-2">
       <VCertificate
         v-for="certificate in certificates"

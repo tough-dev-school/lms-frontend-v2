@@ -10,7 +10,9 @@
 <template>
   <main v-if="!loading.isLoading" class="container-fluid pb-128">
     <VHeader />
-    <slot />
+    <div class="grid gap-48">
+      <slot />
+    </div>
   </main>
   <VPreloader v-else />
   <VToastFeed />

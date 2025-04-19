@@ -41,8 +41,7 @@
 </script>
 
 <template>
-  <VCard>
-    <VHeading class="mb-24" tag="h2">Аватар</VHeading>
+  <VCard title="Аватар">
     <avatar-cropper
       v-model="showCropper"
       :labels="{ cancel: 'Отменить', submit: 'Сохранить' }"

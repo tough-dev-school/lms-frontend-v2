@@ -29,8 +29,7 @@
 </script>
 
 <template>
-  <VCard>
-    <VHeading class="mb-24" tag="h2">Настройки темы</VHeading>
+  <VCard title="Настройки темы">
     <div class="flex flex-wrap gap-16">
       <VRadioSwitch v-model="store" :options="darkModeOptions" />
     </div>

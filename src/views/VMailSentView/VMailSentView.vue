@@ -16,8 +16,7 @@
 </script>
 
 <template>
-  <VCard class="flex flex-col gap-16">
-    <VHeading tag="h1">Ссылка отправлена</VHeading>
+  <VCard class="flex flex-col gap-16" title="Ссылка отправлена">
     <div data-testid="message">
       Мы отправили ссылку по адресу {{ email }}. Если письма долго нет —
       посмотрите пожалуйста в спаме. Если и там нет —

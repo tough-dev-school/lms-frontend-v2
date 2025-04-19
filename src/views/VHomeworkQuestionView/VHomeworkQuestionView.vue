@@ -44,15 +44,16 @@
 </script>
 
 <template>
-  <div v-if="question !== undefined && questionId">
-    <VCard class="mb-64">
-      <VHeading tag="h1" class="mb-24">{{ question.name }}</VHeading>
-      <VHtmlContent :content="question.text" />
-    </VCard>
+  <div
+    v-if="question !== undefined && questionId"
+    class="VHomeworkQuestionView">
+    <VHeading tag="h1">{{ question.name }}</VHeading>
+    <VHtmlContent :content="question.text" />
+
     <section>
       <VHeading tag="h2" class="mb-24">Ответ</VHeading>
 
-      <VCard v-if="answer" class="mb-16 bg-yellow-light">
+      <div v-if="answer" class="mb-16 bg-yellow-light">
         <VHeading tag="h3" class="mb-8"
           >Поделиться ссылкой на сделанную домашку</VHeading
         >
@@ -66,7 +67,7 @@
           }"
           >{{ answerLink }}</RouterLink
         >
-      </VCard>
+      </div>
 
       <VOwnAnswer
         v-if="answer"

@@ -32,8 +32,7 @@
 </script>
 
 <template>
-  <VCard>
-    <VHeading class="mb-24" tag="h2">Ссылки</VHeading>
+  <VCard title="Ссылки">
     <div class="flex flex-col items-start gap-16 tablet:gap-24">
       <VTextInput
         v-model="githubUsername"

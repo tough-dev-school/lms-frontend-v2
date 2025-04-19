@@ -37,8 +37,10 @@
 </script>
 
 <template>
-  <VCard tag="form" @submit.prevent="loginWithCredentials">
-    <VHeading tag="h1" class="mb-32">Вход и регистрация</VHeading>
+  <VCard
+    tag="form"
+    title="Вход и регистрация"
+    @submit.prevent="loginWithCredentials">
     <div class="flex flex-col gap-16">
       <VTextInput
         v-model="username"

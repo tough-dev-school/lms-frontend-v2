@@ -40,8 +40,7 @@
 </script>
 
 <template>
-  <VCard>
-    <VHeading class="mb-24" tag="h2">Данные для диплома</VHeading>
+  <VCard title="Данные для диплома">
     <div class="mb-16 rounded bg-yellow bg-opacity-30 p-16">
       Будьте внимательнее, когда заполняете поля имени и фамилии на двух языках.
       Именно в таком виде они отобразятся в сертификате.
