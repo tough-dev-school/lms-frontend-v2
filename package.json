@@ -25,7 +25,7 @@
     "add:component": "pnpx hygen new component --folder components --name",
     "add:view": "pnpx hygen new component --folder views --name",
     "add:layout": "pnpx hygen new component --folder layouts --name",
-    "generate-sdk": "node --experimental-strip-types generate-sdk.ts"
+    "generate-sdk": "node --experimental-strip-types generate-sdk.ts; prettier --write ./src/api"
   },
   "dependencies": {
     "@brachkow/email-providers": "^1.2.0",
