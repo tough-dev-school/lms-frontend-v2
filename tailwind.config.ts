@@ -62,15 +62,15 @@ module.exports = {
       sub: '14px',
       base: '16px',
       h1: [
-        'clamp(1.875rem, 5vw, 42px)',
+        'clamp(32px, 5vw, 42px)',
         { letterSpacing: '-0.03em', lineHeight: '1.1', fontWeight: '800' },
       ],
       h2: [
-        'clamp(1.3rem, 3.5vw, 36px)',
+        'clamp(24px, 3.5vw, 36px)',
         { letterSpacing: '-0.03em', lineHeight: '1.1', fontWeight: '800' },
       ],
       h3: [
-        'clamp(1.25rem, 2.5vw, 18px)',
+        'clamp(16px, 2.5vw, 18px)',
         { letterSpacing: '-0.03em', lineHeight: '1.1', fontWeight: '800' },
       ],
     },
