@@ -17,7 +17,7 @@
     <template #header>
       <VProfileMenu data-testid="profile" />
     </template>
-    <div v-if="title || breadcrumbs">
+    <div v-if="title || breadcrumbs" class="flex flex-col gap-32">
       <VBreadcrumbs v-if="breadcrumbs" :items="breadcrumbs" />
       <VHeading v-if="title" tag="h1">{{ title }}</VHeading>
     </div>

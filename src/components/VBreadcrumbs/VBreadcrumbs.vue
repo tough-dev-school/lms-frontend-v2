@@ -14,7 +14,7 @@
 </script>
 
 <template>
-  <nav class="mb-16">
+  <nav>
     <ol class="flex items-center gap-4">
       <li
         v-for="(item, index) in props.items"
