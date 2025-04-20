@@ -53,56 +53,57 @@
   <VLoggedLayout title="Уроки" :breadcrumbs="breadcrumbs">
     <div class="VLessonsView gap-32 flex flex-col">
       <div v-if="lessons && lessons.length > 0" class="VLessonsView__Layout">
-        <VCard
+        <div
           v-for="lesson in lessons"
           :key="lesson.id"
-          :class="[
-            'VLessonsView__Item',
-            'dark:!bg-accent-yellow !bg-accent-yellow text-black flex-shrink py-24',
-          ]">
-          <div class="flex flex-col gap-10">
-            <div class="flex flex-col gap-16">
-              <div class="empty:hidden gap-8 flex flex-wrap">
-                <VTag v-if="lesson.homework?.question.deadline"
-                  >Дедлайн {{ lesson.homework.question.deadline }}</VTag
-                >
+          class="VLessonsView__Item">
+          <VCard
+            :class="[
+              'dark:!bg-accent-yellow !bg-accent-yellow text-black flex-shrink py-24',
+            ]">
+            <div class="flex flex-col gap-10">
+              <div class="flex flex-col gap-16">
+                <div class="empty:hidden gap-8 flex flex-wrap">
+                  <VTag v-if="lesson.homework?.question.deadline"
+                    >Дедлайн {{ lesson.homework.question.deadline }}</VTag
+                  >
+                </div>
+                <VHeading tag="h3" class="mb-8">{{ lesson.name }}</VHeading>
               </div>
-              <VHeading tag="h3" class="mb-8">{{ lesson.name }}</VHeading>
+              <div v-if="lesson.homework">
+                <table class="w-full">
+                  <tr v-if="lesson.homework.crosschecks">
+                    <td class="font-bold">Проверенны домашки коллег</td>
+                    <td class="text-right">
+                      {{ lesson.homework.crosschecks.checked }} из
+                      {{ lesson.homework.crosschecks.total }}
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <RouterLink
+                v-if="lesson.material"
+                class="button VLessonsView__Button"
+                :to="{
+                  name: 'materials',
+                  params: {
+                    id: lesson.material.id,
+                  },
+                }">
+                Открыть материалы
+              </RouterLink>
+              <RouterLink
+                v-if="lesson.homework"
+                class="button VLessonsView__Button"
+                :to="{
+                  name: 'homework-question',
+                  params: { questionId: lesson.homework.question.slug },
+                }">
+                Отправить домашку
+              </RouterLink>
             </div>
-            <div v-if="lesson.homework">
-              <table class="w-full">
-                <tr v-if="lesson.homework.crosschecks">
-                  <td class="font-bold">Проверенны домашки коллег</td>
-                  <td class="text-right">
-                    {{ lesson.homework.crosschecks.checked }} из
-                    {{ lesson.homework.crosschecks.total }}
-                  </td>
-                </tr>
-              </table>
-            </div>
-            <RouterLink
-              v-if="lesson.material"
-              class="button VLessonsView__Button"
-              :to="{
-                name: 'materials',
-                params: {
-                  id: lesson.material.id,
-                },
-              }">
-              Открыть материалы
-            </RouterLink>
-
-            <RouterLink
-              v-if="lesson.homework"
-              class="button VLessonsView__Button"
-              :to="{
-                name: 'homework-question',
-                params: { questionId: lesson.homework.question.slug },
-              }">
-              Отправить домашку
-            </RouterLink>
-          </div>
-        </VCard>
+          </VCard>
+        </div>
       </div>
       <p v-else data-testid="empty" class="mb-16 text-center">
         Нет доступных уроков.
