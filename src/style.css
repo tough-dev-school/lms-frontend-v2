@@ -95,7 +95,7 @@
   }
 
   .container-fluid {
-    @apply tablet:px-16 px-8 max-w-[768px] mx-auto;
+    @apply px-16 max-w-[720px] mx-auto;
   }
 }
 
