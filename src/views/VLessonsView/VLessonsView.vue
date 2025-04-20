@@ -50,7 +50,7 @@
 </script>
 
 <template>
-  <VLoggedLayout title="Уроки" :breadcrumbs="breadcrumbs">
+  <VLoggedLayout :title="moduleName" :breadcrumbs="breadcrumbs">
     <div class="VLessonsView gap-32 flex flex-col">
       <div v-if="lessons && lessons.length > 0" class="VLessonsView__Layout">
         <div

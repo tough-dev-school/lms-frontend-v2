@@ -45,7 +45,7 @@
 </script>
 
 <template>
-  <VLoggedLayout title="Модули" :breadcrumbs="breadcrumbs">
+  <VLoggedLayout :title="courseName" :breadcrumbs="breadcrumbs">
     <template v-if="modules && modules.length > 0">
       <RouterLink
         v-for="(module, index) in modules"
