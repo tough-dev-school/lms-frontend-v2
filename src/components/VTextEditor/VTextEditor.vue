@@ -166,7 +166,7 @@
 <template>
   <div
     ref="currentEditor"
-    class="bg-white border-lightgray border rounded-16 px-16 dark:bg-darkmode-layer2">
+    class="bg-white border-lightgray border rounded-8 px-16 dark:bg-darkmode-layer2">
     <FloatingMenu
       v-if="editor"
       class="float-menu"
