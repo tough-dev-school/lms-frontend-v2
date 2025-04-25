@@ -1,4 +1,4 @@
-import axios from '@/axios';
+import axios from './index';
 import type { Diploma } from '@/types/diplomas';
 
 export const getDiplomas = async () => {
