@@ -1,7 +1,7 @@
-import { createCustomAxiosInstance } from '@/axios';
+import { createHttpClient } from './index';
 import type { BlockMap } from '@/types/materials';
 
-const axios = createCustomAxiosInstance({ useResponseCaseMiddleware: false });
+const axios = createHttpClient({ useResponseCaseMiddleware: false }).instance;
 
 export const getMaterial: (materialId: string) => Promise<BlockMap> = async (
   materialId,
