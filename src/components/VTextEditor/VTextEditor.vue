@@ -1,11 +1,6 @@
 <script setup lang="ts">
   import Placeholder from '@tiptap/extension-placeholder';
-  import {
-    BubbleMenu,
-    EditorContent,
-    Editor,
-    FloatingMenu,
-  } from '@tiptap/vue-3';
+  import { EditorContent, Editor } from '@tiptap/vue-3';
   import StarterKit from '@tiptap/starter-kit';
   import Image from '@tiptap/extension-image';
   import {
@@ -166,55 +161,73 @@
 <template>
   <div
     ref="currentEditor"
-    class="bg-white border-lightgray border rounded-8 px-16 dark:bg-darkmode-layer2">
-    <FloatingMenu
+    class="bg-white dark:bg-darkmode-layer2 px-16 rounded border border-lightgray dark:border-darkmode-border min-h-240">
+    <div
       v-if="editor"
-      class="float-menu"
-      :editor="editor"
-      :tippy-options="{ duration: 100 }">
+      class="flex items-center bg-white dark:bg-darkmode-layer3 dark:text-darkmode-white border-b border-lightgray dark:border-darkmode-border">
       <button
-        class="float-button"
+        class="TextEditor__Button"
         :class="{
-          'float-button_active': editor.isActive('heading', { level: 1 }),
+          'TextEditor__Button--active': editor.isActive('heading', {
+            level: 1,
+          }),
         }"
         @click="toggleHeading1">
         <H1Icon />
       </button>
       <button
-        class="float-button"
+        class="TextEditor__Button"
         :class="{
-          'float-button_active': editor.isActive('heading', { level: 2 }),
+          'TextEditor__Button--active': editor.isActive('heading', {
+            level: 2,
+          }),
         }"
         @click="toggleHeading2">
         <H2Icon />
       </button>
       <button
-        class="float-button"
+        class="TextEditor__Button"
         :class="{
-          'float-button_active': editor.isActive('heading', { level: 3 }),
+          'TextEditor__Button--active': editor.isActive('heading', {
+            level: 3,
+          }),
         }"
         @click="toggleHeading3">
         <H3Icon />
       </button>
       <button
-        class="float-button"
-        :class="{ 'float-button_active': editor.isActive('blockquote') }"
+        class="TextEditor__Button"
+        :class="{ 'TextEditor__Button--active': editor.isActive('bold') }"
+        @click="toggleBold">
+        <BoldIcon />
+      </button>
+      <button
+        class="TextEditor__Button"
+        :class="{ 'TextEditor__Button--active': editor.isActive('italic') }"
+        @click="toggleItalic">
+        <ItalicIcon />
+      </button>
+      <button
+        class="TextEditor__Button"
+        :class="{ 'TextEditor__Button--active': editor.isActive('blockquote') }"
         @click="toggleBlockquote">
         <BlockquoteIcon />
       </button>
       <button
-        class="float-button"
-        :class="{ 'float-button_active': editor.isActive('orderedList') }"
+        class="TextEditor__Button"
+        :class="{
+          'TextEditor__Button--active': editor.isActive('orderedList'),
+        }"
         @click="toggleOrderedList">
         <ListNumbersIcon />
       </button>
       <button
-        class="float-button"
-        :class="{ 'float-button_active': editor.isActive('bulletList') }"
+        class="TextEditor__Button"
+        :class="{ 'TextEditor__Button--active': editor.isActive('bulletList') }"
         @click="toggleUnorderedList">
         <ListIcon />
       </button>
-      <label class="float-button">
+      <label class="TextEditor__Button">
         <PhotoIcon />
         <input
           class="visually-hidden"
@@ -223,57 +236,26 @@
           name="image"
           @change="addImage($event)"
       /></label>
-    </FloatingMenu>
-    <BubbleMenu
-      v-if="editor"
-      class="bubble-menu"
-      :editor="editor"
-      :tippy-options="{ duration: 100 }">
-      <button
-        class="bubble-button"
-        :class="{ 'bubble-button_active': editor.isActive('bold') }"
-        @click="toggleBold">
-        <BoldIcon />
-      </button>
-      <button
-        class="bubble-button"
-        :class="{ 'bubble-button_active': editor.isActive('italic') }"
-        @click="toggleItalic">
-        <ItalicIcon />
-      </button>
-    </BubbleMenu>
+    </div>
     <div v-if="isImageLoading" class="p-32">
       <VLoader />
     </div>
-    <EditorContent :editor="editor" class="EditorContent prose" />
+    <EditorContent :editor="editor" class="TextEditor__Content prose" />
   </div>
 </template>
 
 <style>
-  .bubble-menu,
-  .float-menu {
-    @apply flex rounded;
-  }
-
-  .bubble-menu {
-    @apply bg-black text-white dark:bg-darkmode-layer1 dark:text-darkmode-white;
-  }
-
-  .bubble-button,
-  .float-button {
-    @apply flex h-32 items-center justify-center px-8 first:pl-16 last:pr-16 hover:bg-white hover:bg-opacity-20;
-  }
-
-  .bubble-button_active {
-    @apply bg-white bg-opacity-20;
-  }
-
-  .float-menu {
-    @apply bg-white text-black dark:bg-darkmode-layer3 dark:text-darkmode-white;
+  .TextEditor {
+    &__Button {
+      @apply flex h-32 items-center justify-center px-8 hover:bg-lightgray dark:hover:bg-darkmode-layer2;
+      &_Active {
+        @apply bg-lightgray dark:bg-darkmode-layer2;
+      }
+    }
   }
 
   .ProseMirror {
-    @apply prose max-w-none rounded bg-white py-24 px-16 outline-none dark:prose-invert dark:bg-darkmode-layer2 tablet:px-32;
+    @apply prose max-w-none outline-none dark:prose-invert tablet:px-32;
   }
 
   .ProseMirror-focused {
