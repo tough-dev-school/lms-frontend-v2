@@ -1,4 +1,4 @@
-import VDefaultLayout from '@/layouts/VDefaultLayout/VDefaultLayout.vue';
+import VBaseLayout from '@/layouts/VBaseLayout/VBaseLayout.vue';
 import { mockMaterial } from '@/mocks/mockMaterial';
 import { mockQuestion, STATIC_QUESTION } from '@/mocks/mockQuestion';
 import { mockUserId, USER_1 } from '@/mocks/mockUserId';
@@ -40,6 +40,6 @@ const layoutDecorator = (story: any, layout: any) => ({
 });
 
 const defaultLayoutDecorator = (story: any) =>
-  layoutDecorator(story, VDefaultLayout);
+  layoutDecorator(story, VBaseLayout);
 
 export { defaultLayoutDecorator };
