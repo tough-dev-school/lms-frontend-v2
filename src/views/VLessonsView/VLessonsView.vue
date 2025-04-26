@@ -9,6 +9,8 @@
   import { useRouteParams } from '@vueuse/router';
   import { useQueryClient } from '@tanstack/vue-query';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
+  import VButton from '@/components/VButton/VButton.vue';
+
   const queryClient = useQueryClient();
   const courseId = useRouteParams('courseId', '0', {
     transform: (value) => parseInt(value),
@@ -81,9 +83,11 @@
                   </tr>
                 </table>
               </div>
-              <RouterLink
+              <VButton
                 v-if="lesson.material"
-                class="button VLessonsView__Button"
+                tag="RouterLink"
+                class="VLessonsView__Button"
+                appearance="secondary"
                 :to="{
                   name: 'materials',
                   params: {
@@ -91,16 +95,18 @@
                   },
                 }">
                 Открыть материалы
-              </RouterLink>
-              <RouterLink
+              </VButton>
+              <VButton
                 v-if="lesson.homework"
-                class="button VLessonsView__Button"
+                tag="RouterLink"
+                class="VLessonsView__Button"
+                appearance="secondary"
                 :to="{
                   name: 'homework-question',
                   params: { questionId: lesson.homework.question.slug },
                 }">
                 Отправить домашку
-              </RouterLink>
+              </VButton>
             </div>
           </VCard>
         </div>

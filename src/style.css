@@ -23,13 +23,6 @@
 }
 
 @layer components {
-  .center {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
   .prose {
     @apply prose-p:my-[0.5em];
     @apply prose-li:my-[0.25em];
@@ -49,10 +42,6 @@
   .prose li > p {
     margin-top: 0;
     margin-bottom: 0;
-  }
-
-  .button {
-    @apply leading-[1.5] rounded-8 bg-yellow p-module text-center text-black transition-colors hover:bg-yellow-hover disabled:opacity-25;
   }
 
   .label {
@@ -100,6 +89,13 @@
 }
 
 @layer utilities {
+  .center {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
   .visually-hidden {
     @apply absolute h-0 w-0 overflow-hidden;
   }

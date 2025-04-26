@@ -5,6 +5,7 @@
   import { useChatra } from '@/hooks/useChatra';
   import { getProviderByEmail } from '@brachkow/email-providers';
   import VPublicLayout from '@/layouts/VPublicLayout/VPublicLayout.vue';
+  import VButton from '@/components/VButton/VButton.vue';
 
   const route = useRoute();
 
@@ -26,13 +27,14 @@
         >.
       </div>
       <template #footer>
-        <a
+        <VButton
           v-if="emailProvider"
-          class="flex-grow button"
+          class="flex-grow"
           data-testid="open"
-          :href="emailProvider.url"
-          >Открыть {{ emailProvider.label }}</a
-        >
+          tag="a"
+          :href="emailProvider.url">
+          Открыть {{ emailProvider.label }}
+        </VButton>
       </template>
     </VCard>
   </VPublicLayout>
