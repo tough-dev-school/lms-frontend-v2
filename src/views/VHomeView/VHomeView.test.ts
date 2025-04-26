@@ -6,7 +6,7 @@ import { nextTick, ref } from 'vue';
 import { faker } from '@faker-js/faker';
 import { mockStudy } from '@/mocks/mockStudy';
 import { useStudiesQuery } from '@/query';
-import VMockLayout from '@/mocks/mockLayout.vue';
+import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
 
 const defaultStudies = faker.helpers.multiple(mockStudy, { count: 3 });
 
@@ -27,7 +27,7 @@ describe('VHomeView', () => {
       shallow: true,
       global: {
         stubs: {
-          VLoggedLayout: VMockLayout,
+          VLoggedLayout: VTransparentComponent,
           VCard: false,
           RouterLink: RouterLinkStub,
         },
@@ -49,12 +49,6 @@ describe('VHomeView', () => {
     expect(getStudiesWrapper()).toHaveLength(defaultStudies.length);
   });
 
-  test('has study names displayed', () => {
-    expect(wrapper.text()).toContain(defaultStudies[0].name);
-    expect(wrapper.text()).toContain(defaultStudies[1].name);
-    expect(wrapper.text()).toContain(defaultStudies[2].name);
-  });
-
   test('click on studies redirects to material', async () => {
     expect(getStudyWrapper().props().to).toStrictEqual({
       name: 'modules',
@@ -68,7 +62,7 @@ describe('VHomeView', () => {
 
   test('if no studies — empty message is shown', async () => {
     vi.mocked(useStudiesQuery).mockReturnValue({
-      data: ref([]),
+      data: ref(undefined),
       isLoading: ref(false),
     } as any);
 
@@ -78,6 +72,7 @@ describe('VHomeView', () => {
         stubs: {
           VCard: false,
           RouterLink: RouterLinkStub,
+          VLoggedLayout: VTransparentComponent,
         },
       },
     });

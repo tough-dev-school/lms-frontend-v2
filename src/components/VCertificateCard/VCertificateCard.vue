@@ -12,7 +12,11 @@
 </script>
 
 <template>
-  <VCard tag="section" class="grid gap-16" :title="`Курс «${course}»`">
+  <VCard
+    tag="section"
+    data-testid="container"
+    class="grid gap-16"
+    :title="`Курс «${course}»`">
     <ul class="grid gap-32 phone:grid-cols-2">
       <VCertificate
         v-for="certificate in certificates"

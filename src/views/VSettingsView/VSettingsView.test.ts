@@ -3,7 +3,7 @@ import { mount, RouterLinkStub } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import VSettingsView from './VSettingsView.vue';
 import type { RouterLink } from 'vue-router';
-import VMockLayout from '@/mocks/mockLayout.vue';
+import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
 
 const defaultProps = {};
 
@@ -16,7 +16,7 @@ describe('VSettingsView', () => {
       props: defaultProps,
       global: {
         stubs: {
-          VLoggedLayout: VMockLayout,
+          VLoggedLayout: VTransparentComponent,
           VCard: false,
           RouterLink: RouterLinkStub,
         },

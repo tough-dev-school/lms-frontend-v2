@@ -8,7 +8,7 @@ import { nextTick, ref } from 'vue';
 import { faker } from '@faker-js/faker';
 import { vi, describe, beforeEach, expect, test } from 'vitest';
 import { useDiplomasQuery } from '@/query';
-import VMockLayout from '@/mocks/mockLayout.vue';
+import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
 
 const defaultProps = {};
 
@@ -40,7 +40,7 @@ describe('VCertificatesView', () => {
       props: defaultProps,
       global: {
         stubs: {
-          VLoggedLayout: VMockLayout,
+          VLoggedLayout: VTransparentComponent,
         },
       },
     });
