@@ -88,6 +88,11 @@ describe('VCertificatesView', () => {
     wrapper = mount(VCertificatesView, {
       shallow: true,
       props: defaultProps,
+      global: {
+        stubs: {
+          VLoggedLayout: VTransparentComponent,
+        },
+      },
     });
 
     await nextTick();
