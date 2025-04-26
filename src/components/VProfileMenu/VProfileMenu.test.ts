@@ -232,7 +232,7 @@ describe('VProfileMenu', () => {
     expect(routerPushMock).toHaveBeenCalledTimes(1);
     expect(routerPushMock).toHaveBeenCalledWith({
       name: 'materials',
-      params: { id: studies.items[0].homePageSlug },
+      params: { materialId: studies.items[0].homePageSlug },
     });
   });
 });

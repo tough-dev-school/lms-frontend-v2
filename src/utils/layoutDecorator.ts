@@ -2,10 +2,11 @@ import VBaseLayout from '@/layouts/VBaseLayout/VBaseLayout.vue';
 import { mockMaterial } from '@/mocks/mockMaterial';
 import { mockQuestion, STATIC_QUESTION } from '@/mocks/mockQuestion';
 import { mockUserId, USER_1 } from '@/mocks/mockUserId';
+import { materialsKeys } from '@/query';
 import useHomework from '@/stores/homework';
-import useMaterials from '@/stores/materials';
 import useToasts from '@/stores/toasts';
 import useUser from '@/stores/user';
+import { useQueryClient } from '@tanstack/vue-query';
 
 const layoutDecorator = (story: any, layout: any) => ({
   components: { layout, story },
@@ -34,8 +35,8 @@ const layoutDecorator = (story: any, layout: any) => ({
       question: mockQuestion(STATIC_QUESTION),
     });
 
-    const materials = useMaterials();
-    materials.$patch({ material: mockMaterial() });
+    const queryClient = useQueryClient();
+    queryClient.setQueryData(materialsKeys.materials('123'), mockMaterial());
   },
 });
 

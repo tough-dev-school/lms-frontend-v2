@@ -91,7 +91,7 @@
                 :to="{
                   name: 'materials',
                   params: {
-                    id: lesson.material.id,
+                    materialId: lesson.material.id,
                   },
                 }">
                 Открыть материалы

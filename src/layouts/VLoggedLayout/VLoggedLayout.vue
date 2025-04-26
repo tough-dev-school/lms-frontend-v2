@@ -6,14 +6,22 @@
   import VHeading from '@/components/VHeading/VHeading.vue';
   import VProfileMenu from '@/components/VProfileMenu/VProfileMenu.vue';
 
-  withDefaults(defineProps<{ title?: string; breadcrumbs?: Breadcrumb[] }>(), {
-    title: undefined,
-    breadcrumbs: undefined,
-  });
+  withDefaults(
+    defineProps<{
+      isLoading?: boolean;
+      title?: string;
+      breadcrumbs?: Breadcrumb[];
+    }>(),
+    {
+      isLoading: false,
+      title: undefined,
+      breadcrumbs: undefined,
+    },
+  );
 </script>
 
 <template>
-  <VPublicLayout>
+  <VPublicLayout :is-loading="isLoading">
     <template #header>
       <VProfileMenu data-testid="profile" />
     </template>

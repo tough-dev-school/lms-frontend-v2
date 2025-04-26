@@ -4,6 +4,8 @@ import type { MaybeRefOrGetter } from 'vue';
 import { computed } from 'vue';
 import { toValue } from 'vue';
 import { api } from '@/api';
+import { queryOptions } from '@tanstack/vue-query';
+import type { BlockMap } from './types/materials';
 
 export const studiesKeys = {
   all: () => ['studies'],
@@ -14,6 +16,15 @@ export const lmsKeys = {
   all: () => ['lms'],
   lessons: (moduleId?: number) => [...lmsKeys.all(), 'lessons', { moduleId }],
   modules: (courseId?: number) => [...lmsKeys.all(), 'modules', { courseId }],
+};
+
+export const materialsKeys = {
+  all: () => ['materials'],
+  materials: (materialId: string) => [
+    ...materialsKeys.all(),
+    'materials',
+    materialId,
+  ],
 };
 
 const studiesOptions = () => {
@@ -63,6 +74,25 @@ export const useModulesQuery = (
   courseId: MaybeRefOrGetter<number | undefined>,
 ) => {
   const options = computed(() => modulesOptions(toValue(courseId)));
+
+  return useQuery(options);
+};
+
+export const getMaterialQueryOptions = (materialId: string) => {
+  return queryOptions({
+    queryKey: materialsKeys.materials(materialId),
+    queryFn: async () =>
+      (await api.notionMaterialsRetrieve(materialId)) as BlockMap,
+  });
+};
+
+export const fetchMaterial = async (
+  queryClient: QueryClient,
+  { materialId }: { materialId: string },
+) => queryClient.fetchQuery(getMaterialQueryOptions(materialId));
+
+export const useMaterialQuery = (materialId: MaybeRefOrGetter<string>) => {
+  const options = computed(() => getMaterialQueryOptions(toValue(materialId)));
 
   return useQuery(options);
 };

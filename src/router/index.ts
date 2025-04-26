@@ -6,9 +6,7 @@ import {
 import useAuth from '@/stores/auth';
 import useUser from '@/stores/user';
 import useStudies from '@/stores/studies';
-import useMaterials from '@/stores/materials';
 import useDiplomas from '@/stores/diplomas';
-import useLoading from '@/stores/loading';
 
 import loginByToken from '@/router/loginByToken';
 import loginById from '@/router/loginById';
@@ -99,7 +97,7 @@ export const routes = [
     beforeEnter: [loginById],
   },
   {
-    path: '/materials/:id',
+    path: '/materials/:materialId',
     name: 'materials',
     component: () => import('@/views/VNotionView/VNotionView.vue'),
   },
@@ -169,17 +167,6 @@ router.beforeEach(
         name: 'login',
         query,
       };
-    }
-
-    // #FIXME: this must be replaced with vue query subscriptions
-    if (to.name === 'materials' && to.params.id !== from.params.id) {
-      const materials = useMaterials();
-      const loading = useLoading();
-
-      loading.isLoading = true;
-      materials.material = undefined;
-      await materials.getData(String(to.params.id));
-      loading.isLoading = false;
     }
 
     // #FIXME: this must be replaced with vue query subscriptions

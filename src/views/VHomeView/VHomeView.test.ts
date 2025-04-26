@@ -58,7 +58,7 @@ describe('VHomeView', () => {
   test('click on studies redirects to material', async () => {
     expect(getStudyWrapper().props().to).toStrictEqual({
       name: 'materials',
-      params: { id: defaultStudies[0].homePageSlug },
+      params: { materialId: defaultStudies[0].homePageSlug },
     });
   });
 
