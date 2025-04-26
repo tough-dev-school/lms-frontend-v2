@@ -8,6 +8,7 @@ import { nextTick, ref } from 'vue';
 import { faker } from '@faker-js/faker';
 import { vi, describe, beforeEach, expect, test } from 'vitest';
 import { useDiplomasQuery } from '@/query';
+import VMockLayout from '@/mocks/mockLayout.vue';
 
 const defaultProps = {};
 
@@ -37,6 +38,11 @@ describe('VCertificatesView', () => {
     wrapper = mount(VCertificatesView, {
       shallow: true,
       props: defaultProps,
+      global: {
+        stubs: {
+          VLoggedLayout: VMockLayout,
+        },
+      },
     });
   });
 

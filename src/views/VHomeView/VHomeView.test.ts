@@ -6,6 +6,7 @@ import { nextTick, ref } from 'vue';
 import { faker } from '@faker-js/faker';
 import { mockStudy } from '@/mocks/mockStudy';
 import { useStudiesQuery } from '@/query';
+import VMockLayout from '@/mocks/mockLayout.vue';
 
 const defaultStudies = faker.helpers.multiple(mockStudy, { count: 3 });
 
@@ -26,6 +27,7 @@ describe('VHomeView', () => {
       shallow: true,
       global: {
         stubs: {
+          VLoggedLayout: VMockLayout,
           VCard: false,
           RouterLink: RouterLinkStub,
         },

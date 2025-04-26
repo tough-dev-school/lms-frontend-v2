@@ -4,6 +4,7 @@ import type { VueWrapper } from '@vue/test-utils';
 import VLoginChangeView from './VLoginChangeView.vue';
 import VPasswordSettings from '@/components/VPasswordSettings/VPasswordSettings.vue';
 import { faker } from '@faker-js/faker';
+import VMockLayout from '@/mocks/mockLayout.vue';
 
 const defaultProps = {};
 
@@ -26,6 +27,11 @@ describe('VLoginChangeView', () => {
     wrapper = mount(VLoginChangeView, {
       shallow: true,
       props: defaultProps,
+      global: {
+        stubs: {
+          VPublicLayout: VMockLayout,
+        },
+      },
     });
   });
 
