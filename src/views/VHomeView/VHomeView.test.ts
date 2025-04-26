@@ -1,6 +1,5 @@
 import { vi, describe, beforeEach, expect, test } from 'vitest';
 import { RouterLinkStub, mount, VueWrapper } from '@vue/test-utils';
-import { createTestingPinia } from '@pinia/testing';
 import VHomeView from './VHomeView.vue';
 import type { RouterLink } from 'vue-router';
 import { nextTick, ref } from 'vue';
@@ -26,11 +25,6 @@ describe('VHomeView', () => {
     wrapper = mount(VHomeView, {
       shallow: true,
       global: {
-        plugins: [
-          createTestingPinia({
-            createSpy: vi.fn,
-          }),
-        ],
         stubs: {
           VCard: false,
           RouterLink: RouterLinkStub,
@@ -79,11 +73,6 @@ describe('VHomeView', () => {
     wrapper = mount(VHomeView, {
       shallow: true,
       global: {
-        plugins: [
-          createTestingPinia({
-            createSpy: vi.fn,
-          }),
-        ],
         stubs: {
           VCard: false,
           RouterLink: RouterLinkStub,

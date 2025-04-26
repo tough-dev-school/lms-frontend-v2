@@ -1,14 +1,14 @@
 <script lang="ts" setup>
-  import useDiplomas from '@/stores/diplomas';
   import VCertificateCard from '@/components/VCertificateCard/VCertificateCard.vue';
   import { computed } from 'vue';
   import { groupBy } from 'lodash-es';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
+  import { useDiplomasQuery } from '@/query';
 
-  const diplomas = useDiplomas();
+  const { data: diplomas } = useDiplomasQuery();
 
   const groupedDiplomas = computed(() => {
-    const gorups = groupBy(diplomas.items, (diploma) => diploma.course.name);
+    const gorups = groupBy(diplomas.value, (diploma) => diploma.course.name);
 
     return Object.keys(gorups).map((key) => ({
       course: key,

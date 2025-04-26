@@ -95,3 +95,21 @@ export const useMaterialQuery = (materialId: MaybeRefOrGetter<string>) => {
 
   return useQuery(options);
 };
+
+export const diplomasKeys = {
+  all: () => ['diplomas'],
+  lists: () => [...diplomasKeys.all(), 'list'],
+};
+
+const diplomasOptions = () => {
+  return {
+    queryKey: diplomasKeys.lists(),
+    queryFn: async () => (await api.diplomasList({ page_size: 100 })).results,
+  };
+};
+
+export const useDiplomasQuery = () => {
+  const options = computed(() => diplomasOptions());
+
+  return useQuery(options);
+};

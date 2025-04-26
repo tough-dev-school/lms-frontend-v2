@@ -5,7 +5,6 @@ import {
 } from 'vue-router';
 import useAuth from '@/stores/auth';
 import useUser from '@/stores/user';
-import useDiplomas from '@/stores/diplomas';
 
 import loginByToken from '@/router/loginByToken';
 import loginById from '@/router/loginById';
@@ -164,13 +163,6 @@ router.beforeEach(
         name: 'login',
         query,
       };
-    }
-
-    // #FIXME: this must be replaced with vue query subscriptions
-    if (to.name === 'certificates') {
-      const diplomas = useDiplomas();
-
-      await diplomas.getData();
     }
 
     // Reset title after navigation (except hash change)
