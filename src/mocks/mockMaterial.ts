@@ -1,4 +1,4 @@
-import type { BlockMap } from '@/types/materials';
+import type { BlockMap } from '@/types';
 
 export const mockMaterial = (): BlockMap => {
   return {

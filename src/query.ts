@@ -4,7 +4,7 @@ import { computed } from 'vue';
 import { toValue } from 'vue';
 import { api } from '@/api';
 import { queryOptions } from '@tanstack/vue-query';
-import type { BlockMap } from './types/materials';
+import type { BlockMap } from '@/types';
 
 export const studiesKeys = {
   all: () => ['studies'],
