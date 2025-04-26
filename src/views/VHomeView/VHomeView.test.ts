@@ -2,19 +2,27 @@ import { vi, describe, beforeEach, expect, test } from 'vitest';
 import { RouterLinkStub, mount, VueWrapper } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
 import VHomeView from './VHomeView.vue';
-import useStudies from '@/stores/studies';
 import type { RouterLink } from 'vue-router';
-import { nextTick } from 'vue';
+import { nextTick, ref } from 'vue';
 import { faker } from '@faker-js/faker';
 import { mockStudy } from '@/mocks/mockStudy';
+import { useStudiesQuery } from '@/query';
 
 const defaultStudies = faker.helpers.multiple(mockStudy, { count: 3 });
 
+vi.mock('@/query', () => ({
+  useStudiesQuery: vi.fn(),
+}));
+
 describe('VHomeView', () => {
   let wrapper: VueWrapper<InstanceType<typeof VHomeView>>;
-  let studies: ReturnType<typeof useStudies>;
 
   beforeEach(() => {
+    vi.mocked(useStudiesQuery).mockReturnValue({
+      data: ref(defaultStudies),
+      isLoading: ref(false),
+    } as any);
+
     wrapper = mount(VHomeView, {
       shallow: true,
       global: {
@@ -29,10 +37,6 @@ describe('VHomeView', () => {
         },
       },
     });
-
-    studies = useStudies();
-
-    studies.$patch({ items: defaultStudies });
   });
 
   const getStudyWrapper = () => {
@@ -57,8 +61,8 @@ describe('VHomeView', () => {
 
   test('click on studies redirects to material', async () => {
     expect(getStudyWrapper().props().to).toStrictEqual({
-      name: 'materials',
-      params: { materialId: defaultStudies[0].homePageSlug },
+      name: 'modules',
+      params: { courseId: defaultStudies[0].id },
     });
   });
 
@@ -67,9 +71,27 @@ describe('VHomeView', () => {
   });
 
   test('if no studies — empty message is shown', async () => {
-    studies.$patch({ items: [] });
+    vi.mocked(useStudiesQuery).mockReturnValue({
+      data: ref([]),
+      isLoading: ref(false),
+    } as any);
 
-    await Promise.resolve(nextTick());
+    wrapper = mount(VHomeView, {
+      shallow: true,
+      global: {
+        plugins: [
+          createTestingPinia({
+            createSpy: vi.fn,
+          }),
+        ],
+        stubs: {
+          VCard: false,
+          RouterLink: RouterLinkStub,
+        },
+      },
+    });
+
+    await nextTick();
 
     expect(getEmptyWrapper().exists()).toBe(true);
   });

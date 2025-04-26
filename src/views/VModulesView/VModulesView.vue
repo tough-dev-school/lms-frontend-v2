@@ -4,8 +4,7 @@
   import { computed } from 'vue';
   import { RouterLink, useRoute } from 'vue-router';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
-  import { useModulesQuery } from '@/query';
-  import useStudies from '@/stores/studies';
+  import { useModulesQuery, useStudiesQuery } from '@/query';
   import { useRouteParams } from '@vueuse/router';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
 
@@ -15,9 +14,12 @@
     transform: (value) => parseInt(value),
   });
 
-  const { getStudyById } = useStudies();
+  const { data: studies } = useStudiesQuery();
 
-  const courseName = computed(() => getStudyById(courseId.value)?.name);
+  const courseName = computed(
+    () =>
+      (studies.value || []).find((study) => study.id === courseId.value)?.name,
+  );
 
   const { data: modules } = useModulesQuery(() =>
     parseInt(route.params.courseId.toString()),

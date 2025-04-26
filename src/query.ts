@@ -1,5 +1,4 @@
 import { QueryClient, useQuery } from '@tanstack/vue-query';
-import { getStudies } from '@/api/studies';
 import type { MaybeRefOrGetter } from 'vue';
 import { computed } from 'vue';
 import { toValue } from 'vue';
@@ -30,8 +29,8 @@ export const materialsKeys = {
 const studiesOptions = () => {
   return {
     queryKey: studiesKeys.lists(),
-    queryFn: getStudies,
-    placeholderData: () => [],
+    queryFn: async () =>
+      (await api.studiesPurchasedList({ page_size: 100 })).results,
   };
 };
 

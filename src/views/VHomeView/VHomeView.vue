@@ -1,19 +1,19 @@
 <script lang="ts" setup>
   import VCard from '@/components/VCard/VCard.vue';
   import VCover from '@/components/VCover/VCover.vue';
-  import useStudies from '@/stores/studies';
   import { RouterLink } from 'vue-router';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
+  import { useStudiesQuery } from '@/query';
 
-  const studies = useStudies();
+  const { data: studies, isLoading } = useStudiesQuery();
 </script>
 
 <template>
-  <VLoggedLayout title="Мои курсы">
+  <VLoggedLayout :is-loading="isLoading" title="Мои курсы">
     <ul
-      v-if="studies.items.length > 0"
+      v-if="studies && studies.length > 0"
       class="grid gap-16 tablet:gap-32 phone:gap-24">
-      <li v-for="(study, index) in studies.items" :key="index">
+      <li v-for="(study, index) in studies" :key="index">
         <RouterLink
           class="link"
           data-testid="study"

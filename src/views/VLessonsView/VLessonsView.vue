@@ -4,12 +4,12 @@
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
   import { useLessonsQuery, fetchModules } from '@/query';
   import VTag from '@/components/VTag/VTag.vue';
-  import useStudies from '@/stores/studies';
   import { onBeforeMount, computed, ref } from 'vue';
   import { useRouteParams } from '@vueuse/router';
   import { useQueryClient } from '@tanstack/vue-query';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import VButton from '@/components/VButton/VButton.vue';
+  import { useStudiesQuery } from '@/query';
 
   const queryClient = useQueryClient();
   const courseId = useRouteParams('courseId', '0', {
@@ -19,9 +19,12 @@
     transform: (value) => parseInt(value),
   });
 
-  const { getStudyById } = useStudies();
+  const { data: studies } = useStudiesQuery();
 
-  const courseName = computed(() => getStudyById(courseId.value)?.name);
+  const courseName = computed(
+    () =>
+      (studies.value ?? []).find((study) => study.id === courseId.value)?.name,
+  );
   const moduleName = ref('');
 
   const { data: lessons } = useLessonsQuery(moduleId);

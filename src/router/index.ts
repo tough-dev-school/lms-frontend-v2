@@ -5,7 +5,6 @@ import {
 } from 'vue-router';
 import useAuth from '@/stores/auth';
 import useUser from '@/stores/user';
-import useStudies from '@/stores/studies';
 import useDiplomas from '@/stores/diplomas';
 
 import loginByToken from '@/router/loginByToken';
@@ -13,9 +12,7 @@ import loginById from '@/router/loginById';
 
 const fetchMainUserData = async () => {
   const user = useUser();
-  const studies = useStudies();
   await user.getData();
-  await studies.getData();
 };
 
 const disallowAuthorized = () => {

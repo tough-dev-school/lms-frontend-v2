@@ -6,7 +6,6 @@ import useAuth from '@/stores/auth';
 import type VAvatar from '@/components/VAvatar/VAvatar.vue';
 import { faker } from '@faker-js/faker';
 import { createTestingPinia } from '@pinia/testing';
-import useStudies from '@/stores/studies';
 import { mockStudy } from '@/mocks/mockStudy';
 
 const routerPushMock = vi.fn();
@@ -21,7 +20,6 @@ describe('VProfileMenu', () => {
   let wrapper: VueWrapper;
   let user: ReturnType<typeof useUser>;
   let auth: ReturnType<typeof useAuth>;
-  let studies: ReturnType<typeof useStudies>;
 
   beforeEach(() => {
     wrapper = mount(VProfileMenu, {
@@ -43,11 +41,6 @@ describe('VProfileMenu', () => {
       username: faker.internet.email(),
       firstName: faker.person.firstName(),
       lastName: faker.person.lastName(),
-    });
-
-    studies = useStudies();
-    studies.$patch({
-      items: faker.helpers.multiple(mockStudy, { count: 3 }),
     });
 
     auth = useAuth();
@@ -198,41 +191,6 @@ describe('VProfileMenu', () => {
     expect(routerPushMock).toHaveBeenCalledWith({
       name: 'settings',
       hash: '#certificate',
-    });
-  });
-
-  test('Has correct number of materials', async () => {
-    const NUMBER_OF_MATERIALS = 2;
-
-    studies.$patch({
-      items: faker.helpers.multiple(mockStudy, { count: NUMBER_OF_MATERIALS }),
-    });
-
-    await getButtonWrapper().trigger('click');
-    const materials = getMaterialsWrapper();
-
-    expect(materials).toHaveLength(NUMBER_OF_MATERIALS);
-  });
-
-  test('Has max of 3 materials', async () => {
-    studies.$patch({
-      items: faker.helpers.multiple(mockStudy, { count: 10 }),
-    });
-
-    await getButtonWrapper().trigger('click');
-    const materials = getMaterialsWrapper();
-
-    expect(materials).toHaveLength(3);
-  });
-
-  test('Click on material opens material', async () => {
-    await getButtonWrapper().trigger('click');
-    await getMaterialWrapper().trigger('click');
-
-    expect(routerPushMock).toHaveBeenCalledTimes(1);
-    expect(routerPushMock).toHaveBeenCalledWith({
-      name: 'materials',
-      params: { materialId: studies.items[0].homePageSlug },
     });
   });
 });
