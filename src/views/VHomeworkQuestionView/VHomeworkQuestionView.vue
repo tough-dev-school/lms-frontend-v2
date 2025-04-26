@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
   import useHomework from '@/stores/homework';
-  import { computed, onMounted } from 'vue';
+  import { computed, onBeforeMount } from 'vue';
   import { storeToRefs } from 'pinia';
   import VHeading from '@/components/VHeading/VHeading.vue';
   import VOwnAnswer from '@/components/VOwnAnswer/VOwnAnswer.vue';
@@ -37,20 +37,20 @@
       : undefined;
   });
 
-  onMounted(async () => {
+  onBeforeMount(async () => {
     await getData();
   });
 </script>
 
 <template>
-  <VLoggedLayout title="Домашнее задание">
+  <VLoggedLayout :title="question?.name">
     <VHtmlContent v-if="question" :content="question.text" />
     <section>
       <VHeading tag="h2" class="mb-24">Ответ</VHeading>
       <div v-if="answer" class="mb-16 bg-yellow-light">
-        <VHeading tag="h3" class="mb-8"
-          >Поделиться ссылкой на сделанную домашку</VHeading
-        >
+        <VHeading tag="h3" class="mb-8">
+          Поделиться ссылкой на сделанную домашку
+        </VHeading>
         <RouterLink
           class="link block"
           :to="{
