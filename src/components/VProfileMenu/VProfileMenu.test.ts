@@ -6,7 +6,6 @@ import useAuth from '@/stores/auth';
 import type VAvatar from '@/components/VAvatar/VAvatar.vue';
 import { faker } from '@faker-js/faker';
 import { createTestingPinia } from '@pinia/testing';
-import { mockStudy } from '@/mocks/mockStudy';
 
 const routerPushMock = vi.fn();
 
@@ -80,14 +79,6 @@ describe('VProfileMenu', () => {
 
   const getCertificateWrapper = () => {
     return wrapper.find('[data-testid="certificate"]');
-  };
-
-  const getMaterialsWrapper = () => {
-    return wrapper.findAll('[data-testid*="material"]');
-  };
-
-  const getMaterialWrapper = () => {
-    return wrapper.find('[data-testid*="material"]');
   };
 
   test('Click on profile toggles menu', async () => {

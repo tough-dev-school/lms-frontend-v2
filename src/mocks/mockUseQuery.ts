@@ -1,1 +1,1 @@
-const mockUseQuery = () => {};
+export const mockUseQuery = () => {};
