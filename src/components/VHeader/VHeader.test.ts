@@ -1,10 +1,6 @@
 import { vi, describe, beforeEach, expect, test } from 'vitest';
 import { mount, RouterLinkStub, VueWrapper } from '@vue/test-utils';
-import { faker } from '@faker-js/faker';
 import VHeader from './VHeader.vue';
-import { useRoute } from 'vue-router';
-
-vi.mock('vue-router');
 
 describe('VHeader', () => {
   let wrapper: VueWrapper<InstanceType<typeof VHeader>>;
@@ -21,36 +17,30 @@ describe('VHeader', () => {
   };
 
   beforeEach(() => {
-    (useRoute as ReturnType<typeof vi.fn>).mockReturnValue({
-      meta: { isPublic: faker.datatype.boolean() },
-    });
-
     mountComponent();
   });
 
   const getLogoWrapper = () => wrapper.findComponent(RouterLinkStub);
-  const getProfileMenuWrapper = () => wrapper.find('[data-testid="profile"]');
 
   test('has logo that leads to home page', () => {
     expect(getLogoWrapper().exists()).toBe(true);
     expect(getLogoWrapper().props().to).toBe('/');
   });
 
-  test('has profile menu if route is private', () => {
-    (useRoute as ReturnType<typeof vi.fn>).mockReturnValue({
-      meta: { isPublic: false },
+  test('renders slot content', () => {
+    const slotContent = '<div data-testid="slot-content">Test Slot</div>';
+    wrapper = mount(VHeader, {
+      shallow: true,
+      slots: {
+        default: slotContent,
+      },
+      global: {
+        stubs: {
+          RouterLink: RouterLinkStub,
+        },
+      },
     });
-    mountComponent();
 
-    expect(getProfileMenuWrapper().exists()).toBe(true);
-  });
-
-  test('has no profile menu if route is public', () => {
-    (useRoute as ReturnType<typeof vi.fn>).mockReturnValue({
-      meta: { isPublic: true },
-    });
-    mountComponent();
-
-    expect(getProfileMenuWrapper().exists()).toBe(false);
+    expect(wrapper.html()).toContain(slotContent);
   });
 });

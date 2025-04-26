@@ -8,6 +8,7 @@ import { cloneDeep } from 'lodash-es';
 import responseCaseMiddleware from './responseCaseMiddleware';
 import handleError from '@/utils/handleError';
 import type { AxiosError } from 'axios';
+import { faker } from '@faker-js/faker';
 
 const defaultError = {
   response: {
@@ -32,6 +33,7 @@ describe('custom axios', () => {
     setActivePinia(pinia);
 
     auth = useAuth();
+    auth.token = faker.string.uuid();
   });
 
   test('response data is converted to CamelCase', () => {
