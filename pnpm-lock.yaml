@@ -19,7 +19,7 @@ importers:
         version: 8.34.0(vue@3.3.8(typescript@5.2.2))
       '@tanstack/vue-query':
         specifier: ^5.71.10
-        version: 5.73.3(vue@3.3.8(typescript@5.2.2))
+        version: 5.74.6(vue@3.3.8(typescript@5.2.2))
       '@tiptap/extension-bubble-menu':
         specifier: ^2.1.12
         version: 2.1.12(@tiptap/core@2.1.12(@tiptap/pm@2.1.12))(@tiptap/pm@2.1.12)
@@ -1337,11 +1337,11 @@ packages:
     resolution: {integrity: sha512-Wo1iKt2b9OT7d+YGhvEPD3DXvPv2etTusIMhMUoG7fbhmxcXCtIjJDEygy91Y2JFlwGyjqiBPRozme7UD8hoqg==}
     engines: {node: '>=12'}
 
-  '@tanstack/query-core@5.73.3':
-    resolution: {integrity: sha512-LUpsgVT3IkvOECdkQ3QD6esczSH71mAzH/LDZ2cu8j6w430v5W0JB1ulzsG8FFwFBd5fm/ePM2DFpg9TucRMgQ==}
+  '@tanstack/query-core@5.74.4':
+    resolution: {integrity: sha512-YuG0A0+3i9b2Gfo9fkmNnkUWh5+5cFhWBN0pJAHkHilTx6A0nv8kepkk4T4GRt4e5ahbtFj2eTtkiPcVU1xO4A==}
 
-  '@tanstack/vue-query@5.73.3':
-    resolution: {integrity: sha512-e8J0m9BhaF7loNvn+G/JAK4X47+9VdzSSmEhju/+G7XK49o3eFHNCAyFX0fBRAJhEKknDaSWTk9ggSE38wuQ/w==}
+  '@tanstack/vue-query@5.74.6':
+    resolution: {integrity: sha512-Fs0ZCwY9oV2TroxzAu5JOcnVpAnjMfpntGR1uUgaFvTdi8JcMPPtEt9FJZuJMa9Vo9cDrQj9Sq1ifP7ATi25TQ==}
     peerDependencies:
       '@vue/composition-api': ^1.1.2
       vue: ^2.6.0 || ^3.3.0
@@ -4988,6 +4988,9 @@ packages:
   vue-component-type-helpers@1.8.4:
     resolution: {integrity: sha512-6bnLkn8O0JJyiFSIF0EfCogzeqNXpnjJ0vW/SZzNHfe6sPx30lTtTXlE5TFs2qhJlAtDFybStVNpL73cPe3OMQ==}
 
+  vue-component-type-helpers@2.2.10:
+    resolution: {integrity: sha512-iDUO7uQK+Sab2tYuiP9D1oLujCWlhHELHMgV/cB13cuGbG4qwkLHvtfWb6FzvxrIOPDnU0oHsz2MlQjhYDeaHA==}
+
   vue-component-type-helpers@2.2.8:
     resolution: {integrity: sha512-4bjIsC284coDO9om4HPA62M7wfsTvcmZyzdfR0aUlFXqq4tXxM1APyXpNVxPC8QazKw9OhmZNHBVDA6ODaZsrA==}
 
@@ -5892,7 +5895,7 @@ snapshots:
 
   '@pkgr/utils@2.4.2':
     dependencies:
-      cross-spawn: 7.0.3
+      cross-spawn: 7.0.6
       fast-glob: 3.3.3
       is-glob: 4.0.3
       open: 9.1.0
@@ -6250,7 +6253,7 @@ snapshots:
       ts-dedent: 2.2.0
       type-fest: 2.19.0
       vue: 3.3.8(typescript@5.2.2)
-      vue-component-type-helpers: 2.2.8
+      vue-component-type-helpers: 2.2.10
 
   '@tailwindcss/typography@0.5.10(tailwindcss@3.4.17)':
     dependencies:
@@ -6264,12 +6267,12 @@ snapshots:
     dependencies:
       remove-accents: 0.5.0
 
-  '@tanstack/query-core@5.73.3': {}
+  '@tanstack/query-core@5.74.4': {}
 
-  '@tanstack/vue-query@5.73.3(vue@3.3.8(typescript@5.2.2))':
+  '@tanstack/vue-query@5.74.6(vue@3.3.8(typescript@5.2.2))':
     dependencies:
       '@tanstack/match-sorter-utils': 8.19.4
-      '@tanstack/query-core': 5.73.3
+      '@tanstack/query-core': 5.74.4
       '@vue/devtools-api': 6.6.4
       vue: 3.3.8(typescript@5.2.2)
       vue-demi: 0.14.10(vue@3.3.8(typescript@5.2.2))
@@ -6789,7 +6792,7 @@ snapshots:
       '@babel/parser': 7.22.7
       '@vue/shared': 3.3.4
       estree-walker: 2.0.2
-      source-map-js: 1.0.2
+      source-map-js: 1.2.1
 
   '@vue/compiler-core@3.3.8':
     dependencies:
@@ -10229,6 +10232,8 @@ snapshots:
       typescript: 5.8.3
 
   vue-component-type-helpers@1.8.4: {}
+
+  vue-component-type-helpers@2.2.10: {}
 
   vue-component-type-helpers@2.2.8: {}
 
