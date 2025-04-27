@@ -7,6 +7,7 @@ import FloatingVue from 'floating-vue';
 import 'floating-vue/dist/style.css';
 import { createRouter, createWebHistory } from 'vue-router';
 import { VueQueryPlugin } from '@tanstack/vue-query';
+import { vueQueryConfig } from '@/main';
 
 const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -52,11 +53,7 @@ setup((app) => {
   );
   app.use(FloatingVue);
   app.use(createPinia());
-  app.use(VueQueryPlugin, {
-    staleTime: Infinity,
-    retry: false,
-    refetchOnWindowFocus: false,
-  });
+  app.use(VueQueryPlugin, vueQueryConfig);
 });
 
 /** @type { import('@storybook/vue3').Preview } */

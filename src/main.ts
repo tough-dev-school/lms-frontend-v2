@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-app.use(VueQueryPlugin, {
+export const vueQueryConfig = {
   enableDevtoolsV6Plugin: true,
   queryClientConfig: {
     defaultOptions: {
@@ -43,7 +43,9 @@ app.use(VueQueryPlugin, {
       },
     },
   },
-});
+};
+
+app.use(VueQueryPlugin, vueQueryConfig);
 
 app.use(FloatingVue);
 app.use(AvatarCropper);
