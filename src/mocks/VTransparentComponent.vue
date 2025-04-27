@@ -1,7 +1,5 @@
 <template>
   <div v-bind="$attrs">
-    <slot name="header" />
-    <slot />
-    <slot name="footer" />
+    <slot v-for="slot in Object.keys($slots)" :key="slot" :name="slot" />
   </div>
 </template>
