@@ -62,7 +62,7 @@
       <VAnswer :answer="answer" />
     </section>
     <section v-if="question && answer" class="flex flex-col gap-24">
-      <VHeading tag="h2">Обсуждение</VHeading>
+      <VHeading tag="h2">Коментарии вашей работы</VHeading>
       <VFeedbackGuide />
       <VNewAnswer
         :question-id="question.slug"

@@ -1,5 +1,6 @@
 <script lang="ts">
   export type Appearance = 'link' | 'primary' | 'secondary';
+  export type Type = 'big' | 'inline';
 </script>
 
 <script lang="ts" setup>
@@ -7,11 +8,13 @@
 
   export interface Props {
     appearance?: Appearance;
+    type?: Type;
     tag?: string;
   }
 
   withDefaults(defineProps<Props>(), {
     appearance: 'primary',
+    type: 'big',
     tag: 'button',
   });
 </script>
@@ -24,6 +27,8 @@
       Button_Appearance_Link: appearance === 'link',
       Button_Appearance_Primary: appearance === 'primary',
       Button_Appearance_Secondary: appearance === 'secondary',
+      Button_Type_Big: type === 'big',
+      Button_Type_Inline: type === 'inline',
     }">
     <slot />
   </component>
@@ -33,7 +38,15 @@
   /* We dont use scoped here because we want to have the button class in the global style */
 
   .Button {
-    @apply leading-[1.5] h-module min-w-[280px] rounded-8 p-module text-center text-black transition-colors border;
+    @apply leading-[1.5] font-medium rounded-8 text-center text-black transition-colors border;
+    &_Type {
+      &_Big {
+        @apply min-w-[280px] h-module p-module;
+      }
+      &_Inline {
+        @apply min-w-0;
+      }
+    }
     &_Appearance {
       &_Primary {
         @apply bg-yellow border-yellow;

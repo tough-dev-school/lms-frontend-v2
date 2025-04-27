@@ -25,6 +25,7 @@
   import useUser from '@/stores/user';
   import { useRoute, useRouter } from 'vue-router';
   import { MessageCircleIcon, MessageCircleOffIcon } from 'vue-tabler-icons';
+  import VButton from '@/components/VButton/VButton.vue';
 
   const route = useRoute();
   const router = useRouter();
@@ -117,16 +118,22 @@
         @update="emit('update', originalPost.slug)"
         @mounted="scrollToComment">
         <template #footer>
-          <button
-            v-for="(action, index) in actions.filter((action) => action.show)"
-            :key="index"
-            class="answer-action"
-            :class="{ 'cursor-auto opacity-50': !action.handle }"
-            :title="action.name"
-            :disabled="action.disabled"
-            @click="action.handle">
-            <component :is="action.icon" />
-          </button>
+          <div class="flex">
+            <VButton
+              v-for="(action, index) in actions.filter((action) => action.show)"
+              :key="index"
+              class="px-16 h-32"
+              :class="{
+                'cursor-auto opacity-50 w-auto': !action.handle,
+              }"
+              :title="action.name"
+              type="inline"
+              appearance="secondary"
+              :disabled="action.disabled"
+              @click="action.handle">
+              <component :is="action.icon" />
+            </VButton>
+          </div>
         </template>
       </component>
       <div class="thread-ruler" :class="{ 'mt-16': replyMode }">
@@ -146,8 +153,8 @@
   </div>
 </template>
 
-<style scoped>
+<style>
   .thread-ruler {
-    @apply flex flex-col gap-16 border-l border-gray border-opacity-10 pl-8 transition-colors hover:border-opacity-25 tablet:pl-16;
+    @apply flex flex-col gap-16 pl-8 transition-colors tablet:pl-40;
   }
 </style>

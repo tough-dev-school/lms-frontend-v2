@@ -68,21 +68,6 @@
     @apply overflow-hidden rounded-8 bg-white dark:bg-darkmode-layer2 shadow;
   }
 
-  .answer-action,
-  .answer-action-base {
-    @apply rounded-8 text-dark-gray text-sub flex flex-col justify-center items-center px-16 py-4 box-content border border-offwhite cursor-pointer bg-offwhite transition-colors dark:bg-darkmode-layer3 dark:border-darkmode-layer3 dark:text-darkmode-white dark:opacity-100;
-  }
-
-  .answer-action,
-  .answer-action-hover {
-    @apply hover:bg-lightgray hover:border-lightgray dark:hover:bg-darkmode-layer1 dark:hover:border-darkmode-layer3;
-  }
-
-  .answer-action,
-  .answer-action-disabled {
-    @apply disabled:hover:bg-offwhite disabled:hover:border-offwhite disabled:opacity-50 disabled:cursor-not-allowed dark:disabled:hover:bg-darkmode-layer3 dark:disabled:hover:border-darkmode-border dark:disabled:opacity-50;
-  }
-
   .container-fluid {
     @apply px-16 max-w-[720px] mx-auto;
   }
