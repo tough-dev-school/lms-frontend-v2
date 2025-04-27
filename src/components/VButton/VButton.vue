@@ -39,7 +39,7 @@
 
   .Button {
     @apply leading-[1.5] font-medium rounded-8 text-center text-black transition-colors border;
-    &_Type {
+    &_Size {
       &_Big {
         @apply min-w-[280px] h-module p-module;
       }
