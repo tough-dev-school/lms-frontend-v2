@@ -3,7 +3,7 @@
 
   export interface ThreadAction {
     name?: string;
-    handle: () => void | null;
+    handle: (() => void) | (() => Promise<void>) | null;
     show: boolean;
     disabled?: boolean;
   }
@@ -124,7 +124,7 @@
               size="inline"
               appearance="link"
               :disabled="action.disabled"
-              @click="action.handle">
+              @click="action.handle ? action.handle() : null">
               {{ action.name }}
             </VButton>
           </div>

@@ -26,14 +26,12 @@
       name: 'Загрузить комментарии',
       handle: fetchComments,
       show: props.originalPost.hasDescendants && descendants.value.length === 0,
-      icon: MessagesIcon,
     },
     {
       name: 'Комментариев нет',
       handle: null,
       show: !props.originalPost.hasDescendants,
       disabled: true,
-      icon: MessagesOffIcon,
     },
   ]);
 </script>
