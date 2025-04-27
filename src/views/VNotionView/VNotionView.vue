@@ -42,7 +42,8 @@
 <template>
   <VLoggedLayout :is-loading="isLoading">
     <template v-if="material">
-      <VCard class="pt-32">
+      <VCard
+        class="pt-32 bg-white dark:bg-dark-black p-8 phone:p-24 rounded-16 shadow">
         <VNotionRenderer :block-map="material" />
       </VCard>
     </template>

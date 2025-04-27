@@ -34,9 +34,6 @@ const layoutDecorator = (story: any, layout: any) => ({
     homework.$patch({
       question: mockQuestion(STATIC_QUESTION),
     });
-
-    const queryClient = useQueryClient();
-    queryClient.setQueryData(materialsKeys.materials('123'), mockMaterial());
   },
 });
 

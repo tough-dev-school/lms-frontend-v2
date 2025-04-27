@@ -27,7 +27,11 @@ export const Default = {
     () => ({
       setup() {
         const queryClient = useQueryClient();
-        queryClient.setQueryData(materialsKeys.materials(''), mockMaterial());
+        queryClient.setQueryData(
+          // @ts-expect-error
+          materialsKeys.materials(undefined),
+          mockMaterial(),
+        );
       },
       template: '<story />',
     }),
@@ -40,7 +44,8 @@ export const Empty = {
     () => ({
       setup() {
         const queryClient = useQueryClient();
-        queryClient.setQueryData(materialsKeys.materials(''), undefined);
+        // @ts-expect-error
+        queryClient.setQueryData(materialsKeys.materials(undefined), undefined);
       },
       template: '<story />',
     }),
