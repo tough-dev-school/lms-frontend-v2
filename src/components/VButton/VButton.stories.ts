@@ -4,6 +4,16 @@ import VButton from '@/components/VButton/VButton.vue';
 export default {
   title: 'Forms/VButton',
   component: VButton,
+  argTypes: {
+    appearance: {
+      control: 'select',
+      options: ['primary', 'secondary', 'link'],
+    },
+    type: {
+      control: 'select',
+      options: ['big', 'inline'],
+    },
+  },
 } as Meta;
 
 const Template: StoryFn = (args) => ({
@@ -14,18 +24,34 @@ const Template: StoryFn = (args) => ({
   template: '<VButton v-bind="args">Press me</VButton>',
 });
 
-export const Default = {
+export const Primary = {
   render: Template,
-
   args: {
-    appearance: 'button',
+    appearance: 'primary',
+    type: 'big',
+  },
+};
+
+export const Secondary = {
+  render: Template,
+  args: {
+    appearance: 'secondary',
+    type: 'big',
   },
 };
 
 export const Link = {
   render: Template,
-
   args: {
     appearance: 'link',
+    type: 'big',
+  },
+};
+
+export const Inline = {
+  render: Template,
+  args: {
+    appearance: 'primary',
+    type: 'inline',
   },
 };
