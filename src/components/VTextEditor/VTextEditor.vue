@@ -161,7 +161,7 @@
 <template>
   <div
     ref="currentEditor"
-    class="bg-white dark:bg-darkmode-layer2 px-16 rounded border border-lightgray dark:border-darkmode-border min-h-240">
+    class="bg-white dark:bg-darkmode-layer2 px-16 rounded border border-lightgray dark:border-darkmode-border min-h-240 flex flex-col">
     <div
       v-if="editor"
       class="flex items-center dark:text-darkmode-white border-b border-lightgray dark:border-darkmode-border">
@@ -240,7 +240,10 @@
     <div v-if="isImageLoading" class="p-32">
       <VLoader />
     </div>
-    <EditorContent :editor="editor" class="TextEditor__Content prose" />
+    <EditorContent
+      :editor="editor"
+      class="TextEditor__Content prose flex-grow"
+      @click="editor.chain().focus().run()" />
   </div>
 </template>
 
