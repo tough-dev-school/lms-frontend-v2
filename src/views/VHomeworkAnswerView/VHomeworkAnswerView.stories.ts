@@ -19,6 +19,7 @@ export default {
   title: 'App/VHomeworkAnswerView',
   component: VHomeworkAnswerView,
   decorators: [defaultLayoutDecorator],
+  parameters: { layout: 'fullscreen' },
 } as Meta;
 
 const Template: StoryFn = (args) => ({

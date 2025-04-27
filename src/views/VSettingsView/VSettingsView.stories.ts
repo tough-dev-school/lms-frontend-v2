@@ -6,6 +6,7 @@ export default {
   title: 'App/VSettingsView',
   component: VSettingsView,
   decorators: [defaultLayoutDecorator],
+  parameters: { layout: 'fullscreen' },
 } as Meta;
 
 const Template: StoryFn = () => ({

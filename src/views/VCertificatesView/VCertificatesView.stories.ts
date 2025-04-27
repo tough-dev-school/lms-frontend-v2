@@ -10,6 +10,7 @@ export default {
   title: 'App/VCertificatesView',
   component: VCertificatesView,
   decorators: [defaultLayoutDecorator],
+  parameters: { layout: 'fullscreen' },
 } as Meta;
 
 const Template: StoryFn = (args) => ({

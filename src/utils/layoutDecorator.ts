@@ -7,6 +7,7 @@ import useHomework from '@/stores/homework';
 import useToasts from '@/stores/toasts';
 import useUser from '@/stores/user';
 import { useQueryClient } from '@tanstack/vue-query';
+import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
 
 const layoutDecorator = (story: any, layout: any) => ({
   components: { layout, story },
@@ -38,6 +39,6 @@ const layoutDecorator = (story: any, layout: any) => ({
 });
 
 const defaultLayoutDecorator = (story: any) =>
-  layoutDecorator(story, VBaseLayout);
+  layoutDecorator(story, VTransparentComponent);
 
 export { defaultLayoutDecorator };

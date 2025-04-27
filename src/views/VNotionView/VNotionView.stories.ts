@@ -8,6 +8,7 @@ export default {
   title: 'App/VNotionView',
   component: VNotionView,
   decorators: [defaultLayoutDecorator],
+  parameters: { layout: 'fullscreen' },
 } as Meta;
 
 const Template: StoryFn = (args) => ({
