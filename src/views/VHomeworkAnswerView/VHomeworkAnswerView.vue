@@ -13,6 +13,7 @@
   import type { Thread } from '@/types/homework';
   import VCrossChecks from '@/components/VCrossChecks/VCrossChecks.vue';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
+  import VDetails from '@/components/VDetails/VDetails.vue';
 
   const homework = useHomework();
   const { question, answers, crosschecks } = storeToRefs(homework);
@@ -53,12 +54,14 @@
 
 <template>
   <VLoggedLayout>
-    <section v-if="question && answer" class="mb-64 flex flex-col gap-24">
+    <section v-if="question && answer" class="flex flex-col gap-24">
       <VHeading tag="h1">{{ question.name }}</VHeading>
-      <VCard tag="details">
-        <summary>Показать задание</summary>
-        <VHtmlContent :content="question.text" class="mt-16" />
-      </VCard>
+      <VDetails>
+        <template #title> Задание </template>
+        <template #details>
+          <VHtmlContent :content="question.text" class="mt-16" />
+        </template>
+      </VDetails>
       <VAnswer :answer="answer" />
     </section>
     <section v-if="question && answer" class="flex flex-col gap-24">

@@ -1,12 +1,10 @@
 <script setup lang="ts">
-  import VCard from '@/components/VCard/VCard.vue';
+  import VDetails from '@/components/VDetails/VDetails.vue';
 </script>
 
 <template>
-  <VCard tag="details" class="bg-yellow-light">
-    <summary>
-      <h3 class="mb-16 inline font-bold">Как давать обратную связь?</h3>
-    </summary>
+  <VDetails tag="details">
+    <template #title> Как давать обратную связь? </template>
     <div class="prose mt-8 prose-h3:mt-16 prose-h3:text-base">
       <h3>Шаг 1</h3>
       <p>Напишите обратную связь по формату:</p>
@@ -35,5 +33,5 @@
       <h3>Шаг 3</h3>
       <p>Можно отправлять.</p>
     </div>
-  </VCard>
+  </VDetails>
 </template>
