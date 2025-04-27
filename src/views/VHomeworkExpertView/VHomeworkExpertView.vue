@@ -32,7 +32,7 @@
 
 <template>
   <VLoggedLayout>
-    <VCard v-if="question" class="mb-64" :title="question.name">
+    <VCard v-if="question" :title="question.name">
       <VHtmlContent :content="question.text" class="mt-8" />
     </VCard>
     <section>
