@@ -57,9 +57,9 @@
     <section v-if="question && answer" class="flex flex-col gap-24">
       <VHeading tag="h1">{{ question.name }}</VHeading>
       <VDetails>
-        <template #title> Задание </template>
+        <template #title>Задание</template>
         <template #details>
-          <VHtmlContent :content="question.text" class="mt-16" />
+          <VHtmlContent :content="question.text" />
         </template>
       </VDetails>
       <VAnswer :answer="answer" />

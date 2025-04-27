@@ -1,12 +1,10 @@
 <script lang="ts">
   import type { Thread } from '@/types/homework';
-  import type { MoodHappyIcon } from 'vue-tabler-icons';
 
   export interface ThreadAction {
     name?: string;
     handle: (() => void) | null;
     show: boolean;
-    icon: typeof MoodHappyIcon;
     disabled?: boolean;
   }
 
@@ -24,7 +22,6 @@
   import { onClickOutside } from '@vueuse/core';
   import useUser from '@/stores/user';
   import { useRoute, useRouter } from 'vue-router';
-  import { MessageCircleIcon, MessageCircleOffIcon } from 'vue-tabler-icons';
   import VButton from '@/components/VButton/VButton.vue';
 
   const route = useRoute();
@@ -50,7 +47,6 @@
           emit('reply');
           replyMode.value = true;
         },
-        icon: MessageCircleIcon,
         show: replyMode.value === false,
       },
       {
@@ -58,7 +54,6 @@
         handle: () => {
           replyMode.value = false;
         },
-        icon: MessageCircleOffIcon,
         show: replyMode.value === true,
       },
     ];
@@ -118,20 +113,19 @@
         @update="emit('update', originalPost.slug)"
         @mounted="scrollToComment">
         <template #footer>
-          <div class="flex">
+          <div class="flex gap-16">
             <VButton
               v-for="(action, index) in actions.filter((action) => action.show)"
               :key="index"
-              class="px-16 h-32"
               :class="{
                 'cursor-auto opacity-50 w-auto': !action.handle,
               }"
               :title="action.name"
               type="inline"
-              appearance="secondary"
+              appearance="link"
               :disabled="action.disabled"
               @click="action.handle">
-              <component :is="action.icon" />
+              {{ action.name }}
             </VButton>
           </div>
         </template>
@@ -144,7 +138,7 @@
           @update="handleUpdate" />
       </div>
     </div>
-    <div v-if="originalPost.descendants?.length > 0" class="thread-ruler mt-16">
+    <div v-if="originalPost.descendants?.length > 0" class="thread-ruler mt-32">
       <VThread
         v-for="reply in originalPost.descendants"
         :key="reply.slug"
@@ -155,6 +149,6 @@
 
 <style>
   .thread-ruler {
-    @apply flex flex-col gap-16 pl-8 transition-colors tablet:pl-40;
+    @apply flex flex-col gap-16 pl-8 transition-colors tablet:pl-16 border-l border-gray border-opacity-20 hover:border-opacity-100;
   }
 </style>

@@ -28,7 +28,7 @@
         <slot name="summary" />
       </div>
     </button>
-    <div v-if="isOpen" class="pl-64 pr-16">
+    <div v-if="isOpen" class="pl-64 pr-16 py-16">
       <slot />
       <slot name="details" />
     </div>

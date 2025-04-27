@@ -51,8 +51,8 @@
 </script>
 
 <template>
-  <div>
-    <div class="mb-16 flex items-center gap-8">
+  <div class="flex flex-col gap-8">
+    <div class="flex items-center gap-8">
       <VAvatar
         data-testid="avatar"
         :user-id="answer.author.uuid"
@@ -64,35 +64,40 @@
           data-testid="name">
           {{ getName(answer.author.firstName, answer.author.lastName) }}
         </div>
-        <div class="text-sub leading-tight text-gray" data-testid="date">
-          {{ relativeDate(answer.created) }}
-        </div>
       </div>
       <div class="flex-grow"></div>
       <slot name="header"></slot>
     </div>
     <VHtmlContent :content="answer.text" data-testid="content" />
-    <div
-      ref="parent"
-      class="flex justify-start flex-wrap items-start gap-8 pt-16">
-      <slot name="footer" />
-      <VButton
+
+    <div class="flex flex-col gap-4">
+      <div
         v-if="!isOwn"
-        appearance="secondary"
-        type="inline"
-        class="flex px-16 h-32 items-center justify-center text-[1.5rem]"
-        data-testid="open"
-        @click="togglePalette">
-        <MoodHappyIcon />
-      </VButton>
-      <VReactions
-        :answer-id="answer.slug"
-        :reactions="answer.reactions"
-        :open="isPaletteOpen"
-        :disabled="isOwn"
-        @close="closePalette"
-        @add="addReaction"
-        @remove="removeReaction" />
+        ref="parent"
+        class="flex justify-start flex-wrap items-start gap-8">
+        <VButton
+          appearance="secondary"
+          type="inline"
+          class="flex px-16 h-32 items-center justify-center text-[1.5rem]"
+          data-testid="open"
+          @click="togglePalette">
+          <MoodHappyIcon />
+        </VButton>
+        <VReactions
+          :answer-id="answer.slug"
+          :reactions="answer.reactions"
+          :open="isPaletteOpen"
+          :disabled="isOwn"
+          @close="closePalette"
+          @add="addReaction"
+          @remove="removeReaction" />
+      </div>
+      <div class="flex justify-start flex-wrap items-center gap-8">
+        <slot name="footer" />
+        <div class="text-sub leading-tight text-gray" data-testid="date">
+          {{ relativeDate(answer.created) }}
+        </div>
+      </div>
     </div>
   </div>
 </template>
