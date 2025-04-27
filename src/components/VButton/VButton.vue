@@ -8,13 +8,13 @@
 
   export interface Props {
     appearance?: Appearance;
-    type?: Type;
+    size?: Type;
     tag?: string;
   }
 
   withDefaults(defineProps<Props>(), {
     appearance: 'primary',
-    type: 'big',
+    size: 'big',
     tag: 'button',
   });
 </script>
@@ -27,8 +27,8 @@
       Button_Appearance_Link: appearance === 'link',
       Button_Appearance_Primary: appearance === 'primary',
       Button_Appearance_Secondary: appearance === 'secondary',
-      Button_Type_Big: type === 'big',
-      Button_Type_Inline: type === 'inline',
+      Button_Size_Big: size === 'big',
+      Button_Size_Inline: size === 'inline',
     }">
     <slot />
   </component>

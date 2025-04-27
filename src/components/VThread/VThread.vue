@@ -121,7 +121,7 @@
                 'cursor-auto opacity-50 w-auto': !action.handle,
               }"
               :title="action.name"
-              type="inline"
+              size="inline"
               appearance="link"
               :disabled="action.disabled"
               @click="action.handle">

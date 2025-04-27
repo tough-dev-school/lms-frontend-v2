@@ -77,7 +77,7 @@
         class="flex justify-start flex-wrap items-start gap-8">
         <VButton
           appearance="secondary"
-          type="inline"
+          size="inline"
           class="flex px-16 h-32 items-center justify-center text-[1.5rem]"
           data-testid="open"
           @click="togglePalette">

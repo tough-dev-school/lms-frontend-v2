@@ -12,7 +12,7 @@
   <div class="flex items-center gap-8">
     <VButton
       appearance="secondary"
-      type="inline"
+      size="inline"
       class="h-32 px-16"
       data-testid="delete"
       @click="emit('delete')">
@@ -20,7 +20,7 @@
     </VButton>
     <VButton
       appearance="secondary"
-      type="inline"
+      size="inline"
       class="h-32 px-16"
       data-testid="edit"
       @click="emit('edit')">

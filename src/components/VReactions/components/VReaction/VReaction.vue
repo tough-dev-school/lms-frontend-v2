@@ -52,7 +52,7 @@
 
 <template>
   <VButton
-    type="inline"
+    size="inline"
     appearance="secondary"
     class="flex-row inline-flex items-center gap-16 text-[1.25rem] min-w-[64px] h-32"
     :class="{
