@@ -69,9 +69,9 @@
             <div class="flex flex-col gap-10">
               <div class="flex flex-col gap-16">
                 <div class="empty:hidden gap-8 flex flex-wrap">
-                  <VTag v-if="lesson.homework?.question.deadline"
-                    >Дедлайн {{ lesson.homework.question.deadline }}</VTag
-                  >
+                  <VTag v-if="lesson.homework?.question.deadline">
+                    Дедлайн {{ lesson.homework.question.deadline }}
+                  </VTag>
                 </div>
                 <VHeading tag="h3" class="mb-8">{{ lesson.name }}</VHeading>
               </div>

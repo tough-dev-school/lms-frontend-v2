@@ -42,7 +42,11 @@
 
 <template>
   <label class="w-full">
-    <div class="mb-8 text-gray empty:hidden" data-testid="label">
+    <div
+      v-if="$slots.label"
+      class="mb-8"
+      :class="{ 'text-red': error, 'text-gray': !error }"
+      data-testid="label">
       <slot name="label">
         {{ label }}
       </slot>
