@@ -1,4 +1,4 @@
-import { vi, describe, beforeEach, expect, test } from 'vitest';
+import { describe, beforeEach, expect, test } from 'vitest';
 import { mount, RouterLinkStub, VueWrapper } from '@vue/test-utils';
 import VHeader from './VHeader.vue';
 
