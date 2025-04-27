@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-  import VCard from '@/components/VCard/VCard.vue';
   import VCover from '@/components/VCover/VCover.vue';
   import { RouterLink } from 'vue-router';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
@@ -21,12 +20,10 @@
             name: 'modules',
             params: { courseId: study.id },
           }">
-          <VCard class="relative !p-0 !px-0">
-            <VCover
-              :name="study.name"
-              :image="study.cover"
-              class="hidden phone:flex" />
-          </VCard>
+          <VCover
+            :name="study.name"
+            :image="study.cover"
+            class="hidden phone:flex rounded-16 overflow-hidden" />
         </RouterLink>
       </li>
     </ul>
