@@ -38,7 +38,7 @@
   };
 
   const breadcrumbs = computed<Breadcrumb[]>(() => [
-    { name: 'Главная', to: { name: 'home' } },
+    { name: 'Мои курсы', to: { name: 'home' } },
     {
       name: courseName.value ? courseName.value : 'Материалы курса',
       to: { name: 'modules', params: { courseId: courseId.value } },
@@ -53,9 +53,13 @@
         v-for="(module, index) in modules"
         :key="module.id"
         :to="{ name: 'lessons', params: { moduleId: module.id } }">
-        <VCard :class="[cardClass(index), 'text-black min-h-120']">
+        <div
+          :class="[
+            cardClass(index),
+            'text-black min-h-120 rounded-16 p-16 tablet:p-24',
+          ]">
           <VHeading tag="h3">{{ module.name }}</VHeading>
-        </VCard>
+        </div>
       </RouterLink>
     </template>
 

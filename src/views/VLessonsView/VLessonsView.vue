@@ -30,7 +30,7 @@
   const { data: lessons } = useLessonsQuery(moduleId);
 
   const breadcrumbs = computed<Breadcrumb[]>(() => [
-    { name: 'Главная', to: { name: 'home' } },
+    { name: 'Мои курсы', to: { name: 'home' } },
     {
       name: courseName.value ? courseName.value : 'Материалы курса',
       to: { name: 'modules', params: { courseId: courseId.value } },
@@ -62,9 +62,9 @@
           v-for="lesson in lessons"
           :key="lesson.id"
           class="VLessonsView__Item">
-          <VCard
+          <div
             :class="[
-              'dark:!bg-accent-yellow !bg-accent-yellow text-black flex-shrink py-24',
+              'dark:!bg-accent-yellow !bg-accent-yellow text-black flex-shrink py-24 rounded-16 p-16 tablet:p-24',
             ]">
             <div class="flex flex-col gap-10">
               <div class="flex flex-col gap-16">
@@ -111,7 +111,7 @@
                 Отправить домашку
               </VButton>
             </div>
-          </VCard>
+          </div>
         </div>
       </div>
       <p v-else data-testid="empty" class="mb-16 text-center">

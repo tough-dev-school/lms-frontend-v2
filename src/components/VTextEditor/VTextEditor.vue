@@ -164,11 +164,11 @@
     class="bg-white dark:bg-darkmode-layer2 px-16 rounded border border-lightgray dark:border-darkmode-border min-h-240">
     <div
       v-if="editor"
-      class="flex items-center bg-white dark:bg-darkmode-layer3 dark:text-darkmode-white border-b border-lightgray dark:border-darkmode-border">
+      class="flex items-center dark:text-darkmode-white border-b border-lightgray dark:border-darkmode-border">
       <button
         class="TextEditor__Button"
         :class="{
-          'TextEditor__Button--active': editor.isActive('heading', {
+          TextEditor__Button_Active: editor.isActive('heading', {
             level: 1,
           }),
         }"
@@ -178,7 +178,7 @@
       <button
         class="TextEditor__Button"
         :class="{
-          'TextEditor__Button--active': editor.isActive('heading', {
+          TextEditor__Button_Active: editor.isActive('heading', {
             level: 2,
           }),
         }"
@@ -188,7 +188,7 @@
       <button
         class="TextEditor__Button"
         :class="{
-          'TextEditor__Button--active': editor.isActive('heading', {
+          TextEditor__Button_Active: editor.isActive('heading', {
             level: 3,
           }),
         }"
@@ -197,33 +197,33 @@
       </button>
       <button
         class="TextEditor__Button"
-        :class="{ 'TextEditor__Button--active': editor.isActive('bold') }"
+        :class="{ TextEditor__Button_Active: editor.isActive('bold') }"
         @click="toggleBold">
         <BoldIcon />
       </button>
       <button
         class="TextEditor__Button"
-        :class="{ 'TextEditor__Button--active': editor.isActive('italic') }"
+        :class="{ TextEditor__Button_Active: editor.isActive('italic') }"
         @click="toggleItalic">
         <ItalicIcon />
       </button>
       <button
         class="TextEditor__Button"
-        :class="{ 'TextEditor__Button--active': editor.isActive('blockquote') }"
+        :class="{ TextEditor__Button_Active: editor.isActive('blockquote') }"
         @click="toggleBlockquote">
         <BlockquoteIcon />
       </button>
       <button
         class="TextEditor__Button"
         :class="{
-          'TextEditor__Button--active': editor.isActive('orderedList'),
+          TextEditor__Button_Active: editor.isActive('orderedList'),
         }"
         @click="toggleOrderedList">
         <ListNumbersIcon />
       </button>
       <button
         class="TextEditor__Button"
-        :class="{ 'TextEditor__Button--active': editor.isActive('bulletList') }"
+        :class="{ TextEditor__Button_Active: editor.isActive('bulletList') }"
         @click="toggleUnorderedList">
         <ListIcon />
       </button>
@@ -247,9 +247,9 @@
 <style>
   .TextEditor {
     &__Button {
-      @apply flex h-32 items-center justify-center px-8 hover:bg-lightgray dark:hover:bg-darkmode-layer2;
+      @apply flex h-32 items-center justify-center px-8 hover:bg-lightgray dark:hover:bg-darkmode-layer3 transition-colors;
       &_Active {
-        @apply bg-lightgray dark:bg-darkmode-layer2;
+        @apply bg-lightgray dark:bg-darkmode-layer3;
       }
     }
   }

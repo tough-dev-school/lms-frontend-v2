@@ -15,7 +15,7 @@
 
 <template>
   <nav>
-    <ol class="flex items-center gap-4">
+    <ol class="flex items-center flex-wrap gap-4">
       <li
         v-for="(item, index) in props.items"
         :key="index"
@@ -23,10 +23,12 @@
         <template v-if="index > 0">
           <span class="mx-2 text-gray-400">/</span>
         </template>
-        <RouterLink v-if="item.to" :to="item.to">
+        <RouterLink
+          v-if="item.to"
+          :class="index === props.items.length - 1 ? 'font-bold' : ''"
+          :to="item.to">
           {{ item.name }}
         </RouterLink>
-        <span v-else class="font-medium">{{ item.name }}</span>
       </li>
     </ol>
   </nav>

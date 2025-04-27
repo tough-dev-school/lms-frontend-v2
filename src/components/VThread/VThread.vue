@@ -3,7 +3,7 @@
 
   export interface ThreadAction {
     name?: string;
-    handle: (() => void) | null;
+    handle: () => void | null;
     show: boolean;
     disabled?: boolean;
   }

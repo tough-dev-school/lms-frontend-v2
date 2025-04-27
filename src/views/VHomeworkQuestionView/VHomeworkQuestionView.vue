@@ -46,7 +46,7 @@
   <VLoggedLayout :title="question?.name">
     <VHtmlContent v-if="question" :content="question.text" />
     <section>
-      <VHeading tag="h2" class="mb-24">Ответ</VHeading>
+      <VHeading tag="h2" class="mb-24">Отправить работу</VHeading>
       <div v-if="answer" class="mb-16 bg-yellow-light">
         <VHeading tag="h3" class="mb-8">
           Поделиться ссылкой на сделанную домашку

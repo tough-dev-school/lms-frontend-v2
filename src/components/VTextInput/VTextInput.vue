@@ -43,7 +43,7 @@
 <template>
   <label class="w-full">
     <div
-      v-if="$slots.label"
+      v-if="$slots.label || label"
       class="mb-8"
       :class="{ 'text-red': error, 'text-gray': !error }"
       data-testid="label">
