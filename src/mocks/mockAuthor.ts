@@ -19,6 +19,6 @@ const staticAuthor = (seed: number) => {
 
 export const STATIC_AUTHOR_1: Author = staticAuthor(1);
 
-export const STATIC_AUTHOR_2: Author = staticAuthor(1);
+export const STATIC_AUTHOR_2: Author = staticAuthor(2);
 
-export const STATIC_AUTHOR_3: Author = staticAuthor(1);
+export const STATIC_AUTHOR_3: Author = staticAuthor(3);
