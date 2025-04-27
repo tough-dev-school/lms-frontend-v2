@@ -17,10 +17,7 @@
 <template>
   <section class="flex flex-col gap-24">
     <VHeading v-if="title" tag="h2">{{ title }}</VHeading>
-    <component
-      :is="tag"
-      v-bind="$attrs"
-      class="overflow-hidden rounded bg-white p-16 phone:p-24 dark:bg-darkmode-layer2">
+    <component :is="tag" v-bind="$attrs">
       <slot />
       <footer
         v-if="$slots.footer"
