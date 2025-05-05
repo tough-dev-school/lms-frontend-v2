@@ -1,6 +1,5 @@
 <script lang="ts" setup>
   import VHeading from '@/components/VHeading/VHeading.vue';
-  import VCard from '@/components/VCard/VCard.vue';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
   import { useLessonsQuery, fetchModules } from '@/query';
   import VTag from '@/components/VTag/VTag.vue';

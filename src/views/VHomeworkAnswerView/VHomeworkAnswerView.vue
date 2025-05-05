@@ -8,7 +8,6 @@
   import { useRoute, useRouter } from 'vue-router';
   import { storeToRefs } from 'pinia';
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
-  import VCard from '@/components/VCard/VCard.vue';
   import VNewAnswer from '@/components/VNewAnswer/VNewAnswer.vue';
   import type { Thread } from '@/types/homework';
   import VCrossChecks from '@/components/VCrossChecks/VCrossChecks.vue';

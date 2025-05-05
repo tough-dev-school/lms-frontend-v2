@@ -1,6 +1,5 @@
 <script lang="ts" setup>
   import VHeading from '@/components/VHeading/VHeading.vue';
-  import VCard from '@/components/VCard/VCard.vue';
   import { computed } from 'vue';
   import { RouterLink, useRoute } from 'vue-router';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';

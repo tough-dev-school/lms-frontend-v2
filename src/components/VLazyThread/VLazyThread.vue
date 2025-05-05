@@ -4,7 +4,6 @@
   import VPreloader from '@/components/VPreloader/VPreloader.vue';
   import { getComments } from '@/api/homework';
   import { ref, computed } from 'vue';
-  import { MessagesIcon, MessagesOffIcon } from 'vue-tabler-icons';
 
   export interface Props {
     originalPost: Answer;
