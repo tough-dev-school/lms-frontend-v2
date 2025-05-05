@@ -55,6 +55,20 @@ export enum BlankEnum {
   Value = '',
 }
 
+export interface CallSerializr {
+  /**
+   * Название
+   * @maxLength 255
+   */
+  name: string;
+  /**
+   * Ссылка
+   * @format uri
+   * @maxLength 255
+   */
+  url: string;
+}
+
 export interface Course {
   id: number;
   /**
@@ -71,6 +85,18 @@ export interface Course {
    * @format uri
    */
   cover?: string;
+  /**
+   * Чат
+   * @format uri
+   * @maxLength 200
+   */
+  chat?: string | null;
+  /**
+   * Календарь
+   * @format uri
+   * @maxLength 200
+   */
+  calendar?: string | null;
 }
 
 export interface CourseSimple {
@@ -187,6 +213,7 @@ export interface LessonForUser {
   name: string;
   material?: NotionMaterial;
   homework: HomeworkStats;
+  call?: CallSerializr;
 }
 
 export interface Module {
@@ -887,6 +914,15 @@ export type LmsModulesListData = PaginatedModuleList;
 export type NotionMaterialsRetrieveData = any;
 
 export type OrdersConfirmRetrieveData = any;
+
+export interface PurchasedCoursesListParams {
+  /** A page number within the paginated result set. */
+  page?: number;
+  /** Number of results to return per page. */
+  page_size?: number;
+}
+
+export type PurchasedCoursesListData = PaginatedCourseList;
 
 export interface StudiesPurchasedListParams {
   /** A page number within the paginated result set. */
@@ -1815,7 +1851,28 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * @description Add ability to disable response pagination with `disable_pagination=True` query param.
+     * @description List of courses, purchased by particular user
+     *
+     * @tags purchased-courses
+     * @name PurchasedCoursesList
+     * @request GET:/api/v2/purchased-courses/
+     * @secure
+     */
+    purchasedCoursesList: (
+      query: PurchasedCoursesListParams,
+      params: RequestParams = {},
+    ) =>
+      this.http.request<PurchasedCoursesListData, any>({
+        path: `/api/v2/purchased-courses/`,
+        method: 'GET',
+        query: query,
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description List of courses, purchased by particular user
      *
      * @tags studies
      * @name StudiesPurchasedList
