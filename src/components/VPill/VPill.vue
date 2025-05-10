@@ -25,7 +25,7 @@
       data-testid="pill-item"
       class="py-16 flex-grow text-center"
       :class="{
-        'hover:bg-lightgray hover:bg-opacity-20 cursor-pointer': item.to,
+        'hover:bg-lightgray hover:bg-opacity-20 cursor-pointer link': item.to,
       }"
       :to="item.to">
       <div
