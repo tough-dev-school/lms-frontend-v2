@@ -10,12 +10,18 @@ import type {
 } from '@/types/homework';
 import htmlToMarkdown from '@/utils/htmlToMarkdown';
 
+/**
+ * @deprecated use api/index.ts instead
+ */
 export const getQuestion = async (questionId: string) => {
   const url = `/api/v2/homework/questions/${questionId}/`;
 
   return (await axios.get(url)).data as Question;
 };
 
+/**
+ * @deprecated use api/index.ts instead
+ */
 export const getAnswer = async (answerId: string) => {
   const url = `/api/v2/homework/answers/${answerId}/`;
 
@@ -27,6 +33,9 @@ interface getAnswersParams {
   author?: string;
 }
 
+/**
+ * @deprecated use api/index.ts instead
+ */
 export const getAnswers = async ({
   questionId,
   authorId,
@@ -51,12 +60,18 @@ export const getAnswers = async ({
   ).data as Answer[];
 };
 
+/**
+ * @deprecated use api/index.ts instead
+ */
 export const getComments = async (answerIds: string[]) => {
   const url = `/api/v2/homework/comments/?answer=${[...answerIds].join(',')}`;
 
   return (await axios.get(url)).data as Comments[];
 };
 
+/**
+ * @deprecated use api/index.ts instead
+ */
 export const postAnswer = async ({
   text,
   questionId,
@@ -78,12 +93,18 @@ export const postAnswer = async ({
   return (await axios.post(url, data)).data as Answer | Comment;
 };
 
+/**
+ * @deprecated use api/index.ts instead
+ */
 export const deleteAnswer = async (answerId: string) => {
   const url = `/api/v2/homework/answers/${answerId}/`;
 
   await axios.delete(url);
 };
 
+/**
+ * @deprecated use api/index.ts instead
+ */
 export const updateAnswer = async (answerId: string, text: string) => {
   const url = `/api/v2/homework/answers/${answerId}/`;
 
@@ -92,6 +113,9 @@ export const updateAnswer = async (answerId: string, text: string) => {
     | Comment;
 };
 
+/**
+ * @deprecated use api/index.ts instead
+ */
 export const sendImage = async (file: File) => {
   const formData = new FormData();
   formData.append('image', file);
@@ -101,6 +125,9 @@ export const sendImage = async (file: File) => {
   return (await axios.post(url, formData)).data as { image: string };
 };
 
+/**
+ * @deprecated use api/index.ts instead
+ */
 export const addReaction = async ({
   answerId,
   emoji,
@@ -119,12 +146,18 @@ export const addReaction = async ({
   return (await axios.post(url, data)).data as Reaction;
 };
 
+/**
+ * @deprecated use api/index.ts instead
+ */
 export const removeReaction = async (answerId: string, reactionId: string) => {
   const url = `/api/v2/homework/answers/${answerId}/reactions/${reactionId}/`;
 
   await axios.delete(url);
 };
 
+/**
+ * @deprecated use api/index.ts instead
+ */
 export const getCrossChecks = async (questionId: string) => {
   const url = `/api/v2/homework/crosschecks/?question=${questionId}`;
 

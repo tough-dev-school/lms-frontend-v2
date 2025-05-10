@@ -1,21 +1,23 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import VHomeView from './VHomeView.vue';
+import VCoursesView from './VCoursesView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
-import useStudies from '@/stores/studies';
 import { STATIC_STUDY } from '@/mocks/mockStudy';
+import { studiesKeys } from '@/query';
+import { useQueryClient } from '@tanstack/vue-query';
 
 export default {
-  title: 'App/VHomeView',
-  component: VHomeView,
+  title: 'App/VCoursesView',
+  component: VCoursesView,
   decorators: [defaultLayoutDecorator],
+  parameters: { layout: 'fullscreen' },
 } as Meta;
 
 const Template: StoryFn = (args) => ({
-  components: { VHomeView },
+  components: { VCoursesView },
   setup() {
     return { args };
   },
-  template: '<VHomeView v-bind="args" />',
+  template: '<VCoursesView v-bind="args" />',
 });
 
 export const Default = {
@@ -23,10 +25,8 @@ export const Default = {
   decorators: [
     () => ({
       setup() {
-        const studies = useStudies();
-        studies.$patch({
-          items: [STATIC_STUDY],
-        });
+        const queryClient = useQueryClient();
+        queryClient.setQueryData(studiesKeys.lists(), [STATIC_STUDY]);
       },
       template: '<story />',
     }),
@@ -38,8 +38,8 @@ export const Empty = {
   decorators: [
     () => ({
       setup() {
-        const studies = useStudies();
-        studies.items = [];
+        const queryClient = useQueryClient();
+        queryClient.setQueryData(studiesKeys.lists(), []);
       },
       template: '<story />',
     }),

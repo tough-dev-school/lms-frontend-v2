@@ -1,12 +1,10 @@
 <script lang="ts">
   import type { Thread } from '@/types/homework';
-  import type { MoodHappyIcon } from 'vue-tabler-icons';
 
   export interface ThreadAction {
     name?: string;
-    handle: (() => void) | null;
+    handle: (() => void) | (() => Promise<void>) | null;
     show: boolean;
-    icon: typeof MoodHappyIcon;
     disabled?: boolean;
   }
 
@@ -24,7 +22,7 @@
   import { onClickOutside } from '@vueuse/core';
   import useUser from '@/stores/user';
   import { useRoute, useRouter } from 'vue-router';
-  import { MessageCircleIcon, MessageCircleOffIcon } from 'vue-tabler-icons';
+  import VButton from '@/components/VButton/VButton.vue';
 
   const route = useRoute();
   const router = useRouter();
@@ -49,7 +47,6 @@
           emit('reply');
           replyMode.value = true;
         },
-        icon: MessageCircleIcon,
         show: replyMode.value === false,
       },
       {
@@ -57,7 +54,6 @@
         handle: () => {
           replyMode.value = false;
         },
-        icon: MessageCircleOffIcon,
         show: replyMode.value === true,
       },
     ];
@@ -117,16 +113,21 @@
         @update="emit('update', originalPost.slug)"
         @mounted="scrollToComment">
         <template #footer>
-          <button
-            v-for="(action, index) in actions.filter((action) => action.show)"
-            :key="index"
-            class="answer-action"
-            :class="{ 'cursor-auto opacity-50': !action.handle }"
-            :title="action.name"
-            :disabled="action.disabled"
-            @click="action.handle">
-            <component :is="action.icon" />
-          </button>
+          <div class="flex gap-16">
+            <VButton
+              v-for="(action, index) in actions.filter((action) => action.show)"
+              :key="index"
+              :class="{
+                'cursor-auto opacity-50 w-auto': !action.handle,
+              }"
+              :title="action.name"
+              size="inline"
+              appearance="link"
+              :disabled="action.disabled"
+              @click="action.handle ? action.handle() : null">
+              {{ action.name }}
+            </VButton>
+          </div>
         </template>
       </component>
       <div class="thread-ruler" :class="{ 'mt-16': replyMode }">
@@ -137,7 +138,7 @@
           @update="handleUpdate" />
       </div>
     </div>
-    <div v-if="originalPost.descendants?.length > 0" class="thread-ruler mt-16">
+    <div v-if="originalPost.descendants?.length > 0" class="thread-ruler mt-32">
       <VThread
         v-for="reply in originalPost.descendants"
         :key="reply.slug"
@@ -146,8 +147,8 @@
   </div>
 </template>
 
-<style scoped>
+<style>
   .thread-ruler {
-    @apply flex flex-col gap-16 border-l border-gray border-opacity-10 pl-8 transition-colors hover:border-opacity-25 tablet:pl-16;
+    @apply flex flex-col gap-16 pl-8 transition-colors tablet:pl-16 border-l border-gray border-opacity-20 hover:border-opacity-100;
   }
 </style>

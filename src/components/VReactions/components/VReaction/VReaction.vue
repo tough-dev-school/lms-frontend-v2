@@ -13,6 +13,7 @@
   import VAvatar from '@/components/VAvatar/VAvatar.vue';
   import { computed } from 'vue';
   import getName from '@/utils/getName';
+  import VButton from '@/components/VButton/VButton.vue';
 
   const props = withDefaults(defineProps<VReactionProps>(), {
     reactions: () => [],
@@ -50,15 +51,20 @@
 </script>
 
 <template>
-  <div
-    class="answer-action-base flex-row inline-flex items-center gap-16 pl-8 pr-4 text-[1.25rem] min-w-[64px]"
+  <VButton
+    size="inline"
+    appearance="secondary"
+    class="flex-row inline-flex items-center gap-16 text-[1.25rem] min-w-[64px] h-32"
     :class="{
-      'answer-action-hover': !disabled,
       'cursor-not-allowed': disabled,
       '!border !border-gray dark:!border-darkmode-border': ownReaction,
+      'pl-8 pr-4': reactions.length !== 0,
+      'px-16 justify-center': reactions.length === 0,
     }"
     @click="handleClick">
-    <div class="flex h-24 w-24 items-center justify-center" data-testid="emoji">
+    <div
+      class="flex h-24 w-24 items-center justify-center leading-none"
+      data-testid="emoji">
       {{ emoji }}
     </div>
     <div v-if="reactions.length > 0" class="flex items-center pr-16">
@@ -75,5 +81,5 @@
           data-testid="avatar" />
       </abbr>
     </div>
-  </div>
+  </VButton>
 </template>

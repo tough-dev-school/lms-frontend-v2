@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-  import VHeading from '@/components/VHeading/VHeading.vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VRadioSwitch from '@/components/VRadioSwitch/VRadioSwitch.vue';
   import { MoonFilledIcon, DevicesIcon, SunFilledIcon } from 'vue-tabler-icons';
@@ -29,8 +28,7 @@
 </script>
 
 <template>
-  <VCard>
-    <VHeading class="mb-24" tag="h2">Настройки темы</VHeading>
+  <VCard title="Настройки темы">
     <div class="flex flex-wrap gap-16">
       <VRadioSwitch v-model="store" :options="darkModeOptions" />
     </div>

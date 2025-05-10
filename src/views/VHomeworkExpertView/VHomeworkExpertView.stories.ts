@@ -11,6 +11,7 @@ export default {
   title: 'App/VHomeworkExpertView',
   component: VHomeworkExpertView,
   decorators: [defaultLayoutDecorator],
+  parameters: { layout: 'fullscreen' },
 } as Meta;
 
 const Template: StoryFn = (args) => ({

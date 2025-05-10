@@ -9,7 +9,6 @@
   import { relativeDate } from '@/utils/date';
   import getName from '@/utils/getName';
   import type { Answer } from '@/types/homework';
-  import VCard from '@/components/VCard/VCard.vue';
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
   import { computed, ref } from 'vue';
   import useUser from '@/stores/user';
@@ -18,6 +17,7 @@
   import useHomework from '@/stores/homework';
   import { MoodHappyIcon } from 'vue-tabler-icons';
   import { useAutoAnimate } from '@formkit/auto-animate/vue';
+  import VButton from '@/components/VButton/VButton.vue';
 
   const emit = defineEmits<{
     update: [];
@@ -51,8 +51,8 @@
 </script>
 
 <template>
-  <VCard class="pb-32">
-    <div class="mb-16 flex items-center gap-8">
+  <div class="flex flex-col gap-8">
+    <div class="flex items-center gap-8">
       <VAvatar
         data-testid="avatar"
         :user-id="answer.author.uuid"
@@ -60,42 +60,44 @@
       <div>
         <div
           class="font-bold text-black dark:text-darkmode-white"
+          :class="{ 'text-accent-orange': isOwn }"
           data-testid="name">
           {{ getName(answer.author.firstName, answer.author.lastName) }}
-          <span
-            v-if="isOwn"
-            class="h-16 rounded-8 bg-yellow px-4 text-sub font-normal text-white"
-            data-testid="own-badge"
-            >вы</span
-          >
-        </div>
-        <div class="text-sub leading-tight text-gray" data-testid="date">
-          {{ relativeDate(answer.created) }}
         </div>
       </div>
       <div class="flex-grow"></div>
       <slot name="header"></slot>
     </div>
     <VHtmlContent :content="answer.text" data-testid="content" />
-    <div
-      ref="parent"
-      class="flex justify-start flex-wrap items-start gap-8 pt-16">
-      <slot name="footer" />
-      <button
+
+    <div class="flex flex-col gap-4">
+      <div
         v-if="!isOwn"
-        class="answer-action box-content flex items-center justify-center text-[1.5rem]"
-        data-testid="open"
-        @click="togglePalette">
-        <MoodHappyIcon />
-      </button>
-      <VReactions
-        :answer-id="answer.slug"
-        :reactions="answer.reactions"
-        :open="isPaletteOpen"
-        :disabled="isOwn"
-        @close="closePalette"
-        @add="addReaction"
-        @remove="removeReaction" />
+        ref="parent"
+        class="flex justify-start flex-wrap items-start gap-8">
+        <VButton
+          appearance="secondary"
+          size="inline"
+          class="flex px-16 h-32 items-center justify-center text-[1.5rem]"
+          data-testid="open"
+          @click="togglePalette">
+          <MoodHappyIcon />
+        </VButton>
+        <VReactions
+          :answer-id="answer.slug"
+          :reactions="answer.reactions"
+          :open="isPaletteOpen"
+          :disabled="isOwn"
+          @close="closePalette"
+          @add="addReaction"
+          @remove="removeReaction" />
+      </div>
+      <div class="flex justify-start flex-wrap items-center gap-8">
+        <slot name="footer" />
+        <div class="text-sub leading-tight text-gray" data-testid="date">
+          {{ relativeDate(answer.created) }}
+        </div>
+      </div>
     </div>
-  </VCard>
+  </div>
 </template>

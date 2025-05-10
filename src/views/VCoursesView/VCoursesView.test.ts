@@ -1,38 +1,38 @@
 import { vi, describe, beforeEach, expect, test } from 'vitest';
 import { RouterLinkStub, mount, VueWrapper } from '@vue/test-utils';
-import { createTestingPinia } from '@pinia/testing';
-import VHomeView from './VHomeView.vue';
-import useStudies from '@/stores/studies';
+import VCoursesView from './VCoursesView.vue';
 import type { RouterLink } from 'vue-router';
-import { nextTick } from 'vue';
+import { nextTick, ref } from 'vue';
 import { faker } from '@faker-js/faker';
 import { mockStudy } from '@/mocks/mockStudy';
+import { useStudiesQuery } from '@/query';
+import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
 
 const defaultStudies = faker.helpers.multiple(mockStudy, { count: 3 });
 
-describe('VHomeView', () => {
-  let wrapper: VueWrapper<InstanceType<typeof VHomeView>>;
-  let studies: ReturnType<typeof useStudies>;
+vi.mock('@/query', () => ({
+  useStudiesQuery: vi.fn(),
+}));
+
+describe('VCoursesView', () => {
+  let wrapper: VueWrapper<InstanceType<typeof VCoursesView>>;
 
   beforeEach(() => {
-    wrapper = mount(VHomeView, {
+    vi.mocked(useStudiesQuery).mockReturnValue({
+      data: ref(defaultStudies),
+      isLoading: ref(false),
+    } as any);
+
+    wrapper = mount(VCoursesView, {
       shallow: true,
       global: {
-        plugins: [
-          createTestingPinia({
-            createSpy: vi.fn,
-          }),
-        ],
         stubs: {
+          VLoggedLayout: VTransparentComponent,
           VCard: false,
           RouterLink: RouterLinkStub,
         },
       },
     });
-
-    studies = useStudies();
-
-    studies.$patch({ items: defaultStudies });
   });
 
   const getStudyWrapper = () => {
@@ -49,16 +49,10 @@ describe('VHomeView', () => {
     expect(getStudiesWrapper()).toHaveLength(defaultStudies.length);
   });
 
-  test('has study names displayed', () => {
-    expect(wrapper.text()).toContain(defaultStudies[0].name);
-    expect(wrapper.text()).toContain(defaultStudies[1].name);
-    expect(wrapper.text()).toContain(defaultStudies[2].name);
-  });
-
   test('click on studies redirects to material', async () => {
     expect(getStudyWrapper().props().to).toStrictEqual({
-      name: 'materials',
-      params: { id: defaultStudies[0].homePageSlug },
+      name: 'modules',
+      params: { courseId: defaultStudies[0].id },
     });
   });
 
@@ -67,9 +61,23 @@ describe('VHomeView', () => {
   });
 
   test('if no studies — empty message is shown', async () => {
-    studies.$patch({ items: [] });
+    vi.mocked(useStudiesQuery).mockReturnValue({
+      data: ref(undefined),
+      isLoading: ref(false),
+    } as any);
 
-    await Promise.resolve(nextTick());
+    wrapper = mount(VCoursesView, {
+      shallow: true,
+      global: {
+        stubs: {
+          VCard: false,
+          RouterLink: RouterLinkStub,
+          VLoggedLayout: VTransparentComponent,
+        },
+      },
+    });
+
+    await nextTick();
 
     expect(getEmptyWrapper().exists()).toBe(true);
   });

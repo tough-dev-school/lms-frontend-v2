@@ -1,34 +1,37 @@
-<script lang="ts">
-  export interface VNotionView {
-    forceNew?: boolean;
-  }
-</script>
-
 <script lang="ts" setup>
-  import { useRoute, useRouter } from 'vue-router';
+  import { useRouter } from 'vue-router';
   import { watch } from 'vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VButton from '@/components/VButton/VButton.vue';
-  import useMaterials from '@/stores/materials';
   import { useTitle } from '@vueuse/core';
   import getNotionTitle from '@/utils/getNotionTitle';
   import { useChatra } from '@/hooks/useChatra';
   import VNotionRenderer from '@/components/VNotionRenderer/VNotionRenderer.vue';
+  import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
+  import { useRouteParams } from '@vueuse/router';
+  import { useMaterialQuery } from '@/query';
 
   const router = useRouter();
-  const materials = useMaterials();
+  const materialId = useRouteParams<string>('materialId');
   const title = useTitle();
-  const route = useRoute();
 
-  withDefaults(defineProps<VNotionView>(), { forceNew: false });
+  const { data: material, isLoading, isSuccess } = useMaterialQuery(materialId);
+
   watch(
-    () => route.params.id,
-    async () => {
-      if (materials.material) {
-        const materialId = String(route.params.id);
-        const notionTitle = getNotionTitle(materialId, materials.material);
+    () => isSuccess.value,
+    () => {
+      console.log(material.value);
+      if (isSuccess.value && material.value) {
+        const notionTitle = getNotionTitle(materialId.value, material.value);
         if (notionTitle) title.value = notionTitle;
       }
+    },
+  );
+
+  watch(
+    () => material.value,
+    () => {
+      console.log(material.value);
     },
     { immediate: true },
   );
@@ -37,32 +40,35 @@
 </script>
 
 <template>
-  <template v-if="materials.material">
-    <VCard class="pt-32">
-      <VNotionRenderer :block-map="materials.material" />
-    </VCard>
-  </template>
-  <div
-    v-else-if="!materials.material"
-    class="center flex max-w-[400px] flex-col text-center">
-    <p>Материал не найден :(</p>
-    <p>
-      Если кажется что здесь какая-то ошибка напишите
-      <button class="link" @click="chatra('openChat', true)">
-        в чат в углу экрана
-      </button>
-      или на
-      <a
-        class="link"
-        href="mailto:
-support@tough-dev.school">
-        support@tough-dev.school</a
+  <VLoggedLayout :is-loading="isLoading">
+    <template v-if="material">
+      <VCard
+        class="pt-32 bg-white dark:bg-dark-black p-8 phone:p-24 rounded-16 shadow">
+        <VNotionRenderer :block-map="material" />
+      </VCard>
+    </template>
+    <div
+      v-else-if="!material"
+      class="center flex max-w-[400px] flex-col text-center">
+      <p>Материал не найден :(</p>
+      <p>
+        Если кажется что здесь какая-то ошибка напишите
+        <button class="link" @click="chatra('openChat', true)">
+          в чат в углу экрана
+        </button>
+        или на
+        <a
+          class="link"
+          href="mailto:
+    support@tough-dev.school">
+          support@tough-dev.school</a
+        >
+      </p>
+      <VButton appearance="link" @click="router.push({ name: 'home' })"
+        >На главную</VButton
       >
-    </p>
-    <VButton appearance="link" @click="router.push({ name: 'home' })"
-      >На главную</VButton
-    >
-  </div>
+    </div>
+  </VLoggedLayout>
 </template>
 
 <style>

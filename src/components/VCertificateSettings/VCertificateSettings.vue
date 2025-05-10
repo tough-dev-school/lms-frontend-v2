@@ -1,7 +1,6 @@
 <script lang="ts" setup>
   import VTextInput from '@/components/VTextInput/VTextInput.vue';
   import VButton from '@/components/VButton/VButton.vue';
-  import VHeading from '@/components/VHeading/VHeading.vue';
   import VCard from '@/components/VCard/VCard.vue';
   import useUser from '@/stores/user';
   import type { Gender } from '@/types/users';
@@ -40,8 +39,7 @@
 </script>
 
 <template>
-  <VCard>
-    <VHeading class="mb-24" tag="h2">Данные для диплома</VHeading>
+  <VCard title="Данные для диплома">
     <div class="mb-16 rounded bg-yellow bg-opacity-30 p-16">
       Будьте внимательнее, когда заполняете поля имени и фамилии на двух языках.
       Именно в таком виде они отобразятся в сертификате.

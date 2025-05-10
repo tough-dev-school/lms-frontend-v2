@@ -5,7 +5,6 @@
   import useHomework from '@/stores/homework';
   import { ref, onMounted, computed } from 'vue';
   import VAnswer from '@/components/VAnswer/VAnswer.vue';
-  import VCard from '@/components/VCard/VCard.vue';
   import type { Answer, Thread, Comment } from '@/types/homework';
   import dayjs from 'dayjs';
 
@@ -75,7 +74,7 @@
       </template>
     </VAnswer>
   </div>
-  <VCard v-else class="px-0 pt-0 tablet:px-0">
+  <div v-else class="px-0 pt-0 tablet:px-0">
     <VTextEditor
       v-model="text"
       class="mb-16 rounded-t border-b border-offwhite"
@@ -85,5 +84,5 @@
         >Сохранить</VButton
       >
     </div>
-  </VCard>
+  </div>
 </template>
