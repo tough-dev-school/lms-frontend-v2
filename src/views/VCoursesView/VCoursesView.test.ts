@@ -1,6 +1,6 @@
 import { vi, describe, beforeEach, expect, test } from 'vitest';
 import { RouterLinkStub, mount, VueWrapper } from '@vue/test-utils';
-import VHomeView from './VHomeView.vue';
+import VCoursesView from './VCoursesView.vue';
 import type { RouterLink } from 'vue-router';
 import { nextTick, ref } from 'vue';
 import { faker } from '@faker-js/faker';
@@ -14,8 +14,8 @@ vi.mock('@/query', () => ({
   useStudiesQuery: vi.fn(),
 }));
 
-describe('VHomeView', () => {
-  let wrapper: VueWrapper<InstanceType<typeof VHomeView>>;
+describe('VCoursesView', () => {
+  let wrapper: VueWrapper<InstanceType<typeof VCoursesView>>;
 
   beforeEach(() => {
     vi.mocked(useStudiesQuery).mockReturnValue({
@@ -23,7 +23,7 @@ describe('VHomeView', () => {
       isLoading: ref(false),
     } as any);
 
-    wrapper = mount(VHomeView, {
+    wrapper = mount(VCoursesView, {
       shallow: true,
       global: {
         stubs: {
@@ -66,7 +66,7 @@ describe('VHomeView', () => {
       isLoading: ref(false),
     } as any);
 
-    wrapper = mount(VHomeView, {
+    wrapper = mount(VCoursesView, {
       shallow: true,
       global: {
         stubs: {

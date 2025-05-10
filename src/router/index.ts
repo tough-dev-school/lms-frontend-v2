@@ -24,7 +24,7 @@ export const routes = [
   {
     path: '/',
     name: 'home',
-    component: () => import('@/views/VHomeView/VHomeView.vue'),
+    component: () => import('@/views/VCoursesView/VCoursesView.vue'),
   },
   {
     path: '/settings',
