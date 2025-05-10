@@ -30,7 +30,7 @@ const studiesOptions = () => {
   return {
     queryKey: studiesKeys.lists(),
     queryFn: async () =>
-      (await api.studiesPurchasedList({ page_size: 100 })).results,
+      (await api.purchasedCoursesList({ page_size: 100 })).results,
   };
 };
 
