@@ -6,6 +6,7 @@
   import { useModulesQuery, useStudiesQuery } from '@/query';
   import { useRouteParams } from '@vueuse/router';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
+  import VPill, { type PillItem } from '@/components/VPill/VPill.vue';
 
   const route = useRoute();
 
@@ -15,10 +16,11 @@
 
   const { data: studies } = useStudiesQuery();
 
-  const courseName = computed(
-    () =>
-      (studies.value || []).find((study) => study.id === courseId.value)?.name,
+  const study = computed(() =>
+    (studies.value || []).find((study) => study.id === courseId.value),
   );
+
+  const courseName = computed(() => study.value?.name);
 
   const { data: modules } = useModulesQuery(() =>
     parseInt(route.params.courseId.toString()),
@@ -43,10 +45,27 @@
       to: { name: 'modules', params: { courseId: courseId.value } },
     },
   ]);
+
+  const courseInfo = computed(() => {
+    const items: PillItem[] = [];
+
+    if (study.value?.calendar) {
+      items.push({ label: 'Календарь', to: study.value?.calendar });
+    }
+
+    if (study.value?.chat) {
+      items.push({ label: 'Чат', to: study.value?.chat });
+    }
+
+    return items;
+  });
 </script>
 
 <template>
   <VLoggedLayout :title="courseName" :breadcrumbs="breadcrumbs">
+    <template v-if="courseInfo.length > 0" #pill>
+      <VPill :items="courseInfo" />
+    </template>
     <template v-if="modules && modules.length > 0">
       <RouterLink
         v-for="(module, index) in modules"

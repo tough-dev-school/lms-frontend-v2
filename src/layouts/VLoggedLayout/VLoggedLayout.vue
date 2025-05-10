@@ -25,8 +25,11 @@
     <template #header>
       <VProfileMenu data-testid="profile" />
     </template>
-    <div v-if="title || breadcrumbs" class="flex flex-col gap-32">
+    <div
+      v-if="title || breadcrumbs || $slots.pill"
+      class="flex flex-col gap-32">
       <VBreadcrumbs v-if="breadcrumbs" :items="breadcrumbs" />
+      <slot name="pill" />
       <VHeading v-if="title" tag="h1">{{ title }}</VHeading>
     </div>
     <slot />
