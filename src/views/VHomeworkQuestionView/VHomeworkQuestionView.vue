@@ -9,7 +9,9 @@
   import useUser from '@/stores/user';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import { useRouteParams } from '@vueuse/router';
+  import { useRouter } from 'vue-router';
 
+  const router = useRouter();
   const homework = useHomework();
   const user = useUser();
 
@@ -31,11 +33,16 @@
     });
   };
 
-  const answerLink = computed(() => {
-    return answer.value
-      ? `${window.location.origin}/homework/answers/${answer.value?.slug}`
-      : undefined;
-  });
+  const handleUpdate = async () => {
+    await getData();
+
+    router.push({
+      name: 'homework-answer',
+      params: {
+        answerId: answer.value?.slug,
+      },
+    });
+  };
 
   onBeforeMount(async () => {
     await getData();
@@ -47,27 +54,12 @@
     <VHtmlContent v-if="question" :content="question.text" />
     <section>
       <VHeading tag="h2" class="mb-24">Отправить работу</VHeading>
-      <div v-if="answer" class="mb-16 bg-yellow-light">
-        <VHeading tag="h3" class="mb-8">
-          Поделиться ссылкой на сделанную домашку
-        </VHeading>
-        <RouterLink
-          class="link block"
-          :to="{
-            name: 'homework-answer',
-            params: {
-              answerId: answer.slug,
-            },
-          }"
-          >{{ answerLink }}</RouterLink
-        >
-      </div>
       <VOwnAnswer
         v-if="question && answer"
         :answer="answer"
         :question-id="questionId"
-        @update="getData" />
-      <VNewAnswer v-else :question-id="questionId" @update="getData" />
+        @update="handleUpdate" />
+      <VNewAnswer v-else :question-id="questionId" @update="handleUpdate" />
     </section>
   </VLoggedLayout>
 </template>

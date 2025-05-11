@@ -1,6 +1,5 @@
 <script lang="ts" setup>
   import VHeading from '@/components/VHeading/VHeading.vue';
-  import VAnswer from '@/components/VAnswer/VAnswer.vue';
   import VThread from '@/components/VThread/VThread.vue';
   import VFeedbackGuide from '@/components/VFeedbackGuide/VFeedbackGuide.vue';
   import { computed, watch } from 'vue';
@@ -13,6 +12,7 @@
   import VCrossChecks from '@/components/VCrossChecks/VCrossChecks.vue';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import VDetails from '@/components/VDetails/VDetails.vue';
+  import VOwnAnswer from '@/components/VOwnAnswer/VOwnAnswer.vue';
 
   const homework = useHomework();
   const { question, answers, crosschecks } = storeToRefs(homework);
@@ -49,11 +49,32 @@
     },
     { immediate: true },
   );
+
+  const answerLink = computed(() => {
+    return answer.value
+      ? `${window.location.origin}/homework/answers/${answer.value?.slug}`
+      : undefined;
+  });
 </script>
 
 <template>
   <VLoggedLayout>
     <section v-if="question && answer" class="flex flex-col gap-24">
+      <div v-if="answer" class="mb-16 p-16 rounded bg-yellow">
+        <VHeading tag="h3" class="mb-8">
+          Поделитесь ссылкой на сделанную домашку
+        </VHeading>
+        <div
+          class="block select-all"
+          :to="{
+            name: 'homework-answer',
+            params: {
+              answerId: answer.slug,
+            },
+          }">
+          {{ answerLink }}
+        </div>
+      </div>
       <VHeading tag="h1">{{ question.name }}</VHeading>
       <VDetails>
         <template #title>Задание</template>
@@ -61,7 +82,7 @@
           <VHtmlContent :content="question.text" />
         </template>
       </VDetails>
-      <VAnswer :answer="answer" />
+      <VOwnAnswer :answer="answer" :question-id="question.slug" />
     </section>
     <section v-if="question && answer" class="flex flex-col gap-24">
       <VHeading tag="h2">Коментарии вашей работы</VHeading>
