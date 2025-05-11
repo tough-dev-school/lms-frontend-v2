@@ -1,8 +1,20 @@
+<script lang="ts">
+  import type { TablerIconComponent } from 'vue-tabler-icons';
+
+  export interface RadioOption {
+    value: string;
+    label: string;
+    icon: TablerIconComponent;
+  }
+</script>
+
 <script lang="ts" setup>
   import { v4 as uuidv4 } from 'uuid';
-  import type { VRadioSwitchProps } from '@/types/preferences';
 
-  defineProps<VRadioSwitchProps>();
+  defineProps<{
+    modelValue: string;
+    options: RadioOption[];
+  }>();
   const emit = defineEmits<{ 'update:modelValue': [value: any] }>();
   const radiogroup = uuidv4();
 </script>

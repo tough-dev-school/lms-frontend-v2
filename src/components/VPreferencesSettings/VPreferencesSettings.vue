@@ -1,10 +1,16 @@
 <script lang="ts" setup>
   import VCard from '@/components/VCard/VCard.vue';
-  import VRadioSwitch from '@/components/VRadioSwitch/VRadioSwitch.vue';
+  import VRadioSwitch, {
+    type RadioOption,
+  } from '@/components/VRadioSwitch/VRadioSwitch.vue';
   import { MoonFilledIcon, DevicesIcon, SunFilledIcon } from 'vue-tabler-icons';
-  import type { RadioOption } from '@/types/preferences';
-  import { DarkMode } from '@/types/preferences';
   import { useColorMode } from '@vueuse/core';
+
+  enum DarkMode {
+    Auto = 'auto',
+    Light = 'light',
+    Dark = 'dark',
+  }
 
   const darkModeOptions: RadioOption[] = [
     {
