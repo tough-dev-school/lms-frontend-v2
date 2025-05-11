@@ -6,19 +6,21 @@ import { api } from '@/api';
 import { queryOptions } from '@tanstack/vue-query';
 import type { BlockMap } from '@/types';
 
+export const baseQueryKey = () => ['base'];
+
 export const studiesKeys = {
-  all: () => ['studies'],
+  all: () => [...baseQueryKey(), 'studies'],
   lists: () => [...studiesKeys.all(), 'list'],
 };
 
 export const lmsKeys = {
-  all: () => ['lms'],
+  all: () => [...baseQueryKey(), 'lms'],
   lessons: (moduleId?: number) => [...lmsKeys.all(), 'lessons', { moduleId }],
   modules: (courseId?: number) => [...lmsKeys.all(), 'modules', { courseId }],
 };
 
 export const materialsKeys = {
-  all: () => ['materials'],
+  all: () => [...baseQueryKey(), 'materials'],
   materials: (materialId: string) => [
     ...materialsKeys.all(),
     'materials',

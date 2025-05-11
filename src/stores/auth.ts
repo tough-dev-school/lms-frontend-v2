@@ -10,6 +10,8 @@ import {
   resetPassword,
 } from '@/api/auth';
 import useToasts from './toasts';
+import { useQueryClient } from '@tanstack/vue-query';
+import { baseQueryKey } from '@/query';
 
 type AuthStoreState = {
   token: AuthToken | undefined;
@@ -25,7 +27,7 @@ const useAuth = defineStore('auth', {
     async loginWithCredentials(username: string, password: string) {
       try {
         const loginResult = await loginWithCredentials(username, password);
-        this.token = loginResult.token;
+        this.addToken(loginResult.token);
       } catch (error: any) {}
     },
     async loginWithEmail(email: string) {
@@ -36,13 +38,13 @@ const useAuth = defineStore('auth', {
     async exchangeTokens(passwordlessToken: string) {
       try {
         const loginResult = await loginWithLink(passwordlessToken);
-        this.token = loginResult.token;
+        this.addToken(loginResult.token);
       } catch (error: any) {}
     },
     async loginWithUserId(userId: string) {
       try {
         const loginResult = await loginWithUserId(userId);
-        this.token = loginResult.token;
+        this.addToken(loginResult.token);
       } catch (error: any) {}
     },
     async changePassword({
@@ -81,8 +83,15 @@ const useAuth = defineStore('auth', {
         await requestReset(email);
       } catch (error: any) {}
     },
+    addToken(token: AuthToken) {
+      this.token = token;
+      const queryClient = useQueryClient();
+      queryClient.invalidateQueries({ queryKey: baseQueryKey() });
+    },
     removeToken() {
       this.token = undefined;
+      const queryClient = useQueryClient();
+      queryClient.invalidateQueries({ queryKey: baseQueryKey() });
     },
   },
   persist: true,
