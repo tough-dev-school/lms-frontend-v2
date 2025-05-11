@@ -1,5 +1,5 @@
 import axios from './index';
-import type { AuthToken } from '@/types/auth';
+import type { AuthToken } from '@/types';
 
 type LoginResponse = {
   token: AuthToken;

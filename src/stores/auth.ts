@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import type { AuthToken } from '@/types/auth';
+import type { AuthToken } from '@/types';
 import {
   loginWithCredentials,
   sendLoginLink,
