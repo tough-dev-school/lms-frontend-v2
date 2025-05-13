@@ -7,7 +7,6 @@
   import { useRoute, useRouter } from 'vue-router';
   import { storeToRefs } from 'pinia';
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
-  import VNewAnswer from '@/components/VNewAnswer/VNewAnswer.vue';
   import type { Thread } from '@/types/homework';
   import VCrossChecks from '@/components/VCrossChecks/VCrossChecks.vue';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
@@ -23,7 +22,8 @@
     return answers.value.at(-1) as Thread;
   });
 
-  const prepareForScroll = (slug: string) => {
+  const prepareForScroll = (slug?: string) => {
+    if (!slug) return;
     if (route.name) {
       router.push({ name: route.name, hash: `#${slug}` });
     }
@@ -87,7 +87,7 @@
     <section v-if="question && answer" class="flex flex-col gap-24">
       <VHeading tag="h2">Коментарии вашей работы</VHeading>
       <VFeedbackGuide />
-      <VNewAnswer
+      <VOwnAnswer
         :question-id="question.slug"
         :parent-id="answer.slug"
         @update="prepareForScroll" />

@@ -5,7 +5,6 @@
   import { storeToRefs } from 'pinia';
   import VHeading from '@/components/VHeading/VHeading.vue';
   import VOwnAnswer from '@/components/VOwnAnswer/VOwnAnswer.vue';
-  import VNewAnswer from '@/components/VNewAnswer/VNewAnswer.vue';
   import useUser from '@/stores/user';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import { useRouteParams } from '@vueuse/router';
@@ -55,11 +54,9 @@
     <section>
       <VHeading tag="h2" class="mb-24">Отправить работу</VHeading>
       <VOwnAnswer
-        v-if="question && answer"
         :answer="answer"
         :question-id="questionId"
         @update="handleUpdate" />
-      <VNewAnswer v-else :question-id="questionId" @update="handleUpdate" />
     </section>
   </VLoggedLayout>
 </template>

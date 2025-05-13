@@ -258,7 +258,7 @@
   }
 
   .ProseMirror {
-    @apply prose max-w-none outline-none dark:prose-invert tablet:px-32;
+    @apply prose max-w-none outline-none dark:prose-invert;
   }
 
   .ProseMirror-focused {

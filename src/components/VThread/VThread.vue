@@ -17,7 +17,6 @@
 <script lang="ts" setup>
   import VOwnAnswer from '@/components/VOwnAnswer/VOwnAnswer.vue';
   import VAnswer from '@/components/VAnswer/VAnswer.vue';
-  import VNewAnswer from '@/components/VNewAnswer/VNewAnswer.vue';
   import { computed, ref } from 'vue';
   import { onClickOutside } from '@vueuse/core';
   import useUser from '@/stores/user';
@@ -74,7 +73,8 @@
     }
   };
 
-  const handleUpdate = async (slug: string) => {
+  const handleUpdate = async (slug?: string) => {
+    if (!slug) return;
     replyMode.value = false;
     emit('update', slug);
 
@@ -131,7 +131,7 @@
         </template>
       </component>
       <div class="thread-ruler" :class="{ 'mt-16': replyMode }">
-        <VNewAnswer
+        <VOwnAnswer
           v-show="replyMode"
           :question-id="originalPost.question"
           :parent-id="originalPost.slug"
