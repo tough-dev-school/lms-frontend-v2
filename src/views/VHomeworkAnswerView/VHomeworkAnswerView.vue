@@ -60,7 +60,7 @@
 <template>
   <VLoggedLayout>
     <section v-if="question && answer" class="flex flex-col gap-24">
-      <div v-if="answer" class="mb-16 p-16 rounded bg-yellow">
+      <div v-if="answer" class="card mb-16 bg-accent-green">
         <VHeading tag="h3" class="mb-8">
           Поделитесь ссылкой на сделанную домашку
         </VHeading>

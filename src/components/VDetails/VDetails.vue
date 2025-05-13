@@ -6,7 +6,7 @@
 </script>
 
 <template>
-  <div class="bg-yellow rounded-16">
+  <div class="card p-0">
     <button
       class="pl-64 py-16 block w-full text-left relative min-h-56"
       type="button"

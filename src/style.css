@@ -71,6 +71,10 @@
   .container-fluid {
     @apply px-16 max-w-[720px] mx-auto;
   }
+
+  .card {
+    @apply bg-yellow rounded-16 p-16 text-black;
+  }
 }
 
 @layer utilities {
