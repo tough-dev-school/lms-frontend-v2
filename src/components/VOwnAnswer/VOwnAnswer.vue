@@ -18,9 +18,7 @@
   const props = defineProps<Props>();
 
   const emit = defineEmits<{
-    update: [];
-    delete: [];
-    edit: [];
+    invalidate: [slug: string];
     mounted: [slug: string | undefined];
   }>();
 
@@ -53,13 +51,18 @@
     isEdit.value = true;
   };
 
+  const clearDraft = () => {
+    text.value = '';
+    draft.value = '';
+  };
+
   const handleDelete = async () => {
     if (!props.answer) throw new Error('Answer is required');
     if (confirm('Удалить ответ?')) {
       try {
         await homework.deleteAnswer(props.answer.slug);
-        draft.value = '';
-        emit('update');
+        clearDraft();
+        emit('invalidate', props.answer.slug);
       } catch (e) {
         console.error(e);
       }
@@ -68,12 +71,14 @@
 
   const createAnswer = async () => {
     try {
-      await homework.postAnswer({
+      const answer = await homework.postAnswer({
         text: text.value,
         questionId: props.questionId,
         parentId: props.parentId,
       });
-      emit('update');
+      if (!answer) throw new Error('Answer is required');
+      emit('invalidate', answer.slug);
+      clearDraft();
     } catch (e) {
       console.error(e);
     }
@@ -83,8 +88,10 @@
     if (isDisabled.value) return;
     if (!props.answer) throw new Error('Answer is required');
     try {
-      await homework.updateAnswer(props.answer.slug, text.value);
-      emit('update');
+      const answer = await homework.updateAnswer(props.answer.slug, text.value);
+      if (!answer) throw new Error('Answer is required');
+      emit('invalidate', answer.slug);
+      clearDraft();
       isEdit.value = false;
     } catch (e) {
       console.error(e);
@@ -102,7 +109,7 @@
 
 <template>
   <div v-if="answer && isEdit === false">
-    <VAnswer :answer="answer" @update="emit('update')">
+    <VAnswer :answer="answer" @reaction="emit('invalidate', answer.slug)">
       <template #header>
         <VAnswerActions
           v-if="isEditable"
@@ -151,7 +158,6 @@
       @apply mb-16 rounded-t border-b border-offwhite;
     }
     &__Footer {
-      @apply flex flex-row-reverse px-32;
     }
   }
 </style>

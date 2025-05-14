@@ -165,6 +165,7 @@ const useHomework = defineStore('homework', {
         const result = await updateAnswer(answerId, text);
         this.replaceAnswer(result);
         toasts.addMessage('Сообщение отправлено', 'success');
+        return result;
       } catch (error: any) {}
     },
     async sendImage(file: File) {

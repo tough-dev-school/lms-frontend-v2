@@ -20,8 +20,7 @@
   import VButton from '@/components/VButton/VButton.vue';
 
   const emit = defineEmits<{
-    update: [];
-    mounted: [slug: string]; //# FIXME Does nothing — needed to fix interface mismatch type error
+    reaction: [];
   }>();
 
   const homeworkStore = useHomework();
@@ -36,12 +35,12 @@
 
   const addReaction = (emoji: ReactionEmoji, slug: string) => {
     homeworkStore.addReaction({ answerId: props.answer.slug, emoji, slug });
-    emit('update');
+    emit('reaction');
   };
 
   const removeReaction = (reactionId: string) => {
     homeworkStore.removeReaction(props.answer.slug, reactionId);
-    emit('update');
+    emit('reaction');
   };
 
   const togglePalette = () => (isPaletteOpen.value = !isPaletteOpen.value);

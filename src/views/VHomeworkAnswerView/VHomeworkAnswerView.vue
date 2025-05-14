@@ -2,7 +2,7 @@
   import VHeading from '@/components/VHeading/VHeading.vue';
   import VThread from '@/components/VThread/VThread.vue';
   import VFeedbackGuide from '@/components/VFeedbackGuide/VFeedbackGuide.vue';
-  import { computed, watch } from 'vue';
+  import { computed, onBeforeMount, watch } from 'vue';
   import useHomework from '@/stores/homework';
   import { useRoute, useRouter } from 'vue-router';
   import { storeToRefs } from 'pinia';
@@ -22,11 +22,8 @@
     return answers.value.at(-1) as Thread;
   });
 
-  const prepareForScroll = (slug?: string) => {
-    if (!slug) return;
-    if (route.name) {
-      router.push({ name: route.name, hash: `#${slug}` });
-    }
+  const prepareForScroll = (slug: string) => {
+    router.push({ name: route.name, hash: `#${slug}` });
   };
 
   const getData = async (slug?: string) => {
@@ -40,20 +37,14 @@
     if (slug) prepareForScroll(slug);
   };
 
-  const answerId = computed(() => route.params.answerId);
-
-  watch(
-    answerId,
-    async () => {
-      await getData();
-    },
-    { immediate: true },
-  );
-
   const answerLink = computed(() => {
     return answer.value
       ? `${window.location.origin}/homework/answers/${answer.value?.slug}`
       : undefined;
+  });
+
+  onBeforeMount(async () => {
+    await getData();
   });
 </script>
 
@@ -82,7 +73,10 @@
           <VHtmlContent :content="question.text" />
         </template>
       </VDetails>
-      <VOwnAnswer :answer="answer" :question-id="question.slug" />
+      <VOwnAnswer
+        :answer="answer"
+        :question-id="question.slug"
+        @invalidate="getData" />
     </section>
     <section v-if="question && answer" class="flex flex-col gap-24">
       <VHeading tag="h2">Коментарии вашей работы</VHeading>
@@ -90,13 +84,13 @@
       <VOwnAnswer
         :question-id="question.slug"
         :parent-id="answer.slug"
-        @update="prepareForScroll" />
+        @invalidate="prepareForScroll" />
       <VCrossChecks :crosschecks="crosschecks" />
       <VThread
         v-for="comment in answer.descendants"
         :key="comment.slug"
         :original-post="comment"
-        @update="prepareForScroll" />
+        @invalidate="prepareForScroll" />
     </section>
   </VLoggedLayout>
 </template>

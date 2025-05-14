@@ -32,13 +32,11 @@
     });
   };
 
-  const handleUpdate = async () => {
-    await getData();
-
+  const handleUpdate = async (slug: string) => {
     router.push({
       name: 'homework-answer',
       params: {
-        answerId: answer.value?.slug,
+        answerId: slug,
       },
     });
   };
@@ -56,7 +54,7 @@
       <VOwnAnswer
         :answer="answer"
         :question-id="questionId"
-        @update="handleUpdate" />
+        @invalidate="handleUpdate" />
     </section>
   </VLoggedLayout>
 </template>

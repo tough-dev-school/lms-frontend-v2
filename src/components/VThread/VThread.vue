@@ -73,11 +73,9 @@
     }
   };
 
-  const handleUpdate = async (slug?: string) => {
-    if (!slug) return;
-    replyMode.value = false;
+  const handleUpdate = async (slug: string) => {
     emit('update', slug);
-
+    replyMode.value = false;
     prepareForScroll(slug);
   };
 
@@ -110,7 +108,7 @@
         :is="getRootComponent"
         v-bind="getRootComponentProps"
         :id="getRootComponentProps.answer.slug"
-        @update="emit('update', originalPost.slug)"
+        @invalidate="(slug) => handleUpdate(slug)"
         @mounted="scrollToComment">
         <template #footer>
           <div class="flex gap-16">
@@ -135,14 +133,15 @@
           v-show="replyMode"
           :question-id="originalPost.question"
           :parent-id="originalPost.slug"
-          @update="handleUpdate" />
+          @invalidate="(slug) => handleUpdate(slug)" />
       </div>
     </div>
     <div v-if="originalPost.descendants?.length > 0" class="thread-ruler mt-32">
       <VThread
         v-for="reply in originalPost.descendants"
         :key="reply.slug"
-        :original-post="reply" />
+        :original-post="reply"
+        @update="(slug) => handleUpdate(slug)" />
     </div>
   </div>
 </template>

@@ -14,6 +14,7 @@
   const isLoading = ref(false);
 
   const fetchComments = async () => {
+    console.log('fetchComments');
     isLoading.value = true;
     const comments = (await getComments([props.originalPost.slug])).at(-1);
     descendants.value = comments ? comments.descendants : descendants.value;
