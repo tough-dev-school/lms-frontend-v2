@@ -9,7 +9,7 @@
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import { useRouteParams } from '@vueuse/router';
   import { useRouter } from 'vue-router';
-
+  import { ref } from 'vue';
   const router = useRouter();
   const homework = useHomework();
   const user = useUser();
@@ -24,12 +24,16 @@
     return answers.value.at(-1);
   });
 
+  const isLoading = ref(true);
+
   const getData = async () => {
+    isLoading.value = true;
     await homework.getQuestion(questionId.value);
     await homework.getAnswers({
       questionId: questionId.value,
       authorId: user.uuid,
     });
+    isLoading.value = false;
   };
 
   const handleUpdate = async (slug: string) => {
@@ -52,6 +56,7 @@
     <section>
       <VHeading tag="h2" class="mb-24">Отправить работу</VHeading>
       <VOwnAnswer
+        v-if="!isLoading"
         :answer="answer"
         :question-id="questionId"
         @invalidate="handleUpdate" />

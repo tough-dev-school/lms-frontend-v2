@@ -2,7 +2,7 @@
   import VHeading from '@/components/VHeading/VHeading.vue';
   import VThread from '@/components/VThread/VThread.vue';
   import VFeedbackGuide from '@/components/VFeedbackGuide/VFeedbackGuide.vue';
-  import { computed, onBeforeMount, watch } from 'vue';
+  import { computed, onBeforeMount } from 'vue';
   import useHomework from '@/stores/homework';
   import { useRoute, useRouter } from 'vue-router';
   import { storeToRefs } from 'pinia';

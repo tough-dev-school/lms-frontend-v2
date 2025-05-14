@@ -11,10 +11,11 @@
   }>();
 
   const links = computed(() => {
-    let items: { label: string; to: RouteLocationRaw }[] = [];
+    let items: { name: string; label: string; to: RouteLocationRaw }[] = [];
 
     if (props.lesson.material) {
       items.push({
+        name: props.lesson.material.title,
         label: 'Открыть материалы',
         to: {
           name: 'materials',
@@ -25,6 +26,7 @@
 
     if (props.lesson.homework) {
       items.push({
+        name: props.lesson.homework.question.name,
         label: 'Отправить домашку',
         to: {
           name: 'homework-question',
@@ -35,6 +37,7 @@
 
     if (props.lesson.call?.url) {
       items.push({
+        name: props.lesson.call.name,
         label: 'Открыть звонок',
         to: {
           name: 'call',
@@ -48,7 +51,7 @@
 
   const name = computed(() => {
     return links.value.length > 0
-      ? links.value[0].label
+      ? links.value[0].name
       : props.lesson.name || '';
   });
 </script>

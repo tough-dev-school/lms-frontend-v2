@@ -1,15 +1,11 @@
 <script lang="ts">
-  import type { RouteLocationRaw } from 'vue-router';
-
   export interface PillItem {
     label: string;
-    to?: RouteLocationRaw;
+    to?: string;
   }
 </script>
 
 <script lang="ts" setup>
-  import { RouterLink } from 'vue-router';
-
   defineProps<{
     items: PillItem[];
   }>();
@@ -19,7 +15,7 @@
   <div
     class="flex-col flex min-h-72 phone:flex-row rounded-8 bg-white overflow-hidden">
     <component
-      :is="item.to ? RouterLink : 'div'"
+      :is="item.to ? 'a' : 'div'"
       v-for="(item, index) in items"
       :key="item.label"
       data-testid="pill-item"
@@ -27,7 +23,7 @@
       :class="{
         'hover:bg-lightgray hover:bg-opacity-20 cursor-pointer link': item.to,
       }"
-      :to="item.to">
+      :href="item.to">
       <div
         class="px-40 py-8"
         :class="{
