@@ -10,7 +10,11 @@
 <template>
   <VHeading tag="h1" class="mb-32">Ваши курсы</VHeading>
   <ul v-if="studies.items.length > 0" class="mb-32 flex flex-col gap-16">
-    <li v-for="(study, index) in studies.items" :key="index">
+    <li
+      v-for="(study, index) in studies.items.filter(
+        (study) => study.homePageSlug,
+      )"
+      :key="index">
       <RouterLink
         class="link"
         data-testid="study"
