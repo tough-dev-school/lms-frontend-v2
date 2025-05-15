@@ -49,8 +49,18 @@
   const courseInfo = computed(() => {
     const items: PillItem[] = [];
 
-    if (study.value?.calendar) {
-      items.push({ label: 'Календарь', to: study.value?.calendar });
+    if (study.value?.calendar_google) {
+      items.push({
+        label: 'Календарь Google',
+        to: study.value.calendar_google,
+      });
+    }
+
+    if (study.value?.calendar_ios) {
+      items.push({
+        label: 'Календарь iOS',
+        to: study.value.calendar_ios,
+      });
     }
 
     if (study.value?.chat) {

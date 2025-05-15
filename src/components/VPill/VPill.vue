@@ -19,15 +19,15 @@
       v-for="(item, index) in items"
       :key="item.label"
       data-testid="pill-item"
-      class="py-16 flex-grow text-center"
+      class="py-16 flex-grow text-center font-medium"
       :class="{
         'hover:bg-lightgray hover:bg-opacity-20 cursor-pointer link': item.to,
       }"
       :href="item.to">
       <div
-        class="px-40 py-8"
+        class="p-8"
         :class="{
-          'border-r border-lightgray font-medium ':
+          'border-r border-lightgray':
             items.length > 1 && index !== items.length - 1,
         }">
         {{ item.label }}

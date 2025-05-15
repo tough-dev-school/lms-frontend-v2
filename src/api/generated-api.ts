@@ -92,11 +92,17 @@ export interface Course {
    */
   chat?: string | null;
   /**
-   * Календарь
+   * Календарь (iOS)
    * @format uri
    * @maxLength 200
    */
-  calendar?: string | null;
+  calendar_ios?: string | null;
+  /**
+   * Календарь (Google)
+   * @format uri
+   * @maxLength 200
+   */
+  calendar_google?: string | null;
 }
 
 export interface CourseSimple {
@@ -206,11 +212,6 @@ export enum LanguageEnum {
 /** Serialize lesson for the user, lesson should be annotated with crosschecks stats */
 export interface LessonForUser {
   id: number;
-  /**
-   * Название
-   * @maxLength 255
-   */
-  name: string;
   material?: NotionMaterial;
   homework: HomeworkStats;
   call?: CallSerializr;
@@ -888,8 +889,6 @@ export interface HomeworkCrosschecksListParams {
 export type HomeworkCrosschecksListData = AnswerCrossCheck[];
 
 export type HomeworkQuestionsRetrieveData = Question;
-
-export type LeadsEmailCreateData = any;
 
 export interface LmsLessonsListParams {
   module?: number;
@@ -1763,22 +1762,6 @@ export class Api<SecurityDataType extends unknown> {
         method: 'GET',
         secure: true,
         format: 'json',
-        ...params,
-      }),
-
-    /**
-     * @description Create a amocrm_lead for amocrm_lead campaign
-     *
-     * @tags leads
-     * @name LeadsEmailCreate
-     * @request POST:/api/v2/leads/email/{slug}/
-     * @secure
-     */
-    leadsEmailCreate: (slug: string, params: RequestParams = {}) =>
-      this.http.request<LeadsEmailCreateData, any>({
-        path: `/api/v2/leads/email/${slug}/`,
-        method: 'POST',
-        secure: true,
         ...params,
       }),
 
