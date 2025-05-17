@@ -45,7 +45,6 @@ module.exports = {
       'darkmode-layer1': { DEFAULT: '#1d2021' },
       'darkmode-layer2': { DEFAULT: '#3c3836' },
       'darkmode-layer3': { DEFAULT: '#32302f' },
-      'darkmode-white': { DEFAULT: '#ebdbb2' },
       'darkmode-border': { DEFAULT: '#665c54' },
       'darkmode-blue': { DEFAULT: '#83a598' },
       'darkmode-red': { DEFAULT: '#fb4934' },

@@ -45,7 +45,7 @@
     <div
       v-if="$slots.label || label"
       class="mb-8"
-      :class="{ 'text-red': error, 'text-gray': !error }"
+      :class="{ 'text-red': error }"
       data-testid="label">
       <slot name="label">
         {{ label }}
@@ -54,7 +54,7 @@
     <input
       :type="type"
       v-bind="$attrs"
-      class="leading-1.5 block h-module w-full rounded-8 border bg-white p-module text-black placeholder:text-gray focus:border-blue focus:outline-none border-gray"
+      class="leading-1.5 block h-module w-full rounded-8 border bg-white p-module text-black placeholder:text-gray focus:border-blue focus:outline-none border-white"
       :class="{
         'border-red': error,
       }"

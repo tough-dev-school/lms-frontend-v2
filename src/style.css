@@ -18,7 +18,7 @@
   }
 
   body {
-    @apply bg-offwhite font-body text-black dark:bg-darkmode-layer1 dark:text-darkmode-white min-h-screen;
+    @apply bg-offwhite font-body text-black dark:bg-darkmode-layer1 dark:text-white min-h-screen;
   }
 }
 

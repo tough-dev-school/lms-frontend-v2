@@ -123,6 +123,6 @@
     @apply fill-darkmode-black;
   } */
   .dark .logo-black {
-    @apply fill-darkmode-white;
+    @apply fill-white;
   }
 </style>

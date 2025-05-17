@@ -40,7 +40,7 @@
 
 <style scoped>
   .RadioSwitch__Button {
-    @apply border-y border-r first:border-l p-8 gap-4 flex border-gray bg-offwhite cursor-pointer transition-colors whitespace-nowrap dark:bg-darkmode-white dark:border-darkmode-border phone:first:rounded-l-4 phone:last:rounded-r-4 phone:first:w-auto first:w-full flex-grow phone:rounded-0 rounded-4;
+    @apply p-8 gap-4 flex border-gray cursor-pointer transition-colors whitespace-nowrap bg-white dark:border-darkmode-border phone:first:rounded-l-4 phone:last:rounded-r-4 phone:first:w-auto first:w-full flex-grow phone:rounded-0 rounded-4;
   }
   .RadioSwitch__Button_Active {
     @apply bg-yellow dark:bg-yellow;

@@ -114,7 +114,7 @@
               class="VProfileMenu__Item"
               :data-testid="item.id"
               @click="handleItemClick(item.action)">
-              <span class="link">{{ item.label }}</span>
+              <span>{{ item.label }}</span>
             </button>
           </li>
         </ul>
