@@ -49,9 +49,13 @@
     @apply mb-8 w-full text-gray;
   }
 
+  .link-bright {
+    @apply border-blue text-blue opacity-100 transition-colors;
+  }
+
   .link,
   .group-link {
-    @apply border-blue text-blue opacity-100 transition-colors;
+    @apply link-bright;
     @apply dark:border-darkmode-blue dark:text-darkmode-blue dark:opacity-100;
   }
 

@@ -24,7 +24,7 @@
 
 <template>
   <div
-    class="flex flex-col phone:grid phone:grid-cols-[repeat(auto-fill,minmax(0,1fr))] grid-cols-1 min-h-72 rounded-8 bg-white overflow-hidden"
+    class="flex flex-col phone:grid phone:grid-cols-[repeat(auto-fill,minmax(0,1fr))] grid-cols-1 min-h-72 rounded-8 text-black bg-white overflow-hidden"
     style="
       grid-template-columns: repeat(
         min(var(--max-items, 5), var(--items)),
@@ -39,7 +39,7 @@
           data-testid="pill-item"
           class="py-16 w-full flex justify-center items-center text-center font-medium"
           :class="{
-            'hover:bg-lightgray hover:bg-opacity-20 cursor-pointer link':
+            'hover:bg-lightgray hover:bg-opacity-20 cursor-pointer link-bright':
               item.to,
             'phone:border-r phone:!border-r-lightgray border-b !border-b-lightgray phone:border-b-0':
               needBorder(items.length, index),

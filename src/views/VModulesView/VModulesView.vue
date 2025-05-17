@@ -72,13 +72,13 @@
             <div>
               <a
                 v-if="study?.calendar_google"
-                class="link"
+                class="link-bright"
                 :href="study.calendar_google">
                 Google
               </a>
               <a
                 v-if="study?.calendar_ios"
-                class="link"
+                class="link-bright"
                 :href="study.calendar_ios">
                 iOS</a
               >
