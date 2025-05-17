@@ -1,6 +1,5 @@
 <script lang="ts" setup>
   import { onMounted, ref, computed } from 'vue';
-  import VHeading from '@/components/VHeading/VHeading.vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VAvatar from '@/components/VAvatar/VAvatar.vue';
   import VButton from '@/components/VButton/VButton.vue';
@@ -41,8 +40,7 @@
 </script>
 
 <template>
-  <VCard>
-    <VHeading class="mb-24" tag="h2">Аватар</VHeading>
+  <VCard title="Аватар">
     <avatar-cropper
       v-model="showCropper"
       :labels="{ cancel: 'Отменить', submit: 'Сохранить' }"

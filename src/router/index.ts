@@ -5,135 +5,134 @@ import {
 } from 'vue-router';
 import useAuth from '@/stores/auth';
 import useUser from '@/stores/user';
-import useStudies from '@/stores/studies';
-import useMaterials from '@/stores/materials';
-import useDiplomas from '@/stores/diplomas';
-import useLoading from '@/stores/loading';
 
-const VHomeView = () => import('@/views/VHomeView/VHomeView.vue');
-const VMailSentView = () => import('@/views/VMailSentView/VMailSentView.vue');
-const VSettingsView = () => import('@/views/VSettingsView/VSettingsView.vue');
-const VLoginView = () => import('@/views/VLoginView/VLoginView.vue');
-const VLoadingView = () => import('@/views/VLoadingView/VLoadingView.vue');
-const VNotionView = () => import('@/views/VNotionView/VNotionView.vue');
-const VHomeworkQuestionView = () =>
-  import('@/views/VHomeworkQuestionView/VHomeworkQuestionView.vue');
-const VHomeworkExpertView = () =>
-  import('@/views/VHomeworkExpertView/VHomeworkExpertView.vue');
-const VHomeworkAnswerView = () =>
-  import('@/views/VHomeworkAnswerView/VHomeworkAnswerView.vue');
-const VLoginResetView = () =>
-  import('@/views/VLoginResetView/VLoginResetView.vue');
-const VLoginChangeView = () =>
-  import('@/views/VLoginChangeView/VLoginChangeView.vue');
-const VCertificatesView = () =>
-  import('@/views/VCertificatesView/VCertificatesView.vue');
 import loginByToken from '@/router/loginByToken';
 import loginById from '@/router/loginById';
-
-const isAuthorized = () => {
-  const auth = useAuth();
-
-  return !!auth.token;
-};
+import { useQueryClient } from '@tanstack/vue-query';
+import { fetchHomeworkAnswers, useHomeworkAnswersQuery } from '@/query';
 
 const fetchMainUserData = async () => {
   const user = useUser();
-  const studies = useStudies();
   await user.getData();
-  await studies.getData();
 };
 
 const disallowAuthorized = () => {
-  if (isAuthorized()) return { name: 'home' };
+  const auth = useAuth();
+
+  if (auth.token) return { name: 'home' };
 };
 
 export const routes = [
   {
     path: '/',
     name: 'home',
-    component: VHomeView,
+    component: () => import('@/views/VCoursesView/VCoursesView.vue'),
   },
   {
     path: '/settings',
     name: 'settings',
-    component: VSettingsView,
+    component: () => import('@/views/VSettingsView/VSettingsView.vue'),
+  },
+  {
+    path: '/:courseId/modules',
+    name: 'modules',
+    component: () => import('@/views/VModulesView/VModulesView.vue'),
+  },
+  {
+    path: '/:courseId/module/:moduleId/lessons',
+    name: 'lessons',
+    component: () => import('@/views/VLessonsView/VLessonsView.vue'),
   },
   {
     path: '/login',
     name: 'login',
-    component: VLoginView,
+    component: () => import('@/views/VLoginView/VLoginView.vue'),
     beforeEnter: [disallowAuthorized],
     meta: {
-      isPublic: true,
+      unauthorizedOnly: true,
     },
   },
   {
     path: '/login/mail-sent',
     name: 'mail-sent',
-    component: VMailSentView,
+    component: () => import('@/views/VMailSentView/VMailSentView.vue'),
     beforeEnter: [disallowAuthorized],
     meta: {
-      isPublic: true,
+      unauthorizedOnly: true,
     },
   },
   {
     path: '/login/reset',
     name: 'login-reset',
-    component: VLoginResetView,
+    component: () => import('@/views/VLoginResetView/VLoginResetView.vue'),
     beforeEnter: [disallowAuthorized],
     meta: {
-      isPublic: true,
+      unauthorizedOnly: true,
     },
   },
   {
     path: '/auth/password/reset/:uid/:token/',
     name: 'login-change',
-    component: VLoginChangeView,
+    component: () => import('@/views/VLoginChangeView/VLoginChangeView.vue'),
     beforeEnter: [disallowAuthorized],
     meta: {
-      isPublic: true,
+      unauthorizedOnly: true,
     },
   },
   {
     path: '/auth/passwordless/:passwordlessToken',
     name: 'token',
-    component: VLoadingView,
+    component: () => import('@/views/VLoadingView/VLoadingView.vue'),
     beforeEnter: [loginByToken],
     meta: {
-      isPublic: true,
+      unauthorizedOnly: true,
     },
   },
   {
     path: '/auth/as/:userId',
     name: 'auth-as',
-    component: VLoadingView,
+    component: () => import('@/views/VLoadingView/VLoadingView.vue'),
     beforeEnter: [loginById],
   },
   {
-    path: '/materials/:id',
+    path: '/materials/:materialId',
     name: 'materials',
-    component: VNotionView,
+    component: () => import('@/views/VNotionView/VNotionView.vue'),
   },
   {
-    path: '/homework/questions/:questionId',
-    name: 'homework-question',
-    component: VHomeworkQuestionView,
-  },
-  {
-    path: '/homework/question-admin/:questionId',
-    name: 'homework-expert',
-    component: VHomeworkExpertView,
-  },
-  {
-    path: '/homework/answers/:answerId',
-    name: 'homework-answer',
-    component: VHomeworkAnswerView,
+    path: '/homework/:questionId',
+    name: 'homework',
+    component: () => import('@/views/VHomeworkView/VHomeworkView.vue'),
+    beforeEnter: [
+      async (to: RouteLocationNormalized) => {
+        if (to.query.answerId) return;
+
+        const queryClient = useQueryClient();
+
+        const answers = await fetchHomeworkAnswers(queryClient, {
+          questionId: to.params.questionId as string,
+        });
+
+        if (answers && answers.length > 0) {
+          return {
+            name: 'homework',
+            params: {
+              questionId: to.params.questionId as string,
+            },
+            query: {
+              answerId: answers[0]?.slug,
+            },
+          };
+        }
+
+        return;
+      },
+    ],
   },
   {
     path: '/certificates',
     name: 'certificates',
-    component: VCertificatesView,
+    component: () => import('@/views/VCertificatesView/VCertificatesView.vue'),
   },
 ];
 
@@ -149,9 +148,16 @@ const router = createRouter({
 
 router.beforeEach(
   async (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
-    // Get main data if authorized
-    if (isAuthorized()) {
+    const auth = useAuth();
+
+    // Fetch main user data if token exists
+    // #FIXME: this must be replaced with vue query subscriptions
+    if (auth.token) {
       await fetchMainUserData();
+    }
+
+    if (to.meta.unauthorizedOnly && auth.token) {
+      return { name: 'home' };
     }
 
     // Redirect to exisiting route if route does not exist
@@ -160,7 +166,7 @@ router.beforeEach(
     }
 
     // Redirect to /login if unauthorized and route is not public
-    if (!(isAuthorized() || to.meta.isPublic)) {
+    if (!(auth.token || to.meta.unauthorizedOnly)) {
       let query = {};
 
       if (to.fullPath !== '/') {
@@ -171,22 +177,6 @@ router.beforeEach(
         name: 'login',
         query,
       };
-    }
-
-    if (to.name === 'materials' && to.params.id !== from.params.id) {
-      const materials = useMaterials();
-      const loading = useLoading();
-
-      loading.isLoading = true;
-      materials.material = undefined;
-      await materials.getData(String(to.params.id));
-      loading.isLoading = false;
-    }
-
-    if (to.name === 'certificates') {
-      const diplomas = useDiplomas();
-
-      await diplomas.getData();
     }
 
     // Reset title after navigation (except hash change)

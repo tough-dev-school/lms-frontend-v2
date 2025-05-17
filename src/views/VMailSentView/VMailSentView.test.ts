@@ -5,6 +5,7 @@ import { faker } from '@faker-js/faker';
 import { useRoute } from 'vue-router';
 import VMailSentView from './VMailSentView.vue';
 import { getProviderById, type Provider } from '@brachkow/email-providers';
+import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
 
 const GMAIL = getProviderById('GMAIL') as Provider;
 const MAILRU = getProviderById('MAILRU') as Provider;
@@ -30,7 +31,9 @@ describe('VMailSentView', () => {
           }),
         ],
         stubs: {
-          VCard: false,
+          VCard: VTransparentComponent,
+          VButton: VTransparentComponent,
+          VPublicLayout: VTransparentComponent,
         },
       },
     });

@@ -12,8 +12,8 @@
 
 export interface AnswerCommentTree {
   /** @format uuid */
-  slug?: string;
-  descendants: Record<string, any>[];
+  slug: string;
+  descendants: AnswerDetailed[];
 }
 
 export interface AnswerCreate {
@@ -35,7 +35,7 @@ export interface AnswerDetailed {
   /** @format date-time */
   modified: string;
   /** @format uuid */
-  slug?: string;
+  slug: string;
   question: string;
   author: UserSafe;
   /** @format uuid */
@@ -55,6 +55,20 @@ export enum BlankEnum {
   Value = '',
 }
 
+export interface CallSerializr {
+  /**
+   * Название
+   * @maxLength 255
+   */
+  name: string;
+  /**
+   * Ссылка
+   * @format uri
+   * @maxLength 255
+   */
+  url: string;
+}
+
 export interface Course {
   id: number;
   /**
@@ -71,6 +85,24 @@ export interface Course {
    * @format uri
    */
   cover?: string;
+  /**
+   * Чат
+   * @format uri
+   * @maxLength 200
+   */
+  chat?: string | null;
+  /**
+   * Календарь (iOS)
+   * @format uri
+   * @maxLength 200
+   */
+  calendar_ios?: string | null;
+  /**
+   * Календарь (Google)
+   * @format uri
+   * @maxLength 200
+   */
+  calendar_google?: string | null;
 }
 
 export interface CourseSimple {
@@ -180,13 +212,9 @@ export enum LanguageEnum {
 /** Serialize lesson for the user, lesson should be annotated with crosschecks stats */
 export interface LessonForUser {
   id: number;
-  /**
-   * Название
-   * @maxLength 255
-   */
-  name: string;
   material?: NotionMaterial;
   homework: HomeworkStats;
+  call?: CallSerializr;
 }
 
 export interface Module {
@@ -459,7 +487,7 @@ export interface SimpleAnswer {
 export interface User {
   id: number;
   /** @format uuid */
-  uuid?: string;
+  uuid: string;
   /**
    * Имя пользователя
    * Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
@@ -471,71 +499,71 @@ export interface User {
    * Имя
    * @maxLength 150
    */
-  first_name?: string;
+  first_name: string;
   /**
    * Фамилия
    * @maxLength 150
    */
-  last_name?: string;
+  last_name: string;
   /**
    * Имя на английском
    * @maxLength 150
    */
-  first_name_en?: string;
+  first_name_en: string;
   /**
    * Фамилия на английском
    * @maxLength 150
    */
-  last_name_en?: string;
+  last_name_en: string;
   /**
    * Адрес электронной почты
    * @format email
    * @maxLength 254
    */
-  email?: string;
+  email: string;
   /** Пол */
-  gender?: GenderEnum | BlankEnum;
+  gender: GenderEnum | BlankEnum;
   /** @maxLength 256 */
-  github_username?: string;
+  github_username: string;
   /** @maxLength 256 */
-  linkedin_username?: string;
+  linkedin_username: string;
   /** @maxLength 256 */
-  telegram_username?: string;
+  telegram_username: string;
   /**
    * Аватар
    * @format uri
    */
-  avatar?: string | null;
+  avatar: string | null;
 }
 
 export interface UserSafe {
   /** @format uuid */
-  uuid?: string;
+  uuid: string;
   /**
    * Имя
    * @maxLength 150
    */
-  first_name?: string;
+  first_name: string;
   /**
    * Фамилия
    * @maxLength 150
    */
-  last_name?: string;
+  last_name: string;
   /**
    * Имя на английском
    * @maxLength 150
    */
-  first_name_en?: string;
+  first_name_en: string;
   /**
    * Фамилия на английском
    * @maxLength 150
    */
-  last_name_en?: string;
+  last_name_en: string;
   /**
    * Аватар
    * @format uri
    */
-  avatar?: string | null;
+  avatar: string | null;
 }
 
 export type AuthAsRetrieveData = any;
@@ -862,8 +890,6 @@ export type HomeworkCrosschecksListData = AnswerCrossCheck[];
 
 export type HomeworkQuestionsRetrieveData = Question;
 
-export type LeadsEmailCreateData = any;
-
 export interface LmsLessonsListParams {
   module?: number;
   /** A page number within the paginated result set. */
@@ -887,6 +913,15 @@ export type LmsModulesListData = PaginatedModuleList;
 export type NotionMaterialsRetrieveData = any;
 
 export type OrdersConfirmRetrieveData = any;
+
+export interface PurchasedCoursesListParams {
+  /** A page number within the paginated result set. */
+  page?: number;
+  /** Number of results to return per page. */
+  page_size?: number;
+}
+
+export type PurchasedCoursesListData = PaginatedCourseList;
 
 export interface StudiesPurchasedListParams {
   /** A page number within the paginated result set. */
@@ -1683,7 +1718,7 @@ export class Api<SecurityDataType extends unknown> {
       query: HomeworkCommentsListParams,
       params: RequestParams = {},
     ) =>
-      this.http.request<HomeworkCommentsListData, any>({
+      this.http.request<AnswerCommentTree[], any>({
         path: `/api/v2/homework/comments/`,
         method: 'GET',
         query: query,
@@ -1727,22 +1762,6 @@ export class Api<SecurityDataType extends unknown> {
         method: 'GET',
         secure: true,
         format: 'json',
-        ...params,
-      }),
-
-    /**
-     * @description Create a amocrm_lead for amocrm_lead campaign
-     *
-     * @tags leads
-     * @name LeadsEmailCreate
-     * @request POST:/api/v2/leads/email/{slug}/
-     * @secure
-     */
-    leadsEmailCreate: (slug: string, params: RequestParams = {}) =>
-      this.http.request<LeadsEmailCreateData, any>({
-        path: `/api/v2/leads/email/${slug}/`,
-        method: 'POST',
-        secure: true,
         ...params,
       }),
 
@@ -1815,7 +1834,28 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * @description Add ability to disable response pagination with `disable_pagination=True` query param.
+     * @description List of courses, purchased by particular user
+     *
+     * @tags purchased-courses
+     * @name PurchasedCoursesList
+     * @request GET:/api/v2/purchased-courses/
+     * @secure
+     */
+    purchasedCoursesList: (
+      query: PurchasedCoursesListParams,
+      params: RequestParams = {},
+    ) =>
+      this.http.request<PurchasedCoursesListData, any>({
+        path: `/api/v2/purchased-courses/`,
+        method: 'GET',
+        query: query,
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description List of courses, purchased by particular user
      *
      * @tags studies
      * @name StudiesPurchasedList

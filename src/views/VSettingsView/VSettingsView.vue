@@ -1,16 +1,15 @@
 <script lang="ts" setup>
-  import VHeading from '@/components/VHeading/VHeading.vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VPasswordSettings from '@/components/VPasswordSettings/VPasswordSettings.vue';
   import VLinksSettings from '@/components/VLinksSettings/VLinksSettings.vue';
   import VCertificateSettings from '@/components/VCertificateSettings/VCertificateSettings.vue';
   import VAvatarSettings from '@/components/VAvatarSettings/VAvatarSettings.vue';
   import VPreferencesSettings from '@/components/VPreferencesSettings/VPreferencesSettings.vue';
+  import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
 </script>
 
 <template>
-  <div class="flex flex-col gap-32">
-    <VHeading tag="h1">Настройки</VHeading>
+  <VLoggedLayout title="Настройки">
     <VCard>
       <ul>
         <li>
@@ -60,5 +59,5 @@
     <VCertificateSettings id="certificate" data-testid="certificate-settings" />
     <VAvatarSettings id="avatar" data-testid="avatar-settings" />
     <VPreferencesSettings id="preferences" data-testid="preferences-settings" />
-  </div>
+  </VLoggedLayout>
 </template>

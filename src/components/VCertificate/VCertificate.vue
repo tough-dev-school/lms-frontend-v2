@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import getCertificateLink from '@/utils/getCertificateLink';
-  import type { Diploma } from '@/types/diplomas';
+  import type { Diploma } from '@/api/generated-api';
 
   export interface Props {
     certificate: Diploma;
@@ -32,7 +32,7 @@
       <a
         class="link"
         data-testid="linkedin"
-        :href="getCertificateLink(certificate.slug)"
+        :href="getCertificateLink(certificate.slug || '')"
         >Ссылка для LinkedIn</a
       >
     </div>

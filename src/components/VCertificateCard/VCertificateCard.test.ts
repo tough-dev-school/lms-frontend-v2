@@ -4,6 +4,8 @@ import type { VueWrapper } from '@vue/test-utils';
 import VCertificateCard from './VCertificateCard.vue';
 import type VCertificate from '@/components/VCertificate/VCertificate.vue';
 import { mockDiplomaData, mockDiplomaSet } from '@/mocks/mockDiploma';
+import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
+import VCard from '@/components/VCard/VCard.vue';
 
 const diplomas = mockDiplomaSet(mockDiplomaData());
 
@@ -17,14 +19,14 @@ describe('VCertificateCard', () => {
 
   beforeEach(() => {
     wrapper = mount(VCertificateCard, {
-      global: { stubs: { VCard: false, VHeading: false } },
+      global: { stubs: { VCard: VTransparentComponent } },
       shallow: true,
       props: defaultProps,
     });
   });
 
-  const getCourseNameWrapper = () => {
-    return wrapper.find('[data-testid="name"]');
+  const getContainerWrapper = () => {
+    return wrapper.findComponent<typeof VCard>('[data-testid="container"]');
   };
 
   const getCertificatesWrappers = () => {
@@ -38,7 +40,9 @@ describe('VCertificateCard', () => {
   };
 
   test('has course name', () => {
-    expect(getCourseNameWrapper().text()).toContain(defaultProps.course);
+    expect(getContainerWrapper().attributes('title')).toContain(
+      defaultProps.course,
+    );
   });
 
   test('passes props to VCertificate', () => {

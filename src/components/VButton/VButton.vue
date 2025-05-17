@@ -1,25 +1,67 @@
+<script lang="ts">
+  export type Appearance = 'link' | 'primary' | 'secondary';
+  export type Type = 'big' | 'inline';
+</script>
+
 <script lang="ts" setup>
   import { withDefaults } from 'vue';
 
-  export type Appearance = 'button' | 'link';
-
   export interface Props {
     appearance?: Appearance;
+    size?: Type;
+    tag?: string;
   }
 
   withDefaults(defineProps<Props>(), {
-    appearance: 'button',
+    appearance: 'primary',
+    size: 'big',
+    tag: 'button',
   });
 </script>
 
 <template>
-  <button
-    class="h-module min-w-[240px]"
-    type="button"
+  <component
+    :is="tag"
+    class="Button"
     :class="{
-      button: appearance === 'button',
-      link: appearance === 'link',
+      Button_Appearance_Link: appearance === 'link',
+      Button_Appearance_Primary: appearance === 'primary',
+      Button_Appearance_Secondary: appearance === 'secondary',
+      Button_Size_Big: size === 'big',
+      Button_Size_Inline: size === 'inline',
     }">
     <slot />
-  </button>
+  </component>
 </template>
+
+<style>
+  /* We dont use scoped here because we want to have the button class in the global style */
+
+  .Button {
+    @apply leading-[1.5] font-medium rounded-8 text-center text-black transition-colors;
+    &_Size {
+      &_Big {
+        @apply min-w-[280px] h-module p-module;
+      }
+      &_Inline {
+        @apply min-w-0;
+      }
+    }
+    &_Appearance {
+      &_Primary {
+        @apply bg-yellow border-yellow border;
+        @apply hover:bg-yellow-hover;
+        @apply disabled:opacity-25;
+      }
+      &_Secondary {
+        @apply border-white bg-white text-black border;
+        @apply hover:border-gray;
+        @apply disabled:opacity-25 disabled:border-gray disabled:bg-lightgray;
+      }
+      &_Link {
+        @apply link border-transparent;
+        @apply hover:border-transparent;
+      }
+    }
+  }
+</style>
