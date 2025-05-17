@@ -48,56 +48,53 @@
 </script>
 
 <template>
-  <div v-if="answer">
-    <div class="flex flex-col gap-8">
-      <div class="flex items-center gap-8">
-        <VAvatar
-          data-testid="avatar"
-          :user-id="answer.author.uuid"
-          :image="answer.author.avatar ?? undefined" />
-        <div>
-          <div
-            class="font-bold text-black dark:text-darkmode-white"
-            :class="{ 'text-accent-orange': isOwn }"
-            data-testid="name">
-            {{ getName(answer.author.first_name, answer.author.last_name) }}
-          </div>
-        </div>
-        <div class="flex-grow"></div>
-        <slot name="header"></slot>
-      </div>
-      <VHtmlContent :content="answer.text" data-testid="content" />
-
-      <div class="flex flex-col gap-4">
+  <div v-if="answer" class="flex flex-col gap-8">
+    <div class="flex items-center gap-8">
+      <VAvatar
+        data-testid="avatar"
+        :user-id="answer.author.uuid"
+        :image="answer.author.avatar ?? undefined" />
+      <div>
         <div
-          v-if="!isOwn"
-          ref="parent"
-          class="flex justify-start flex-wrap items-start gap-8">
-          <VButton
-            appearance="secondary"
-            size="inline"
-            class="flex px-16 h-32 items-center justify-center text-[1.5rem]"
-            data-testid="open"
-            @click="togglePalette">
-            <MoodHappyIcon />
-          </VButton>
-          <VReactions
-            :answer-id="answer.slug"
-            :reactions="answer.reactions"
-            :open="isPaletteOpen"
-            :disabled="isOwn"
-            @close="closePalette"
-            @add="(emoji) => sendAddReaction({ answerId, reaction: emoji })"
-            @remove="
-              (reactionId) => sendRemoveReaction({ answerId, reactionId })
-            " />
+          class="font-bold text-black dark:text-darkmode-white"
+          :class="{ 'text-accent-orange': isOwn }"
+          data-testid="name">
+          {{ getName(answer.author.first_name, answer.author.last_name) }}
         </div>
-        <div class="flex justify-start flex-wrap items-center gap-8">
-          <slot name="footer" />
-          <div class="text-sub leading-tight text-gray" data-testid="date">
-            {{ relativeDate(answer.created) }}
-          </div>
-        </div>
+      </div>
+      <div class="flex-grow"></div>
+      <slot name="header"></slot>
+    </div>
+    <VHtmlContent :content="answer.text" data-testid="content" />
+    <div class="flex justify-start flex-wrap items-center gap-8">
+      <slot name="footer" />
+      <div class="text-sub leading-tight text-gray" data-testid="date">
+        {{ relativeDate(answer.created) }}
+      </div>
+    </div>
+    <div class="flex flex-col gap-4">
+      <div
+        v-if="!isOwn"
+        ref="parent"
+        class="flex justify-start flex-wrap items-start gap-8">
+        <VButton
+          appearance="secondary"
+          size="inline"
+          class="flex px-16 h-32 items-center justify-center text-[1.5rem]"
+          data-testid="open"
+          @click="togglePalette">
+          <MoodHappyIcon />
+        </VButton>
+        <VReactions
+          :answer-id="answer.slug"
+          :reactions="answer.reactions"
+          :open="isPaletteOpen"
+          :disabled="isOwn"
+          @close="closePalette"
+          @add="(emoji) => sendAddReaction({ answerId, reaction: emoji })"
+          @remove="
+            (reactionId) => sendRemoveReaction({ answerId, reactionId })
+          " />
       </div>
     </div>
   </div>

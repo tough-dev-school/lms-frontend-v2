@@ -4,12 +4,13 @@ import { computed } from 'vue';
 import { toValue } from 'vue';
 import { api } from '@/api';
 import { queryOptions } from '@tanstack/vue-query';
-import type { BlockMap } from '@/types';
+import type { Answer, BlockMap } from '@/types';
 import type {
   AnswerCreate,
   AnswerDetailed,
   Question,
 } from './api/generated-api';
+import htmlToMarkdown from './utils/htmlToMarkdown';
 
 export const baseQueryKey = () => ['base'];
 
@@ -168,7 +169,24 @@ export const useHomeworkQuestionQuery = (
 export const getHomeworkAnswerQueryOptions = (answerId?: string) => {
   return queryOptions({
     queryKey: homeworkKeys.answers(answerId ?? ''),
-    queryFn: async () => await api.homeworkAnswersRetrieve(answerId ?? ''),
+    queryFn: async () => {
+      const answer = await api.homeworkAnswersRetrieve(answerId ?? '');
+      const descendants: string[] = [];
+      if (answer.has_descendants) {
+        const descendants = await api.homeworkAnswersList({
+          parent: [answerId ?? ''],
+        });
+
+        descendants.forEach((descendant) => {
+          descendants.push(descendant.slug);
+        });
+      }
+
+      return {
+        ...answer,
+        descendants,
+      } as Answer;
+    },
     enabled: answerId !== undefined,
   });
 };
@@ -302,9 +320,21 @@ export const useHomeworkCrosschecksQuery = (
 
 export const useHomeworkAnswerCreateMutation = (queryClient: QueryClient) => {
   return useMutation({
-    mutationFn: async ({ data }: { data: AnswerDetailed }) =>
-      await api.homeworkAnswersCreate(data),
-    onSuccess: (_, { data }) => {
+    mutationFn: async ({
+      text,
+      questionId,
+      parentId,
+    }: {
+      text: string;
+      questionId: string;
+      parentId?: string;
+    }) =>
+      await api.homeworkAnswersCreate({
+        text: htmlToMarkdown(text),
+        question: questionId,
+        parent: parentId,
+      }),
+    onSuccess: (data) => {
       queryClient.invalidateQueries({
         queryKey: homeworkKeys.answer(data.slug),
       });
@@ -316,11 +346,12 @@ export const useHomeworkAnswerUpdateMutation = (queryClient: QueryClient) => {
   return useMutation({
     mutationFn: async ({
       answerId,
-      data,
+      text,
     }: {
       answerId: string;
-      data: AnswerDetailed;
-    }) => await api.homeworkAnswersUpdate(answerId, data),
+      text: string;
+    }) =>
+      await api.homeworkAnswersUpdate(answerId, { text: htmlToMarkdown(text) }),
     onSuccess: (_, { answerId }) => {
       queryClient.invalidateQueries({
         queryKey: homeworkKeys.answer(answerId),

@@ -16,6 +16,7 @@
   import { useRoute, useRouter } from 'vue-router';
   import { useHomeworkAnswerQuery, useHomeworkCommentsQuery } from '@/query';
   import { useQueryClient } from '@tanstack/vue-query';
+  import VSendOwnAnswer from '../VSendOwnAnswer/VSendOwnAnswer.vue';
 
   const route = useRoute();
   const router = useRouter();
@@ -51,6 +52,8 @@
   onClickOutside(target, () => {
     replyMode.value = false;
   });
+
+  const handleCreateComment = (text: string) => {};
 </script>
 
 <template>
@@ -64,10 +67,10 @@
         {{ replyMode ? 'Отменить' : 'Ответить' }}
       </button>
       <div class="thread-ruler" :class="{ 'mt-16': replyMode }">
-        <VOwnAnswer
+        <VSendOwnAnswer
           v-show="replyMode"
-          :question-id="answer.question"
-          :parent-id="answer.slug" />
+          :draft-key="[answer.question, answer.slug]"
+          @send="handleCreateComment" />
       </div>
     </div>
     <div v-if="descendants.length > 0" class="thread-ruler mt-32">

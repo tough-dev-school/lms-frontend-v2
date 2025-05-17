@@ -1,7 +1,5 @@
 <script lang="ts" setup>
   import VAnswerActions from '@/components/VAnswerActions/VAnswerActions.vue';
-  import VTextEditor from '@/components/VTextEditor/VTextEditor.vue';
-  import VButton from '@/components/VButton/VButton.vue';
   import { ref, onMounted, computed, onBeforeMount, watch } from 'vue';
   import VAnswer from '@/components/VAnswer/VAnswer.vue';
   import dayjs from 'dayjs';
@@ -13,10 +11,11 @@
     useHomeworkAnswerUpdateMutation,
   } from '@/query';
   import { useQueryClient } from '@tanstack/vue-query';
+  import VSendOwnAnswer from '@/components/VSendOwnAnswer/VSendOwnAnswer.vue';
 
   export type Props =
     | { questionId: string; parentId: undefined; answerId: undefined }
-    | { parentId?: string; answerId: string; questionId?: string };
+    | { parentId?: string; answerId: string; questionId: string };
 
   const props = defineProps<Props>();
 
@@ -24,7 +23,22 @@
     mounted: [slug: string | undefined];
   }>();
 
-  const isEdit = ref(false);
+  const { data: answer, isSuccess: isAnswerLoaded } = useHomeworkAnswerQuery(
+    () => props.answerId,
+  );
+
+  const isEdit = ref(!!props.answerId);
+
+  watch(
+    () => isAnswerLoaded.value,
+    () => {
+      isEdit.value = !answer.value;
+    },
+    {
+      immediate: true,
+    },
+  );
+
   const text = ref('');
   const draft = useStorage(
     ['draft', props.questionId, props.parentId, props.answerId]
@@ -39,22 +53,12 @@
       draft.value = value;
     },
   );
+  const clearDraft = () => {
+    text.value = '';
+    draft.value = '';
+  };
 
   const isDisabled = computed(() => !(text.value.length > 0));
-
-  const { data: answer, isSuccess } = useHomeworkAnswerQuery(
-    () => props.answerId,
-  );
-
-  watch(
-    () => isSuccess.value,
-    () => {
-      isEdit.value = true;
-    },
-    {
-      immediate: true,
-    },
-  );
 
   const isEditable = computed(() => {
     const isDayPassed = dayjs().unix() < dayjs(answer.value?.created).unix();
@@ -65,11 +69,6 @@
   const handleEdit = async () => {
     text.value = answer.value?.text ?? draft.value;
     isEdit.value = true;
-  };
-
-  const clearDraft = () => {
-    text.value = '';
-    draft.value = '';
   };
 
   const queryClient = useQueryClient();
@@ -111,16 +110,13 @@
     useHomeworkAnswerUpdateMutation(queryClient);
 
   const updateAnswer = async () => {
-    if (isDisabled.value) return;
+    if (isDisabled.value) throw new Error('Editing is disabled');
     if (!props.answerId) throw new Error('Answer is required');
     try {
-      const answer = await updateAnswerMutation({
+      await updateAnswerMutation({
         answerId: props.answerId,
-        data: {
-          text: text.value,
-        },
+        text: text.value,
       });
-      if (!answer) throw new Error('Answer is required');
       clearDraft();
       isEdit.value = false;
     } catch (e) {
@@ -151,32 +147,15 @@
       </template>
     </VAnswer>
   </div>
-  <div v-else-if="answer && isEdit === true">
-    <div class="VOwnAnswer__Container">
-      <VTextEditor
-        v-model="text"
-        class="VOwnAnswer__Editor"
-        @send="updateAnswer" />
-      <div class="VOwnAnswer__Footer">
-        <VButton :disabled="isDisabled" class="h-32" @click="updateAnswer">
-          Сохранить изменения
-        </VButton>
-      </div>
-    </div>
-  </div>
-  <div v-else>
-    <div class="VOwnAnswer__Container">
-      <VTextEditor
-        v-model="text"
-        class="VOwnAnswer__Editor"
-        @send="createAnswer" />
-      <div class="VOwnAnswer__Footer">
-        <VButton :disabled="isDisabled" class="h-32" @click="createAnswer">
-          Сохранить
-        </VButton>
-      </div>
-    </div>
-  </div>
+  <VSendOwnAnswer
+    v-else-if="answer && isEdit === true"
+    :initial-text="answer?.text"
+    :draft-key="[props.questionId, props.parentId, props.answerId]"
+    @send="updateAnswer" />
+  <VSendOwnAnswer
+    v-else
+    :draft-key="[props.questionId, props.parentId]"
+    @send="createAnswer" />
 </template>
 
 <style lang="scss" scoped>
