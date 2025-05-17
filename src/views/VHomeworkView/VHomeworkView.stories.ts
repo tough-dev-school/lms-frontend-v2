@@ -1,8 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import VHomeworkAnswerView from './VHomeworkAnswerView.vue';
+import VHomeworkView from './VHomeworkView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
-import useHomework from '@/stores/homework';
-import type { Answer } from '@/types/homework';
 import { mockThread } from '@/mocks/mockThread';
 import { mockAnswer } from '@/mocks/mockAnswer';
 import { HTML_CONTENT, mockContent } from '@/mocks/mockContent';
@@ -16,14 +14,14 @@ import dayjs from 'dayjs';
 import { STATIC_REACTIONS, STATIC_REACTION_2 } from '@/mocks/mockReaction';
 
 export default {
-  title: 'App/VHomeworkAnswerView',
-  component: VHomeworkAnswerView,
+  title: 'App/VHomeworkView',
+  component: VHomeworkView,
   decorators: [defaultLayoutDecorator],
   parameters: { layout: 'fullscreen' },
 } as Meta;
 
 const Template: StoryFn = (args) => ({
-  components: { VHomeworkAnswerView },
+  components: { VHomeworkView },
   setup() {
     const homework = useHomework();
 
@@ -95,7 +93,7 @@ const Template: StoryFn = (args) => ({
 
     return { args };
   },
-  template: '<VHomeworkAnswerView v-bind="args" />',
+  template: '<VHomeworkView v-bind="args" />',
 });
 
 export const Default = {

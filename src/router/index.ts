@@ -8,6 +8,8 @@ import useUser from '@/stores/user';
 
 import loginByToken from '@/router/loginByToken';
 import loginById from '@/router/loginById';
+import { useQueryClient } from '@tanstack/vue-query';
+import { fetchHomeworkAnswers, useHomeworkAnswersQuery } from '@/query';
 
 const fetchMainUserData = async () => {
   const user = useUser();
@@ -98,22 +100,34 @@ export const routes = [
     component: () => import('@/views/VNotionView/VNotionView.vue'),
   },
   {
-    path: '/homework/questions/:questionId',
-    name: 'homework-question',
-    component: () =>
-      import('@/views/VHomeworkQuestionView/VHomeworkQuestionView.vue'),
-  },
-  {
-    path: '/homework/question-admin/:questionId',
-    name: 'homework-expert',
-    component: () =>
-      import('@/views/VHomeworkExpertView/VHomeworkExpertView.vue'),
-  },
-  {
-    path: '/homework/answers/:answerId',
-    name: 'homework-answer',
-    component: () =>
-      import('@/views/VHomeworkAnswerView/VHomeworkAnswerView.vue'),
+    path: '/homework/:questionId',
+    name: 'homework',
+    component: () => import('@/views/VHomeworkView/VHomeworkView.vue'),
+    beforeEnter: [
+      async (to: RouteLocationNormalized) => {
+        if (to.query.answerId) return;
+
+        const queryClient = useQueryClient();
+
+        const answers = await fetchHomeworkAnswers(queryClient, {
+          questionId: to.params.questionId as string,
+        });
+
+        if (answers && answers.length > 0) {
+          return {
+            name: 'homework',
+            params: {
+              questionId: to.params.questionId as string,
+            },
+            query: {
+              answerId: answers[0]?.slug,
+            },
+          };
+        }
+
+        return;
+      },
+    ],
   },
   {
     path: '/certificates',

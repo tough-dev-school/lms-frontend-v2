@@ -1,6 +1,5 @@
 import { mockQuestion, STATIC_QUESTION } from '@/mocks/mockQuestion';
 import { mockUserId, USER_1 } from '@/mocks/mockUserId';
-import useHomework from '@/stores/homework';
 import useToasts from '@/stores/toasts';
 import useUser from '@/stores/user';
 import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
@@ -25,11 +24,6 @@ const layoutDecorator = (story: any, layout: any) => ({
       linkedinUsername: 'johndoe',
       githubUsername: 'johndoe',
       telegramUsername: 'johndoe',
-    });
-
-    const homework = useHomework();
-    homework.$patch({
-      question: mockQuestion(STATIC_QUESTION),
     });
   },
 });

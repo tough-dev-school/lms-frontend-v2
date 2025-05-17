@@ -13,7 +13,11 @@
 
 <template>
   <div
-    class="flex-col flex min-h-72 phone:flex-row rounded-8 bg-white overflow-hidden">
+    :style="{
+      '--items': items.length,
+      'grid-template-columns': `repeat(var(--items), 1fr)`,
+    }"
+    class="grid min-h-72 phone:flex-row rounded-8 bg-white overflow-hidden">
     <component
       :is="item.to ? 'a' : 'div'"
       v-for="(item, index) in items"

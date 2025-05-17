@@ -1,5 +1,14 @@
 <script lang="ts">
-  import { ReactionEmoji } from '@/types/homework';
+  export enum ReactionEmoji {
+    LIKE = '👍',
+    DISLIKE = '👎',
+    HAPPY = '😄',
+    PARTY = '🎉',
+    SAD = '😕',
+    HEART = '❤️',
+    ROCKET = '🚀',
+    SEEN = '👀',
+  }
 
   export interface VReactionsProps {
     answerId: string;
@@ -15,7 +24,6 @@
 <script lang="ts" setup>
   import { computed, watch, ref, onMounted } from 'vue';
   import VReaction from './components/VReaction/VReaction.vue';
-  import type { Reaction } from '@/types/homework';
   import { groupBy, debounce } from 'lodash-es';
   import useUser from '@/stores/user';
   import { uuid } from '@/utils/uuid';

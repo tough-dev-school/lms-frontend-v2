@@ -14,7 +14,6 @@
     ListIcon,
     PhotoIcon,
   } from 'vue-tabler-icons';
-  import useHomework from '@/stores/homework';
   import { onBeforeUnmount, watch, withDefaults, ref } from 'vue';
   import { onKeyDown, useKeyModifier, useFocusWithin } from '@vueuse/core';
   import VLoader from '@/components/VLoader/VLoader.vue';
@@ -46,8 +45,6 @@
       emit('send');
     }
   });
-
-  const homework = useHomework();
 
   const editor = new Editor({
     content: props.modelValue,

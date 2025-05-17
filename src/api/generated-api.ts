@@ -12,8 +12,8 @@
 
 export interface AnswerCommentTree {
   /** @format uuid */
-  slug?: string;
-  descendants: Record<string, any>[];
+  slug: string;
+  descendants: AnswerDetailed[];
 }
 
 export interface AnswerCreate {
@@ -35,7 +35,7 @@ export interface AnswerDetailed {
   /** @format date-time */
   modified: string;
   /** @format uuid */
-  slug?: string;
+  slug: string;
   question: string;
   author: UserSafe;
   /** @format uuid */
@@ -487,7 +487,7 @@ export interface SimpleAnswer {
 export interface User {
   id: number;
   /** @format uuid */
-  uuid?: string;
+  uuid: string;
   /**
    * Имя пользователя
    * Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
@@ -499,71 +499,71 @@ export interface User {
    * Имя
    * @maxLength 150
    */
-  first_name?: string;
+  first_name: string;
   /**
    * Фамилия
    * @maxLength 150
    */
-  last_name?: string;
+  last_name: string;
   /**
    * Имя на английском
    * @maxLength 150
    */
-  first_name_en?: string;
+  first_name_en: string;
   /**
    * Фамилия на английском
    * @maxLength 150
    */
-  last_name_en?: string;
+  last_name_en: string;
   /**
    * Адрес электронной почты
    * @format email
    * @maxLength 254
    */
-  email?: string;
+  email: string;
   /** Пол */
-  gender?: GenderEnum | BlankEnum;
+  gender: GenderEnum | BlankEnum;
   /** @maxLength 256 */
-  github_username?: string;
+  github_username: string;
   /** @maxLength 256 */
-  linkedin_username?: string;
+  linkedin_username: string;
   /** @maxLength 256 */
-  telegram_username?: string;
+  telegram_username: string;
   /**
    * Аватар
    * @format uri
    */
-  avatar?: string | null;
+  avatar: string | null;
 }
 
 export interface UserSafe {
   /** @format uuid */
-  uuid?: string;
+  uuid: string;
   /**
    * Имя
    * @maxLength 150
    */
-  first_name?: string;
+  first_name: string;
   /**
    * Фамилия
    * @maxLength 150
    */
-  last_name?: string;
+  last_name: string;
   /**
    * Имя на английском
    * @maxLength 150
    */
-  first_name_en?: string;
+  first_name_en: string;
   /**
    * Фамилия на английском
    * @maxLength 150
    */
-  last_name_en?: string;
+  last_name_en: string;
   /**
    * Аватар
    * @format uri
    */
-  avatar?: string | null;
+  avatar: string | null;
 }
 
 export type AuthAsRetrieveData = any;
@@ -1718,7 +1718,7 @@ export class Api<SecurityDataType extends unknown> {
       query: HomeworkCommentsListParams,
       params: RequestParams = {},
     ) =>
-      this.http.request<HomeworkCommentsListData, any>({
+      this.http.request<AnswerCommentTree[], any>({
         path: `/api/v2/homework/comments/`,
         method: 'GET',
         query: query,

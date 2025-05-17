@@ -2,32 +2,34 @@
   import VAnswerActions from '@/components/VAnswerActions/VAnswerActions.vue';
   import VTextEditor from '@/components/VTextEditor/VTextEditor.vue';
   import VButton from '@/components/VButton/VButton.vue';
-  import useHomework from '@/stores/homework';
   import { ref, onMounted, computed, onBeforeMount, watch } from 'vue';
   import VAnswer from '@/components/VAnswer/VAnswer.vue';
-  import type { Answer, Thread, Comment } from '@/types/homework';
   import dayjs from 'dayjs';
   import { useStorage } from '@vueuse/core';
+  import {
+    useHomeworkAnswerCreateMutation,
+    useHomeworkAnswerDeleteMutation,
+    useHomeworkAnswerQuery,
+    useHomeworkAnswerUpdateMutation,
+  } from '@/query';
+  import { useQueryClient } from '@tanstack/vue-query';
 
-  export interface Props {
-    answer?: Answer | Thread | Comment;
-    questionId: string;
-    parentId?: string;
-  }
+  export type Props =
+    | { questionId: string; parentId: undefined; answerId: undefined }
+    | { parentId?: string; answerId: string; questionId?: string };
 
   const props = defineProps<Props>();
 
   const emit = defineEmits<{
-    invalidate: [slug: string];
     mounted: [slug: string | undefined];
   }>();
-
-  const homework = useHomework();
 
   const isEdit = ref(false);
   const text = ref('');
   const draft = useStorage(
-    ['draft', props.questionId, props.parentId].filter(Boolean).join('-'),
+    ['draft', props.questionId, props.parentId, props.answerId]
+      .filter(Boolean)
+      .join('-'),
     '',
     localStorage,
   );
@@ -40,14 +42,28 @@
 
   const isDisabled = computed(() => !(text.value.length > 0));
 
-  const isEditable = computed(() => {
-    const isDayPassed = dayjs().unix() < dayjs(props.answer?.created).unix();
+  const { data: answer, isSuccess } = useHomeworkAnswerQuery(
+    () => props.answerId,
+  );
 
-    return !(isDayPassed || props.answer?.hasDescendants);
+  watch(
+    () => isSuccess.value,
+    () => {
+      isEdit.value = true;
+    },
+    {
+      immediate: true,
+    },
+  );
+
+  const isEditable = computed(() => {
+    const isDayPassed = dayjs().unix() < dayjs(answer.value?.created).unix();
+
+    return !(isDayPassed || answer.value?.has_descendants);
   });
 
   const handleEdit = async () => {
-    text.value = props.answer ? props.answer.text : draft.value;
+    text.value = answer.value?.text ?? draft.value;
     isEdit.value = true;
   };
 
@@ -56,41 +72,55 @@
     draft.value = '';
   };
 
+  const queryClient = useQueryClient();
+
+  const { mutate: deleteAnswerMutation } =
+    useHomeworkAnswerDeleteMutation(queryClient);
+
   const handleDelete = async () => {
-    if (!props.answer) throw new Error('Answer is required');
+    if (!props.answerId) throw new Error('Answer is required');
     if (confirm('Удалить ответ?')) {
       try {
-        await homework.deleteAnswer(props.answer.slug);
+        await deleteAnswerMutation({
+          answerId: props.answerId,
+        });
         clearDraft();
-        emit('invalidate', props.answer.slug);
       } catch (e) {
         console.error(e);
       }
     }
   };
 
+  const { mutate: createAnswerMutation } =
+    useHomeworkAnswerCreateMutation(queryClient);
+
   const createAnswer = async () => {
     try {
-      const answer = await homework.postAnswer({
+      await createAnswerMutation({
         text: text.value,
         questionId: props.questionId,
         parentId: props.parentId,
       });
-      if (!answer) throw new Error('Answer is required');
-      emit('invalidate', answer.slug);
       clearDraft();
     } catch (e) {
       console.error(e);
     }
   };
 
+  const { mutate: updateAnswerMutation } =
+    useHomeworkAnswerUpdateMutation(queryClient);
+
   const updateAnswer = async () => {
     if (isDisabled.value) return;
-    if (!props.answer) throw new Error('Answer is required');
+    if (!props.answerId) throw new Error('Answer is required');
     try {
-      const answer = await homework.updateAnswer(props.answer.slug, text.value);
+      const answer = await updateAnswerMutation({
+        answerId: props.answerId,
+        data: {
+          text: text.value,
+        },
+      });
       if (!answer) throw new Error('Answer is required');
-      emit('invalidate', answer.slug);
       clearDraft();
       isEdit.value = false;
     } catch (e) {
@@ -99,17 +129,17 @@
   };
 
   onBeforeMount(() => {
-    if (!props.answer) handleEdit();
+    if (!props.answerId) handleEdit();
   });
 
   onMounted(() => {
-    emit('mounted', props.answer?.slug);
+    emit('mounted', props.answerId);
   });
 </script>
 
 <template>
   <div v-if="answer && isEdit === false">
-    <VAnswer :answer="answer" @reaction="emit('invalidate', answer.slug)">
+    <VAnswer :answer-id="answer.slug">
       <template #header>
         <VAnswerActions
           v-if="isEditable"

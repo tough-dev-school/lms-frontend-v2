@@ -1,11 +1,13 @@
-import type { Answer } from '@/types/homework';
 import dayjs from 'dayjs';
 import { faker } from '@faker-js/faker';
 import { mockAuthor } from './mockAuthor';
 import htmlToMarkdown from '@/utils/htmlToMarkdown';
 import { LOREM_CONTENT, mockContent } from './mockContent';
+import type { AnswerDetailed } from '@/api/generated-api';
 
-export const mockAnswer = (payload: Partial<Answer> = {}): Answer => {
+export const mockAnswer = (
+  payload: Partial<AnswerDetailed> = {},
+): AnswerDetailed => {
   const text = mockContent(LOREM_CONTENT);
   return {
     created: dayjs().toISOString(),
@@ -15,7 +17,7 @@ export const mockAnswer = (payload: Partial<Answer> = {}): Answer => {
     author: mockAuthor(),
     text,
     src: htmlToMarkdown(text),
-    hasDescendants: false,
+    has_descendants: false,
     reactions: [],
     ...payload,
   };
