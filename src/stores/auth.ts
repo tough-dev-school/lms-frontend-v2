@@ -13,12 +13,13 @@ import useToasts from './toasts';
 import { useQueryClient } from '@tanstack/vue-query';
 import { baseQueryKey } from '@/query';
 import useUser from './user';
+import { watch } from 'vue';
 
 type AuthStoreState = {
   token: AuthToken | undefined;
 };
 
-const useAuth = defineStore('auth', {
+export const useAuth = defineStore('auth', {
   state: (): AuthStoreState => {
     return {
       token: undefined,
@@ -93,11 +94,20 @@ const useAuth = defineStore('auth', {
     },
     removeToken() {
       this.token = undefined;
-      const queryClient = useQueryClient();
-      queryClient.invalidateQueries({ queryKey: baseQueryKey() });
     },
   },
   persist: true,
 });
+
+export const useInvalidateOnTokenChange = () => {
+  const auth = useAuth();
+  const queryClient = useQueryClient();
+  watch(
+    () => auth.token,
+    () => {
+      queryClient.invalidateQueries({ queryKey: baseQueryKey() });
+    },
+  );
+};
 
 export default useAuth;
