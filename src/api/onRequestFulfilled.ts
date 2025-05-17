@@ -4,27 +4,38 @@ import requestCaseMiddleware from './requestCaseMiddleware';
 import { cloneDeep } from 'lodash-es';
 
 const onRequestFulfilled = (
-  request: InternalAxiosRequestConfig,
+  config: InternalAxiosRequestConfig,
   enableCaseMiddleware = true,
 ) => {
   const auth = useAuth();
 
-  request = cloneDeep(request);
+  config = cloneDeep(config);
 
-  request.headers = request.headers || {};
+  config.headers = config.headers || {};
 
   // Manage authorization via pinia
   if (auth.token) {
-    request.headers.Authorization = `Bearer ${auth.token}`;
-    request.headers.frkn = '1';
+    config.headers.Authorization = `Bearer ${auth.token}`;
+    config.headers.frkn = '1';
   }
 
   // Convert data keys to target case
-  if (!(request.data instanceof FormData)) {
-    request.data = requestCaseMiddleware(request.data, enableCaseMiddleware);
+  if (!(config.data instanceof FormData)) {
+    config.data = requestCaseMiddleware(config.data, enableCaseMiddleware);
   }
 
-  return request;
+  if (config.params !== undefined) {
+    Object.keys(config.params).forEach((paramName) => {
+      if (
+        Array.isArray(config.params[paramName]) &&
+        config.params[paramName].length > 0
+      ) {
+        config.params[paramName] = config.params[paramName].join(',');
+      }
+    });
+  }
+
+  return config;
 };
 
 export default onRequestFulfilled;
