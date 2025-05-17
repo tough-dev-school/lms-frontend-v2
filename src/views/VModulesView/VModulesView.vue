@@ -49,18 +49,8 @@
   const courseInfo = computed(() => {
     const items: PillItem[] = [];
 
-    if (study.value?.calendar_google) {
-      items.push({
-        label: 'Календарь Google',
-        to: study.value.calendar_google,
-      });
-    }
-
-    if (study.value?.calendar_ios) {
-      items.push({
-        label: 'Календарь iOS',
-        to: study.value.calendar_ios,
-      });
+    if (study.value?.calendar_google || study.value?.calendar_ios) {
+      items.push('calendar');
     }
 
     if (study.value?.chat) {
@@ -74,7 +64,28 @@
 <template>
   <VLoggedLayout :title="courseName" :breadcrumbs="breadcrumbs">
     <template v-if="courseInfo.length > 0" #pill>
-      <VPill :items="courseInfo" />
+      <VPill :items="courseInfo">
+        <template #pill-calendar>
+          <div
+            class="font-medium text-center flex justify-center items-center flex-col">
+            <div>Календарь</div>
+            <div>
+              <a
+                v-if="study?.calendar_google"
+                class="link"
+                :href="study.calendar_google">
+                Google
+              </a>
+              <a
+                v-if="study?.calendar_ios"
+                class="link"
+                :href="study.calendar_ios">
+                iOS</a
+              >
+            </div>
+          </div>
+        </template>
+      </VPill>
     </template>
     <template v-if="modules && modules.length > 0">
       <RouterLink
