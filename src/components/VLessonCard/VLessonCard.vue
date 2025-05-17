@@ -21,7 +21,7 @@
     if (props.lesson.material) {
       items.push({
         name: props.lesson.material.title || '',
-        label: 'Открыть материалы',
+        label: 'Перейти',
         to: {
           name: 'materials',
           params: { materialId: props.lesson.material.id },
@@ -32,7 +32,7 @@
     if (props.lesson.homework) {
       items.push({
         name: props.lesson.homework.question.name || '',
-        label: 'Отправить домашку',
+        label: 'Смотреть домашку',
         to: {
           name: 'homework-question',
           params: { questionId: props.lesson.homework.question.slug },
@@ -43,7 +43,7 @@
     if (props.lesson.call) {
       items.push({
         name: props.lesson.call.name || '',
-        label: 'Открыть звонок',
+        label: 'Перейти',
         href: props.lesson.call.url,
       });
     }
