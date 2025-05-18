@@ -114,8 +114,7 @@ export const useModulesQuery = (
 export const getMaterialQueryOptions = (materialId: string) => {
   return queryOptions({
     queryKey: materialsKeys.materials(materialId),
-    queryFn: async () =>
-      (await api.notionMaterialsRetrieve(materialId)) as BlockMap,
+    queryFn: async () => await api.materialsRetrieve(materialId),
   });
 };
 

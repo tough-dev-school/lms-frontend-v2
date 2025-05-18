@@ -56,7 +56,7 @@
         :image="answer.author.avatar ?? undefined" />
       <div>
         <div
-          class="font-bold text-black dark:text-darkmode-white"
+          class="font-bold text-black dark:text-white"
           :class="{ 'text-accent-orange': isOwn }"
           data-testid="name">
           {{ getName(answer.author.first_name, answer.author.last_name) }}

@@ -91,9 +91,7 @@
         :image="user.avatar"
         data-testid="avatar" />
       <ul class="text-sub">
-        <li
-          class="leading-tight text-black dark:text-darkmode-white"
-          data-testid="name">
+        <li class="leading-tight text-black dark:text-white" data-testid="name">
           {{ name }}
         </li>
         <li class="leading-tight text-gray" data-testid="username">

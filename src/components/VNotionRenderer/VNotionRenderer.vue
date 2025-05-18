@@ -339,7 +339,7 @@
     height: 30px;
     margin: 1px 0px;
     transition: background 120ms ease-in 0s;
-    @apply dark:text-darkmode-white;
+    @apply dark:text-white;
   }
   .notion-page-link:hover {
     background: rgba(55, 53, 47, 0.08);
