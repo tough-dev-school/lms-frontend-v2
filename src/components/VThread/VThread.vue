@@ -14,11 +14,16 @@
   import { onClickOutside } from '@vueuse/core';
   import useUser from '@/stores/user';
   import { useRoute, useRouter } from 'vue-router';
-  import { useHomeworkAnswerQuery } from '@/query';
+  import {
+    useHomeworkAnswerQuery,
+    useHomeworkAnswerCreateMutation,
+  } from '@/query';
   import VSendOwnAnswer from '../VSendOwnAnswer/VSendOwnAnswer.vue';
+  import { useQueryClient } from '@tanstack/vue-query';
 
   const route = useRoute();
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const user = useUser();
   const replyMode = ref(false);
@@ -46,7 +51,18 @@
     replyMode.value = false;
   });
 
-  const handleCreateComment = (text: string) => {};
+  const { mutateAsync: createComment } =
+    useHomeworkAnswerCreateMutation(queryClient);
+
+  const handleCreateComment = async (text: string) => {
+    if (!answer.value) throw new Error('Answer not found');
+
+    await createComment({
+      questionId: answer.value.question,
+      parentId: answer.value.slug,
+      text,
+    });
+  };
 </script>
 
 <template>
