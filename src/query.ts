@@ -49,12 +49,6 @@ export const homeworkKeys = {
     authorId?: string;
   }) => [...homeworkKeys.all(), 'answers', [questionId, authorId]],
   answer: (answerId: string) => [...homeworkKeys.all(), 'answers', answerId],
-  comments: (answerId: string) => [
-    ...homeworkKeys.all(),
-    'answers',
-    answerId,
-    'comments',
-  ],
   crosschecks: (questionId: string) => [
     ...homeworkKeys.all(),
     'crosschecks',
@@ -274,18 +268,37 @@ export const useRemoveHomeworkReactionMutation = (queryClient: QueryClient) => {
     mutationFn: async ({
       answerId,
       reactionId,
+      questionId,
+      parentId,
     }: {
       answerId: MaybeRefOrGetter<string>;
       reactionId: MaybeRefOrGetter<string>;
+      questionId?: MaybeRefOrGetter<string>;
+      parentId?: MaybeRefOrGetter<string>;
     }) =>
       await api.homeworkAnswersReactionsDestroy(
         toValue(answerId),
         toValue(reactionId),
       ),
-    onSuccess: (_, { answerId }) => {
+    onSuccess: (_, { answerId, questionId, parentId }) => {
+      // Invalidate the specific answer
       queryClient.invalidateQueries({
         queryKey: homeworkKeys.answer(toValue(answerId)),
       });
+
+      // Invalidate the question's answers list if provided
+      if (questionId) {
+        queryClient.invalidateQueries({
+          queryKey: homeworkKeys.answers({ questionId: toValue(questionId) }),
+        });
+      }
+
+      // If this is a comment (has parent), invalidate the parent
+      if (parentId) {
+        queryClient.invalidateQueries({
+          queryKey: homeworkKeys.answer(toValue(parentId)),
+        });
+      }
     },
   });
 };
@@ -295,17 +308,36 @@ export const useAddHomeworkReactionMutation = (queryClient: QueryClient) => {
     mutationFn: async ({
       answerId,
       reaction,
+      questionId,
+      parentId,
     }: {
       answerId: MaybeRefOrGetter<string>;
       reaction: MaybeRefOrGetter<string>;
+      questionId?: MaybeRefOrGetter<string>;
+      parentId?: MaybeRefOrGetter<string>;
     }) =>
       await api.homeworkAnswersReactionsCreate(toValue(answerId), {
         emoji: toValue(reaction),
       }),
-    onSuccess: (_, { answerId }) => {
+    onSuccess: (_, { answerId, questionId, parentId }) => {
+      // Invalidate the specific answer
       queryClient.invalidateQueries({
         queryKey: homeworkKeys.answer(toValue(answerId)),
       });
+
+      // Invalidate the question's answers list if provided
+      if (questionId) {
+        queryClient.invalidateQueries({
+          queryKey: homeworkKeys.answers({ questionId: toValue(questionId) }),
+        });
+      }
+
+      // If this is a comment (has parent), invalidate the parent
+      if (parentId) {
+        queryClient.invalidateQueries({
+          queryKey: homeworkKeys.answer(toValue(parentId)),
+        });
+      }
     },
   });
 };
@@ -344,10 +376,18 @@ export const useHomeworkAnswerCreateMutation = (queryClient: QueryClient) => {
         question: questionId,
         parent: parentId,
       }),
-    onSuccess: (data) => {
+    onSuccess: (_, { questionId, parentId }) => {
+      // Invalidate the answers list for the question
       queryClient.invalidateQueries({
-        queryKey: homeworkKeys.answer(data.slug),
+        queryKey: homeworkKeys.answers({ questionId }),
       });
+
+      // If this is a comment (has parent), also invalidate the parent
+      if (parentId) {
+        queryClient.invalidateQueries({
+          queryKey: homeworkKeys.answer(parentId),
+        });
+      }
     },
   });
 };
@@ -357,27 +397,68 @@ export const useHomeworkAnswerUpdateMutation = (queryClient: QueryClient) => {
     mutationFn: async ({
       answerId,
       text,
+      questionId,
+      parentId,
     }: {
       answerId: string;
       text: string;
+      questionId?: string;
+      parentId?: string;
     }) =>
       await api.homeworkAnswersUpdate(answerId, { text: htmlToMarkdown(text) }),
-    onSuccess: (_, { answerId }) => {
+    onSuccess: (_, { answerId, questionId, parentId }) => {
+      // Invalidate the specific answer
       queryClient.invalidateQueries({
         queryKey: homeworkKeys.answer(answerId),
       });
+
+      // Invalidate the question's answers list if we have the questionId
+      // if (questionId) {
+      //   queryClient.invalidateQueries({
+      //     queryKey: homeworkKeys.answers({ questionId }),
+      //   });
+      // }
+
+      // If this is a comment (has parent), invalidate the parent
+      // if (parentId) {
+      //   queryClient.invalidateQueries({
+      //     queryKey: homeworkKeys.answer(parentId),
+      //   });
+      // }
     },
   });
 };
 
 export const useHomeworkAnswerDeleteMutation = (queryClient: QueryClient) => {
   return useMutation({
-    mutationFn: async ({ answerId }: { answerId: string }) =>
-      await api.homeworkAnswersDestroy(answerId),
-    onSuccess: (_, { answerId }) => {
-      queryClient.invalidateQueries({
+    mutationFn: async ({
+      answerId,
+      questionId,
+      parentId,
+    }: {
+      answerId: string;
+      questionId?: string;
+      parentId?: string;
+    }) => await api.homeworkAnswersDestroy(answerId),
+    onSuccess: (_, { answerId, questionId, parentId }) => {
+      // Remove the deleted answer from cache
+      queryClient.removeQueries({
         queryKey: homeworkKeys.answer(answerId),
       });
+
+      // Invalidate the question's answers list if we have the questionId
+      // if (questionId) {
+      //   queryClient.invalidateQueries({
+      //     queryKey: homeworkKeys.answers({ questionId }),
+      //   });
+      // }
+
+      // If this is a comment (has parent), invalidate the parent
+      if (parentId) {
+        queryClient.invalidateQueries({
+          queryKey: homeworkKeys.answer(parentId),
+        });
+      }
     },
   });
 };
