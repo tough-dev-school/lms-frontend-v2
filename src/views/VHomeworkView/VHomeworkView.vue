@@ -100,9 +100,9 @@
         :draft-key="[questionId, answerId]"
         @send="handleCreateComment" />
       <VCrossChecks v-if="crosschecks" :crosschecks="crosschecks" />
-      <template v-if="comments">
+      <template v-if="answer.descendants">
         <VThread
-          v-for="comment in comments[0].descendants"
+          v-for="comment in answer.descendants"
           :key="comment.slug"
           :answer-id="comment.slug" />
       </template>

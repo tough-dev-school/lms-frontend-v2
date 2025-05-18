@@ -50,7 +50,7 @@
 </script>
 
 <template>
-  <div v-if="answer && descendants">
+  <div v-if="answer">
     <div ref="target" class="group">
       <VAnswer
         v-if="answer.author.uuid !== user.uuid"
@@ -66,9 +66,9 @@
           @send="handleCreateComment" />
       </div>
     </div>
-    <div v-if="descendants.length > 0" class="thread-ruler mt-32">
+    <div v-if="answer.descendants.length > 0" class="thread-ruler mt-32">
       <VThread
-        v-for="descendant in descendants"
+        v-for="descendant in answer.descendants"
         :key="descendant.slug"
         :answer-id="descendant.slug"
         @update="(slug) => handleUpdate(slug)" />

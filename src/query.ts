@@ -4,8 +4,7 @@ import { computed } from 'vue';
 import { toValue } from 'vue';
 import { api } from '@/api';
 import { queryOptions } from '@tanstack/vue-query';
-import type { Answer } from '@/types';
-import type { Question } from './api/generated-api';
+import type { Question, AnswerCommentTree } from './api/generated-api';
 import htmlToMarkdown from './utils/htmlToMarkdown';
 
 export const baseQueryKey = () => ['base'];
@@ -166,7 +165,28 @@ export const useHomeworkQuestionQuery = (
 export const getHomeworkAnswerQueryOptions = (answerId?: string) => {
   return queryOptions({
     queryKey: homeworkKeys.answer(answerId ?? ''),
-    queryFn: async () => await api.homeworkAnswersRetrieve(answerId ?? ''),
+    queryFn: async () => {
+      if (answerId) {
+        const answer = await api.homeworkAnswersRetrieve(answerId);
+        let descendants: AnswerCommentTree[] = [];
+
+        if (answer.has_descendants) {
+          const response = await api.homeworkCommentsList({
+            answer: [answerId],
+          });
+
+          descendants = response[0].descendants;
+        }
+
+        // #TODO cache descendants as answers
+
+        return {
+          ...answer,
+          descendants,
+        };
+      }
+      return Promise.reject('answerId is not provided');
+    },
     enabled: answerId !== undefined,
   });
 };
