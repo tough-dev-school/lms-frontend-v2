@@ -12,8 +12,8 @@
 
 export interface AnswerCommentTree {
   /** @format uuid */
-  slug: string;
-  descendants: AnswerDetailed[];
+  slug?: string;
+  descendants: AnswerTree[];
 }
 
 export interface AnswerCreate {
@@ -35,7 +35,7 @@ export interface AnswerDetailed {
   /** @format date-time */
   modified: string;
   /** @format uuid */
-  slug: string;
+  slug?: string;
   question: string;
   author: UserSafe;
   /** @format uuid */
@@ -51,8 +51,37 @@ export interface AnswerImage {
   image: string;
 }
 
+export interface AnswerTree {
+  /** @format date-time */
+  created: string;
+  /** @format date-time */
+  modified: string;
+  /** @format uuid */
+  slug?: string;
+  question: string;
+  author: UserSafe;
+  /** @format uuid */
+  parent: string;
+  text: string;
+  src: string;
+  descendants: AnswerTree[];
+  has_descendants: boolean;
+  reactions: ReactionDetailed[];
+}
+
+/** For swagger only */
+export interface AnswerUpdate {
+  text: string;
+}
+
 export enum BlankEnum {
   Value = '',
+}
+
+export interface Breadcrumbs {
+  module: Module;
+  course: Course;
+  lesson: LessonPlain;
 }
 
 export interface CallSerializr {
@@ -78,7 +107,6 @@ export interface Course {
   slug: string;
   /** @maxLength 255 */
   name: string;
-  home_page_slug: string;
   /**
    * Обложка
    * Обложка курса
@@ -215,6 +243,15 @@ export interface LessonForUser {
   material?: NotionMaterial;
   homework: HomeworkStats;
   call?: CallSerializr;
+}
+
+export interface LessonPlain {
+  id: number;
+}
+
+export interface MaterialSerilizer {
+  breadcrumbs: Breadcrumbs;
+  content: Record<string, any>;
 }
 
 export interface Module {
@@ -423,6 +460,14 @@ export interface Purchase {
   name: string;
   /** @format email */
   email: string;
+  /**
+   * * `b2b` - B2B
+   * * `dolyame` - Долями
+   * * `stripe` - Stripe USD
+   * * `stripe_kz` - Stripe KZT
+   * * `tinkoff_bank` - Тинькофф
+   * * `zero_price` - Бесплатно
+   */
   desired_bank?: DesiredBankEnum;
   /** @maxLength 100 */
   promocode?: string;
@@ -487,7 +532,7 @@ export interface SimpleAnswer {
 export interface User {
   id: number;
   /** @format uuid */
-  uuid: string;
+  uuid?: string;
   /**
    * Имя пользователя
    * Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
@@ -499,104 +544,78 @@ export interface User {
    * Имя
    * @maxLength 150
    */
-  first_name: string;
+  first_name?: string;
   /**
    * Фамилия
    * @maxLength 150
    */
-  last_name: string;
+  last_name?: string;
   /**
    * Имя на английском
    * @maxLength 150
    */
-  first_name_en: string;
+  first_name_en?: string;
   /**
    * Фамилия на английском
    * @maxLength 150
    */
-  last_name_en: string;
+  last_name_en?: string;
   /**
    * Адрес электронной почты
    * @format email
    * @maxLength 254
    */
-  email: string;
+  email?: string;
   /** Пол */
-  gender: GenderEnum | BlankEnum;
+  gender?: GenderEnum | BlankEnum;
   /** @maxLength 256 */
-  github_username: string;
+  github_username?: string;
   /** @maxLength 256 */
-  linkedin_username: string;
+  linkedin_username?: string;
   /** @maxLength 256 */
-  telegram_username: string;
+  telegram_username?: string;
   /**
    * Аватар
    * @format uri
    */
-  avatar: string | null;
+  avatar?: string | null;
 }
 
 export interface UserSafe {
   /** @format uuid */
-  uuid: string;
+  uuid?: string;
   /**
    * Имя
    * @maxLength 150
    */
-  first_name: string;
+  first_name?: string;
   /**
    * Фамилия
    * @maxLength 150
    */
-  last_name: string;
+  last_name?: string;
   /**
    * Имя на английском
    * @maxLength 150
    */
-  first_name_en: string;
+  first_name_en?: string;
   /**
    * Фамилия на английском
    * @maxLength 150
    */
-  last_name_en: string;
+  last_name_en?: string;
   /**
    * Аватар
    * @format uri
    */
-  avatar: string | null;
+  avatar?: string | null;
 }
-
-export type AuthAsRetrieveData = any;
-
-export type AuthPasswordChangeCreateData = RestAuthDetail;
-
-export type AuthPasswordResetCreateData = PasswordReset;
-
-export type AuthPasswordResetConfirmCreateData = RestAuthDetail;
-
-export type AuthPasswordlessTokenRetrieveData = any;
-
-export type AuthPasswordlessTokenRequestRetrieveData = any;
-
-export type AuthTokenCreateData = JSONWebToken;
-
-export type AuthTokenRefreshCreateData = RefreshAuthToken;
-
-export type BankingDolyameNotificationsCreateData = any;
-
-export type BankingStripeWebhooksCreateData = any;
-
-export type BankingStripeWebhooksKzCreateData = any;
-
-export type BankingTinkoffNotificationsCreateData = any;
 
 export interface CoursesPromocodeRetrieveParams {
   desired_bank?: DesiredBankEnum;
   promocode?: string;
   slug: string;
 }
-
-export type CoursesPromocodeRetrieveData = Promocode;
 
 export enum CoursesPromocodeRetrieveParams1DesiredBankEnum {
   B2B = 'b2b',
@@ -613,18 +632,6 @@ export interface DiplomasListParams {
   /** Number of results to return per page. */
   page_size?: number;
 }
-
-export type DiplomasListData = PaginatedDiplomaList;
-
-export type DiplomasCreateData = DiplomaCreate;
-
-export type DiplomasRetrieveData = DiplomaRetrieve;
-
-export type DiplomasUpdateData = Diploma;
-
-export type DiplomasPartialUpdateData = Diploma;
-
-export type DiplomasDestroyData = any;
 
 export interface DocsSchemaRetrieveParams {
   format?: FormatEnum;
@@ -736,8 +743,6 @@ export enum LangEnum {
   ZhHans = 'zh-hans',
   ZhHant = 'zh-hant',
 }
-
-export type DocsSchemaRetrieveData = Record<string, any>;
 
 export enum DocsSchemaRetrieveParams1FormatEnum {
   Json = 'json',
@@ -856,39 +861,15 @@ export interface HomeworkAnswersListParams {
   question?: string;
 }
 
-export type HomeworkAnswersListData = PaginatedAnswerDetailedList;
-
-export type HomeworkAnswersCreateData = AnswerDetailed;
-
-export type HomeworkAnswersReactionsCreateData = ReactionDetailed;
-
-export type HomeworkAnswersReactionsDestroyData = any;
-
-export type HomeworkAnswersRetrieveData = AnswerDetailed;
-
-export type HomeworkAnswersUpdateData = AnswerDetailed;
-
-export type HomeworkAnswersPartialUpdateData = AnswerCreate;
-
-export type HomeworkAnswersDestroyData = any;
-
-export type HomeworkAnswersImageCreateData = AnswerImage;
-
 export interface HomeworkCommentsListParams {
   /** Несколько значений могут быть разделены запятыми. */
   answer: string[];
 }
 
-export type HomeworkCommentsListData = AnswerCommentTree[];
-
 export interface HomeworkCrosschecksListParams {
   /** Несколько значений могут быть разделены запятыми. */
   question: string[];
 }
-
-export type HomeworkCrosschecksListData = AnswerCrossCheck[];
-
-export type HomeworkQuestionsRetrieveData = Question;
 
 export interface LmsLessonsListParams {
   module?: number;
@@ -898,8 +879,6 @@ export interface LmsLessonsListParams {
   page_size?: number;
 }
 
-export type LmsLessonsListData = PaginatedLessonForUserList;
-
 export interface LmsModulesListParams {
   course?: number;
   /** A page number within the paginated result set. */
@@ -908,12 +887,6 @@ export interface LmsModulesListParams {
   page_size?: number;
 }
 
-export type LmsModulesListData = PaginatedModuleList;
-
-export type NotionMaterialsRetrieveData = any;
-
-export type OrdersConfirmRetrieveData = any;
-
 export interface PurchasedCoursesListParams {
   /** A page number within the paginated result set. */
   page?: number;
@@ -921,20 +894,12 @@ export interface PurchasedCoursesListParams {
   page_size?: number;
 }
 
-export type PurchasedCoursesListData = PaginatedCourseList;
-
 export interface StudiesPurchasedListParams {
   /** A page number within the paginated result set. */
   page?: number;
   /** Number of results to return per page. */
   page_size?: number;
 }
-
-export type StudiesPurchasedListData = PaginatedCourseList;
-
-export type UsersMeRetrieveData = User;
-
-export type UsersMePartialUpdateData = User;
 
 import type {
   AxiosInstance,
@@ -1134,7 +1099,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     authAsRetrieve: (userId: number, params: RequestParams = {}) =>
-      this.http.request<AuthAsRetrieveData, any>({
+      this.http.request<void, any>({
         path: `/api/v2/auth/as/${userId}/`,
         method: 'GET',
         secure: true,
@@ -1153,7 +1118,7 @@ export class Api<SecurityDataType extends unknown> {
       data: PasswordChange,
       params: RequestParams = {},
     ) =>
-      this.http.request<AuthPasswordChangeCreateData, any>({
+      this.http.request<RestAuthDetail, any>({
         path: `/api/v2/auth/password/change/`,
         method: 'POST',
         body: data,
@@ -1175,7 +1140,7 @@ export class Api<SecurityDataType extends unknown> {
       data: PasswordReset,
       params: RequestParams = {},
     ) =>
-      this.http.request<AuthPasswordResetCreateData, any>({
+      this.http.request<PasswordReset, any>({
         path: `/api/v2/auth/password/reset/`,
         method: 'POST',
         body: data,
@@ -1197,7 +1162,7 @@ export class Api<SecurityDataType extends unknown> {
       data: PasswordResetConfirm,
       params: RequestParams = {},
     ) =>
-      this.http.request<AuthPasswordResetConfirmCreateData, any>({
+      this.http.request<RestAuthDetail, any>({
         path: `/api/v2/auth/password/reset/confirm/`,
         method: 'POST',
         body: data,
@@ -1219,7 +1184,7 @@ export class Api<SecurityDataType extends unknown> {
       token: string,
       params: RequestParams = {},
     ) =>
-      this.http.request<AuthPasswordlessTokenRetrieveData, any>({
+      this.http.request<void, any>({
         path: `/api/v2/auth/passwordless-token/${token}/`,
         method: 'GET',
         secure: true,
@@ -1238,7 +1203,7 @@ export class Api<SecurityDataType extends unknown> {
       userEmail: string,
       params: RequestParams = {},
     ) =>
-      this.http.request<AuthPasswordlessTokenRequestRetrieveData, any>({
+      this.http.request<void, any>({
         path: `/api/v2/auth/passwordless-token/request/${userEmail}/`,
         method: 'GET',
         secure: true,
@@ -1253,7 +1218,7 @@ export class Api<SecurityDataType extends unknown> {
      * @request POST:/api/v2/auth/token/
      */
     authTokenCreate: (data: JSONWebToken, params: RequestParams = {}) =>
-      this.http.request<AuthTokenCreateData, any>({
+      this.http.request<JSONWebToken, any>({
         path: `/api/v2/auth/token/`,
         method: 'POST',
         body: data,
@@ -1273,7 +1238,7 @@ export class Api<SecurityDataType extends unknown> {
       data: RefreshAuthToken,
       params: RequestParams = {},
     ) =>
-      this.http.request<AuthTokenRefreshCreateData, any>({
+      this.http.request<RefreshAuthToken, any>({
         path: `/api/v2/auth/token/refresh/`,
         method: 'POST',
         body: data,
@@ -1291,7 +1256,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     bankingDolyameNotificationsCreate: (params: RequestParams = {}) =>
-      this.http.request<BankingDolyameNotificationsCreateData, any>({
+      this.http.request<void, any>({
         path: `/api/v2/banking/dolyame-notifications/`,
         method: 'POST',
         secure: true,
@@ -1307,7 +1272,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     bankingStripeWebhooksCreate: (params: RequestParams = {}) =>
-      this.http.request<BankingStripeWebhooksCreateData, any>({
+      this.http.request<void, any>({
         path: `/api/v2/banking/stripe-webhooks/`,
         method: 'POST',
         secure: true,
@@ -1323,7 +1288,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     bankingStripeWebhooksKzCreate: (params: RequestParams = {}) =>
-      this.http.request<BankingStripeWebhooksKzCreateData, any>({
+      this.http.request<void, any>({
         path: `/api/v2/banking/stripe-webhooks/kz/`,
         method: 'POST',
         secure: true,
@@ -1339,7 +1304,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     bankingTinkoffNotificationsCreate: (params: RequestParams = {}) =>
-      this.http.request<BankingTinkoffNotificationsCreateData, any>({
+      this.http.request<void, any>({
         path: `/api/v2/banking/tinkoff-notifications/`,
         method: 'POST',
         secure: true,
@@ -1358,7 +1323,7 @@ export class Api<SecurityDataType extends unknown> {
       { slug, ...query }: CoursesPromocodeRetrieveParams,
       params: RequestParams = {},
     ) =>
-      this.http.request<CoursesPromocodeRetrieveData, any>({
+      this.http.request<Promocode, any>({
         path: `/api/v2/courses/${slug}/promocode/`,
         method: 'GET',
         query: query,
@@ -1398,7 +1363,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     diplomasList: (query: DiplomasListParams, params: RequestParams = {}) =>
-      this.http.request<DiplomasListData, any>({
+      this.http.request<PaginatedDiplomaList, any>({
         path: `/api/v2/diplomas/`,
         method: 'GET',
         query: query,
@@ -1416,7 +1381,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     diplomasCreate: (data: DiplomaCreate, params: RequestParams = {}) =>
-      this.http.request<DiplomasCreateData, any>({
+      this.http.request<DiplomaCreate, any>({
         path: `/api/v2/diplomas/`,
         method: 'POST',
         body: data,
@@ -1435,7 +1400,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     diplomasRetrieve: (slug: string, params: RequestParams = {}) =>
-      this.http.request<DiplomasRetrieveData, any>({
+      this.http.request<DiplomaRetrieve, any>({
         path: `/api/v2/diplomas/${slug}/`,
         method: 'GET',
         secure: true,
@@ -1452,7 +1417,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     diplomasUpdate: (slug: string, data: Diploma, params: RequestParams = {}) =>
-      this.http.request<DiplomasUpdateData, any>({
+      this.http.request<Diploma, any>({
         path: `/api/v2/diplomas/${slug}/`,
         method: 'PUT',
         body: data,
@@ -1475,7 +1440,7 @@ export class Api<SecurityDataType extends unknown> {
       data: PatchedDiploma,
       params: RequestParams = {},
     ) =>
-      this.http.request<DiplomasPartialUpdateData, any>({
+      this.http.request<Diploma, any>({
         path: `/api/v2/diplomas/${slug}/`,
         method: 'PATCH',
         body: data,
@@ -1494,7 +1459,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     diplomasDestroy: (slug: string, params: RequestParams = {}) =>
-      this.http.request<DiplomasDestroyData, any>({
+      this.http.request<void, any>({
         path: `/api/v2/diplomas/${slug}/`,
         method: 'DELETE',
         secure: true,
@@ -1513,7 +1478,7 @@ export class Api<SecurityDataType extends unknown> {
       query: DocsSchemaRetrieveParams,
       params: RequestParams = {},
     ) =>
-      this.http.request<DocsSchemaRetrieveData, any>({
+      this.http.request<Record<string, any>, any>({
         path: `/api/v2/docs/schema/`,
         method: 'GET',
         query: query,
@@ -1523,7 +1488,7 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * @description Add ability to disable response pagination with `disable_pagination=True` query param.
+     * @description List allowed answers
      *
      * @tags homework
      * @name HomeworkAnswersList
@@ -1534,7 +1499,7 @@ export class Api<SecurityDataType extends unknown> {
       query: HomeworkAnswersListParams,
       params: RequestParams = {},
     ) =>
-      this.http.request<HomeworkAnswersListData, any>({
+      this.http.request<PaginatedAnswerDetailedList, any>({
         path: `/api/v2/homework/answers/`,
         method: 'GET',
         query: query,
@@ -1544,15 +1509,15 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * @description Always serialize response with the default serializer. CAUTION: we are loosing serializer context here! If you need it, feel free to rewrite this method with http://www.cdrf.co/3.6/rest_framework.mixins/CreateModelMixin.html
+     * @description Create an answer
      *
      * @tags homework
      * @name HomeworkAnswersCreate
      * @request POST:/api/v2/homework/answers/
      * @secure
      */
-    homeworkAnswersCreate: (data: AnswerDetailed, params: RequestParams = {}) =>
-      this.http.request<HomeworkAnswersCreateData, any>({
+    homeworkAnswersCreate: (data: AnswerCreate, params: RequestParams = {}) =>
+      this.http.request<AnswerDetailed, any>({
         path: `/api/v2/homework/answers/`,
         method: 'POST',
         body: data,
@@ -1563,7 +1528,7 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * No description
+     * @description Create a reaction
      *
      * @tags homework
      * @name HomeworkAnswersReactionsCreate
@@ -1575,7 +1540,7 @@ export class Api<SecurityDataType extends unknown> {
       data: ReactionCreate,
       params: RequestParams = {},
     ) =>
-      this.http.request<HomeworkAnswersReactionsCreateData, any>({
+      this.http.request<ReactionDetailed, any>({
         path: `/api/v2/homework/answers/${answerSlug}/reactions/`,
         method: 'POST',
         body: data,
@@ -1598,7 +1563,7 @@ export class Api<SecurityDataType extends unknown> {
       slug: string,
       params: RequestParams = {},
     ) =>
-      this.http.request<HomeworkAnswersReactionsDestroyData, any>({
+      this.http.request<void, any>({
         path: `/api/v2/homework/answers/${answerSlug}/reactions/${slug}/`,
         method: 'DELETE',
         secure: true,
@@ -1606,7 +1571,7 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * @description Add ability to disable response pagination with `disable_pagination=True` query param.
+     * @description Get an answer by slug (any answer can be accessible if user knows the slug
      *
      * @tags homework
      * @name HomeworkAnswersRetrieve
@@ -1614,7 +1579,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     homeworkAnswersRetrieve: (slug: string, params: RequestParams = {}) =>
-      this.http.request<HomeworkAnswersRetrieveData, any>({
+      this.http.request<AnswerDetailed, any>({
         path: `/api/v2/homework/answers/${slug}/`,
         method: 'GET',
         secure: true,
@@ -1623,7 +1588,7 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * @description Always serialize response with the default serializer. CAUTION: we are loosing serializer context here! If you need it, feel free to rewrite this method with http://www.cdrf.co/3.6/rest_framework.mixins/UpdateModelMixin.html
+     * @description Update answer text
      *
      * @tags homework
      * @name HomeworkAnswersUpdate
@@ -1632,10 +1597,10 @@ export class Api<SecurityDataType extends unknown> {
      */
     homeworkAnswersUpdate: (
       slug: string,
-      data: AnswerDetailed,
+      data: AnswerUpdate,
       params: RequestParams = {},
     ) =>
-      this.http.request<HomeworkAnswersUpdateData, any>({
+      this.http.request<AnswerDetailed, any>({
         path: `/api/v2/homework/answers/${slug}/`,
         method: 'PUT',
         body: data,
@@ -1646,7 +1611,7 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * @description Add ability to disable response pagination with `disable_pagination=True` query param.
+     * @description Answer CRUD
      *
      * @tags homework
      * @name HomeworkAnswersPartialUpdate
@@ -1658,7 +1623,7 @@ export class Api<SecurityDataType extends unknown> {
       data: PatchedAnswerCreate,
       params: RequestParams = {},
     ) =>
-      this.http.request<HomeworkAnswersPartialUpdateData, any>({
+      this.http.request<AnswerCreate, any>({
         path: `/api/v2/homework/answers/${slug}/`,
         method: 'PATCH',
         body: data,
@@ -1669,7 +1634,7 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * @description Add ability to disable response pagination with `disable_pagination=True` query param.
+     * @description Remove an answer if allowed
      *
      * @tags homework
      * @name HomeworkAnswersDestroy
@@ -1677,7 +1642,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     homeworkAnswersDestroy: (slug: string, params: RequestParams = {}) =>
-      this.http.request<HomeworkAnswersDestroyData, any>({
+      this.http.request<void, any>({
         path: `/api/v2/homework/answers/${slug}/`,
         method: 'DELETE',
         secure: true,
@@ -1696,7 +1661,7 @@ export class Api<SecurityDataType extends unknown> {
       data: AnswerImage,
       params: RequestParams = {},
     ) =>
-      this.http.request<HomeworkAnswersImageCreateData, any>({
+      this.http.request<AnswerImage, any>({
         path: `/api/v2/homework/answers/image/`,
         method: 'POST',
         body: data,
@@ -1707,7 +1672,7 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * No description
+     * @description Recursive list list answer comments
      *
      * @tags homework
      * @name HomeworkCommentsList
@@ -1728,7 +1693,7 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * No description
+     * @description Retrieves crosscheck status
      *
      * @tags homework
      * @name HomeworkCrosschecksList
@@ -1739,7 +1704,7 @@ export class Api<SecurityDataType extends unknown> {
       query: HomeworkCrosschecksListParams,
       params: RequestParams = {},
     ) =>
-      this.http.request<HomeworkCrosschecksListData, any>({
+      this.http.request<AnswerCrossCheck[], any>({
         path: `/api/v2/homework/crosschecks/`,
         method: 'GET',
         query: query,
@@ -1757,7 +1722,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     homeworkQuestionsRetrieve: (slug: string, params: RequestParams = {}) =>
-      this.http.request<HomeworkQuestionsRetrieveData, any>({
+      this.http.request<Question, any>({
         path: `/api/v2/homework/questions/${slug}/`,
         method: 'GET',
         secure: true,
@@ -1774,7 +1739,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     lmsLessonsList: (query: LmsLessonsListParams, params: RequestParams = {}) =>
-      this.http.request<LmsLessonsListData, any>({
+      this.http.request<PaginatedLessonForUserList, any>({
         path: `/api/v2/lms/lessons/`,
         method: 'GET',
         query: query,
@@ -1792,7 +1757,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     lmsModulesList: (query: LmsModulesListParams, params: RequestParams = {}) =>
-      this.http.request<LmsModulesListData, any>({
+      this.http.request<PaginatedModuleList, any>({
         path: `/api/v2/lms/modules/`,
         method: 'GET',
         query: query,
@@ -1802,7 +1767,24 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * No description
+     * @description Fetch material
+     *
+     * @tags materials
+     * @name MaterialsRetrieve
+     * @request GET:/api/v2/materials/{page_id}/
+     * @secure
+     */
+    materialsRetrieve: (pageId: string, params: RequestParams = {}) =>
+      this.http.request<MaterialSerilizer, any>({
+        path: `/api/v2/materials/${pageId}/`,
+        method: 'GET',
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description Legacy API View
      *
      * @tags notion
      * @name NotionMaterialsRetrieve
@@ -1810,7 +1792,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     notionMaterialsRetrieve: (pageId: string, params: RequestParams = {}) =>
-      this.http.request<NotionMaterialsRetrieveData, any>({
+      this.http.request<void, any>({
         path: `/api/v2/notion/materials/${pageId}/`,
         method: 'GET',
         secure: true,
@@ -1826,7 +1808,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     ordersConfirmRetrieve: (slug: string, params: RequestParams = {}) =>
-      this.http.request<OrdersConfirmRetrieveData, any>({
+      this.http.request<void, any>({
         path: `/api/v2/orders/${slug}/confirm/`,
         method: 'GET',
         secure: true,
@@ -1845,7 +1827,7 @@ export class Api<SecurityDataType extends unknown> {
       query: PurchasedCoursesListParams,
       params: RequestParams = {},
     ) =>
-      this.http.request<PurchasedCoursesListData, any>({
+      this.http.request<PaginatedCourseList, any>({
         path: `/api/v2/purchased-courses/`,
         method: 'GET',
         query: query,
@@ -1866,7 +1848,7 @@ export class Api<SecurityDataType extends unknown> {
       query: StudiesPurchasedListParams,
       params: RequestParams = {},
     ) =>
-      this.http.request<StudiesPurchasedListData, any>({
+      this.http.request<PaginatedCourseList, any>({
         path: `/api/v2/studies/purchased/`,
         method: 'GET',
         query: query,
@@ -1884,7 +1866,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     usersMeRetrieve: (params: RequestParams = {}) =>
-      this.http.request<UsersMeRetrieveData, any>({
+      this.http.request<User, any>({
         path: `/api/v2/users/me/`,
         method: 'GET',
         secure: true,
@@ -1901,7 +1883,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     usersMePartialUpdate: (data: PatchedUser, params: RequestParams = {}) =>
-      this.http.request<UsersMePartialUpdateData, any>({
+      this.http.request<User, any>({
         path: `/api/v2/users/me/`,
         method: 'PATCH',
         body: data,
