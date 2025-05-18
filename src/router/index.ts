@@ -129,6 +129,26 @@ export const routes = [
       },
     ],
   },
+  // #FIXME this to support old route used in Django Admin
+  {
+    path: '/homework/questions/:questionId',
+    redirect: (to: RouteLocationNormalized) => {
+      return {
+        name: 'homework',
+        params: { questionId: to.params.questionId as string },
+      };
+    },
+  },
+  // #FIXME this to support old route used in Django Admin
+  {
+    path: '/homework/question-admin/:questionId',
+    redirect: (to: RouteLocationNormalized) => {
+      return {
+        name: 'homework',
+        params: { questionId: to.params.questionId as string },
+      };
+    },
+  },
   {
     path: '/certificates',
     name: 'certificates',
