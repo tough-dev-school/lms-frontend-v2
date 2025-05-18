@@ -1,10 +1,15 @@
 import { QueryClient, useMutation, useQuery } from '@tanstack/vue-query';
 import type { MaybeRefOrGetter } from 'vue';
-import { computed } from 'vue';
+import { computed, onBeforeUnmount, watch } from 'vue';
 import { toValue } from 'vue';
 import { api } from '@/api';
 import { queryOptions } from '@tanstack/vue-query';
-import type { Question, AnswerCommentTree } from './api/generated-api';
+import type {
+  Question,
+  AnswerCommentTree,
+  AnswerDetailed,
+  AnswerTree,
+} from './api/generated-api';
 import htmlToMarkdown from './utils/htmlToMarkdown';
 
 export const baseQueryKey = () => ['base'];
@@ -168,7 +173,7 @@ export const getHomeworkAnswerQueryOptions = (answerId?: string) => {
     queryFn: async () => {
       if (answerId) {
         const answer = await api.homeworkAnswersRetrieve(answerId);
-        let descendants: AnswerCommentTree[] = [];
+        let descendants: AnswerTree[] = [];
 
         if (answer.has_descendants) {
           const response = await api.homeworkCommentsList({
@@ -188,6 +193,25 @@ export const getHomeworkAnswerQueryOptions = (answerId?: string) => {
       return Promise.reject('answerId is not provided');
     },
     enabled: answerId !== undefined,
+  });
+};
+
+export const populateAnswersCacheFromDescendants = (
+  queryClient: QueryClient,
+  rootAnswer: AnswerTree,
+) => {
+  const flatAnswers: AnswerTree[] = [];
+
+  const populate = (answer: AnswerTree) => {
+    flatAnswers.push(answer);
+
+    if (answer.has_descendants) answer.descendants.forEach(populate);
+  };
+
+  populate(rootAnswer);
+
+  flatAnswers.forEach((answer) => {
+    queryClient.setQueryData(homeworkKeys.answer(answer.slug), answer);
   });
 };
 

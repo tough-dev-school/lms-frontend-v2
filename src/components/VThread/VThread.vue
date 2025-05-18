@@ -10,13 +10,14 @@
 <script lang="ts" setup>
   import VOwnAnswer from '@/components/VOwnAnswer/VOwnAnswer.vue';
   import VAnswer from '@/components/VAnswer/VAnswer.vue';
-  import { ref } from 'vue';
+  import { ref, watch } from 'vue';
   import { onClickOutside } from '@vueuse/core';
   import useUser from '@/stores/user';
   import { useRoute, useRouter } from 'vue-router';
   import {
     useHomeworkAnswerQuery,
     useHomeworkAnswerCreateMutation,
+    populateAnswersCacheFromDescendants,
   } from '@/query';
   import VSendOwnAnswer from '../VSendOwnAnswer/VSendOwnAnswer.vue';
   import { useQueryClient } from '@tanstack/vue-query';
@@ -33,6 +34,14 @@
   }>();
 
   const { data: answer } = useHomeworkAnswerQuery(() => props.answerId);
+  watch(
+    () => answer.value,
+    () => {
+      if (answer.value) {
+        populateAnswersCacheFromDescendants(queryClient, answer.value);
+      }
+    },
+  );
 
   const prepareForScroll = (slug: string) => {
     if (route.name) {

@@ -13,10 +13,12 @@
     useHomeworkCrosschecksQuery,
     useHomeworkQuestionQuery,
     useHomeworkAnswerCreateMutation,
+    populateAnswersCacheFromDescendants,
   } from '@/query';
   import { useQueryClient } from '@tanstack/vue-query';
   import VSendOwnAnswer from '@/components/VSendOwnAnswer/VSendOwnAnswer.vue';
   import VDetails from '@/components/VDetails/VDetails.vue';
+  import { watch } from 'vue';
 
   const answerId = useRouteQuery<string | undefined>('answerId');
   const questionId = useRouteParams<string>('questionId');
@@ -27,6 +29,14 @@
     useHomeworkQuestionQuery(questionId);
   const { data: answer, isLoading: isAnswersLoading } =
     useHomeworkAnswerQuery(answerId);
+  watch(
+    () => answer.value,
+    () => {
+      if (answer.value) {
+        populateAnswersCacheFromDescendants(queryClient, answer.value);
+      }
+    },
+  );
   const { data: crosschecks, isLoading: isCrosschecksLoading } =
     useHomeworkCrosschecksQuery(questionId);
 
