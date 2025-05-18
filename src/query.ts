@@ -4,12 +4,8 @@ import { computed } from 'vue';
 import { toValue } from 'vue';
 import { api } from '@/api';
 import { queryOptions } from '@tanstack/vue-query';
-import type { Answer, BlockMap } from '@/types';
-import type {
-  AnswerCreate,
-  AnswerDetailed,
-  Question,
-} from './api/generated-api';
+import type { Answer } from '@/types';
+import type { Question } from './api/generated-api';
 import htmlToMarkdown from './utils/htmlToMarkdown';
 
 export const baseQueryKey = () => ['base'];
@@ -41,22 +37,24 @@ export const homeworkKeys = {
     'question',
     questionId,
   ],
-  answer: (answerId: string) => [...homeworkKeys.all(), 'answer', answerId],
-  answers: (questionId: string) => [
-    ...homeworkKeys.all(),
+  answers: ({
     questionId,
+    authorId,
+  }: {
+    questionId?: string;
+    authorId?: string;
+  }) => [...homeworkKeys.all(), 'answers', [questionId, authorId]],
+  answer: (answerId: string) => [...homeworkKeys.all(), 'answers', answerId],
+  comments: (answerId: string) => [
+    ...homeworkKeys.all(),
     'answers',
+    answerId,
+    'comments',
   ],
-  comments: (answerId: string) => [...homeworkKeys.all(), 'comments', answerId],
   crosschecks: (questionId: string) => [
     ...homeworkKeys.all(),
     'crosschecks',
     questionId,
-  ],
-  descendants: (answerId: string) => [
-    ...homeworkKeys.all(),
-    'descendants',
-    answerId,
   ],
 };
 
@@ -167,25 +165,8 @@ export const useHomeworkQuestionQuery = (
 
 export const getHomeworkAnswerQueryOptions = (answerId?: string) => {
   return queryOptions({
-    queryKey: homeworkKeys.answers(answerId ?? ''),
-    queryFn: async () => {
-      const answer = await api.homeworkAnswersRetrieve(answerId ?? '');
-      const descendants: string[] = [];
-      if (answer.has_descendants) {
-        const descendants = await api.homeworkAnswersList({
-          parent: [answerId ?? ''],
-        });
-
-        descendants.forEach((descendant) => {
-          descendants.push(descendant.slug);
-        });
-      }
-
-      return {
-        ...answer,
-        descendants,
-      } as Answer;
-    },
+    queryKey: homeworkKeys.answer(answerId ?? ''),
+    queryFn: async () => await api.homeworkAnswersRetrieve(answerId ?? ''),
     enabled: answerId !== undefined,
   });
 };
@@ -200,59 +181,45 @@ export const useHomeworkAnswerQuery = (
   return useQuery(options);
 };
 
-export const getHomeworkAnswersQueryOptions = (questionId: string) => {
+export const getHomeworkAnswersQueryOptions = ({
+  authorId,
+  questionId,
+}: {
+  authorId?: string;
+  questionId?: string;
+}) => {
   return queryOptions({
-    queryKey: homeworkKeys.answers(questionId),
+    queryKey: homeworkKeys.answers({ questionId, authorId }),
     queryFn: async () =>
-      (await api.homeworkAnswersList({ question: questionId })).results,
+      (
+        await api.homeworkAnswersList({
+          question: questionId,
+          author: authorId,
+        })
+      ).results,
   });
 };
 
 export const fetchHomeworkAnswers = async (
   queryClient: QueryClient,
-  { questionId }: { questionId: string },
-) => queryClient.fetchQuery(getHomeworkAnswersQueryOptions(questionId));
-
-export const useHomeworkAnswersQuery = (
-  questionId: MaybeRefOrGetter<string>,
-) => {
-  const options = computed(() =>
-    getHomeworkAnswersQueryOptions(toValue(questionId)),
+  { authorId, questionId }: { authorId?: string; questionId?: string },
+) =>
+  queryClient.fetchQuery(
+    getHomeworkAnswersQueryOptions({ authorId, questionId }),
   );
 
-  return useQuery(options);
-};
-
-export const getHomeworkCommentsQueryOptions = (
-  answerId: string | undefined,
-  queryClient: QueryClient,
-) => {
-  return queryOptions({
-    queryKey: homeworkKeys.comments(answerId ?? ''),
-    queryFn: async () => {
-      const descendants = await api.homeworkCommentsList({
-        answer: [answerId ?? ''],
-      });
-
-      descendants.forEach((descendant) => {
-        queryClient.setQueryData(
-          homeworkKeys.comments(descendant.slug),
-          descendant,
-        );
-      });
-
-      return descendants;
-    },
-    enabled: answerId !== undefined,
-  });
-};
-
-export const useHomeworkCommentsQuery = (
-  answerId: MaybeRefOrGetter<string | undefined>,
-  queryClient: QueryClient,
-) => {
+export const useHomeworkAnswersQuery = ({
+  questionId,
+  authorId,
+}: {
+  questionId: MaybeRefOrGetter<string>;
+  authorId: MaybeRefOrGetter<string | undefined>;
+}) => {
   const options = computed(() =>
-    getHomeworkCommentsQueryOptions(toValue(answerId), queryClient),
+    getHomeworkAnswersQueryOptions({
+      questionId: toValue(questionId),
+      authorId: toValue(authorId),
+    }),
   );
 
   return useQuery(options);

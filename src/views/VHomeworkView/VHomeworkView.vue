@@ -9,10 +9,9 @@
   import VOwnAnswer from '@/components/VOwnAnswer/VOwnAnswer.vue';
   import { useRouteQuery, useRouteParams } from '@vueuse/router';
   import {
-    useHomeworkAnswersQuery,
+    useHomeworkAnswerQuery,
     useHomeworkCrosschecksQuery,
     useHomeworkQuestionQuery,
-    useHomeworkCommentsQuery,
     useHomeworkAnswerCreateMutation,
   } from '@/query';
   import { useQueryClient } from '@tanstack/vue-query';
@@ -26,10 +25,8 @@
 
   const { data: question, isLoading: isQuestionLoading } =
     useHomeworkQuestionQuery(questionId);
-  const { data: answers, isLoading: isAnswersLoading } =
-    useHomeworkAnswersQuery(questionId);
-  const { data: comments, isLoading: isCommentsLoading } =
-    useHomeworkCommentsQuery(answerId, queryClient);
+  const { data: answer, isLoading: isAnswersLoading } =
+    useHomeworkAnswerQuery(answerId);
   const { data: crosschecks, isLoading: isCrosschecksLoading } =
     useHomeworkCrosschecksQuery(questionId);
 
@@ -37,12 +34,9 @@
     return (
       isQuestionLoading.value ||
       isAnswersLoading.value ||
-      isCommentsLoading.value ||
       isCrosschecksLoading.value
     );
   });
-
-  const answer = computed(() => answers.value?.at(-1));
 
   const answerLink = computed(() => {
     if (answerId.value) {

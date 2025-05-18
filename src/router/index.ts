@@ -9,7 +9,7 @@ import useUser from '@/stores/user';
 import loginByToken from '@/router/loginByToken';
 import loginById from '@/router/loginById';
 import { useQueryClient } from '@tanstack/vue-query';
-import { fetchHomeworkAnswers, useHomeworkAnswersQuery } from '@/query';
+import { fetchHomeworkAnswers } from '@/query';
 
 const fetchMainUserData = async () => {
   const user = useUser();
@@ -108,18 +108,18 @@ export const routes = [
         if (to.query.answerId) return;
 
         const queryClient = useQueryClient();
+        const user = useUser();
 
         const answers = await fetchHomeworkAnswers(queryClient, {
           questionId: to.params.questionId as string,
+          authorId: user.uuid,
         });
 
         if (answers && answers.length > 0) {
           return {
-            name: 'homework',
-            params: {
-              questionId: to.params.questionId as string,
-            },
+            ...to,
             query: {
+              ...to.query,
               answerId: answers[0]?.slug,
             },
           };

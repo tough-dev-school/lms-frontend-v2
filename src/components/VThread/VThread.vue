@@ -14,8 +14,7 @@
   import { onClickOutside } from '@vueuse/core';
   import useUser from '@/stores/user';
   import { useRoute, useRouter } from 'vue-router';
-  import { useHomeworkAnswerQuery, useHomeworkCommentsQuery } from '@/query';
-  import { useQueryClient } from '@tanstack/vue-query';
+  import { useHomeworkAnswerQuery } from '@/query';
   import VSendOwnAnswer from '../VSendOwnAnswer/VSendOwnAnswer.vue';
 
   const route = useRoute();
@@ -28,13 +27,7 @@
     answerId: string;
   }>();
 
-  const queryClient = useQueryClient();
-
   const { data: answer } = useHomeworkAnswerQuery(() => props.answerId);
-  const { data: descendants } = useHomeworkCommentsQuery(
-    () => props.answerId,
-    queryClient,
-  );
 
   const prepareForScroll = (slug: string) => {
     if (route.name) {
