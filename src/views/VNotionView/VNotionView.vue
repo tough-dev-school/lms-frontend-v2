@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import { useRouter } from 'vue-router';
-  import { watch } from 'vue';
+  import { watch, computed } from 'vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VButton from '@/components/VButton/VButton.vue';
   import { useTitle } from '@vueuse/core';
@@ -10,37 +10,68 @@
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import { useRouteParams } from '@vueuse/router';
   import { useMaterialQuery } from '@/query';
+  import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
 
   const router = useRouter();
   const materialId = useRouteParams<string>('materialId');
   const title = useTitle();
 
-  const { data: material, isLoading, isSuccess } = useMaterialQuery(materialId);
+  const { data: material, isLoading } = useMaterialQuery(materialId);
+
+  const notionTitle = computed(() => {
+    if (material.value) {
+      return getNotionTitle(materialId.value, material.value);
+    }
+    return undefined;
+  });
 
   watch(
-    () => isSuccess.value,
-    () => {
-      console.log(material.value);
-      if (isSuccess.value && material.value) {
-        const notionTitle = getNotionTitle(materialId.value, material.value);
-        if (notionTitle) title.value = notionTitle;
-      }
+    () => notionTitle.value,
+    (value) => {
+      title.value = value;
     },
   );
 
-  watch(
-    () => material.value,
-    () => {
-      console.log(material.value);
-    },
-    { immediate: true },
+  const breadcrumbs = computed(() =>
+    material.value
+      ? [
+          {
+            name: material.value.breadcrumbs.course.name,
+            to: {
+              name: 'modules',
+              params: {
+                courseId: material.value.breadcrumbs.course.id,
+              },
+            },
+          },
+          {
+            name: material.value.breadcrumbs.module.name,
+            to: {
+              name: 'lessons',
+              params: {
+                courseId: material.value.breadcrumbs.course.id,
+                moduleId: material.value.breadcrumbs.module.id,
+              },
+            },
+          },
+          {
+            name: notionTitle.value ?? '',
+            to: {
+              name: 'materials',
+              params: {
+                materialId: material.value.content.slug,
+              },
+            },
+          },
+        ]
+      : undefined,
   );
 
   const { chatra } = useChatra();
 </script>
 
 <template>
-  <VLoggedLayout :is-loading="isLoading">
+  <VLoggedLayout :breadcrumbs="breadcrumbs" :is-loading="isLoading">
     <template v-if="material">
       <VCard
         class="pt-32 bg-white dark:bg-dark-black p-8 phone:p-24 rounded-16 shadow">
