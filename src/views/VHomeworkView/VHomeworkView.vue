@@ -106,7 +106,10 @@
 </script>
 
 <template>
-  <VLoggedLayout :breadcrumbs="breadcrumbs" :is-loading="isLoading">
+  <VLoggedLayout
+    :title="question?.name"
+    :breadcrumbs="breadcrumbs"
+    :is-loading="isLoading">
     <section class="flex flex-col gap-24">
       <div
         v-if="answer && answer.author === user.uuid"
@@ -128,14 +131,11 @@
       <template v-if="question">
         <template v-if="answer">
           <VDetails>
-            <template #summary>
-              {{ question.name }}
-            </template>
+            <template #summary> Текст задания </template>
             <VHtmlContent :content="question.text" />
           </VDetails>
         </template>
         <template v-else>
-          <VHeading tag="h1">{{ question.name }}</VHeading>
           <VHtmlContent :content="question.text" />
         </template>
       </template>
