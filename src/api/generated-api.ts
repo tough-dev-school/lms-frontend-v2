@@ -80,7 +80,7 @@ export enum BlankEnum {
 
 export interface Breadcrumbs {
   module: Module;
-  course: Course;
+  course: LMSCourse;
   lesson: LessonPlain;
 }
 
@@ -107,6 +107,7 @@ export interface Course {
   slug: string;
   /** @maxLength 255 */
   name: string;
+  home_page_slug: string;
   /**
    * Обложка
    * Обложка курса
@@ -226,6 +227,41 @@ export interface JSONWebToken {
   password: string;
   token: string;
   username: string;
+}
+
+export interface LMSCourse {
+  id: number;
+  /**
+   * @maxLength 50
+   * @pattern ^[-a-zA-Z0-9_]+$
+   */
+  slug: string;
+  /** @maxLength 255 */
+  name: string;
+  /**
+   * Обложка
+   * Обложка курса
+   * @format uri
+   */
+  cover?: string;
+  /**
+   * Чат
+   * @format uri
+   * @maxLength 200
+   */
+  chat?: string | null;
+  /**
+   * Календарь (iOS)
+   * @format uri
+   * @maxLength 200
+   */
+  calendar_ios?: string | null;
+  /**
+   * Календарь (Google)
+   * @format uri
+   * @maxLength 200
+   */
+  calendar_google?: string | null;
 }
 
 /**
@@ -484,6 +520,23 @@ export interface Purchase {
 }
 
 export interface Question {
+  /** @format uuid */
+  slug?: string;
+  /**
+   * Название
+   * @maxLength 256
+   */
+  name: string;
+  text: string;
+  /**
+   * Дедлайн
+   * @format date-time
+   */
+  deadline?: string | null;
+}
+
+export interface QuestionDetail {
+  breadcrumbs: Breadcrumbs;
   /** @format uuid */
   slug?: string;
   /**
@@ -1722,7 +1775,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     homeworkQuestionsRetrieve: (slug: string, params: RequestParams = {}) =>
-      this.http.request<Question, any>({
+      this.http.request<QuestionDetail, any>({
         path: `/api/v2/homework/questions/${slug}/`,
         method: 'GET',
         secure: true,
@@ -1784,7 +1837,7 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * @description Legacy API View
+     * @description [DEPRECATED] Fetch notion materials
      *
      * @tags notion
      * @name NotionMaterialsRetrieve
