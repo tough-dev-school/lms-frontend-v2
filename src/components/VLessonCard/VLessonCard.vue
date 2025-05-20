@@ -73,7 +73,7 @@
     <div v-if="lesson.homework">
       <table class="w-full">
         <tr v-if="lesson.homework.crosschecks">
-          <td class="font-bold">Проверенны домашки коллег</td>
+          <td class="font-bold">Проверенные домашки коллег</td>
           <td class="text-right">
             {{ lesson.homework.crosschecks.checked }} из
             {{ lesson.homework.crosschecks.total }}
