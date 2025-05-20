@@ -57,7 +57,7 @@
       @apply px-0 pt-0 tablet:px-0;
     }
     &__Editor {
-      @apply mb-16 rounded-t border-b border-offwhite;
+      @apply mb-16 rounded-t;
     }
     &__Footer {
     }
