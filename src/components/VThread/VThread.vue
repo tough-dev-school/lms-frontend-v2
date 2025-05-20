@@ -54,7 +54,7 @@
     prepareForScroll(slug);
   };
 
-  const target = ref(null);
+  const target = ref<HTMLElement | null>(null);
 
   onClickOutside(target, () => {
     replyMode.value = false;
@@ -66,11 +66,22 @@
   const handleCreateComment = async (text: string) => {
     if (!answer.value) throw new Error('Answer not found');
 
-    await createComment({
+    const newComment = await createComment({
       questionId: answer.value.question,
       parentId: answer.value.slug,
       text,
     });
+
+    router.push({
+      ...router.currentRoute.value,
+      hash: `#${newComment.slug}`,
+    });
+  };
+
+  const handleMounted = (slug: string) => {
+    if (router.currentRoute.value.hash.includes(slug)) {
+      target.value?.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 </script>
 
@@ -80,7 +91,7 @@
       <VAnswer
         v-if="answer.author.uuid !== user.uuid"
         :answer-id="answer.slug" />
-      <VOwnAnswer v-else :answer-id="answer.slug" />
+      <VOwnAnswer v-else :answer-id="answer.slug" @mounted="handleMounted" />
       <button class="text-sm link" @click="replyMode = !replyMode">
         {{ replyMode ? 'Отменить' : 'Ответить' }}
       </button>

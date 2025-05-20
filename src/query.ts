@@ -327,12 +327,13 @@ export const useHomeworkAnswerCreateMutation = (queryClient: QueryClient) => {
       text: string;
       questionId: string;
       parentId?: string;
-    }) =>
-      await api.homeworkAnswersCreate({
+    }) => {
+      return await api.homeworkAnswersCreate({
         text: htmlToMarkdown(text),
         question: questionId,
         parent: parentId,
-      }),
+      });
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: homeworkKeys.all(),

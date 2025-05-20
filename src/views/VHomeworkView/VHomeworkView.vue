@@ -20,10 +20,12 @@
   import VDetails from '@/components/VDetails/VDetails.vue';
   import { watch } from 'vue';
   import useUser from '@/stores/user';
+  import { useRouter } from 'vue-router';
 
   const answerId = useRouteQuery<string | undefined>('answerId');
   const questionId = useRouteParams<string>('questionId');
 
+  const router = useRouter();
   const queryClient = useQueryClient();
   const user = useUser();
   const { data: question, isLoading: isQuestionLoading } =
@@ -58,14 +60,19 @@
     return undefined;
   });
 
-  const { mutate: createAnswerMutation } =
+  const { mutateAsync: createAnswerMutation } =
     useHomeworkAnswerCreateMutation(queryClient);
 
-  const handleCreateComment = (text: string) => {
-    createAnswerMutation({
+  const handleCreateComment = async (text: string) => {
+    const answer = await createAnswerMutation({
       text,
       questionId: questionId.value,
       parentId: answerId.value,
+    });
+
+    router.push({
+      ...router.currentRoute.value,
+      hash: `#${answer.slug}`,
     });
   };
 
