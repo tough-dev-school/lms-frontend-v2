@@ -184,6 +184,11 @@ export const getHomeworkAnswerQueryOptions = (answerId?: string) => {
   });
 };
 
+export const fetchHomeworkAnswer = async (
+  queryClient: QueryClient,
+  { answerId }: { answerId: string },
+) => queryClient.fetchQuery(getHomeworkAnswerQueryOptions(answerId));
+
 export const populateAnswersCacheFromDescendants = (
   queryClient: QueryClient,
   rootAnswer: AnswerTree,

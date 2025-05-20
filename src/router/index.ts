@@ -9,7 +9,8 @@ import useUser from '@/stores/user';
 import loginByToken from '@/router/loginByToken';
 import loginById from '@/router/loginById';
 import { useQueryClient } from '@tanstack/vue-query';
-import { fetchHomeworkAnswers } from '@/query';
+import { fetchHomeworkAnswer, fetchHomeworkAnswers } from '@/query';
+import { api } from '@/api';
 
 const fetchMainUserData = async () => {
   const user = useUser();
@@ -129,7 +130,24 @@ export const routes = [
       },
     ],
   },
-  // #FIXME this to support old route used in Django Admin
+  {
+    path: '/homework/answers/:answerId/',
+    name: 'homework-answer-old',
+    beforeEnter: [
+      async (to: RouteLocationNormalized) => {
+        const queryClient = useQueryClient();
+        const answerId = to.params.answerId as string;
+        const answer = await fetchHomeworkAnswer(queryClient, { answerId });
+        return {
+          name: 'homework',
+          params: { questionId: answer.question },
+          query: { answerId },
+          replace: true,
+        };
+      },
+    ],
+    component: () => import('@/views/VLoadingView/VLoadingView.vue'),
+  },
   {
     path: '/homework/questions/:questionId',
     redirect: (to: RouteLocationNormalized) => {
