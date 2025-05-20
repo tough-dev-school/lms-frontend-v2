@@ -19,12 +19,13 @@
   import VSendOwnAnswer from '@/components/VSendOwnAnswer/VSendOwnAnswer.vue';
   import VDetails from '@/components/VDetails/VDetails.vue';
   import { watch } from 'vue';
+  import useUser from '@/stores/user';
 
   const answerId = useRouteQuery<string | undefined>('answerId');
   const questionId = useRouteParams<string>('questionId');
 
   const queryClient = useQueryClient();
-
+  const user = useUser();
   const { data: question, isLoading: isQuestionLoading } =
     useHomeworkQuestionQuery(questionId);
   const { data: answer, isLoading: isAnswersLoading } =
@@ -107,7 +108,9 @@
 <template>
   <VLoggedLayout :breadcrumbs="breadcrumbs" :is-loading="isLoading">
     <section class="flex flex-col gap-24">
-      <div v-if="answer" class="card mb-16 bg-accent-green">
+      <div
+        v-if="answer && answer.author === user.uuid"
+        class="card mb-16 bg-accent-green">
         <VHeading tag="h3" class="mb-8">
           Поделитесь ссылкой на сделанную домашку
         </VHeading>
