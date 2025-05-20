@@ -67,10 +67,45 @@
       parentId: answerId.value,
     });
   };
+
+  const breadcrumbs = computed(() =>
+    question.value
+      ? [
+          {
+            name: question.value.breadcrumbs.course.name,
+            to: {
+              name: 'modules',
+              params: {
+                courseId: question.value.breadcrumbs.course.id,
+              },
+            },
+          },
+          {
+            name: question.value.breadcrumbs.module.name,
+            to: {
+              name: 'lessons',
+              params: {
+                courseId: question.value.breadcrumbs.course.id,
+                moduleId: question.value.breadcrumbs.module.id,
+              },
+            },
+          },
+          {
+            name: question.value.name,
+            to: {
+              name: 'homework',
+              params: {
+                questionId: questionId.value,
+              },
+            },
+          },
+        ]
+      : undefined,
+  );
 </script>
 
 <template>
-  <VLoggedLayout :is-loading="isLoading">
+  <VLoggedLayout :breadcrumbs="breadcrumbs" :is-loading="isLoading">
     <section class="flex flex-col gap-24">
       <div v-if="answer" class="card mb-16 bg-accent-green">
         <VHeading tag="h3" class="mb-8">

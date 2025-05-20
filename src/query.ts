@@ -1,15 +1,10 @@
 import { QueryClient, useMutation, useQuery } from '@tanstack/vue-query';
 import type { MaybeRefOrGetter } from 'vue';
-import { computed, onBeforeUnmount, watch } from 'vue';
+import { computed } from 'vue';
 import { toValue } from 'vue';
 import { api } from '@/api';
 import { queryOptions } from '@tanstack/vue-query';
-import type {
-  Question,
-  AnswerCommentTree,
-  AnswerDetailed,
-  AnswerTree,
-} from './api/generated-api';
+import type { AnswerTree } from './api/generated-api';
 import htmlToMarkdown from './utils/htmlToMarkdown';
 
 export const baseQueryKey = () => ['base'];
@@ -146,8 +141,7 @@ export const useDiplomasQuery = () => {
 export const getHomeworkQuestionQueryOptions = (questionId: string) => {
   return queryOptions({
     queryKey: homeworkKeys.question(questionId),
-    queryFn: async () =>
-      (await api.homeworkQuestionsRetrieve(questionId)) as Question,
+    queryFn: async () => await api.homeworkQuestionsRetrieve(questionId),
   });
 };
 

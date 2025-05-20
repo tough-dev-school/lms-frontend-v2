@@ -34,7 +34,7 @@
         name: props.lesson.homework.question.name || '',
         label: 'Смотреть домашку',
         to: {
-          name: 'homework-question',
+          name: 'homework',
           params: { questionId: props.lesson.homework.question.slug },
         },
       });
