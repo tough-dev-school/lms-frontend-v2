@@ -143,11 +143,11 @@
     </section>
     <section v-if="question && answer" class="flex flex-col gap-24">
       <VHeading tag="h2">Коментарии вашей работы</VHeading>
+      <VCrossChecks v-if="crosschecks" :crosschecks="crosschecks" />
       <VFeedbackGuide />
       <VSendOwnAnswer
         :draft-key="[questionId, answerId]"
         @send="handleCreateComment" />
-      <VCrossChecks v-if="crosschecks" :crosschecks="crosschecks" />
       <template v-if="answer.descendants">
         <VThread
           v-for="comment in answer.descendants"
