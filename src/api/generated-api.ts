@@ -84,18 +84,30 @@ export interface Breadcrumbs {
   lesson: LessonPlain;
 }
 
-export interface CallSerializr {
+export interface Call {
   /**
    * Название
    * @maxLength 255
    */
   name: string;
   /**
+   * Описание
+   * @maxLength 512
+   */
+  description?: string | null;
+  /**
    * Ссылка
    * @format uri
    * @maxLength 255
    */
   url: string;
+  video: VideoProvider[];
+  /**
+   * Дата
+   * @format date-time
+   */
+  datetime: string;
+  recommended_video_provider: RecommendedVideoProviderEnum | null;
 }
 
 export interface Course {
@@ -278,7 +290,7 @@ export interface LessonForUser {
   id: number;
   material?: NotionMaterial;
   homework: HomeworkStats;
-  call?: CallSerializr;
+  call?: Call;
 }
 
 export interface LessonPlain {
@@ -294,6 +306,13 @@ export interface Module {
   id: number;
   /** @maxLength 255 */
   name: string;
+  /**
+   * Подзаг
+   * @maxLength 512
+   */
+  description?: string | null;
+  /** Текст */
+  text: string | null;
 }
 
 export interface NotionMaterial {
@@ -568,6 +587,11 @@ export interface ReactionDetailed {
   answer: string;
 }
 
+export enum RecommendedVideoProviderEnum {
+  Youtube = 'youtube',
+  Rutube = 'rutube',
+}
+
 /** Serializer used for refreshing JWTs. */
 export interface RefreshAuthToken {
   token: string;
@@ -662,6 +686,14 @@ export interface UserSafe {
    * @format uri
    */
   avatar?: string | null;
+}
+
+export interface VideoProvider {
+  provider: string;
+  /** @format uri */
+  embed: string;
+  /** @format uri */
+  src: string;
 }
 
 export interface CoursesPromocodeRetrieveParams {
