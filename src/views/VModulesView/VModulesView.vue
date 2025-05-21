@@ -7,6 +7,7 @@
   import { useRouteParams } from '@vueuse/router';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import VPill, { type PillItem } from '@/components/VPill/VPill.vue';
+  import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
 
   const route = useRoute();
 
@@ -98,6 +99,12 @@
             'text-black min-h-120 rounded-16 p-16 tablet:p-24',
           ]">
           <VHeading tag="h3">{{ module.name }}</VHeading>
+          <p v-if="module.text">
+            {{ module.text }}
+          </p>
+          <VHtmlContent
+            v-if="module.description"
+            :content="module.description" />
         </div>
       </RouterLink>
     </template>
