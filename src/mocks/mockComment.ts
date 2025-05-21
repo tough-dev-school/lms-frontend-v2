@@ -1,5 +1,5 @@
 import type { Thread, Comment } from '@/types/homework';
-import { mockAnswer } from './mockAnswer';
+import { mockAnswer } from './mockAnswerDetailed';
 import { mockThread } from './mockThread';
 
 export const mockComment = (

@@ -2,7 +2,7 @@ import type { Meta, StoryFn } from '@storybook/vue3';
 import VHomeworkView from './VHomeworkView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import { mockThread } from '@/mocks/mockThread';
-import { mockAnswer } from '@/mocks/mockAnswer';
+import { mockAnswer } from '@/mocks/mockAnswerDetailed';
 import { HTML_CONTENT, mockContent } from '@/mocks/mockContent';
 import {
   STATIC_AUTHOR_1,
