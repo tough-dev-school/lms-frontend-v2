@@ -17,6 +17,7 @@
   import { onBeforeUnmount, watch, withDefaults, ref } from 'vue';
   import { onKeyDown, useKeyModifier, useFocusWithin } from '@vueuse/core';
   import VLoader from '@/components/VLoader/VLoader.vue';
+  import { useHomeworkAnswerSendImageMutation } from '@/query';
 
   export interface Props {
     modelValue: string;
@@ -46,6 +47,8 @@
     }
   });
 
+  const { mutateAsync: sendImage } = useHomeworkAnswerSendImageMutation();
+
   const editor = new Editor({
     content: props.modelValue,
     extensions: [
@@ -68,7 +71,7 @@
           isImageLoading.value = true;
           const file = event.dataTransfer.files[0];
 
-          homework.sendImage(file).then(({ image }) => {
+          sendImage({ image: file }).then(({ image }) => {
             const { schema } = view.state;
             const coordinates = view.posAtCoords({
               left: event.clientX,
@@ -143,7 +146,7 @@
     if (event.target) {
       const file = (event.target as HTMLInputElement).files?.[0];
       if (file) {
-        const { image } = await homework.sendImage(file);
+        const { image } = await sendImage({ image: file });
         editor.commands.setImage({ src: image });
       }
     }

@@ -6,7 +6,7 @@ import { api } from '@/api';
 import { queryOptions } from '@tanstack/vue-query';
 import type { AnswerTree } from './api/generated-api';
 import htmlToMarkdown from './utils/htmlToMarkdown';
-
+import { ContentType } from './api/generated-api';
 export const baseQueryKey = () => ['base'];
 
 export const studiesKeys = {
@@ -369,5 +369,14 @@ export const useHomeworkAnswerDeleteMutation = (queryClient: QueryClient) => {
         queryKey: homeworkKeys.all(),
       });
     },
+  });
+};
+
+export const useHomeworkAnswerSendImageMutation = () => {
+  return useMutation({
+    mutationFn: async (image: File) =>
+      await api.homeworkAnswersImageCreate(image, {
+        type: ContentType.FormData,
+      }),
   });
 };
