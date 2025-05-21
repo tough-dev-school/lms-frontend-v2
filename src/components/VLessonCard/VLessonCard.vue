@@ -41,11 +41,30 @@
     }
 
     if (props.lesson.call) {
-      items.push({
-        name: props.lesson.call.name || '',
-        label: 'Перейти',
-        href: props.lesson.call.url,
-      });
+      const { name } = props.lesson.call;
+
+      if (
+        props.lesson.call.video?.length > 0 &&
+        props.lesson.call.recommended_video_provider
+      ) {
+        const recommendedVideo = props.lesson.call.video.find(
+          (v) => v.provider === props.lesson.call.recommended_video_provider,
+        );
+
+        items.push({
+          name,
+          label: 'Смотреть запись',
+          href: recommendedVideo
+            ? recommendedVideo.src
+            : props.lesson.call.video[0].src,
+        });
+      } else {
+        items.push({
+          name,
+          label: 'Перейти к встрече',
+          href: props.lesson.call.url,
+        });
+      }
     }
 
     return items;
