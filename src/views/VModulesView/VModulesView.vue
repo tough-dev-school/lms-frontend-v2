@@ -1,13 +1,12 @@
 <script lang="ts" setup>
-  import VHeading from '@/components/VHeading/VHeading.vue';
   import { computed } from 'vue';
-  import { RouterLink, useRoute } from 'vue-router';
+  import { useRoute } from 'vue-router';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
   import { useModulesQuery, useStudiesQuery } from '@/query';
   import { useRouteParams } from '@vueuse/router';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import VPill, { type PillItem } from '@/components/VPill/VPill.vue';
-  import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
+  import VModuleCard from '@/components/VModuleCard/VModuleCard.vue';
 
   const route = useRoute();
 
@@ -26,18 +25,6 @@
   const { data: modules } = useModulesQuery(() =>
     parseInt(route.params.courseId.toString()),
   );
-
-  const cardClass = (number: number) => {
-    // Sadly, Tailwind will strip dynamic classes, so we need to do this manually
-    const colors = [
-      '!bg-accent-yellow dark:!bg-accent-yellow',
-      '!bg-accent-orange dark:!bg-accent-orange',
-      '!bg-accent-green dark:!bg-accent-green',
-      '!bg-accent-blue dark:!bg-accent-blue',
-    ];
-
-    return colors[number % colors.length];
-  };
 
   const breadcrumbs = computed<Breadcrumb[]>(() => [
     { name: 'Мои курсы', to: { name: 'home' } },
@@ -89,24 +76,11 @@
       </VPill>
     </template>
     <template v-if="modules && modules.length > 0">
-      <RouterLink
+      <VModuleCard
         v-for="(module, index) in modules"
         :key="module.id"
-        :to="{ name: 'lessons', params: { moduleId: module.id } }">
-        <div
-          :class="[
-            cardClass(index),
-            'text-black min-h-120 rounded-16 p-16 tablet:p-24',
-          ]">
-          <VHeading tag="h3">{{ module.name }}</VHeading>
-          <p v-if="module.text">
-            {{ module.text }}
-          </p>
-          <VHtmlContent
-            v-if="module.description"
-            :content="module.description" />
-        </div>
-      </RouterLink>
+        :module="module"
+        :index="index" />
     </template>
 
     <p v-else data-testid="empty" class="mb-16 text-center">
