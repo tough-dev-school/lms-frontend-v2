@@ -111,6 +111,6 @@
 <style lang="scss" scoped>
   .VLessonCard__Button {
     --module: 40px;
-    @apply bg-white rounded-8;
+    @apply bg-white rounded-8 w-full;
   }
 </style>
