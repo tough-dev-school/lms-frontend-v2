@@ -9,6 +9,13 @@ export const relativeDate = (date: dayjs.ConfigType) => {
   return dayjs().to(date);
 };
 
-export const formatDate = (date: dayjs.ConfigType, format: string) => {
+export const formatDate = (
+  date: dayjs.ConfigType,
+  format: string = 'DD.MM.YYYY',
+) => {
   return dayjs(date).format(format);
+};
+
+export const formatDateTime = (date: string) => {
+  return dayjs(date).format('DD.MM.YYYY HH:mm');
 };

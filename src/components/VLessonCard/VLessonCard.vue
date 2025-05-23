@@ -2,77 +2,35 @@
   import VHeading from '@/components/VHeading/VHeading.vue';
   import VTag from '@/components/VTag/VTag.vue';
   import VButton from '@/components/VButton/VButton.vue';
-  import type { RouteLocationRaw } from 'vue-router';
-  import type { LessonForUser } from '@/api/generated-api';
+  import type {
+    LessonForUser,
+    RecommendedVideoProviderEnum,
+    VideoProvider,
+  } from '@/api/generated-api';
   import { computed } from 'vue';
+  import { formatDateTime } from '@/utils/date';
 
   const props = defineProps<{
     lesson: LessonForUser;
   }>();
 
-  const links = computed(() => {
-    let items: Array<
-      {
-        name: string;
-        label: string;
-      } & ({ to: RouteLocationRaw } | { href: string })
-    > = [];
-
-    if (props.lesson.material) {
-      items.push({
-        name: props.lesson.material.title || '',
-        label: 'Перейти',
-        to: {
-          name: 'materials',
-          params: { materialId: props.lesson.material.id },
-        },
-      });
-    }
-
-    if (props.lesson.homework) {
-      items.push({
-        name: props.lesson.homework.question.name || '',
-        label: 'Смотреть домашку',
-        to: {
-          name: 'homework',
-          params: { questionId: props.lesson.homework.question.slug },
-        },
-      });
-    }
-
-    if (props.lesson.call) {
-      const { name } = props.lesson.call;
-
-      if (
-        props.lesson.call.video?.length > 0 &&
-        props.lesson.call.recommended_video_provider
-      ) {
-        const recommendedVideo = props.lesson.call.video.find(
-          (v) => v.provider === props.lesson.call.recommended_video_provider,
-        );
-
-        items.push({
-          name,
-          label: 'Смотреть запись',
-          href: recommendedVideo
-            ? recommendedVideo.src
-            : props.lesson.call.video[0].src,
-        });
-      } else {
-        items.push({
-          name,
-          label: 'Перейти к встрече',
-          href: props.lesson.call.url,
-        });
-      }
-    }
-
-    return items;
-  });
-
   const name = computed(() => {
-    return links.value.length > 0 ? links.value[0].name : '';
+    if (props.lesson.call) return props.lesson.call.name;
+    if (props.lesson.homework) return props.lesson.homework.question.name;
+    if (props.lesson.material) return props.lesson.material.title;
+    return undefined;
   });
+
+  const getRecommendedVideo = (
+    videos: VideoProvider[],
+    recommendedVideoProvider: RecommendedVideoProviderEnum | null,
+  ) => {
+    const fallback = videos[0];
+    if (!recommendedVideoProvider) return fallback;
+    return (
+      videos.find((v) => v.provider === recommendedVideoProvider) || fallback
+    );
+  };
 </script>
 
 <template>
@@ -83,11 +41,14 @@
     ]">
     <div class="flex flex-col gap-16">
       <div class="empty:hidden gap-8 flex flex-wrap">
-        <VTag v-if="lesson.homework?.question.deadline">
-          Дедлайн {{ lesson.homework.question.deadline }}
+        <VTag v-if="lesson.call?.datetime">
+          {{ formatDateTime(lesson.call.datetime) }}
+        </VTag>
+        <VTag v-else-if="lesson.homework?.question.deadline">
+          Дедлайн {{ formatDateTime(lesson.homework.question.deadline) }}
         </VTag>
       </div>
-      <VHeading tag="h3" class="mb-8">{{ name }}</VHeading>
+      <VHeading v-if="name" tag="h3" class="mb-8">{{ name }}</VHeading>
     </div>
     <div v-if="lesson.homework">
       <table class="w-full">
@@ -101,24 +62,49 @@
       </table>
     </div>
     <div class="flex-grow"></div>
-    <template v-for="link in links" :key="link.label">
-      <VButton
-        v-if="'to' in link"
-        tag="RouterLink"
-        class="VLessonCard__Button"
-        appearance="secondary"
-        :to="link.to">
-        {{ link.label }}
-      </VButton>
-      <VButton
-        v-if="'href' in link"
-        tag="a"
-        class="VLessonCard__Button"
-        appearance="secondary"
-        :href="link.href">
-        {{ link.label }}
-      </VButton>
+    <template v-if="lesson.call">
+      <template v-if="lesson.call.video.length">
+        <a
+          v-if="
+            getRecommendedVideo(
+              lesson.call.video,
+              lesson.call.recommended_video_provider,
+            ).src
+          "
+          :href="
+            getRecommendedVideo(
+              lesson.call.video,
+              lesson.call.recommended_video_provider,
+            ).src
+          "
+          target="_blank">
+          <VButton class="VLessonCard__Button"> Смотреть запись </VButton>
+        </a>
+      </template>
+      <template v-else>
+        <a :href="lesson.call.url" target="_blank">
+          <VButton class="VLessonCard__Button" appearance="secondary">
+            Подключиться
+          </VButton>
+        </a>
+      </template>
     </template>
+    <RouterLink
+      v-if="lesson.material"
+      :to="{
+        name: 'materials',
+        params: { materialId: lesson.material.id },
+      }">
+      <VButton class="VLessonCard__Button"> Читать </VButton>
+    </RouterLink>
+    <RouterLink
+      v-if="lesson.homework"
+      :to="{
+        name: 'homework',
+        params: { questionId: lesson.homework.question.slug },
+      }">
+      <VButton class="VLessonCard__Button"> Открыть </VButton>
+    </RouterLink>
   </div>
 </template>
 

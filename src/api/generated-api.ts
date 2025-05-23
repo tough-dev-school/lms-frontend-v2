@@ -289,7 +289,7 @@ export enum LanguageEnum {
 export interface LessonForUser {
   id: number;
   material?: NotionMaterial;
-  homework: HomeworkStats;
+  homework?: HomeworkStats;
   call?: Call;
 }
 
