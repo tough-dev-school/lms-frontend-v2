@@ -10,13 +10,17 @@
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import { useRouteParams } from '@vueuse/router';
   import { useMaterialQuery } from '@/query';
-  import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
 
   const router = useRouter();
   const materialId = useRouteParams<string>('materialId');
   const title = useTitle();
 
-  const { data: material, isLoading } = useMaterialQuery(materialId);
+  const { data: materialData, isLoading } = useMaterialQuery(materialId);
+
+  const material = computed(() => {
+    if (!materialData.value) return undefined;
+    return materialData.value.content;
+  });
 
   const notionTitle = computed(() => {
     if (material.value) {
@@ -33,24 +37,24 @@
   );
 
   const breadcrumbs = computed(() =>
-    material.value
+    materialData.value
       ? [
           {
-            name: material.value.breadcrumbs.course.name,
+            name: materialData.value.breadcrumbs.course.name,
             to: {
               name: 'modules',
               params: {
-                courseId: material.value.breadcrumbs.course.id,
+                courseId: materialData.value.breadcrumbs.course.id,
               },
             },
           },
           {
-            name: material.value.breadcrumbs.module.name,
+            name: materialData.value.breadcrumbs.module.name,
             to: {
               name: 'lessons',
               params: {
-                courseId: material.value.breadcrumbs.course.id,
-                moduleId: material.value.breadcrumbs.module.id,
+                courseId: materialData.value.breadcrumbs.course.id,
+                moduleId: materialData.value.breadcrumbs.module.id,
               },
             },
           },
@@ -59,7 +63,7 @@
             to: {
               name: 'materials',
               params: {
-                materialId: material.value.content.slug,
+                materialId: materialData.value.content.slug,
               },
             },
           },
