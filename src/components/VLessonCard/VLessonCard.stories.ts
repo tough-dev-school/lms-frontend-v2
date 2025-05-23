@@ -6,7 +6,7 @@ import type {
 } from '@/api/generated-api';
 
 export default {
-  title: 'Components/VLessonCard',
+  title: 'UI/VLessonCard',
   component: VLessonCard,
   parameters: {
     layout: 'padded',

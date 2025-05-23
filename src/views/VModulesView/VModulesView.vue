@@ -76,11 +76,12 @@
       </VPill>
     </template>
     <template v-if="modules && modules.length > 0">
-      <VModuleCard
+      <RouterLink
         v-for="(module, index) in modules"
         :key="module.id"
-        :module="module"
-        :index="index" />
+        :to="{ name: 'lessons', params: { moduleId: module.id } }">
+        <VModuleCard :key="module.id" :module="module" :index="index" />
+      </RouterLink>
     </template>
 
     <p v-else data-testid="empty" class="mb-16 text-center">
