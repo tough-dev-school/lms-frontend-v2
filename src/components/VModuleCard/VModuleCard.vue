@@ -24,13 +24,13 @@
   <div
     :class="[
       cardClass(index),
-      'VModuleCard text-black min-h-120 rounded-16 p-16 tablet:p-24',
+      'VModuleCard text-black min-h-120 rounded-16 p-16 tablet:p-24 flex flex-col gap-8',
     ]">
     <VHeading tag="h3">{{ module.name }}</VHeading>
-    <p v-if="module.text">
-      {{ module.text }}
+    <p v-if="module.description">
+      {{ module.description }}
     </p>
-    <VHtmlContent v-if="module.description" :content="module.description" />
+    <VHtmlContent v-if="module.text" :content="module.text" />
   </div>
 </template>
 
