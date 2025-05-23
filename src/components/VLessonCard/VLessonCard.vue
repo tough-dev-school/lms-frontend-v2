@@ -21,6 +21,11 @@
     return undefined;
   });
 
+  const description = computed(() => {
+    if (props.lesson.call) return props.lesson.call.description;
+    return undefined;
+  });
+
   const getRecommendedVideo = (
     videos: VideoProvider[],
     recommendedVideoProvider: RecommendedVideoProviderEnum | null,
@@ -49,6 +54,7 @@
         </VTag>
       </div>
       <VHeading v-if="name" tag="h3" class="mb-8">{{ name }}</VHeading>
+      <p v-if="description">{{ description }}</p>
     </div>
     <div v-if="lesson.homework">
       <table class="w-full">
