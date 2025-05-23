@@ -36,6 +36,6 @@
 
 <style lang="scss" scoped>
   .VModuleCard {
-    @apply transition-transform hover:scale-[1.02];
+    @apply transition-transform hover:scale-[1.01] origin-center;
   }
 </style>
