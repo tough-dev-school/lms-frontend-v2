@@ -1,68 +1,109 @@
-<script lang="ts">
-  export interface VNotionView {
-    forceNew?: boolean;
-  }
-</script>
-
 <script lang="ts" setup>
-  import { useRoute, useRouter } from 'vue-router';
-  import { watch } from 'vue';
+  import { useRouter } from 'vue-router';
+  import { watch, computed } from 'vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VButton from '@/components/VButton/VButton.vue';
-  import useMaterials from '@/stores/materials';
   import { useTitle } from '@vueuse/core';
   import getNotionTitle from '@/utils/getNotionTitle';
   import { useChatra } from '@/hooks/useChatra';
   import VNotionRenderer from '@/components/VNotionRenderer/VNotionRenderer.vue';
+  import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
+  import { useRouteParams } from '@vueuse/router';
+  import { useMaterialQuery } from '@/query';
 
   const router = useRouter();
-  const materials = useMaterials();
+  const materialId = useRouteParams<string>('materialId');
   const title = useTitle();
-  const route = useRoute();
 
-  withDefaults(defineProps<VNotionView>(), { forceNew: false });
+  const { data: materialData, isLoading } = useMaterialQuery(materialId);
+
+  const material = computed(() => {
+    if (!materialData.value) return undefined;
+    return materialData.value.content;
+  });
+
+  const notionTitle = computed(() => {
+    if (material.value) {
+      return getNotionTitle(materialId.value, material.value);
+    }
+    return undefined;
+  });
+
   watch(
-    () => route.params.id,
-    async () => {
-      if (materials.material) {
-        const materialId = String(route.params.id);
-        const notionTitle = getNotionTitle(materialId, materials.material);
-        if (notionTitle) title.value = notionTitle;
-      }
+    () => notionTitle.value,
+    (value) => {
+      title.value = value;
     },
-    { immediate: true },
+  );
+
+  const breadcrumbs = computed(() =>
+    materialData.value
+      ? [
+          {
+            name: materialData.value.breadcrumbs.course.name,
+            to: {
+              name: 'modules',
+              params: {
+                courseId: materialData.value.breadcrumbs.course.id,
+              },
+            },
+          },
+          {
+            name: materialData.value.breadcrumbs.module.name,
+            to: {
+              name: 'lessons',
+              params: {
+                courseId: materialData.value.breadcrumbs.course.id,
+                moduleId: materialData.value.breadcrumbs.module.id,
+              },
+            },
+          },
+          {
+            name: notionTitle.value ?? '',
+            to: {
+              name: 'materials',
+              params: {
+                materialId: materialData.value.content.slug,
+              },
+            },
+          },
+        ]
+      : undefined,
   );
 
   const { chatra } = useChatra();
 </script>
 
 <template>
-  <template v-if="materials.material">
-    <VCard class="pt-32">
-      <VNotionRenderer :block-map="materials.material" />
-    </VCard>
-  </template>
-  <div
-    v-else-if="!materials.material"
-    class="center flex max-w-[400px] flex-col text-center">
-    <p>Материал не найден :(</p>
-    <p>
-      Если кажется что здесь какая-то ошибка напишите
-      <button class="link" @click="chatra('openChat', true)">
-        в чат в углу экрана
-      </button>
-      или на
-      <a
-        class="link"
-        href="mailto:
-support@tough-dev.school">
-        support@tough-dev.school</a
+  <VLoggedLayout :breadcrumbs="breadcrumbs" :is-loading="isLoading">
+    <template v-if="material">
+      <VCard
+        class="pt-32 bg-white dark:bg-dark-black p-8 phone:p-24 rounded-16 shadow">
+        <VNotionRenderer :block-map="material" />
+      </VCard>
+    </template>
+    <div
+      v-else-if="!material"
+      class="center flex max-w-[400px] flex-col text-center">
+      <p>Материал не найден :(</p>
+      <p>
+        Если кажется что здесь какая-то ошибка напишите
+        <button class="link" @click="chatra('openChat', true)">
+          в чат в углу экрана
+        </button>
+        или на
+        <a
+          class="link"
+          href="mailto:
+    support@tough-dev.school">
+          support@tough-dev.school</a
+        >
+      </p>
+      <VButton appearance="link" @click="router.push({ name: 'home' })"
+        >На главную</VButton
       >
-    </p>
-    <VButton appearance="link" @click="router.push({ name: 'home' })"
-      >На главную</VButton
-    >
-  </div>
+    </div>
+  </VLoggedLayout>
 </template>
 
 <style>

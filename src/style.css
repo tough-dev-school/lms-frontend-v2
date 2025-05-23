@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --module: 56px;
+  --module: 52px;
 }
 
 @media (max-width: 768px) {
@@ -18,18 +18,11 @@
   }
 
   body {
-    @apply bg-offwhite font-body text-black dark:bg-darkmode-layer1 dark:text-darkmode-white min-h-screen;
+    @apply bg-offwhite font-body text-black dark:bg-darkmode-layer1 dark:text-white min-h-screen;
   }
 }
 
 @layer components {
-  .center {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
   .prose {
     @apply prose-p:my-[0.5em];
     @apply prose-li:my-[0.25em];
@@ -37,13 +30,14 @@
     @apply prose-ul:my-[0.5em];
     @apply prose-h1:mt-[1em];
     @apply prose-h2:mt-[1.5em];
-    @apply !text-black dark:!text-darkmode-white;
-    --tw-prose-bullets: currentColor;
+    @apply !text-[inherit];
+    --tw-prose-bullets: inherit;
+    --tw-prose-counters: inherit;
     max-width: 100%;
   }
 
   .prose * {
-    @apply !text-black dark:!text-darkmode-white marker:dark:!text-darkmode-white;
+    @apply !text-[inherit];
   }
 
   .prose li > p {
@@ -51,17 +45,17 @@
     margin-bottom: 0;
   }
 
-  .button {
-    @apply leading-[1.5] rounded bg-yellow p-module text-center text-black transition-colors hover:bg-yellow-hover disabled:opacity-25;
-  }
-
   .label {
     @apply mb-8 w-full text-gray;
   }
 
+  .link-bright {
+    @apply border-blue text-blue opacity-100 transition-colors;
+  }
+
   .link,
   .group-link {
-    @apply border-blue text-blue opacity-100 transition-colors;
+    @apply link-bright;
     @apply dark:border-darkmode-blue dark:text-darkmode-blue dark:opacity-100;
   }
 
@@ -79,27 +73,23 @@
     @apply overflow-hidden rounded-8 bg-white dark:bg-darkmode-layer2 shadow;
   }
 
-  .answer-action,
-  .answer-action-base {
-    @apply rounded-8 text-dark-gray text-sub flex flex-col justify-center items-center px-16 py-4 box-content border border-offwhite cursor-pointer bg-offwhite transition-colors dark:bg-darkmode-layer3 dark:border-darkmode-layer3 dark:text-darkmode-white dark:opacity-100;
-  }
-
-  .answer-action,
-  .answer-action-hover {
-    @apply hover:bg-lightgray hover:border-lightgray dark:hover:bg-darkmode-layer1 dark:hover:border-darkmode-layer3;
-  }
-
-  .answer-action,
-  .answer-action-disabled {
-    @apply disabled:hover:bg-offwhite disabled:hover:border-offwhite disabled:opacity-50 disabled:cursor-not-allowed dark:disabled:hover:bg-darkmode-layer3 dark:disabled:hover:border-darkmode-border dark:disabled:opacity-50;
-  }
-
   .container-fluid {
-    @apply tablet:px-16 px-8 max-w-[768px] mx-auto;
+    @apply px-16 max-w-[720px] mx-auto;
+  }
+
+  .card {
+    @apply bg-yellow rounded-16 p-16 text-black;
   }
 }
 
 @layer utilities {
+  .center {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
   .visually-hidden {
     @apply absolute h-0 w-0 overflow-hidden;
   }

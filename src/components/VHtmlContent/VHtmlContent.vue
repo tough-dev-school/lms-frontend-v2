@@ -11,3 +11,12 @@
   <!-- #TODO Check for XSS-->
   <article class="prose prose-custom" v-html="content" />
 </template>
+
+<style>
+  .prose > *:first-child {
+    margin-top: 0;
+  }
+  .prose > *:last-child {
+    margin-bottom: 0;
+  }
+</style>

@@ -1,13 +1,14 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
 import VNotionView from './VNotionView.vue';
-import useMaterials from '@/stores/materials';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import { mockMaterial } from '@/mocks/mockMaterial';
-
+import { materialsKeys } from '@/query';
+import { useQueryClient } from '@tanstack/vue-query';
 export default {
   title: 'App/VNotionView',
   component: VNotionView,
   decorators: [defaultLayoutDecorator],
+  parameters: { layout: 'fullscreen' },
 } as Meta;
 
 const Template: StoryFn = (args) => ({
@@ -26,8 +27,12 @@ export const Default = {
   decorators: [
     () => ({
       setup() {
-        const materials = useMaterials();
-        materials.$patch({ material: mockMaterial() });
+        const queryClient = useQueryClient();
+        queryClient.setQueryData(
+          // @ts-expect-error
+          materialsKeys.materials(undefined),
+          mockMaterial(),
+        );
       },
       template: '<story />',
     }),
@@ -39,9 +44,9 @@ export const Empty = {
   decorators: [
     () => ({
       setup() {
-        const materials = useMaterials();
-
-        materials.material = undefined;
+        const queryClient = useQueryClient();
+        // @ts-expect-error
+        queryClient.setQueryData(materialsKeys.materials(undefined), undefined);
       },
       template: '<story />',
     }),

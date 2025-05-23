@@ -2,7 +2,7 @@ import type { Meta, StoryFn } from '@storybook/vue3';
 import VOwnAnswer from '@/components/VOwnAnswer/VOwnAnswer.vue';
 import { faker } from '@faker-js/faker';
 import dayjs from 'dayjs';
-import { mockAnswer } from '@/mocks/mockAnswer';
+import { mockAnswer } from '@/mocks/mockAnswerDetailed';
 import useUser from '@/stores/user';
 import { USER_1 } from '@/mocks/mockUserId';
 import { STATIC_AUTHOR_1 } from '@/mocks/mockAuthor';

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-  import VHeading from '@/components/VHeading/VHeading.vue';
   import VButton from '@/components/VButton/VButton.vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VTextInput from '@/components/VTextInput/VTextInput.vue';
@@ -37,8 +36,10 @@
 </script>
 
 <template>
-  <VCard tag="form" @submit.prevent="loginWithCredentials">
-    <VHeading tag="h1" class="mb-32">Вход и регистрация</VHeading>
+  <VCard
+    tag="form"
+    title="Вход и регистрация"
+    @submit.prevent="loginWithCredentials">
     <div class="flex flex-col gap-16">
       <VTextInput
         v-model="username"

@@ -6,6 +6,7 @@ export default {
   title: 'App/VLoginResetView',
   component: VLoginResetView,
   decorators: [defaultLayoutDecorator],
+  parameters: { layout: 'fullscreen' },
 } as Meta;
 
 const Template: StoryFn = (args) => ({

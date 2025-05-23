@@ -1,11 +1,8 @@
-import VDefaultLayout from '@/layouts/VDefaultLayout/VDefaultLayout.vue';
-import { mockMaterial } from '@/mocks/mockMaterial';
 import { mockQuestion, STATIC_QUESTION } from '@/mocks/mockQuestion';
 import { mockUserId, USER_1 } from '@/mocks/mockUserId';
-import useHomework from '@/stores/homework';
-import useMaterials from '@/stores/materials';
 import useToasts from '@/stores/toasts';
 import useUser from '@/stores/user';
+import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
 
 const layoutDecorator = (story: any, layout: any) => ({
   components: { layout, story },
@@ -28,18 +25,10 @@ const layoutDecorator = (story: any, layout: any) => ({
       githubUsername: 'johndoe',
       telegramUsername: 'johndoe',
     });
-
-    const homework = useHomework();
-    homework.$patch({
-      question: mockQuestion(STATIC_QUESTION),
-    });
-
-    const materials = useMaterials();
-    materials.$patch({ material: mockMaterial() });
   },
 });
 
 const defaultLayoutDecorator = (story: any) =>
-  layoutDecorator(story, VDefaultLayout);
+  layoutDecorator(story, VTransparentComponent);
 
 export { defaultLayoutDecorator };

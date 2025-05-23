@@ -1,4 +1,4 @@
-import type { BlockMap } from '@/types/materials';
+import type { BlockMap } from '@/types';
 import idToUuid from './idToUuid';
 
 const getNotionTitle = (materialId: string, material: BlockMap) => {

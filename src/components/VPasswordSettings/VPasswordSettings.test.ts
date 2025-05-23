@@ -7,7 +7,8 @@ import useAuth from '@/stores/auth';
 import { createTestingPinia } from '@pinia/testing';
 import { faker } from '@faker-js/faker';
 import { nextTick } from 'vue';
-
+import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
+import VButton from '@/components/VButton/VButton.vue';
 const defaultProps = {
   uid: faker.string.uuid(),
   token: faker.string.uuid(),
@@ -28,7 +29,8 @@ describe('VPasswordSettings', () => {
           }),
         ],
         stubs: {
-          VCard: false,
+          VCard: VTransparentComponent,
+          VButton: VTransparentComponent,
         },
       },
     });
@@ -36,26 +38,23 @@ describe('VPasswordSettings', () => {
     auth = useAuth();
   });
 
-  const getResetHeadingWrapper = () =>
-    wrapper.find('[data-testid="reset-heading"]');
-  const getChangeHeadingWrapper = () =>
-    wrapper.find('[data-testid="change-heading"]');
   const getPassword1Wrapper = () =>
     wrapper.findComponent<typeof VTextInput>('[data-testid="password1"]');
   const getPassword2Wrapper = () =>
     wrapper.findComponent<typeof VTextInput>('[data-testid="password2"]');
 
-  const getSaveWrapper = () => wrapper.find('[data-testid="save"]');
+  const getSaveWrapper = () =>
+    wrapper.findComponent<typeof VButton>('[data-testid="save"]');
 
   test('shows reset heading when no auth', () => {
-    expect(getResetHeadingWrapper().exists()).toBe(true);
+    expect(wrapper.attributes('title')).toContain('Сброс пароля');
   });
   test('shows change heading when has auth', async () => {
     auth.$patch({ token: faker.string.uuid() });
 
     await nextTick();
 
-    expect(getChangeHeadingWrapper().exists()).toBe(true);
+    expect(wrapper.attributes('title')).toContain('Пароль');
   });
 
   test('sends data on save', async () => {
@@ -65,7 +64,7 @@ describe('VPasswordSettings', () => {
     getPassword1Wrapper().vm.$emit('update:modelValue', password1);
     getPassword2Wrapper().vm.$emit('update:modelValue', password2);
 
-    await getSaveWrapper().trigger('click');
+    getSaveWrapper().vm.$emit('click');
 
     expect(auth.changePassword).toHaveBeenCalledTimes(1);
     expect(auth.changePassword).toHaveBeenCalledWith({

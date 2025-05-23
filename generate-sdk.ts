@@ -15,11 +15,7 @@ await generateApi({
   httpClientType: 'axios',
   singleHttpClient: true,
   extractEnums: true,
-  extractRequestBody: true,
   extractRequestParams: true,
-  extractResponseBody: true,
-  extractResponseError: true,
-  extractResponses: true,
   unwrapResponseData: true,
   fileName: 'generated-api',
 });

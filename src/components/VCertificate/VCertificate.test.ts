@@ -63,7 +63,7 @@ describe('VCertificate', () => {
   test('has linkedin link', () => {
     expect(!!getLinkedinWrapper().text()).toBe(true);
     expect(getLinkedinWrapper().attributes('href')).toBe(
-      getCertificateLink(defaultProps.certificate.slug),
+      getCertificateLink(defaultProps.certificate.slug || ''),
     );
   });
 });

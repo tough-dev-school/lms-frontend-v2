@@ -12,9 +12,10 @@ export interface CustomAxiosInstanceConfig {
 export const createHttpClient = (
   customConfig: Partial<CustomAxiosInstanceConfig> = {},
 ) => {
+  // #FIXME Case middleware must be removed after migration to autofg
   const defaultConfig = {
-    useResponseCaseMiddleware: true,
-    useRequestCaseMiddleware: true,
+    useResponseCaseMiddleware: false,
+    useRequestCaseMiddleware: false,
   };
 
   const config = merge(
@@ -41,7 +42,19 @@ export const createHttpClient = (
   return httpClient;
 };
 
-const defaultHttpClient = createHttpClient();
-export const axios = defaultHttpClient.instance;
-export const { api } = new Api(defaultHttpClient);
+/**
+ * @deprecated This is a temporary solution to support handwritten API client.
+ */
+const backwardCompatibleHttpClient = createHttpClient({
+  useResponseCaseMiddleware: true,
+  useRequestCaseMiddleware: true,
+});
+
+/**
+ * @deprecated Direct usage of axios is deprecated. Use api instead.
+ */
+export const axios = backwardCompatibleHttpClient.instance;
+
+const modernHttpClient = createHttpClient();
+export const { api } = new Api(modernHttpClient);
 export default axios;

@@ -5,7 +5,6 @@
   import { useRouter } from 'vue-router';
   import useUser from '@/stores/user';
   import useAuth from '@/stores/auth';
-  import useStudies from '@/stores/studies';
   import { storeToRefs } from 'pinia';
 
   export interface ProfileMenuItem {
@@ -20,7 +19,6 @@
   const router = useRouter();
   const user = useUser();
   const auth = useAuth();
-  const studies = useStudies();
   const { username, name, uuid: userId } = storeToRefs(user);
 
   onClickOutside(menu, () => (isOpen.value = false));
@@ -32,21 +30,6 @@
       !!user.firstNameEn &&
       !!user.lastNameEn,
   );
-
-  const studiesAsMenuItems = computed<ProfileMenuItem[]>(() => {
-    return studies.items.slice(0, 3).map((study) => {
-      return {
-        label: study.name.replace(/\(.*\)/, '').trim(),
-        action: () => {
-          router.push({
-            name: 'materials',
-            params: { id: study.homePageSlug },
-          });
-        },
-        id: `material-${study.id}`,
-      };
-    });
-  });
 
   const handleItemClick = (action: () => void) => {
     action();
@@ -61,7 +44,6 @@
       },
       id: 'home',
     },
-    ...studiesAsMenuItems.value,
     {
       label: 'Сертификаты',
       action: () => {
@@ -87,7 +69,7 @@
     {
       label: 'Выйти',
       action: () => {
-        auth.resetAuth();
+        auth.removeToken();
         router.push({ name: 'login' });
         isOpen.value = false;
       },
@@ -109,9 +91,7 @@
         :image="user.avatar"
         data-testid="avatar" />
       <ul class="text-sub">
-        <li
-          class="leading-tight text-black dark:text-darkmode-white"
-          data-testid="name">
+        <li class="leading-tight text-black dark:text-white" data-testid="name">
           {{ name }}
         </li>
         <li class="leading-tight text-gray" data-testid="username">
@@ -132,7 +112,7 @@
               class="VProfileMenu__Item"
               :data-testid="item.id"
               @click="handleItemClick(item.action)">
-              <span class="link">{{ item.label }}</span>
+              <span>{{ item.label }}</span>
             </button>
           </li>
         </ul>
@@ -146,7 +126,7 @@
     @apply bg-gray bg-opacity-10;
   }
   .VProfileMenu__Item {
-    @apply block flex min-h-[32px] w-full cursor-pointer items-center whitespace-nowrap px-8 text-left hover:bg-gray hover:bg-opacity-10;
+    @apply flex min-h-[32px] w-full cursor-pointer items-center whitespace-nowrap px-8 text-left hover:bg-gray hover:bg-opacity-10;
   }
 
   .fade-enter-active,
