@@ -13,7 +13,7 @@
 export interface AnswerCommentTree {
   /** @format uuid */
   slug?: string;
-  descendants: AnswerTree[];
+  descendants?: AnswerTree[];
 }
 
 export interface AnswerCreate {
@@ -26,21 +26,21 @@ export interface AnswerCreate {
 
 export interface AnswerCrossCheck {
   answer: SimpleAnswer;
-  is_checked: boolean;
+  is_checked?: boolean;
 }
 
 export interface AnswerDetailed {
   /** @format date-time */
-  created: string;
+  created?: string;
   /** @format date-time */
-  modified: string;
+  modified?: string;
   /** @format uuid */
-  slug: string;
+  slug?: string;
   question: string;
   author: UserSafe;
   /** @format uuid */
-  parent: string;
-  text: string;
+  parent?: string;
+  text?: string;
   src: string;
   has_descendants: boolean;
   reactions: ReactionDetailed[];
@@ -53,18 +53,18 @@ export interface AnswerImage {
 
 export interface AnswerTree {
   /** @format date-time */
-  created: string;
+  created?: string;
   /** @format date-time */
-  modified: string;
+  modified?: string;
   /** @format uuid */
   slug?: string;
   question: string;
   author: UserSafe;
   /** @format uuid */
-  parent: string;
-  text: string;
+  parent?: string;
+  text?: string;
   src: string;
-  descendants: AnswerTree[];
+  descendants?: AnswerTree[];
   has_descendants: boolean;
   reactions: ReactionDetailed[];
 }
@@ -81,7 +81,7 @@ export enum BlankEnum {
 export interface Breadcrumbs {
   module: Module;
   course: LMSCourse;
-  lesson: LessonPlain;
+  lesson?: LessonPlain;
 }
 
 export interface Call {
@@ -101,17 +101,17 @@ export interface Call {
    * @maxLength 255
    */
   url: string;
-  video: VideoProvider[];
+  video?: VideoProvider[];
   /**
    * Дата
    * @format date-time
    */
-  datetime: string;
-  recommended_video_provider: RecommendedVideoProviderEnum | null;
+  datetime?: string | null;
+  recommended_video_provider?: RecommendedVideoProviderEnum | null;
 }
 
 export interface Course {
-  id: number;
+  id?: number;
   /**
    * @maxLength 50
    * @pattern ^[-a-zA-Z0-9_]+$
@@ -210,7 +210,7 @@ export interface DiplomaRetrieve {
    */
   image: string;
   student: UserSafe;
-  other_languages: Record<string, any>;
+  other_languages?: Record<string, any>;
 }
 
 /**
@@ -237,12 +237,12 @@ export interface HomeworkStats {
  */
 export interface JSONWebToken {
   password: string;
-  token: string;
+  token?: string;
   username: string;
 }
 
 export interface LMSCourse {
-  id: number;
+  id?: number;
   /**
    * @maxLength 50
    * @pattern ^[-a-zA-Z0-9_]+$
@@ -287,7 +287,7 @@ export enum LanguageEnum {
 
 /** Serialize lesson for the user, lesson should be annotated with crosschecks stats */
 export interface LessonForUser {
-  id: number;
+  id?: number;
   material?: NotionMaterial;
   homework?: HomeworkStats;
   call?: Call;
@@ -303,7 +303,7 @@ export interface MaterialSerilizer {
 }
 
 export interface Module {
-  id: number;
+  id?: number;
   /** @maxLength 255 */
   name: string;
   /**
@@ -312,7 +312,7 @@ export interface Module {
    */
   description?: string | null;
   /** Текст */
-  text: string | null;
+  text?: string | null;
 }
 
 export interface NotionMaterial {
@@ -546,7 +546,7 @@ export interface Question {
    * @maxLength 256
    */
   name: string;
-  text: string;
+  text?: string;
   /**
    * Дедлайн
    * @format date-time
@@ -555,7 +555,7 @@ export interface Question {
 }
 
 export interface QuestionDetail {
-  breadcrumbs: Breadcrumbs;
+  breadcrumbs?: Breadcrumbs;
   /** @format uuid */
   slug?: string;
   /**
@@ -563,7 +563,7 @@ export interface QuestionDetail {
    * @maxLength 256
    */
   name: string;
-  text: string;
+  text?: string;
   /**
    * Дедлайн
    * @format date-time
@@ -598,7 +598,7 @@ export interface RefreshAuthToken {
 }
 
 export interface RestAuthDetail {
-  detail: string;
+  detail?: string;
 }
 
 export interface SimpleAnswer {
@@ -607,7 +607,7 @@ export interface SimpleAnswer {
 }
 
 export interface User {
-  id: number;
+  id?: number;
   /** @format uuid */
   uuid?: string;
   /**
