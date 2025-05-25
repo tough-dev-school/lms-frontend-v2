@@ -110,6 +110,27 @@
         ]
       : undefined,
   );
+
+  const handleCreateAnswer = (answerId: string) => {
+    router.push({
+      name: 'homework',
+      params: {
+        questionId: questionId.value,
+      },
+      query: {
+        answerId,
+      },
+    });
+  };
+
+  const handleDeleteAnswer = () => {
+    router.push({
+      name: 'homework',
+      params: {
+        questionId: questionId.value,
+      },
+    });
+  };
 </script>
 
 <template>
@@ -146,7 +167,11 @@
           <VHtmlContent :content="question.text" />
         </template>
       </template>
-      <VOwnAnswer :answer-id="answer?.slug" :question-id="questionId" />
+      <VOwnAnswer
+        :answer-id="answer?.slug"
+        :question-id="questionId"
+        @create="handleCreateAnswer"
+        @delete="handleDeleteAnswer" />
     </section>
     <section v-if="question && answer" class="flex flex-col gap-24">
       <VHeading tag="h2">Коментарии вашей работы</VHeading>

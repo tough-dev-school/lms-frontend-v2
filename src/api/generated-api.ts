@@ -35,7 +35,7 @@ export interface AnswerDetailed {
   /** @format date-time */
   modified: string;
   /** @format uuid */
-  slug?: string;
+  slug: string;
   question: string;
   author: UserSafe;
   /** @format uuid */

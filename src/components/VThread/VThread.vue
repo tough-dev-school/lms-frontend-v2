@@ -66,16 +66,22 @@
   const handleCreateComment = async (text: string) => {
     if (!answer.value) throw new Error('Answer not found');
 
-    const newComment = await createComment({
-      questionId: answer.value.question,
-      parentId: answer.value.slug,
-      text,
-    });
+    try {
+      const newComment = await createComment({
+        questionId: answer.value.question,
+        parentId: answer.value.slug,
+        text,
+      });
 
-    router.push({
-      ...router.currentRoute.value,
-      hash: `#${newComment.slug}`,
-    });
+      replyMode.value = false;
+
+      router.push({
+        ...router.currentRoute.value,
+        hash: `#${newComment.slug}`,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleMounted = (slug: string) => {
