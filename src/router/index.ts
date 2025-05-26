@@ -9,8 +9,7 @@ import useUser from '@/stores/user';
 import loginByToken from '@/router/loginByToken';
 import loginById from '@/router/loginById';
 import { useQueryClient } from '@tanstack/vue-query';
-import { fetchHomeworkAnswer, fetchHomeworkAnswers } from '@/query';
-import { api } from '@/api';
+import { fetchHomeworkAnswer } from '@/query';
 
 const fetchMainUserData = async () => {
   const user = useUser();

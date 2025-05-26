@@ -33,18 +33,13 @@
   const answerLink = computed(() => {
     if (props.answer.slug) {
       const url = new URL(
-        `${window.location.href}/homework/${props.question.slug}`,
+        `${window.location.host}/homework/${props.question.slug}`,
       );
       url.searchParams.set('answerId', props.answer.slug);
       return url.toString();
     }
     return undefined;
   });
-
-  const emit = defineEmits<{
-    comment: [text: string];
-    delete: [];
-  }>();
 
   const commentText = useStorage(
     ['commentText', props.answer.question, props.answer.slug]
