@@ -8,7 +8,6 @@
 </script>
 
 <script lang="ts" setup>
-  import VOwnAnswer from '@/components/VOwnAnswer/VOwnAnswer.vue';
   import VAnswer from '@/components/VAnswer/VAnswer.vue';
   import { ref, watch } from 'vue';
   import { onClickOutside } from '@vueuse/core';
@@ -19,8 +18,10 @@
     useHomeworkAnswerCreateMutation,
     populateAnswersCacheFromDescendants,
   } from '@/query';
-  import VSendOwnAnswer from '../VSendOwnAnswer/VSendOwnAnswer.vue';
   import { useQueryClient } from '@tanstack/vue-query';
+  import { useStorage } from '@vueuse/core';
+  import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
+  import VExistingAnswer from '@/components/VExistingAnswer';
 
   const route = useRoute();
   const router = useRouter();
@@ -63,14 +64,27 @@
   const { mutateAsync: createComment } =
     useHomeworkAnswerCreateMutation(queryClient);
 
-  const handleCreateComment = async (text: string) => {
+  const commentText = useStorage(
+    [
+      'commentText',
+      answer.value?.question,
+      answer.value?.slug,
+      answer.value?.parent,
+    ]
+      .filter(Boolean)
+      .join('-'),
+    '',
+    localStorage,
+  );
+
+  const handleCreateComment = async () => {
     if (!answer.value) throw new Error('Answer not found');
 
     try {
       const newComment = await createComment({
         questionId: answer.value.question,
         parentId: answer.value.slug,
-        text,
+        text: commentText.value,
       });
 
       replyMode.value = false;
@@ -97,14 +111,17 @@
       <VAnswer
         v-if="answer.author.uuid !== user.uuid"
         :answer-id="answer.slug" />
-      <VOwnAnswer v-else :answer-id="answer.slug" @mounted="handleMounted" />
+      <VExistingAnswer
+        v-else
+        :answer-id="answer.slug"
+        @mounted="handleMounted" />
       <button class="text-sm link" @click="replyMode = !replyMode">
         {{ replyMode ? 'Отменить' : 'Ответить' }}
       </button>
       <div class="thread-ruler" :class="{ 'mt-16': replyMode }">
-        <VSendOwnAnswer
+        <VCreateAnswer
           v-show="replyMode"
-          :draft-key="[answer.question, answer.slug]"
+          v-model="commentText"
           @send="handleCreateComment" />
       </div>
     </div>

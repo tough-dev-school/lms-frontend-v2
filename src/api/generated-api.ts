@@ -557,7 +557,7 @@ export interface Question {
 export interface QuestionDetail {
   breadcrumbs: Breadcrumbs;
   /** @format uuid */
-  slug?: string;
+  slug: string;
   /**
    * Название
    * @maxLength 256

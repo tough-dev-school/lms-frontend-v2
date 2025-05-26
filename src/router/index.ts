@@ -104,41 +104,6 @@ export const routes = [
     path: '/homework/:questionId',
     name: 'homework',
     component: () => import('@/views/VHomeworkView/VHomeworkView.vue'),
-    beforeEnter: [
-      async (to: RouteLocationNormalized) => {
-        const queryClient = useQueryClient();
-
-        if (to.query.answerId) {
-          try {
-            await fetchHomeworkAnswer(queryClient, {
-              answerId: to.query.answerId as string,
-            });
-
-            return;
-          } catch {
-            return { ...to, query: { ...to.query, answerId: undefined } };
-          }
-        } else {
-          const user = useUser();
-          const answers = await fetchHomeworkAnswers(queryClient, {
-            questionId: to.params.questionId as string,
-            authorId: user.uuid,
-          });
-
-          if (answers && answers.length > 0) {
-            return {
-              ...to,
-              query: {
-                ...to.query,
-                answerId: answers[0]?.slug,
-              },
-            };
-          }
-
-          return;
-        }
-      },
-    ],
   },
   {
     path: '/homework/answers/:answerId/',

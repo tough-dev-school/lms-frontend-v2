@@ -4,31 +4,90 @@
   import VFeedbackGuide from '@/components/VFeedbackGuide/VFeedbackGuide.vue';
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
   import VCrossChecks from '@/components/VCrossChecks/VCrossChecks.vue';
-  import VSendOwnAnswer from '@/components/VSendOwnAnswer/VSendOwnAnswer.vue';
   import VDetails from '@/components/VDetails/VDetails.vue';
-  import VOwnAnswer from '@/components/VOwnAnswer/VOwnAnswer.vue';
-  import type {
-    QuestionDetail,
-    AnswerTree,
-    AnswerCrossCheck,
-  } from '@/api/generated-api';
+  import type { QuestionDetail, AnswerTree } from '@/api/generated-api';
+  import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
+  import { useStorage } from '@vueuse/core';
+  import VExistingAnswer from '@/components/VExistingAnswer';
+  import { useHomeworkCrosschecksQuery } from '@/query';
+  import { computed } from 'vue';
+  import useUser from '@/stores/user';
+  import { useRouter } from 'vue-router';
+  import { useQueryClient } from '@tanstack/vue-query';
+  import { useHomeworkAnswerCreateMutation } from '@/query';
 
   interface Props {
     question: QuestionDetail;
     answer: AnswerTree;
-    crosschecks: AnswerCrossCheck[];
-    questionId: string;
-    answerId: string;
-    answerLink?: string;
-    isOwnAnswer: boolean;
   }
 
-  defineProps<Props>();
+  const props = defineProps<Props>();
+  const router = useRouter();
+  const user = useUser();
+  const queryClient = useQueryClient();
 
-  defineEmits<{
+  const isOwnAnswer = computed(() => {
+    return props.answer.author.uuid === user.uuid;
+  });
+
+  const answerLink = computed(() => {
+    if (props.answer.slug) {
+      const url = new URL(
+        `${window.location.href}/homework/${props.question.slug}`,
+      );
+      url.searchParams.set('answerId', props.answer.slug);
+      return url.toString();
+    }
+    return undefined;
+  });
+
+  const emit = defineEmits<{
     comment: [text: string];
     delete: [];
   }>();
+
+  const commentText = useStorage(
+    ['commentText', props.answer.question, props.answer.slug]
+      .filter(Boolean)
+      .join('-'),
+    '',
+    localStorage,
+  );
+
+  const handleCreateComment = async () => {
+    try {
+      const answer = await createAnswerMutation({
+        text: commentText.value,
+        questionId: props.question.slug,
+        parentId: props.answer.slug,
+      });
+
+      commentText.value = '';
+
+      router.push({
+        ...router.currentRoute.value,
+        hash: `#${answer.slug}`,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const { data: crosschecks } = useHomeworkCrosschecksQuery(
+    props.answer.question,
+  );
+
+  const { mutateAsync: createAnswerMutation } =
+    useHomeworkAnswerCreateMutation(queryClient);
+
+  const handleDeleteAnswer = () => {
+    router.push({
+      name: 'homework',
+      params: {
+        questionId: props.question.slug,
+      },
+    });
+  };
 </script>
 
 <template>
@@ -47,21 +106,20 @@
       <VHtmlContent :content="question.text" />
     </VDetails>
 
-    <VOwnAnswer
-      :question-id="questionId"
-      :answer-id="answerId"
-      @delete="$emit('delete')" />
+    <VExistingAnswer
+      :answer-id="answer.slug"
+      @after-delete="handleDeleteAnswer" />
   </section>
 
   <section class="flex flex-col gap-24">
     <VHeading tag="h2">{{
       isOwnAnswer ? 'Коментарии вашей работы' : 'Коментарии'
     }}</VHeading>
-    <VCrossChecks v-if="isOwnAnswer" :crosschecks="crosschecks" />
+    <VCrossChecks
+      v-if="isOwnAnswer && crosschecks"
+      :crosschecks="crosschecks" />
     <VFeedbackGuide />
-    <VSendOwnAnswer
-      :draft-key="[questionId, answerId]"
-      @send="(text) => $emit('comment', text)" />
+    <VCreateAnswer v-model="commentText" @send="handleCreateComment" />
     <template v-if="answer.descendants">
       <VThread
         v-for="comment in answer.descendants"

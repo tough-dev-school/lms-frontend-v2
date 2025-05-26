@@ -6,29 +6,27 @@
   import { useRouteQuery, useRouteParams } from '@vueuse/router';
   import {
     useHomeworkAnswerQuery,
-    useHomeworkCrosschecksQuery,
     useHomeworkQuestionQuery,
-    useHomeworkAnswerCreateMutation,
     populateAnswersCacheFromDescendants,
+    fetchHomeworkAnswer,
+    fetchHomeworkAnswers,
   } from '@/query';
   import { useQueryClient } from '@tanstack/vue-query';
-  import { watch } from 'vue';
+  import { watch, onBeforeMount } from 'vue';
+  import { useRoute, useRouter } from 'vue-router';
   import useUser from '@/stores/user';
-  import { useRouter } from 'vue-router';
 
   const answerId = useRouteQuery<string | undefined>('answerId');
   const questionId = useRouteParams<string>('questionId');
 
   const router = useRouter();
+  const route = useRoute();
   const queryClient = useQueryClient();
-  const user = useUser();
 
   const { data: question, isLoading: isQuestionLoading } =
     useHomeworkQuestionQuery(questionId);
-  const { data: answer, isLoading: isAnswersLoading } =
+  const { data: answer, isLoading: isAnswerLoading } =
     useHomeworkAnswerQuery(answerId);
-  const { data: crosschecks, isLoading: isCrosschecksLoading } =
-    useHomeworkCrosschecksQuery(questionId);
 
   watch(
     () => answer.value,
@@ -38,39 +36,6 @@
       }
     },
   );
-
-  const isLoading = computed(() => {
-    return (
-      isQuestionLoading.value ||
-      isAnswersLoading.value ||
-      isCrosschecksLoading.value
-    );
-  });
-
-  const answerLink = computed(() => {
-    if (answerId.value) {
-      const url = new URL(`${window.location.href}/homework/${questionId}`);
-      url.searchParams.set('answerId', answerId.value);
-      return url.toString();
-    }
-    return undefined;
-  });
-
-  const { mutateAsync: createAnswerMutation } =
-    useHomeworkAnswerCreateMutation(queryClient);
-
-  const handleCreateComment = async (text: string) => {
-    const answer = await createAnswerMutation({
-      text,
-      questionId: questionId.value,
-      parentId: answerId.value,
-    });
-
-    router.push({
-      ...router.currentRoute.value,
-      hash: `#${answer.slug}`,
-    });
-  };
 
   const breadcrumbs = computed(() =>
     question.value
@@ -107,51 +72,51 @@
       : undefined,
   );
 
-  const handleCreateAnswer = (answerId: string) => {
-    router.push({
-      name: 'homework',
-      params: {
-        questionId: questionId.value,
-      },
-      query: {
-        answerId,
-      },
-    });
-  };
+  onBeforeMount(async () => {
+    const queryClient = useQueryClient();
 
-  const handleDeleteAnswer = () => {
-    router.push({
-      name: 'homework',
-      params: {
-        questionId: questionId.value,
-      },
-    });
-  };
+    if (route.query.answerId) {
+      try {
+        await fetchHomeworkAnswer(queryClient, {
+          answerId: route.query.answerId as string,
+        });
+      } catch {
+        router.push({
+          ...route,
+          query: { ...route.query, answerId: undefined },
+        });
+      }
+    } else {
+      const user = useUser();
+      const answers = await fetchHomeworkAnswers(queryClient, {
+        questionId: route.params.questionId as string,
+        authorId: user.uuid,
+      });
+
+      if (answers && answers.length > 0) {
+        router.push({
+          ...route,
+          query: {
+            ...route.query,
+            answerId: answers[0]?.slug,
+          },
+        });
+      }
+    }
+  });
 </script>
 
 <template>
   <VLoggedLayout
     :title="question?.name"
     :breadcrumbs="breadcrumbs"
-    :is-loading="isLoading">
+    :is-loading="isQuestionLoading || isAnswerLoading">
     <template v-if="question">
       <VHomeworkAnswer
-        v-if="answer"
+        v-if="answer && question"
         :question="question"
-        :answer="answer"
-        :crosschecks="crosschecks || []"
-        :question-id="questionId"
-        :answer-id="answer.slug || ''"
-        :answer-link="answerLink"
-        :is-own-answer="answer.author.uuid === user.uuid"
-        @comment="handleCreateComment"
-        @delete="handleDeleteAnswer" />
-      <VHomeworkQuestion
-        v-else
-        :question="question"
-        :question-id="questionId"
-        @create="handleCreateAnswer"
-        @delete="handleDeleteAnswer" />
+        :answer="answer" />
+      <VHomeworkQuestion v-else :question="question" />
     </template>
   </VLoggedLayout>
 </template>

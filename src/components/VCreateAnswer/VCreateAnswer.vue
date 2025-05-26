@@ -1,38 +1,13 @@
 <script lang="ts" setup>
   import VTextEditor from '@/components/VTextEditor/VTextEditor.vue';
   import VButton from '@/components/VButton/VButton.vue';
-  import { ref, computed, watch } from 'vue';
-  import { useStorage } from '@vueuse/core';
-
-  const props = defineProps<{
-    initialText?: string;
-    draftKey: (string | undefined)[];
-  }>();
+  import { computed } from 'vue';
 
   const emit = defineEmits<{
-    send: [string];
+    send: [];
   }>();
 
-  const text = ref(props.initialText ?? '');
-
-  const draft = useStorage(
-    ['draft', ...props.draftKey].filter(Boolean).join('-'),
-    '',
-    localStorage,
-  );
-
-  watch(
-    () => text.value,
-    (value) => {
-      draft.value = value;
-    },
-  );
-
-  const handleSave = () => {
-    draft.value = '';
-    emit('send', text.value);
-  };
-
+  const text = defineModel<string>({ required: true });
   const isDisabled = computed(() => !(text.value.length > 0));
 </script>
 
@@ -41,9 +16,9 @@
     <VTextEditor
       v-model="text"
       class="SendOwnAnswer__Editor"
-      @send="handleSave" />
+      @send="emit('send')" />
     <div class="SendOwnAnswer__Footer">
-      <VButton :disabled="isDisabled" class="h-32" @click="handleSave">
+      <VButton :disabled="isDisabled" class="h-32" @click="emit('send')">
         Сохранить
       </VButton>
     </div>
