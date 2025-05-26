@@ -351,7 +351,9 @@ export const useHomeworkAnswerUpdateMutation = (queryClient: QueryClient) => {
       answerId: string;
       text: string;
     }) =>
-      await api.homeworkAnswersUpdate(answerId, { text: htmlToMarkdown(text) }),
+      await api.homeworkAnswersPartialUpdate(answerId, {
+        text: htmlToMarkdown(text),
+      }),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: homeworkKeys.all(),
