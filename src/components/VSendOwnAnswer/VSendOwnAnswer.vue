@@ -31,7 +31,6 @@
   const handleSave = () => {
     draft.value = '';
     emit('send', text.value);
-    text.value = '';
   };
 
   const isDisabled = computed(() => !(text.value.length > 0));
