@@ -1,12 +1,8 @@
 <script lang="ts" setup>
-  import VHeading from '@/components/VHeading/VHeading.vue';
-  import VThread from '@/components/VThread/VThread.vue';
-  import VFeedbackGuide from '@/components/VFeedbackGuide/VFeedbackGuide.vue';
-  import { computed } from 'vue';
-  import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
-  import VCrossChecks from '@/components/VCrossChecks/VCrossChecks.vue';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
-  import VOwnAnswer from '@/components/VOwnAnswer/VOwnAnswer.vue';
+  import VHomeworkQuestion from './VHomeworkQuestion.vue';
+  import VHomeworkAnswer from './VHomeworkAnswer.vue';
+  import { computed } from 'vue';
   import { useRouteQuery, useRouteParams } from '@vueuse/router';
   import {
     useHomeworkAnswerQuery,
@@ -16,8 +12,6 @@
     populateAnswersCacheFromDescendants,
   } from '@/query';
   import { useQueryClient } from '@tanstack/vue-query';
-  import VSendOwnAnswer from '@/components/VSendOwnAnswer/VSendOwnAnswer.vue';
-  import VDetails from '@/components/VDetails/VDetails.vue';
   import { watch } from 'vue';
   import useUser from '@/stores/user';
   import { useRouter } from 'vue-router';
@@ -28,10 +22,14 @@
   const router = useRouter();
   const queryClient = useQueryClient();
   const user = useUser();
+
   const { data: question, isLoading: isQuestionLoading } =
     useHomeworkQuestionQuery(questionId);
   const { data: answer, isLoading: isAnswersLoading } =
     useHomeworkAnswerQuery(answerId);
+  const { data: crosschecks, isLoading: isCrosschecksLoading } =
+    useHomeworkCrosschecksQuery(questionId);
+
   watch(
     () => answer.value,
     () => {
@@ -40,8 +38,6 @@
       }
     },
   );
-  const { data: crosschecks, isLoading: isCrosschecksLoading } =
-    useHomeworkCrosschecksQuery(questionId);
 
   const isLoading = computed(() => {
     return (
@@ -138,54 +134,23 @@
     :title="question?.name"
     :breadcrumbs="breadcrumbs"
     :is-loading="isLoading">
-    <section class="flex flex-col gap-24">
-      <div
-        v-if="answer && answer.author === user.uuid"
-        class="card mb-16 bg-accent-green">
-        <VHeading tag="h3" class="mb-8">
-          Поделитесь ссылкой на сделанную домашку
-        </VHeading>
-        <div
-          class="block select-all"
-          :to="{
-            name: 'homework-answer',
-            params: {
-              answerId: answer.slug,
-            },
-          }">
-          {{ answerLink }}
-        </div>
-      </div>
-      <template v-if="question">
-        <template v-if="answer">
-          <VDetails>
-            <template #summary> Текст задания </template>
-            <VHtmlContent :content="question.text" />
-          </VDetails>
-        </template>
-        <template v-else>
-          <VHtmlContent :content="question.text" />
-        </template>
-      </template>
-      <VOwnAnswer
-        :answer-id="answer?.slug"
+    <template v-if="question">
+      <VHomeworkAnswer
+        v-if="answer"
+        :question="question"
+        :answer="answer"
+        :crosschecks="crosschecks || []"
+        :question-id="questionId"
+        :answer-id="answer.slug || ''"
+        :answer-link="answerLink"
+        :is-own-answer="answer.author.uuid === user.uuid"
+        @comment="handleCreateComment" />
+      <VHomeworkQuestion
+        v-else
+        :question="question"
         :question-id="questionId"
         @create="handleCreateAnswer"
         @delete="handleDeleteAnswer" />
-    </section>
-    <section v-if="question && answer" class="flex flex-col gap-24">
-      <VHeading tag="h2">Коментарии вашей работы</VHeading>
-      <VCrossChecks v-if="crosschecks" :crosschecks="crosschecks" />
-      <VFeedbackGuide />
-      <VSendOwnAnswer
-        :draft-key="[questionId, answerId]"
-        @send="handleCreateComment" />
-      <template v-if="answer.descendants">
-        <VThread
-          v-for="comment in answer.descendants"
-          :key="comment.slug"
-          :answer-id="comment.slug" />
-      </template>
-    </section>
+    </template>
   </VLoggedLayout>
 </template>
