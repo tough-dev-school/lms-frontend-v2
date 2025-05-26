@@ -144,7 +144,8 @@
         :answer-id="answer.slug || ''"
         :answer-link="answerLink"
         :is-own-answer="answer.author.uuid === user.uuid"
-        @comment="handleCreateComment" />
+        @comment="handleCreateComment"
+        @delete="handleDeleteAnswer" />
       <VHomeworkQuestion
         v-else
         :question="question"

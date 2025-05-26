@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-  import VHeading from '@/components/VHeading/VHeading.vue';
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
   import VOwnAnswer from '@/components/VOwnAnswer/VOwnAnswer.vue';
   import type { QuestionDetail } from '@/api/generated-api';
@@ -12,8 +11,8 @@
   defineProps<Props>();
 
   defineEmits<{
-    (e: 'create', answerId: string): void;
-    (e: 'delete'): void;
+    create: [answerId: string];
+    delete: [];
   }>();
 </script>
 

@@ -6,6 +6,7 @@
   import VCrossChecks from '@/components/VCrossChecks/VCrossChecks.vue';
   import VSendOwnAnswer from '@/components/VSendOwnAnswer/VSendOwnAnswer.vue';
   import VDetails from '@/components/VDetails/VDetails.vue';
+  import VOwnAnswer from '@/components/VOwnAnswer/VOwnAnswer.vue';
   import type {
     QuestionDetail,
     AnswerTree,
@@ -25,7 +26,8 @@
   defineProps<Props>();
 
   defineEmits<{
-    (e: 'comment', text: string): void;
+    comment: [text: string];
+    delete: [];
   }>();
 </script>
 
@@ -44,11 +46,18 @@
       <template #summary> Текст задания </template>
       <VHtmlContent :content="question.text" />
     </VDetails>
+
+    <VOwnAnswer
+      :question-id="questionId"
+      :answer-id="answerId"
+      @delete="$emit('delete')" />
   </section>
 
   <section class="flex flex-col gap-24">
-    <VHeading tag="h2">Коментарии вашей работы</VHeading>
-    <VCrossChecks :crosschecks="crosschecks" />
+    <VHeading tag="h2">{{
+      isOwnAnswer ? 'Коментарии вашей работы' : 'Коментарии'
+    }}</VHeading>
+    <VCrossChecks v-if="isOwnAnswer" :crosschecks="crosschecks" />
     <VFeedbackGuide />
     <VSendOwnAnswer
       :draft-key="[questionId, answerId]"
