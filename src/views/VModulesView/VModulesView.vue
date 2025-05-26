@@ -56,8 +56,8 @@
         <template #pill-calendar>
           <div
             class="font-medium text-center flex justify-center items-center flex-col">
-            <div>Календарь</div>
-            <div>
+            <div>Календарь событий</div>
+            <div class="flex gap-16">
               <a
                 v-if="study?.calendar_google"
                 class="link-bright"
