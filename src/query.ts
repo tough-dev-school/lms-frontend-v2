@@ -387,6 +387,7 @@ export const useHomeworkAnswerSendImageMutation = () => {
       const formData = new FormData();
       formData.append('image', image);
 
+      // @ts-expect-error
       return await api.homeworkAnswersImageCreate(formData, {
         type: ContentType.FormData,
       });
@@ -429,6 +430,8 @@ export const useUpdateUserAvatarMutation = (queryClient: QueryClient) => {
       } else {
         formData.append('avatar', '');
       }
+
+      // @ts-expect-error
       return await api.usersMePartialUpdate(formData, {
         type: ContentType.FormData,
       });

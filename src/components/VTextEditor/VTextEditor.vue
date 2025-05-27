@@ -71,7 +71,7 @@
           isImageLoading.value = true;
           const file = event.dataTransfer.files[0];
 
-          sendImage({ image: file }).then(({ image }) => {
+          sendImage(file).then(({ image }) => {
             const { schema } = view.state;
             const coordinates = view.posAtCoords({
               left: event.clientX,
@@ -146,7 +146,7 @@
     if (event.target) {
       const file = (event.target as HTMLInputElement).files?.[0];
       if (file) {
-        const { image } = await sendImage({ image: file });
+        const { image } = await sendImage(file);
         editor.commands.setImage({ src: image });
       }
     }
