@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { computed } from 'vue';
-  import getName from '@/utils/getName';
+  import { getName } from '@/utils/getName';
   import type { AnswerCrossCheck } from '@/api/generated-api';
 
   const props = defineProps<{

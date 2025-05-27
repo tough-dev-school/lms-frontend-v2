@@ -13,7 +13,7 @@
 <script lang="ts" setup>
   import VAvatar from '@/components/VAvatar/VAvatar.vue';
   import { computed } from 'vue';
-  import getName from '@/utils/getName';
+  import { getName } from '@/utils/getName';
   import VButton from '@/components/VButton/VButton.vue';
 
   const props = withDefaults(defineProps<VReactionProps>(), {

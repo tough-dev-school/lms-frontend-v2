@@ -3,7 +3,7 @@ import { mount, VueWrapper } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
 import VReaction, { type VReactionProps } from './VReaction.vue';
 import { ALLOWED_REACTIONS } from '@/components/VReactions/VReactions.vue';
-import getName from '@/utils/getName';
+import { getName } from '@/utils/getName';
 import type VAvatar from '@/components/VAvatar/VAvatar.vue';
 import { times } from 'lodash-es';
 import { mockReactionDetailed } from '@/mocks/mockReactionDetailed';

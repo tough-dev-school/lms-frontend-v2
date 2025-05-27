@@ -1,7 +1,7 @@
 import { vi, describe, beforeEach, expect, test } from 'vitest';
 import { VueWrapper, mount, RouterLinkStub } from '@vue/test-utils';
 import VAnswer from '@/components/VAnswer/VAnswer.vue';
-import getName from '@/utils/getName';
+import { getName } from '@/utils/getName';
 import type VAvatar from '@/components/VAvatar/VAvatar.vue';
 import type VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
 import dayjs from 'dayjs';

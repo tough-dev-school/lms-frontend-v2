@@ -5,7 +5,7 @@
   import { useRouter } from 'vue-router';
   import { useUserQuery } from '@/query';
   import useAuth from '@/stores/auth';
-  import getName from '@/utils/getName';
+  import { getName } from '@/utils/getName';
 
   export interface ProfileMenuItem {
     label: string;

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import VAvatar from '@/components/VAvatar/VAvatar.vue';
   import { relativeDate } from '@/utils/date';
-  import getName from '@/utils/getName';
+  import { getName } from '@/utils/getName';
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
   import { computed, ref } from 'vue';
   import VReactions from '@/components/VReactions/VReactions.vue';
@@ -41,7 +41,7 @@
 </script>
 
 <template>
-  <div v-if="answer" class="flex flex-col gap-8">
+  <div class="flex flex-col gap-8">
     <div class="flex items-center gap-8">
       <VAvatar
         data-testid="avatar"
