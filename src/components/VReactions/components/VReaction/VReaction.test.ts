@@ -22,7 +22,6 @@ const defaultProps = {
 
 const mountComponent = (props: Partial<VReactionProps> = {}) => {
   return mount(VReaction, {
-    shallow: true,
     props: { ...defaultProps, ...props },
   });
 };
