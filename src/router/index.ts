@@ -124,22 +124,12 @@ export const routes = [
   },
   {
     path: '/homework/questions/:questionId',
-    redirect: (to: RouteLocationNormalized) => {
-      return {
-        name: 'homework',
-        params: { questionId: to.params.questionId as string },
-      };
-    },
+    redirect: '/homework/:questionId',
   },
   // #FIXME this to support old route used in Django Admin
   {
     path: '/homework/question-admin/:questionId',
-    redirect: (to: RouteLocationNormalized) => {
-      return {
-        name: 'homework',
-        params: { questionId: to.params.questionId as string },
-      };
-    },
+    redirect: '/homework/:questionId',
   },
   {
     path: '/certificates',
@@ -172,7 +162,7 @@ router.beforeEach(
       return { name: 'home' };
     }
 
-    // Redirect to exisiting route if route does not exist
+    // Redirect to existing route if route does not exist
     if (!to.name) {
       return { name: 'home' };
     }
