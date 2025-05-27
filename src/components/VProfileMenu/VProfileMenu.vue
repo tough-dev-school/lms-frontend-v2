@@ -75,6 +75,10 @@
       id: 'logout',
     },
   ]);
+
+  const fullName = computed(() =>
+    getName(user.value?.first_name, user.value?.last_name),
+  );
 </script>
 
 <template>
@@ -91,7 +95,7 @@
           data-testid="avatar" />
         <ul class="flex flex-col items-start">
           <li class="text-black dark:text-white" data-testid="name">
-            {{ getName(user?.first_name, user?.last_name) }}
+            {{ fullName }}
           </li>
           <li class="text-sub text-gray" data-testid="username">
             {{ user?.username }}

@@ -5,13 +5,11 @@
   import VButton from '@/components/VButton/VButton.vue';
   import { useUserQuery, useUpdateUserAvatarMutation } from '@/query';
   import { useQueryClient } from '@tanstack/vue-query';
-  import useToasts from '@/stores/toasts';
 
   const queryClient = useQueryClient();
   const { data: user } = useUserQuery();
-  const { mutateAsync: updateAvatar } =
+  const { mutateAsync: updateAvatar, isPending: isUpdatePending } =
     useUpdateUserAvatarMutation(queryClient);
-  const toasts = useToasts();
 
   const avatar = ref();
   const file = ref();
@@ -28,8 +26,6 @@
 
   const saveProfile = async () => {
     await updateAvatar(file.value || null);
-    toasts.addMessage('Данные сохранены!', 'success');
-    update();
   };
 
   const showPreview = async (cropperInstance: any) => {
@@ -69,9 +65,9 @@
     <template #footer>
       <VButton
         data-testid="save"
-        :disabled="isSaveButtonDisabled"
+        :disabled="isSaveButtonDisabled || isUpdatePending"
         @click="saveProfile"
-        >Сохранить</VButton
+        >{{ isUpdatePending ? 'Сохраняется...' : 'Сохранить' }}</VButton
       >
     </template>
   </VCard>

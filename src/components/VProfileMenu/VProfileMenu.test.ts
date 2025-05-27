@@ -1,7 +1,6 @@
 import { vi, describe, beforeEach, expect, test } from 'vitest';
 import { RouterLinkStub, mount, VueWrapper } from '@vue/test-utils';
 import VProfileMenu from '@/components/VProfileMenu/VProfileMenu.vue';
-import useAuth from '@/stores/auth';
 import type VAvatar from '@/components/VAvatar/VAvatar.vue';
 import { faker } from '@faker-js/faker';
 import {
@@ -9,6 +8,7 @@ import {
   QueryClient,
   type VueQueryPluginOptions,
 } from '@tanstack/vue-query';
+import { createTestingPinia } from '@pinia/testing';
 
 const routerPushMock = vi.fn();
 
@@ -17,6 +17,18 @@ vi.mock('vue-router', () => ({
     push: routerPushMock,
   }),
 }));
+
+vi.mock('@/query', async () => {
+  const { mockUserSafe } = await import('@/mocks/mockUserSafe');
+  const { ref } = await import('vue');
+  const mockData = ref(mockUserSafe({ seed: 1 }));
+
+  return {
+    useUserQuery: () => ({
+      data: mockData,
+    }),
+  };
+});
 
 const defaultData = {
   uuid: faker.string.uuid(),
@@ -31,6 +43,7 @@ const createWrapper = () => {
     defaultOptions: {
       queries: {
         retry: false,
+        staleTime: Infinity,
       },
     },
   });
@@ -44,7 +57,12 @@ const createWrapper = () => {
   return mount(VProfileMenu, {
     shallow: true,
     global: {
-      plugins: [[VueQueryPlugin, options]],
+      plugins: [
+        [VueQueryPlugin, options],
+        createTestingPinia({
+          createSpy: vi.fn,
+        }),
+      ],
       stubs: {
         RouterLink: RouterLinkStub,
       },
