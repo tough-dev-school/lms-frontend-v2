@@ -1,39 +1,47 @@
 import { vi, describe, beforeEach, expect, test } from 'vitest';
-import { createTestingPinia } from '@pinia/testing';
 import { VueWrapper, mount, RouterLinkStub } from '@vue/test-utils';
 import VAnswer from '@/components/VAnswer/VAnswer.vue';
-import getName from '@/utils/getName';
+import { getName } from '@/utils/getName';
 import type VAvatar from '@/components/VAvatar/VAvatar.vue';
 import type VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
 import dayjs from 'dayjs';
 import { cloneDeep } from 'lodash-es';
 import { faker } from '@faker-js/faker';
-import { mockAnswer } from '@/mocks/mockAnswer';
+import { mockAnswer } from '@/mocks/mockAnswerDetailed';
+import { mockUserSafe } from '@/mocks/mockUserSafe';
 
 const uuid = faker.string.uuid();
 
 const defaultProps = {
   answer: mockAnswer(),
+  user: mockUserSafe({
+    payload: {
+      uuid,
+    },
+  }),
 };
 
 vi.mock('@formkit/auto-animate/vue', () => ({
   useAutoAnimate: () => [null],
 }));
 
+vi.mock('@/query', () => ({
+  useRemoveHomeworkReactionMutation: () => ({
+    mutateAsync: vi.fn(),
+  }),
+  useAddHomeworkReactionMutation: () => ({
+    mutateAsync: vi.fn(),
+  }),
+}));
+
+vi.mock('@tanstack/vue-query', () => ({
+  useQueryClient: () => ({}),
+}));
+
 const defaultMountOptions = {
   props: defaultProps,
   shallow: true,
   global: {
-    plugins: [
-      createTestingPinia({
-        createSpy: vi.fn,
-        initialState: {
-          user: {
-            uuid,
-          },
-        },
-      }),
-    ],
     stubs: {
       VCard: false,
       RouterLink: RouterLinkStub,
@@ -63,7 +71,7 @@ describe('VAnswer', () => {
     );
   };
   const getOwnerBadgeWrapper = () => {
-    return wrapper.find('[data-testid="own-badge"]');
+    return wrapper.find('.VAnswer__Name_Own');
   };
 
   test('props to display avatar passed to VAvatar', () => {
@@ -73,9 +81,9 @@ describe('VAnswer', () => {
   });
 
   test('answer has author name', () => {
-    const { firstName, lastName } = defaultProps.answer.author;
+    const { first_name, last_name } = defaultProps.answer.author;
 
-    expect(getNameWrapper().text()).toBe(getName(firstName, lastName));
+    expect(getNameWrapper().text()).toBe(getName(first_name, last_name));
   });
 
   test('answer has relative date', () => {

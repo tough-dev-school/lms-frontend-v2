@@ -3,10 +3,9 @@
   import { onClickOutside } from '@vueuse/core';
   import VAvatar from '@/components/VAvatar/VAvatar.vue';
   import { useRouter } from 'vue-router';
-  import useUser from '@/stores/user';
+  import { useUserQuery } from '@/query';
   import useAuth from '@/stores/auth';
-  import useStudies from '@/stores/studies';
-  import { storeToRefs } from 'pinia';
+  import { getName } from '@/utils/getName';
 
   export interface ProfileMenuItem {
     label: string;
@@ -18,35 +17,18 @@
   const isOpen = ref(false);
   const menu = ref(null);
   const router = useRouter();
-  const user = useUser();
+  const { data: user } = useUserQuery();
   const auth = useAuth();
-  const studies = useStudies();
-  const { username, name, uuid: userId } = storeToRefs(user);
 
   onClickOutside(menu, () => (isOpen.value = false));
 
   const hasCertificateData = computed(
     () =>
-      !!user.firstName &&
-      !!user.lastName &&
-      !!user.firstNameEn &&
-      !!user.lastNameEn,
+      !!user.value?.first_name &&
+      !!user.value?.last_name &&
+      !!user.value?.first_name_en &&
+      !!user.value?.last_name_en,
   );
-
-  const studiesAsMenuItems = computed<ProfileMenuItem[]>(() => {
-    return studies.items.slice(0, 3).map((study) => {
-      return {
-        label: study.name.replace(/\(.*\)/, '').trim(),
-        action: () => {
-          router.push({
-            name: 'materials',
-            params: { id: study.homePageSlug },
-          });
-        },
-        id: `material-${study.id}`,
-      };
-    });
-  });
 
   const handleItemClick = (action: () => void) => {
     action();
@@ -61,7 +43,6 @@
       },
       id: 'home',
     },
-    ...studiesAsMenuItems.value,
     {
       label: 'Сертификаты',
       action: () => {
@@ -87,37 +68,40 @@
     {
       label: 'Выйти',
       action: () => {
-        auth.resetAuth();
+        auth.removeToken();
         router.push({ name: 'login' });
         isOpen.value = false;
       },
       id: 'logout',
     },
   ]);
+
+  const fullName = computed(() =>
+    getName(user.value?.first_name, user.value?.last_name),
+  );
 </script>
 
 <template>
   <div ref="menu" class="relative">
-    <div
-      class="flex cursor-pointer items-center rounded-8 p-8 transition-colors hover:bg-gray hover:bg-opacity-10"
-      :class="{ VProfileMenu__Button_Active: isOpen }"
-      data-testid="button"
-      @click="isOpen = !isOpen">
-      <VAvatar
-        :user-id="userId"
-        class="mr-8"
-        :image="user.avatar"
-        data-testid="avatar" />
-      <ul class="text-sub">
-        <li
-          class="leading-tight text-black dark:text-darkmode-white"
-          data-testid="name">
-          {{ name }}
-        </li>
-        <li class="leading-tight text-gray" data-testid="username">
-          {{ username }}
-        </li>
-      </ul>
+    <div class="flex items-center gap-8">
+      <button
+        class="flex items-center gap-8 rounded-8 p-8 hover:bg-gray hover:bg-opacity-10"
+        :class="{ VProfileMenu__Button_Active: isOpen }"
+        data-testid="button"
+        @click="isOpen = !isOpen">
+        <VAvatar
+          :user-id="user?.uuid ?? ''"
+          :image="user?.avatar || undefined"
+          data-testid="avatar" />
+        <ul class="flex flex-col items-start">
+          <li class="text-black dark:text-white" data-testid="name">
+            {{ fullName }}
+          </li>
+          <li class="text-sub text-gray" data-testid="username">
+            {{ user?.username }}
+          </li>
+        </ul>
+      </button>
     </div>
     <Transition name="fade">
       <nav
@@ -132,7 +116,7 @@
               class="VProfileMenu__Item"
               :data-testid="item.id"
               @click="handleItemClick(item.action)">
-              <span class="link">{{ item.label }}</span>
+              <span>{{ item.label }}</span>
             </button>
           </li>
         </ul>
@@ -146,7 +130,7 @@
     @apply bg-gray bg-opacity-10;
   }
   .VProfileMenu__Item {
-    @apply block flex min-h-[32px] w-full cursor-pointer items-center whitespace-nowrap px-8 text-left hover:bg-gray hover:bg-opacity-10;
+    @apply flex min-h-[32px] w-full cursor-pointer items-center whitespace-nowrap px-8 text-left hover:bg-gray hover:bg-opacity-10;
   }
 
   .fade-enter-active,

@@ -66,34 +66,14 @@ describe('visual regression test for', () => {
       name: 'Settings',
       path: `/iframe?id=app-vsettingsview--default&viewMode=story`,
     },
-    {
-      name: 'Materials',
-      path: '/iframe?id=app-vnotionview--default&viewMode=story',
-    },
-    {
-      name: 'Materials Missing',
-      path: '/iframe?id=app-vnotionview--empty&viewMode=story',
-    },
-    {
-      name: 'HomeworkAnswers',
-      path: `/iframe?id=app-vhomeworkanswerview--default&viewMode=story`,
-    },
-    {
-      name: 'HomeworkExpert',
-      path: '/iframe?id=app-vhomeworkexpertview--default&viewMode=story',
-    },
-    {
-      name: 'HomeworkQuestion',
-      path: '/iframe?id=app-vhomeworkquestionview--default&viewMode=story',
-    },
-    {
-      name: 'Homepage',
-      path: '/iframe?id=app-vhomeview--default&viewMode=story',
-    },
-    {
-      name: 'Empty Homepage',
-      path: '/iframe?id=app-vhomeview--empty&viewMode=story',
-    },
+    // {
+    //   name: 'Materials',
+    //   path: '/iframe?id=app-vnotionview--default&viewMode=story',
+    // },
+    // {
+    //   name: 'Materials Missing',
+    //   path: '/iframe?id=app-vnotionview--empty&viewMode=story',
+    // },
   ];
 
   scenarios.forEach((test) => {

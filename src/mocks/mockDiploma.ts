@@ -1,9 +1,9 @@
 // #FIXME Split into separate modules
 
 import { faker } from '@faker-js/faker';
-import type { Diploma } from '@/types/diplomas';
-import { DiplomaLocale, mockLocale } from './mockLocale';
-import { mockAuthor, STATIC_AUTHOR_1 } from './mockAuthor';
+import { type Diploma, LanguageEnum } from '@/api/generated-api';
+import { mockLocale } from './mockLocale';
+import { mockUserSafe, STATIC_AUTHOR_1 } from './mockUserSafe';
 
 export const mockDiplomaData = (): Diploma => {
   return {
@@ -13,13 +13,13 @@ export const mockDiplomaData = (): Diploma => {
     slug: faker.string.uuid(),
     language: mockLocale(),
     image: '/diploma-mock.jpg',
-    student: mockAuthor(),
+    student: mockUserSafe(),
     url: faker.internet.url(),
   };
 };
 
 export const mockDiplomaSet = (payload: Diploma): Diploma[] => {
-  return Object.values(DiplomaLocale).map((locale) => {
+  return Object.values(LanguageEnum).map((locale) => {
     return {
       ...payload,
       language: locale,

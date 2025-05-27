@@ -1,5 +1,6 @@
 <script lang="ts" setup>
   import { TrashXIcon, PencilPlusIcon } from 'vue-tabler-icons';
+  import VButton from '../VButton/VButton.vue';
 
   const emit = defineEmits<{
     delete: [];
@@ -9,11 +10,21 @@
 
 <template>
   <div class="flex items-center gap-8">
-    <button class="answer-action" data-testid="delete" @click="emit('delete')">
+    <VButton
+      appearance="secondary"
+      size="inline"
+      class="h-32 px-16"
+      data-testid="delete"
+      @click="emit('delete')">
       <TrashXIcon />
-    </button>
-    <button class="answer-action" data-testid="edit" @click="emit('edit')">
+    </VButton>
+    <VButton
+      appearance="secondary"
+      size="inline"
+      class="h-32 px-16"
+      data-testid="edit"
+      @click="emit('edit')">
       <PencilPlusIcon />
-    </button>
+    </VButton>
   </div>
 </template>

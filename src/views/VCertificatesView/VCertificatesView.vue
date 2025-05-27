@@ -1,14 +1,14 @@
 <script lang="ts" setup>
-  import useDiplomas from '@/stores/diplomas';
-  import VHeading from '@/components/VHeading/VHeading.vue';
   import VCertificateCard from '@/components/VCertificateCard/VCertificateCard.vue';
   import { computed } from 'vue';
   import { groupBy } from 'lodash-es';
+  import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
+  import { useDiplomasQuery } from '@/query';
 
-  const diplomas = useDiplomas();
+  const { data: diplomas } = useDiplomasQuery();
 
   const groupedDiplomas = computed(() => {
-    const gorups = groupBy(diplomas.items, (diploma) => diploma.course.name);
+    const gorups = groupBy(diplomas.value, (diploma) => diploma.course.name);
 
     return Object.keys(gorups).map((key) => ({
       course: key,
@@ -18,21 +18,18 @@
 </script>
 
 <template>
-  <main class="grid gap-24">
-    <VHeading tag="h1">Мои сертификаты</VHeading>
-    <div class="grid gap-24">
-      <VCertificateCard
-        v-for="group in groupedDiplomas"
-        :key="group.course"
-        data-testid="certificate"
-        :certificates="group.certificates"
-        :course="group.course" />
-      <li
-        v-if="groupedDiplomas.length === 0"
-        data-testid="empty"
-        class="flex h-128 flex-grow items-center justify-center rounded border border-dashed border-gray text-center text-gray">
-        Нет сертификатов
-      </li>
-    </div>
-  </main>
+  <VLoggedLayout title="Мои сертификаты">
+    <VCertificateCard
+      v-for="group in groupedDiplomas"
+      :key="group.course"
+      data-testid="certificate"
+      :certificates="group.certificates"
+      :course="group.course" />
+    <li
+      v-if="groupedDiplomas.length === 0"
+      data-testid="empty"
+      class="flex h-128 flex-grow items-center justify-center rounded border border-dashed border-gray text-center text-gray">
+      Нет сертификатов
+    </li>
+  </VLoggedLayout>
 </template>

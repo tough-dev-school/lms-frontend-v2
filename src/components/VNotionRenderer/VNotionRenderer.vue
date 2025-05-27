@@ -1,6 +1,9 @@
 <script lang="ts">
+  import type { BlockMap } from '@/query/types/materials';
+
   export interface VNotionViewProps {
-    blockMap: any;
+    blockMap: BlockMap;
+    materialId: string;
   }
 </script>
 
@@ -9,7 +12,6 @@
   import { NotionRenderer } from 'vue-notion';
   import { onMounted } from 'vue';
   import { useEventListener } from '@vueuse/core';
-  import { useRoute } from 'vue-router';
 
   import 'prismjs';
   import 'prismjs/themes/prism.css';
@@ -20,12 +22,10 @@
   import 'prismjs/components/prism-c.js';
   import 'prismjs/components/prism-cpp.js';
 
-  const mapPageUrl = (id: string) => `/materials/${id}`;
-  const mapBlockId = (id: string) => `${route.params.id}-${id}}`;
+  const props = defineProps<VNotionViewProps>();
 
-  const route = useRoute();
-
-  defineProps<VNotionViewProps>();
+  const mapPageUrl = (materialId: string) => `/materials/${materialId}`;
+  const mapBlockId = (id: string) => `${props.materialId}-${id}}`;
 
   onMounted(() => {
     /**
@@ -337,7 +337,7 @@
     height: 30px;
     margin: 1px 0px;
     transition: background 120ms ease-in 0s;
-    @apply dark:text-darkmode-white;
+    @apply dark:text-white;
   }
   .notion-page-link:hover {
     background: rgba(55, 53, 47, 0.08);

@@ -3,19 +3,20 @@ import { mount, VueWrapper } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
 import VReaction, { type VReactionProps } from './VReaction.vue';
 import { ALLOWED_REACTIONS } from '@/components/VReactions/VReactions.vue';
-import { mockReactionsData } from '../../mocks/mockReactionsData';
-import getName from '@/utils/getName';
+import { getName } from '@/utils/getName';
 import type VAvatar from '@/components/VAvatar/VAvatar.vue';
+import { times } from 'lodash-es';
+import { mockReactionDetailed } from '@/mocks/mockReactionDetailed';
+import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
 
 const emoji = faker.helpers.arrayElement(ALLOWED_REACTIONS);
 const userId = faker.string.uuid();
 
 const defaultProps = {
   emoji,
-  reactions: mockReactionsData().map((reaction) => {
-    reaction.emoji = emoji;
-    return reaction;
-  }),
+  reactions: times(faker.number.int({ min: 1, max: 10 }), () =>
+    mockReactionDetailed(),
+  ),
   disabled: false,
   userId,
 };
@@ -24,6 +25,12 @@ const mountComponent = (props: Partial<VReactionProps> = {}) => {
   return mount(VReaction, {
     shallow: true,
     props: { ...defaultProps, ...props },
+    global: {
+      stubs: {
+        VButton: VTransparentComponent,
+        VAvatar: VTransparentComponent,
+      },
+    },
   });
 };
 
@@ -86,8 +93,8 @@ describe('VReaction', () => {
   test('displays tooltip on hover', () => {
     expect(getAuthorWrapper().attributes('title')).toBe(
       getName(
-        defaultProps.reactions[0].author.firstName,
-        defaultProps.reactions[0].author.lastName,
+        defaultProps.reactions[0].author.first_name,
+        defaultProps.reactions[0].author.last_name,
       ),
     );
   });
@@ -97,7 +104,7 @@ describe('VReaction', () => {
   });
 
   test('passes props to avatar', () => {
-    expect(getAvatarWrappers()[0].props('userId')).toBe(
+    expect(getAvatarWrappers()[0].attributes('user-id')).toBe(
       defaultProps.reactions[0].author.uuid,
     );
   });
@@ -105,6 +112,6 @@ describe('VReaction', () => {
   test('own avatar is always last', () => {
     wrapper = mountWithOwn();
 
-    expect(getLastAvatar().props('userId')).toBe(userId);
+    expect(getLastAvatar().attributes('user-id')).toBe(userId);
   });
 });

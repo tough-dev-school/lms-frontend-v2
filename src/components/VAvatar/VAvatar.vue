@@ -4,7 +4,7 @@
 
   export interface Props {
     userId: string;
-    image?: string;
+    image?: string | null;
     size?: 'sm' | 'md';
   }
 

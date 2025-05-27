@@ -7,6 +7,7 @@ import type VTextInput from '@/components/VTextInput/VTextInput.vue';
 import { faker } from '@faker-js/faker';
 import useAuth from '@/stores/auth';
 import { createTestingPinia } from '@pinia/testing';
+import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
 
 const defaultProps = {};
 
@@ -35,6 +36,7 @@ describe('VLoginResetView', () => {
           }),
         ],
         stubs: {
+          VPublicLayout: VTransparentComponent,
           VCard: false,
         },
       },

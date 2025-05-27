@@ -42,7 +42,11 @@
 
 <template>
   <label class="w-full">
-    <div class="mb-8 text-gray empty:hidden" data-testid="label">
+    <div
+      v-if="$slots.label || label"
+      class="mb-8"
+      :class="{ 'text-red': error }"
+      data-testid="label">
       <slot name="label">
         {{ label }}
       </slot>
@@ -50,7 +54,7 @@
     <input
       :type="type"
       v-bind="$attrs"
-      class="leading-1.5 block h-module w-full rounded border border-gray bg-offwhite p-module px-16 text-black placeholder:text-gray focus:border-blue focus:outline-none dark:bg-darkmode-white"
+      class="leading-1.5 block h-module w-full rounded-8 border bg-white p-module text-black placeholder:text-gray focus:border-blue focus:outline-none border-white"
       :class="{
         'border-red': error,
       }"

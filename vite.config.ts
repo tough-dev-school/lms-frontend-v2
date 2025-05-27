@@ -19,7 +19,7 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
-  test: {
-    // ./tests/*.config.ts
-  },
+  // test: {
+  //  go to ./tests/*.config.ts
+  // },
 });

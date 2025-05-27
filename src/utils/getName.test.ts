@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { describe, expect, test } from 'vitest';
-import getName from './getName';
+import { getName } from './getName';
 
 const firstName = faker.person.firstName();
 const lastName = faker.person.lastName();

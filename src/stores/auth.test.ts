@@ -72,7 +72,7 @@ describe('toasts store', () => {
   test('resetAuth resets token', () => {
     auth.token = faker.string.uuid();
 
-    auth.resetAuth();
+    auth.removeToken();
 
     expect(auth.token).toBe(undefined);
   });

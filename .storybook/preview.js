@@ -1,12 +1,13 @@
 import '../src/fonts.css';
 import '../src/style.css';
-
 import { setup } from '@storybook/vue3';
 import { createPinia } from 'pinia';
 import { routes } from '@/router';
 import FloatingVue from 'floating-vue';
 import 'floating-vue/dist/style.css';
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createMemoryHistory } from 'vue-router';
+import { VueQueryPlugin } from '@tanstack/vue-query';
+import { vueQueryConfig } from '@/main';
 
 const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -46,12 +47,13 @@ const parameters = {
 setup((app) => {
   app.use(
     createRouter({
-      history: createWebHistory(import.meta.env.BASE_URL),
+      history: createMemoryHistory(import.meta.env.BASE_URL),
       routes,
     }),
   );
   app.use(FloatingVue);
   app.use(createPinia());
+  app.use(VueQueryPlugin, vueQueryConfig);
 });
 
 /** @type { import('@storybook/vue3').Preview } */

@@ -1,10 +1,13 @@
 import axios from './index';
-import type { AuthToken } from '@/types/auth';
+import type { AuthToken } from '@/types';
 
 type LoginResponse = {
   token: AuthToken;
 };
 
+/**
+ * @deprecated use api/index.ts instead
+ */
 export const loginWithCredentials = async (
   username: string,
   password: string,
@@ -18,24 +21,36 @@ export const loginWithCredentials = async (
   return (await axios.post(url, data)).data as LoginResponse;
 };
 
+/**
+ * @deprecated use api/index.ts instead
+ */
 export const sendLoginLink = async (email: string): Promise<void> => {
   const url = `/api/v2/auth/passwordless-token/request/${email.toLowerCase()}/`;
 
   await axios.get(url);
 };
 
+/**
+ * @deprecated use api/index.ts instead
+ */
 export const loginWithLink = async (token: string): Promise<LoginResponse> => {
   const url = `/api/v2/auth/passwordless-token/${token}`;
 
   return (await axios.get(url)).data as LoginResponse;
 };
 
+/**
+ * @deprecated use api/index.ts instead
+ */
 export const loginWithUserId = async (userId: string) => {
   const url = `/api/v2/auth/as/${userId}/`;
 
   return (await axios.get(url)).data as LoginResponse;
 };
 
+/**
+ * @deprecated use api/index.ts instead
+ */
 export const changePassword = async (
   newPassword1: string,
   newPassword2: string,
@@ -48,12 +63,18 @@ export const changePassword = async (
   });
 };
 
+/**
+ * @deprecated use api/index.ts instead
+ */
 export const requestReset = async (email: string) => {
   const url = `/api/v2/auth/password/reset/`;
 
   return await axios.post(url, { email });
 };
 
+/**
+ * @deprecated use api/index.ts instead
+ */
 export const resetPassword = async (
   newPassword1: string,
   newPassword2: string,

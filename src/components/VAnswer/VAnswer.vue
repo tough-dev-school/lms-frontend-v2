@@ -1,48 +1,38 @@
-<script lang="ts">
-  export interface VAnswerProps {
-    answer: Answer;
-  }
-</script>
-
 <script lang="ts" setup>
   import VAvatar from '@/components/VAvatar/VAvatar.vue';
   import { relativeDate } from '@/utils/date';
-  import getName from '@/utils/getName';
-  import type { Answer } from '@/types/homework';
-  import VCard from '@/components/VCard/VCard.vue';
+  import { getName } from '@/utils/getName';
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
   import { computed, ref } from 'vue';
-  import useUser from '@/stores/user';
   import VReactions from '@/components/VReactions/VReactions.vue';
-  import type { ReactionEmoji } from '@/types/homework';
-  import useHomework from '@/stores/homework';
   import { MoodHappyIcon } from 'vue-tabler-icons';
   import { useAutoAnimate } from '@formkit/auto-animate/vue';
+  import VButton from '@/components/VButton/VButton.vue';
+  import {
+    useRemoveHomeworkReactionMutation,
+    useAddHomeworkReactionMutation,
+  } from '@/query';
+  import { useQueryClient } from '@tanstack/vue-query';
+  import type { AnswerDetailed, UserSafe } from '@/api/generated-api';
 
-  const emit = defineEmits<{
-    update: [];
-    mounted: [slug: string]; //# FIXME Does nothing — needed to fix interface mismatch type error
+  const props = defineProps<{
+    answer: AnswerDetailed;
+    user: UserSafe;
   }>();
 
-  const homeworkStore = useHomework();
-  const userStore = useUser();
-  const props = defineProps<VAnswerProps>();
-
   const isOwn = computed(() => {
-    return props.answer.author.uuid === userStore.uuid;
+    return props.answer.author.uuid === props.user.uuid;
   });
 
   const isPaletteOpen = ref(false);
 
-  const addReaction = (emoji: ReactionEmoji, slug: string) => {
-    homeworkStore.addReaction({ answerId: props.answer.slug, emoji, slug });
-    emit('update');
-  };
+  const queryClient = useQueryClient();
 
-  const removeReaction = (reactionId: string) => {
-    homeworkStore.removeReaction(props.answer.slug, reactionId);
-    emit('update');
-  };
+  const { mutateAsync: sendAddReaction } =
+    useAddHomeworkReactionMutation(queryClient);
+
+  const { mutateAsync: sendRemoveReaction } =
+    useRemoveHomeworkReactionMutation(queryClient);
 
   const togglePalette = () => (isPaletteOpen.value = !isPaletteOpen.value);
   const closePalette = () => (isPaletteOpen.value = false);
@@ -51,51 +41,64 @@
 </script>
 
 <template>
-  <VCard class="pb-32">
-    <div class="mb-16 flex items-center gap-8">
+  <div class="flex flex-col gap-8">
+    <div class="flex items-center gap-8">
       <VAvatar
         data-testid="avatar"
         :user-id="answer.author.uuid"
-        :image="answer.author.avatar" />
+        :image="answer.author.avatar ?? undefined" />
       <div>
         <div
-          class="font-bold text-black dark:text-darkmode-white"
+          class="font-bold text-black dark:text-white"
+          :class="{ VAnswer__Name_Own: isOwn }"
           data-testid="name">
-          {{ getName(answer.author.firstName, answer.author.lastName) }}
-          <span
-            v-if="isOwn"
-            class="h-16 rounded-8 bg-yellow px-4 text-sub font-normal text-white"
-            data-testid="own-badge"
-            >вы</span
-          >
-        </div>
-        <div class="text-sub leading-tight text-gray" data-testid="date">
-          {{ relativeDate(answer.created) }}
+          {{ getName(answer.author.first_name, answer.author.last_name) }}
         </div>
       </div>
       <div class="flex-grow"></div>
       <slot name="header"></slot>
     </div>
     <VHtmlContent :content="answer.text" data-testid="content" />
-    <div
-      ref="parent"
-      class="flex justify-start flex-wrap items-start gap-8 pt-16">
+    <div class="flex justify-start flex-wrap items-center gap-8">
       <slot name="footer" />
-      <button
-        v-if="!isOwn"
-        class="answer-action box-content flex items-center justify-center text-[1.5rem]"
-        data-testid="open"
-        @click="togglePalette">
-        <MoodHappyIcon />
-      </button>
-      <VReactions
-        :answer-id="answer.slug"
-        :reactions="answer.reactions"
-        :open="isPaletteOpen"
-        :disabled="isOwn"
-        @close="closePalette"
-        @add="addReaction"
-        @remove="removeReaction" />
+      <div class="text-sub leading-tight text-gray" data-testid="date">
+        {{ relativeDate(answer.created) }}
+      </div>
     </div>
-  </VCard>
+    <div class="flex flex-col gap-4">
+      <div
+        v-if="!isOwn"
+        ref="parent"
+        class="flex justify-start flex-wrap items-start gap-8">
+        <VButton
+          appearance="secondary"
+          size="inline"
+          class="flex px-16 h-32 items-center justify-center text-[1.5rem]"
+          data-testid="open"
+          @click="togglePalette">
+          <MoodHappyIcon />
+        </VButton>
+        <VReactions
+          :answer-id="answer.slug"
+          :reactions="answer.reactions"
+          :open="isPaletteOpen"
+          :disabled="isOwn"
+          @close="closePalette"
+          @add="
+            (emoji) =>
+              sendAddReaction({ answerId: answer.slug, reaction: emoji })
+          "
+          @remove="
+            (reactionId) =>
+              sendRemoveReaction({ answerId: answer.slug, reactionId })
+          " />
+      </div>
+    </div>
+  </div>
 </template>
+
+<style lang="scss" scoped>
+  .VAnswer__Name_Own {
+    @apply text-accent-orange;
+  }
+</style>

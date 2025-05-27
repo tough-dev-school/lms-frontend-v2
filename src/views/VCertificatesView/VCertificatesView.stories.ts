@@ -1,14 +1,16 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
 import VCertificatesView from './VCertificatesView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
-import useDiplomas from '@/stores/diplomas';
 import { mockDiplomaSet, STATIC_DIPLOMAS } from '@/mocks/mockDiploma';
 import { flatten } from 'lodash-es';
+import { diplomasKeys } from '@/query';
+import { useQueryClient } from '@tanstack/vue-query';
 
 export default {
   title: 'App/VCertificatesView',
   component: VCertificatesView,
   decorators: [defaultLayoutDecorator],
+  parameters: { layout: 'fullscreen' },
 } as Meta;
 
 const Template: StoryFn = (args) => ({
@@ -24,9 +26,10 @@ export const Default = {
   decorators: [
     () => ({
       setup() {
-        const diplomas = useDiplomas();
-        diplomas.items = flatten(
-          STATIC_DIPLOMAS.map((diploma) => mockDiplomaSet(diploma)),
+        const queryClient = useQueryClient();
+
+        queryClient.setQueryData(diplomasKeys.lists(), () =>
+          flatten(STATIC_DIPLOMAS.map((diploma) => mockDiplomaSet(diploma))),
         );
       },
       template: '<story />',
@@ -39,8 +42,9 @@ export const Empty = {
   decorators: [
     () => ({
       setup() {
-        const diplomas = useDiplomas();
-        diplomas.items = [];
+        const queryClient = useQueryClient();
+
+        queryClient.setQueryData(diplomasKeys.lists(), () => []);
       },
       template: '<story />',
     }),

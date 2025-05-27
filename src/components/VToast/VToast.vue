@@ -34,9 +34,9 @@
 
 <template>
   <div
-    class="cursor-pointer rounded-8 p-16 shadow"
+    class="cursor-pointer rounded-8 p-16 shadow dark:text-darkmode-layer1"
     :class="{
-      'bg-white dark:bg-darkmode-white dark:text-darkmode-layer1': !type,
+      'bg-white dark:bg-darkmode-white': !type,
       'bg-red dark:bg-darkmode-red': type === 'error',
       'bg-green dark:bg-darkmode-green': type === 'success',
     }"

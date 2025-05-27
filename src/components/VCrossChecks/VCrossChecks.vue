@@ -1,15 +1,14 @@
 <script setup lang="ts">
   import { computed } from 'vue';
-  import getName from '@/utils/getName';
-
-  import type { CrossCheck } from '@/types/homework';
+  import { getName } from '@/utils/getName';
+  import type { AnswerCrossCheck } from '@/api/generated-api';
 
   const props = defineProps<{
-    crosschecks: CrossCheck[];
+    crosschecks: AnswerCrossCheck[];
   }>();
 
   const nonCheckedCrossChecks = computed(() => {
-    return props.crosschecks.filter((crosscheck) => !crosscheck.isChecked);
+    return props.crosschecks.filter((crosscheck) => !crosscheck.is_checked);
   });
 
   const getCrossCheckState = (isChecked: boolean) => {
@@ -20,11 +19,15 @@
     return 'не проверено';
   };
 
-  const getStudentName = (
-    firstName: string,
-    lastName: string,
-    index: number,
-  ) => {
+  const getStudentName = ({
+    firstName,
+    lastName,
+    index,
+  }: {
+    firstName?: string;
+    lastName?: string;
+    index: number;
+  }) => {
     if (firstName || lastName) {
       return getName(firstName, lastName);
     }
@@ -45,13 +48,13 @@
         data-testid="crosscheck">
         <a class="link" :href="crosscheck.answer.url"
           >{{
-            getStudentName(
-              crosscheck.answer.author.firstName,
-              crosscheck.answer.author.lastName,
+            getStudentName({
+              firstName: crosscheck.answer.author.first_name,
+              lastName: crosscheck.answer.author.last_name,
               index,
-            )
+            })
           }}
-          ({{ getCrossCheckState(crosscheck.isChecked) }})</a
+          ({{ getCrossCheckState(crosscheck.is_checked) }})</a
         >
       </li>
     </ol>

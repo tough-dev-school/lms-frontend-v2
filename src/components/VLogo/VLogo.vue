@@ -2,7 +2,7 @@
 
 <template>
   <RouterLink to="/">
-    <div class="flex gap-8 p-8 items-end">
+    <div class="flex gap-8 items-end">
       <svg
         viewBox="0 0 256 257"
         fill="none"
@@ -123,6 +123,6 @@
     @apply fill-darkmode-black;
   } */
   .dark .logo-black {
-    @apply fill-darkmode-white;
+    @apply fill-white;
   }
 </style>
