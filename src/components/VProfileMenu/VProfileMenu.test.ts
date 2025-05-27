@@ -9,6 +9,9 @@ import {
   type VueQueryPluginOptions,
 } from '@tanstack/vue-query';
 import { createTestingPinia } from '@pinia/testing';
+import { ref } from 'vue';
+import { useUserQuery } from '@/query';
+import type { User } from '@/api/generated-api';
 
 const routerPushMock = vi.fn();
 
@@ -18,24 +21,20 @@ vi.mock('vue-router', () => ({
   }),
 }));
 
-vi.mock('@/query', async () => {
-  const { mockUserSafe } = await import('@/mocks/mockUserSafe');
-  const { ref } = await import('vue');
-  const mockData = ref(mockUserSafe({ seed: 1 }));
+vi.mock('@/query', () => ({
+  useUserQuery: vi.fn(),
+}));
 
+const getDefaultData = (): User => {
+  faker.seed(1);
   return {
-    useUserQuery: () => ({
-      data: mockData,
-    }),
+    id: 1,
+    uuid: faker.string.uuid(),
+    username: faker.internet.email(),
+    first_name: faker.person.firstName(),
+    last_name: faker.person.lastName(),
+    avatar: faker.image.avatar(),
   };
-});
-
-const defaultData = {
-  uuid: faker.string.uuid(),
-  username: faker.internet.email(),
-  first_name: faker.person.firstName(),
-  last_name: faker.person.lastName(),
-  avatar: faker.image.avatar(),
 };
 
 const createWrapper = () => {
@@ -48,7 +47,12 @@ const createWrapper = () => {
     },
   });
 
-  queryClient.setQueryData(['base', 'user', 'me'], defaultData);
+  queryClient.setQueryData(['base', 'user', 'me'], getDefaultData());
+
+  vi.mocked(useUserQuery).mockReturnValue({
+    data: ref(getDefaultData()),
+    isLoading: ref(false),
+  } as any);
 
   const options: VueQueryPluginOptions = {
     queryClient,
@@ -109,18 +113,18 @@ describe('VProfileMenu', () => {
   test('Avatar has correct props', () => {
     const avatar = getAvatar();
 
-    expect(avatar.props('userId')).toBe(defaultData.uuid);
-    expect(avatar.props('image')).toBe(defaultData.avatar);
+    expect(avatar.props('userId')).toBe(getDefaultData().uuid);
+    expect(avatar.props('image')).toBe(getDefaultData().avatar);
   });
 
   test('Name is displayed correctly', () => {
     expect(getName().text()).toBe(
-      `${defaultData.first_name} ${defaultData.last_name}`,
+      `${getDefaultData().first_name} ${getDefaultData().last_name}`,
     );
   });
 
   test('Username is displayed correctly', () => {
-    expect(getUsername().text()).toBe(defaultData.username);
+    expect(getUsername().text()).toBe(getDefaultData().username);
   });
 
   test('Home button redirects to home page', async () => {
