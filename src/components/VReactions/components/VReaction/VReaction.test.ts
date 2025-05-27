@@ -7,6 +7,7 @@ import { getName } from '@/utils/getName';
 import type VAvatar from '@/components/VAvatar/VAvatar.vue';
 import { times } from 'lodash-es';
 import { mockReactionDetailed } from '@/mocks/mockReactionDetailed';
+import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
 
 const emoji = faker.helpers.arrayElement(ALLOWED_REACTIONS);
 const userId = faker.string.uuid();
@@ -22,7 +23,14 @@ const defaultProps = {
 
 const mountComponent = (props: Partial<VReactionProps> = {}) => {
   return mount(VReaction, {
+    shallow: true,
     props: { ...defaultProps, ...props },
+    global: {
+      stubs: {
+        VButton: VTransparentComponent,
+        VAvatar: VTransparentComponent,
+      },
+    },
   });
 };
 
@@ -96,7 +104,7 @@ describe('VReaction', () => {
   });
 
   test('passes props to avatar', () => {
-    expect(getAvatarWrappers()[0].props('userId')).toBe(
+    expect(getAvatarWrappers()[0].attributes('user-id')).toBe(
       defaultProps.reactions[0].author.uuid,
     );
   });
@@ -104,6 +112,6 @@ describe('VReaction', () => {
   test('own avatar is always last', () => {
     wrapper = mountWithOwn();
 
-    expect(getLastAvatar().props('userId')).toBe(userId);
+    expect(getLastAvatar().attributes('user-id')).toBe(userId);
   });
 });
