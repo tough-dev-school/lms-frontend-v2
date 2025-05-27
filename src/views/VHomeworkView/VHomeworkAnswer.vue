@@ -5,13 +5,12 @@
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
   import VCrossChecks from '@/components/VCrossChecks/VCrossChecks.vue';
   import VDetails from '@/components/VDetails/VDetails.vue';
-  import type { QuestionDetail, AnswerTree } from '@/api/generated-api';
+  import type { QuestionDetail, AnswerTree, User } from '@/api/generated-api';
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
   import { useStorage } from '@vueuse/core';
   import VExistingAnswer from '@/components/VExistingAnswer';
   import { useHomeworkCrosschecksQuery } from '@/query';
   import { computed } from 'vue';
-  import useUser from '@/stores/user';
   import { useRouter } from 'vue-router';
   import { useQueryClient } from '@tanstack/vue-query';
   import { useHomeworkAnswerCreateMutation } from '@/query';
@@ -19,15 +18,15 @@
   interface Props {
     question: QuestionDetail;
     answer: AnswerTree;
+    user: User;
   }
 
   const props = defineProps<Props>();
   const router = useRouter();
-  const user = useUser();
   const queryClient = useQueryClient();
 
   const isOwnAnswer = computed(() => {
-    return props.answer.author.uuid === user.uuid;
+    return props.answer.author.uuid === props.user.uuid;
   });
 
   const answerLink = computed(() => {

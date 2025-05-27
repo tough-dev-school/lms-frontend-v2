@@ -1,7 +1,8 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
 import VProfileMenu from '@/components/VProfileMenu/VProfileMenu.vue';
-import useUser from '@/stores/user';
 import { faker } from '@faker-js/faker';
+import { userKeys } from '@/query';
+import { useQueryClient } from '@tanstack/vue-query';
 
 export default {
   title: 'UI/VProfileMenu',
@@ -11,8 +12,8 @@ export default {
 const Template: StoryFn = (args) => ({
   components: { VProfileMenu },
   setup() {
-    const user = useUser();
-    user.$patch({
+    const queryClient = useQueryClient();
+    queryClient.setQueryData(userKeys.me(), {
       username: faker.internet.email(),
       firstName: faker.person.firstName(),
       lastName: faker.person.lastName(),

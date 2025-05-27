@@ -27,7 +27,7 @@
   import { computed, watch, ref, onMounted } from 'vue';
   import VReaction from './components/VReaction/VReaction.vue';
   import { groupBy, debounce } from 'lodash-es';
-  import useUser from '@/stores/user';
+  import { useUserQuery } from '@/query';
   import { uuid } from '@/utils/uuid';
 
   const props = withDefaults(defineProps<VReactionsProps>(), {
@@ -41,7 +41,7 @@
     close: [];
   }>();
 
-  const userStore = useUser();
+  const { data: user } = useUserQuery();
 
   const localReactions = ref<ReactionDetailed[]>([]);
 
@@ -63,13 +63,15 @@
     if (reactions === undefined) reactions = [];
 
     // Reaction that is set can't be disabled
-    if (reactions.find((reaction) => reaction.author.uuid === userStore.uuid)) {
+    if (
+      reactions.find((reaction) => reaction.author.uuid === user.value?.uuid)
+    ) {
       return false;
     }
 
     const isUnderLimit =
       localReactions.value.filter(
-        (reaction) => reaction.author.uuid === userStore.uuid,
+        (reaction) => reaction.author.uuid === user.value?.uuid,
       ).length < MAX_REACTIONS;
 
     if (isUnderLimit) return false;
@@ -78,70 +80,48 @@
   };
 
   const groupedReactions = computed(() => {
-    return groupBy(
-      localReactions.value,
-      (reaction) => reaction.emoji,
-    ) as Record<ReactionEmoji, ReactionDetailed[]>;
+    return groupBy(localReactions.value, 'emoji') as Record<
+      ReactionEmoji,
+      ReactionDetailed[]
+    >;
   });
-
-  const emojiSet = computed(() => {
-    const sortReactions = (reactions: ReactionEmoji[]) =>
-      reactions.sort(
-        (a, b) => ALLOWED_REACTIONS.indexOf(a) - ALLOWED_REACTIONS.indexOf(b),
-      );
-
-    const EXISTING_REACTIONS = Object.keys(
-      groupedReactions.value,
-    ) as ReactionEmoji[];
-
-    return sortReactions(
-      !props.disabled && props.open ? ALLOWED_REACTIONS : EXISTING_REACTIONS,
-    );
-  });
-
-  const optimisticallyAdd = (emoji: ReactionEmoji, slug: string) => {
-    const reaction: ReactionDetailed = {
-      slug,
-      author: {
-        uuid: userStore.uuid,
-        first_name: userStore.firstName,
-        last_name: userStore.lastName,
-      },
-      emoji,
-      answer: props.answerId,
-    };
-
-    localReactions.value = [...localReactions.value, reaction];
-  };
 
   const handleAdd = (emoji: ReactionEmoji) => {
-    const slug = uuid();
-
-    optimisticallyAdd(emoji, slug);
-    emit('add', emoji, slug);
-  };
-
-  const optimisticallyRemove = (reactionId: string) => {
-    localReactions.value = localReactions.value.filter(
-      (reaction) => reaction.slug !== reactionId,
-    );
+    emit('add', emoji, uuid());
   };
 
   const handleRemove = (reactionId: string) => {
-    optimisticallyRemove(reactionId);
     emit('remove', reactionId);
+  };
+
+  const handleClose = () => {
+    emit('close');
   };
 </script>
 
 <template>
-  <VReaction
-    v-for="emoji in emojiSet"
-    :key="emoji"
-    :disabled="isDisabled(groupedReactions[emoji])"
-    :emoji="emoji"
-    :user-id="userStore.uuid"
-    :reactions="groupedReactions[emoji]"
-    data-testid="reaction"
-    @add="handleAdd"
-    @remove="handleRemove" />
+  <div class="flex flex-wrap items-start gap-8">
+    <div v-if="open" class="flex flex-wrap items-start gap-8">
+      <VReaction
+        v-for="emoji in ALLOWED_REACTIONS"
+        :key="emoji"
+        :emoji="emoji"
+        :user-id="user?.uuid ?? ''"
+        :reactions="groupedReactions[emoji]"
+        :disabled="isDisabled(groupedReactions[emoji])"
+        @add="handleAdd"
+        @remove="handleRemove" />
+    </div>
+    <div v-else class="flex flex-wrap items-start gap-8">
+      <VReaction
+        v-for="(reactions, emoji) in groupedReactions"
+        :key="emoji"
+        :emoji="emoji as ReactionEmoji"
+        :user-id="user?.uuid ?? ''"
+        :reactions="reactions"
+        :disabled="isDisabled(reactions)"
+        @add="handleAdd"
+        @remove="handleRemove" />
+    </div>
+  </div>
 </template>

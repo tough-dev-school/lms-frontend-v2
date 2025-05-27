@@ -1,39 +1,49 @@
 import { vi, describe, beforeEach, expect, test } from 'vitest';
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
-import useUser from '@/stores/user';
-import { createTestingPinia } from '@pinia/testing';
 import { faker } from '@faker-js/faker';
 import VAvatarSettings from '@/components/VAvatarSettings/VAvatarSettings.vue';
+import {
+  VueQueryPlugin,
+  QueryClient,
+  type VueQueryPluginOptions,
+} from '@tanstack/vue-query';
 
 const defaultData = {
   uuid: faker.string.uuid(),
+  avatar: undefined,
+};
+
+const createWrapper = () => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  });
+
+  const options: VueQueryPluginOptions = {
+    queryClient,
+  };
+
+  return mount(VAvatarSettings, {
+    shallow: true,
+    global: {
+      plugins: [[VueQueryPlugin, options]],
+      stubs: {
+        VCard: false,
+        AvatarCropper: true,
+      },
+    },
+  });
 };
 
 describe('VAvatarSettings', () => {
   let wrapper: VueWrapper<InstanceType<typeof VAvatarSettings>>;
-  let user: ReturnType<typeof useUser>;
 
   beforeEach(() => {
-    wrapper = mount(VAvatarSettings, {
-      shallow: true,
-      global: {
-        plugins: [
-          createTestingPinia({
-            createSpy: vi.fn,
-            initialState: {
-              user: { ...defaultData },
-            },
-          }),
-        ],
-        stubs: {
-          VCard: false,
-          AvatarCropper: true,
-        },
-      },
-    });
-
-    user = useUser();
+    wrapper = createWrapper();
   });
 
   const getUploadButton = () => wrapper.find('[data-testid="upload"]');
@@ -73,23 +83,25 @@ describe('VAvatarSettings', () => {
     expect((wrapper.vm as any).showCropper).toBe(true);
   });
 
-  test('Should call setAvatar with null on save button click', async () => {
+  test('Should call updateAvatar with null on save button click', async () => {
     const button = getSaveButton();
+    const updateAvatarSpy = vi.spyOn(wrapper.vm as any, 'updateAvatar');
 
     await button.trigger('click');
 
-    expect(user.setAvatar).toHaveBeenCalledWith(null);
+    expect(updateAvatarSpy).toHaveBeenCalledWith(null);
   });
 
-  test('Should call setAvatar with file on save button click', async () => {
+  test('Should call updateAvatar with file on save button click', async () => {
     const button = getSaveButton();
     const file = new File(['(⌐□_□)'], 'avatar.png', { type: 'image/png' });
+    const updateAvatarSpy = vi.spyOn(wrapper.vm as any, 'updateAvatar');
 
     (wrapper.vm as any).file = file;
     await wrapper.vm.$nextTick();
 
     await button.trigger('click');
 
-    expect(user.setAvatar).toHaveBeenCalledWith(file);
+    expect(updateAvatarSpy).toHaveBeenCalledWith(file);
   });
 });

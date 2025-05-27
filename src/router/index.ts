@@ -4,17 +4,11 @@ import {
   type RouteLocationNormalized,
 } from 'vue-router';
 import useAuth from '@/stores/auth';
-import useUser from '@/stores/user';
 
 import loginByToken from '@/router/loginByToken';
 import loginById from '@/router/loginById';
 import { useQueryClient } from '@tanstack/vue-query';
 import { fetchHomeworkAnswer } from '@/query';
-
-const fetchMainUserData = async () => {
-  const user = useUser();
-  await user.getData();
-};
 
 const disallowAuthorized = () => {
   const auth = useAuth();
@@ -151,12 +145,6 @@ const router = createRouter({
 router.beforeEach(
   async (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
     const auth = useAuth();
-
-    // Fetch main user data if token exists
-    // #FIXME: this must be replaced with vue query subscriptions
-    if (auth.token) {
-      await fetchMainUserData();
-    }
 
     if (to.meta.unauthorizedOnly && auth.token) {
       return { name: 'home' };

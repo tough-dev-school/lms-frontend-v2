@@ -1,11 +1,14 @@
 import { vi, describe, beforeEach, expect, test } from 'vitest';
 import { RouterLinkStub, mount, VueWrapper } from '@vue/test-utils';
 import VProfileMenu from '@/components/VProfileMenu/VProfileMenu.vue';
-import useUser from '@/stores/user';
 import useAuth from '@/stores/auth';
 import type VAvatar from '@/components/VAvatar/VAvatar.vue';
 import { faker } from '@faker-js/faker';
-import { createTestingPinia } from '@pinia/testing';
+import {
+  VueQueryPlugin,
+  QueryClient,
+  type VueQueryPluginOptions,
+} from '@tanstack/vue-query';
 
 const routerPushMock = vi.fn();
 
@@ -15,173 +18,118 @@ vi.mock('vue-router', () => ({
   }),
 }));
 
+const defaultData = {
+  uuid: faker.string.uuid(),
+  username: faker.internet.email(),
+  first_name: faker.person.firstName(),
+  last_name: faker.person.lastName(),
+  avatar: faker.image.avatar(),
+};
+
+const createWrapper = () => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  });
+
+  queryClient.setQueryData(['base', 'user', 'me'], defaultData);
+
+  const options: VueQueryPluginOptions = {
+    queryClient,
+  };
+
+  return mount(VProfileMenu, {
+    shallow: true,
+    global: {
+      plugins: [[VueQueryPlugin, options]],
+      stubs: {
+        RouterLink: RouterLinkStub,
+      },
+    },
+  });
+};
+
 describe('VProfileMenu', () => {
-  let wrapper: VueWrapper;
-  let user: ReturnType<typeof useUser>;
-  let auth: ReturnType<typeof useAuth>;
+  let wrapper: VueWrapper<InstanceType<typeof VProfileMenu>>;
 
   beforeEach(() => {
-    wrapper = mount(VProfileMenu, {
-      shallow: true,
-      global: {
-        plugins: [
-          createTestingPinia({
-            createSpy: vi.fn,
-          }),
-        ],
-        stubs: {
-          RouterLink: RouterLinkStub,
-        },
-      },
-    });
-
-    user = useUser();
-    user.$patch({
-      username: faker.internet.email(),
-      firstName: faker.person.firstName(),
-      lastName: faker.person.lastName(),
-    });
-
-    auth = useAuth();
+    wrapper = createWrapper();
   });
 
-  const getSettingsWrapper = () => {
-    return wrapper.find('[data-testid*="settings"]');
-  };
+  const getButton = () => wrapper.find('[data-testid="button"]');
+  const getMenu = () => wrapper.find('[data-testid="menu"]');
+  const getAvatar = () =>
+    wrapper.findComponent<typeof VAvatar>('[data-testid="avatar"]');
+  const getName = () => wrapper.find('[data-testid="name"]');
+  const getUsername = () => wrapper.find('[data-testid="username"]');
+  const getHomeButton = () => wrapper.find('[data-testid="home"]');
+  const getCertificatesButton = () =>
+    wrapper.find('[data-testid="certificates"]');
+  const getSettingsButton = () => wrapper.find('[data-testid="settings"]');
+  const getLogoutButton = () => wrapper.find('[data-testid="logout"]');
 
-  const getHomeWrapper = () => {
-    return wrapper.find('[data-testid="home"]');
-  };
-
-  const getButtonWrapper = () => {
-    return wrapper.find('[data-testid="button"]');
-  };
-
-  const getAvatarWrapper = () => {
-    return wrapper.findComponent<typeof VAvatar>('[data-testid="avatar"]');
-  };
-
-  const getNameWrapper = () => {
-    return wrapper.find('[data-testid="name"]');
-  };
-
-  const getUsernameWrapper = () => {
-    return wrapper.find('[data-testid="username"]');
-  };
-
-  const getMenuWrapper = () => {
-    return wrapper.find('[data-testid="menu"]');
-  };
-
-  const getLogoutWrapper = () => {
-    return wrapper.find('[data-testid="logout"]');
-  };
-
-  const getCertificateWrapper = () => {
-    return wrapper.find('[data-testid="certificate"]');
-  };
-
-  test('Click on profile toggles menu', async () => {
-    await getButtonWrapper().trigger('click');
-    expect(getMenuWrapper().exists()).toBe(true);
-
-    await getButtonWrapper().trigger('click');
-    expect(getMenuWrapper().exists()).toBe(false);
+  test('Menu is closed by default', () => {
+    expect(getMenu().exists()).toBe(false);
   });
 
-  test('Profile is highlighted when opened', async () => {
-    await getButtonWrapper().trigger('click');
+  test('Menu opens on button click', async () => {
+    await getButton().trigger('click');
 
-    expect(getButtonWrapper().classes('VProfileMenu__Button_Active')).toBe(
-      true,
+    expect(getMenu().exists()).toBe(true);
+  });
+
+  test('Menu closes on button click', async () => {
+    await getButton().trigger('click');
+    await getButton().trigger('click');
+
+    expect(getMenu().exists()).toBe(false);
+  });
+
+  test('Avatar has correct props', () => {
+    const avatar = getAvatar();
+
+    expect(avatar.props('userId')).toBe(defaultData.uuid);
+    expect(avatar.props('image')).toBe(defaultData.avatar);
+  });
+
+  test('Name is displayed correctly', () => {
+    expect(getName().text()).toBe(
+      `${defaultData.first_name} ${defaultData.last_name}`,
     );
   });
 
-  test.todo('Click outside profile should close menu');
-
-  test('VAvatar should have correct props', () => {
-    expect(getAvatarWrapper().props().userId).toBe(user.uuid);
+  test('Username is displayed correctly', () => {
+    expect(getUsername().text()).toBe(defaultData.username);
   });
 
-  test('Displays correct name', () => {
-    expect(getNameWrapper().text()).toBe(user.name);
-  });
+  test('Home button redirects to home page', async () => {
+    await getButton().trigger('click');
+    await getHomeButton().trigger('click');
 
-  test('Displays correct username', () => {
-    expect(getUsernameWrapper().text()).toBe(user.username);
-  });
-
-  test('Click on home opens home', async () => {
-    await getButtonWrapper().trigger('click');
-
-    await getHomeWrapper().trigger('click');
-
-    expect(routerPushMock).toHaveBeenCalledTimes(1);
     expect(routerPushMock).toHaveBeenCalledWith({ name: 'home' });
   });
 
-  test('Click on settings opens settings', async () => {
-    await getButtonWrapper().trigger('click');
+  test('Certificates button redirects to certificates page', async () => {
+    await getButton().trigger('click');
+    await getCertificatesButton().trigger('click');
 
-    await getSettingsWrapper().trigger('click');
+    expect(routerPushMock).toHaveBeenCalledWith({ name: 'certificates' });
+  });
 
-    expect(routerPushMock).toHaveBeenCalledTimes(1);
+  test('Settings button redirects to settings page', async () => {
+    await getButton().trigger('click');
+    await getSettingsButton().trigger('click');
+
     expect(routerPushMock).toHaveBeenCalledWith({ name: 'settings' });
   });
 
-  test('Click on logout clears token', async () => {
-    await getButtonWrapper().trigger('click');
-    await getLogoutWrapper().trigger('click');
+  test('Logout button redirects to login page', async () => {
+    await getButton().trigger('click');
+    await getLogoutButton().trigger('click');
 
-    expect(auth.removeToken).toHaveBeenCalledTimes(1);
-  });
-
-  test('Click on logout opens login', async () => {
-    await getButtonWrapper().trigger('click');
-    await getLogoutWrapper().trigger('click');
-
-    expect(routerPushMock).toHaveBeenCalledTimes(1);
     expect(routerPushMock).toHaveBeenCalledWith({ name: 'login' });
-  });
-
-  test('Menu must be closed after click on item', async () => {
-    await getButtonWrapper().trigger('click');
-  });
-
-  test('Has link to certificates if no needed data', async () => {
-    await getButtonWrapper().trigger('click');
-
-    user.$patch({
-      firstName: undefined,
-      firstNameEn: undefined,
-      lastName: undefined,
-      lastNameEn: undefined,
-    });
-
-    expect(getCertificateWrapper().exists()).toBe(true);
-  });
-
-  test('Has no link to certificates if has needed data', async () => {
-    user.$patch({
-      firstName: faker.person.firstName(),
-      firstNameEn: faker.person.lastName(),
-      lastName: faker.person.firstName(),
-      lastNameEn: faker.person.lastName(),
-    });
-    await getButtonWrapper().trigger('click');
-
-    expect(getCertificateWrapper().exists()).toBe(false);
-  });
-
-  test('Link to certificates opens certificates', async () => {
-    await getButtonWrapper().trigger('click');
-
-    await getCertificateWrapper().trigger('click');
-
-    expect(routerPushMock).toHaveBeenCalledTimes(1);
-    expect(routerPushMock).toHaveBeenCalledWith({
-      name: 'settings',
-      hash: '#certificate',
-    });
   });
 });

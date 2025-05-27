@@ -7,6 +7,8 @@ import { queryOptions } from '@tanstack/vue-query';
 import type { AnswerTree } from './api/generated-api';
 import htmlToMarkdown from './utils/htmlToMarkdown';
 import { ContentType } from './api/generated-api';
+import type { PatchedUser } from './api/generated-api';
+
 export const baseQueryKey = () => ['base'];
 
 export const studiesKeys = {
@@ -49,6 +51,11 @@ export const homeworkKeys = {
     'crosschecks',
     questionId,
   ],
+};
+
+export const userKeys = {
+  all: () => [...baseQueryKey(), 'user'],
+  me: () => [...userKeys.all(), 'me'],
 };
 
 const studiesOptions = () => {
@@ -380,5 +387,48 @@ export const useHomeworkAnswerSendImageMutation = () => {
       await api.homeworkAnswersImageCreate(image, {
         type: ContentType.FormData,
       }),
+  });
+};
+
+export const getUserQueryOptions = () => {
+  return queryOptions({
+    queryKey: userKeys.me(),
+    queryFn: async () => await api.usersMeRetrieve(),
+  });
+};
+
+export const fetchUser = async (queryClient: QueryClient) =>
+  queryClient.fetchQuery(getUserQueryOptions());
+
+export const useUserQuery = () => {
+  const options = computed(() => getUserQueryOptions());
+  return useQuery(options);
+};
+
+export const useUpdateUserMutation = (queryClient: QueryClient) => {
+  return useMutation({
+    mutationFn: async (data: PatchedUser) => {
+      return await api.usersMePartialUpdate(data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: userKeys.all() });
+    },
+  });
+};
+
+export const useUpdateUserAvatarMutation = (queryClient: QueryClient) => {
+  return useMutation({
+    mutationFn: async (avatar: File | null) => {
+      const formData = new FormData();
+      if (avatar) {
+        formData.append('avatar', avatar);
+      } else {
+        formData.append('avatar', '');
+      }
+      return await api.usersMePartialUpdate(formData as any);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: userKeys.all() });
+    },
   });
 };

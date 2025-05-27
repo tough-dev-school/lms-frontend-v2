@@ -1,9 +1,10 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
 import VAnswer from '@/components/VAnswer';
 import { mockAnswer } from '@/mocks/mockAnswerDetailed';
-import useUser from '@/stores/user';
 import { USER_1 } from '@/mocks/mockUserId';
 import { STATIC_AUTHOR_1 } from '@/mocks/mockUserSafe';
+import { userKeys } from '@/query';
+import { useQueryClient } from '@tanstack/vue-query';
 
 export default {
   title: 'Answer/VAnswer',
@@ -17,9 +18,9 @@ const ownAnswer = { ...answer, author: STATIC_AUTHOR_1 };
 const Template: StoryFn = (args) => ({
   components: { VAnswer },
   setup() {
-    const user = useUser();
+    const queryClient = useQueryClient();
 
-    user.$patch({
+    queryClient.setQueryData(userKeys.me(), {
       uuid: userId,
     });
 

@@ -1,17 +1,24 @@
 <script lang="ts" setup>
-  import { onMounted, ref, computed } from 'vue';
+  import { ref, computed } from 'vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VAvatar from '@/components/VAvatar/VAvatar.vue';
   import VButton from '@/components/VButton/VButton.vue';
-  import useUser from '@/stores/user';
+  import { useUserQuery, useUpdateUserAvatarMutation } from '@/query';
+  import { useQueryClient } from '@tanstack/vue-query';
+  import useToasts from '@/stores/toasts';
 
-  const user = useUser();
+  const queryClient = useQueryClient();
+  const { data: user } = useUserQuery();
+  const { mutateAsync: updateAvatar } =
+    useUpdateUserAvatarMutation(queryClient);
+  const toasts = useToasts();
+
   const avatar = ref();
   const file = ref();
   const showCropper = ref(false);
 
   const update = () => {
-    avatar.value = user.avatar!;
+    avatar.value = user.value?.avatar;
   };
 
   const deleteAvatar = async () => {
@@ -20,7 +27,8 @@
   };
 
   const saveProfile = async () => {
-    await user.setAvatar(file.value || null);
+    await updateAvatar(file.value || null);
+    toasts.addMessage('Данные сохранены!', 'success');
     update();
   };
 
@@ -32,11 +40,11 @@
     (file.value as File) = new File([blob], 'avatar.png');
   };
 
-  const isSaveButtonDisabled = computed(() => avatar.value == user.avatar);
+  const isSaveButtonDisabled = computed(
+    () => avatar.value === user.value?.avatar,
+  );
 
-  onMounted(() => {
-    update();
-  });
+  update();
 </script>
 
 <template>
@@ -46,7 +54,7 @@
       :labels="{ cancel: 'Отменить', submit: 'Сохранить' }"
       :upload-handler="showPreview" />
     <div class="flex gap-16">
-      <VAvatar :user-id="user.uuid" :image="avatar" size="md" />
+      <VAvatar :user-id="user?.uuid" :image="avatar" size="md" />
       <button data-testid="upload" class="link p-6" @click="showCropper = true">
         Загрузить
       </button>

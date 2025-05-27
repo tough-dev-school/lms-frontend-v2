@@ -4,7 +4,6 @@
   import getName from '@/utils/getName';
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
   import { computed, ref } from 'vue';
-  import useUser from '@/stores/user';
   import VReactions from '@/components/VReactions/VReactions.vue';
   import { MoodHappyIcon } from 'vue-tabler-icons';
   import { useAutoAnimate } from '@formkit/auto-animate/vue';
@@ -14,25 +13,25 @@
     useAddHomeworkReactionMutation,
   } from '@/query';
   import { useQueryClient } from '@tanstack/vue-query';
-  import type { AnswerDetailed } from '@/api/generated-api';
+  import type { AnswerDetailed, User } from '@/api/generated-api';
 
-  const userStore = useUser();
   const props = defineProps<{
     answer: AnswerDetailed;
+    user: User;
   }>();
 
   const isOwn = computed(() => {
-    return props.answer.author.uuid === userStore.uuid;
+    return props.answer.author.uuid === props.user.uuid;
   });
 
   const isPaletteOpen = ref(false);
 
   const queryClient = useQueryClient();
 
-  const { mutate: sendAddReaction } =
+  const { mutateAsync: sendAddReaction } =
     useAddHomeworkReactionMutation(queryClient);
 
-  const { mutate: sendRemoveReaction } =
+  const { mutateAsync: sendRemoveReaction } =
     useRemoveHomeworkReactionMutation(queryClient);
 
   const togglePalette = () => (isPaletteOpen.value = !isPaletteOpen.value);

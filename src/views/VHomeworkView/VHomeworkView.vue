@@ -14,7 +14,7 @@
   import { useQueryClient } from '@tanstack/vue-query';
   import { watch, onBeforeMount } from 'vue';
   import { useRoute, useRouter } from 'vue-router';
-  import useUser from '@/stores/user';
+  import { useUserQuery } from '@/query';
 
   const answerId = useRouteQuery<string | undefined>('answerId');
   const questionId = useRouteParams<string>('questionId');
@@ -23,6 +23,7 @@
   const route = useRoute();
   const queryClient = useQueryClient();
 
+  const { data: user } = useUserQuery();
   const { data: question, isLoading: isQuestionLoading } =
     useHomeworkQuestionQuery(questionId);
   const { data: answer, isLoading: isAnswerLoading } =
@@ -87,10 +88,9 @@
         });
       }
     } else {
-      const user = useUser();
       const answers = await fetchHomeworkAnswers(queryClient, {
         questionId: route.params.questionId as string,
-        authorId: user.uuid,
+        authorId: user.value?.uuid,
       });
 
       if (answers && answers.length > 0) {
@@ -113,9 +113,10 @@
     :is-loading="isQuestionLoading || isAnswerLoading">
     <template v-if="question">
       <VHomeworkAnswer
-        v-if="answer && question"
+        v-if="answer && question && user"
         :question="question"
-        :answer="answer" />
+        :answer="answer"
+        :user="user" />
       <VHomeworkQuestion v-else :question="question" />
     </template>
   </VLoggedLayout>

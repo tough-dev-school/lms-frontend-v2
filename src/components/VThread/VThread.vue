@@ -11,7 +11,6 @@
   import VAnswer from '@/components/VAnswer';
   import { ref, watch } from 'vue';
   import { onClickOutside } from '@vueuse/core';
-  import useUser from '@/stores/user';
   import { useRoute, useRouter } from 'vue-router';
   import {
     useHomeworkAnswerQuery,
@@ -22,18 +21,19 @@
   import { useStorage } from '@vueuse/core';
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
   import VExistingAnswer from '@/components/VExistingAnswer';
+  import { useUserQuery } from '@/query';
 
   const route = useRoute();
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const user = useUser();
   const replyMode = ref(false);
 
   const props = defineProps<{
     answerId: string;
   }>();
 
+  const { data: user } = useUserQuery();
   const { data: answer } = useHomeworkAnswerQuery(() => props.answerId);
   watch(
     () => answer.value,
@@ -106,7 +106,7 @@
 </script>
 
 <template>
-  <div v-if="answer">
+  <div v-if="answer && user">
     <div ref="target" class="group">
       <VAnswer
         v-if="answer.author.uuid !== user.uuid"

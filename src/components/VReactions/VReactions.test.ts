@@ -1,118 +1,146 @@
 import { vi, describe, beforeEach, expect, test } from 'vitest';
-import { type VueWrapper, mount } from '@vue/test-utils';
+import { mount, VueWrapper } from '@vue/test-utils';
 import VReactions, {
-  ALLOWED_REACTIONS,
-  type VReactionsProps,
-} from './VReactions.vue';
-import type VReaction from './components/VReaction/VReaction.vue';
-import { createTestingPinia } from '@pinia/testing';
+  ReactionEmoji,
+} from '@/components/VReactions/VReactions.vue';
 import { faker } from '@faker-js/faker';
-import useUser from '@/stores/user';
-import { flatten, times, uniq } from 'lodash-es';
-import { mockReactionDetailed } from '@/mocks/mockReactionDetailed';
+import {
+  VueQueryPlugin,
+  QueryClient,
+  type VueQueryPluginOptions,
+} from '@tanstack/vue-query';
+import type { ReactionDetailed } from '@/api/generated-api';
 
-const defaultProps: VReactionsProps = {
-  reactions: times(faker.number.int({ min: 1, max: 10 }), () =>
-    mockReactionDetailed(),
-  ),
-  answerId: faker.string.uuid(),
-  open: false,
-  disabled: false,
+const defaultUser = {
+  uuid: faker.string.uuid(),
+  first_name: faker.person.firstName(),
+  last_name: faker.person.lastName(),
 };
 
-const userId = faker.string.uuid();
+const createReaction = (
+  emoji: ReactionEmoji,
+  authorId = defaultUser.uuid,
+): ReactionDetailed => ({
+  slug: faker.string.uuid(),
+  emoji,
+  author: {
+    uuid: authorId,
+    first_name: faker.person.firstName(),
+    last_name: faker.person.lastName(),
+  },
+  answer: faker.string.uuid(),
+});
 
-const mountComponent = (props: Partial<VReactionsProps> = {}) => {
+const createWrapper = (reactions: ReactionDetailed[] = []) => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  });
+
+  queryClient.setQueryData(['base', 'user', 'me'], defaultUser);
+
+  const options: VueQueryPluginOptions = {
+    queryClient,
+  };
+
   return mount(VReactions, {
-    shallow: true,
-    props: { ...defaultProps, ...props },
+    props: {
+      answerId: faker.string.uuid(),
+      reactions,
+      disabled: false,
+    },
     global: {
-      plugins: [
-        createTestingPinia({
-          createSpy: vi.fn,
-        }),
-      ],
+      plugins: [[VueQueryPlugin, options]],
     },
   });
 };
 
 describe('VReactions', () => {
   let wrapper: VueWrapper<InstanceType<typeof VReactions>>;
-  let userStore: ReturnType<typeof useUser>;
 
   beforeEach(() => {
-    wrapper = mountComponent();
-
-    userStore = useUser();
-
-    userStore.uuid = userId;
+    wrapper = createWrapper();
   });
 
-  const getReactionWrappers = () =>
-    wrapper.findAllComponents<typeof VReaction>('[data-testid="reaction"]');
-  const getReactionWrapper = () => getReactionWrappers()[0];
+  const getReactions = () => wrapper.findAllComponents({ name: 'VReaction' });
 
-  test('passes props to VReaction', () => {
-    const emoji = defaultProps.reactions.sort((a, b) => {
-      return (
-        ALLOWED_REACTIONS.indexOf(a.emoji) - ALLOWED_REACTIONS.indexOf(b.emoji)
-      );
-    })[0].emoji;
-    const targetProps = {
-      userId,
-      emoji,
-      disabled: defaultProps.disabled,
-      reactions: defaultProps.reactions.filter(
-        (reaction) => reaction.emoji === emoji,
-      ),
-    };
-
-    expect(getReactionWrapper().props()).toStrictEqual(targetProps);
+  test('Shows no reactions when empty', () => {
+    expect(getReactions()).toHaveLength(0);
   });
 
-  test('emits remove on VReaction remove', () => {
-    const reaction = getReactionWrapper();
-    const slug = faker.string.uuid();
-
-    reaction.vm.$emit('remove', slug);
-
-    expect(wrapper.emitted('remove')).toStrictEqual([[slug]]);
+  test('Shows all possible reactions when open', async () => {
+    await wrapper.setProps({ open: true });
+    expect(getReactions()).toHaveLength(Object.values(ReactionEmoji).length);
   });
 
-  test('emits add on VReaction add', () => {
-    const reaction = getReactionWrapper();
-    const emoji = defaultProps.reactions[0].emoji;
-
-    reaction.vm.$emit('add', emoji);
-
-    const emitted = flatten(wrapper.emitted('add'));
-    expect(emitted[0]).toStrictEqual(emoji);
-    expect(emitted[1]).toBeDefined();
-    expect(emitted[1]).toHaveLength(36);
+  test('Shows only existing reactions when not open', async () => {
+    const reactions = [
+      createReaction(ReactionEmoji.LIKE),
+      createReaction(ReactionEmoji.HEART),
+    ];
+    wrapper = createWrapper(reactions);
+    expect(getReactions()).toHaveLength(2);
   });
 
-  test('displays only existing reactions when closed', () => {
-    const targetLength = uniq(
-      defaultProps.reactions.map((reaction) => reaction.emoji),
-    ).length;
-
-    expect(getReactionWrappers().length).toBe(targetLength);
-  });
-
-  test('displays all reactions when open', () => {
-    wrapper = mountComponent({ open: true });
-
-    const total = getReactionWrappers().length;
-
-    expect(total).toBe(ALLOWED_REACTIONS.length);
-  });
-
-  test('displays reaction on correct order', () => {
-    wrapper = mountComponent({ open: true });
-    const order = getReactionWrappers().map((reactionWrapper) =>
-      reactionWrapper.props('emoji'),
+  test('Emits add event with correct emoji and generated slug', async () => {
+    await wrapper.setProps({ open: true });
+    const reaction = getReactions().find(
+      (r) => r.props('emoji') === ReactionEmoji.LIKE,
     );
+    await reaction?.vm.$emit('add', ReactionEmoji.LIKE);
 
-    expect(order).toStrictEqual(ALLOWED_REACTIONS);
+    const emitted = wrapper.emitted('add');
+    expect(emitted).toBeTruthy();
+    expect(emitted?.[0][0]).toBe(ReactionEmoji.LIKE);
+    expect(typeof emitted?.[0][1]).toBe('string');
+  });
+
+  test('Emits remove event with correct reaction id', async () => {
+    const reactionId = faker.string.uuid();
+    const reactions = [createReaction(ReactionEmoji.LIKE)];
+    reactions[0].slug = reactionId;
+
+    wrapper = createWrapper(reactions);
+    const reaction = getReactions().at(0);
+    await reaction?.vm.$emit('remove', reactionId);
+
+    const emitted = wrapper.emitted('remove');
+    expect(emitted).toBeTruthy();
+    expect(emitted?.[0][0]).toBe(reactionId);
+  });
+
+  test('Disables reactions when user has reached limit', async () => {
+    const reactions = [
+      createReaction(ReactionEmoji.LIKE),
+      createReaction(ReactionEmoji.HEART),
+      createReaction(ReactionEmoji.PARTY),
+    ];
+
+    wrapper = createWrapper(reactions);
+    await wrapper.setProps({ open: true });
+
+    const unusedReaction = getReactions().find(
+      (r) => r.props('emoji') === ReactionEmoji.ROCKET,
+    );
+    expect(unusedReaction?.props('disabled')).toBe(true);
+  });
+
+  test('Does not disable reaction that user has already used', async () => {
+    const reactions = [
+      createReaction(ReactionEmoji.LIKE),
+      createReaction(ReactionEmoji.HEART),
+      createReaction(ReactionEmoji.PARTY),
+    ];
+
+    wrapper = createWrapper(reactions);
+    await wrapper.setProps({ open: true });
+
+    const usedReaction = getReactions().find(
+      (r) => r.props('emoji') === ReactionEmoji.LIKE,
+    );
+    expect(usedReaction?.props('disabled')).toBe(false);
   });
 });

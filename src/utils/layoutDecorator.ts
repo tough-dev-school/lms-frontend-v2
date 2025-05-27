@@ -1,8 +1,8 @@
-import { mockQuestion, STATIC_QUESTION } from '@/mocks/mockQuestion';
 import { mockUserId, USER_1 } from '@/mocks/mockUserId';
 import useToasts from '@/stores/toasts';
-import useUser from '@/stores/user';
 import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
+import { useQueryClient } from '@tanstack/vue-query';
+import { userKeys } from '@/query';
 
 const layoutDecorator = (story: any, layout: any) => ({
   components: { layout, story },
@@ -11,8 +11,8 @@ const layoutDecorator = (story: any, layout: any) => ({
     const toasts = useToasts();
     toasts.disable();
 
-    const user = useUser();
-    user.$patch({
+    const queryClient = useQueryClient();
+    queryClient.setQueryData(userKeys.me(), {
       id: '',
       uuid: mockUserId(USER_1),
       username: 'johndoe@demo.com',

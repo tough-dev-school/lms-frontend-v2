@@ -12,7 +12,6 @@ import {
 import useToasts from './toasts';
 import { useQueryClient } from '@tanstack/vue-query';
 import { baseQueryKey } from '@/query';
-import useUser from './user';
 import { watch } from 'vue';
 
 type AuthStoreState = {
@@ -88,12 +87,12 @@ export const useAuth = defineStore('auth', {
     addToken(token: AuthToken) {
       this.token = token;
       const queryClient = useQueryClient();
-      const user = useUser();
-      user.getData();
       queryClient.invalidateQueries({ queryKey: baseQueryKey() });
     },
     removeToken() {
       this.token = undefined;
+      const queryClient = useQueryClient();
+      queryClient.invalidateQueries({ queryKey: baseQueryKey() });
     },
   },
   persist: true,
