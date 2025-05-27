@@ -2,13 +2,13 @@ import { faker } from '@faker-js/faker';
 import { ALLOWED_REACTIONS } from '@/components/VReactions/VReactions.vue';
 import { times } from 'lodash-es';
 import { ReactionEmoji, type Reaction } from '@/types/homework';
-import { mockAuthorData } from '@/mocks/mockAuthorData';
+import { mockUserSafeData } from '@/mocks/mockUserSafeData';
 
 export const mockReactionData = (): Reaction => ({
   slug: faker.string.uuid(),
   answer: faker.string.uuid(),
   emoji: faker.helpers.arrayElement(ALLOWED_REACTIONS),
-  author: mockAuthorData(),
+  author: mockUserSafeData(),
 });
 
 export const mockReactionsData = (n: number = 10): Reaction[] => {

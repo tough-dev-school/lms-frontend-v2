@@ -61,7 +61,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240512.0",
-    "@faker-js/faker": "^8.2.0",
+    "@faker-js/faker": "^8.4.1",
     "@pinia/testing": "^0.1.3",
     "@rushstack/eslint-patch": "^1.5.1",
     "@storybook/addon-actions": "^8.6.12",

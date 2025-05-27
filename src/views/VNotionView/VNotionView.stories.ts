@@ -1,7 +1,7 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
 import VNotionView from './VNotionView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
-import { mockMaterial } from '@/mocks/mockMaterial';
+import { mockMaterial } from '@/mocks/mockMaterialSerializer';
 import { materialsKeys } from '@/query';
 import { useQueryClient } from '@tanstack/vue-query';
 export default {

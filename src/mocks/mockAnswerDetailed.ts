@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { faker } from '@faker-js/faker';
-import { mockAuthor } from './mockAuthor';
+import { mockUserSafe } from './mockUserSafe';
 import htmlToMarkdown from '@/utils/htmlToMarkdown';
 import { LOREM_CONTENT, mockContent } from './mockContent';
 import type { AnswerDetailed } from '@/api/generated-api';
@@ -14,11 +14,12 @@ export const mockAnswer = (
     modified: dayjs().toISOString(),
     slug: faker.string.uuid(),
     question: faker.string.uuid(),
-    author: mockAuthor(),
+    author: mockUserSafe(),
     text,
     src: htmlToMarkdown(text),
     has_descendants: false,
     reactions: [],
+    parent: faker.string.uuid(),
     ...payload,
   };
 };

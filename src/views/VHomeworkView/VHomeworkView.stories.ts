@@ -8,7 +8,7 @@ import {
   STATIC_AUTHOR_1,
   STATIC_AUTHOR_2,
   STATIC_AUTHOR_3,
-} from '@/mocks/mockAuthor';
+} from '@/mocks/mockUserSafe';
 import { mockComment } from '@/mocks/mockComment';
 import dayjs from 'dayjs';
 import { STATIC_REACTIONS, STATIC_REACTION_2 } from '@/mocks/mockReaction';

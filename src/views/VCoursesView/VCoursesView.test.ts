@@ -4,11 +4,11 @@ import VCoursesView from './VCoursesView.vue';
 import type { RouterLink } from 'vue-router';
 import { nextTick, ref } from 'vue';
 import { faker } from '@faker-js/faker';
-import { mockStudy } from '@/mocks/mockStudy';
+import { mockCourse } from '@/mocks/mockCourse';
 import { useStudiesQuery } from '@/query';
 import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
 
-const defaultStudies = faker.helpers.multiple(mockStudy, { count: 3 });
+const defaultStudies = faker.helpers.multiple(mockCourse, { count: 3 });
 
 vi.mock('@/query', () => ({
   useStudiesQuery: vi.fn(),

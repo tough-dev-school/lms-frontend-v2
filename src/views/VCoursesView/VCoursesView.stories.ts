@@ -1,7 +1,7 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
 import VCoursesView from './VCoursesView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
-import { STATIC_STUDY } from '@/mocks/mockStudy';
+import { STATIC_STUDY } from '@/mocks/mockCourse';
 import { studiesKeys } from '@/query';
 import { useQueryClient } from '@tanstack/vue-query';
 

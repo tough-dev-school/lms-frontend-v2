@@ -3,7 +3,7 @@
 import { faker } from '@faker-js/faker';
 import { type Diploma, LanguageEnum } from '@/api/generated-api';
 import { mockLocale } from './mockLocale';
-import { mockAuthor, STATIC_AUTHOR_1 } from './mockAuthor';
+import { mockUserSafe, STATIC_AUTHOR_1 } from './mockUserSafe';
 
 export const mockDiplomaData = (): Diploma => {
   return {
@@ -13,7 +13,7 @@ export const mockDiplomaData = (): Diploma => {
     slug: faker.string.uuid(),
     language: mockLocale(),
     image: '/diploma-mock.jpg',
-    student: mockAuthor(),
+    student: mockUserSafe(),
     url: faker.internet.url(),
   };
 };

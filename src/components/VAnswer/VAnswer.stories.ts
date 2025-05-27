@@ -3,7 +3,7 @@ import VAnswer from '@/components/VAnswer/VAnswer.vue';
 import { mockAnswer } from '@/mocks/mockAnswerDetailed';
 import useUser from '@/stores/user';
 import { USER_1 } from '@/mocks/mockUserId';
-import { STATIC_AUTHOR_1 } from '@/mocks/mockAuthor';
+import { STATIC_AUTHOR_1 } from '@/mocks/mockUserSafe';
 
 export default {
   title: 'Answer/VAnswer',
