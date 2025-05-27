@@ -7,12 +7,14 @@ import VReactions, {
 import type VReaction from './components/VReaction/VReaction.vue';
 import { createTestingPinia } from '@pinia/testing';
 import { faker } from '@faker-js/faker';
-import { mockReactionsData } from './mocks/mockReactionsData';
 import useUser from '@/stores/user';
-import { flatten, uniq } from 'lodash-es';
+import { flatten, times, uniq } from 'lodash-es';
+import { mockReactionDetailed } from '@/mocks/mockReactionDetailed';
 
 const defaultProps: VReactionsProps = {
-  reactions: mockReactionsData(),
+  reactions: times(faker.number.int({ min: 1, max: 10 }), () =>
+    mockReactionDetailed(),
+  ),
   answerId: faker.string.uuid(),
   open: false,
   disabled: false,

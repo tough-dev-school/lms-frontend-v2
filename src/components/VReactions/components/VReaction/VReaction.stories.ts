@@ -1,9 +1,10 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
 import VReaction from './VReaction.vue';
 import VCard from '@/components/VCard/VCard.vue';
-import { mockReactionsData } from '@/components/VReactions/mocks/mockReactionsData';
 import { faker } from '@faker-js/faker';
 import { ALLOWED_REACTIONS } from '@/components/VReactions/VReactions.vue';
+import { mockReactionDetailed } from '@/mocks/mockReactionDetailed';
+import { times } from 'lodash-es';
 
 const userId = faker.string.uuid();
 const emoji = faker.helpers.arrayElement(ALLOWED_REACTIONS);
@@ -26,7 +27,9 @@ export const Default = {
   args: {
     userId,
     emoji,
-    reactions: mockReactionsData(),
+    reactions: times(faker.number.int({ min: 1, max: 10 }), () =>
+      mockReactionDetailed(),
+    ),
   },
 };
 
@@ -36,10 +39,8 @@ export const Own = {
     userId,
     emoji,
     reactions: [
-      ...mockReactionsData(1).map((reaction) => {
-        return { ...reaction, author: { ...reaction.author, uuid: userId } };
-      }),
-      ...mockReactionsData(3),
+      ...times(1, () => mockReactionDetailed({ author: { uuid: userId } })),
+      ...times(3, () => mockReactionDetailed()),
     ],
   },
 };
@@ -49,7 +50,9 @@ export const Disabled = {
   args: {
     userId,
     emoji,
-    reactions: mockReactionsData(),
+    reactions: times(faker.number.int({ min: 1, max: 10 }), () =>
+      mockReactionDetailed(),
+    ),
     disabled: true,
   },
 };

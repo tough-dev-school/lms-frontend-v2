@@ -1,10 +1,11 @@
 <script lang="ts">
-  import type { Reaction, ReactionEmoji } from '@/types/homework';
+  import type { ReactionDetailed } from '@/api/generated-api';
+  import { ReactionEmoji } from '@/components/VReactions/VReactions.vue';
 
   export interface VReactionProps {
     userId: string;
     emoji: ReactionEmoji;
-    reactions?: Reaction[];
+    reactions?: ReactionDetailed[];
     disabled: boolean;
   }
 </script>
@@ -73,7 +74,7 @@
         :key="author.uuid"
         class="relative -mr-[12px] transition-all hover:z-50 hover:scale-125"
         data-testid="author"
-        :title="getName(author.firstName, author.lastName)">
+        :title="getName(author.first_name, author.last_name)">
         <VAvatar
           class="!w-24 !h-24"
           :user-id="author.uuid"

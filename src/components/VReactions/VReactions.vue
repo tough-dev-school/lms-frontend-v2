@@ -1,4 +1,6 @@
 <script lang="ts">
+  import type { ReactionDetailed } from '@/api/generated-api';
+
   export enum ReactionEmoji {
     LIKE = '👍',
     DISLIKE = '👎',
@@ -12,7 +14,7 @@
 
   export interface VReactionsProps {
     answerId: string;
-    reactions: Reaction[];
+    reactions: ReactionDetailed[];
     open?: boolean;
     disabled?: boolean;
   }
@@ -41,7 +43,7 @@
 
   const userStore = useUser();
 
-  const localReactions = ref<Reaction[]>([]);
+  const localReactions = ref<ReactionDetailed[]>([]);
 
   const actualizeReactions = () => (localReactions.value = props.reactions);
   const actualizeReactionsDebounced = debounce(actualizeReactions, 1500);
@@ -57,7 +59,7 @@
     actualizeReactions();
   });
 
-  const isDisabled = (reactions: Reaction[] | undefined) => {
+  const isDisabled = (reactions: ReactionDetailed[] | undefined) => {
     if (reactions === undefined) reactions = [];
 
     // Reaction that is set can't be disabled
@@ -79,7 +81,7 @@
     return groupBy(
       localReactions.value,
       (reaction) => reaction.emoji,
-    ) as Record<ReactionEmoji, Reaction[]>;
+    ) as Record<ReactionEmoji, ReactionDetailed[]>;
   });
 
   const emojiSet = computed(() => {
@@ -98,12 +100,12 @@
   });
 
   const optimisticallyAdd = (emoji: ReactionEmoji, slug: string) => {
-    const reaction: Reaction = {
+    const reaction: ReactionDetailed = {
       slug,
       author: {
         uuid: userStore.uuid,
-        firstName: userStore.firstName,
-        lastName: userStore.lastName,
+        first_name: userStore.firstName,
+        last_name: userStore.lastName,
       },
       emoji,
       answer: props.answerId,
