@@ -1,29 +1,19 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import VAnswer from '@/components/VAnswer';
+import VAnswer from '@/components/VAnswer/VAnswer.vue';
 import { mockAnswer } from '@/mocks/mockAnswerDetailed';
-import { USER_1 } from '@/mocks/mockUserId';
-import { STATIC_AUTHOR_1 } from '@/mocks/mockUserSafe';
-import { userKeys } from '@/query';
-import { useQueryClient } from '@tanstack/vue-query';
+import { mockUserSafe, STATIC_AUTHOR_1 } from '@/mocks/mockUserSafe';
 
 export default {
   title: 'Answer/VAnswer',
   component: VAnswer,
 } as Meta;
 
-const userId = USER_1;
 const answer = mockAnswer();
 const ownAnswer = { ...answer, author: STATIC_AUTHOR_1 };
 
 const Template: StoryFn = (args) => ({
   components: { VAnswer },
   setup() {
-    const queryClient = useQueryClient();
-
-    queryClient.setQueryData(userKeys.me(), {
-      uuid: userId,
-    });
-
     return { args };
   },
   template: '<VAnswer v-bind="args" />',
@@ -34,6 +24,7 @@ export const Default = {
 
   args: {
     answer,
+    user: mockUserSafe(),
   },
 };
 
@@ -42,6 +33,7 @@ export const Own = {
 
   args: {
     answer: ownAnswer,
+    user: STATIC_AUTHOR_1,
   },
 };
 
