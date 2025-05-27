@@ -1,7 +1,6 @@
 import { describe, beforeEach, expect, test } from 'vitest';
 import VPill from '@/components/VPill/VPill.vue';
 import { mount, VueWrapper } from '@vue/test-utils';
-import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
 
 const createItems = () => [
   { label: 'Item 1' },
@@ -15,11 +14,6 @@ describe('VPill', () => {
     wrapper = mount(VPill, {
       props: {
         items: createItems(),
-      },
-      global: {
-        stubs: {
-          RouterLink: VTransparentComponent,
-        },
       },
     });
   });
@@ -42,23 +36,21 @@ describe('VPill', () => {
       props: {
         items: [{ label: 'Item 1' }],
       },
-      shallow: true,
     });
 
     const component = getPillItems()[0];
-    expect(component.attributes('is')).toBe('div');
+    expect(component.element.tagName).toBe('DIV');
   });
 
-  test('renders RouterLink for items with links', () => {
+  test('renders anchor tag for items with links', () => {
     wrapper = mount(VPill, {
       props: {
         items: [{ label: 'Item 1', to: '/path' }],
       },
-      shallow: true,
     });
 
     const component = getPillItems()[0];
-    expect(component.attributes('is')).toBe('RouterLink');
-    expect(component.attributes('to')).toBe('/path');
+    expect(component.element.tagName).toBe('A');
+    expect(component.attributes('href')).toBe('/path');
   });
 });
