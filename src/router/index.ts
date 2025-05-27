@@ -91,7 +91,7 @@ export const routes = [
   {
     path: '/materials/:materialId',
     name: 'materials',
-    component: () => import('@/views/VNotionView/VNotionView.vue'),
+    component: () => import('@/views/VNotionView'),
   },
   {
     path: '/homework/:questionId',

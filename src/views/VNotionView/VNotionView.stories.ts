@@ -2,8 +2,7 @@ import type { Meta, StoryFn } from '@storybook/vue3';
 import VNotionView from './VNotionView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import { mockMaterial } from '@/mocks/mockMaterialSerializer';
-import { materialsKeys } from '@/query';
-import { useQueryClient } from '@tanstack/vue-query';
+
 export default {
   title: 'App/VNotionView',
   component: VNotionView,
@@ -19,36 +18,20 @@ const Template: StoryFn = (args) => ({
   template: '<VNotionView v-bind="args" />',
 });
 
+const MOCK_MATERIAL_ID = 'cf1379bf-bf5a-41f9-942f-31dd4253c178';
+
 export const Default = {
   render: Template,
   args: {
-    forceNew: true,
+    materialId: MOCK_MATERIAL_ID,
+    materialData: mockMaterial(),
   },
-  decorators: [
-    () => ({
-      setup() {
-        const queryClient = useQueryClient();
-        queryClient.setQueryData(
-          // @ts-expect-error
-          materialsKeys.materials(undefined),
-          mockMaterial(),
-        );
-      },
-      template: '<story />',
-    }),
-  ],
 };
 
 export const Empty = {
   render: Template,
-  decorators: [
-    () => ({
-      setup() {
-        const queryClient = useQueryClient();
-        // @ts-expect-error
-        queryClient.setQueryData(materialsKeys.materials(undefined), undefined);
-      },
-      template: '<story />',
-    }),
-  ],
+  args: {
+    materialId: MOCK_MATERIAL_ID,
+    materialData: undefined,
+  },
 };

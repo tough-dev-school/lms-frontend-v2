@@ -8,23 +8,24 @@
   import { useChatra } from '@/hooks/useChatra';
   import VNotionRenderer from '@/components/VNotionRenderer/VNotionRenderer.vue';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
-  import { useRouteParams } from '@vueuse/router';
-  import { useMaterialQuery } from '@/query';
+  import type { MaterialSerilizer } from '@/api/generated-api';
+
+  const props = defineProps<{
+    materialData: MaterialSerilizer;
+    materialId: string;
+  }>();
 
   const router = useRouter();
-  const materialId = useRouteParams<string>('materialId');
   const title = useTitle();
 
-  const { data: materialData, isLoading } = useMaterialQuery(materialId);
-
   const material = computed(() => {
-    if (!materialData.value) return undefined;
-    return materialData.value.content;
+    if (!props.materialData) return undefined;
+    return props.materialData.content;
   });
 
   const notionTitle = computed(() => {
     if (material.value) {
-      return getNotionTitle(materialId.value, material.value);
+      return getNotionTitle(props.materialId, material.value);
     }
     return undefined;
   });
@@ -37,24 +38,24 @@
   );
 
   const breadcrumbs = computed(() =>
-    materialData.value
+    props.materialData
       ? [
           {
-            name: materialData.value.breadcrumbs.course.name,
+            name: props.materialData.breadcrumbs.course.name,
             to: {
               name: 'modules',
               params: {
-                courseId: materialData.value.breadcrumbs.course.id,
+                courseId: props.materialData.breadcrumbs.course.id,
               },
             },
           },
           {
-            name: materialData.value.breadcrumbs.module.name,
+            name: props.materialData.breadcrumbs.module.name,
             to: {
               name: 'lessons',
               params: {
-                courseId: materialData.value.breadcrumbs.course.id,
-                moduleId: materialData.value.breadcrumbs.module.id,
+                courseId: props.materialData.breadcrumbs.course.id,
+                moduleId: props.materialData.breadcrumbs.module.id,
               },
             },
           },
@@ -63,7 +64,7 @@
             to: {
               name: 'materials',
               params: {
-                materialId: materialData.value.content.slug,
+                materialId: props.materialData.content.slug,
               },
             },
           },
@@ -75,7 +76,7 @@
 </script>
 
 <template>
-  <VLoggedLayout :breadcrumbs="breadcrumbs" :is-loading="isLoading">
+  <VLoggedLayout :breadcrumbs="breadcrumbs">
     <template v-if="material">
       <VCard
         class="pt-32 bg-white dark:bg-dark-black p-8 phone:p-24 rounded-16 shadow">
