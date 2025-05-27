@@ -25,6 +25,19 @@ vi.mock('@formkit/auto-animate/vue', () => ({
   useAutoAnimate: () => [null],
 }));
 
+vi.mock('@/query', () => ({
+  useRemoveHomeworkReactionMutation: () => ({
+    mutateAsync: vi.fn(),
+  }),
+  useAddHomeworkReactionMutation: () => ({
+    mutateAsync: vi.fn(),
+  }),
+}));
+
+vi.mock('@tanstack/vue-query', () => ({
+  useQueryClient: () => ({}),
+}));
+
 const defaultMountOptions = {
   props: defaultProps,
   shallow: true,
@@ -58,7 +71,7 @@ describe('VAnswer', () => {
     );
   };
   const getOwnerBadgeWrapper = () => {
-    return wrapper.find('[data-testid="own-badge"]');
+    return wrapper.find('.VAnswer__Name_Own');
   };
 
   test('props to display avatar passed to VAvatar', () => {

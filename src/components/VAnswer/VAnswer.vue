@@ -50,7 +50,7 @@
       <div>
         <div
           class="font-bold text-black dark:text-white"
-          :class="{ 'text-accent-orange': isOwn }"
+          :class="{ VAnswer__Name_Own: isOwn }"
           data-testid="name">
           {{ getName(answer.author.first_name, answer.author.last_name) }}
         </div>
@@ -96,3 +96,9 @@
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+  .VAnswer__Name_Own {
+    @apply text-accent-orange;
+  }
+</style>
