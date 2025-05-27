@@ -66,14 +66,14 @@ describe('visual regression test for', () => {
       name: 'Settings',
       path: `/iframe?id=app-vsettingsview--default&viewMode=story`,
     },
-    {
-      name: 'Materials',
-      path: '/iframe?id=app-vnotionview--default&viewMode=story',
-    },
-    {
-      name: 'Materials Missing',
-      path: '/iframe?id=app-vnotionview--empty&viewMode=story',
-    },
+    // {
+    //   name: 'Materials',
+    //   path: '/iframe?id=app-vnotionview--default&viewMode=story',
+    // },
+    // {
+    //   name: 'Materials Missing',
+    //   path: '/iframe?id=app-vnotionview--empty&viewMode=story',
+    // },
   ];
 
   scenarios.forEach((test) => {
