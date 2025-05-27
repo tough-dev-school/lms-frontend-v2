@@ -13,11 +13,11 @@
     useAddHomeworkReactionMutation,
   } from '@/query';
   import { useQueryClient } from '@tanstack/vue-query';
-  import type { AnswerDetailed, User } from '@/api/generated-api';
+  import type { AnswerDetailed, UserSafe } from '@/api/generated-api';
 
   const props = defineProps<{
     answer: AnswerDetailed;
-    user: User;
+    user: UserSafe;
   }>();
 
   const isOwn = computed(() => {
