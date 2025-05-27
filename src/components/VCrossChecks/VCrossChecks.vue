@@ -19,11 +19,15 @@
     return 'не проверено';
   };
 
-  const getStudentName = (
-    firstName: string,
-    lastName: string,
-    index: number,
-  ) => {
+  const getStudentName = ({
+    firstName,
+    lastName,
+    index,
+  }: {
+    firstName?: string;
+    lastName?: string;
+    index: number;
+  }) => {
     if (firstName || lastName) {
       return getName(firstName, lastName);
     }
@@ -44,11 +48,11 @@
         data-testid="crosscheck">
         <a class="link" :href="crosscheck.answer.url"
           >{{
-            getStudentName(
-              crosscheck.answer.author.first_name,
-              crosscheck.answer.author.last_name,
+            getStudentName({
+              firstName: crosscheck.answer.author.first_name,
+              lastName: crosscheck.answer.author.last_name,
               index,
-            )
+            })
           }}
           ({{ getCrossCheckState(crosscheck.is_checked) }})</a
         >
