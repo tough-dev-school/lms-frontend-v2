@@ -93,10 +93,6 @@
   const handleRemove = (reactionId: string) => {
     emit('remove', reactionId);
   };
-
-  const handleClose = () => {
-    emit('close');
-  };
 </script>
 
 <template>
@@ -114,12 +110,12 @@
     </div>
     <div v-else class="flex flex-wrap items-start gap-8">
       <VReaction
-        v-for="(reactions, emoji) in groupedReactions"
+        v-for="(reactionsGroup, emoji) in groupedReactions"
         :key="emoji"
         :emoji="emoji as ReactionEmoji"
         :user-id="user?.uuid ?? ''"
-        :reactions="reactions"
-        :disabled="isDisabled(reactions)"
+        :reactions="reactionsGroup"
+        :disabled="isDisabled(reactionsGroup)"
         @add="handleAdd"
         @remove="handleRemove" />
     </div>
