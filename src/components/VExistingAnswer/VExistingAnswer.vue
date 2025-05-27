@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import VAnswer from '@/components/VAnswer/VAnswer.vue';
+  import VAnswer from '@/components/VAnswer';
   import VAnswerActions from '@/components/VAnswerActions/VAnswerActions.vue';
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
   import dayjs from 'dayjs';

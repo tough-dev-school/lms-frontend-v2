@@ -1,9 +1,3 @@
-<script lang="ts">
-  export interface VAnswerProps {
-    answerId: string;
-  }
-</script>
-
 <script lang="ts" setup>
   import VAvatar from '@/components/VAvatar/VAvatar.vue';
   import { relativeDate } from '@/utils/date';
@@ -16,19 +10,19 @@
   import { useAutoAnimate } from '@formkit/auto-animate/vue';
   import VButton from '@/components/VButton/VButton.vue';
   import {
-    useHomeworkAnswerQuery,
     useRemoveHomeworkReactionMutation,
     useAddHomeworkReactionMutation,
   } from '@/query';
   import { useQueryClient } from '@tanstack/vue-query';
+  import type { AnswerDetailed } from '@/api/generated-api';
 
   const userStore = useUser();
-  const props = defineProps<VAnswerProps>();
-
-  const { data: answer } = useHomeworkAnswerQuery(props.answerId);
+  const props = defineProps<{
+    answer: AnswerDetailed;
+  }>();
 
   const isOwn = computed(() => {
-    return answer.value?.author.uuid === userStore.uuid;
+    return props.answer.author.uuid === userStore.uuid;
   });
 
   const isPaletteOpen = ref(false);
@@ -91,9 +85,13 @@
           :open="isPaletteOpen"
           :disabled="isOwn"
           @close="closePalette"
-          @add="(emoji) => sendAddReaction({ answerId, reaction: emoji })"
+          @add="
+            (emoji) =>
+              sendAddReaction({ answerId: answer.slug, reaction: emoji })
+          "
           @remove="
-            (reactionId) => sendRemoveReaction({ answerId, reactionId })
+            (reactionId) =>
+              sendRemoveReaction({ answerId: answer.slug, reactionId })
           " />
       </div>
     </div>

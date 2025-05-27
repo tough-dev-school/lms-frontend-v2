@@ -8,7 +8,7 @@
 </script>
 
 <script lang="ts" setup>
-  import VAnswer from '@/components/VAnswer/VAnswer.vue';
+  import VAnswer from '@/components/VAnswer';
   import { ref, watch } from 'vue';
   import { onClickOutside } from '@vueuse/core';
   import useUser from '@/stores/user';
