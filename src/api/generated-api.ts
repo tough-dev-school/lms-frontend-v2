@@ -580,7 +580,7 @@ export interface ReactionCreate {
 
 export interface ReactionDetailed {
   /** @format uuid */
-  slug?: string;
+  slug: string;
   /** @maxLength 10 */
   emoji: string;
   author: UserSafe;
