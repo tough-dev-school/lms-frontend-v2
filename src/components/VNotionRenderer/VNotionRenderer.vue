@@ -3,6 +3,7 @@
 
   export interface VNotionViewProps {
     blockMap: BlockMap;
+    materialId: string;
   }
 </script>
 
@@ -11,7 +12,6 @@
   import { NotionRenderer } from 'vue-notion';
   import { onMounted } from 'vue';
   import { useEventListener } from '@vueuse/core';
-  import { useRouteParams } from '@vueuse/router';
 
   import 'prismjs';
   import 'prismjs/themes/prism.css';
@@ -22,12 +22,10 @@
   import 'prismjs/components/prism-c.js';
   import 'prismjs/components/prism-cpp.js';
 
-  const materialId = useRouteParams<string>('materialId');
+  const props = defineProps<VNotionViewProps>();
 
   const mapPageUrl = (materialId: string) => `/materials/${materialId}`;
-  const mapBlockId = (id: string) => `${materialId.value}-${id}}`;
-
-  defineProps<VNotionViewProps>();
+  const mapBlockId = (id: string) => `${props.materialId}-${id}}`;
 
   onMounted(() => {
     /**
