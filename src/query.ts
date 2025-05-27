@@ -383,10 +383,14 @@ export const useHomeworkAnswerDeleteMutation = (queryClient: QueryClient) => {
 
 export const useHomeworkAnswerSendImageMutation = () => {
   return useMutation({
-    mutationFn: async (image: File) =>
-      await api.homeworkAnswersImageCreate(image, {
+    mutationFn: async (image: File) => {
+      const formData = new FormData();
+      formData.append('image', image);
+
+      return await api.homeworkAnswersImageCreate(formData, {
         type: ContentType.FormData,
-      }),
+      });
+    },
   });
 };
 
@@ -425,7 +429,9 @@ export const useUpdateUserAvatarMutation = (queryClient: QueryClient) => {
       } else {
         formData.append('avatar', '');
       }
-      return await api.usersMePartialUpdate(formData as any);
+      return await api.usersMePartialUpdate(formData, {
+        type: ContentType.FormData,
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: userKeys.all() });
