@@ -86,13 +86,9 @@ export const useAuth = defineStore('auth', {
     },
     addToken(token: AuthToken) {
       this.token = token;
-      const queryClient = useQueryClient();
-      queryClient.invalidateQueries({ queryKey: baseQueryKey() });
     },
     removeToken() {
       this.token = undefined;
-      const queryClient = useQueryClient();
-      queryClient.invalidateQueries({ queryKey: baseQueryKey() });
     },
   },
   persist: true,
