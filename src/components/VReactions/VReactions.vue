@@ -50,8 +50,11 @@
 
   watch(
     () => props.reactions,
-    () => {
-      actualizeReactionsDebounced();
+    (newReactions) => {
+      // Only update if the length is different to avoid conflicts with optimistic updates
+      if (newReactions.length !== localReactions.value.length) {
+        actualizeReactionsDebounced();
+      }
     },
   );
 
@@ -87,10 +90,27 @@
   });
 
   const handleAdd = (emoji: ReactionEmoji) => {
-    emit('add', emoji, uuid());
+    const reactionId = uuid();
+    // Optimistically add the reaction
+    if (user.value) {
+      localReactions.value = [
+        ...localReactions.value,
+        {
+          slug: reactionId,
+          emoji,
+          author: user.value,
+          answer: props.answerId,
+        },
+      ];
+    }
+    emit('add', emoji, reactionId);
   };
 
   const handleRemove = (reactionId: string) => {
+    // Optimistically remove the reaction
+    localReactions.value = localReactions.value.filter(
+      (reaction) => reaction.slug !== reactionId,
+    );
     emit('remove', reactionId);
   };
 </script>
