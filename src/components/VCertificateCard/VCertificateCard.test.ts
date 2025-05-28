@@ -4,7 +4,6 @@ import type { VueWrapper } from '@vue/test-utils';
 import VCertificateCard from './VCertificateCard.vue';
 import type VCertificate from '@/components/VCertificate/VCertificate.vue';
 import { mockDiplomaData, mockDiplomaSet } from '@/mocks/mockDiploma';
-import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
 import VCard from '@/components/VCard/VCard.vue';
 
 const diplomas = mockDiplomaSet(mockDiplomaData());
@@ -19,7 +18,9 @@ describe('VCertificateCard', () => {
 
   beforeEach(() => {
     wrapper = mount(VCertificateCard, {
-      global: { stubs: { VCard: VTransparentComponent } },
+      global: {
+        renderStubDefaultSlot: true,
+      },
       shallow: true,
       props: defaultProps,
     });

@@ -7,8 +7,12 @@ import useAuth from '@/stores/auth';
 import { createTestingPinia } from '@pinia/testing';
 import { faker } from '@faker-js/faker';
 import { nextTick } from 'vue';
-import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
 import VButton from '@/components/VButton/VButton.vue';
+
+type MockedAuth = ReturnType<typeof useAuth> & {
+  changePassword: ReturnType<typeof vi.fn>;
+};
+
 const defaultProps = {
   uid: faker.string.uuid(),
   token: faker.string.uuid(),
@@ -16,26 +20,28 @@ const defaultProps = {
 
 describe('VPasswordSettings', () => {
   let wrapper: VueWrapper<InstanceType<typeof VPasswordSettings>>;
-  let auth: ReturnType<typeof useAuth>;
+  let auth: MockedAuth;
 
   beforeEach(() => {
     wrapper = mount(VPasswordSettings, {
       shallow: true,
       props: defaultProps,
       global: {
+        renderStubDefaultSlot: true,
         plugins: [
           createTestingPinia({
             createSpy: vi.fn,
           }),
         ],
         stubs: {
-          VCard: VTransparentComponent,
-          VButton: VTransparentComponent,
+          VCard: true,
+          VTextInput: false,
+          VButton: false,
         },
       },
     });
 
-    auth = useAuth();
+    auth = useAuth() as MockedAuth;
   });
 
   const getPassword1Wrapper = () =>

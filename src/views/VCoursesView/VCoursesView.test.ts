@@ -6,7 +6,12 @@ import { nextTick, ref } from 'vue';
 import { faker } from '@faker-js/faker';
 import { mockCourse } from '@/mocks/mockCourse';
 import { useStudiesQuery } from '@/query';
-import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
+import {
+  VueQueryPlugin,
+  QueryClient,
+  type VueQueryPluginOptions,
+} from '@tanstack/vue-query';
+import { createTestingPinia } from '@pinia/testing';
 
 const defaultStudies = faker.helpers.multiple(mockCourse, { count: 3 });
 
@@ -14,25 +19,47 @@ vi.mock('@/query', () => ({
   useStudiesQuery: vi.fn(),
 }));
 
+const createWrapper = (studies = defaultStudies) => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+        staleTime: Infinity,
+      },
+    },
+  });
+
+  vi.mocked(useStudiesQuery).mockReturnValue({
+    data: ref(studies),
+    isLoading: ref(false),
+  } as any);
+
+  const options: VueQueryPluginOptions = {
+    queryClient,
+  };
+
+  return mount(VCoursesView, {
+    shallow: true,
+    global: {
+      renderStubDefaultSlot: true,
+      plugins: [
+        [VueQueryPlugin, options],
+        createTestingPinia({
+          createSpy: vi.fn,
+        }),
+      ],
+      stubs: {
+        RouterLink: RouterLinkStub,
+      },
+    },
+  });
+};
+
 describe('VCoursesView', () => {
   let wrapper: VueWrapper<InstanceType<typeof VCoursesView>>;
 
   beforeEach(() => {
-    vi.mocked(useStudiesQuery).mockReturnValue({
-      data: ref(defaultStudies),
-      isLoading: ref(false),
-    } as any);
-
-    wrapper = mount(VCoursesView, {
-      shallow: true,
-      global: {
-        stubs: {
-          VLoggedLayout: VTransparentComponent,
-          VCard: false,
-          RouterLink: RouterLinkStub,
-        },
-      },
-    });
+    wrapper = createWrapper();
   });
 
   const getStudyWrapper = () => {
@@ -61,21 +88,7 @@ describe('VCoursesView', () => {
   });
 
   test('if no studies — empty message is shown', async () => {
-    vi.mocked(useStudiesQuery).mockReturnValue({
-      data: ref(undefined),
-      isLoading: ref(false),
-    } as any);
-
-    wrapper = mount(VCoursesView, {
-      shallow: true,
-      global: {
-        stubs: {
-          VCard: false,
-          RouterLink: RouterLinkStub,
-          VLoggedLayout: VTransparentComponent,
-        },
-      },
-    });
+    wrapper = createWrapper([]);
 
     await nextTick();
 

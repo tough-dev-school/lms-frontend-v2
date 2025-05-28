@@ -4,7 +4,6 @@ import type { VueWrapper } from '@vue/test-utils';
 import VLoginView from './VLoginView.vue';
 import type VLoginLink from '@/components/VLoginLink/VLoginLink.vue';
 import type VLoginPassword from '@/components/VLoginPassword/VLoginPassword.vue';
-import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
 
 describe('VLoginView', () => {
   let wrapper: VueWrapper<InstanceType<typeof VLoginView>>;
@@ -13,9 +12,7 @@ describe('VLoginView', () => {
     wrapper = mount(VLoginView, {
       shallow: true,
       global: {
-        stubs: {
-          VPublicLayout: VTransparentComponent,
-        },
+        renderStubDefaultSlot: true,
       },
     });
   });

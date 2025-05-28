@@ -8,7 +8,6 @@ import { nextTick, ref } from 'vue';
 import { faker } from '@faker-js/faker';
 import { vi, describe, beforeEach, expect, test } from 'vitest';
 import { useDiplomasQuery } from '@/query';
-import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
 
 const defaultProps = {};
 
@@ -39,9 +38,7 @@ describe('VCertificatesView', () => {
       shallow: true,
       props: defaultProps,
       global: {
-        stubs: {
-          VLoggedLayout: VTransparentComponent,
-        },
+        renderStubDefaultSlot: true,
       },
     });
   });
@@ -89,9 +86,7 @@ describe('VCertificatesView', () => {
       shallow: true,
       props: defaultProps,
       global: {
-        stubs: {
-          VLoggedLayout: VTransparentComponent,
-        },
+        renderStubDefaultSlot: true,
       },
     });
 
