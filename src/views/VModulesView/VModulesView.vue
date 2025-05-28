@@ -5,7 +5,8 @@
   import { useModulesQuery, useStudiesQuery } from '@/query';
   import { useRouteParams } from '@vueuse/router';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
-  import VPill, { type PillItem } from '@/components/VPill/VPill.vue';
+  import VPill from '@/components/VPill/VPill.vue';
+  import VPillItem from '@/components/VPill/VPillItem.vue';
   import VModuleCard from '@/components/VModuleCard/VModuleCard.vue';
 
   const route = useRoute();
@@ -35,43 +36,51 @@
   ]);
 
   const courseInfo = computed(() => {
-    const items: PillItem[] = [];
-
-    if (study.value?.calendar_google || study.value?.calendar_ios) {
-      items.push('calendar');
+    if (
+      !study.value?.calendar_google &&
+      !study.value?.calendar_ios &&
+      !study.value?.chat
+    ) {
+      return [];
     }
-
-    if (study.value?.chat) {
-      items.push({ label: 'Чат', to: study.value?.chat });
-    }
-
-    return items;
+    return [1];
   });
 </script>
 
 <template>
   <VLoggedLayout :title="courseName" :breadcrumbs="breadcrumbs">
     <template v-if="courseInfo.length > 0" #pill>
-      <VPill :items="courseInfo">
-        <template #pill-calendar>
-          <div
-            class="font-medium text-center flex justify-center items-center flex-col">
-            <div>Календарь событий</div>
-            <div class="flex gap-16">
-              <a
-                v-if="study?.calendar_google"
-                class="link-bright"
-                :href="study.calendar_google">
-                Google
-              </a>
-              <a
-                v-if="study?.calendar_ios"
-                class="link-bright"
-                :href="study.calendar_ios">
-                iOS</a
-              >
+      <VPill>
+        <template v-if="study?.calendar_google || study?.calendar_ios">
+          <VPillItem>
+            <div
+              class="font-medium text-center flex justify-center items-center flex-col">
+              <div>Календарь событий</div>
+              <div class="flex gap-16">
+                <a
+                  v-if="study?.calendar_google"
+                  class="link-bright"
+                  :href="study.calendar_google">
+                  Google
+                </a>
+                <a
+                  v-if="study?.calendar_ios"
+                  class="link-bright"
+                  :href="study.calendar_ios">
+                  iOS
+                </a>
+              </div>
             </div>
-          </div>
+          </VPillItem>
+        </template>
+        <VPillItem v-if="study?.chat" :to="study.chat"> Чат </VPillItem>
+        <template v-if="study?.links?.length">
+          <VPillItem
+            v-for="(link, index) in study.links"
+            :key="index"
+            :to="link.url">
+            {{ link.name }}
+          </VPillItem>
         </template>
       </VPill>
     </template>
