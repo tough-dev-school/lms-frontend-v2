@@ -1,6 +1,5 @@
 <script lang="ts" setup>
   import VHeading from '@/components/VHeading/VHeading.vue';
-  import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
   import type { Module } from '@/api/generated-api';
 
   defineProps<{
