@@ -84,7 +84,7 @@ importers:
         specifier: ^9.0.1
         version: 9.0.1
       vue:
-        specifier: ^3.5.15
+        specifier: ^3.3.8
         version: 3.5.15(typescript@5.2.2)
       vue-avatar-cropper:
         specifier: ^6.1.1
