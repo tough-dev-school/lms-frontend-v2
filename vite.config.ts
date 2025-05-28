@@ -13,7 +13,13 @@ export default defineConfig({
       '/api': 'http://127.0.0.1:8000',
     },
   },
-  plugins: [vue()],
+  plugins: [
+    vue({
+      script: {
+        defineModel: true,
+      },
+    }),
+  ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
