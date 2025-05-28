@@ -23,7 +23,7 @@
           <VCover
             :name="study.name"
             :image="study.cover"
-            class="hidden phone:flex rounded-16 overflow-hidden" />
+            class="rounded-16 overflow-hidden" />
         </RouterLink>
       </li>
     </ul>
