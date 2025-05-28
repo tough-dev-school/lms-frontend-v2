@@ -105,13 +105,12 @@
       @after-delete="handleDeleteAnswer" />
   </section>
 
+  <VCrossChecks v-if="isOwnAnswer && crosschecks" :crosschecks="crosschecks" />
+
   <section class="flex flex-col gap-24">
     <VHeading tag="h2">{{
       isOwnAnswer ? 'Коментарии вашей работы' : 'Коментарии'
     }}</VHeading>
-    <VCrossChecks
-      v-if="isOwnAnswer && crosschecks"
-      :crosschecks="crosschecks" />
     <VFeedbackGuide />
     <VCreateAnswer v-model="commentText" @send="handleCreateComment" />
     <template v-if="answer.descendants">
