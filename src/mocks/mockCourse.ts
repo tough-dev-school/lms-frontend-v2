@@ -11,6 +11,12 @@ export const mockCourse = (payload: Partial<Course> = {}): Required<Course> => {
     calendar_ios: faker.internet.url(),
     calendar_google: faker.internet.url(),
     home_page_slug: faker.string.uuid(),
+    links: [
+      {
+        name: 'test',
+        url: faker.internet.url(),
+      },
+    ],
     ...payload,
   };
 };
