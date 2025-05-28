@@ -30,7 +30,6 @@
     <p v-if="module.description">
       {{ module.description }}
     </p>
-    <VHtmlContent v-if="module.text" :content="module.text" />
   </div>
 </template>
 
