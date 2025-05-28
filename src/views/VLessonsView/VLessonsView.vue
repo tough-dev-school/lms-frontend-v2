@@ -1,14 +1,14 @@
 <script lang="ts" setup>
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
-  import { useLessonsQuery, fetchModules } from '@/query';
-  import { onBeforeMount, computed, ref } from 'vue';
+  import { useLessonsQuery } from '@/query';
+  import { computed } from 'vue';
   import { useRouteParams } from '@vueuse/router';
-  import { useQueryClient } from '@tanstack/vue-query';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import { useStudiesQuery } from '@/query';
   import VLessonCard from '@/components/VLessonCard/VLessonCard.vue';
+  import { useModulesQuery } from '@/query';
+  import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
 
-  const queryClient = useQueryClient();
   const courseId = useRouteParams('courseId', '0', {
     transform: (value) => parseInt(value),
   });
@@ -22,37 +22,41 @@
     () =>
       (studies.value ?? []).find((study) => study.id === courseId.value)?.name,
   );
-  const moduleName = ref('');
 
   const { data: lessons } = useLessonsQuery(moduleId);
 
-  const breadcrumbs = computed<Breadcrumb[]>(() => [
-    { name: 'Мои курсы', to: { name: 'home' } },
-    {
-      name: courseName.value ? courseName.value : 'Материалы курса',
-      to: { name: 'modules', params: { courseId: courseId.value } },
-    },
-    {
-      name: moduleName.value,
-      to: {
-        name: 'lessons',
-        params: { courseId: courseId.value, moduleId: moduleId.value },
+  const breadcrumbs = computed<Breadcrumb[]>(() => {
+    if (!courseName.value || !moduleName.value) return [];
+
+    return [
+      { name: 'Мои курсы', to: { name: 'home' } },
+      {
+        name: courseName.value ? courseName.value : 'Материалы курса',
+        to: { name: 'modules', params: { courseId: courseId.value } },
       },
-    },
-  ]);
-
-  onBeforeMount(async () => {
-    const modules = await fetchModules(queryClient, {
-      courseId: courseId.value,
-    });
-
-    moduleName.value =
-      modules.find((module) => module.id === moduleId.value)?.name ?? '';
+      {
+        name: moduleName.value,
+        to: {
+          name: 'lessons',
+          params: { courseId: courseId.value, moduleId: moduleId.value },
+        },
+      },
+    ];
   });
+
+  const { data: modules } = useModulesQuery(courseId);
+
+  const module = computed(
+    () => modules.value?.find((module) => module.id === moduleId.value),
+  );
+
+  const moduleName = computed(() => module.value?.name);
+  const moduleText = computed(() => module.value?.text);
 </script>
 
 <template>
   <VLoggedLayout :title="moduleName" :breadcrumbs="breadcrumbs">
+    <VHtmlContent v-if="moduleText" :content="moduleText" />
     <div class="VLessonsView gap-32 flex flex-col">
       <div v-if="lessons && lessons.length > 0" class="VLessonsView__Layout">
         <VLessonCard

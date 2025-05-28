@@ -1,6 +1,5 @@
 <script lang="ts" setup>
   import VHeading from '@/components/VHeading/VHeading.vue';
-  import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
   import type { Module } from '@/api/generated-api';
 
   defineProps<{
@@ -30,7 +29,6 @@
     <p v-if="module.description">
       {{ module.description }}
     </p>
-    <VHtmlContent v-if="module.text" :content="module.text" />
   </div>
 </template>
 
