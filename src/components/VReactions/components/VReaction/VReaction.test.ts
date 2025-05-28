@@ -26,8 +26,9 @@ const mountComponent = (props: Partial<VReactionProps> = {}) => {
     shallow: true,
     props: { ...defaultProps, ...props },
     global: {
+      renderStubDefaultSlot: true,
       stubs: {
-        VButton: VTransparentComponent,
+        VButton: false,
         VAvatar: VTransparentComponent,
       },
     },

@@ -4,7 +4,6 @@ import type { VueWrapper } from '@vue/test-utils';
 import VLoginChangeView from './VLoginChangeView.vue';
 import VPasswordSettings from '@/components/VPasswordSettings/VPasswordSettings.vue';
 import { faker } from '@faker-js/faker';
-import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
 
 const defaultProps = {};
 
@@ -28,9 +27,7 @@ describe('VLoginChangeView', () => {
       shallow: true,
       props: defaultProps,
       global: {
-        stubs: {
-          VPublicLayout: VTransparentComponent,
-        },
+        renderStubDefaultSlot: true,
       },
     });
   });

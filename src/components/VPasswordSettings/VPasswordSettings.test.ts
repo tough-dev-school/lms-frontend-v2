@@ -7,8 +7,12 @@ import useAuth from '@/stores/auth';
 import { createTestingPinia } from '@pinia/testing';
 import { faker } from '@faker-js/faker';
 import { nextTick } from 'vue';
-import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
 import VButton from '@/components/VButton/VButton.vue';
+
+type MockedAuth = ReturnType<typeof useAuth> & {
+  changePassword: ReturnType<typeof vi.fn>;
+};
+
 const defaultProps = {
   uid: faker.string.uuid(),
   token: faker.string.uuid(),
@@ -16,55 +20,60 @@ const defaultProps = {
 
 describe('VPasswordSettings', () => {
   let wrapper: VueWrapper<InstanceType<typeof VPasswordSettings>>;
-  let auth: ReturnType<typeof useAuth>;
+  let auth: MockedAuth;
 
   beforeEach(() => {
     wrapper = mount(VPasswordSettings, {
       shallow: true,
       props: defaultProps,
       global: {
+        renderStubDefaultSlot: true,
         plugins: [
           createTestingPinia({
             createSpy: vi.fn,
           }),
         ],
         stubs: {
-          VCard: VTransparentComponent,
-          VButton: VTransparentComponent,
+          VCard: {
+            template:
+              '<div><slot /><slot name="footer" /><div data-testid="title">{{ title }}</div></div>',
+            props: ['title'],
+          },
+          VTextInput: false,
+          VButton: false,
         },
       },
     });
 
-    auth = useAuth();
+    auth = useAuth() as MockedAuth;
   });
 
   const getPassword1Wrapper = () =>
     wrapper.findComponent<typeof VTextInput>('[data-testid="password1"]');
   const getPassword2Wrapper = () =>
     wrapper.findComponent<typeof VTextInput>('[data-testid="password2"]');
-
   const getSaveWrapper = () =>
     wrapper.findComponent<typeof VButton>('[data-testid="save"]');
 
   test('shows reset heading when no auth', () => {
-    expect(wrapper.attributes('title')).toContain('Сброс пароля');
+    const title = wrapper.find('[data-testid="title"]').text();
+    expect(title).toBe('Сброс пароля');
   });
+
   test('shows change heading when has auth', async () => {
     auth.$patch({ token: faker.string.uuid() });
-
     await nextTick();
-
-    expect(wrapper.attributes('title')).toContain('Пароль');
+    const title = wrapper.find('[data-testid="title"]').text();
+    expect(title).toBe('Пароль');
   });
 
   test('sends data on save', async () => {
     const password1 = faker.string.uuid();
     const password2 = faker.string.uuid();
 
-    getPassword1Wrapper().vm.$emit('update:modelValue', password1);
-    getPassword2Wrapper().vm.$emit('update:modelValue', password2);
-
-    getSaveWrapper().vm.$emit('click');
+    await getPassword1Wrapper().vm.$emit('update:modelValue', password1);
+    await getPassword2Wrapper().vm.$emit('update:modelValue', password2);
+    await getSaveWrapper().trigger('click');
 
     expect(auth.changePassword).toHaveBeenCalledTimes(1);
     expect(auth.changePassword).toHaveBeenCalledWith({
@@ -77,7 +86,6 @@ describe('VPasswordSettings', () => {
 
   test('emit save on save', async () => {
     await getSaveWrapper().trigger('click');
-
     expect(wrapper.emitted('save')).toHaveLength(1);
   });
 });
