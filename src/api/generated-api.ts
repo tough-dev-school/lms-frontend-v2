@@ -144,6 +144,20 @@ export interface Course {
    * @maxLength 200
    */
   calendar_google?: string | null;
+  links?: CourseLink[];
+}
+
+export interface CourseLink {
+  /**
+   * Название
+   * @maxLength 255
+   */
+  name: string;
+  /**
+   * Ссылка
+   * @maxLength 255
+   */
+  url: string;
 }
 
 export interface CourseSimple {
