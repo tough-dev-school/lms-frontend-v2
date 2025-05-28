@@ -24,7 +24,7 @@
 
 <template>
   <div
-    class="flex flex-col phone:grid phone:grid-cols-[repeat(auto-fill,minmax(0,1fr))] grid-cols-1 min-h-72 rounded-8 text-black bg-white overflow-hidden"
+    class="flex flex-col phone:grid phone:grid-cols-[repeat(auto-fill,minmax(0,1fr))] grid-cols-1 phone:min-h-72 rounded-8 text-black bg-white overflow-hidden"
     style="
       grid-template-columns: repeat(
         min(var(--max-items, 5), var(--items)),
@@ -48,7 +48,9 @@
           {{ item.label }}
         </component>
       </template>
-      <slot v-else :name="`pill-${item}`" />
+      <div v-else class="py-16">
+        <slot :name="`pill-${item}`" />
+      </div>
     </template>
   </div>
 </template>
