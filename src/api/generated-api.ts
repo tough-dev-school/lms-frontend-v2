@@ -79,9 +79,9 @@ export enum BlankEnum {
 }
 
 export interface Breadcrumbs {
-  module: Module;
-  course: LMSCourse;
-  lesson: LessonPlain;
+  module?: Module;
+  course?: LMSCourse;
+  lesson?: LessonPlain;
 }
 
 export interface Call {

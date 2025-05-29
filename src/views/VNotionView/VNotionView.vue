@@ -9,6 +9,7 @@
   import VNotionRenderer from '@/components/VNotionRenderer/VNotionRenderer.vue';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import type { MaterialSerilizer } from '@/api/generated-api';
+  import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
 
   const props = defineProps<{
     materialData: MaterialSerilizer;
@@ -37,40 +38,52 @@
     },
   );
 
-  const breadcrumbs = computed(() =>
-    props.materialData
-      ? [
-          {
-            name: props.materialData.breadcrumbs.course.name,
-            to: {
-              name: 'modules',
-              params: {
-                courseId: props.materialData.breadcrumbs.course.id,
-              },
-            },
+  const breadcrumbs = computed(() => {
+    const result: Breadcrumb[] = [{ name: 'Мои курсы', to: { name: 'home' } }];
+
+    if (!props.materialData) return undefined;
+
+    if (props.materialData.breadcrumbs.course) {
+      result.push({
+        name: props.materialData.breadcrumbs.course.name,
+        to: {
+          name: 'modules',
+          params: {
+            courseId: props.materialData.breadcrumbs.course.id,
           },
-          {
-            name: props.materialData.breadcrumbs.module.name,
-            to: {
-              name: 'lessons',
-              params: {
-                courseId: props.materialData.breadcrumbs.course.id,
-                moduleId: props.materialData.breadcrumbs.module.id,
-              },
-            },
+        },
+      });
+    } else {
+      return undefined;
+    }
+
+    if (props.materialData.breadcrumbs.module) {
+      result.push({
+        name: props.materialData.breadcrumbs.module.name,
+        to: {
+          name: 'lessons',
+          params: {
+            courseId: props.materialData.breadcrumbs.course.id,
+            moduleId: props.materialData.breadcrumbs.module.id,
           },
-          {
-            name: notionTitle.value ?? '',
-            to: {
-              name: 'materials',
-              params: {
-                materialId: props.materialData.content.slug,
-              },
-            },
-          },
-        ]
-      : undefined,
-  );
+        },
+      });
+    } else {
+      return undefined;
+    }
+
+    result.push({
+      name: notionTitle.value ?? '',
+      to: {
+        name: 'materials',
+        params: {
+          materialId: props.materialData.content.slug,
+        },
+      },
+    });
+
+    return result;
+  });
 
   const { chatra } = useChatra();
 </script>

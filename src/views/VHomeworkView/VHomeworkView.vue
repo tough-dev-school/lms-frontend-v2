@@ -15,6 +15,7 @@
   import { watch, onBeforeMount } from 'vue';
   import { useRoute, useRouter } from 'vue-router';
   import { useUserQuery } from '@/query';
+  import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
 
   const answerId = useRouteQuery<string | undefined>('answerId');
   const questionId = useRouteParams<string>('questionId');
@@ -38,40 +39,52 @@
     },
   );
 
-  const breadcrumbs = computed(() =>
-    question.value
-      ? [
-          {
-            name: question.value.breadcrumbs.course.name,
-            to: {
-              name: 'modules',
-              params: {
-                courseId: question.value.breadcrumbs.course.id,
-              },
-            },
+  const breadcrumbs = computed(() => {
+    const result: Breadcrumb[] = [{ name: 'Мои курсы', to: { name: 'home' } }];
+
+    if (!question.value) return undefined;
+
+    if (question.value.breadcrumbs.course) {
+      result.push({
+        name: question.value.breadcrumbs.course.name,
+        to: {
+          name: 'modules',
+          params: {
+            courseId: question.value.breadcrumbs.course.id,
           },
-          {
-            name: question.value.breadcrumbs.module.name,
-            to: {
-              name: 'lessons',
-              params: {
-                courseId: question.value.breadcrumbs.course.id,
-                moduleId: question.value.breadcrumbs.module.id,
-              },
-            },
+        },
+      });
+    } else {
+      return undefined;
+    }
+
+    if (question.value.breadcrumbs.module) {
+      result.push({
+        name: question.value.breadcrumbs.module.name,
+        to: {
+          name: 'lessons',
+          params: {
+            courseId: question.value.breadcrumbs.course.id,
+            moduleId: question.value.breadcrumbs.module.id,
           },
-          {
-            name: question.value.name,
-            to: {
-              name: 'homework',
-              params: {
-                questionId: questionId.value,
-              },
-            },
-          },
-        ]
-      : undefined,
-  );
+        },
+      });
+    } else {
+      return undefined;
+    }
+
+    result.push({
+      name: question.value.name,
+      to: {
+        name: 'homework',
+        params: {
+          questionId: questionId.value,
+        },
+      },
+    });
+
+    return result;
+  });
 
   onBeforeMount(async () => {
     const queryClient = useQueryClient();
