@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import VAnswer from '@/components/VAnswer';
+  import VAnswer from '@/components/VAnswer/VAnswer.vue';
   import VAnswerActions from '@/components/VAnswerActions/VAnswerActions.vue';
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
   import dayjs from 'dayjs';
@@ -9,10 +9,11 @@
     useHomeworkAnswerUpdateMutation,
     useHomeworkAnswerDeleteMutation,
   } from '@/query';
-  import type { AnswerDetailed } from '@/api/generated-api';
+  import type { AnswerDetailed, UserSafe } from '@/api/generated-api';
 
   const props = defineProps<{
     answer: AnswerDetailed;
+    user: UserSafe;
   }>();
 
   const emit = defineEmits<{
@@ -57,7 +58,7 @@
 </script>
 
 <template>
-  <VAnswer v-if="!isEdit" :answer-id="answer.slug">
+  <VAnswer v-if="!isEdit" :answer="answer" :user="user">
     <template #header>
       <VAnswerActions
         v-if="isEditable"
@@ -68,5 +69,5 @@
       <slot name="footer" />
     </template>
   </VAnswer>
-  <VCreateAnswer v-else v-model="text" @send="handleUpdate" />
+  <VCreateAnswer v-else-if="isEdit" v-model="text" @send="handleUpdate" />
 </template>
