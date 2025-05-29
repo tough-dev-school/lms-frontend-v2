@@ -32,7 +32,7 @@
   const answerLink = computed(() => {
     if (props.answer.slug) {
       const url = new URL(
-        `${window.location.host}/homework/${props.question.slug}`,
+        `${window.location.origin}/homework/${props.question.slug}`,
       );
       url.searchParams.set('answerId', props.answer.slug);
       return url.toString();
