@@ -90,8 +90,8 @@ importers:
         specifier: ^6.1.1
         version: 6.1.1(vue@3.5.15(typescript@5.2.2))
       vue-notion:
-        specifier: github:tough-dev-school/vue-notion#2.0.6
-        version: https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/2f47c60d13a1603d9725036a76581f9f130cad22(@janniks/vue3-katex@0.6.0-rc.5.1(katex@0.16.11)(vue@3.5.15(typescript@5.2.2)))(vue@3.5.15(typescript@5.2.2))
+        specifier: github:tough-dev-school/vue-notion#2.0.7
+        version: https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/cde29a6b2a4691d8426c642081ec06dff3534101(@janniks/vue3-katex@0.6.0-rc.5.1(katex@0.16.11)(vue@3.5.15(typescript@5.2.2)))(vue@3.5.15(typescript@5.2.2))
       vue-router:
         specifier: ^4.4.5
         version: 4.4.5(vue@3.5.15(typescript@5.2.2))
@@ -2481,9 +2481,6 @@ packages:
   define-properties@1.2.0:
     resolution: {integrity: sha512-xvqAVKGfT1+UAvPwKTVw/njhdQ8ZhXK4lI0bCIuCMrp2up9nPnaDftrLtmpTazqd1o+UY4zgzU+avtMbDP+ldA==}
     engines: {node: '>= 0.4'}
-
-  defu@6.1.2:
-    resolution: {integrity: sha512-+uO4+qr7msjNNWKYPHqN/3+Dx3NFkmIzayk2L1MyZQlvgZb/J1A0fo410dpKrN2SnqFjt8n4JL8fDJE0wIgjFQ==}
 
   defu@6.1.4:
     resolution: {integrity: sha512-mEQCMmwJu317oSz8CwdIOdwf3xMif1ttiM8LTufzc3g6kR+9Pe236twL8j3IYT1F7GfRgGcW6MWxzZjLIkuHIg==}
@@ -5011,8 +5008,8 @@ packages:
       vue:
         optional: true
 
-  vue-notion@https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/2f47c60d13a1603d9725036a76581f9f130cad22:
-    resolution: {tarball: https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/2f47c60d13a1603d9725036a76581f9f130cad22}
+  vue-notion@https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/cde29a6b2a4691d8426c642081ec06dff3534101:
+    resolution: {tarball: https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/cde29a6b2a4691d8426c642081ec06dff3534101}
     version: 2.0.6
     peerDependencies:
       '@janniks/vue3-katex': ^0.6.0-rc.5.1
@@ -7542,8 +7539,6 @@ snapshots:
     dependencies:
       has-property-descriptors: 1.0.0
       object-keys: 1.1.1
-
-  defu@6.1.2: {}
 
   defu@6.1.4: {}
 
@@ -10208,10 +10203,10 @@ snapshots:
     optionalDependencies:
       vue: 3.5.15(typescript@5.2.2)
 
-  vue-notion@https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/2f47c60d13a1603d9725036a76581f9f130cad22(@janniks/vue3-katex@0.6.0-rc.5.1(katex@0.16.11)(vue@3.5.15(typescript@5.2.2)))(vue@3.5.15(typescript@5.2.2)):
+  vue-notion@https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/cde29a6b2a4691d8426c642081ec06dff3534101(@janniks/vue3-katex@0.6.0-rc.5.1(katex@0.16.11)(vue@3.5.15(typescript@5.2.2)))(vue@3.5.15(typescript@5.2.2)):
     dependencies:
       '@janniks/vue3-katex': 0.6.0-rc.5.1(katex@0.16.11)(vue@3.5.15(typescript@5.2.2))
-      defu: 6.1.2
+      defu: 6.1.4
       vue: 3.5.15(typescript@5.2.2)
 
   vue-resize@2.0.0-alpha.1(vue@3.5.15(typescript@5.2.2)):
