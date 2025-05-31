@@ -90,8 +90,8 @@ importers:
         specifier: ^6.1.1
         version: 6.1.1(vue@3.5.15(typescript@5.2.2))
       vue-notion:
-        specifier: github:tough-dev-school/vue-notion#2.0.7
-        version: https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/cde29a6b2a4691d8426c642081ec06dff3534101(@janniks/vue3-katex@0.6.0-rc.5.1(katex@0.16.11)(vue@3.5.15(typescript@5.2.2)))(vue@3.5.15(typescript@5.2.2))
+        specifier: github:tough-dev-school/vue-notion#2.0.8
+        version: https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/ae4d94f0554898697dd8c2e1cf8b555c4fa8a030(@janniks/vue3-katex@0.6.0-rc.5.1(katex@0.16.11)(vue@3.5.15(typescript@5.2.2)))(vue@3.5.15(typescript@5.2.2))
       vue-router:
         specifier: ^4.4.5
         version: 4.4.5(vue@3.5.15(typescript@5.2.2))
@@ -5008,8 +5008,8 @@ packages:
       vue:
         optional: true
 
-  vue-notion@https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/cde29a6b2a4691d8426c642081ec06dff3534101:
-    resolution: {tarball: https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/cde29a6b2a4691d8426c642081ec06dff3534101}
+  vue-notion@https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/ae4d94f0554898697dd8c2e1cf8b555c4fa8a030:
+    resolution: {tarball: https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/ae4d94f0554898697dd8c2e1cf8b555c4fa8a030}
     version: 2.0.6
     peerDependencies:
       '@janniks/vue3-katex': ^0.6.0-rc.5.1
@@ -10203,7 +10203,7 @@ snapshots:
     optionalDependencies:
       vue: 3.5.15(typescript@5.2.2)
 
-  vue-notion@https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/cde29a6b2a4691d8426c642081ec06dff3534101(@janniks/vue3-katex@0.6.0-rc.5.1(katex@0.16.11)(vue@3.5.15(typescript@5.2.2)))(vue@3.5.15(typescript@5.2.2)):
+  vue-notion@https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/ae4d94f0554898697dd8c2e1cf8b555c4fa8a030(@janniks/vue3-katex@0.6.0-rc.5.1(katex@0.16.11)(vue@3.5.15(typescript@5.2.2)))(vue@3.5.15(typescript@5.2.2)):
     dependencies:
       '@janniks/vue3-katex': 0.6.0-rc.5.1(katex@0.16.11)(vue@3.5.15(typescript@5.2.2))
       defu: 6.1.4
