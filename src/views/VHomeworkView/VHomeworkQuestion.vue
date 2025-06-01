@@ -8,8 +8,7 @@
   import { useHomeworkAnswerCreateMutation } from '@/query';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
-  import VPill from '@/components/VPill/VPill.vue';
-  import VPillItem from '@/components/VPill/VPillItem.vue';
+  import VPillHomework from '@/components/VPillHomework/VPillHomework.vue';
 
   interface Props {
     question: QuestionDetail;
@@ -57,11 +56,7 @@
 <template>
   <VLoggedLayout :breadcrumbs="breadcrumbs" :title="question.name">
     <template #pill>
-      <VPill>
-        <VPillItem>
-          {{ JSON.stringify(lesson?.homework, null, 2) }}
-        </VPillItem>
-      </VPill>
+      <VPillHomework v-if="lesson?.homework" :stats="lesson?.homework" />
     </template>
     <section class="flex flex-col gap-24">
       <VHtmlContent :content="question.text" />

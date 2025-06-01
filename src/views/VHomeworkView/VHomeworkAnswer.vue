@@ -16,8 +16,7 @@
   import { useHomeworkAnswerCreateMutation } from '@/query';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
-  import VPill from '@/components/VPill/VPill.vue';
-  import VPillItem from '@/components/VPill/VPillItem.vue';
+  import VPillHomework from '@/components/VPillHomework/VPillHomework.vue';
   import type { LessonForUser } from '@/api/generated-api';
 
   interface Props {
@@ -94,11 +93,7 @@
 <template>
   <VLoggedLayout :breadcrumbs="breadcrumbs" :title="question.name">
     <template #pill>
-      <VPill>
-        <VPillItem>
-          {{ JSON.stringify(lesson?.homework, null, 2) }}
-        </VPillItem>
-      </VPill>
+      <VPillHomework v-if="lesson?.homework" :stats="lesson?.homework" />
     </template>
     <section class="flex flex-col gap-24">
       <div v-if="isOwnAnswer" class="card mb-16 bg-accent-green">
