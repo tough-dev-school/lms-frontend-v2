@@ -14,11 +14,18 @@
   import { useRouter } from 'vue-router';
   import { useQueryClient } from '@tanstack/vue-query';
   import { useHomeworkAnswerCreateMutation } from '@/query';
+  import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
+  import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
+  import VPill from '@/components/VPill/VPill.vue';
+  import VPillItem from '@/components/VPill/VPillItem.vue';
+  import type { LessonForUser } from '@/api/generated-api';
 
   interface Props {
     question: QuestionDetail;
     answer: AnswerTree;
     user: User;
+    breadcrumbs: Breadcrumb[];
+    lesson?: LessonForUser;
   }
 
   const props = defineProps<Props>();
@@ -85,39 +92,46 @@
 </script>
 
 <template>
-  <section class="flex flex-col gap-24">
-    <div v-if="isOwnAnswer" class="card mb-16 bg-accent-green">
-      <VHeading tag="h3" class="mb-8">
-        Поделитесь ссылкой на сделанную домашку
-      </VHeading>
-      <div class="block select-all">
-        {{ answerLink }}
-      </div>
-    </div>
-
-    <VDetails>
-      <template #summary> Текст задания </template>
-      <VHtmlContent :content="question.text" />
-    </VDetails>
-
-    <VExistingAnswer
-      :answer-id="answer.slug"
-      @after-delete="handleDeleteAnswer" />
-  </section>
-
-  <VCrossChecks v-if="isOwnAnswer && crosschecks" :crosschecks="crosschecks" />
-
-  <section class="flex flex-col gap-24">
-    <VHeading tag="h2">{{
-      isOwnAnswer ? 'Коментарии вашей работы' : 'Коментарии'
-    }}</VHeading>
-    <VFeedbackGuide />
-    <VCreateAnswer v-model="commentText" @send="handleCreateComment" />
-    <template v-if="answer.descendants">
-      <VThread
-        v-for="comment in answer.descendants"
-        :key="comment.slug"
-        :answer-id="comment.slug" />
+  <VLoggedLayout :breadcrumbs="breadcrumbs" :title="question.name">
+    <template #pill>
+      <VPill>
+        <VPillItem>
+          {{ JSON.stringify(lesson?.homework, null, 2) }}
+        </VPillItem>
+      </VPill>
     </template>
-  </section>
+    <section class="flex flex-col gap-24">
+      <div v-if="isOwnAnswer" class="card mb-16 bg-accent-green">
+        <VHeading tag="h3" class="mb-8">
+          Поделитесь ссылкой на сделанную домашку
+        </VHeading>
+        <div class="block select-all">
+          {{ answerLink }}
+        </div>
+      </div>
+      <VDetails>
+        <template #summary> Текст задания </template>
+        <VHtmlContent :content="question.text" />
+      </VDetails>
+      <VExistingAnswer
+        :answer-id="answer.slug"
+        @after-delete="handleDeleteAnswer" />
+    </section>
+    <VCrossChecks
+      v-if="isOwnAnswer && crosschecks"
+      :crosschecks="crosschecks" />
+    <section class="flex flex-col gap-24">
+      <VHeading tag="h2">
+        {{ isOwnAnswer ? 'Коментарии вашей работы' : 'Коментарии' }}
+      </VHeading>
+      <VFeedbackGuide />
+      <VCreateAnswer v-model="commentText" @send="handleCreateComment" />
+      <template v-if="answer.descendants">
+        <VThread
+          v-for="comment in answer.descendants"
+          :key="comment.slug"
+          :answer-id="comment.slug" />
+      </template>
+    </section>
+  </VLoggedLayout>
 </template>
