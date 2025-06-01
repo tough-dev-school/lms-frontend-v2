@@ -354,7 +354,7 @@ export const useHomeworkAnswerDeleteMutation = (queryClient: QueryClient) => {
   return useMutation({
     mutationFn: async ({
       answerId,
-      // @eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       parentId,
     }: {
       answerId: string;
