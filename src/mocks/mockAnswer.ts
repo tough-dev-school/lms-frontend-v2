@@ -20,6 +20,7 @@ export const mockAnswer = (
     has_descendants: false,
     reactions: [],
     is_editable: true,
+    descendants: [],
     parent: faker.string.uuid(),
     ...payload,
   };
