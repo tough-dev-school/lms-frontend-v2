@@ -70,8 +70,9 @@ export interface AnswerTree {
   parent: string;
   text: string;
   src: string;
-  descendants?: Answer[];
+  descendants: AnswerTree[];
   has_descendants: boolean;
+  is_editable: boolean;
   reactions: ReactionDetailed[];
 }
 
