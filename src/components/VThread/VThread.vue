@@ -74,6 +74,8 @@
         text: commentText.value,
       });
 
+      commentText.value = '';
+
       replyMode.value = false;
 
       router.push({
