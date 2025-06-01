@@ -97,7 +97,10 @@
 <template>
   <div ref="target" class="group">
     <VAnswer v-if="answer.author.uuid !== user.uuid" :answer-id="answer.slug" />
-    <VExistingAnswer v-else :answer-id="answer.slug" @mounted="handleMounted" />
+    <VExistingAnswer
+      v-else
+      :answer-id="answer.slug"
+      @after-create="handleMounted" />
     <button class="text-sm link" @click="replyMode = !replyMode">
       {{ replyMode ? 'Отменить' : 'Ответить' }}
     </button>

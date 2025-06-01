@@ -2,7 +2,7 @@
   import VAnswer from '@/components/VAnswer/VAnswer.vue';
   import VAnswerActions from '@/components/VAnswerActions/VAnswerActions.vue';
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
-  import { ref } from 'vue';
+  import { ref, onMounted } from 'vue';
   import { useQueryClient } from '@tanstack/vue-query';
   import {
     useHomeworkAnswerUpdateMutation,
@@ -17,6 +17,7 @@
 
   const emit = defineEmits<{
     'after-delete': [];
+    'after-create': [slug: string];
   }>();
 
   const queryClient = useQueryClient();
@@ -52,6 +53,10 @@
 
     isEdit.value = false;
   };
+
+  onMounted(() => {
+    emit('after-create', props.answer.slug);
+  });
 </script>
 
 <template>
