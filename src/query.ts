@@ -167,23 +167,7 @@ export const getHomeworkAnswerQueryOptions = (answerId?: string) => {
     queryKey: homeworkKeys.answer(answerId ?? ''),
     queryFn: async () => {
       if (answerId) {
-        const answer = await api.homeworkAnswersRetrieve(answerId);
-        let descendants: AnswerTree[] = [];
-
-        if (answer.has_descendants) {
-          const response = await api.homeworkCommentsList({
-            answer: [answerId],
-          });
-
-          descendants = response[0].descendants;
-        }
-
-        // #TODO cache descendants as answers
-
-        return {
-          ...answer,
-          descendants,
-        };
+        return await api.homeworkAnswersRetrieve(answerId);
       }
       return Promise.reject('answerId is not provided');
     },
@@ -205,7 +189,7 @@ export const populateAnswersCacheFromDescendants = (
   const populate = (answer: AnswerTree) => {
     flatAnswers.push(answer);
 
-    if (answer.has_descendants) answer.descendants.forEach(populate);
+    if (answer.descendants.length) answer.descendants.forEach(populate);
   };
 
   populate(rootAnswer);

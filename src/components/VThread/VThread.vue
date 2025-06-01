@@ -9,40 +9,26 @@
 
 <script lang="ts" setup>
   import VAnswer from '@/components/VAnswer';
-  import { ref, watch } from 'vue';
+  import { ref } from 'vue';
   import { onClickOutside } from '@vueuse/core';
   import { useRoute, useRouter } from 'vue-router';
-  import {
-    useHomeworkAnswerQuery,
-    useHomeworkAnswerCreateMutation,
-    populateAnswersCacheFromDescendants,
-  } from '@/query';
+  import { useHomeworkAnswerCreateMutation } from '@/query';
   import { useQueryClient } from '@tanstack/vue-query';
   import { useStorage } from '@vueuse/core';
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
   import VExistingAnswer from '@/components/VExistingAnswer';
-  import { useUserQuery } from '@/query';
+  import type { AnswerTree, User } from '@/api/generated-api';
+
+  const props = defineProps<{
+    answer: AnswerTree;
+    user: User;
+  }>();
 
   const route = useRoute();
   const router = useRouter();
   const queryClient = useQueryClient();
 
   const replyMode = ref(false);
-
-  const props = defineProps<{
-    answerId: string;
-  }>();
-
-  const { data: user } = useUserQuery();
-  const { data: answer } = useHomeworkAnswerQuery(() => props.answerId);
-  watch(
-    () => answer.value,
-    () => {
-      if (answer.value) {
-        populateAnswersCacheFromDescendants(queryClient, answer.value);
-      }
-    },
-  );
 
   const prepareForScroll = (slug: string) => {
     if (route.name) {
@@ -67,9 +53,9 @@
   const commentText = useStorage(
     [
       'commentText',
-      answer.value?.question,
-      answer.value?.slug,
-      answer.value?.parent,
+      props.answer.question,
+      props.answer.slug,
+      props.answer.parent,
     ]
       .filter(Boolean)
       .join('-'),
@@ -78,12 +64,12 @@
   );
 
   const handleCreateComment = async () => {
-    if (!answer.value) throw new Error('Answer not found');
+    if (!props.answer) throw new Error('Answer not found');
 
     try {
       const newComment = await createComment({
-        questionId: answer.value.question,
-        parentId: answer.value.slug,
+        questionId: props.answer.question,
+        parentId: props.answer.slug,
         text: commentText.value,
       });
 
@@ -129,7 +115,8 @@
       <VThread
         v-for="descendant in answer.descendants"
         :key="descendant.slug"
-        :answer-id="descendant.slug"
+        :answer="descendant"
+        :user="user"
         @update="(slug) => handleUpdate(slug)" />
     </div>
   </div>

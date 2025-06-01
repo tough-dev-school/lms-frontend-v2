@@ -8,10 +8,10 @@
     useHomeworkAnswerUpdateMutation,
     useHomeworkAnswerDeleteMutation,
   } from '@/query';
-  import type { AnswerDetailed, UserSafe } from '@/api/generated-api';
+  import type { AnswerTree, UserSafe } from '@/api/generated-api';
 
   const props = defineProps<{
-    answer: AnswerDetailed;
+    answer: AnswerTree;
     user: UserSafe;
   }>();
 
