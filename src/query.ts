@@ -162,6 +162,11 @@ export const useHomeworkQuestionQuery = (
   return useQuery(options);
 };
 
+export const fetchHomeworkQuestion = async (
+  queryClient: QueryClient,
+  { questionId }: { questionId: string },
+) => queryClient.fetchQuery(getHomeworkQuestionQueryOptions(questionId));
+
 export const getHomeworkAnswerQueryOptions = (answerId: string) => {
   return queryOptions({
     queryKey: homeworkKeys.answer(answerId),
@@ -349,7 +354,7 @@ export const useHomeworkAnswerDeleteMutation = (queryClient: QueryClient) => {
   return useMutation({
     mutationFn: async ({
       answerId,
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // @eslint-disable-next-line @typescript-eslint/no-unused-vars
       parentId,
     }: {
       answerId: string;

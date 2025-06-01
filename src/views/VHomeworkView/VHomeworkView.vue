@@ -1,56 +1,38 @@
 <script lang="ts" setup>
-  import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
-  import VHomeworkQuestion from './VHomeworkQuestion.vue';
-  import VHomeworkAnswer from './VHomeworkAnswer.vue';
-  import { computed } from 'vue';
+  import { onMounted, ref } from 'vue';
   import { useRouteQuery, useRouteParams } from '@vueuse/router';
-  import {
-    useHomeworkAnswerQuery,
-    useHomeworkQuestionQuery,
-    populateAnswersCacheFromDescendants,
-    fetchHomeworkAnswer,
-    fetchHomeworkAnswers,
-  } from '@/query';
+  import { fetchHomeworkQuestion } from '@/query';
   import { useQueryClient } from '@tanstack/vue-query';
-  import { watch, onBeforeMount } from 'vue';
-  import { useRoute, useRouter } from 'vue-router';
-  import { useUserQuery } from '@/query';
+  import { useRoute } from 'vue-router';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
+  import VHomeworkAnswerProvider from './VHomeworkAnswerProvider.vue';
+  import VHomeworkQuestionProvider from './VHomeworkQuestionProvider.vue';
 
   const answerId = useRouteQuery<string | undefined>('answerId');
   const questionId = useRouteParams<string>('questionId');
 
-  const router = useRouter();
   const route = useRoute();
+
   const queryClient = useQueryClient();
 
-  const { data: user } = useUserQuery();
-  const { data: question, isLoading: isQuestionLoading } =
-    useHomeworkQuestionQuery(questionId);
-  const { data: answer, isLoading: isAnswerLoading } =
-    useHomeworkAnswerQuery(answerId);
+  const breadcrumbs = ref<Breadcrumb[]>([]);
 
-  watch(
-    () => answer.value,
-    () => {
-      if (answer.value) {
-        populateAnswersCacheFromDescendants(queryClient, answer.value);
-      }
-    },
-  );
-
-  const breadcrumbs = computed(() => {
+  onMounted(async () => {
     const result: Breadcrumb[] = [{ name: 'Мои курсы', to: { name: 'home' } }];
 
-    if (!question.value) return undefined;
+    const question = await fetchHomeworkQuestion(queryClient, {
+      questionId: route.params.questionId as string,
+    });
 
-    if (question.value.breadcrumbs.course) {
+    if (!question) return undefined;
+
+    if (question.breadcrumbs.course) {
       result.push({
-        name: question.value.breadcrumbs.course.name,
+        name: question.breadcrumbs.course.name,
         to: {
           name: 'modules',
           params: {
-            courseId: question.value.breadcrumbs.course.id,
+            courseId: question.breadcrumbs.course.id,
           },
         },
       });
@@ -58,14 +40,14 @@
       return undefined;
     }
 
-    if (question.value.breadcrumbs.module) {
+    if (question.breadcrumbs.module) {
       result.push({
-        name: question.value.breadcrumbs.module.name,
+        name: question.breadcrumbs.module.name,
         to: {
           name: 'lessons',
           params: {
-            courseId: question.value.breadcrumbs.course.id,
-            moduleId: question.value.breadcrumbs.module.id,
+            courseId: question.breadcrumbs.course.id,
+            moduleId: question.breadcrumbs.module.id,
           },
         },
       });
@@ -74,7 +56,7 @@
     }
 
     result.push({
-      name: question.value.name,
+      name: question.name,
       to: {
         name: 'homework',
         params: {
@@ -85,52 +67,16 @@
 
     return result;
   });
-
-  onBeforeMount(async () => {
-    const queryClient = useQueryClient();
-
-    if (route.query.answerId) {
-      try {
-        await fetchHomeworkAnswer(queryClient, {
-          answerId: route.query.answerId as string,
-        });
-      } catch {
-        router.push({
-          ...route,
-          query: { ...route.query, answerId: undefined },
-        });
-      }
-    } else {
-      const answers = await fetchHomeworkAnswers(queryClient, {
-        questionId: route.params.questionId as string,
-        authorId: user.value?.uuid,
-      });
-
-      if (answers && answers.length > 0) {
-        router.push({
-          ...route,
-          query: {
-            ...route.query,
-            answerId: answers[0]?.slug,
-          },
-        });
-      }
-    }
-  });
 </script>
 
 <template>
-  <VLoggedLayout
-    :title="question?.name"
+  <VHomeworkAnswerProvider
+    v-if="answerId"
     :breadcrumbs="breadcrumbs"
-    :is-loading="isQuestionLoading || isAnswerLoading">
-    <template v-if="question">
-      <VHomeworkAnswer
-        v-if="answer && question && user"
-        :question="question"
-        :answer="answer"
-        :user="user" />
-      <VHomeworkQuestion v-else :question="question" />
-    </template>
-  </VLoggedLayout>
+    :question-id="questionId"
+    :answer-id="answerId" />
+  <VHomeworkQuestionProvider
+    v-else
+    :breadcrumbs="breadcrumbs"
+    :question-id="questionId" />
 </template>

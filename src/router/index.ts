@@ -8,7 +8,7 @@ import useAuth from '@/stores/auth';
 import loginByToken from '@/router/loginByToken';
 import loginById from '@/router/loginById';
 import { useQueryClient } from '@tanstack/vue-query';
-import { fetchHomeworkAnswer } from '@/query';
+import { fetchHomeworkAnswer, fetchHomeworkAnswers, fetchUser } from '@/query';
 import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
 
 const disallowAuthorized = () => {
@@ -98,6 +98,40 @@ export const routes = [
     path: '/homework/:questionId',
     name: 'homework',
     component: () => import('@/views/VHomeworkView/VHomeworkView.vue'),
+    beforeEnter: [
+      async (to: RouteLocationNormalized) => {
+        const queryClient = useQueryClient();
+        const user = await fetchUser(queryClient);
+
+        if (to.query.answerId) {
+          try {
+            await fetchHomeworkAnswer(queryClient, {
+              answerId: to.query.answerId as string,
+            });
+          } catch {
+            return {
+              ...to,
+              query: { ...to.query, answerId: undefined },
+            };
+          }
+        } else {
+          const answers = await fetchHomeworkAnswers(queryClient, {
+            questionId: to.params.questionId as string,
+            authorId: user.uuid,
+          });
+
+          if (answers && answers.length > 0) {
+            return {
+              ...to,
+              query: {
+                ...to.query,
+                answerId: answers[0]?.slug,
+              },
+            };
+          }
+        }
+      },
+    ],
   },
   {
     path: '/homework/answers/:answerId/',
