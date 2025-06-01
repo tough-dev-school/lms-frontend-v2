@@ -9,7 +9,6 @@ import {
   requestReset,
   resetPassword,
 } from '@/api/auth';
-import useToasts from './toasts';
 import { useQueryClient } from '@tanstack/vue-query';
 import { baseQueryKey } from '@/query';
 import { watch } from 'vue';
@@ -59,12 +58,9 @@ export const useAuth = defineStore('auth', {
       uid?: string;
       token?: string;
     }) {
-      const savedToast = () =>
-        useToasts().addMessage('Новый пароль сохранен', 'success');
       if (uid && token) {
         try {
           await resetPassword(newPassword1, newPassword2, uid, token);
-          savedToast();
           return Promise.resolve();
         } catch (error: any) {
           return Promise.reject();
@@ -72,7 +68,6 @@ export const useAuth = defineStore('auth', {
       } else {
         try {
           await changePassword(newPassword1, newPassword2);
-          savedToast();
           return Promise.resolve();
         } catch (error: any) {
           return Promise.reject();

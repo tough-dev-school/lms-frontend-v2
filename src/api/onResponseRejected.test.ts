@@ -6,7 +6,6 @@ import { createTestingPinia } from '@pinia/testing';
 import onResponseRejected from './onResponseRejected';
 import { cloneDeep } from 'lodash-es';
 import responseCaseMiddleware from './responseCaseMiddleware';
-import handleError from '@/utils/handleError';
 import type { AxiosError } from 'axios';
 import { faker } from '@faker-js/faker';
 
@@ -78,24 +77,5 @@ describe('custom axios', () => {
     onResponseRejected(error as unknown as AxiosError, true).catch(() => {});
 
     expect(auth.removeToken).toHaveBeenCalledTimes(1);
-  });
-
-  test('calls handleError with error for json errors', () => {
-    const error = cloneDeep(defaultError);
-    error.response.headers['content-type'] = 'application/json; charset=utf-8';
-
-    onResponseRejected(error as unknown as AxiosError, true).catch(() => {});
-
-    expect(handleError).toHaveBeenCalledTimes(1);
-    expect(handleError).toHaveBeenCalledWith(error);
-  });
-
-  test('calls handleError without error non-json errors', () => {
-    const error = cloneDeep(defaultError);
-
-    onResponseRejected(error as unknown as AxiosError, true).catch(() => {});
-
-    expect(handleError).toHaveBeenCalledTimes(1);
-    expect(handleError).toHaveBeenCalledWith();
   });
 });

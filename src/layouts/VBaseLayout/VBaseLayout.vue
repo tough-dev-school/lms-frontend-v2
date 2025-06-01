@@ -1,6 +1,5 @@
 <script lang="ts" setup>
   import VPreloader from '@/components/VPreloader/VPreloader.vue';
-  import VToastFeed from '@/components/VToastFeed/VToastFeed.vue';
 
   withDefaults(
     defineProps<{
@@ -17,5 +16,4 @@
     <slot />
   </main>
   <VPreloader v-else />
-  <VToastFeed />
 </template>
