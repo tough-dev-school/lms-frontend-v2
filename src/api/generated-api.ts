@@ -26,7 +26,7 @@ export interface AnswerCreate {
 
 export interface AnswerCrossCheck {
   answer: SimpleAnswer;
-  is_checked?: boolean;
+  is_checked: boolean;
 }
 
 export interface AnswerDetailed {
@@ -62,7 +62,7 @@ export interface AnswerTree {
   question: string;
   author: UserSafe;
   /** @format uuid */
-  parent?: string;
+  parent: string;
   text: string;
   src: string;
   descendants: AnswerTree[];
@@ -102,7 +102,7 @@ export interface Call {
    * @maxLength 255
    */
   url: string;
-  video?: VideoProvider[];
+  video: VideoProvider[];
   /**
    * Дата
    * @format date-time
@@ -117,7 +117,7 @@ export interface CommentStats {
 }
 
 export interface Course {
-  id?: number;
+  id: number;
   /**
    * @maxLength 50
    * @pattern ^[-a-zA-Z0-9_]+$
@@ -230,7 +230,7 @@ export interface DiplomaRetrieve {
    */
   image: string;
   student: UserSafe;
-  other_languages?: Record<string, any>;
+  other_languages: Record<string, any>;
 }
 
 /**
@@ -258,12 +258,12 @@ export interface HomeworkStats {
  */
 export interface JSONWebToken {
   password: string;
-  token?: string;
+  token: string;
   username: string;
 }
 
 export interface LMSCourse {
-  id?: number;
+  id: number;
   /**
    * @maxLength 50
    * @pattern ^[-a-zA-Z0-9_]+$
@@ -308,7 +308,7 @@ export enum LanguageEnum {
 
 /** Serialize lesson for the user, lesson should be annotated with crosschecks stats */
 export interface LessonForUser {
-  id?: number;
+  id: number;
   material?: NotionMaterial;
   homework?: HomeworkStats;
   call?: Call;
@@ -324,7 +324,7 @@ export interface MaterialSerilizer {
 }
 
 export interface Module {
-  id?: number;
+  id: number;
   /** @maxLength 255 */
   name: string;
   /**
@@ -333,7 +333,7 @@ export interface Module {
    */
   description?: string | null;
   /** Текст */
-  text?: string | null;
+  text: string | null;
 }
 
 export interface NotionMaterial {
@@ -567,7 +567,7 @@ export interface Question {
    * @maxLength 256
    */
   name: string;
-  text?: string;
+  text: string;
   /**
    * Дедлайн
    * @format date-time
@@ -601,7 +601,7 @@ export interface ReactionCreate {
 
 export interface ReactionDetailed {
   /** @format uuid */
-  slug?: string;
+  slug: string;
   /** @maxLength 10 */
   emoji: string;
   author: UserSafe;
@@ -619,7 +619,7 @@ export interface RefreshAuthToken {
 }
 
 export interface RestAuthDetail {
-  detail?: string;
+  detail: string;
 }
 
 export interface SimpleAnswer {
@@ -628,7 +628,7 @@ export interface SimpleAnswer {
 }
 
 export interface User {
-  id?: number;
+  id: number;
   /** @format uuid */
   uuid?: string;
   /**
