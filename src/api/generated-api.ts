@@ -10,26 +10,7 @@
  * ---------------------------------------------------------------
  */
 
-export interface AnswerCommentTree {
-  /** @format uuid */
-  slug: string;
-  descendants: AnswerTree[];
-}
-
-export interface AnswerCreate {
-  /** @format uuid */
-  question: string;
-  /** @format uuid */
-  parent?: string | null;
-  text: string;
-}
-
-export interface AnswerCrossCheck {
-  answer: SimpleAnswer;
-  is_checked: boolean;
-}
-
-export interface AnswerDetailed {
+export interface Answer {
   /** @format date-time */
   created: string;
   /** @format date-time */
@@ -43,13 +24,37 @@ export interface AnswerDetailed {
   text: string;
   src: string;
   has_descendants: boolean;
-  is_editable: boolean;
   reactions: ReactionDetailed[];
+}
+
+export interface AnswerCommentTree {
+  /** @format uuid */
+  slug: string;
+  descendants: Answer[];
+}
+
+export interface AnswerCreate {
+  /** @format uuid */
+  question: string;
+  /** @format uuid */
+  parent?: string | null;
+  text: string;
+}
+
+export interface AnswerCrossCheck {
+  answer: AnswerSimple;
+  is_checked: boolean;
 }
 
 export interface AnswerImage {
   /** @format uri */
   image: string;
+}
+
+export interface AnswerSimple {
+  /** @format uri */
+  url: string;
+  author: UserSafe;
 }
 
 export interface AnswerTree {
@@ -65,7 +70,7 @@ export interface AnswerTree {
   parent: string;
   text: string;
   src: string;
-  descendants: AnswerTree[];
+  descendants: Answer[];
   has_descendants: boolean;
   reactions: ReactionDetailed[];
 }
@@ -346,7 +351,7 @@ export interface NotionMaterial {
   title?: string;
 }
 
-export interface PaginatedAnswerDetailedList {
+export interface PaginatedAnswerList {
   /** @example 123 */
   count: number;
   /**
@@ -359,7 +364,7 @@ export interface PaginatedAnswerDetailedList {
    * @example "http://api.example.org/accounts/?page=2"
    */
   previous?: string | null;
-  results: AnswerDetailed[];
+  results: Answer[];
 }
 
 export interface PaginatedCourseList {
@@ -622,11 +627,6 @@ export interface RestAuthDetail {
   detail: string;
 }
 
-export interface SimpleAnswer {
-  url: string;
-  author: UserSafe;
-}
-
 export interface User {
   id: number;
   /** @format uuid */
@@ -681,7 +681,7 @@ export interface User {
 
 export interface UserSafe {
   /** @format uuid */
-  uuid: string;
+  uuid?: string;
   /**
    * Имя
    * @maxLength 150
@@ -1197,7 +1197,7 @@ export class Api<SecurityDataType extends unknown> {
 
   api = {
     /**
-     * @description Get token for given user_id. Superuser only!
+     * No description
      *
      * @tags auth
      * @name AuthAsRetrieve
@@ -1205,11 +1205,10 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     authAsRetrieve: (userId: number, params: RequestParams = {}) =>
-      this.http.request<Record<string, string>, any>({
+      this.http.request<void, any>({
         path: `/api/v2/auth/as/${userId}/`,
         method: 'GET',
         secure: true,
-        format: 'json',
         ...params,
       }),
 
@@ -1280,7 +1279,7 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * @description Exchange passwordless token to JWT
+     * No description
      *
      * @tags auth
      * @name AuthPasswordlessTokenRetrieve
@@ -1291,11 +1290,10 @@ export class Api<SecurityDataType extends unknown> {
       token: string,
       params: RequestParams = {},
     ) =>
-      this.http.request<Record<string, string>, any>({
+      this.http.request<void, any>({
         path: `/api/v2/auth/passwordless-token/${token}/`,
         method: 'GET',
         secure: true,
-        format: 'json',
         ...params,
       }),
 
@@ -1311,11 +1309,10 @@ export class Api<SecurityDataType extends unknown> {
       userEmail: string,
       params: RequestParams = {},
     ) =>
-      this.http.request<Record<string, boolean>, any>({
+      this.http.request<void, any>({
         path: `/api/v2/auth/passwordless-token/request/${userEmail}/`,
         method: 'GET',
         secure: true,
-        format: 'json',
         ...params,
       }),
 
@@ -1353,6 +1350,70 @@ export class Api<SecurityDataType extends unknown> {
         body: data,
         type: ContentType.Json,
         format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description Receive dolyame notifications.
+     *
+     * @tags banking
+     * @name BankingDolyameNotificationsCreate
+     * @request POST:/api/v2/banking/dolyame-notifications/
+     * @secure
+     */
+    bankingDolyameNotificationsCreate: (params: RequestParams = {}) =>
+      this.http.request<void, any>({
+        path: `/api/v2/banking/dolyame-notifications/`,
+        method: 'POST',
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags banking
+     * @name BankingStripeWebhooksCreate
+     * @request POST:/api/v2/banking/stripe-webhooks/
+     * @secure
+     */
+    bankingStripeWebhooksCreate: (params: RequestParams = {}) =>
+      this.http.request<void, any>({
+        path: `/api/v2/banking/stripe-webhooks/`,
+        method: 'POST',
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags banking
+     * @name BankingStripeWebhooksKzCreate
+     * @request POST:/api/v2/banking/stripe-webhooks/kz/
+     * @secure
+     */
+    bankingStripeWebhooksKzCreate: (params: RequestParams = {}) =>
+      this.http.request<void, any>({
+        path: `/api/v2/banking/stripe-webhooks/kz/`,
+        method: 'POST',
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags banking
+     * @name BankingTinkoffNotificationsCreate
+     * @request POST:/api/v2/banking/tinkoff-notifications/
+     * @secure
+     */
+    bankingTinkoffNotificationsCreate: (params: RequestParams = {}) =>
+      this.http.request<void, any>({
+        path: `/api/v2/banking/tinkoff-notifications/`,
+        method: 'POST',
+        secure: true,
         ...params,
       }),
 
@@ -1418,7 +1479,7 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * @description Always serialize response with the default serializer. CAUTION: we are loosing serializer context here! If you need it, feel free to rewrite this method with http://www.cdrf.co/3.6/rest_framework.mixins/CreateModelMixin.html
+     * @description Always serialize response with the default serializer.
      *
      * @tags diplomas
      * @name DiplomasCreate
@@ -1454,7 +1515,7 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * @description Always serialize response with the default serializer. CAUTION: we are loosing serializer context here! If you need it, feel free to rewrite this method with http://www.cdrf.co/3.6/rest_framework.mixins/UpdateModelMixin.html
+     * @description Always serialize response with the default serializer.
      *
      * @tags diplomas
      * @name DiplomasUpdate
@@ -1544,7 +1605,7 @@ export class Api<SecurityDataType extends unknown> {
       query: HomeworkAnswersListParams,
       params: RequestParams = {},
     ) =>
-      this.http.request<PaginatedAnswerDetailedList, any>({
+      this.http.request<PaginatedAnswerList, any>({
         path: `/api/v2/homework/answers/`,
         method: 'GET',
         query: query,
@@ -1562,7 +1623,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     homeworkAnswersCreate: (data: AnswerCreate, params: RequestParams = {}) =>
-      this.http.request<AnswerDetailed, any>({
+      this.http.request<AnswerTree, any>({
         path: `/api/v2/homework/answers/`,
         method: 'POST',
         body: data,
@@ -1624,7 +1685,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     homeworkAnswersRetrieve: (slug: string, params: RequestParams = {}) =>
-      this.http.request<AnswerDetailed, any>({
+      this.http.request<AnswerTree, any>({
         path: `/api/v2/homework/answers/${slug}/`,
         method: 'GET',
         secure: true,
@@ -1645,7 +1706,7 @@ export class Api<SecurityDataType extends unknown> {
       data: AnswerUpdate,
       params: RequestParams = {},
     ) =>
-      this.http.request<AnswerDetailed, any>({
+      this.http.request<AnswerTree, any>({
         path: `/api/v2/homework/answers/${slug}/`,
         method: 'PUT',
         body: data,
@@ -1845,7 +1906,7 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * @description Redirects user to the confirmation URL
+     * No description
      *
      * @tags orders
      * @name OrdersConfirmRetrieve
@@ -1853,7 +1914,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     ordersConfirmRetrieve: (slug: string, params: RequestParams = {}) =>
-      this.http.request<any, void>({
+      this.http.request<void, any>({
         path: `/api/v2/orders/${slug}/confirm/`,
         method: 'GET',
         secure: true,
