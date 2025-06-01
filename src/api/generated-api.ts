@@ -12,7 +12,7 @@
 
 export interface AnswerCommentTree {
   /** @format uuid */
-  slug?: string;
+  slug: string;
   descendants: AnswerTree[];
 }
 
@@ -26,7 +26,7 @@ export interface AnswerCreate {
 
 export interface AnswerCrossCheck {
   answer: SimpleAnswer;
-  is_checked: boolean;
+  is_checked?: boolean;
 }
 
 export interface AnswerDetailed {
@@ -43,6 +43,7 @@ export interface AnswerDetailed {
   text: string;
   src: string;
   has_descendants: boolean;
+  is_editable: boolean;
   reactions: ReactionDetailed[];
 }
 
@@ -61,7 +62,7 @@ export interface AnswerTree {
   question: string;
   author: UserSafe;
   /** @format uuid */
-  parent: string;
+  parent?: string;
   text: string;
   src: string;
   descendants: AnswerTree[];
@@ -79,8 +80,8 @@ export enum BlankEnum {
 }
 
 export interface Breadcrumbs {
-  module?: Module;
-  course?: LMSCourse;
+  module: Module;
+  course: LMSCourse;
   lesson?: LessonPlain;
 }
 
@@ -101,17 +102,22 @@ export interface Call {
    * @maxLength 255
    */
   url: string;
-  video: VideoProvider[];
+  video?: VideoProvider[];
   /**
    * Дата
    * @format date-time
    */
-  datetime: string;
-  recommended_video_provider: RecommendedVideoProviderEnum | null;
+  datetime?: string | null;
+  recommended_video_provider?: RecommendedVideoProviderEnum | null;
+}
+
+export interface CommentStats {
+  comments: number;
+  hidden_before_crosscheck_completed: number;
 }
 
 export interface Course {
-  id: number;
+  id?: number;
   /**
    * @maxLength 50
    * @pattern ^[-a-zA-Z0-9_]+$
@@ -224,7 +230,7 @@ export interface DiplomaRetrieve {
    */
   image: string;
   student: UserSafe;
-  other_languages: Record<string, any>;
+  other_languages?: Record<string, any>;
 }
 
 /**
@@ -239,6 +245,7 @@ export enum GenderEnum {
 export interface HomeworkStats {
   is_sent: boolean;
   crosschecks?: CrosscheckStats;
+  comments: CommentStats;
   question: Question;
 }
 
@@ -251,12 +258,12 @@ export interface HomeworkStats {
  */
 export interface JSONWebToken {
   password: string;
-  token: string;
+  token?: string;
   username: string;
 }
 
 export interface LMSCourse {
-  id: number;
+  id?: number;
   /**
    * @maxLength 50
    * @pattern ^[-a-zA-Z0-9_]+$
@@ -301,7 +308,7 @@ export enum LanguageEnum {
 
 /** Serialize lesson for the user, lesson should be annotated with crosschecks stats */
 export interface LessonForUser {
-  id: number;
+  id?: number;
   material?: NotionMaterial;
   homework?: HomeworkStats;
   call?: Call;
@@ -317,7 +324,7 @@ export interface MaterialSerilizer {
 }
 
 export interface Module {
-  id: number;
+  id?: number;
   /** @maxLength 255 */
   name: string;
   /**
@@ -326,7 +333,7 @@ export interface Module {
    */
   description?: string | null;
   /** Текст */
-  text: string | null;
+  text?: string | null;
 }
 
 export interface NotionMaterial {
@@ -560,7 +567,7 @@ export interface Question {
    * @maxLength 256
    */
   name: string;
-  text: string;
+  text?: string;
   /**
    * Дедлайн
    * @format date-time
@@ -594,7 +601,7 @@ export interface ReactionCreate {
 
 export interface ReactionDetailed {
   /** @format uuid */
-  slug: string;
+  slug?: string;
   /** @maxLength 10 */
   emoji: string;
   author: UserSafe;
@@ -612,7 +619,7 @@ export interface RefreshAuthToken {
 }
 
 export interface RestAuthDetail {
-  detail: string;
+  detail?: string;
 }
 
 export interface SimpleAnswer {
@@ -621,7 +628,7 @@ export interface SimpleAnswer {
 }
 
 export interface User {
-  id: number;
+  id?: number;
   /** @format uuid */
   uuid?: string;
   /**
@@ -674,7 +681,7 @@ export interface User {
 
 export interface UserSafe {
   /** @format uuid */
-  uuid?: string;
+  uuid: string;
   /**
    * Имя
    * @maxLength 150
@@ -1190,7 +1197,7 @@ export class Api<SecurityDataType extends unknown> {
 
   api = {
     /**
-     * No description
+     * @description Get token for given user_id. Superuser only!
      *
      * @tags auth
      * @name AuthAsRetrieve
@@ -1198,10 +1205,11 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     authAsRetrieve: (userId: number, params: RequestParams = {}) =>
-      this.http.request<void, any>({
+      this.http.request<Record<string, string>, any>({
         path: `/api/v2/auth/as/${userId}/`,
         method: 'GET',
         secure: true,
+        format: 'json',
         ...params,
       }),
 
@@ -1272,7 +1280,7 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * No description
+     * @description Exchange passwordless token to JWT
      *
      * @tags auth
      * @name AuthPasswordlessTokenRetrieve
@@ -1283,10 +1291,11 @@ export class Api<SecurityDataType extends unknown> {
       token: string,
       params: RequestParams = {},
     ) =>
-      this.http.request<void, any>({
+      this.http.request<Record<string, string>, any>({
         path: `/api/v2/auth/passwordless-token/${token}/`,
         method: 'GET',
         secure: true,
+        format: 'json',
         ...params,
       }),
 
@@ -1302,10 +1311,11 @@ export class Api<SecurityDataType extends unknown> {
       userEmail: string,
       params: RequestParams = {},
     ) =>
-      this.http.request<void, any>({
+      this.http.request<Record<string, boolean>, any>({
         path: `/api/v2/auth/passwordless-token/request/${userEmail}/`,
         method: 'GET',
         secure: true,
+        format: 'json',
         ...params,
       }),
 
@@ -1343,70 +1353,6 @@ export class Api<SecurityDataType extends unknown> {
         body: data,
         type: ContentType.Json,
         format: 'json',
-        ...params,
-      }),
-
-    /**
-     * @description Receive dolyame notifications.
-     *
-     * @tags banking
-     * @name BankingDolyameNotificationsCreate
-     * @request POST:/api/v2/banking/dolyame-notifications/
-     * @secure
-     */
-    bankingDolyameNotificationsCreate: (params: RequestParams = {}) =>
-      this.http.request<void, any>({
-        path: `/api/v2/banking/dolyame-notifications/`,
-        method: 'POST',
-        secure: true,
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags banking
-     * @name BankingStripeWebhooksCreate
-     * @request POST:/api/v2/banking/stripe-webhooks/
-     * @secure
-     */
-    bankingStripeWebhooksCreate: (params: RequestParams = {}) =>
-      this.http.request<void, any>({
-        path: `/api/v2/banking/stripe-webhooks/`,
-        method: 'POST',
-        secure: true,
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags banking
-     * @name BankingStripeWebhooksKzCreate
-     * @request POST:/api/v2/banking/stripe-webhooks/kz/
-     * @secure
-     */
-    bankingStripeWebhooksKzCreate: (params: RequestParams = {}) =>
-      this.http.request<void, any>({
-        path: `/api/v2/banking/stripe-webhooks/kz/`,
-        method: 'POST',
-        secure: true,
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags banking
-     * @name BankingTinkoffNotificationsCreate
-     * @request POST:/api/v2/banking/tinkoff-notifications/
-     * @secure
-     */
-    bankingTinkoffNotificationsCreate: (params: RequestParams = {}) =>
-      this.http.request<void, any>({
-        path: `/api/v2/banking/tinkoff-notifications/`,
-        method: 'POST',
-        secure: true,
         ...params,
       }),
 
@@ -1899,7 +1845,7 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * No description
+     * @description Redirects user to the confirmation URL
      *
      * @tags orders
      * @name OrdersConfirmRetrieve
@@ -1907,7 +1853,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     ordersConfirmRetrieve: (slug: string, params: RequestParams = {}) =>
-      this.http.request<void, any>({
+      this.http.request<any, void>({
         path: `/api/v2/orders/${slug}/confirm/`,
         method: 'GET',
         secure: true,
