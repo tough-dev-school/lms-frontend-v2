@@ -107,8 +107,8 @@ export interface Call {
    * Дата
    * @format date-time
    */
-  datetime?: string | null;
-  recommended_video_provider?: RecommendedVideoProviderEnum | null;
+  datetime: string | null;
+  recommended_video_provider: RecommendedVideoProviderEnum | null;
 }
 
 export interface CommentStats {
@@ -630,7 +630,7 @@ export interface SimpleAnswer {
 export interface User {
   id: number;
   /** @format uuid */
-  uuid?: string;
+  uuid: string;
   /**
    * Имя пользователя
    * Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
