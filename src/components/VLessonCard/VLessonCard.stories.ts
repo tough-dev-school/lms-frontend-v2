@@ -67,6 +67,10 @@ const homeworkWithCrosschecks: LessonForUser = {
   ...baseLesson,
   id: 3,
   homework: {
+    comments: {
+      comments: 10,
+      hidden_before_crosscheck_completed: 2,
+    },
     is_sent: true,
     crosschecks: {
       total: 5,
@@ -85,6 +89,10 @@ const homeworkWithoutCrosschecks: LessonForUser = {
   ...baseLesson,
   id: 4,
   homework: {
+    comments: {
+      comments: 0,
+      hidden_before_crosscheck_completed: 0,
+    },
     is_sent: false,
     question: {
       slug: 'css-layouts',

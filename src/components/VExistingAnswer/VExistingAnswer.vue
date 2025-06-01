@@ -2,8 +2,7 @@
   import VAnswer from '@/components/VAnswer/VAnswer.vue';
   import VAnswerActions from '@/components/VAnswerActions/VAnswerActions.vue';
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
-  import dayjs from 'dayjs';
-  import { computed, ref } from 'vue';
+  import { ref } from 'vue';
   import { useQueryClient } from '@tanstack/vue-query';
   import {
     useHomeworkAnswerUpdateMutation,
@@ -23,11 +22,6 @@
   const queryClient = useQueryClient();
 
   const isEdit = ref(false);
-
-  const isEditable = computed(() => {
-    const isDayPassed = dayjs().unix() < dayjs(props.answer.created).unix();
-    return !(isDayPassed || props.answer.has_descendants);
-  });
 
   const { mutateAsync: updateAnswerMutation } =
     useHomeworkAnswerUpdateMutation(queryClient);
@@ -61,7 +55,7 @@
   <VAnswer v-if="!isEdit" :answer="answer" :user="user">
     <template #header>
       <VAnswerActions
-        v-if="isEditable"
+        v-if="answer.is_editable"
         @edit="isEdit = true"
         @delete="handleDelete" />
     </template>

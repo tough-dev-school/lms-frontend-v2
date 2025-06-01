@@ -19,6 +19,7 @@ export const mockAnswer = (
     src: htmlToMarkdown(text),
     has_descendants: false,
     reactions: [],
+    is_editable: true,
     parent: faker.string.uuid(),
     ...payload,
   };
