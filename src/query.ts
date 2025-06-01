@@ -162,6 +162,11 @@ export const useHomeworkQuestionQuery = (
   return useQuery(options);
 };
 
+export const fetchHomeworkQuestion = async (
+  queryClient: QueryClient,
+  { questionId }: { questionId: string },
+) => queryClient.fetchQuery(getHomeworkQuestionQueryOptions(questionId));
+
 export const getHomeworkAnswerQueryOptions = (answerId?: string) => {
   return queryOptions({
     queryKey: homeworkKeys.answer(answerId ?? ''),
