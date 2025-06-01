@@ -9,6 +9,7 @@ import loginByToken from '@/router/loginByToken';
 import loginById from '@/router/loginById';
 import { useQueryClient } from '@tanstack/vue-query';
 import { fetchHomeworkAnswer } from '@/query';
+import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
 
 const disallowAuthorized = () => {
   const auth = useAuth();
@@ -110,7 +111,6 @@ export const routes = [
           name: 'homework',
           params: { questionId: answer.question },
           query: { answerId },
-          replace: true,
         };
       },
     ],
@@ -118,12 +118,29 @@ export const routes = [
   },
   {
     path: '/homework/questions/:questionId',
-    redirect: '/homework/:questionId',
+    name: 'homework-question-old',
+    component: VLoadingView,
+    beforeEnter: [
+      (to: RouteLocationNormalized) => {
+        return {
+          name: 'homework',
+          params: { questionId: to.params.questionId },
+        };
+      },
+    ],
   },
-  // #FIXME this to support old route used in Django Admin
   {
     path: '/homework/question-admin/:questionId',
-    redirect: '/homework/:questionId',
+    component: VLoadingView,
+    name: 'homework-question-admin-old',
+    beforeEnter: [
+      (to: RouteLocationNormalized) => {
+        return {
+          name: 'homework',
+          params: { questionId: to.params.questionId },
+        };
+      },
+    ],
   },
   {
     path: '/certificates',
