@@ -30,7 +30,10 @@
 
   const handleDelete = async () => {
     try {
-      await deleteAnswerMutation({ answerId: props.answer.slug });
+      await deleteAnswerMutation({
+        answerId: props.answer.slug,
+        parentId: props.answer.parent,
+      });
       emit('after-delete');
     } catch (error) {
       console.error(error);

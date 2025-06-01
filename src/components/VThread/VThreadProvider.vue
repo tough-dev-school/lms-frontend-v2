@@ -11,6 +11,10 @@
     answerId: string;
   }>();
 
+  const emit = defineEmits<{
+    update: [answerId: string];
+  }>();
+
   const { data: user } = useUserQuery();
   const { data: answer } = useHomeworkAnswerQuery(() => props.answerId);
   watch(
@@ -24,6 +28,10 @@
 </script>
 
 <template>
-  <VThread v-if="answer && user" :answer="answer" :user="user" />
+  <VThread
+    v-if="answer && user"
+    :answer="answer"
+    :user="user"
+    @update="(slug) => emit('update', slug)" />
   <div v-else>Loading...</div>
 </template>

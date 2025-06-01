@@ -18,6 +18,7 @@
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
   import VExistingAnswer from '@/components/VExistingAnswer';
   import type { AnswerTree, User } from '@/api/generated-api';
+  import VThreadProvider from '.';
 
   const props = defineProps<{
     answer: AnswerTree;
@@ -92,33 +93,25 @@
 </script>
 
 <template>
-  <div v-if="answer && user">
-    <div ref="target" class="group">
-      <VAnswer
-        v-if="answer.author.uuid !== user.uuid"
-        :answer-id="answer.slug" />
-      <VExistingAnswer
-        v-else
-        :answer-id="answer.slug"
-        @mounted="handleMounted" />
-      <button class="text-sm link" @click="replyMode = !replyMode">
-        {{ replyMode ? 'Отменить' : 'Ответить' }}
-      </button>
-      <div class="thread-ruler" :class="{ 'mt-16': replyMode }">
-        <VCreateAnswer
-          v-show="replyMode"
-          v-model="commentText"
-          @send="handleCreateComment" />
-      </div>
+  <div ref="target" class="group">
+    <VAnswer v-if="answer.author.uuid !== user.uuid" :answer-id="answer.slug" />
+    <VExistingAnswer v-else :answer-id="answer.slug" @mounted="handleMounted" />
+    <button class="text-sm link" @click="replyMode = !replyMode">
+      {{ replyMode ? 'Отменить' : 'Ответить' }}
+    </button>
+    <div class="thread-ruler" :class="{ 'mt-16': replyMode }">
+      <VCreateAnswer
+        v-show="replyMode"
+        v-model="commentText"
+        @send="handleCreateComment" />
     </div>
-    <div v-if="answer.descendants.length > 0" class="thread-ruler mt-32">
-      <VThread
-        v-for="descendant in answer.descendants"
-        :key="descendant.slug"
-        :answer="descendant"
-        :user="user"
-        @update="(slug) => handleUpdate(slug)" />
-    </div>
+  </div>
+  <div v-if="answer.descendants.length > 0" class="thread-ruler mt-32">
+    <VThreadProvider
+      v-for="descendant in answer.descendants"
+      :key="descendant.slug"
+      :answer-id="descendant.slug"
+      @update="(slug) => handleUpdate(slug)" />
   </div>
 </template>
 
