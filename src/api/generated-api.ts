@@ -24,13 +24,14 @@ export interface Answer {
   text: string;
   src: string;
   has_descendants: boolean;
+  is_editable: boolean;
   reactions: ReactionDetailed[];
 }
 
 export interface AnswerCommentTree {
   /** @format uuid */
   slug?: string;
-  descendants?: Answer[];
+  descendants: AnswerTree[];
 }
 
 export interface AnswerCreate {
@@ -52,9 +53,12 @@ export interface AnswerImage {
 }
 
 export interface AnswerSimple {
+  /** @format uuid */
+  slug: string;
   /** @format uri */
   url: string;
   author: UserSafe;
+  question: Question;
 }
 
 export interface AnswerTree {
@@ -70,10 +74,10 @@ export interface AnswerTree {
   parent: string;
   text: string;
   src: string;
-  descendants: AnswerTree[];
   has_descendants: boolean;
   is_editable: boolean;
   reactions: ReactionDetailed[];
+  descendants: AnswerTree[];
 }
 
 /** For swagger only */
@@ -1198,7 +1202,7 @@ export class Api<SecurityDataType extends unknown> {
 
   api = {
     /**
-     * No description
+     * @description Get token for given user_id. Superuser only!
      *
      * @tags auth
      * @name AuthAsRetrieve
@@ -1206,10 +1210,11 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     authAsRetrieve: (userId: number, params: RequestParams = {}) =>
-      this.http.request<void, any>({
+      this.http.request<Record<string, string>, any>({
         path: `/api/v2/auth/as/${userId}/`,
         method: 'GET',
         secure: true,
+        format: 'json',
         ...params,
       }),
 
@@ -1353,70 +1358,6 @@ export class Api<SecurityDataType extends unknown> {
         body: data,
         type: ContentType.Json,
         format: 'json',
-        ...params,
-      }),
-
-    /**
-     * @description Receive dolyame notifications.
-     *
-     * @tags banking
-     * @name BankingDolyameNotificationsCreate
-     * @request POST:/api/v2/banking/dolyame-notifications/
-     * @secure
-     */
-    bankingDolyameNotificationsCreate: (params: RequestParams = {}) =>
-      this.http.request<void, any>({
-        path: `/api/v2/banking/dolyame-notifications/`,
-        method: 'POST',
-        secure: true,
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags banking
-     * @name BankingStripeWebhooksCreate
-     * @request POST:/api/v2/banking/stripe-webhooks/
-     * @secure
-     */
-    bankingStripeWebhooksCreate: (params: RequestParams = {}) =>
-      this.http.request<void, any>({
-        path: `/api/v2/banking/stripe-webhooks/`,
-        method: 'POST',
-        secure: true,
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags banking
-     * @name BankingStripeWebhooksKzCreate
-     * @request POST:/api/v2/banking/stripe-webhooks/kz/
-     * @secure
-     */
-    bankingStripeWebhooksKzCreate: (params: RequestParams = {}) =>
-      this.http.request<void, any>({
-        path: `/api/v2/banking/stripe-webhooks/kz/`,
-        method: 'POST',
-        secure: true,
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags banking
-     * @name BankingTinkoffNotificationsCreate
-     * @request POST:/api/v2/banking/tinkoff-notifications/
-     * @secure
-     */
-    bankingTinkoffNotificationsCreate: (params: RequestParams = {}) =>
-      this.http.request<void, any>({
-        path: `/api/v2/banking/tinkoff-notifications/`,
-        method: 'POST',
-        secure: true,
         ...params,
       }),
 
@@ -1909,7 +1850,7 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * No description
+     * @description Redirects user to the confirmation URL
      *
      * @tags orders
      * @name OrdersConfirmRetrieve
@@ -1917,7 +1858,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     ordersConfirmRetrieve: (slug: string, params: RequestParams = {}) =>
-      this.http.request<void, any>({
+      this.http.request<any, void>({
         path: `/api/v2/orders/${slug}/confirm/`,
         method: 'GET',
         secure: true,
