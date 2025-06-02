@@ -95,6 +95,18 @@
       },
     });
   };
+
+  const ownAnswerHref = computed(() => {
+    return (
+      window.location.origin +
+      router.resolve({
+        name: 'homework',
+        params: {
+          questionId: props.question.slug,
+        },
+      }).fullPath
+    );
+  });
 </script>
 
 <template>
@@ -130,16 +142,7 @@
       <VCreateAnswer v-model="commentText" @send="handleCreateComment" />
       <div v-if="isSent" class="card">
         Ответ отправлен!
-        <RouterLink
-          class="link"
-          :to="{
-            name: 'homework',
-            params: {
-              questionId: question.slug,
-            },
-          }"
-          >Вернуться к своему ответу</RouterLink
-        >
+        <a class="link" :href="ownAnswerHref">Вернуться к своему ответу</a>
       </div>
       <template v-if="answer.descendants">
         <VThread
