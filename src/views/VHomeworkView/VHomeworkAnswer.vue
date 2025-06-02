@@ -10,7 +10,7 @@
   import { useStorage } from '@vueuse/core';
   import VExistingAnswer from '@/components/VExistingAnswer';
   import { useHomeworkCrosschecksQuery } from '@/query';
-  import { computed } from 'vue';
+  import { computed, ref } from 'vue';
   import { useRouter } from 'vue-router';
   import { useQueryClient } from '@tanstack/vue-query';
   import { useHomeworkAnswerCreateMutation } from '@/query';
@@ -18,6 +18,7 @@
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import VPillHomework from '@/components/VPillHomework/VPillHomework.vue';
   import type { LessonForUser } from '@/api/generated-api';
+  import VCard from '@/components/VCard/VCard.vue';
 
   interface Props {
     question: QuestionDetail;
@@ -77,6 +78,13 @@
     props.answer.question,
   );
 
+  const isSent = computed(() => {
+    return crosschecks.value?.some(
+      (crosscheck) =>
+        crosscheck.answer.slug === props.answer.slug && crosscheck.is_checked,
+    );
+  });
+
   const { mutateAsync: createAnswerMutation } =
     useHomeworkAnswerCreateMutation(queryClient);
 
@@ -121,6 +129,19 @@
       </VHeading>
       <VFeedbackGuide />
       <VCreateAnswer v-model="commentText" @send="handleCreateComment" />
+      <div v-if="isSent" class="card">
+        Ответ отправлен!
+        <RouterLink
+          class="link"
+          :to="{
+            name: 'homework',
+            params: {
+              questionId: question.slug,
+            },
+          }"
+          >Вернуться к своему ответу</RouterLink
+        >
+      </div>
       <template v-if="answer.descendants">
         <VThread
           v-for="comment in answer.descendants"
