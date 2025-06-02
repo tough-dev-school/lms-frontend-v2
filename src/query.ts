@@ -180,7 +180,9 @@ export const getHomeworkAnswerQueryOptions = (answerId?: string) => {
             answer: [answerId],
           });
 
-          descendants = response[0].descendants;
+          if (response[0]) {
+            descendants = response[0].descendants;
+          }
         }
 
         // #TODO cache descendants as answers

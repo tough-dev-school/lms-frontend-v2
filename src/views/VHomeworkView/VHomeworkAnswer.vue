@@ -113,7 +113,7 @@
         @after-delete="handleDeleteAnswer" />
     </section>
     <VCrossChecks
-      v-if="isOwnAnswer && crosschecks"
+      v-if="isOwnAnswer && crosschecks?.length"
       :crosschecks="crosschecks" />
     <section class="flex flex-col gap-24">
       <VHeading tag="h2">
