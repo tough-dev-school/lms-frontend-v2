@@ -2,21 +2,22 @@
   import VAnswer from '@/components/VAnswer/VAnswer.vue';
   import VAnswerActions from '@/components/VAnswerActions/VAnswerActions.vue';
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
-  import { ref } from 'vue';
+  import { ref, onMounted } from 'vue';
   import { useQueryClient } from '@tanstack/vue-query';
   import {
     useHomeworkAnswerUpdateMutation,
     useHomeworkAnswerDeleteMutation,
   } from '@/query';
-  import type { AnswerDetailed, UserSafe } from '@/api/generated-api';
+  import type { AnswerTree, UserSafe } from '@/api/generated-api';
 
   const props = defineProps<{
-    answer: AnswerDetailed;
+    answer: AnswerTree;
     user: UserSafe;
   }>();
 
   const emit = defineEmits<{
     'after-delete': [];
+    'after-create': [slug: string];
   }>();
 
   const queryClient = useQueryClient();
@@ -30,7 +31,10 @@
 
   const handleDelete = async () => {
     try {
-      await deleteAnswerMutation({ answerId: props.answer.slug });
+      await deleteAnswerMutation({
+        answerId: props.answer.slug,
+        parentId: props.answer.parent,
+      });
       emit('after-delete');
     } catch (error) {
       console.error(error);
@@ -49,6 +53,10 @@
 
     isEdit.value = false;
   };
+
+  onMounted(() => {
+    emit('after-create', props.answer.slug);
+  });
 </script>
 
 <template>

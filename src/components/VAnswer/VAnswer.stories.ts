@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
 import VAnswer from '@/components/VAnswer/VAnswer.vue';
-import { mockAnswer } from '@/mocks/mockAnswerDetailed';
+import { mockAnswer } from '@/mocks/mockAnswer';
 import { mockUserSafe, STATIC_AUTHOR_1 } from '@/mocks/mockUserSafe';
 
 export default {

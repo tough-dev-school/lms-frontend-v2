@@ -38,7 +38,7 @@ export const homeworkKeys = {
     'question',
     questionId,
   ],
-  answers: ({
+  questionAnswers: ({
     questionId,
     authorId,
   }: {
@@ -162,32 +162,15 @@ export const useHomeworkQuestionQuery = (
   return useQuery(options);
 };
 
-export const getHomeworkAnswerQueryOptions = (answerId?: string) => {
+export const fetchHomeworkQuestion = async (
+  queryClient: QueryClient,
+  { questionId }: { questionId: string },
+) => queryClient.fetchQuery(getHomeworkQuestionQueryOptions(questionId));
+
+export const getHomeworkAnswerQueryOptions = (answerId: string) => {
   return queryOptions({
-    queryKey: homeworkKeys.answer(answerId ?? ''),
-    queryFn: async () => {
-      if (answerId) {
-        const answer = await api.homeworkAnswersRetrieve(answerId);
-        let descendants: AnswerTree[] = [];
-
-        if (answer.has_descendants) {
-          const response = await api.homeworkCommentsList({
-            answer: [answerId],
-          });
-
-          descendants = response[0].descendants;
-        }
-
-        // #TODO cache descendants as answers
-
-        return {
-          ...answer,
-          descendants,
-        };
-      }
-      return Promise.reject('answerId is not provided');
-    },
-    enabled: answerId !== undefined,
+    queryKey: homeworkKeys.answer(answerId),
+    queryFn: async () => await api.homeworkAnswersRetrieve(answerId),
   });
 };
 
@@ -205,7 +188,7 @@ export const populateAnswersCacheFromDescendants = (
   const populate = (answer: AnswerTree) => {
     flatAnswers.push(answer);
 
-    if (answer.has_descendants) answer.descendants.forEach(populate);
+    if (answer.descendants.length) answer.descendants.forEach(populate);
   };
 
   populate(rootAnswer);
@@ -215,9 +198,7 @@ export const populateAnswersCacheFromDescendants = (
   });
 };
 
-export const useHomeworkAnswerQuery = (
-  answerId: MaybeRefOrGetter<string | undefined>,
-) => {
+export const useHomeworkAnswerQuery = (answerId: MaybeRefOrGetter<string>) => {
   const options = computed(() =>
     getHomeworkAnswerQueryOptions(toValue(answerId)),
   );
@@ -233,7 +214,7 @@ export const getHomeworkAnswersQueryOptions = ({
   questionId?: string;
 }) => {
   return queryOptions({
-    queryKey: homeworkKeys.answers({ questionId, authorId }),
+    queryKey: homeworkKeys.questionAnswers({ questionId, authorId }),
     queryFn: async () =>
       (
         await api.homeworkAnswersList({
@@ -278,9 +259,9 @@ export const useRemoveHomeworkReactionMutation = (queryClient: QueryClient) => {
       answerId: string;
       reactionId: string;
     }) => await api.homeworkAnswersReactionsDestroy(answerId, reactionId),
-    onSuccess: () => {
+    onSuccess: (_, { answerId }) => {
       queryClient.invalidateQueries({
-        queryKey: homeworkKeys.all(),
+        queryKey: homeworkKeys.answer(answerId),
       });
     },
   });
@@ -298,9 +279,9 @@ export const useAddHomeworkReactionMutation = (queryClient: QueryClient) => {
       await api.homeworkAnswersReactionsCreate(answerId, {
         emoji: reaction,
       }),
-    onSuccess: () => {
+    onSuccess: (_, { answerId }) => {
       queryClient.invalidateQueries({
-        queryKey: homeworkKeys.all(),
+        queryKey: homeworkKeys.answer(answerId),
       });
     },
   });
@@ -341,9 +322,9 @@ export const useHomeworkAnswerCreateMutation = (queryClient: QueryClient) => {
         parent: parentId,
       });
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({
-        queryKey: homeworkKeys.all(),
+        queryKey: homeworkKeys.answer(data.parent),
       });
     },
   });
@@ -361,9 +342,9 @@ export const useHomeworkAnswerUpdateMutation = (queryClient: QueryClient) => {
       await api.homeworkAnswersPartialUpdate(answerId, {
         text: htmlToMarkdown(text),
       }),
-    onSuccess: () => {
+    onSuccess: (_, { answerId }) => {
       queryClient.invalidateQueries({
-        queryKey: homeworkKeys.all(),
+        queryKey: homeworkKeys.answer(answerId),
       });
     },
   });
@@ -371,11 +352,17 @@ export const useHomeworkAnswerUpdateMutation = (queryClient: QueryClient) => {
 
 export const useHomeworkAnswerDeleteMutation = (queryClient: QueryClient) => {
   return useMutation({
-    mutationFn: async ({ answerId }: { answerId: string }) =>
-      await api.homeworkAnswersDestroy(answerId),
-    onSuccess: () => {
+    mutationFn: async ({
+      answerId,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      parentId,
+    }: {
+      answerId: string;
+      parentId: string;
+    }) => await api.homeworkAnswersDestroy(answerId),
+    onSuccess: (_, { parentId }) => {
       queryClient.invalidateQueries({
-        queryKey: homeworkKeys.all(),
+        queryKey: homeworkKeys.answer(parentId),
       });
     },
   });

@@ -10,26 +10,7 @@
  * ---------------------------------------------------------------
  */
 
-export interface AnswerCommentTree {
-  /** @format uuid */
-  slug: string;
-  descendants: AnswerTree[];
-}
-
-export interface AnswerCreate {
-  /** @format uuid */
-  question: string;
-  /** @format uuid */
-  parent?: string | null;
-  text: string;
-}
-
-export interface AnswerCrossCheck {
-  answer: SimpleAnswer;
-  is_checked: boolean;
-}
-
-export interface AnswerDetailed {
+export interface Answer {
   /** @format date-time */
   created: string;
   /** @format date-time */
@@ -47,9 +28,37 @@ export interface AnswerDetailed {
   reactions: ReactionDetailed[];
 }
 
+export interface AnswerCommentTree {
+  /** @format uuid */
+  slug?: string;
+  descendants: AnswerTree[];
+}
+
+export interface AnswerCreate {
+  /** @format uuid */
+  question: string;
+  /** @format uuid */
+  parent?: string | null;
+  text: string;
+}
+
+export interface AnswerCrossCheck {
+  answer: AnswerSimple;
+  is_checked: boolean;
+}
+
 export interface AnswerImage {
   /** @format uri */
   image: string;
+}
+
+export interface AnswerSimple {
+  /** @format uuid */
+  slug: string;
+  /** @format uri */
+  url: string;
+  author: UserSafe;
+  question: Question;
 }
 
 export interface AnswerTree {
@@ -65,9 +74,10 @@ export interface AnswerTree {
   parent: string;
   text: string;
   src: string;
-  descendants: AnswerTree[];
   has_descendants: boolean;
+  is_editable: boolean;
   reactions: ReactionDetailed[];
+  descendants: AnswerTree[];
 }
 
 /** For swagger only */
@@ -346,7 +356,7 @@ export interface NotionMaterial {
   title?: string;
 }
 
-export interface PaginatedAnswerDetailedList {
+export interface PaginatedAnswerList {
   /** @example 123 */
   count: number;
   /**
@@ -359,7 +369,7 @@ export interface PaginatedAnswerDetailedList {
    * @example "http://api.example.org/accounts/?page=2"
    */
   previous?: string | null;
-  results: AnswerDetailed[];
+  results: Answer[];
 }
 
 export interface PaginatedCourseList {
@@ -620,11 +630,6 @@ export interface RefreshAuthToken {
 
 export interface RestAuthDetail {
   detail: string;
-}
-
-export interface SimpleAnswer {
-  url: string;
-  author: UserSafe;
 }
 
 export interface User {
@@ -1418,7 +1423,7 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * @description Always serialize response with the default serializer. CAUTION: we are loosing serializer context here! If you need it, feel free to rewrite this method with http://www.cdrf.co/3.6/rest_framework.mixins/CreateModelMixin.html
+     * @description Always serialize response with the default serializer.
      *
      * @tags diplomas
      * @name DiplomasCreate
@@ -1454,7 +1459,7 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * @description Always serialize response with the default serializer. CAUTION: we are loosing serializer context here! If you need it, feel free to rewrite this method with http://www.cdrf.co/3.6/rest_framework.mixins/UpdateModelMixin.html
+     * @description Always serialize response with the default serializer.
      *
      * @tags diplomas
      * @name DiplomasUpdate
@@ -1544,7 +1549,7 @@ export class Api<SecurityDataType extends unknown> {
       query: HomeworkAnswersListParams,
       params: RequestParams = {},
     ) =>
-      this.http.request<PaginatedAnswerDetailedList, any>({
+      this.http.request<PaginatedAnswerList, any>({
         path: `/api/v2/homework/answers/`,
         method: 'GET',
         query: query,
@@ -1562,7 +1567,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     homeworkAnswersCreate: (data: AnswerCreate, params: RequestParams = {}) =>
-      this.http.request<AnswerDetailed, any>({
+      this.http.request<AnswerTree, any>({
         path: `/api/v2/homework/answers/`,
         method: 'POST',
         body: data,
@@ -1624,7 +1629,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     homeworkAnswersRetrieve: (slug: string, params: RequestParams = {}) =>
-      this.http.request<AnswerDetailed, any>({
+      this.http.request<AnswerTree, any>({
         path: `/api/v2/homework/answers/${slug}/`,
         method: 'GET',
         secure: true,
@@ -1645,7 +1650,7 @@ export class Api<SecurityDataType extends unknown> {
       data: AnswerUpdate,
       params: RequestParams = {},
     ) =>
-      this.http.request<AnswerDetailed, any>({
+      this.http.request<AnswerTree, any>({
         path: `/api/v2/homework/answers/${slug}/`,
         method: 'PUT',
         body: data,
