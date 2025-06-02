@@ -1,14 +1,19 @@
 <script lang="ts" setup>
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
-  import type { QuestionDetail } from '@/api/generated-api';
+  import type { LessonForUser, QuestionDetail } from '@/api/generated-api';
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
   import { useStorage } from '@vueuse/core';
   import { useRouter } from 'vue-router';
   import { useQueryClient } from '@tanstack/vue-query';
   import { useHomeworkAnswerCreateMutation } from '@/query';
+  import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
+  import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
+  import VPillHomework from '@/components/VPillHomework/VPillHomework.vue';
 
   interface Props {
     question: QuestionDetail;
+    lesson?: LessonForUser;
+    breadcrumbs: Breadcrumb[];
   }
 
   const props = defineProps<Props>();
@@ -49,8 +54,13 @@
 </script>
 
 <template>
-  <section class="flex flex-col gap-24">
-    <VHtmlContent :content="question.text" />
-    <VCreateAnswer v-model="draft" @send="handleCreateAnswer" />
-  </section>
+  <VLoggedLayout :breadcrumbs="breadcrumbs" :title="question.name">
+    <template #pill>
+      <VPillHomework v-if="lesson?.homework" :stats="lesson?.homework" />
+    </template>
+    <section class="flex flex-col gap-24">
+      <VHtmlContent :content="question.text" />
+      <VCreateAnswer v-model="draft" @send="handleCreateAnswer" />
+    </section>
+  </VLoggedLayout>
 </template>

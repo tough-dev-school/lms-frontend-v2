@@ -30,7 +30,7 @@ export interface Answer {
 
 export interface AnswerCommentTree {
   /** @format uuid */
-  slug?: string;
+  slug: string;
   descendants: AnswerTree[];
 }
 
@@ -686,7 +686,7 @@ export interface User {
 
 export interface UserSafe {
   /** @format uuid */
-  uuid: string;
+  uuid?: string;
   /**
    * Имя
    * @maxLength 150
@@ -1202,7 +1202,7 @@ export class Api<SecurityDataType extends unknown> {
 
   api = {
     /**
-     * @description Get token for given user_id. Superuser only!
+     * No description
      *
      * @tags auth
      * @name AuthAsRetrieve
@@ -1210,11 +1210,10 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     authAsRetrieve: (userId: number, params: RequestParams = {}) =>
-      this.http.request<Record<string, string>, any>({
+      this.http.request<void, any>({
         path: `/api/v2/auth/as/${userId}/`,
         method: 'GET',
         secure: true,
-        format: 'json',
         ...params,
       }),
 
@@ -1285,7 +1284,7 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * @description Exchange passwordless token to JWT
+     * No description
      *
      * @tags auth
      * @name AuthPasswordlessTokenRetrieve
@@ -1296,11 +1295,10 @@ export class Api<SecurityDataType extends unknown> {
       token: string,
       params: RequestParams = {},
     ) =>
-      this.http.request<Record<string, string>, any>({
+      this.http.request<void, any>({
         path: `/api/v2/auth/passwordless-token/${token}/`,
         method: 'GET',
         secure: true,
-        format: 'json',
         ...params,
       }),
 
@@ -1316,11 +1314,10 @@ export class Api<SecurityDataType extends unknown> {
       userEmail: string,
       params: RequestParams = {},
     ) =>
-      this.http.request<Record<string, boolean>, any>({
+      this.http.request<void, any>({
         path: `/api/v2/auth/passwordless-token/request/${userEmail}/`,
         method: 'GET',
         secure: true,
-        format: 'json',
         ...params,
       }),
 
@@ -1358,6 +1355,70 @@ export class Api<SecurityDataType extends unknown> {
         body: data,
         type: ContentType.Json,
         format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description Receive dolyame notifications.
+     *
+     * @tags banking
+     * @name BankingDolyameNotificationsCreate
+     * @request POST:/api/v2/banking/dolyame-notifications/
+     * @secure
+     */
+    bankingDolyameNotificationsCreate: (params: RequestParams = {}) =>
+      this.http.request<void, any>({
+        path: `/api/v2/banking/dolyame-notifications/`,
+        method: 'POST',
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags banking
+     * @name BankingStripeWebhooksCreate
+     * @request POST:/api/v2/banking/stripe-webhooks/
+     * @secure
+     */
+    bankingStripeWebhooksCreate: (params: RequestParams = {}) =>
+      this.http.request<void, any>({
+        path: `/api/v2/banking/stripe-webhooks/`,
+        method: 'POST',
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags banking
+     * @name BankingStripeWebhooksKzCreate
+     * @request POST:/api/v2/banking/stripe-webhooks/kz/
+     * @secure
+     */
+    bankingStripeWebhooksKzCreate: (params: RequestParams = {}) =>
+      this.http.request<void, any>({
+        path: `/api/v2/banking/stripe-webhooks/kz/`,
+        method: 'POST',
+        secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags banking
+     * @name BankingTinkoffNotificationsCreate
+     * @request POST:/api/v2/banking/tinkoff-notifications/
+     * @secure
+     */
+    bankingTinkoffNotificationsCreate: (params: RequestParams = {}) =>
+      this.http.request<void, any>({
+        path: `/api/v2/banking/tinkoff-notifications/`,
+        method: 'POST',
+        secure: true,
         ...params,
       }),
 
@@ -1850,7 +1911,7 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * @description Redirects user to the confirmation URL
+     * No description
      *
      * @tags orders
      * @name OrdersConfirmRetrieve
@@ -1858,7 +1919,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     ordersConfirmRetrieve: (slug: string, params: RequestParams = {}) =>
-      this.http.request<any, void>({
+      this.http.request<void, any>({
         path: `/api/v2/orders/${slug}/confirm/`,
         method: 'GET',
         secure: true,

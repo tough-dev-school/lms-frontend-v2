@@ -3,11 +3,12 @@
   import { useHomeworkQuestionQuery } from '@/query';
   import { useHomeworkAnswerQuery } from '@/query';
   import { useUserQuery } from '@/query';
-  import { watch } from 'vue';
+  import { watch, computed } from 'vue';
   import { useQueryClient } from '@tanstack/vue-query';
   import { populateAnswersCacheFromDescendants } from '@/query';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
+  import { useLessonsQuery } from '@/query';
 
   const queryClient = useQueryClient();
 
@@ -22,6 +23,17 @@
   const { data: answer, isLoading: isAnswerLoading } = useHomeworkAnswerQuery(
     props.answerId,
   );
+
+  const { data: lessons, isLoading: isLessonsLoading } = useLessonsQuery(
+    question.value?.breadcrumbs.module.id,
+  );
+
+  const lesson = computed(() => {
+    return lessons.value?.find(
+      (lesson) => lesson.id === question.value?.breadcrumbs.lesson?.id,
+    );
+  });
+
   const { data: user, isLoading: isUserLoading } = useUserQuery();
 
   watch(
@@ -35,10 +47,18 @@
 </script>
 
 <template>
+  <template v-if="question && answer && user">
+    <VHomeworkAnswer
+      :breadcrumbs="breadcrumbs"
+      :question="question"
+      :answer="answer"
+      :user="user"
+      :lesson="lesson" />
+  </template>
   <VLoggedLayout
-    :is-loading="isQuestionLoading || isAnswerLoading || isUserLoading">
-    <template v-if="question && answer && user">
-      <VHomeworkAnswer :question="question" :answer="answer" :user="user" />
-    </template>
+    v-else
+    :is-loading="
+      isQuestionLoading || isAnswerLoading || isUserLoading || isLessonsLoading
+    ">
   </VLoggedLayout>
 </template>

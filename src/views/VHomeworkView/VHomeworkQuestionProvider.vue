@@ -1,8 +1,9 @@
 <script lang="ts" setup>
   import VHomeworkQuestion from './VHomeworkQuestion.vue';
-  import { useHomeworkQuestionQuery } from '@/query';
+  import { useHomeworkQuestionQuery, useLessonsQuery } from '@/query';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
+  import { computed } from 'vue';
 
   const props = defineProps<{
     questionId: string;
@@ -11,15 +12,25 @@
 
   const { data: question, isLoading: isQuestionLoading } =
     useHomeworkQuestionQuery(props.questionId);
+
+  const { data: lessons, isLoading: isLessonsLoading } = useLessonsQuery(
+    question.value?.breadcrumbs.module.id,
+  );
+
+  const lesson = computed(() => {
+    return lessons.value?.find(
+      (lesson) => lesson.id === question.value?.breadcrumbs.lesson?.id,
+    );
+  });
 </script>
 
 <template>
-  <VLoggedLayout
-    :title="question?.name"
-    :breadcrumbs="breadcrumbs"
-    :is-loading="isQuestionLoading">
-    <template v-if="question">
-      <VHomeworkQuestion :question="question" />
-    </template>
+  <template v-if="question && !isLessonsLoading">
+    <VHomeworkQuestion
+      :breadcrumbs="breadcrumbs"
+      :question="question"
+      :lesson="lesson" />
+  </template>
+  <VLoggedLayout v-else :is-loading="isQuestionLoading || isLessonsLoading">
   </VLoggedLayout>
 </template>

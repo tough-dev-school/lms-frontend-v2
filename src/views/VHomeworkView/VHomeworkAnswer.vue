@@ -14,11 +14,17 @@
   import { useRouter } from 'vue-router';
   import { useQueryClient } from '@tanstack/vue-query';
   import { useHomeworkAnswerCreateMutation } from '@/query';
+  import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
+  import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
+  import VPillHomework from '@/components/VPillHomework/VPillHomework.vue';
+  import type { LessonForUser } from '@/api/generated-api';
 
   interface Props {
     question: QuestionDetail;
     answer: AnswerTree;
     user: User;
+    breadcrumbs: Breadcrumb[];
+    lesson?: LessonForUser;
   }
 
   const props = defineProps<Props>();
@@ -71,6 +77,13 @@
     props.answer.question,
   );
 
+  const isSent = computed(() => {
+    return crosschecks.value?.some(
+      (crosscheck) =>
+        crosscheck.answer.slug === props.answer.slug && crosscheck.is_checked,
+    );
+  });
+
   const { mutateAsync: createAnswerMutation } =
     useHomeworkAnswerCreateMutation(queryClient);
 
@@ -82,42 +95,61 @@
       },
     });
   };
+
+  const ownAnswerHref = computed(() => {
+    return (
+      window.location.origin +
+      router.resolve({
+        name: 'homework',
+        params: {
+          questionId: props.question.slug,
+        },
+      }).fullPath
+    );
+  });
 </script>
 
 <template>
-  <section class="flex flex-col gap-24">
-    <div v-if="isOwnAnswer" class="card mb-16 bg-accent-green">
-      <VHeading tag="h3" class="mb-8">
-        Поделитесь ссылкой на сделанную домашку
-      </VHeading>
-      <div class="block select-all">
-        {{ answerLink }}
-      </div>
-    </div>
-
-    <VDetails>
-      <template #summary> Текст задания </template>
-      <VHtmlContent :content="question.text" />
-    </VDetails>
-
-    <VExistingAnswer
-      :answer-id="answer.slug"
-      @after-delete="handleDeleteAnswer" />
-  </section>
-
-  <VCrossChecks v-if="isOwnAnswer && crosschecks" :crosschecks="crosschecks" />
-
-  <section class="flex flex-col gap-24">
-    <VHeading tag="h2">{{
-      isOwnAnswer ? 'Коментарии вашей работы' : 'Коментарии'
-    }}</VHeading>
-    <VFeedbackGuide />
-    <VCreateAnswer v-model="commentText" @send="handleCreateComment" />
-    <template v-if="answer.descendants">
-      <VThread
-        v-for="comment in answer.descendants"
-        :key="comment.slug"
-        :answer-id="comment.slug" />
+  <VLoggedLayout :breadcrumbs="breadcrumbs" :title="question.name">
+    <template #pill>
+      <VPillHomework v-if="lesson?.homework" :stats="lesson?.homework" />
     </template>
-  </section>
+    <section class="flex flex-col gap-24">
+      <div v-if="isOwnAnswer" class="card mb-16 bg-accent-green">
+        <VHeading tag="h3" class="mb-8">
+          Поделитесь ссылкой на сделанную домашку
+        </VHeading>
+        <div class="block select-all">
+          {{ answerLink }}
+        </div>
+      </div>
+      <VDetails>
+        <template #summary> Текст задания </template>
+        <VHtmlContent :content="question.text" />
+      </VDetails>
+      <VExistingAnswer
+        :answer-id="answer.slug"
+        @after-delete="handleDeleteAnswer" />
+    </section>
+    <VCrossChecks
+      v-if="isOwnAnswer && crosschecks?.length"
+      :crosschecks="crosschecks" />
+    <section class="flex flex-col gap-24">
+      <VHeading tag="h2">
+        {{ isOwnAnswer ? 'Коментарии вашей работы' : 'Коментарии' }}
+      </VHeading>
+      <VFeedbackGuide />
+      <VCreateAnswer v-model="commentText" @send="handleCreateComment" />
+      <div v-if="isSent" class="card">
+        Ответ отправлен!
+        <a class="link" :href="ownAnswerHref">Вернуться к своему ответу</a>
+      </div>
+      <template v-if="answer.descendants">
+        <VThread
+          v-for="comment in answer.descendants"
+          :key="comment.slug"
+          :answer-id="comment.slug" />
+      </template>
+    </section>
+  </VLoggedLayout>
 </template>

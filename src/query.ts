@@ -18,8 +18,10 @@ export const studiesKeys = {
 
 export const lmsKeys = {
   all: () => [...baseQueryKey(), 'lms'],
-  lessons: (moduleId?: number) => [...lmsKeys.all(), 'lessons', { moduleId }],
-  modules: (courseId?: number) => [...lmsKeys.all(), 'modules', { courseId }],
+  lessons: () => [...lmsKeys.all(), 'lessons'],
+  moduleLessons: (moduleId?: number) => [...lmsKeys.lessons(), { moduleId }],
+  modules: () => [...lmsKeys.all(), 'modules'],
+  courseModules: (courseId?: number) => [...lmsKeys.modules(), { courseId }],
 };
 
 export const materialsKeys = {
@@ -47,9 +49,8 @@ export const homeworkKeys = {
   }) => [...homeworkKeys.all(), 'answers', [questionId, authorId]],
   answer: (answerId: string) => [...homeworkKeys.all(), 'answers', answerId],
   crosschecks: (questionId: string) => [
-    ...homeworkKeys.all(),
+    ...homeworkKeys.question(questionId),
     'crosschecks',
-    questionId,
   ],
 };
 
@@ -74,7 +75,7 @@ export const useStudiesQuery = () => {
 
 const lessonsOptions = (moduleId: number | undefined) => {
   return {
-    queryKey: lmsKeys.lessons(moduleId),
+    queryKey: lmsKeys.moduleLessons(moduleId),
     queryFn: async () =>
       (await api.lmsLessonsList({ module: moduleId, page_size: 100 })).results,
   };
@@ -90,7 +91,7 @@ export const useLessonsQuery = (
 
 const modulesOptions = (courseId: number | undefined) => {
   return {
-    queryKey: lmsKeys.modules(courseId),
+    queryKey: lmsKeys.courseModules(courseId),
     queryFn: async () =>
       (await api.lmsModulesList({ course: courseId, page_size: 100 })).results,
   };
@@ -322,9 +323,15 @@ export const useHomeworkAnswerCreateMutation = (queryClient: QueryClient) => {
         parent: parentId,
       });
     },
-    onSuccess: (data) => {
+    onSuccess: (data, { questionId }) => {
       queryClient.invalidateQueries({
         queryKey: homeworkKeys.answer(data.parent),
+      });
+      queryClient.invalidateQueries({
+        queryKey: homeworkKeys.crosschecks(questionId),
+      });
+      queryClient.invalidateQueries({
+        queryKey: lmsKeys.lessons(),
       });
     },
   });
@@ -346,6 +353,9 @@ export const useHomeworkAnswerUpdateMutation = (queryClient: QueryClient) => {
       queryClient.invalidateQueries({
         queryKey: homeworkKeys.answer(answerId),
       });
+      queryClient.invalidateQueries({
+        queryKey: lmsKeys.lessons(),
+      });
     },
   });
 };
@@ -363,6 +373,9 @@ export const useHomeworkAnswerDeleteMutation = (queryClient: QueryClient) => {
     onSuccess: (_, { parentId }) => {
       queryClient.invalidateQueries({
         queryKey: homeworkKeys.answer(parentId),
+      });
+      queryClient.invalidateQueries({
+        queryKey: lmsKeys.lessons(),
       });
     },
   });
