@@ -10,7 +10,7 @@
   import { useStorage } from '@vueuse/core';
   import VExistingAnswer from '@/components/VExistingAnswer';
   import { useHomeworkCrosschecksQuery } from '@/query';
-  import { computed, ref } from 'vue';
+  import { computed } from 'vue';
   import { useRouter } from 'vue-router';
   import { useQueryClient } from '@tanstack/vue-query';
   import { useHomeworkAnswerCreateMutation } from '@/query';
@@ -18,7 +18,6 @@
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import VPillHomework from '@/components/VPillHomework/VPillHomework.vue';
   import type { LessonForUser } from '@/api/generated-api';
-  import VCard from '@/components/VCard/VCard.vue';
 
   interface Props {
     question: QuestionDetail;
