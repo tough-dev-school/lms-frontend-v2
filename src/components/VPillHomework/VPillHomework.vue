@@ -21,7 +21,8 @@
   const isOverCrossCheckDate = computed(() => {
     return (
       props.stats.question?.deadline &&
-      dayjs(props.stats.question.deadline).add(1, 'day').isAfter(new Date())
+      crossCheckDate.value &&
+      dayjs().isAfter(crossCheckDate.value)
     );
   });
 
