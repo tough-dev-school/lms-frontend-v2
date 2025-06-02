@@ -38,7 +38,9 @@
       Домашка:
       {{ stats.is_sent ? 'Отправлена' : 'Не отправлена' }}
     </VPillItem>
-    <VPillItem v-if="stats.is_sent && stats.crosschecks">
+    <VPillItem
+      v-if="stats.is_sent && stats.crosschecks"
+      :class="{ 'text-gray': crossCheckDate && !isOverCrossCheckDate }">
       <div>
         <div>
           Работы коллег:
