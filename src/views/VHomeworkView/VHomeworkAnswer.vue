@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import VHeading from '@/components/VHeading/VHeading.vue';
-  import VThread from '@/components/VThread/VThread.vue';
+  import VThread from '@/components/VThread';
   import VFeedbackGuide from '@/components/VFeedbackGuide/VFeedbackGuide.vue';
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
   import VCrossChecks from '@/components/VCrossChecks/VCrossChecks.vue';

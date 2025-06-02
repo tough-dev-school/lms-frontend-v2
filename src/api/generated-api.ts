@@ -24,13 +24,14 @@ export interface Answer {
   text: string;
   src: string;
   has_descendants: boolean;
+  is_editable: boolean;
   reactions: ReactionDetailed[];
 }
 
 export interface AnswerCommentTree {
   /** @format uuid */
   slug: string;
-  descendants: Answer[];
+  descendants: AnswerTree[];
 }
 
 export interface AnswerCreate {
@@ -52,9 +53,12 @@ export interface AnswerImage {
 }
 
 export interface AnswerSimple {
+  /** @format uuid */
+  slug: string;
   /** @format uri */
   url: string;
   author: UserSafe;
+  question: Question;
 }
 
 export interface AnswerTree {
@@ -70,9 +74,10 @@ export interface AnswerTree {
   parent: string;
   text: string;
   src: string;
-  descendants: Answer[];
   has_descendants: boolean;
+  is_editable: boolean;
   reactions: ReactionDetailed[];
+  descendants: AnswerTree[];
 }
 
 /** For swagger only */
