@@ -24,26 +24,26 @@ jobs:
         run: pnpm install
 
       - name: Run linter 👀
-        run: pnpm run check:lint
+        run: pnpm run test:lint
 
       - name: Run prettier 🧹
-        run: pnpm run check:format
+        run: pnpm run test:format
 
       - name: Run typecheck ✅
-        run: pnpm run check:type
-
-      - name: Build 😎
-        run: pnpm run build
+        run: pnpm run test:type
 
       - name: Run unit tests 🧪
         run: pnpm run test:unit
         continue-on-error: true
 
+      - name: Build 😎
+        run: pnpm --filter frontend run build
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: dist
-          path: dist
+          path: apps/frontend/dist
 
   build-docker-image:
     needs: check
@@ -57,7 +57,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dist
-          path: dist
+          path: apps/lms-frontend/dist
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -82,7 +82,7 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: ./apps/lms-frontend
           push: true
           tags: |
             ghcr.io/${{ steps.image.outputs.lowercase }}:latest

@@ -1,5 +1,5 @@
 {
-  "name": "lms-frontend-v2",
+  "name": "frontend",
   "version": "0.0.0",
   "packageManager": "pnpm@9.11.0",
   "scripts": {
