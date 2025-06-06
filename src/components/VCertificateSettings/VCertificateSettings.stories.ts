@@ -1,4 +1,4 @@
-import type { Meta, StoryFn } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VCertificateSettings from '@/components/VCertificateSettings/VCertificateSettings.vue';
 import { userKeys } from '@/query';
 import { useQueryClient } from '@tanstack/vue-query';

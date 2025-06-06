@@ -1,12 +1,12 @@
 import '../src/fonts.css';
 import '../src/style.css';
-import { setup } from '@storybook/vue3';
+import { setup } from '@storybook/vue3-vite';
 import { createPinia } from 'pinia';
 import FloatingVue from 'floating-vue';
 import 'floating-vue/dist/style.css';
 import { VueQueryPlugin } from '@tanstack/vue-query';
 import { vueQueryConfig } from '../src/main';
-import type { Preview } from '@storybook/vue3';
+import type { Preview } from '@storybook/vue3-vite';
 
 const preview: Preview = {
   parameters: {

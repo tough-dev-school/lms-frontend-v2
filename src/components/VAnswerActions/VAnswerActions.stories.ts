@@ -1,4 +1,4 @@
-import type { Meta, StoryFn } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VAnswerActions from '@/components/VAnswerActions/VAnswerActions.vue';
 import dayjs from 'dayjs';
 

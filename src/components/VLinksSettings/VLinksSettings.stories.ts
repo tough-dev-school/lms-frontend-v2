@@ -1,4 +1,4 @@
-import type { Meta, StoryFn } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VLinksSettings from '@/components/VLinksSettings/VLinksSettings.vue';
 import { useQueryClient } from '@tanstack/vue-query';
 import { userKeys } from '@/query';

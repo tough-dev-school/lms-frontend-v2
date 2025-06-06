@@ -1,4 +1,4 @@
-import type { Meta, StoryFn } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VLoadingView from './VLoadingView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 
