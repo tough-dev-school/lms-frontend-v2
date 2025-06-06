@@ -222,6 +222,9 @@ router.beforeEach(
   async (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
     const auth = useAuth();
 
+    const queryClient = useQueryClient();
+    queryClient.invalidateQueries({ queryKey: baseQueryKey() });
+
     if (to.meta.unauthorizedOnly && auth.token) {
       return { name: 'home' };
     }
