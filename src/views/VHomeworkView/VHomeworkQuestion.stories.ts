@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import VHomeworkQuestion from './VHomeworkQuestion.vue';
+import VHomeworkQuestion from './VHomeworkQuestionView.vue';
 import { mockQuestion } from '@/mocks/mockQuestion';
 import { LOREM_CONTENT, mockContent } from '@/mocks/mockContent';
 import {

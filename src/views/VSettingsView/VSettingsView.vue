@@ -16,17 +16,17 @@
           <RouterLink
             class="link"
             :to="{ name: 'settings', hash: '#links' }"
-            data-testid="links-link"
-            >Ссылки</RouterLink
-          >
+            data-testid="links-link">
+            Ссылки
+          </RouterLink>
         </li>
         <li>
           <RouterLink
             class="link"
             data-testid="password-link"
-            :to="{ name: 'settings', hash: '#password' }"
-            >Пароль</RouterLink
-          >
+            :to="{ name: 'settings', hash: '#password' }">
+            Пароль
+          </RouterLink>
         </li>
         <li>
           <RouterLink
@@ -40,17 +40,17 @@
           <RouterLink
             class="link"
             :to="{ name: 'settings', hash: '#avatar' }"
-            data-testid="avatar-link"
-            >Аватар</RouterLink
-          >
+            data-testid="avatar-link">
+            Аватар
+          </RouterLink>
         </li>
         <li>
           <RouterLink
             class="link"
             :to="{ name: 'settings', hash: '#preferences' }"
-            data-testid="preferences-link"
-            >Настройки темы</RouterLink
-          >
+            data-testid="preferences-link">
+            Настройки темы
+          </RouterLink>
         </li>
       </ul>
     </VCard>

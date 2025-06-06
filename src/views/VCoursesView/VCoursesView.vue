@@ -3,12 +3,13 @@
   import { RouterLink } from 'vue-router';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import { useStudiesQuery } from '@/query';
+  import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
 
   const { data: studies, isLoading } = useStudiesQuery();
 </script>
 
 <template>
-  <VLoggedLayout :is-loading="isLoading" title="Мои курсы">
+  <VLoggedLayout v-if="!isLoading" title="Мои курсы">
     <ul
       v-if="studies && studies.length > 0"
       class="grid gap-16 tablet:gap-32 phone:gap-24">
@@ -35,4 +36,5 @@
       >.
     </p>
   </VLoggedLayout>
+  <VLoadingView v-else />
 </template>
