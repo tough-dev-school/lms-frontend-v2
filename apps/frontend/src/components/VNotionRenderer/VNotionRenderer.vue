@@ -217,7 +217,8 @@
     margin-top: 1em;
   }
   .notion-emoji {
-    font-family: 'Apple Color Emoji', Arial, sans-serif, 'Segoe UI Emoji',
+    font-family:
+      'Apple Color Emoji', Arial, sans-serif, 'Segoe UI Emoji',
       'Segoe UI Symbol';
   }
   .notion-page-cover {
@@ -383,8 +384,8 @@
     background: rgba(135, 131, 120, 0.15);
     border-radius: 3px;
     font-size: 85%;
-    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier,
-      monospace;
+    font-family:
+      'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
   }
 
   .notion-list {
@@ -493,8 +494,8 @@
     box-sizing: border-box;
     overflow-x: auto; /* edit: changed from `scroll` */
     background: rgb(247, 246, 243);
-    font-family: SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Courier,
-      monospace;
+    font-family:
+      SFMono-Regular, Consolas, 'Liberation Mono', Menlo, Courier, monospace;
   }
 
   .notion-column {

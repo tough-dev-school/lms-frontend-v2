@@ -1,0 +1,4 @@
+{
+  "*": ["prettier --write --ignore-unknown"],
+  "apps/frontend/**/*.{vue,js,jsx,cjs,mjs,ts,tsx,cts,mts}": ["cd apps/frontend && eslint --fix"]
+}

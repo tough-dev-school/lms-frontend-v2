@@ -2,7 +2,15 @@ services:
   backend:
     # please login to ghcr.io
     image: ghcr.io/tough-dev-school/dev-backend
-    command: ["wait-for-it", "postgres:5432", "--", "/bin/sh", "-c", "python ./manage.py migrate && ./manage.py create_dev_admin_user && uwsgi --master --http :8000 --module core.wsgi --workers 2"]
+    command:
+      [
+        'wait-for-it',
+        'postgres:5432',
+        '--',
+        '/bin/sh',
+        '-c',
+        'python ./manage.py migrate && ./manage.py create_dev_admin_user && uwsgi --master --http :8000 --module core.wsgi --workers 2',
+      ]
     environment:
       - DEBUG=Off
       - AXES_ENABLED=Off
