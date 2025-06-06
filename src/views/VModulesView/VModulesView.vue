@@ -20,7 +20,7 @@
 
   const courseName = computed(() => study.value?.name);
 
-  const { data: modules } = useModulesQuery(props.courseId);
+  const { data: modules } = useModulesQuery(() => props.courseId);
 
   const breadcrumbs = computed<Breadcrumb[]>(() => [
     { name: 'Мои курсы', to: { name: 'home' } },

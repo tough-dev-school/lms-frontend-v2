@@ -19,10 +19,10 @@
   const props = defineProps<Props>();
   const router = useRouter();
 
-  const { breadcrumbs } = useHomeworkBreadcrumbs(props.questionId);
+  const { breadcrumbs } = useHomeworkBreadcrumbs(() => props.questionId);
 
   const { data: question, isLoading: isQuestionLoading } =
-    useHomeworkQuestionQuery(props.questionId);
+    useHomeworkQuestionQuery(() => props.questionId);
 
   const { data: lessons, isLoading: isLessonsLoading } = useLessonsQuery(
     question.value?.breadcrumbs.module.id,

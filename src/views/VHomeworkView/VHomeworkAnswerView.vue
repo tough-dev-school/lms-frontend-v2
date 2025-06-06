@@ -36,12 +36,11 @@
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const { breadcrumbs } = useHomeworkBreadcrumbs(props.questionId);
-
+  const { breadcrumbs } = useHomeworkBreadcrumbs(() => props.questionId);
   const { data: question, isLoading: isQuestionLoading } =
-    useHomeworkQuestionQuery(props.questionId);
+    useHomeworkQuestionQuery(() => props.questionId);
   const { data: answer, isLoading: isAnswerLoading } = useHomeworkAnswerQuery(
-    props.answerId,
+    () => props.answerId,
   );
 
   const { data: lessons, isLoading: isLessonsLoading } = useLessonsQuery(
@@ -105,7 +104,9 @@
     }
   };
 
-  const { data: crosschecks } = useHomeworkCrosschecksQuery(props.questionId);
+  const { data: crosschecks } = useHomeworkCrosschecksQuery(
+    () => props.questionId,
+  );
 
   const isSent = computed(() => {
     return crosschecks.value?.some(

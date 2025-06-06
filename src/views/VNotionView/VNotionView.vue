@@ -17,7 +17,9 @@
 
   const router = useRouter();
 
-  const { data: materialData, isLoading } = useMaterialQuery(props.materialId);
+  const { data: materialData, isLoading } = useMaterialQuery(
+    () => props.materialId,
+  );
 
   const material = computed(() => {
     if (!materialData.value) return undefined;
