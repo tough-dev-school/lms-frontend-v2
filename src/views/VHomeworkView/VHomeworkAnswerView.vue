@@ -197,7 +197,7 @@
       <VHeading tag="h2">
         {{ isOwnAnswer ? 'Коментарии вашей работы' : 'Коментарии' }}
       </VHeading>
-      <p v-if="feedbackMessage">
+      <p v-if="isOwnAnswer && feedbackMessage">
         {{ feedbackMessage }}
       </p>
       <VFeedbackGuide />
