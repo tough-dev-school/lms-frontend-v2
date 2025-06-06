@@ -13,7 +13,6 @@
   import { useRouter } from 'vue-router';
   import { useQueryClient } from '@tanstack/vue-query';
   import { useHomeworkAnswerCreateMutation } from '@/query';
-  import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import VPillHomework from '@/components/VPillHomework/VPillHomework.vue';
   import { useHomeworkBreadcrumbs } from './useHomeworkBreadcrumbs';
@@ -26,13 +25,10 @@
   } from '@/query';
   import { watch } from 'vue';
 
-  interface Props {
+  const props = defineProps<{
     questionId: string;
     answerId: string;
-    breadcrumbs: Breadcrumb[];
-  }
-
-  const props = defineProps<Props>();
+  }>();
   const router = useRouter();
   const queryClient = useQueryClient();
 

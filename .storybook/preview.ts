@@ -1,15 +1,15 @@
 import '../src/fonts.css';
 import '../src/style.css';
-import { setup } from '@storybook/vue3';
+import { setup } from '@storybook/vue3-vite';
 import { createPinia } from 'pinia';
-import { routes } from '@/router';
 import FloatingVue from 'floating-vue';
 import 'floating-vue/dist/style.css';
-import { createRouter, createMemoryHistory } from 'vue-router';
 import { VueQueryPlugin } from '@tanstack/vue-query';
-import { vueQueryConfig } from '@/main';
+import { vueQueryConfig } from '../src/main';
+import type { Preview } from '@storybook/vue3-vite';
 
-const parameters = {
+const preview: Preview = {
+  parameters: {
   actions: { argTypesRegex: '^on[A-Z].*' },
   controls: {
     matchers: {
@@ -42,23 +42,14 @@ const parameters = {
     ],
     defaultViewport: 'fluid',
   },
+}
 };
 
 setup((app) => {
-  app.use(
-    createRouter({
-      history: createMemoryHistory(import.meta.env.BASE_URL),
-      routes,
-    }),
-  );
   app.use(FloatingVue);
   app.use(createPinia());
   app.use(VueQueryPlugin, vueQueryConfig);
 });
 
-/** @type { import('@storybook/vue3').Preview } */
-const preview = {
-  parameters,
-};
 
 export default preview;

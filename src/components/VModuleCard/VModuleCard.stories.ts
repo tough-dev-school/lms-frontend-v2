@@ -1,4 +1,4 @@
-import type { Meta, StoryFn } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import { faker } from '@faker-js/faker';
 import VModuleCard from './VModuleCard.vue';
 import type { Module } from '@/api/generated-api';

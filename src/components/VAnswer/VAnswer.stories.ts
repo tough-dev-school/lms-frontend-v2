@@ -1,4 +1,4 @@
-import type { Meta, StoryFn } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VAnswer from '@/components/VAnswer/VAnswer.vue';
 import { mockAnswer } from '@/mocks/mockAnswer';
 import { mockUserSafe, STATIC_AUTHOR_1 } from '@/mocks/mockUserSafe';

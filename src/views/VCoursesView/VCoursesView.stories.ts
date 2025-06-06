@@ -1,4 +1,4 @@
-import type { Meta, StoryFn } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VCoursesView from './VCoursesView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import { STATIC_STUDY } from '@/mocks/mockCourse';

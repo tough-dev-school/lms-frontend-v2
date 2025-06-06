@@ -1,4 +1,4 @@
-import type { Meta, StoryFn } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VProfileMenu from '@/components/VProfileMenu/VProfileMenu.vue';
 import { faker } from '@faker-js/faker';
 import { userKeys } from '@/query';

@@ -1,4 +1,4 @@
-import type { Meta, StoryFn } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VTextEditor from '@/components/VTextEditor/VTextEditor.vue';
 
 export default {

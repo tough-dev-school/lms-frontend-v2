@@ -69,7 +69,8 @@
     @apply dark:hover:border-darkmode-red dark:hover:text-darkmode-red;
   }
 
-  .float-card {
+  .float-card,
+  .v-popper--theme-dropdown .v-popper__inner.v-popper__inner {
     @apply overflow-hidden rounded-8 bg-white dark:bg-darkmode-layer2 shadow;
   }
 

@@ -24,7 +24,7 @@
     :is="tag"
     class="Button"
     :class="{
-      Button_Appearance_Link: appearance === 'link',
+      'link border-transparent hover:border-transparent': appearance === 'link',
       Button_Appearance_Primary: appearance === 'primary',
       Button_Appearance_Secondary: appearance === 'secondary',
       Button_Size_Big: size === 'big',
@@ -38,7 +38,7 @@
   /* We dont use scoped here because we want to have the button class in the global style */
 
   .Button {
-    @apply leading-[1.5] font-medium rounded-8 text-center text-black transition-colors;
+    @apply leading-[1.5] font-medium rounded-8 text-center transition-colors;
     &_Size {
       &_Big {
         @apply min-w-[280px] h-module p-module;
@@ -49,7 +49,7 @@
     }
     &_Appearance {
       &_Primary {
-        @apply bg-yellow border-yellow border;
+        @apply bg-yellow text-black border-yellow border;
         @apply hover:bg-yellow-hover;
         @apply disabled:opacity-25;
       }
@@ -57,10 +57,6 @@
         @apply border-white bg-white text-black border;
         @apply hover:border-gray;
         @apply disabled:opacity-25 disabled:border-gray disabled:bg-lightgray;
-      }
-      &_Link {
-        @apply link border-transparent;
-        @apply hover:border-transparent;
       }
     }
   }

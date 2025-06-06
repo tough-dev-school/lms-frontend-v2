@@ -1,4 +1,4 @@
-import type { Meta, StoryFn } from '@storybook/vue3';
+import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VToastFeed from '@/components/VToastFeed/VToastFeed.vue';
 import useToasts from '@/stores/toasts';
 import { faker } from '@faker-js/faker';
