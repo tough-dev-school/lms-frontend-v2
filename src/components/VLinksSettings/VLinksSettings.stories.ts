@@ -1,5 +1,8 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
 import VLinksSettings from '@/components/VLinksSettings/VLinksSettings.vue';
+import { useQueryClient } from '@tanstack/vue-query';
+import { userKeys } from '@/query';
+import { mockUserSafe } from '@/mocks/mockUserSafe';
 
 export default {
   title: 'Settings/VLinksSettings',
@@ -9,6 +12,10 @@ export default {
 const Template: StoryFn = (args) => ({
   components: { VLinksSettings },
   setup() {
+    const queryClient = useQueryClient();
+
+    queryClient.setQueryData(userKeys.me(), mockUserSafe());
+
     return { args };
   },
   template: '<VLinksSettings v-bind="args"/>',
