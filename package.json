@@ -2,6 +2,10 @@
   "name": "lms-frontend-v2",
   "type": "module",
   "scripts": {
+    "test:lint": "pnpm -r run test:lint",
+    "test:format": "pnpm -r run test:format",
+    "test:type": "pnpm -r run test:type",
+    "test:unit": "pnpm -r run test:unit",
     "prepare": "husky install",
     "lint-staged": "lint-staged --concurrent false"
   },
