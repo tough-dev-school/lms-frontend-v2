@@ -5,9 +5,11 @@ import { createPinia } from 'pinia';
 import FloatingVue from 'floating-vue';
 import 'floating-vue/dist/style.css';
 import { VueQueryPlugin } from '@tanstack/vue-query';
-import { vueQueryConfig } from '@/main';
+import { vueQueryConfig } from '../src/main';
+import type { Preview } from '@storybook/vue3';
 
-const parameters = {
+const preview: Preview = {
+  parameters: {
   actions: { argTypesRegex: '^on[A-Z].*' },
   controls: {
     matchers: {
@@ -40,6 +42,7 @@ const parameters = {
     ],
     defaultViewport: 'fluid',
   },
+}
 };
 
 setup((app) => {
@@ -48,9 +51,5 @@ setup((app) => {
   app.use(VueQueryPlugin, vueQueryConfig);
 });
 
-/** @type { import('@storybook/vue3').Preview } */
-const preview = {
-  parameters,
-};
 
 export default preview;
