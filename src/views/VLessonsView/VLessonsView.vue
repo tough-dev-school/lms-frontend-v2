@@ -7,20 +7,25 @@
   import VLessonCard from '@/components/VLessonCard/VLessonCard.vue';
   import { useModulesQuery } from '@/query';
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
+  import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
 
   const props = defineProps<{
     courseId: number;
     moduleId: number;
   }>();
 
-  const { data: studies } = useStudiesQuery();
+  const { data: studies, isLoading: isStudiesLoading } = useStudiesQuery();
+  const { data: lessons, isLoading: isLessonsLoading } = useLessonsQuery(
+    props.moduleId,
+  );
+  const { data: modules, isLoading: isModulesLoading } = useModulesQuery(
+    props.courseId,
+  );
 
   const courseName = computed(
     () =>
       (studies.value ?? []).find((study) => study.id === props.courseId)?.name,
   );
-
-  const { data: lessons } = useLessonsQuery(props.moduleId);
 
   const breadcrumbs = computed<Breadcrumb[]>(() => {
     if (!courseName.value || !moduleName.value) return [];
@@ -41,8 +46,6 @@
     ];
   });
 
-  const { data: modules } = useModulesQuery(props.courseId);
-
   const module = computed(
     () => modules.value?.find((module) => module.id === props.moduleId),
   );
@@ -52,7 +55,10 @@
 </script>
 
 <template>
-  <VLoggedLayout :title="moduleName" :breadcrumbs="breadcrumbs">
+  <VLoggedLayout
+    v-if="!(isStudiesLoading || isModulesLoading || isLessonsLoading)"
+    :title="moduleName"
+    :breadcrumbs="breadcrumbs">
     <VHtmlContent v-if="moduleText" :content="moduleText" />
     <div class="VLessonsView gap-32 flex flex-col">
       <div v-if="lessons && lessons.length > 0" class="VLessonsView__Layout">
@@ -67,6 +73,7 @@
       </p>
     </div>
   </VLoggedLayout>
+  <VLoadingView v-else />
 </template>
 
 <style>

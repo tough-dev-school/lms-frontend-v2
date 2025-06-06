@@ -4,21 +4,22 @@
   import { groupBy } from 'lodash-es';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import { useDiplomasQuery } from '@/query';
+  import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
 
-  const { data: diplomas } = useDiplomasQuery();
+  const { data: diplomas, isLoading } = useDiplomasQuery();
 
   const groupedDiplomas = computed(() => {
-    const gorups = groupBy(diplomas.value, (diploma) => diploma.course.name);
+    const groups = groupBy(diplomas.value, (diploma) => diploma.course.name);
 
-    return Object.keys(gorups).map((key) => ({
+    return Object.keys(groups).map((key) => ({
       course: key,
-      certificates: gorups[key],
+      certificates: groups[key],
     }));
   });
 </script>
 
 <template>
-  <VLoggedLayout title="Мои сертификаты">
+  <VLoggedLayout v-if="!isLoading" title="Мои сертификаты">
     <VCertificateCard
       v-for="group in groupedDiplomas"
       :key="group.course"
@@ -32,4 +33,5 @@
       Нет сертификатов
     </li>
   </VLoggedLayout>
+  <VLoadingView v-else />
 </template>

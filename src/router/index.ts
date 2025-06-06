@@ -4,11 +4,15 @@ import {
   type RouteLocationNormalized,
 } from 'vue-router';
 import useAuth from '@/stores/auth';
-
 import loginByToken from '@/router/loginByToken';
 import loginById from '@/router/loginById';
 import { useQueryClient } from '@tanstack/vue-query';
-import { fetchHomeworkAnswer, fetchHomeworkAnswers, fetchUser } from '@/query';
+import {
+  baseQueryKey,
+  fetchHomeworkAnswer,
+  fetchHomeworkAnswers,
+  fetchUser,
+} from '@/query';
 import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
 
 const disallowAuthorized = () => {
@@ -106,7 +110,7 @@ export const routes = [
   {
     path: '/materials/:materialId',
     name: 'materials',
-    component: () => import('@/views/VNotionView'),
+    component: () => import('@/views/VNotionView/VNotionView.vue'),
     props: (route: RouteLocationNormalized) => ({
       materialId: route.params.materialId as string,
     }),
@@ -217,6 +221,9 @@ const router = createRouter({
 router.beforeEach(
   async (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
     const auth = useAuth();
+
+    const queryClient = useQueryClient();
+    queryClient.invalidateQueries({ queryKey: baseQueryKey() });
 
     if (to.meta.unauthorizedOnly && auth.token) {
       return { name: 'home' };

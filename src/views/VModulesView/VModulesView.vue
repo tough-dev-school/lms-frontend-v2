@@ -6,12 +6,13 @@
   import VPill from '@/components/VPill/VPill.vue';
   import VPillItem from '@/components/VPill/VPillItem.vue';
   import VModuleCard from '@/components/VModuleCard/VModuleCard.vue';
+  import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
 
   const props = defineProps<{
     courseId: number;
   }>();
 
-  const { data: studies } = useStudiesQuery();
+  const { data: studies, isLoading } = useStudiesQuery();
 
   const study = computed(() =>
     (studies.value || []).find((study) => study.id === props.courseId),
@@ -19,7 +20,7 @@
 
   const courseName = computed(() => study.value?.name);
 
-  const { data: modules } = useModulesQuery(props.courseId);
+  const { data: modules } = useModulesQuery(() => props.courseId);
 
   const breadcrumbs = computed<Breadcrumb[]>(() => [
     { name: 'Мои курсы', to: { name: 'home' } },
@@ -42,7 +43,10 @@
 </script>
 
 <template>
-  <VLoggedLayout :title="courseName" :breadcrumbs="breadcrumbs">
+  <VLoggedLayout
+    v-if="!isLoading"
+    :title="courseName"
+    :breadcrumbs="breadcrumbs">
     <template v-if="courseInfo.length > 0" #pill>
       <VPill>
         <template v-if="study?.calendar_google || study?.calendar_ios">
@@ -91,4 +95,5 @@
       Нет доступных модулей.
     </p>
   </VLoggedLayout>
+  <VLoadingView v-else />
 </template>

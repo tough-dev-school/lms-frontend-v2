@@ -10,13 +10,11 @@
 
   const props = withDefaults(
     defineProps<{
-      isLoading?: boolean;
       title?: string;
       showTitle?: boolean;
       breadcrumbs?: Breadcrumb[];
     }>(),
     {
-      isLoading: false,
       title: undefined,
       showTitle: true,
       breadcrumbs: undefined,
@@ -33,7 +31,7 @@
 </script>
 
 <template>
-  <VPublicLayout :is-loading="isLoading">
+  <VPublicLayout>
     <template #header>
       <VProfileMenu data-testid="profile" />
     </template>
