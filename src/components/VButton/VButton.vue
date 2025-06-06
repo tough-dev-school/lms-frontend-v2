@@ -24,7 +24,7 @@
     :is="tag"
     class="Button"
     :class="{
-      Button_Appearance_Link: appearance === 'link',
+      'link border-transparent hover:border-transparent': appearance === 'link',
       Button_Appearance_Primary: appearance === 'primary',
       Button_Appearance_Secondary: appearance === 'secondary',
       Button_Size_Big: size === 'big',
@@ -57,10 +57,6 @@
         @apply border-white bg-white text-black border;
         @apply hover:border-gray;
         @apply disabled:opacity-25 disabled:border-gray disabled:bg-lightgray;
-      }
-      &_Link {
-        @apply link border-transparent;
-        @apply hover:border-transparent;
       }
     }
   }
