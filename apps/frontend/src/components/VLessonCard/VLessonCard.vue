@@ -114,7 +114,7 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
   .VLessonCard__Button {
     --module: 40px;
     @apply bg-white rounded-8 w-full;

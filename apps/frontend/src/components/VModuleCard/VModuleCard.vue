@@ -32,7 +32,7 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
   .VModuleCard {
     @apply transition-transform hover:scale-[1.01] origin-center;
   }

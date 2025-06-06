@@ -25,7 +25,7 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
   .SendOwnAnswer {
     &__Container {
       @apply px-0 pt-0 tablet:px-0;
