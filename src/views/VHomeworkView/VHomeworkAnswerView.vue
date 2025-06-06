@@ -134,6 +134,24 @@
       }).fullPath
     );
   });
+
+  const feedbackMessage = computed(() => {
+    if (!crosschecks.value?.length) return;
+
+    const completedCrosschecks = crosschecks.value.filter(
+      (check) => check.is_checked,
+    );
+
+    if (completedCrosschecks.length === 0) {
+      return 'Вы увидите ответ преподавателя и ваших однокурсников после того как отправите свою работу и прокомментируете 3 чужих домашки.';
+    }
+
+    if (completedCrosschecks.length < 3) {
+      return 'Часть ответов ваших однокурсников скрыта. Чтобы открыть их — проверьте ещё чужих домашек';
+    }
+
+    return null;
+  });
 </script>
 
 <template>
@@ -179,7 +197,11 @@
       <VHeading tag="h2">
         {{ isOwnAnswer ? 'Коментарии вашей работы' : 'Коментарии' }}
       </VHeading>
+      <p v-if="isOwnAnswer && feedbackMessage">
+        {{ feedbackMessage }}
+      </p>
       <VFeedbackGuide />
+
       <VCreateAnswer v-model="commentText" @send="handleCreateComment" />
       <div v-if="isSent" class="card">
         Ответ отправлен!
