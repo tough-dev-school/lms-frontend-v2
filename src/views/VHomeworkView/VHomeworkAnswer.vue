@@ -84,6 +84,25 @@
     );
   });
 
+  const completedCrosschecksCount = computed(() => {
+    return (
+      crosschecks.value?.filter((crosscheck) => crosscheck.is_checked).length ??
+      0
+    );
+  });
+
+  const showCrosscheckMessage = computed(() => {
+    if (!crosschecks.value?.length) return false;
+    return completedCrosschecksCount.value < 3;
+  });
+
+  const crosscheckMessage = computed(() => {
+    if (completedCrosschecksCount.value === 0) {
+      return 'Вы увидите ответ преподавателя и ваших однокурсников после того как отправите свою работу и прокомментируете 3 чужих домашки.';
+    }
+    return 'Часть ответов ваших однокурсников скрыта. Чтобы открыть их — проверьте ещё чужих домашек';
+  });
+
   const { mutateAsync: createAnswerMutation } =
     useHomeworkAnswerCreateMutation(queryClient);
 
@@ -138,6 +157,9 @@
       <VHeading tag="h2">
         {{ isOwnAnswer ? 'Коментарии вашей работы' : 'Коментарии' }}
       </VHeading>
+      <p v-if="showCrosscheckMessage">
+        {{ crosscheckMessage }}
+      </p>
       <VFeedbackGuide />
       <VCreateAnswer v-model="commentText" @send="handleCreateComment" />
       <div v-if="isSent" class="card">
