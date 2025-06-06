@@ -10,19 +10,19 @@ const GMAIL = getProviderById('GMAIL') as Provider;
 const MAILRU = getProviderById('MAILRU') as Provider;
 
 const email = faker.internet.email({ provider: 'foobar.baz' });
-const getQuery = (email: string) => ({ query: { email } });
-
-vi.mock('vue-router');
-
-const gmailEmailQuery = getQuery('john@gmail.com');
-const mailruEmailQuery = getQuery('ivan@mail.ru');
+const mailRuEmail = faker.internet.email({ provider: 'mail.ru' });
+const gmailEmail = faker.internet.email({ provider: 'gmail.com' });
 
 describe('VMailSentView', () => {
   let wrapper: VueWrapper<InstanceType<typeof VMailSentView>>;
 
-  const mountWrapper = () => {
+  const mountWrapper = (props: Partial<{ email: string }> = {}) => {
     wrapper = mount(VMailSentView, {
       shallow: true,
+      props: {
+        email,
+        ...props,
+      },
       global: {
         plugins: [
           createTestingPinia({
@@ -38,8 +38,6 @@ describe('VMailSentView', () => {
   };
 
   beforeEach(() => {
-    (useRoute as ReturnType<typeof vi.fn>).mockReturnValue(getQuery(email));
-
     mountWrapper();
   });
 
@@ -63,17 +61,17 @@ describe('VMailSentView', () => {
   });
 
   test('button is shown if email service is recognized', async () => {
-    (useRoute as ReturnType<typeof vi.fn>).mockReturnValueOnce(
-      faker.helpers.arrayElement([mailruEmailQuery, gmailEmailQuery]),
-    );
-    mountWrapper();
+    mountWrapper({
+      email: faker.helpers.arrayElement([mailRuEmail, gmailEmail]),
+    });
 
     expect(getOpenWrapper().exists()).toBe(true);
   });
 
   test('button has correct attributes for gmail', async () => {
-    (useRoute as ReturnType<typeof vi.fn>).mockReturnValueOnce(gmailEmailQuery);
-    mountWrapper();
+    mountWrapper({
+      email: gmailEmail,
+    });
 
     expect(getOpenWrapper().exists()).toBe(true);
     expect(getOpenWrapper().attributes('href')).toBe(GMAIL.url);
@@ -81,10 +79,9 @@ describe('VMailSentView', () => {
   });
 
   test('button has correct attributes for mailru', async () => {
-    (useRoute as ReturnType<typeof vi.fn>).mockReturnValueOnce(
-      mailruEmailQuery,
-    );
-    mountWrapper();
+    mountWrapper({
+      email: mailRuEmail,
+    });
 
     expect(getOpenWrapper().exists()).toBe(true);
     expect(getOpenWrapper().attributes('href')).toBe(MAILRU.url);
