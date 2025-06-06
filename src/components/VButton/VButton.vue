@@ -38,7 +38,7 @@
   /* We dont use scoped here because we want to have the button class in the global style */
 
   .Button {
-    @apply leading-[1.5] font-medium rounded-8 text-center text-black transition-colors;
+    @apply leading-[1.5] font-medium rounded-8 text-center transition-colors;
     &_Size {
       &_Big {
         @apply min-w-[280px] h-module p-module;
@@ -49,7 +49,7 @@
     }
     &_Appearance {
       &_Primary {
-        @apply bg-yellow border-yellow border;
+        @apply bg-yellow text-black border-yellow border;
         @apply hover:bg-yellow-hover;
         @apply disabled:opacity-25;
       }
