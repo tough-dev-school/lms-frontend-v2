@@ -6,7 +6,7 @@ import {
 import useAuth from '@/stores/auth';
 import loginByToken from '@/router/loginByToken';
 import loginById from '@/router/loginById';
-import { QueryClient, useQueryClient } from '@tanstack/vue-query';
+import { useQueryClient } from '@tanstack/vue-query';
 import {
   baseQueryKey,
   fetchHomeworkAnswer,
