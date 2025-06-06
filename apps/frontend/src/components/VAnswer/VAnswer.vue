@@ -97,7 +97,7 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style scoped>
   .VAnswer__Name_Own {
     @apply text-accent-orange;
   }
