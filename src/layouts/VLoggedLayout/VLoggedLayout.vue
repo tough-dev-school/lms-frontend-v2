@@ -5,19 +5,31 @@
   } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
   import VHeading from '@/components/VHeading/VHeading.vue';
   import VProfileMenu from '@/components/VProfileMenu/VProfileMenu.vue';
+  import { useTitle } from '@vueuse/core';
+  import { computed } from 'vue';
 
-  withDefaults(
+  const props = withDefaults(
     defineProps<{
       isLoading?: boolean;
       title?: string;
+      showTitle?: boolean;
       breadcrumbs?: Breadcrumb[];
     }>(),
     {
       isLoading: false,
       title: undefined,
+      showTitle: true,
       breadcrumbs: undefined,
     },
   );
+
+  const formattedTitle = computed(() => {
+    return [props.title, 'Школа Сильных Программистов']
+      .filter(Boolean)
+      .join(' | ');
+  });
+
+  useTitle(formattedTitle);
 </script>
 
 <template>
@@ -30,7 +42,7 @@
       class="flex flex-col gap-32">
       <VBreadcrumbs v-if="breadcrumbs" :items="breadcrumbs" />
       <slot name="pill" />
-      <VHeading v-if="title" tag="h1">{{ title }}</VHeading>
+      <VHeading v-if="title && showTitle" tag="h1">{{ title }}</VHeading>
     </div>
     <slot />
   </VPublicLayout>

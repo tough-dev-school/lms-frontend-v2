@@ -1,9 +1,8 @@
 <script lang="ts" setup>
   import { useRouter } from 'vue-router';
-  import { watch, computed } from 'vue';
+  import { computed } from 'vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VButton from '@/components/VButton/VButton.vue';
-  import { useTitle } from '@vueuse/core';
   import getNotionTitle from '@/utils/getNotionTitle';
   import { useChatra } from '@/hooks/useChatra';
   import VNotionRenderer from '@/components/VNotionRenderer/VNotionRenderer.vue';
@@ -17,7 +16,6 @@
   }>();
 
   const router = useRouter();
-  const title = useTitle();
 
   const material = computed(() => {
     if (!props.materialData) return undefined;
@@ -30,13 +28,6 @@
     }
     return undefined;
   });
-
-  watch(
-    () => notionTitle.value,
-    (value) => {
-      title.value = value;
-    },
-  );
 
   const breadcrumbs = computed(() => {
     const result: Breadcrumb[] = [{ name: 'Мои курсы', to: { name: 'home' } }];
@@ -89,7 +80,10 @@
 </script>
 
 <template>
-  <VLoggedLayout :breadcrumbs="breadcrumbs">
+  <VLoggedLayout
+    :title="notionTitle"
+    :show-title="false"
+    :breadcrumbs="breadcrumbs">
     <template v-if="material">
       <VCard
         class="pt-32 bg-white dark:bg-dark-black p-8 phone:p-24 rounded-16 shadow">
