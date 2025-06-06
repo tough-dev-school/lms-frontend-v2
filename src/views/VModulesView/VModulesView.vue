@@ -1,6 +1,5 @@
 <script lang="ts" setup>
   import { computed } from 'vue';
-  import { useRoute } from 'vue-router';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
   import { useModulesQuery, useStudiesQuery } from '@/query';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
