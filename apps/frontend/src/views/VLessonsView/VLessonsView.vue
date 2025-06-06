@@ -46,8 +46,8 @@
     ];
   });
 
-  const module = computed(
-    () => modules.value?.find((module) => module.id === props.moduleId),
+  const module = computed(() =>
+    modules.value?.find((module) => module.id === props.moduleId),
   );
 
   const moduleName = computed(() => module.value?.name);
