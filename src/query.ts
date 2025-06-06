@@ -77,7 +77,7 @@ const lessonsOptions = (moduleId: number | undefined) => {
   return {
     queryKey: lmsKeys.moduleLessons(moduleId),
     queryFn: async () =>
-      (await api.lmsLessonsList({ module: moduleId, page_size: 100 })).results,
+      (await api.lmsLessonsList({ module: moduleId, page_size: 1000 })).results,
   };
 };
 
