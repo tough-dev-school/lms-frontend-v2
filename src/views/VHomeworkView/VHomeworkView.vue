@@ -1,17 +1,15 @@
 <script lang="ts" setup>
   import { onMounted, ref } from 'vue';
-  import { useRouteQuery, useRouteParams } from '@vueuse/router';
   import { fetchHomeworkQuestion } from '@/query';
   import { useQueryClient } from '@tanstack/vue-query';
-  import { useRoute } from 'vue-router';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
   import VHomeworkAnswerProvider from './VHomeworkAnswerProvider.vue';
   import VHomeworkQuestionProvider from './VHomeworkQuestionProvider.vue';
 
-  const answerId = useRouteQuery<string | undefined>('answerId');
-  const questionId = useRouteParams<string>('questionId');
-
-  const route = useRoute();
+  const props = defineProps<{
+    questionId: string;
+    answerId?: string;
+  }>();
 
   const queryClient = useQueryClient();
 
@@ -21,7 +19,7 @@
     const result: Breadcrumb[] = [{ name: 'Мои курсы', to: { name: 'home' } }];
 
     const question = await fetchHomeworkQuestion(queryClient, {
-      questionId: route.params.questionId as string,
+      questionId: props.questionId,
     });
 
     if (!question) return undefined;
@@ -60,7 +58,7 @@
       to: {
         name: 'homework',
         params: {
-          questionId: questionId.value,
+          questionId: props.questionId,
         },
       },
     });

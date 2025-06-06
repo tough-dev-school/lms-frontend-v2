@@ -1,17 +1,21 @@
 <script lang="ts" setup>
   import VPasswordSettings from '@/components/VPasswordSettings/VPasswordSettings.vue';
-  import { useRoute, useRouter } from 'vue-router';
+  import { useRouter } from 'vue-router';
   import VPublicLayout from '@/layouts/VPublicLayout/VPublicLayout.vue';
 
-  const route = useRoute();
+  const props = defineProps<{
+    uid: string;
+    token: string;
+  }>();
+
   const router = useRouter();
 </script>
 
 <template>
   <VPublicLayout>
     <VPasswordSettings
-      :uid="String(route.params.uid)"
-      :token="String(route.params.token)"
+      :uid="props.uid"
+      :token="props.token"
       @save="router.push({ name: 'login' })" />
   </VPublicLayout>
 </template>

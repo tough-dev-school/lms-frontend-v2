@@ -32,11 +32,18 @@ export const routes = [
     path: '/:courseId/modules',
     name: 'modules',
     component: () => import('@/views/VModulesView/VModulesView.vue'),
+    props: (route: RouteLocationNormalized) => ({
+      courseId: parseInt(route.params.courseId as string),
+    }),
   },
   {
     path: '/:courseId/module/:moduleId/lessons',
     name: 'lessons',
     component: () => import('@/views/VLessonsView/VLessonsView.vue'),
+    props: (route: RouteLocationNormalized) => ({
+      courseId: parseInt(route.params.courseId as string),
+      moduleId: parseInt(route.params.moduleId as string),
+    }),
   },
   {
     path: '/login',
@@ -52,6 +59,9 @@ export const routes = [
     name: 'mail-sent',
     component: () => import('@/views/VMailSentView/VMailSentView.vue'),
     beforeEnter: [disallowAuthorized],
+    props: (route: RouteLocationNormalized) => ({
+      email: route.query.email as string | undefined,
+    }),
     meta: {
       unauthorizedOnly: true,
     },
@@ -69,6 +79,10 @@ export const routes = [
     path: '/auth/password/reset/:uid/:token/',
     name: 'login-change',
     component: () => import('@/views/VLoginChangeView/VLoginChangeView.vue'),
+    props: (route: RouteLocationNormalized) => ({
+      uid: route.params.uid as string,
+      token: route.params.token as string,
+    }),
     beforeEnter: [disallowAuthorized],
     meta: {
       unauthorizedOnly: true,
@@ -93,11 +107,18 @@ export const routes = [
     path: '/materials/:materialId',
     name: 'materials',
     component: () => import('@/views/VNotionView'),
+    props: (route: RouteLocationNormalized) => ({
+      materialId: route.params.materialId as string,
+    }),
   },
   {
     path: '/homework/:questionId',
     name: 'homework',
     component: () => import('@/views/VHomeworkView/VHomeworkView.vue'),
+    props: (route: RouteLocationNormalized) => ({
+      questionId: route.params.questionId as string,
+      answerId: route.query.answerId as string | undefined,
+    }),
     beforeEnter: [
       async (to: RouteLocationNormalized) => {
         const queryClient = useQueryClient();

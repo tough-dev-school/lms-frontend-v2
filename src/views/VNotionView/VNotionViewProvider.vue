@@ -1,12 +1,13 @@
 <script lang="ts" setup>
   import { useMaterialQuery } from '@/query';
-  import { useRouteParams } from '@vueuse/router';
   import VNotionView from './VNotionView.vue';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
 
-  const materialId = useRouteParams<string>('materialId');
+  const props = defineProps<{
+    materialId: string;
+  }>();
 
-  const { data: materialData } = useMaterialQuery(materialId);
+  const { data: materialData } = useMaterialQuery(props.materialId);
 </script>
 
 <template>

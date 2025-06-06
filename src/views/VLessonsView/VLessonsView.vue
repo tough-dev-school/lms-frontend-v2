@@ -2,28 +2,25 @@
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
   import { useLessonsQuery } from '@/query';
   import { computed } from 'vue';
-  import { useRouteParams } from '@vueuse/router';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import { useStudiesQuery } from '@/query';
   import VLessonCard from '@/components/VLessonCard/VLessonCard.vue';
   import { useModulesQuery } from '@/query';
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
 
-  const courseId = useRouteParams('courseId', '0', {
-    transform: (value) => parseInt(value),
-  });
-  const moduleId = useRouteParams('moduleId', '0', {
-    transform: (value) => parseInt(value),
-  });
+  const props = defineProps<{
+    courseId: number;
+    moduleId: number;
+  }>();
 
   const { data: studies } = useStudiesQuery();
 
   const courseName = computed(
     () =>
-      (studies.value ?? []).find((study) => study.id === courseId.value)?.name,
+      (studies.value ?? []).find((study) => study.id === props.courseId)?.name,
   );
 
-  const { data: lessons } = useLessonsQuery(moduleId);
+  const { data: lessons } = useLessonsQuery(props.moduleId);
 
   const breadcrumbs = computed<Breadcrumb[]>(() => {
     if (!courseName.value || !moduleName.value) return [];
@@ -32,22 +29,22 @@
       { name: 'Мои курсы', to: { name: 'home' } },
       {
         name: courseName.value ? courseName.value : 'Материалы курса',
-        to: { name: 'modules', params: { courseId: courseId.value } },
+        to: { name: 'modules', params: { courseId: props.courseId } },
       },
       {
         name: moduleName.value,
         to: {
           name: 'lessons',
-          params: { courseId: courseId.value, moduleId: moduleId.value },
+          params: { courseId: props.courseId, moduleId: props.moduleId },
         },
       },
     ];
   });
 
-  const { data: modules } = useModulesQuery(courseId);
+  const { data: modules } = useModulesQuery(props.courseId);
 
   const module = computed(
-    () => modules.value?.find((module) => module.id === moduleId.value),
+    () => modules.value?.find((module) => module.id === props.moduleId),
   );
 
   const moduleName = computed(() => module.value?.name);

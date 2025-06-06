@@ -4,11 +4,14 @@
   import VTextInput from '@/components/VTextInput/VTextInput.vue';
   import { ref, computed } from 'vue';
   import useAuth from '@/stores/auth';
-  import { useRouter, useRoute } from 'vue-router';
+  import { useRouter } from 'vue-router';
+
+  const props = defineProps<{
+    next?: string;
+  }>();
 
   const auth = useAuth();
   const router = useRouter();
-  const route = useRoute();
 
   const username = ref('');
   const password = ref('');
@@ -20,8 +23,8 @@
   const loginWithCredentials = async () => {
     await auth.loginWithCredentials(username.value, password.value);
     if (auth.token) {
-      route.query.next
-        ? router.push({ path: decodeURIComponent(String(route.query.next)) })
+      props.next
+        ? router.push({ path: decodeURIComponent(String(props.next)) })
         : router.push({ name: 'home' });
     }
   };

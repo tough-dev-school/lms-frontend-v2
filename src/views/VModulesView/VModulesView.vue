@@ -3,35 +3,30 @@
   import { useRoute } from 'vue-router';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
   import { useModulesQuery, useStudiesQuery } from '@/query';
-  import { useRouteParams } from '@vueuse/router';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import VPill from '@/components/VPill/VPill.vue';
   import VPillItem from '@/components/VPill/VPillItem.vue';
   import VModuleCard from '@/components/VModuleCard/VModuleCard.vue';
 
-  const route = useRoute();
-
-  const courseId = useRouteParams('courseId', '0', {
-    transform: (value) => parseInt(value),
-  });
+  const props = defineProps<{
+    courseId: number;
+  }>();
 
   const { data: studies } = useStudiesQuery();
 
   const study = computed(() =>
-    (studies.value || []).find((study) => study.id === courseId.value),
+    (studies.value || []).find((study) => study.id === props.courseId),
   );
 
   const courseName = computed(() => study.value?.name);
 
-  const { data: modules } = useModulesQuery(() =>
-    parseInt(route.params.courseId.toString()),
-  );
+  const { data: modules } = useModulesQuery(props.courseId);
 
   const breadcrumbs = computed<Breadcrumb[]>(() => [
     { name: 'Мои курсы', to: { name: 'home' } },
     {
       name: courseName.value ? courseName.value : 'Материалы курса',
-      to: { name: 'modules', params: { courseId: courseId.value } },
+      to: { name: 'modules', params: { courseId: props.courseId } },
     },
   ]);
 
