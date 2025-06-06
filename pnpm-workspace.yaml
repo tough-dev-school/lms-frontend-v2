@@ -3,5 +3,6 @@ packages:
   - packages/*
 onlyBuiltDependencies:
   - '@apollo/protobufjs'
+  - '@parcel/watcher'
   - esbuild
   - vue-demi
