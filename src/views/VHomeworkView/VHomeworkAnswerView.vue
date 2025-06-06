@@ -5,7 +5,6 @@
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
   import VCrossChecks from '@/components/VCrossChecks/VCrossChecks.vue';
   import VDetails from '@/components/VDetails/VDetails.vue';
-  import type { QuestionDetail, AnswerTree, User } from '@/api/generated-api';
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
   import { useStorage } from '@vueuse/core';
   import VExistingAnswer from '@/components/VExistingAnswer';
@@ -17,39 +16,71 @@
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import VPillHomework from '@/components/VPillHomework/VPillHomework.vue';
-  import type { LessonForUser } from '@/api/generated-api';
+  import { useHomeworkBreadcrumbs } from './useHomeworkBreadcrumbs';
+  import {
+    useHomeworkQuestionQuery,
+    useLessonsQuery,
+    useHomeworkAnswerQuery,
+    useUserQuery,
+    populateAnswersCacheFromDescendants,
+  } from '@/query';
+  import { watch } from 'vue';
 
   interface Props {
-    question: QuestionDetail;
-    answer: AnswerTree;
-    user: User;
+    questionId: string;
+    answerId: string;
     breadcrumbs: Breadcrumb[];
-    lesson?: LessonForUser;
   }
 
   const props = defineProps<Props>();
   const router = useRouter();
   const queryClient = useQueryClient();
 
+  const { breadcrumbs } = useHomeworkBreadcrumbs(() => props.questionId);
+  const { data: question, isLoading: isQuestionLoading } =
+    useHomeworkQuestionQuery(() => props.questionId);
+  const { data: answer, isLoading: isAnswerLoading } = useHomeworkAnswerQuery(
+    () => props.answerId,
+  );
+
+  const { data: lessons, isLoading: isLessonsLoading } = useLessonsQuery(
+    question.value?.breadcrumbs.module.id,
+  );
+
+  const lesson = computed(() => {
+    return lessons.value?.find(
+      (lesson) => lesson.id === question.value?.breadcrumbs.lesson?.id,
+    );
+  });
+
+  const { data: user, isLoading: isUserLoading } = useUserQuery();
+
+  watch(
+    () => answer.value,
+    () => {
+      if (answer.value) {
+        populateAnswersCacheFromDescendants(queryClient, answer.value);
+      }
+    },
+  );
+
   const isOwnAnswer = computed(() => {
-    return props.answer.author.uuid === props.user.uuid;
+    return answer.value?.author.uuid === user.value?.uuid;
   });
 
   const answerLink = computed(() => {
-    if (props.answer.slug) {
+    if (props.answerId) {
       const url = new URL(
-        `${window.location.origin}/homework/${props.question.slug}`,
+        `${window.location.origin}/homework/${props.questionId}`,
       );
-      url.searchParams.set('answerId', props.answer.slug);
+      url.searchParams.set('answerId', props.answerId);
       return url.toString();
     }
     return undefined;
   });
 
   const commentText = useStorage(
-    ['commentText', props.answer.question, props.answer.slug]
-      .filter(Boolean)
-      .join('-'),
+    ['commentText', props.questionId, props.answerId].filter(Boolean).join('-'),
     '',
     localStorage,
   );
@@ -58,8 +89,8 @@
     try {
       const answer = await createAnswerMutation({
         text: commentText.value,
-        questionId: props.question.slug,
-        parentId: props.answer.slug,
+        questionId: props.questionId,
+        parentId: props.answerId,
       });
 
       commentText.value = '';
@@ -74,13 +105,13 @@
   };
 
   const { data: crosschecks } = useHomeworkCrosschecksQuery(
-    props.answer.question,
+    () => props.questionId,
   );
 
   const isSent = computed(() => {
     return crosschecks.value?.some(
       (crosscheck) =>
-        crosscheck.answer.slug === props.answer.slug && crosscheck.is_checked,
+        crosscheck.answer.slug === props.answerId && crosscheck.is_checked,
     );
   });
 
@@ -91,7 +122,7 @@
     router.push({
       name: 'homework',
       params: {
-        questionId: props.question.slug,
+        questionId: props.questionId,
       },
     });
   };
@@ -102,7 +133,7 @@
       router.resolve({
         name: 'homework',
         params: {
-          questionId: props.question.slug,
+          questionId: props.questionId,
         },
       }).fullPath
     );
@@ -110,9 +141,23 @@
 </script>
 
 <template>
-  <VLoggedLayout :breadcrumbs="breadcrumbs" :title="question.name">
+  <VLoggedLayout
+    v-if="
+      !(
+        isQuestionLoading &&
+        isAnswerLoading &&
+        isLessonsLoading &&
+        isUserLoading
+      ) &&
+      question &&
+      answer &&
+      user &&
+      lesson
+    "
+    :breadcrumbs="breadcrumbs"
+    :title="question.name">
     <template #pill>
-      <VPillHomework v-if="lesson?.homework" :stats="lesson?.homework" />
+      <VPillHomework v-if="lesson.homework" :stats="lesson.homework" />
     </template>
     <section class="flex flex-col gap-24">
       <div v-if="isOwnAnswer" class="card mb-16 bg-accent-green">
@@ -152,4 +197,5 @@
       </template>
     </section>
   </VLoggedLayout>
+  <VLoadingView v-else />
 </template>

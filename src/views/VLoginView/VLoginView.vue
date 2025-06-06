@@ -6,6 +6,10 @@
 
   export type Mode = 'link' | 'password';
 
+  defineProps<{
+    next?: string;
+  }>();
+
   const mode = ref<Mode>('link');
 </script>
 
@@ -17,6 +21,7 @@
       @change="mode = 'password'" />
     <VLoginPassword
       v-else-if="mode === 'password'"
+      :next="next"
       data-testid="login-password"
       @change="mode = 'link'" />
   </VPublicLayout>

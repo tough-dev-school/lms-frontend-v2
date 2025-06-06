@@ -1,17 +1,16 @@
 <script lang="ts" setup>
   import VCard from '@/components/VCard/VCard.vue';
-  import { useRoute } from 'vue-router';
   import { computed } from 'vue';
   import { useChatra } from '@/hooks/useChatra';
   import { getProviderByEmail } from '@brachkow/email-providers';
   import VPublicLayout from '@/layouts/VPublicLayout/VPublicLayout.vue';
   import VButton from '@/components/VButton/VButton.vue';
 
-  const route = useRoute();
+  const props = defineProps<{
+    email?: string;
+  }>();
 
-  const email = computed(() => String(route.query.email));
-
-  const emailProvider = computed(() => getProviderByEmail(email.value));
+  const emailProvider = computed(() => getProviderByEmail(props.email ?? ''));
 
   const { chatra } = useChatra();
 </script>

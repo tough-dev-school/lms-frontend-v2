@@ -2,28 +2,30 @@
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
   import { useLessonsQuery } from '@/query';
   import { computed } from 'vue';
-  import { useRouteParams } from '@vueuse/router';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import { useStudiesQuery } from '@/query';
   import VLessonCard from '@/components/VLessonCard/VLessonCard.vue';
   import { useModulesQuery } from '@/query';
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
+  import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
 
-  const courseId = useRouteParams('courseId', '0', {
-    transform: (value) => parseInt(value),
-  });
-  const moduleId = useRouteParams('moduleId', '0', {
-    transform: (value) => parseInt(value),
-  });
+  const props = defineProps<{
+    courseId: number;
+    moduleId: number;
+  }>();
 
-  const { data: studies } = useStudiesQuery();
+  const { data: studies, isLoading: isStudiesLoading } = useStudiesQuery();
+  const { data: lessons, isLoading: isLessonsLoading } = useLessonsQuery(
+    props.moduleId,
+  );
+  const { data: modules, isLoading: isModulesLoading } = useModulesQuery(
+    props.courseId,
+  );
 
   const courseName = computed(
     () =>
-      (studies.value ?? []).find((study) => study.id === courseId.value)?.name,
+      (studies.value ?? []).find((study) => study.id === props.courseId)?.name,
   );
-
-  const { data: lessons } = useLessonsQuery(moduleId);
 
   const breadcrumbs = computed<Breadcrumb[]>(() => {
     if (!courseName.value || !moduleName.value) return [];
@@ -32,22 +34,20 @@
       { name: 'Мои курсы', to: { name: 'home' } },
       {
         name: courseName.value ? courseName.value : 'Материалы курса',
-        to: { name: 'modules', params: { courseId: courseId.value } },
+        to: { name: 'modules', params: { courseId: props.courseId } },
       },
       {
         name: moduleName.value,
         to: {
           name: 'lessons',
-          params: { courseId: courseId.value, moduleId: moduleId.value },
+          params: { courseId: props.courseId, moduleId: props.moduleId },
         },
       },
     ];
   });
 
-  const { data: modules } = useModulesQuery(courseId);
-
   const module = computed(
-    () => modules.value?.find((module) => module.id === moduleId.value),
+    () => modules.value?.find((module) => module.id === props.moduleId),
   );
 
   const moduleName = computed(() => module.value?.name);
@@ -55,7 +55,10 @@
 </script>
 
 <template>
-  <VLoggedLayout :title="moduleName" :breadcrumbs="breadcrumbs">
+  <VLoggedLayout
+    v-if="!(isStudiesLoading || isModulesLoading || isLessonsLoading)"
+    :title="moduleName"
+    :breadcrumbs="breadcrumbs">
     <VHtmlContent v-if="moduleText" :content="moduleText" />
     <div class="VLessonsView gap-32 flex flex-col">
       <div v-if="lessons && lessons.length > 0" class="VLessonsView__Layout">
@@ -70,6 +73,7 @@
       </p>
     </div>
   </VLoggedLayout>
+  <VLoadingView v-else />
 </template>
 
 <style>

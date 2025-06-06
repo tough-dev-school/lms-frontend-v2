@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3';
-import VHomeworkAnswer from './VHomeworkAnswer.vue';
+import VHomeworkAnswer from './VHomeworkAnswerView.vue';
 import { mockAnswer } from '@/mocks/mockAnswer';
 import { mockQuestion } from '@/mocks/mockQuestion';
 import { mockUserSafe, STATIC_AUTHOR_1 } from '@/mocks/mockUserSafe';

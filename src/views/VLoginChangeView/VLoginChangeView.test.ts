@@ -5,10 +5,13 @@ import VLoginChangeView from './VLoginChangeView.vue';
 import VPasswordSettings from '@/components/VPasswordSettings/VPasswordSettings.vue';
 import { faker } from '@faker-js/faker';
 
-const defaultProps = {};
-
 const uid = faker.string.uuid();
 const token = faker.string.uuid();
+
+const defaultProps = {
+  uid,
+  token,
+};
 
 const routerPushMock = vi.fn();
 
@@ -16,7 +19,6 @@ vi.mock('vue-router', () => ({
   useRouter: () => ({
     push: routerPushMock,
   }),
-  useRoute: () => ({ params: { uid, token } }),
 }));
 
 describe('VLoginChangeView', () => {

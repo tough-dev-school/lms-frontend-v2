@@ -8,7 +8,7 @@
   }>();
 
   const { data: user } = useUserQuery();
-  const { data: answer } = useHomeworkAnswerQuery(props.answerId);
+  const { data: answer } = useHomeworkAnswerQuery(() => props.answerId);
 </script>
 
 <template>

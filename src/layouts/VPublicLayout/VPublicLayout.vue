@@ -2,13 +2,11 @@
   import VHeader from '@/components/VHeader/VHeader.vue';
   import VBaseLayout from '@/layouts/VBaseLayout/VBaseLayout.vue';
 
-  withDefaults(defineProps<{ isLoading?: boolean }>(), {
-    isLoading: false,
-  });
+  defineProps<{ isLoading?: boolean }>();
 </script>
 
 <template>
-  <VBaseLayout :is-loading="isLoading">
+  <VBaseLayout>
     <VHeader>
       <slot name="header" />
     </VHeader>

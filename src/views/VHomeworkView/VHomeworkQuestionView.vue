@@ -1,23 +1,38 @@
 <script lang="ts" setup>
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
-  import type { LessonForUser, QuestionDetail } from '@/api/generated-api';
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
   import { useStorage } from '@vueuse/core';
   import { useRouter } from 'vue-router';
   import { useQueryClient } from '@tanstack/vue-query';
   import { useHomeworkAnswerCreateMutation } from '@/query';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
-  import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
   import VPillHomework from '@/components/VPillHomework/VPillHomework.vue';
+  import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
+  import { useHomeworkQuestionQuery, useLessonsQuery } from '@/query';
+  import { computed } from 'vue';
+  import { useHomeworkBreadcrumbs } from './useHomeworkBreadcrumbs';
 
   interface Props {
-    question: QuestionDetail;
-    lesson?: LessonForUser;
-    breadcrumbs: Breadcrumb[];
+    questionId: string;
   }
 
   const props = defineProps<Props>();
   const router = useRouter();
+
+  const { breadcrumbs } = useHomeworkBreadcrumbs(() => props.questionId);
+
+  const { data: question, isLoading: isQuestionLoading } =
+    useHomeworkQuestionQuery(() => props.questionId);
+
+  const { data: lessons, isLoading: isLessonsLoading } = useLessonsQuery(
+    question.value?.breadcrumbs.module.id,
+  );
+
+  const lesson = computed(() => {
+    return lessons.value?.find(
+      (lesson) => lesson.id === question.value?.breadcrumbs.lesson?.id,
+    );
+  });
 
   defineEmits<{
     create: [answerId: string];
@@ -25,7 +40,7 @@
   }>();
 
   const draft = useStorage(
-    ['draft', props.question.slug].filter(Boolean).join('-'),
+    ['draft', props.questionId].filter(Boolean).join('-'),
     '',
     localStorage,
   );
@@ -37,14 +52,14 @@
   const handleCreateAnswer = async () => {
     const answer = await createAnswerMutation({
       text: draft.value,
-      questionId: props.question.slug,
+      questionId: props.questionId,
       parentId: undefined,
     });
 
     router.push({
       name: 'homework',
       params: {
-        questionId: props.question.slug,
+        questionId: props.questionId,
       },
       query: {
         answerId: answer.slug,
@@ -54,7 +69,10 @@
 </script>
 
 <template>
-  <VLoggedLayout :breadcrumbs="breadcrumbs" :title="question.name">
+  <VLoggedLayout
+    v-if="!(isQuestionLoading && isLessonsLoading) && question && lesson"
+    :breadcrumbs="breadcrumbs"
+    :title="question.name">
     <template #pill>
       <VPillHomework v-if="lesson?.homework" :stats="lesson?.homework" />
     </template>
@@ -63,4 +81,5 @@
       <VCreateAnswer v-model="draft" @send="handleCreateAnswer" />
     </section>
   </VLoggedLayout>
+  <VLoadingView v-else />
 </template>
