@@ -9,7 +9,7 @@
 <template>
   <!-- eslint-disable vue/no-v-html -->
   <!-- #TODO Check for XSS-->
-  <article class="prose prose-custom" v-html="content" />
+  <article class="prose prose-a:break-words prose-custom" v-html="content" />
 </template>
 
 <style>
