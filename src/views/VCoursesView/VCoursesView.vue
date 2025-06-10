@@ -31,8 +31,10 @@
     <p v-else data-testid="empty" class="text-center">Нет доступных курсов.</p>
     <p class="text-center">
       Доступ к курсам можно купить на
-      <a href="https://education.borshev.com/" class="link"
-        >education.borshev.com</a
+      <a
+        href="https://tough-dev.school/?utm_source=lms&utm_campaign=footer"
+        class="link"
+        >tough-dev.school</a
       >.
     </p>
   </VLoggedLayout>
