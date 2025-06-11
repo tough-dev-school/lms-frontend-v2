@@ -7,7 +7,8 @@
       :key="contentId"
       :level="level + 1"
       :content-id="contentId"
-      :content-index="contentIndex" />
+      :content-index="contentIndex"
+      style="overflow-wrap: break-word" />
   </NotionBlock>
 </template>
 
@@ -32,7 +33,6 @@
       mapPageUrl: { type: Function, default: defaultMapPageUrl },
       pageLinkOptions: Object,
       imageOptions: Object,
-      prism: { type: Boolean, default: false },
       todo: { type: Boolean, default: false },
     },
     methods: {

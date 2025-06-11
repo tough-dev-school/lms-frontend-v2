@@ -5,12 +5,12 @@
   "type": "module",
   "main": "index.js",
   "dependencies": {
-    "defu": "^6.1.2"
+    "defu": "^6.1.2",
+    "shiki": "^3.6.0"
   },
   "devDependencies": {
     "@janniks/vue3-katex": "^0.6.0-rc.5.1",
     "@rushstack/eslint-patch": "^1.5.1",
-    "@types/prismjs": "^1.26.0",
     "@vitejs/plugin-vue": "^4.1.0",
     "@vue/cli": "^5.0.8",
     "@vue/cli-service": "^5.0.8",
