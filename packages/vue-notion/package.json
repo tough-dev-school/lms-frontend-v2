@@ -5,7 +5,8 @@
   "type": "module",
   "main": "index.js",
   "dependencies": {
-    "defu": "^6.1.2"
+    "defu": "^6.1.2",
+    "shiki": "^3.6.0"
   },
   "devDependencies": {
     "@janniks/vue3-katex": "^0.6.0-rc.5.1",
