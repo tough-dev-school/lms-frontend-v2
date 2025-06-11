@@ -1,5 +1,5 @@
 <template>
-  <pre><code :class="langClass" v-html="code"></code>
+  <pre class="wrapper"><code :class="langClass" v-html="code"></code>
 </pre>
 </template>
 
@@ -33,8 +33,12 @@
   };
 </script>
 
-<style>
-  .shiki {
+<style scoped>
+  .wrapper {
+    overflow-x: auto;
+  }
+  :deep(.shiki) {
     padding: 1em;
+    font-size: 14px;
   }
 </style>
