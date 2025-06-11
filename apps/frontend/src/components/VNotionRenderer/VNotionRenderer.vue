@@ -13,15 +13,6 @@
   import { onMounted } from 'vue';
   import { useEventListener } from '@vueuse/core';
 
-  import 'prismjs';
-  import 'prismjs/themes/prism.css';
-  import 'prismjs/components/prism-typescript.js';
-  import 'prismjs/components/prism-ruby.js';
-  import 'prismjs/components/prism-python.js';
-  import 'prismjs/components/prism-bash.js';
-  import 'prismjs/components/prism-c.js';
-  import 'prismjs/components/prism-cpp.js';
-
   const props = defineProps<VNotionViewProps>();
 
   const mapPageUrl = (materialId: string) => `/materials/${materialId}`;
@@ -69,8 +60,7 @@
       component: 'RouterLink',
       href: 'to',
     }"
-    :full-page="true"
-    prism />
+    :full-page="true" />
 </template>
 
 <style>

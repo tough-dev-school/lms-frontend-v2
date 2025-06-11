@@ -7,13 +7,24 @@
       :key="contentId"
       :level="level + 1"
       :content-id="contentId"
-      :content-index="contentIndex" />
+      :content-index="contentIndex"
+      prism
+      style="overflow-wrap: break-word" />
   </NotionBlock>
 </template>
 
 <script>
   import { Blockable } from '../lib/blockable';
   import NotionBlock from './NotionBlock.vue';
+
+  import 'prismjs';
+  import 'prismjs/components/prism-typescript';
+  import 'prismjs/components/prism-ruby';
+  import 'prismjs/components/prism-python';
+  import 'prismjs/components/prism-bash';
+  import 'prismjs/components/prism-c';
+  import 'prismjs/components/prism-cpp';
+  import 'prismjs/components/prism-ruby';
 
   import { defaultMapPageUrl } from '../lib/utils';
 
