@@ -45,12 +45,11 @@
     "minidenticons": "^4.2.0",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.0",
-    "prismjs": "^1.29.0",
     "turndown": "^7.1.2",
     "uuid": "^9.0.1",
     "vue": "^3.3.8",
     "vue-avatar-cropper": "^6.1.1",
-    "vue-notion": "github:tough-dev-school/vue-notion#2.0.8",
+    "vue-notion": "github:tough-dev-school/vue-notion#2.0.10",
     "vue-router": "^4.4.5",
     "vue-tabler-icons": "^2.21.0"
   },

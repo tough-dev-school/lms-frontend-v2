@@ -71,9 +71,6 @@ importers:
       pinia-plugin-persistedstate:
         specifier: ^3.2.0
         version: 3.2.0(pinia@2.1.7(typescript@5.2.2)(vue@3.5.15(typescript@5.2.2)))
-      prismjs:
-        specifier: ^1.29.0
-        version: 1.29.0
       turndown:
         specifier: ^7.1.2
         version: 7.1.2
@@ -87,8 +84,8 @@ importers:
         specifier: ^6.1.1
         version: 6.1.1(vue@3.5.15(typescript@5.2.2))
       vue-notion:
-        specifier: github:tough-dev-school/vue-notion#2.0.8
-        version: https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/ae4d94f0554898697dd8c2e1cf8b555c4fa8a030(@janniks/vue3-katex@0.6.0-rc.5.1(katex@0.16.11)(vue@3.5.15(typescript@5.2.2)))(vue@3.5.15(typescript@5.2.2))
+        specifier: github:tough-dev-school/vue-notion#2.0.10
+        version: https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/1dd144e938b21b02e030666a43465d04b6a4c278(@janniks/vue3-katex@0.6.0-rc.5.1(katex@0.16.11)(vue@3.5.15(typescript@5.2.2)))(vue@3.5.15(typescript@5.2.2))
       vue-router:
         specifier: ^4.4.5
         version: 4.4.5(vue@3.5.15(typescript@5.2.2))
@@ -3846,8 +3843,8 @@ packages:
     resolution: {integrity: sha512-Pdlw/oPxN+aXdmM9R00JVC9WVFoCLTKJvDVLgmJ+qAffBMxsV85l/Lu7sNx4zSzPyoL2euImuEwHhOXdEgNFZQ==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
 
-  prismjs@1.29.0:
-    resolution: {integrity: sha512-Kx/1w86q/epKcmte75LNrEoT+lX8pBpavuAbvJWRXar7Hz8jrtF+e3vY751p0R8H9HdArwaCTNDDzHg/ScJK1Q==}
+  prismjs@1.30.0:
+    resolution: {integrity: sha512-DEvV2ZF2r2/63V+tK8hQvrR2ZGn10srHbXviTlcv7Kpzw8jWiNTqbVgjO3IY8RxrrOUF8VPMQQFysYYYv0YZxw==}
     engines: {node: '>=6'}
 
   promise@7.3.1:
@@ -4779,8 +4776,8 @@ packages:
       vue:
         optional: true
 
-  vue-notion@https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/ae4d94f0554898697dd8c2e1cf8b555c4fa8a030:
-    resolution: {tarball: https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/ae4d94f0554898697dd8c2e1cf8b555c4fa8a030}
+  vue-notion@https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/1dd144e938b21b02e030666a43465d04b6a4c278:
+    resolution: {tarball: https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/1dd144e938b21b02e030666a43465d04b6a4c278}
     version: 2.0.6
     peerDependencies:
       '@janniks/vue3-katex': ^0.6.0-rc.5.1
@@ -8686,7 +8683,7 @@ snapshots:
       ansi-styles: 5.2.0
       react-is: 18.3.1
 
-  prismjs@1.29.0: {}
+  prismjs@1.30.0: {}
 
   promise@7.3.1:
     dependencies:
@@ -9730,10 +9727,11 @@ snapshots:
     optionalDependencies:
       vue: 3.5.15(typescript@5.2.2)
 
-  vue-notion@https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/ae4d94f0554898697dd8c2e1cf8b555c4fa8a030(@janniks/vue3-katex@0.6.0-rc.5.1(katex@0.16.11)(vue@3.5.15(typescript@5.2.2)))(vue@3.5.15(typescript@5.2.2)):
+  vue-notion@https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/1dd144e938b21b02e030666a43465d04b6a4c278(@janniks/vue3-katex@0.6.0-rc.5.1(katex@0.16.11)(vue@3.5.15(typescript@5.2.2)))(vue@3.5.15(typescript@5.2.2)):
     dependencies:
       '@janniks/vue3-katex': 0.6.0-rc.5.1(katex@0.16.11)(vue@3.5.15(typescript@5.2.2))
       defu: 6.1.4
+      prismjs: 1.30.0
       vue: 3.5.15(typescript@5.2.2)
 
   vue-resize@2.0.0-alpha.1(vue@3.5.15(typescript@5.2.2)):
