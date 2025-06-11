@@ -14,7 +14,6 @@ export const blockProps = {
   mapPageUrl: Function,
   pageLinkOptions: Object,
   pageLinkTarget: { type: String, default: '_self' },
-  prism: { type: Boolean, default: false },
   textLinkTarget: { type: String, default: '_blank' },
   todo: { type: Boolean, default: false },
 };
@@ -35,7 +34,6 @@ export const blockComputed = {
       level: this.level,
       mapPageUrl: this.mapPageUrl,
       pageLinkOptions: this.pageLinkOptions,
-      prism: this.prism,
       todo: this.todo,
     };
   },

@@ -241,9 +241,6 @@ importers:
       '@rushstack/eslint-patch':
         specifier: ^1.5.1
         version: 1.11.0
-      '@types/prismjs':
-        specifier: ^1.26.0
-        version: 1.26.5
       '@vitejs/plugin-vue':
         specifier: ^4.1.0
         version: 4.6.2(vite@4.5.14(@types/node@20.19.0)(terser@5.41.0))(vue@3.5.16(typescript@5.8.3))
@@ -2125,9 +2122,6 @@ packages:
 
   '@types/pixelmatch@5.2.6':
     resolution: {integrity: sha512-wC83uexE5KGuUODn6zkm9gMzTwdY5L0chiK+VrKcDfEjzxh1uadlWTvOmAbCpnM9zx/Ww3f8uKlYQVnO/TrqVg==}
-
-  '@types/prismjs@1.26.5':
-    resolution: {integrity: sha512-AUZTa7hQ2KY5L7AmtSiqxlhWxb4ina0yd8hNbl4TWuqnv/pFP0nDMb3YrfSBf4hJVGLh2YEIBfKaBW/9UEl6IQ==}
 
   '@types/qs@6.14.0':
     resolution: {integrity: sha512-eOunJqu0K1923aExK6y8p6fsihYEn/BYuQ4g0CxAAgFc4b/ZLN4CrsRZ55srTdqoiLzU2B2evC+apEIxprEzkQ==}
@@ -10089,8 +10083,6 @@ snapshots:
   '@types/pixelmatch@5.2.6':
     dependencies:
       '@types/node': 20.19.0
-
-  '@types/prismjs@1.26.5': {}
 
   '@types/qs@6.14.0': {}
 
