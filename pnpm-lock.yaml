@@ -99,13 +99,8 @@ importers:
         specifier: ^6.1.1
         version: 6.1.1(vue@3.5.15(typescript@5.2.2))
       vue-notion:
-<<<<<<< HEAD
-        specifier: github:tough-dev-school/vue-notion#2.0.8
-        version: https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/ae4d94f0554898697dd8c2e1cf8b555c4fa8a030(@janniks/vue3-katex@0.6.0-rc.5.1(katex@0.16.11)(vue@3.5.15(typescript@5.2.2)))(vue@3.5.15(typescript@5.2.2))
-=======
         specifier: workspace:*
         version: link:../../packages/vue-notion
->>>>>>> c3e3064f (Install vue-notion from monorepo)
       vue-router:
         specifier: ^4.4.5
         version: 4.4.5(vue@3.5.15(typescript@5.2.2))
@@ -248,14 +243,7 @@ importers:
         version: 0.6.0-rc.5.1(katex@0.16.11)(vue@3.5.15(typescript@5.8.3))
       '@rushstack/eslint-patch':
         specifier: ^1.5.1
-<<<<<<< HEAD
         version: 1.5.1
-      '@types/prismjs':
-        specifier: ^1.26.0
-        version: 1.26.5
-=======
-        version: 1.11.0
->>>>>>> 5dcb413a (Fixes for vue-notion 2.0.9 (#382))
       '@vitejs/plugin-vue':
         specifier: ^4.1.0
         version: 4.4.1(vite@4.5.0(@types/node@20.17.51)(sass@1.69.5)(terser@5.40.0))(vue@3.5.15(typescript@5.8.3))
@@ -2213,22 +2201,11 @@ packages:
   '@types/long@4.0.2':
     resolution: {integrity: sha512-MqTGEo5bj5t157U6fA/BiDynNkn0YknVdh48CMPkTSpFTVmvao5UQmm7uEF6xBEo7qIMAlY/JSleYaE6VOdpaA==}
 
-<<<<<<< HEAD
-  '@types/mdx@2.0.5':
-    resolution: {integrity: sha512-76CqzuD6Q7LC+AtbPqrvD9AqsN0k8bsYo2bM2J8pmNldP1aIPAbzUQ7QbobyXL4eLr1wK5x8FZFe8eF/ubRuBg==}
-=======
-  '@types/markdown-it@14.1.2':
-    resolution: {integrity: sha512-promo4eFwuiW+TfGxhi+0x3czqTYJkG8qB17ZUJiVF10Xm7NLVRSLUsfRTU/6h1e24VvRnXCx+hG7li58lkzog==}
-
   '@types/mdast@4.0.4':
     resolution: {integrity: sha512-kGaNbPh1k7AFzgpud/gMdvIm5xuECykRR+JnWKQno9TAXVa6WIVCGTPvYGekIDL4uwCZQSYbUxNBSb1aUo79oA==}
 
-  '@types/mdurl@2.0.0':
-    resolution: {integrity: sha512-RGdgjQUZba5p6QEFAVx2OGb8rQDL/cPRG7GiedRzMcJ1tYnUANBncjbSB1NRGwbvjcPeikRABz2nshyPk1bhWg==}
-
-  '@types/mdx@2.0.13':
-    resolution: {integrity: sha512-+OWZQfAYyio6YkJb3HLxDrvnx6SWWDbC0zVPfBRzUk0/nqoDyf6dNxQi3eArPe8rJ473nobTMQ/8Zk+LxJ+Yuw==}
->>>>>>> 5dcb413a (Fixes for vue-notion 2.0.9 (#382))
+  '@types/mdx@2.0.5':
+    resolution: {integrity: sha512-76CqzuD6Q7LC+AtbPqrvD9AqsN0k8bsYo2bM2J8pmNldP1aIPAbzUQ7QbobyXL4eLr1wK5x8FZFe8eF/ubRuBg==}
 
   '@types/mime@1.3.5':
     resolution: {integrity: sha512-/pyBZWSLD2n0dcHE3hq8s8ZvcETHtEuF+3E7XVt0Ig2nvsVQXdghHVcEkIWjy9A0wKfTn97a/PSDYohKIlnP/w==}
@@ -2260,15 +2237,9 @@ packages:
   '@types/pixelmatch@5.2.4':
     resolution: {integrity: sha512-HDaSHIAv9kwpMN7zlmwfTv6gax0PiporJOipcrGsVNF3Ba+kryOZc0Pio5pn6NhisgWr7TaajlPEKTbTAypIBQ==}
 
-<<<<<<< HEAD
-  '@types/prismjs@1.26.5':
-    resolution: {integrity: sha512-AUZTa7hQ2KY5L7AmtSiqxlhWxb4ina0yd8hNbl4TWuqnv/pFP0nDMb3YrfSBf4hJVGLh2YEIBfKaBW/9UEl6IQ==}
-
   '@types/prop-types@15.7.14':
     resolution: {integrity: sha512-gNMvNH49DJ7OJYv+KAKn0Xp45p8PLl6zo2YnvDIbTd4J6MER2BmWN49TG7n9LvkyihINxeKW8+3bfS2yDC9dzQ==}
 
-=======
->>>>>>> 5dcb413a (Fixes for vue-notion 2.0.9 (#382))
   '@types/qs@6.14.0':
     resolution: {integrity: sha512-eOunJqu0K1923aExK6y8p6fsihYEn/BYuQ4g0CxAAgFc4b/ZLN4CrsRZ55srTdqoiLzU2B2evC+apEIxprEzkQ==}
 
@@ -2317,16 +2288,11 @@ packages:
   '@types/turndown@5.0.4':
     resolution: {integrity: sha512-28GI33lCCkU4SGH1GvjDhFgOVr+Tym4PXGBIU1buJUa6xQolniPArtUT+kv42RR2N9MsMLInkr904Aq+ESHBJg==}
 
-<<<<<<< HEAD
-  '@types/uuid@9.0.7':
-    resolution: {integrity: sha512-WUtIVRUZ9i5dYXefDEAI7sh9/O7jGvHg7Df/5O/gtH3Yabe5odI3UWopVR1qbPXQtvOxWu3mM4XxlYeZtMWF4g==}
-=======
   '@types/unist@3.0.3':
     resolution: {integrity: sha512-ko/gIFJRv177XgZsZcBwnqJN5x/Gien8qNOn0D5bQU/zAzVf9Zt3BlcUiLqhV9y4ARk0GbT3tnUiPNgnTXzc/Q==}
 
-  '@types/uuid@9.0.8':
-    resolution: {integrity: sha512-jg+97EGIcY9AGHJJRaaPVgetKDsrTgbRjQ5Msgjh/DQKEFl0DtyRr/VCOyD1T2R1MNeWPK/u7JoGhlDZnKBAfA==}
->>>>>>> 5dcb413a (Fixes for vue-notion 2.0.9 (#382))
+  '@types/uuid@9.0.7':
+    resolution: {integrity: sha512-WUtIVRUZ9i5dYXefDEAI7sh9/O7jGvHg7Df/5O/gtH3Yabe5odI3UWopVR1qbPXQtvOxWu3mM4XxlYeZtMWF4g==}
 
   '@types/web-bluetooth@0.0.20':
     resolution: {integrity: sha512-g9gZnnXVq7gM7v3tJCWV/qw7w+KeOlSHAhgF9RytFyifW6AF61hdT2ucrYhPq9hLs5JIryeupHV3qGk95dH9ow==}
@@ -3216,16 +3182,11 @@ packages:
     resolution: {integrity: sha512-Cg8/ZSBEa8ZVY9HspcGUYaK63d/bN7rqS3CYCzEGUxuYv6UlmcjzDUz2fCFFHyTvUW5Pk0I+3hkA3iXlIj6guA==}
     engines: {node: '>=4'}
 
-<<<<<<< HEAD
-  chai@4.4.1:
-    resolution: {integrity: sha512-13sOfMv2+DWduEU+/xbun3LScLoqN17nBeTLUsmDfKdoiC1fr0n9PU4guu4AhRcOVFk/sW8LyZWHuhWtQZiF+g==}
-=======
   ccount@2.0.1:
     resolution: {integrity: sha512-eyrF0jiFpY+3drT6383f1qhkbGsLSifNAjA61IUjZjmLCWjItY6LB9ft9YhoDgwfmclB2zhu51Lc7+95b8NRAg==}
 
-  chai@4.5.0:
-    resolution: {integrity: sha512-RITGBfijLkBddZvnn8jdqoTypxvqbOLYQkGGxXzeFjVHvudaPw0HNFD9x928/eUwYWd2dPCugVqspGALTZZQKw==}
->>>>>>> 5dcb413a (Fixes for vue-notion 2.0.9 (#382))
+  chai@4.4.1:
+    resolution: {integrity: sha512-13sOfMv2+DWduEU+/xbun3LScLoqN17nBeTLUsmDfKdoiC1fr0n9PU4guu4AhRcOVFk/sW8LyZWHuhWtQZiF+g==}
     engines: {node: '>=4'}
 
   chai@5.2.0:
@@ -6037,19 +5998,12 @@ packages:
     resolution: {integrity: sha512-1FlR+gjXK7X+AsAHso35MnyN5KqGwJRi/31ft6x0M194ht7S+rWAvd7PHss9xSKMzE0asv1pyIHaJYq+BbacAQ==}
     engines: {node: '>=12'}
 
-<<<<<<< HEAD
-=======
-  onetime@7.0.0:
-    resolution: {integrity: sha512-VXJjc87FScF88uafS3JllDgvAm+c/Slfz06lorj2uAY34rlUu0Nt+v8wreiImcrgAjjIHp1rXpTDlLOGw29WwQ==}
-    engines: {node: '>=18'}
-
   oniguruma-parser@0.12.1:
     resolution: {integrity: sha512-8Unqkvk1RYc6yq2WBYRj4hdnsAxVze8i7iPfQr8e4uSP3tRv0rpZcbGUDvxfQQcdwHt/e9PrMvGCsa8OqG9X3w==}
 
   oniguruma-to-es@4.3.3:
     resolution: {integrity: sha512-rPiZhzC3wXwE59YQMRDodUwwT9FZ9nNBwQQfsd1wfdtlKEyCdRV0avrTcSZ5xlIvGRVPd/cx6ZN45ECmS39xvg==}
 
->>>>>>> 5dcb413a (Fixes for vue-notion 2.0.9 (#382))
   open@8.4.2:
     resolution: {integrity: sha512-7x81NCL719oNbsq/3mh+hVrAWmFuEYUqrq/Iw3kUzH8ReypT9QQ0BLoJS7/G9k6N81XjW4qHWtjWwe/9eLy1EQ==}
     engines: {node: '>=12'}
@@ -6711,16 +6665,11 @@ packages:
   promise@7.3.1:
     resolution: {integrity: sha512-nolQXZ/4L+bP/UGlkfaIujX9BKxGwmQ9OT4mOt5yvy8iK1h3wqTEJCijzGANTCCl9nWjY41juyAn2K3Q1hLLTg==}
 
-<<<<<<< HEAD
-  prosemirror-changeset@2.2.1:
-    resolution: {integrity: sha512-J7msc6wbxB4ekDFj+n9gTW/jav/p53kdlivvuppHsrZXCaQdVgRghoZbSS3kwrRyAstRVQ4/+u5k7YfLgkkQvQ==}
-=======
   property-information@7.1.0:
     resolution: {integrity: sha512-TwEZ+X+yCJmYfL7TPUOcvBZ4QfoT5YenQiJuX//0th53DE6w0xxLEtfK3iyryQFddXuvkIk51EEgrJQ0WJkOmQ==}
 
-  prosemirror-changeset@2.3.1:
-    resolution: {integrity: sha512-j0kORIBm8ayJNl3zQvD1TTPHJX3g042et6y/KQhZhnPrruO8exkTgG8X+NRpj7kIyMMEx74Xb3DyMIBtO0IKkQ==}
->>>>>>> 5dcb413a (Fixes for vue-notion 2.0.9 (#382))
+  prosemirror-changeset@2.2.1:
+    resolution: {integrity: sha512-J7msc6wbxB4ekDFj+n9gTW/jav/p53kdlivvuppHsrZXCaQdVgRghoZbSS3kwrRyAstRVQ4/+u5k7YfLgkkQvQ==}
 
   prosemirror-collab@1.3.1:
     resolution: {integrity: sha512-4SnynYR9TTYaQVXd/ieUvsVV4PDMBzrq2xPUWutHivDuOshZXqQ5rGbZM84HEaXKbLdItse7weMGOUdDVcLKEQ==}
@@ -6962,10 +6911,6 @@ packages:
     resolution: {integrity: sha512-J6SDjUgDxQj5NusnOtdFxDwN/+HWykR8GELwctJ7mdqhcyy1xEc4SRFHUXvxTp661YaVKAjfRLZ9cCqS6tn32A==}
     engines: {node: '>=0.10.0'}
 
-<<<<<<< HEAD
-  regexp.prototype.flags@1.5.0:
-    resolution: {integrity: sha512-0SutC3pNudRKgquxGoRGIz946MZVHqbNfPjBdxeOhBrdgDKlRoXmYLQN9xRbrR09ZXWeGAdPuif7egofn6v5LA==}
-=======
   regex-recursion@6.0.2:
     resolution: {integrity: sha512-0YCaSCq2VRIebiaUviZNs0cBz1kg5kVS2UKUfNIx8YVs1cN3AV7NTctO5FOKBA+UT2BPJIWZauYHPqJODG50cg==}
 
@@ -6975,9 +6920,8 @@ packages:
   regex@6.0.1:
     resolution: {integrity: sha512-uorlqlzAKjKQZ5P+kTJr3eeJGSVroLKoHmquUj4zHWuR+hEyNqlXsSKlYYF5F4NI6nl7tWCs0apKJ0lmfsXAPA==}
 
-  regexp.prototype.flags@1.5.4:
-    resolution: {integrity: sha512-dYqgNSZbDwkaJ2ceRd9ojCGjBq+mOm9LmtXnAnEGyHhN/5R7iDW2TRw3h+o/jCFxus3P2LfWIIiwowAjANm7IA==}
->>>>>>> 5dcb413a (Fixes for vue-notion 2.0.9 (#382))
+  regexp.prototype.flags@1.5.0:
+    resolution: {integrity: sha512-0SutC3pNudRKgquxGoRGIz946MZVHqbNfPjBdxeOhBrdgDKlRoXmYLQN9xRbrR09ZXWeGAdPuif7egofn6v5LA==}
     engines: {node: '>= 0.4'}
 
   regexpu-core@6.2.0:
@@ -9768,17 +9712,7 @@ snapshots:
 
   '@istanbuljs/schema@0.1.3': {}
 
-<<<<<<< HEAD
-  '@janniks/vue3-katex@0.6.0-rc.5.1(katex@0.16.11)(vue@3.5.15(typescript@5.2.2))':
-    dependencies:
-      deepmerge: 4.3.1
-      katex: 0.16.11
-      vue: 3.5.15(typescript@5.2.2)
-
   '@janniks/vue3-katex@0.6.0-rc.5.1(katex@0.16.11)(vue@3.5.15(typescript@5.8.3))':
-=======
-  '@janniks/vue3-katex@0.6.0-rc.5.1(katex@0.16.22)(vue@3.5.16(typescript@5.8.3))':
->>>>>>> c3e3064f (Install vue-notion from monorepo)
     dependencies:
       deepmerge: 4.3.1
       katex: 0.16.11
@@ -10211,7 +10145,7 @@ snapshots:
 
   '@testing-library/dom@10.4.0':
     dependencies:
-      '@babel/code-frame': 7.22.13
+      '@babel/code-frame': 7.27.1
       '@babel/runtime': 7.22.6
       '@types/aria-query': 5.0.1
       aria-query: 5.3.0
@@ -10537,22 +10471,11 @@ snapshots:
 
   '@types/long@4.0.2': {}
 
-<<<<<<< HEAD
-  '@types/mdx@2.0.5': {}
-=======
-  '@types/markdown-it@14.1.2':
-    dependencies:
-      '@types/linkify-it': 5.0.0
-      '@types/mdurl': 2.0.0
-
   '@types/mdast@4.0.4':
     dependencies:
       '@types/unist': 3.0.3
 
-  '@types/mdurl@2.0.0': {}
-
-  '@types/mdx@2.0.13': {}
->>>>>>> 5dcb413a (Fixes for vue-notion 2.0.9 (#382))
+  '@types/mdx@2.0.5': {}
 
   '@types/mime@1.3.5': {}
 
@@ -10580,13 +10503,8 @@ snapshots:
     dependencies:
       '@types/node': 20.17.51
 
-<<<<<<< HEAD
-  '@types/prismjs@1.26.5': {}
-
   '@types/prop-types@15.7.14': {}
 
-=======
->>>>>>> 5dcb413a (Fixes for vue-notion 2.0.9 (#382))
   '@types/qs@6.14.0': {}
 
   '@types/range-parser@1.2.7': {}
@@ -10637,13 +10555,9 @@ snapshots:
 
   '@types/turndown@5.0.4': {}
 
-<<<<<<< HEAD
-  '@types/uuid@9.0.7': {}
-=======
   '@types/unist@3.0.3': {}
 
-  '@types/uuid@9.0.8': {}
->>>>>>> 5dcb413a (Fixes for vue-notion 2.0.9 (#382))
+  '@types/uuid@9.0.7': {}
 
   '@types/web-bluetooth@0.0.20': {}
 
@@ -12095,13 +12009,9 @@ snapshots:
       tunnel-agent: 0.6.0
       url-to-options: 1.0.1
 
-<<<<<<< HEAD
-  chai@4.4.1:
-=======
   ccount@2.0.1: {}
 
-  chai@4.5.0:
->>>>>>> 5dcb413a (Fixes for vue-notion 2.0.9 (#382))
+  chai@4.4.1:
     dependencies:
       assertion-error: 1.1.0
       check-error: 1.0.3
@@ -13788,13 +13698,9 @@ snapshots:
       relateurl: 0.2.7
       terser: 5.40.0
 
-<<<<<<< HEAD
-  html-webpack-plugin@5.6.3(webpack@5.95.0):
-=======
   html-void-elements@3.0.0: {}
 
-  html-webpack-plugin@5.6.3(webpack@5.99.9):
->>>>>>> 5dcb413a (Fixes for vue-notion 2.0.9 (#382))
+  html-webpack-plugin@5.6.3(webpack@5.95.0):
     dependencies:
       '@types/html-minifier-terser': 6.1.0
       html-minifier-terser: 6.1.0
@@ -14629,7 +14535,7 @@ snapshots:
     dependencies:
       '@types/hast': 3.0.4
       '@types/mdast': 4.0.4
-      '@ungap/structured-clone': 1.3.0
+      '@ungap/structured-clone': 1.2.0
       devlop: 1.1.0
       micromark-util-sanitize-uri: 2.0.1
       trim-lines: 3.0.1
@@ -15029,12 +14935,6 @@ snapshots:
     dependencies:
       mimic-fn: 4.0.0
 
-<<<<<<< HEAD
-=======
-  onetime@7.0.0:
-    dependencies:
-      mimic-function: 5.0.1
-
   oniguruma-parser@0.12.1: {}
 
   oniguruma-to-es@4.3.3:
@@ -15043,7 +14943,6 @@ snapshots:
       regex: 6.0.1
       regex-recursion: 6.0.2
 
->>>>>>> 5dcb413a (Fixes for vue-notion 2.0.9 (#382))
   open@8.4.2:
     dependencies:
       define-lazy-prop: 2.0.0
@@ -15594,13 +15493,9 @@ snapshots:
     dependencies:
       asap: 2.0.6
 
-<<<<<<< HEAD
-  prosemirror-changeset@2.2.1:
-=======
   property-information@7.1.0: {}
 
-  prosemirror-changeset@2.3.1:
->>>>>>> 5dcb413a (Fixes for vue-notion 2.0.9 (#382))
+  prosemirror-changeset@2.2.1:
     dependencies:
       prosemirror-transform: 1.7.3
 
@@ -15941,9 +15836,6 @@ snapshots:
       extend-shallow: 3.0.2
       safe-regex: 1.1.0
 
-<<<<<<< HEAD
-  regexp.prototype.flags@1.5.0:
-=======
   regex-recursion@6.0.2:
     dependencies:
       regex-utilities: 2.3.0
@@ -15954,8 +15846,7 @@ snapshots:
     dependencies:
       regex-utilities: 2.3.0
 
-  regexp.prototype.flags@1.5.4:
->>>>>>> 5dcb413a (Fixes for vue-notion 2.0.9 (#382))
+  regexp.prototype.flags@1.5.0:
     dependencies:
       call-bind: 1.0.2
       define-properties: 1.2.0
@@ -17114,9 +17005,6 @@ snapshots:
 
   vary@1.1.2: {}
 
-<<<<<<< HEAD
-  vite-node@1.6.0(@types/node@20.17.51)(sass@1.69.5)(terser@5.40.0):
-=======
   vfile-message@4.0.2:
     dependencies:
       '@types/unist': 3.0.3
@@ -17127,8 +17015,7 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.2
 
-  vite-node@1.6.0(@types/node@20.19.0)(terser@5.41.0):
->>>>>>> 5dcb413a (Fixes for vue-notion 2.0.9 (#382))
+  vite-node@1.6.0(@types/node@20.17.51)(sass@1.69.5)(terser@5.40.0):
     dependencies:
       cac: 6.7.14
       debug: 4.3.4
@@ -17370,17 +17257,7 @@ snapshots:
     optionalDependencies:
       vue: 3.5.15(typescript@5.2.2)
 
-<<<<<<< HEAD
-  vue-notion@https://codeload.github.com/tough-dev-school/vue-notion/tar.gz/ae4d94f0554898697dd8c2e1cf8b555c4fa8a030(@janniks/vue3-katex@0.6.0-rc.5.1(katex@0.16.11)(vue@3.5.15(typescript@5.2.2)))(vue@3.5.15(typescript@5.2.2)):
-    dependencies:
-      '@janniks/vue3-katex': 0.6.0-rc.5.1(katex@0.16.11)(vue@3.5.15(typescript@5.2.2))
-      defu: 6.1.4
-      vue: 3.5.15(typescript@5.2.2)
-
   vue-resize@2.0.0-alpha.1(vue@3.5.15(typescript@5.2.2)):
-=======
-  vue-resize@2.0.0-alpha.1(vue@3.5.16(typescript@5.2.2)):
->>>>>>> c3e3064f (Install vue-notion from monorepo)
     dependencies:
       vue: 3.5.15(typescript@5.2.2)
 
@@ -17778,10 +17655,6 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
-<<<<<<< HEAD
   yocto-queue@1.0.0: {}
-=======
-  yocto-queue@1.2.1: {}
 
   zwitch@2.0.4: {}
->>>>>>> 5dcb413a (Fixes for vue-notion 2.0.9 (#382))
