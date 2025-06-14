@@ -2,7 +2,6 @@ import { vi, describe, beforeEach, expect, test, afterEach } from 'vitest';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { createTestingPinia } from '@pinia/testing';
 import { faker } from '@faker-js/faker';
-import { useRoute } from 'vue-router';
 import VMailSentView from './VMailSentView.vue';
 import { getProviderById, type Provider } from '@brachkow/email-providers';
 
