@@ -59,6 +59,7 @@
             (<button
               class="underline"
               type="button"
+              tabindex="-1"
               @click="router.push({ name: 'login-reset' })">
               Не помню пароль</button
             >)
