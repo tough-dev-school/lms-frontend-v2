@@ -42,11 +42,6 @@ export interface AnswerCreate {
   text: string;
 }
 
-export interface AnswerCrossCheck {
-  answer: AnswerSimple;
-  is_checked: boolean;
-}
-
 export interface AnswerImage {
   /** @format uri */
   image: string;
@@ -186,7 +181,12 @@ export interface CourseSimple {
   name_international?: string;
 }
 
-export interface CrosscheckStats {
+export interface CrossCheck {
+  answer: AnswerSimple;
+  is_checked?: boolean;
+}
+
+export interface CrossCheckStats {
   total: number;
   checked: number;
 }
@@ -252,11 +252,12 @@ export enum GenderEnum {
   Female = 'female',
 }
 
+/** Requires *any* model annotaded with statistics. For annotation examples check homework.QuestionQuerySet */
 export interface HomeworkStats {
   is_sent: boolean;
-  crosschecks?: CrosscheckStats;
-  comments: CommentStats;
-  question: Question;
+  crosschecks?: CrossCheckStats;
+  comments?: CommentStats;
+  question: TemporarySoonToBeDepricatedQuestion;
 }
 
 /**
@@ -321,6 +322,7 @@ export interface LessonForUser {
   id: number;
   material?: NotionMaterial;
   homework?: HomeworkStats;
+  question: Question;
   call?: Call;
 }
 
@@ -337,6 +339,11 @@ export interface Module {
   id: number;
   /** @maxLength 255 */
   name: string;
+  /**
+   * Дата начала
+   * @format date-time
+   */
+  start_date?: string | null;
   /**
    * Подзаг
    * @maxLength 512
@@ -404,7 +411,7 @@ export interface PaginatedDiplomaList {
   results: Diploma[];
 }
 
-export interface PaginatedLessonForUserList {
+export interface PaginatedLessonList {
   /** @example 123 */
   count: number;
   /**
@@ -417,7 +424,7 @@ export interface PaginatedLessonForUserList {
    * @example "http://api.example.org/accounts/?page=2"
    */
   previous?: string | null;
-  results: LessonForUser[];
+  results: Lesson[];
 }
 
 export interface PaginatedModuleList {
@@ -600,6 +607,8 @@ export interface QuestionDetail {
    * @format date-time
    */
   deadline?: string | null;
+  /** Requires *any* model annotaded with statistics. For annotation examples check homework.QuestionQuerySet */
+  homework: HomeworkStats;
 }
 
 export interface ReactionCreate {
@@ -629,7 +638,23 @@ export interface RefreshAuthToken {
 }
 
 export interface RestAuthDetail {
-  detail: string;
+  detail?: string;
+}
+
+export interface TemporarySoonToBeDepricatedQuestion {
+  /** @format uuid */
+  slug?: string;
+  /**
+   * Название
+   * @maxLength 256
+   */
+  name: string;
+  text?: string;
+  /**
+   * Дедлайн
+   * @format date-time
+   */
+  deadline?: string | null;
 }
 
 export interface User {
@@ -1202,7 +1227,7 @@ export class Api<SecurityDataType extends unknown> {
 
   api = {
     /**
-     * No description
+     * @description Get token for given user_id. Superuser only!
      *
      * @tags auth
      * @name AuthAsRetrieve
@@ -1210,10 +1235,11 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     authAsRetrieve: (userId: number, params: RequestParams = {}) =>
-      this.http.request<void, any>({
+      this.http.request<Record<string, string>, any>({
         path: `/api/v2/auth/as/${userId}/`,
         method: 'GET',
         secure: true,
+        format: 'json',
         ...params,
       }),
 
@@ -1284,7 +1310,7 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * No description
+     * @description Exchange passwordless token to JWT
      *
      * @tags auth
      * @name AuthPasswordlessTokenRetrieve
@@ -1295,10 +1321,11 @@ export class Api<SecurityDataType extends unknown> {
       token: string,
       params: RequestParams = {},
     ) =>
-      this.http.request<void, any>({
+      this.http.request<Record<string, string>, any>({
         path: `/api/v2/auth/passwordless-token/${token}/`,
         method: 'GET',
         secure: true,
+        format: 'json',
         ...params,
       }),
 
@@ -1314,10 +1341,11 @@ export class Api<SecurityDataType extends unknown> {
       userEmail: string,
       params: RequestParams = {},
     ) =>
-      this.http.request<void, any>({
+      this.http.request<Record<string, boolean>, any>({
         path: `/api/v2/auth/passwordless-token/request/${userEmail}/`,
         method: 'GET',
         secure: true,
+        format: 'json',
         ...params,
       }),
 
@@ -1355,70 +1383,6 @@ export class Api<SecurityDataType extends unknown> {
         body: data,
         type: ContentType.Json,
         format: 'json',
-        ...params,
-      }),
-
-    /**
-     * @description Receive dolyame notifications.
-     *
-     * @tags banking
-     * @name BankingDolyameNotificationsCreate
-     * @request POST:/api/v2/banking/dolyame-notifications/
-     * @secure
-     */
-    bankingDolyameNotificationsCreate: (params: RequestParams = {}) =>
-      this.http.request<void, any>({
-        path: `/api/v2/banking/dolyame-notifications/`,
-        method: 'POST',
-        secure: true,
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags banking
-     * @name BankingStripeWebhooksCreate
-     * @request POST:/api/v2/banking/stripe-webhooks/
-     * @secure
-     */
-    bankingStripeWebhooksCreate: (params: RequestParams = {}) =>
-      this.http.request<void, any>({
-        path: `/api/v2/banking/stripe-webhooks/`,
-        method: 'POST',
-        secure: true,
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags banking
-     * @name BankingStripeWebhooksKzCreate
-     * @request POST:/api/v2/banking/stripe-webhooks/kz/
-     * @secure
-     */
-    bankingStripeWebhooksKzCreate: (params: RequestParams = {}) =>
-      this.http.request<void, any>({
-        path: `/api/v2/banking/stripe-webhooks/kz/`,
-        method: 'POST',
-        secure: true,
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags banking
-     * @name BankingTinkoffNotificationsCreate
-     * @request POST:/api/v2/banking/tinkoff-notifications/
-     * @secure
-     */
-    bankingTinkoffNotificationsCreate: (params: RequestParams = {}) =>
-      this.http.request<void, any>({
-        path: `/api/v2/banking/tinkoff-notifications/`,
-        method: 'POST',
-        secure: true,
         ...params,
       }),
 
@@ -1761,7 +1725,7 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * No description
+     * @description Upload an image
      *
      * @tags homework
      * @name HomeworkAnswersImageCreate
@@ -1783,7 +1747,7 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * @description Recursive list list answer comments
+     * @description Recursively list answer comments
      *
      * @tags homework
      * @name HomeworkCommentsList
@@ -1804,7 +1768,7 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * @description Retrieves crosscheck status
+     * @description Crosscheck status
      *
      * @tags homework
      * @name HomeworkCrosschecksList
@@ -1815,7 +1779,7 @@ export class Api<SecurityDataType extends unknown> {
       query: HomeworkCrosschecksListParams,
       params: RequestParams = {},
     ) =>
-      this.http.request<AnswerCrossCheck[], any>({
+      this.http.request<CrossCheck[], any>({
         path: `/api/v2/homework/crosschecks/`,
         method: 'GET',
         query: query,
@@ -1850,10 +1814,27 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     lmsLessonsList: (query: LmsLessonsListParams, params: RequestParams = {}) =>
-      this.http.request<PaginatedLessonForUserList, any>({
+      this.http.request<PaginatedLessonList, any>({
         path: `/api/v2/lms/lessons/`,
         method: 'GET',
         query: query,
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description Get a lesson by id
+     *
+     * @tags lms
+     * @name LmsLessonsRetrieve
+     * @request GET:/api/v2/lms/lessons/{id}/
+     * @secure
+     */
+    lmsLessonsRetrieve: (id: number, params: RequestParams = {}) =>
+      this.http.request<Lesson, any>({
+        path: `/api/v2/lms/lessons/${id}/`,
+        method: 'GET',
         secure: true,
         format: 'json',
         ...params,
@@ -1911,7 +1892,7 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * No description
+     * @description Redirects user to the confirmation URL
      *
      * @tags orders
      * @name OrdersConfirmRetrieve
@@ -1919,7 +1900,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     ordersConfirmRetrieve: (slug: string, params: RequestParams = {}) =>
-      this.http.request<void, any>({
+      this.http.request<any, void>({
         path: `/api/v2/orders/${slug}/confirm/`,
         method: 'GET',
         secure: true,
