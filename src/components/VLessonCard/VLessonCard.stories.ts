@@ -4,6 +4,7 @@ import type {
   LessonForUser,
   RecommendedVideoProviderEnum,
 } from '@/api/generated-api';
+import { mockQuestion } from '@/mocks/mockQuestion';
 
 export default {
   title: 'UI/VLessonCard',
@@ -28,6 +29,7 @@ const baseLesson = {
 
 const callWithVideo: LessonForUser = {
   ...baseLesson,
+  question: mockQuestion(),
   call: {
     name: 'Введение в React',
     description: 'Изучаем основы React и создаем первое приложение',
@@ -52,7 +54,7 @@ const callWithVideo: LessonForUser = {
 
 const callWithoutVideo: LessonForUser = {
   ...baseLesson,
-  id: 2,
+  question: mockQuestion(),
   call: {
     name: 'Дизайн систем',
     description: 'Обсуждаем принципы создания дизайн систем',
@@ -65,7 +67,7 @@ const callWithoutVideo: LessonForUser = {
 
 const homeworkWithCrosschecks: LessonForUser = {
   ...baseLesson,
-  id: 3,
+  question: mockQuestion(),
   homework: {
     comments: {
       comments: 10,
@@ -87,7 +89,7 @@ const homeworkWithCrosschecks: LessonForUser = {
 
 const homeworkWithoutCrosschecks: LessonForUser = {
   ...baseLesson,
-  id: 4,
+  question: mockQuestion(),
   homework: {
     comments: {
       comments: 0,
@@ -105,7 +107,7 @@ const homeworkWithoutCrosschecks: LessonForUser = {
 
 const materialLesson: LessonForUser = {
   ...baseLesson,
-  id: 5,
+  question: mockQuestion(),
   material: {
     id: 'material-123',
     title: 'Углубленное изучение Vue.js',
