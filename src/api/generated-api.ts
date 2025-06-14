@@ -183,7 +183,7 @@ export interface CourseSimple {
 
 export interface CrossCheck {
   answer: AnswerSimple;
-  is_checked?: boolean;
+  is_checked: boolean;
 }
 
 export interface CrossCheckStats {

@@ -7,6 +7,7 @@ export const mockModule = (payload: Partial<Module> = {}): Required<Module> => {
     name: faker.lorem.words(3),
     description: faker.lorem.words(3),
     text: faker.lorem.words(3),
+    start_date: faker.date.recent().toISOString(),
     ...payload,
   };
 };

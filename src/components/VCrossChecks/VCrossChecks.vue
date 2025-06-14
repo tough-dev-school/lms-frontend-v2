@@ -1,9 +1,9 @@
 <script setup lang="ts">
   import { getName } from '@/utils/getName';
-  import type { AnswerCrossCheck } from '@/api/generated-api';
+  import type { CrossCheck } from '@/api/generated-api';
 
   defineProps<{
-    crosschecks: AnswerCrossCheck[];
+    crosschecks: CrossCheck[];
   }>();
 
   const getCrossCheckState = (isChecked: boolean) => {
