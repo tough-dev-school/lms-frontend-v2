@@ -21,22 +21,27 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+        working-directory: apps/frontend
 
       - name: Install playwright browsers
         run: pnpm playwright install chromium
+        working-directory: apps/frontend
 
       - name: Build storybook
         run: pnpm run storybook:build
+        working-directory: apps/frontend
 
       - name: Run storybook
         run: pnpm run storybook:preview &
+        working-directory: apps/frontend
 
       - name: Run regression tests
         run: pnpm run test:regression:update
+        working-directory: apps/frontend
 
       - name: Saving screenshots 📥
         uses: actions/upload-artifact@v4
         with:
           name: updated-screenshots
-          path: tests/__image_snapshots__/
+          path: apps/frontend/tests/__image_snapshots__/
           retention-days: 14

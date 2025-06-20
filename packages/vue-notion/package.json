@@ -1,0 +1,30 @@
+{
+  "name": "vue-notion",
+  "version": "2.0.6",
+  "description": "A Vue renderer for Notion pages",
+  "type": "module",
+  "main": "index.js",
+  "dependencies": {
+    "defu": "^6.1.2",
+    "shiki": "^3.6.0"
+  },
+  "devDependencies": {
+    "@janniks/vue3-katex": "^0.6.0-rc.5.1",
+    "@rushstack/eslint-patch": "^1.5.1",
+    "@vitejs/plugin-vue": "^4.1.0",
+    "@vue/cli": "^5.0.8",
+    "@vue/cli-service": "^5.0.8",
+    "@vue/compiler-sfc": "^3.2.47",
+    "@vue/eslint-config-prettier": "^8.0.0",
+    "@vue/eslint-config-typescript": "^12.0.0",
+    "eslint": "^8.53.0",
+    "minimist": "^1.2.8",
+    "prettier": "^3.1.0",
+    "vite": "^4.2.1",
+    "vue": "^3.2.47"
+  },
+  "peerDependencies": {
+    "@janniks/vue3-katex": "^0.6.0-rc.5.1",
+    "vue": "^3.2.45"
+  }
+}
