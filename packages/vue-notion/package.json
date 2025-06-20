@@ -4,6 +4,9 @@
   "description": "A Vue renderer for Notion pages",
   "type": "module",
   "main": "index.js",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "dependencies": {
     "defu": "^6.1.2",
     "shiki": "^3.6.0"

@@ -1,6 +1,9 @@
 {
   "name": "lms-frontend-v2",
   "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "test:lint": "pnpm -r run test:lint",
     "test:format": "pnpm -r run test:format",
