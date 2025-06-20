@@ -27,7 +27,6 @@
 <script>
   import { Blockable } from '../lib/blockable';
   import NotionPageIcon from './NotionPageIcon.vue';
-  import NotionRenderer from './NotionRenderer.vue';
   import NotionTextRenderer from './NotionTextRenderer.vue';
   import { defineAsyncComponent } from 'vue';
 
