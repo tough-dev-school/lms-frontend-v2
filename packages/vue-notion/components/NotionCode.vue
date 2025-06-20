@@ -1,8 +1,9 @@
 <template>
   <pre
-    class="wrapper"
-    :data-lang="lang"><code :class="langClass" v-html="code"></code>
-</pre>
+    class="NotionCode"
+    :data-lang="
+      lang
+    "><code class="NotionCode__Element" :class="langClass" v-html="code"></code></pre>
 </template>
 
 <script>
@@ -36,8 +37,12 @@
 </script>
 
 <style scoped>
-  .wrapper {
+  .NotionCode {
     overflow-x: auto;
+    &__Element {
+      display: block;
+      width: fit-content;
+    }
   }
   :deep(.shiki) {
     padding: 1em;
