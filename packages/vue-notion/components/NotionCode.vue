@@ -1,6 +1,9 @@
 <template>
-  <pre class="wrapper"><code :class="langClass" v-html="code"></code>
-</pre>
+  <pre
+    class="NotionCode"
+    :data-lang="
+      lang
+    "><code class="NotionCode__Element" :class="langClass" v-html="code"></code></pre>
 </template>
 
 <script>
@@ -26,7 +29,7 @@
     },
     async mounted() {
       this.code = await codeToHtml(this.properties.title.flat(100)[0], {
-        lang: this.lang,
+        lang: { 'plain text': 'text' }[this.lang] ?? this.lang,
         theme: 'github-light',
       });
     },
@@ -34,8 +37,12 @@
 </script>
 
 <style scoped>
-  .wrapper {
+  .NotionCode {
     overflow-x: auto;
+    &__Element {
+      display: block;
+      width: fit-content;
+    }
   }
   :deep(.shiki) {
     padding: 1em;

@@ -126,30 +126,6 @@ pageLinkOptions: {
 
 – the [target attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-target) of links
 
-## Syntax-Highlighting
-
-The following steps are required to add syntax-highlighting using Prism.js
-
-- Install `prismjs` to your project – `npm install prismjs`
-- Import the Prism.js css and a theme css somewhere in your application.
-
-```js
-import 'prismjs';
-import 'prismjs/themes/prism.css';
-```
-
-- Add the `prism` flag to the `NotionRenderer`
-
-```diff
--<NotionRenderer :blockMap="blockMap" />
-+<NotionRenderer :blockMap="blockMap" prism />
-```
-
-> A list of available themes can be found at [prism/themes](https://github.com/PrismJS/prism/tree/master/themes) and more installable themes can be found at [prism-themes](https://github.com/PrismJS/prism-themes).
-
-> ⚠️ To keep file size down, Prism.js only includes `markup`, `css`, `clike`, and `javascript` languages per default.
-> To add supported languages import the language component from Prism.js – e.g. `import 'prismjs/components/prism-rust'` for `rust`.
-
 ## Equations
 
 The following steps are required to display equations via katex

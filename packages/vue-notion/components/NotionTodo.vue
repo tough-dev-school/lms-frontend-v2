@@ -15,17 +15,30 @@
     <div v-if="imageUrl" class="notion-todo-image">
       <img :src="imageUrl" :alt="imageAlt" @error="handleImageError" />
     </div>
+    <div v-if="block.value.content" class="NotionTodo__Indent">
+      <NotionRenderer
+        v-for="(contentId, contentIndex) in block.value.content"
+        v-bind="pass"
+        :key="contentId"
+        :level="pass.level + 1"
+        :content-id="contentId"
+        :content-index="contentIndex" />
+    </div>
   </div>
 </template>
 
 <script>
   import { Blockable } from '../lib/blockable';
   import NotionTextRenderer from './NotionTextRenderer.vue';
+  import { defineAsyncComponent } from 'vue';
 
   export default {
     name: 'NotionTodo',
     components: {
       NotionTextRenderer,
+      NotionRenderer: defineAsyncComponent(
+        () => import('./NotionRenderer.vue'),
+      ),
     },
     extends: Blockable,
     computed: {
@@ -52,3 +65,11 @@
     },
   };
 </script>
+
+<style>
+  .NotionTodo {
+    &__Indent {
+      padding-left: 20px;
+    }
+  }
+</style>
