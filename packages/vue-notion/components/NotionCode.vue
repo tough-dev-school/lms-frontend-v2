@@ -1,5 +1,7 @@
 <template>
-  <pre class="wrapper"><code :class="langClass" v-html="code"></code>
+  <pre
+    class="wrapper"
+    :data-lang="lang"><code :class="langClass" v-html="code"></code>
 </pre>
 </template>
 
@@ -26,7 +28,7 @@
     },
     async mounted() {
       this.code = await codeToHtml(this.properties.title.flat(100)[0], {
-        lang: this.lang,
+        lang: { 'plain text': 'text' }[this.lang] ?? this.lang,
         theme: 'github-light',
       });
     },
