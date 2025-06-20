@@ -11,6 +11,8 @@ import * as Sentry from '@sentry/vue';
 import AvatarCropper from 'vue-avatar-cropper';
 import { VueQueryPlugin } from '@tanstack/vue-query';
 
+console.log('hi from monorepo!');
+
 const app = createApp(App);
 
 if (process.env.NODE_ENV === 'production') {
