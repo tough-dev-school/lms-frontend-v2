@@ -30,13 +30,15 @@
 <script>
   import { Blockable } from '../lib/blockable';
   import NotionTextRenderer from './NotionTextRenderer.vue';
-  import NotionRenderer from './NotionRenderer.vue';
+  import { defineAsyncComponent } from 'vue';
 
   export default {
     name: 'NotionTodo',
     components: {
       NotionTextRenderer,
-      NotionRenderer,
+      NotionRenderer: defineAsyncComponent(
+        () => import('./NotionRenderer.vue'),
+      ),
     },
     extends: Blockable,
     computed: {
