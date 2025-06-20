@@ -2,6 +2,9 @@
   "name": "frontend",
   "version": "0.0.0",
   "packageManager": "pnpm@9.11.0",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -65,7 +68,7 @@
     "@types/jest-image-snapshot": "^6.2.3",
     "@types/jsdom": "^21.1.5",
     "@types/lodash-es": "^4.17.11",
-    "@types/node": "^20.9.0",
+    "@types/node": "^22.0.0",
     "@types/turndown": "^5.0.4",
     "@types/uuid": "^9.0.7",
     "@vitejs/plugin-vue": "^4.4.1",
