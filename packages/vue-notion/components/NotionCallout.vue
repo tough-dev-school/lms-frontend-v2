@@ -9,8 +9,8 @@
         class="notion-callout-title">
         <NotionTextRenderer :text="title" v-bind="pass" />
       </div>
-
-      <template v-if="block.value.content">
+      <NotionTextRenderer v-else :text="title" v-bind="pass" />
+      <div v-if="block.value.content" style="margin-left: -20px">
         <NotionRenderer
           v-for="(contentId, contentIndex) in block.value.content"
           v-bind="pass"
@@ -18,8 +18,7 @@
           :level="pass.level + 1"
           :content-id="contentId"
           :content-index="contentIndex" />
-      </template>
-      <NotionTextRenderer v-else :text="title" v-bind="pass" />
+      </div>
     </div>
   </div>
 </template>

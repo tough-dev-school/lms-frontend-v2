@@ -1,5 +1,8 @@
 <template>
-  <NotionBlock v-if="blockMap && value" v-bind="pass">
+  <NotionBlock
+    v-if="blockMap && value"
+    v-bind="pass"
+    :style="{ paddingLeft: `${level > 1 ? `${level * 10}px` : undefined}` }">
     <NotionRenderer
       v-for="(contentId, contentIndex) in value.content"
       v-bind="pass"
