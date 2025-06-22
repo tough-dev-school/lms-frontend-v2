@@ -15,7 +15,7 @@
     <div v-if="imageUrl" class="notion-todo-image">
       <img :src="imageUrl" :alt="imageAlt" @error="handleImageError" />
     </div>
-    <div v-if="block.value.content" class="NotionTodo__Indent">
+    <div v-if="block.value.content">
       <NotionRenderer
         v-for="(contentId, contentIndex) in block.value.content"
         v-bind="pass"
@@ -65,11 +65,3 @@
     },
   };
 </script>
-
-<style>
-  .NotionTodo {
-    &__Indent {
-      padding-left: 20px;
-    }
-  }
-</style>
