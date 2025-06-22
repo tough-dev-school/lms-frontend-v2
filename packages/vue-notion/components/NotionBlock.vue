@@ -1,5 +1,10 @@
 <template>
-  <component :is="component" v-bind="pass" v-if="component" :format="format">
+  <component
+    :is="component"
+    v-if="component"
+    :data-block-type="type"
+    v-bind="pass"
+    :format="format">
     <slot />
   </component>
   <div v-else>Block type not implemented: {{ type }}</div>
