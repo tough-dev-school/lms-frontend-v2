@@ -10,7 +10,7 @@
         <NotionTextRenderer :text="title" v-bind="pass" />
       </div>
       <NotionTextRenderer v-else :text="title" v-bind="pass" />
-      <template v-if="block.value.content">
+      <div v-if="block.value.content" style="margin-left: -20px">
         <NotionRenderer
           v-for="(contentId, contentIndex) in block.value.content"
           v-bind="pass"
@@ -18,7 +18,7 @@
           :level="pass.level + 1"
           :content-id="contentId"
           :content-index="contentIndex" />
-      </template>
+      </div>
     </div>
   </div>
 </template>
