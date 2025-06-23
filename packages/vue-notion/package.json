@@ -6,6 +6,7 @@
   "main": "index.js",
   "dependencies": {
     "defu": "^6.1.2",
+    "glightbox": "^3.3.1",
     "shiki": "^3.6.0"
   },
   "devDependencies": {

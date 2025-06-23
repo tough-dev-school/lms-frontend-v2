@@ -1,12 +1,16 @@
 <template>
-  <div v-if="this.f.block_aspect_ratio" :style="aspectRatioStyle">
-    <img class="notion-image-inset" :alt="alt || 'Notion image'" :src="src" />
-  </div>
-  <img v-else :alt="alt" :src="src" :style="basicStyle" />
+  <a :href="src" :data-lightbox="contentId">
+    <div v-if="f.block_aspect_ratio" :style="aspectRatioStyle">
+      <img class="notion-image-inset" :alt="alt || 'Notion image'" :src="src" />
+    </div>
+    <img v-else :alt="alt" :src="src" :style="basicStyle" />
+  </a>
 </template>
 
 <script>
   import { Blockable, blockComputed } from '../lib/blockable';
+  import GLightbox from 'glightbox';
+  import 'glightbox/dist/css/glightbox.css';
 
   export default {
     extends: Blockable,
@@ -43,6 +47,13 @@
           aspectRatio,
         };
       },
+    },
+    mounted() {
+      GLightbox({
+        selector: `[data-lightbox="${this.contentId}"]`,
+        openEffect: 'zoom',
+        closeEffect: 'none',
+      });
     },
   };
 </script>
