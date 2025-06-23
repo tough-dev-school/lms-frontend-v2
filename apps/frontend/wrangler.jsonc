@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "env": {
+    "frontend": {
+      "name": "lms-frontend",
+      "assets": {
+        "directory": "dist/"
+      },
+      "preview_urls": true
+    },
+    "storybook": {
+      "name": "lms-storybook",
+      "assets": {
+        "directory": ".storybook-static/"
+      },
+      "preview_urls": true
+    }
+  }
+}
