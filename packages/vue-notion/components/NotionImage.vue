@@ -1,18 +1,9 @@
 <template>
   <a
-    v-if="f.block_aspect_ratio"
-    class="block"
+    class="relative block"
     :href="src"
     :data-lightbox="contentId"
-    :style="aspectRatioStyle">
-    <img class="notion-image-inset" :alt="alt || 'Notion image'" :src="src" />
-  </a>
-  <a
-    v-else
-    class="block"
-    :href="src"
-    :data-lightbox="contentId"
-    :style="basicStyle">
+    :style="f.block_aspect_ratio ? aspectRatioStyle : basicStyle">
     <img class="notion-image-inset" :alt="alt || 'Notion image'" :src="src" />
   </a>
 </template>
