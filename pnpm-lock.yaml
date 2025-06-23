@@ -234,6 +234,9 @@ importers:
       defu:
         specifier: ^6.1.2
         version: 6.1.4
+      glightbox:
+        specifier: ^3.3.1
+        version: 3.3.1
       shiki:
         specifier: ^3.6.0
         version: 3.6.0
@@ -4620,6 +4623,9 @@ packages:
   git-config-path@2.0.0:
     resolution: {integrity: sha512-qc8h1KIQbJpp+241id3GuAtkdyJ+IK+LIVtkiFTRKRrmddDzs3SI9CvP1QYmWBFvm1I/PWRwj//of8bgAc0ltA==}
     engines: {node: '>=4'}
+
+  glightbox@3.3.1:
+    resolution: {integrity: sha512-nXoKfJRnQTDaAFAw5799hjpfAAHx5aLvOLG0SIGudeMCwtHgO3P2/avNYapJ+SL4UEZxO2YNBPtq6pzMhSx42g==}
 
   glob-parent@5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
@@ -13474,6 +13480,8 @@ snapshots:
   git-clone@0.1.0: {}
 
   git-config-path@2.0.0: {}
+
+  glightbox@3.3.1: {}
 
   glob-parent@5.1.2:
     dependencies:
