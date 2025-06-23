@@ -1,9 +1,19 @@
 <template>
-  <a :href="src" :data-lightbox="contentId">
-    <div v-if="f.block_aspect_ratio" :style="aspectRatioStyle">
-      <img class="notion-image-inset" :alt="alt || 'Notion image'" :src="src" />
-    </div>
-    <img v-else :alt="alt" :src="src" :style="basicStyle" />
+  <a
+    v-if="f.block_aspect_ratio"
+    class="block"
+    :href="src"
+    :data-lightbox="contentId"
+    :style="aspectRatioStyle">
+    <img class="notion-image-inset" :alt="alt || 'Notion image'" :src="src" />
+  </a>
+  <a
+    v-else
+    class="block"
+    :href="src"
+    :data-lightbox="contentId"
+    :style="basicStyle">
+    <img class="notion-image-inset" :alt="alt || 'Notion image'" :src="src" />
   </a>
 </template>
 
