@@ -1,15 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
-import { faker } from '@faker-js/faker';
 import VModuleCard from './VModuleCard.vue';
-import type { Module } from '@/api/generated-api';
-
-const createMockModule = (payload: Partial<Module> = {}): Module => ({
-  id: faker.number.int({ min: 1, max: 1000 }),
-  name: faker.commerce.productName(),
-  description: faker.lorem.paragraphs(2),
-  text: faker.lorem.sentence(),
-  ...payload,
-});
+import { mockModule } from '@/mocks/mockModule';
 
 export default {
   title: 'UI/VModuleCard',
@@ -33,7 +24,7 @@ const Template: StoryFn = (args) => ({
 export const Default = {
   render: Template,
   args: {
-    module: createMockModule(),
+    module: mockModule(),
     index: 0,
   },
 };
@@ -41,8 +32,9 @@ export const Default = {
 export const WithLongTitle = {
   render: Template,
   args: {
-    module: createMockModule({
+    module: mockModule({
       name: 'Introduction to Advanced Web Development with Modern JavaScript Frameworks and Best Practices',
+      start_date: null,
     }),
     index: 1,
   },
@@ -51,8 +43,9 @@ export const WithLongTitle = {
 export const WithoutDescription = {
   render: Template,
   args: {
-    module: createMockModule({
+    module: mockModule({
       description: null,
+      start_date: null,
     }),
     index: 2,
   },
@@ -61,19 +54,30 @@ export const WithoutDescription = {
 export const WithoutText = {
   render: Template,
   args: {
-    module: createMockModule({
+    module: mockModule({
       text: null,
     }),
     index: 3,
   },
 };
 
+export const WithStartDate = {
+  render: Template,
+  args: {
+    module: mockModule({
+      start_date: '2025-01-01',
+    }),
+    index: 4,
+  },
+};
+
 export const MinimalContent = {
   render: Template,
   args: {
-    module: createMockModule({
+    module: mockModule({
       description: null,
       text: null,
+      start_date: null,
     }),
     index: 0,
   },
@@ -84,9 +88,10 @@ export const ColorVariations = {
     components: { VModuleCard },
     setup() {
       const modules = Array.from({ length: 8 }, (_, index) => ({
-        module: createMockModule({
+        module: mockModule({
           name: `Module ${index + 1}`,
           text: `This is module ${index + 1} with color variation`,
+          start_date: null,
         }),
         index,
       }));
@@ -108,7 +113,7 @@ export const ColorVariations = {
 export const WithRichDescription = {
   render: Template,
   args: {
-    module: createMockModule({
+    module: mockModule({
       description: `
         <p>This module covers <strong>advanced topics</strong> in web development:</p>
         <ul>
