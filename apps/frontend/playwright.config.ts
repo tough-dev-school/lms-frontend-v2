@@ -24,7 +24,7 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'pnpm run storybook',
+    command: 'pnpm run storybook:preview &',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
   },
