@@ -1,7 +1,6 @@
 {
   "name": "frontend",
   "version": "0.0.0",
-  "packageManager": "pnpm@9.11.0",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -21,6 +20,10 @@
     "storybook:build": "storybook build",
     "storybook:preview": "serve storybook-static/",
     "generate-sdk": "node --experimental-strip-types generate-sdk.ts; prettier --write ./src/api"
+  },
+  "engines": {
+    "node": "22.14.0",
+    "pnpm": "9.11.0"
   },
   "dependencies": {
     "@brachkow/email-providers": "^1.2.0",
