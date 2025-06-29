@@ -21,10 +21,6 @@
     "storybook:preview": "serve storybook-static/",
     "generate-sdk": "node --experimental-strip-types generate-sdk.ts; prettier --write ./src/api"
   },
-  "engines": {
-    "node": "22.14.0",
-    "pnpm": "9.11.0"
-  },
   "dependencies": {
     "@brachkow/email-providers": "^1.2.0",
     "@formkit/auto-animate": "^0.8.1",
@@ -95,8 +91,5 @@
     "vitest": "3.2.4",
     "vue-loader": "^17.4.2",
     "vue-tsc": "^2.2.10"
-  },
-  "volta": {
-    "node": "22.14.0"
   }
 }

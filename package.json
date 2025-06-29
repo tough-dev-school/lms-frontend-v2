@@ -9,6 +9,10 @@
     "prepare": "husky install",
     "lint-staged": "lint-staged --concurrent false"
   },
+  "engines": {
+    "node": "24.3.0",
+    "pnpm": "10.12.4"
+  },
   "devDependencies": {
     "husky": "^8.0.3",
     "lint-staged": "^15.1.0",
