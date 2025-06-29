@@ -130,7 +130,7 @@ importers:
         specifier: ^22.0.2
         version: 22.0.2
       '@types/jest-image-snapshot':
-        specifier: ^6.4.0
+        specifier: ^6.2.3
         version: 6.4.0
       '@types/jsdom':
         specifier: ^21.1.7
@@ -175,7 +175,7 @@ importers:
         specifier: ^0.12.0
         version: 0.12.0(eslint@8.53.0)(typescript@5.8.3)
       jest-image-snapshot:
-        specifier: ^6.5.1
+        specifier: ^6.2.0
         version: 6.5.1
       jsdom:
         specifier: ^22.1.0
