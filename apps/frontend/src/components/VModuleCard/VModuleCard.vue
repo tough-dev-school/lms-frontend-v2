@@ -1,6 +1,8 @@
 <script lang="ts" setup>
   import VHeading from '@/components/VHeading/VHeading.vue';
   import type { Module } from '@/api/generated-api';
+  import VTag from '../VTag/VTag.vue';
+  import { formatDate } from '@/utils/date';
 
   defineProps<{
     module: Module;
@@ -25,6 +27,9 @@
       cardClass(index),
       'VModuleCard text-black min-h-120 rounded-16 p-16 tablet:p-24 flex flex-col gap-8',
     ]">
+    <div v-if="module.start_date" class="flex justify-start">
+      <VTag>{{ formatDate(module.start_date, 'DD.MM') }}</VTag>
+    </div>
     <VHeading tag="h3">{{ module.name }}</VHeading>
     <p v-if="module.description">
       {{ module.description }}
