@@ -21,6 +21,7 @@ export const lmsKeys = {
   lessons: () => [...lmsKeys.all(), 'lessons'],
   moduleLessons: (moduleId?: number) => [...lmsKeys.lessons(), { moduleId }],
   modules: () => [...lmsKeys.all(), 'modules'],
+  module: (moduleId: number) => [...lmsKeys.modules(), { moduleId }],
   courseModules: (courseId?: number) => [...lmsKeys.modules(), { courseId }],
 };
 
@@ -106,6 +107,24 @@ export const useModulesQuery = (
   courseId: MaybeRefOrGetter<number | undefined>,
 ) => {
   const options = computed(() => modulesOptions(toValue(courseId)));
+
+  return useQuery(options);
+};
+
+const moduleOptions = (moduleId: number) => {
+  return {
+    queryKey: lmsKeys.module(moduleId),
+    queryFn: async () => await api.lmsModulesRetrieve(moduleId),
+  };
+};
+
+export const fetchModule = async (
+  queryClient: QueryClient,
+  { moduleId }: { moduleId: number },
+) => queryClient.fetchQuery(moduleOptions(moduleId));
+
+export const useModuleQuery = (moduleId: MaybeRefOrGetter<number>) => {
+  const options = computed(() => moduleOptions(toValue(moduleId)));
 
   return useQuery(options);
 };

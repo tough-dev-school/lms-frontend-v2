@@ -5,9 +5,9 @@
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import { useStudiesQuery } from '@/query';
   import VLessonCard from '@/components/VLessonCard/VLessonCard.vue';
-  import { useModulesQuery } from '@/query';
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
+  import { useModuleQuery } from '@/query';
 
   const props = defineProps<{
     courseId: number;
@@ -17,9 +17,6 @@
   const { data: studies, isLoading: isStudiesLoading } = useStudiesQuery();
   const { data: lessons, isLoading: isLessonsLoading } = useLessonsQuery(
     props.moduleId,
-  );
-  const { data: modules, isLoading: isModulesLoading } = useModulesQuery(
-    props.courseId,
   );
 
   const courseName = computed(
@@ -46,8 +43,8 @@
     ];
   });
 
-  const module = computed(() =>
-    modules.value?.find((module) => module.id === props.moduleId),
+  const { data: module, isLoading: isModuleLoading } = useModuleQuery(
+    props.moduleId,
   );
 
   const moduleName = computed(() => module.value?.name);
@@ -56,7 +53,7 @@
 
 <template>
   <VLoggedLayout
-    v-if="!(isStudiesLoading || isModulesLoading || isLessonsLoading)"
+    v-if="!(isStudiesLoading || isModuleLoading || isLessonsLoading)"
     :title="moduleName"
     :breadcrumbs="breadcrumbs">
     <VHtmlContent v-if="moduleText" :content="moduleText" />

@@ -318,7 +318,7 @@ export enum LanguageEnum {
 }
 
 /** Serialize lesson for the user, lesson should be annotated with crosschecks stats */
-export interface LessonForUser {
+export interface Lesson {
   id: number;
   material?: NotionMaterial;
   homework?: HomeworkStats;
@@ -1853,6 +1853,23 @@ export class Api<SecurityDataType extends unknown> {
         path: `/api/v2/lms/modules/`,
         method: 'GET',
         query: query,
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description Get a module by id
+     *
+     * @tags lms
+     * @name LmsModulesRetrieve
+     * @request GET:/api/v2/lms/modules/{id}/
+     * @secure
+     */
+    lmsModulesRetrieve: (id: number, params: RequestParams = {}) =>
+      this.http.request<Module, any>({
+        path: `/api/v2/lms/modules/${id}/`,
+        method: 'GET',
         secure: true,
         format: 'json',
         ...params,
