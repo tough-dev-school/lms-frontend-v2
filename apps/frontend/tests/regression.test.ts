@@ -81,10 +81,7 @@ for (const scenario of scenarios) {
           await scenario.action({ page });
         }
 
-        const snapshotName = `regression-test-ts-tests-regression-test-ts-visual-regression-test-for-${scenario.name
-          .toLowerCase()
-          .replace(/\s+/g, '-')}-${width}-${height}-${colorScheme}-1-snap`;
-        await expect(page).toHaveScreenshot(snapshotName + '.png', {
+        await expect(page).toHaveScreenshot({
           fullPage: true,
           animations: 'disabled',
         });
