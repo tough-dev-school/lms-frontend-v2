@@ -75,7 +75,6 @@
     "@vue/test-utils": "^2.4.1",
     "@vue/tsconfig": "^0.4.0",
     "autoprefixer": "^10.4.16",
-    "esbuild": "^0.19.5",
     "eslint": "^8.53.0",
     "eslint-plugin-storybook": "^0.12.0",
     "jest-image-snapshot": "^6.2.0",
