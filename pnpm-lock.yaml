@@ -83,9 +83,6 @@ importers:
       pinia-plugin-persistedstate:
         specifier: ^3.2.0
         version: 3.2.0(pinia@2.1.7(typescript@5.2.2)(vue@3.5.15(typescript@5.2.2)))
-      prismjs:
-        specifier: ^1.29.0
-        version: 1.30.0
       turndown:
         specifier: ^7.1.2
         version: 7.1.2
