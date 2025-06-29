@@ -1,7 +1,6 @@
 # Docs
 
 - `NotionRenderer`: [`docs/`](https://github.com/tough-dev-school/vue-notion/tree/main/docs#notionrenderer)
-- Syntax-Highlighting in Code Blocks (with Prism.js): [`docs/`](https://github.com/tough-dev-school/vue-notion/tree/main/docs#syntax-highlighting)
 - Equations: [`docs/`](https://github.com/tough-dev-school/vue-notion/tree/main/docs#equations)
 - Notion API: [`docs/`](https://github.com/tough-dev-school/vue-notion/tree/main/docs#notion-api)
 
@@ -19,7 +18,6 @@ The `NotionRenderer` component offers a few properties
 - [`mapPageUrl`](#mapPageUrl) – default: `defaultMapPageUrl()`
 - [`pageLinkOptions`](#pageLinkOptions) – default: `undefined`
 - [`pageLinkTarget`](#pageLinkTarget) – default: `"_self"`
-- [`prism`](#prism) – default: `false`
 - [`katex`](#katex) – default: `false`
 - [`textLinkTarget`](#textLinkTarget) – default: `"_blank"`
 
@@ -109,12 +107,6 @@ pageLinkOptions: {
 ### `pageLinkTarget`: String
 
 – the [target attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attr-target) of links referencing other pages (skipped for pages with `pageLinkeOptions`)
-
-### `prism`: Boolean
-
-– whether or not syntax-highlighting using Prims.js should be activated.
-
-> Check the `docs#syntax-highlighting` section below for more details.
 
 ### `katex`: Boolean
 
