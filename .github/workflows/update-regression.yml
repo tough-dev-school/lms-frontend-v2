@@ -29,6 +29,10 @@ jobs:
         run: pnpm run storybook:build
         working-directory: apps/frontend
 
+      - name: Run storybook
+        run: pnpm run storybook:preview &
+        working-directory: apps/frontend
+
       - name: Run regression tests
         run: pnpm run test:regression:update
         working-directory: apps/frontend
