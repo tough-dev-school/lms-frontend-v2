@@ -1,7 +1,6 @@
 import '../src/fonts.css';
 import '../src/style.css';
 import { setup } from '@storybook/vue3-vite';
-import { createPinia } from 'pinia';
 import FloatingVue from 'floating-vue';
 import 'floating-vue/dist/style.css';
 import { VueQueryPlugin } from '@tanstack/vue-query';
@@ -47,7 +46,6 @@ const preview: Preview = {
 
 setup((app) => {
   app.use(FloatingVue);
-  app.use(createPinia());
   app.use(VueQueryPlugin, vueQueryConfig);
 });
 

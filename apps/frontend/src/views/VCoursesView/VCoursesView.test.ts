@@ -11,7 +11,6 @@ import {
   QueryClient,
   type VueQueryPluginOptions,
 } from '@tanstack/vue-query';
-import { createTestingPinia } from '@pinia/testing';
 
 const defaultStudies = faker.helpers.multiple(mockCourse, { count: 3 });
 
@@ -42,12 +41,7 @@ const createWrapper = (studies = defaultStudies) => {
     shallow: true,
     global: {
       renderStubDefaultSlot: true,
-      plugins: [
-        [VueQueryPlugin, options],
-        createTestingPinia({
-          createSpy: vi.fn,
-        }),
-      ],
+      plugins: [[VueQueryPlugin, options]],
       stubs: {
         RouterLink: RouterLinkStub,
       },

@@ -5,8 +5,7 @@ import VLoginResetView from './VLoginResetView.vue';
 import type VButton from '@/components/VButton/VButton.vue';
 import type VTextInput from '@/components/VTextInput/VTextInput.vue';
 import { faker } from '@faker-js/faker';
-import useAuth from '@/stores/auth';
-import { createTestingPinia } from '@pinia/testing';
+import { useAuth } from '@/stores/auth';
 
 const defaultProps = {};
 
@@ -18,30 +17,29 @@ vi.mock('vue-router', () => ({
   }),
 }));
 
+vi.mock('@/stores/auth');
+
 const email = faker.internet.email();
 
 describe('VLoginResetView', () => {
   let wrapper: VueWrapper<InstanceType<typeof VLoginResetView>>;
-  let auth: ReturnType<typeof useAuth>;
+  const requestResetMock = vi.fn();
 
   beforeEach(() => {
+    (useAuth as ReturnType<typeof vi.fn>).mockReturnValue({
+      requestReset: requestResetMock,
+    });
+
     wrapper = mount(VLoginResetView, {
       shallow: true,
       props: defaultProps,
       global: {
         renderStubDefaultSlot: true,
-        plugins: [
-          createTestingPinia({
-            createSpy: vi.fn,
-          }),
-        ],
         stubs: {
           VCard: false,
         },
       },
     });
-
-    auth = useAuth();
   });
 
   const getEmailWrapper = () =>
@@ -60,8 +58,8 @@ describe('VLoginResetView', () => {
 
     await getSendWrapper().trigger('submit');
 
-    expect(auth.requestReset).toHaveBeenCalledTimes(1);
-    expect(auth.requestReset).toHaveBeenCalledWith(email);
+    expect(requestResetMock).toHaveBeenCalledTimes(1);
+    expect(requestResetMock).toHaveBeenCalledWith(email);
   });
 
   test('click on send redirects to mail-sent', async () => {
@@ -69,7 +67,7 @@ describe('VLoginResetView', () => {
 
     await getSendWrapper().trigger('submit');
 
-    expect(auth.requestReset).toHaveBeenCalledTimes(1);
+    expect(requestResetMock).toHaveBeenCalledTimes(1);
     expect(routerPushMock).toHaveBeenCalledWith({
       name: 'mail-sent',
       query: { email },

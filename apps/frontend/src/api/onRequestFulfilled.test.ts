@@ -1,29 +1,15 @@
-import { vi, describe, beforeEach, expect, test } from 'vitest';
+import { vi, describe, expect, test } from 'vitest';
 import onRequestFulfilled from './onRequestFulfilled';
 import requestCaseMiddleware from './requestCaseMiddleware';
 import type { InternalAxiosRequestConfig } from 'axios';
 import { faker } from '@faker-js/faker';
-import { createApp } from 'vue';
-import { setActivePinia } from 'pinia';
-import { createTestingPinia } from '@pinia/testing';
-import useAuth from '@/stores/auth';
+import { useAuth } from '@/stores/auth';
 
 vi.mock('./requestCaseMiddleware');
 
 const input = { data: {}, headers: {} } as InternalAxiosRequestConfig;
 
 describe('onRequestFulfilled', () => {
-  let authStore: any;
-
-  beforeEach(() => {
-    const app = createApp({});
-    const pinia = createTestingPinia({ createSpy: vi.fn });
-    app.use(pinia);
-    setActivePinia(pinia);
-
-    authStore = useAuth();
-  });
-
   test('request data is converted to snake_case', () => {
     onRequestFulfilled(input, true);
 
@@ -31,7 +17,7 @@ describe('onRequestFulfilled', () => {
     expect(requestCaseMiddleware).toHaveBeenCalledWith(input.data, true);
   });
 
-  test('request data coversion can be disabled', () => {
+  test('request data conversion can be disabled', () => {
     onRequestFulfilled(input, false);
 
     expect(requestCaseMiddleware).toHaveBeenCalledTimes(1);
@@ -39,15 +25,17 @@ describe('onRequestFulfilled', () => {
   });
 
   test('auth token added to request headers if exist', () => {
-    authStore.token = faker.string.uuid();
+    const { token } = useAuth();
+    token.value = faker.string.uuid();
 
     const request = onRequestFulfilled(input, true);
 
-    expect(request?.headers?.Authorization).toBe(`Bearer ${authStore.token}`);
+    expect(request?.headers?.Authorization).toBe(`Bearer ${token.value}`);
   });
 
   test('auth token is not added to request headers if not exist', () => {
-    authStore.token = undefined;
+    const { token } = useAuth();
+    token.value = undefined;
 
     const request = onRequestFulfilled(input, true);
 

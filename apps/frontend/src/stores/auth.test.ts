@@ -1,79 +1,81 @@
-import { setActivePinia } from 'pinia';
-import { createTestingPinia } from '@pinia/testing';
 import { loginWithCredentials, loginWithLink, sendLoginLink } from '@/api/auth';
 import { faker } from '@faker-js/faker';
-import useAuth from './auth';
-import { createApp } from 'vue';
-import { vi, describe, beforeEach, expect, test } from 'vitest';
+import { useAuth } from './auth';
+import { vi, describe, expect, test } from 'vitest';
 
-const token = faker.string.uuid();
 const passwordlessToken = faker.string.uuid();
 const username = faker.internet.userName();
 const password = faker.internet.password();
 const email = faker.internet.email();
 
-vi.mock('@/api/auth', () => {
-  return {
-    loginWithCredentials: vi.fn(),
-    sendLoginLink: vi.fn(),
-    loginWithLink: vi.fn(),
-  };
-});
+// vi.mock('@/api/auth', () => {
+//   return {
+//     loginWithCredentials: vi.fn(),
+//     sendLoginLink: vi.fn(),
+//     loginWithLink: vi.fn(),
+//   };
+// });
+
+vi.mock('@/api/auth');
 
 describe('toasts store', () => {
-  let auth: ReturnType<typeof useAuth>;
-
-  beforeEach(() => {
-    const app = createApp({});
-    const pinia = createTestingPinia({ createSpy: vi.fn, stubActions: false });
-    app.use(pinia);
-    setActivePinia(pinia);
-
-    auth = useAuth();
-  });
-
   test('loginWithCredentials calls api with needed parameters', async () => {
-    await auth.loginWithCredentials(username, password);
+    const { loginWithCredentials: login } = useAuth();
+    await login(username, password);
 
     expect(loginWithCredentials).toHaveBeenCalledTimes(1);
     expect(loginWithCredentials).toHaveBeenCalledWith(username, password);
   });
 
   test('loginWithCredentials sets token', async () => {
+    const expectedValue = faker.string.uuid();
     (loginWithCredentials as ReturnType<typeof vi.fn>).mockResolvedValue({
-      token,
+      token: expectedValue,
     });
-    await auth.loginWithCredentials(username, password);
+    const { token, loginWithCredentials: login } = useAuth();
 
-    expect(auth.token).toBe(token);
+    await login(username, password);
+
+    expect(token.value).toBe(expectedValue);
   });
 
   test('loginWithEmail calls api with needed parameters', () => {
-    auth.loginWithEmail(email);
+    const { loginWithEmail: login } = useAuth();
+    login(email);
 
     expect(sendLoginLink).toHaveBeenCalledTimes(1);
     expect(sendLoginLink).toHaveBeenCalledWith(email);
   });
 
   test('exchangeTokens calls api with needed parameters', async () => {
-    await auth.exchangeTokens(passwordlessToken);
+    const { exchangeTokens } = useAuth();
+
+    await exchangeTokens(passwordlessToken);
 
     expect(loginWithLink).toHaveBeenCalledTimes(1);
     expect(loginWithLink).toHaveBeenCalledWith(passwordlessToken);
   });
 
   test('exchangeTokens sets token', async () => {
-    (loginWithLink as ReturnType<typeof vi.fn>).mockResolvedValue({ token });
-    await auth.exchangeTokens(passwordlessToken);
+    const expectedValue = faker.string.uuid();
 
-    expect(auth.token).toBe(token);
+    (loginWithLink as ReturnType<typeof vi.fn>).mockResolvedValue({
+      token: expectedValue,
+    });
+    const { token, exchangeTokens } = useAuth();
+
+    await exchangeTokens(passwordlessToken);
+
+    expect(token.value).toBe(expectedValue);
   });
 
   test('resetAuth resets token', () => {
-    auth.token = faker.string.uuid();
+    const { token, removeToken } = useAuth();
 
-    auth.removeToken();
+    token.value = faker.string.uuid();
 
-    expect(auth.token).toBe(undefined);
+    removeToken();
+
+    expect(token.value).toBe(undefined);
   });
 });

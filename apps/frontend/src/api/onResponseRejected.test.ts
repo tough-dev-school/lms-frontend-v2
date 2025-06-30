@@ -1,14 +1,12 @@
-import useAuth from '@/stores/auth';
+import { useAuth } from '@/stores/auth';
 import { vi, describe, beforeEach, expect, test } from 'vitest';
-import { createApp } from 'vue';
-import { setActivePinia } from 'pinia';
-import { createTestingPinia } from '@pinia/testing';
 import onResponseRejected from './onResponseRejected';
 import { cloneDeep } from 'lodash-es';
 import responseCaseMiddleware from './responseCaseMiddleware';
 import handleError from '@/utils/handleError';
 import type { AxiosError } from 'axios';
 import { faker } from '@faker-js/faker';
+import { ref } from 'vue';
 
 const defaultError = {
   response: {
@@ -22,18 +20,16 @@ const defaultError = {
 
 vi.mock('@/utils/handleError');
 vi.mock('./responseCaseMiddleware');
+vi.mock('@/stores/auth');
 
 describe('custom axios', () => {
-  let auth: ReturnType<typeof useAuth>;
+  const removeTokenMock = vi.fn();
 
   beforeEach(() => {
-    const app = createApp({});
-    const pinia = createTestingPinia({ createSpy: vi.fn });
-    app.use(pinia);
-    setActivePinia(pinia);
-
-    auth = useAuth();
-    auth.token = faker.string.uuid();
+    (useAuth as ReturnType<typeof vi.fn>).mockReturnValue({
+      removeToken: removeTokenMock,
+      token: ref(faker.string.uuid()),
+    });
   });
 
   test('response data is converted to CamelCase', () => {
@@ -49,7 +45,7 @@ describe('custom axios', () => {
     );
   });
 
-  test('response data coversion can be disabled', () => {
+  test('response data conversion can be disabled', () => {
     onResponseRejected(
       cloneDeep(defaultError) as unknown as AxiosError,
       false,
@@ -68,7 +64,7 @@ describe('custom axios', () => {
 
     onResponseRejected(error as unknown as AxiosError, true).catch(() => {});
 
-    expect(auth.removeToken).toHaveBeenCalledTimes(0);
+    expect(removeTokenMock).toHaveBeenCalledTimes(0);
   });
 
   test('logout on 401', () => {
@@ -77,7 +73,7 @@ describe('custom axios', () => {
 
     onResponseRejected(error as unknown as AxiosError, true).catch(() => {});
 
-    expect(auth.removeToken).toHaveBeenCalledTimes(1);
+    expect(removeTokenMock).toHaveBeenCalledTimes(1);
   });
 
   test('calls handleError with error for json errors', () => {

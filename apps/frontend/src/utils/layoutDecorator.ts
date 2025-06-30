@@ -8,8 +8,8 @@ const layoutDecorator = (story: any, layout: any) => ({
   components: { layout, story },
   template: '<layout><story /></layout>',
   setup() {
-    const toasts = useToasts();
-    toasts.disable();
+    const { disable } = useToasts();
+    disable();
 
     const queryClient = useQueryClient();
     queryClient.setQueryData(userKeys.me(), {

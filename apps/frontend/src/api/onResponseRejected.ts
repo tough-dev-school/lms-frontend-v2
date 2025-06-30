@@ -1,4 +1,4 @@
-import useAuth from '@/stores/auth';
+import { useAuth } from '@/stores/auth';
 import type { AxiosError } from 'axios';
 import handleError from '@/utils/handleError';
 import responseCaseMiddleware from './responseCaseMiddleware';
@@ -7,10 +7,10 @@ const onResponseRejected = (
   error: AxiosError,
   enableCaseMiddleware: boolean,
 ) => {
-  const auth = useAuth();
+  const { removeToken, token } = useAuth();
 
   if (error.response) {
-    if (error.response.status === 401 && auth.token) auth.removeToken();
+    if (error.response.status === 401 && token.value) removeToken();
 
     if (error.response.status !== 401) {
       // Convert data keys to target case

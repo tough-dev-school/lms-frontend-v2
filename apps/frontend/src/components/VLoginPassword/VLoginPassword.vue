@@ -3,14 +3,14 @@
   import VCard from '@/components/VCard/VCard.vue';
   import VTextInput from '@/components/VTextInput/VTextInput.vue';
   import { ref, computed } from 'vue';
-  import useAuth from '@/stores/auth';
+  import { useAuth } from '@/stores/auth';
   import { useRouter } from 'vue-router';
 
   const props = defineProps<{
     next?: string;
   }>();
 
-  const auth = useAuth();
+  const { loginWithCredentials, token } = useAuth();
   const router = useRouter();
 
   const username = ref('');
@@ -22,11 +22,11 @@
 
   const isPending = ref(false);
 
-  const loginWithCredentials = async () => {
+  const handleLogin = async () => {
     isPending.value = true;
     try {
-      await auth.loginWithCredentials(username.value, password.value);
-      if (auth.token) {
+      await loginWithCredentials(username.value, password.value);
+      if (token.value) {
         props.next
           ? router.push({ path: decodeURIComponent(String(props.next)) })
           : router.push({ name: 'home' });
@@ -47,10 +47,7 @@
 </script>
 
 <template>
-  <VCard
-    tag="form"
-    title="Вход и регистрация"
-    @submit.prevent="loginWithCredentials">
+  <VCard tag="form" title="Вход и регистрация" @submit.prevent="handleLogin">
     <div class="flex flex-col gap-16">
       <VTextInput
         v-model="username"

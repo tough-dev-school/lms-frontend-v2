@@ -1,11 +1,8 @@
 import { faker } from '@faker-js/faker';
-import { vi, describe, beforeEach, expect, test } from 'vitest';
-import loginById from './loginById';
-import useAuth from '@/stores/auth';
+import { describe, beforeEach, expect, test, vi } from 'vitest';
+import { loginById } from './loginById';
+import { useAuth } from '@/stores/auth';
 import type { RouteLocationNormalized } from 'vue-router';
-import { createApp } from 'vue';
-import { createTestingPinia } from '@pinia/testing';
-import { setActivePinia } from 'pinia';
 
 const userId = faker.string.uuid();
 
@@ -15,23 +12,22 @@ const to: Partial<RouteLocationNormalized> = {
   },
 };
 
+vi.mock('@/stores/auth');
+
 describe('loginById', () => {
-  let auth: ReturnType<typeof useAuth>;
-
   beforeEach(() => {
-    const app = createApp({});
-    const pinia = createTestingPinia({ createSpy: vi.fn });
-    app.use(pinia);
-    setActivePinia(pinia);
-
-    auth = useAuth();
+    (useAuth as ReturnType<typeof vi.fn>).mockReturnValue({
+      loginWithUserId: vi.fn(),
+    });
   });
 
   test('should call loginWithUserId', async () => {
+    const { loginWithUserId } = useAuth();
+
     await loginById(to as RouteLocationNormalized);
 
-    expect(auth.loginWithUserId).toHaveBeenCalled();
-    expect(auth.loginWithUserId).toHaveBeenCalledWith(userId);
+    expect(loginWithUserId).toHaveBeenCalled();
+    expect(loginWithUserId).toHaveBeenCalledWith(userId);
   });
 
   test('should return directions to home', async () => {

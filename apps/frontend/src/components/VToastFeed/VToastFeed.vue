@@ -1,13 +1,11 @@
 <script lang="ts" setup>
   import VToast from '@/components/VToast/VToast.vue';
   import useToasts from '@/stores/toasts';
-  import { storeToRefs } from 'pinia';
 
-  const toasts = useToasts();
-  const { messages } = storeToRefs(toasts);
+  const { messages, removeMessage } = useToasts();
 
   const handleDelete = (id: string) => {
-    toasts.removeMessage(id);
+    removeMessage(id);
   };
 </script>
 

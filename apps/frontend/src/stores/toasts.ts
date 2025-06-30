@@ -1,5 +1,6 @@
 import { uuid } from '@/utils/uuid';
-import { defineStore } from 'pinia';
+import { createGlobalState } from '@vueuse/core';
+import { ref } from 'vue';
 
 type VToastType = 'error' | 'success' | undefined;
 
@@ -17,31 +18,36 @@ export class VToastMessage {
   }
 }
 
-interface State {
-  messages: VToastMessage[];
-  disabled: boolean;
-}
+const useToasts = createGlobalState(() => {
+  const messages = ref<VToastMessage[]>([]);
+  const disabled = ref(false);
 
-const useToasts = defineStore('toasts', {
-  state: (): State => {
-    return { messages: [], disabled: false };
-  },
-  actions: {
-    addMessage(text: string, type: VToastType = undefined) {
-      if (this.disabled) return;
-      this.messages = [...this.messages, new VToastMessage(text, type)];
-    },
-    removeMessage(id: string) {
-      this.messages = this.messages.filter((message) => message.id !== id);
-    },
-    disable() {
-      this.messages = [];
-      this.disabled = true;
-    },
-    enable() {
-      this.disabled = false;
-    },
-  },
+  const addMessage = (text: string, type: VToastType = undefined) => {
+    if (disabled.value) return;
+    messages.value = [...messages.value, new VToastMessage(text, type)];
+  };
+
+  const removeMessage = (id: string) => {
+    messages.value = messages.value.filter((message) => message.id !== id);
+  };
+
+  const enable = () => {
+    disabled.value = false;
+  };
+
+  const disable = () => {
+    messages.value = [];
+    disabled.value = true;
+  };
+
+  return {
+    messages,
+    disabled,
+    addMessage,
+    removeMessage,
+    enable,
+    disable,
+  };
 });
 
 export default useToasts;

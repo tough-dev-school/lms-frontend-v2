@@ -3,19 +3,19 @@
   import VCard from '@/components/VCard/VCard.vue';
   import VTextInput from '@/components/VTextInput/VTextInput.vue';
   import { ref } from 'vue';
-  import useAuth from '@/stores/auth';
+  import { useAuth } from '@/stores/auth';
   import { useRouter } from 'vue-router';
 
-  const auth = useAuth();
+  const { loginWithEmail } = useAuth();
   const router = useRouter();
 
   const email = ref('');
   const isPending = ref(false);
 
-  const loginWithEmail = async () => {
+  const handleLogin = async () => {
     try {
       isPending.value = true;
-      await auth.loginWithEmail(email.value);
+      await loginWithEmail(email.value);
       router.push({ name: 'mail-sent', query: { email: email.value } });
     } catch (e) {
       console.error('Failed to login with email');
@@ -27,7 +27,7 @@
 </script>
 
 <template>
-  <VCard tag="form" title="Вход и регистрация" @submit.prevent="loginWithEmail">
+  <VCard tag="form" title="Вход и регистрация" @submit.prevent="handleLogin">
     <VTextInput
       v-model="email"
       label="Электронная почта"

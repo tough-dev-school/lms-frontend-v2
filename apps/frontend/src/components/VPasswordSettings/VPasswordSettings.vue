@@ -3,14 +3,14 @@
   import VButton from '@/components/VButton/VButton.vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VTextInput from '@/components/VTextInput/VTextInput.vue';
-  import useAuth from '@/stores/auth';
+  import { useAuth } from '@/stores/auth';
 
   export interface Props {
     uid?: string;
     token?: string;
   }
 
-  const auth = useAuth();
+  const { changePassword } = useAuth();
 
   const newPassword1 = ref('');
   const newPassword2 = ref('');
@@ -23,7 +23,7 @@
   const savePassword = async () => {
     isPending.value = true;
     try {
-      await auth.changePassword({
+      await changePassword({
         newPassword1: newPassword1.value,
         newPassword2: newPassword2.value,
         uid: props.uid,
@@ -37,7 +37,7 @@
 </script>
 
 <template>
-  <VCard :title="!auth.token ? 'Сброс пароля' : 'Пароль'">
+  <VCard :title="!token ? 'Сброс пароля' : 'Пароль'">
     <div class="flex flex-col items-start gap-16 tablet:gap-24">
       <VTextInput
         v-model="newPassword1"
