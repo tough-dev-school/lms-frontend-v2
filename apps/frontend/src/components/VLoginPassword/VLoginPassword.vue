@@ -20,13 +20,21 @@
     () => !(username.value && password.value),
   );
 
+  const isPending = ref(false);
+
   const loginWithCredentials = async () => {
-    await auth.loginWithCredentials(username.value, password.value);
-    if (auth.token) {
-      props.next
-        ? router.push({ path: decodeURIComponent(String(props.next)) })
-        : router.push({ name: 'home' });
+    isPending.value = true;
+    try {
+      await auth.loginWithCredentials(username.value, password.value);
+      if (auth.token) {
+        props.next
+          ? router.push({ path: decodeURIComponent(String(props.next)) })
+          : router.push({ name: 'home' });
+      }
+    } catch {
+      console.error('Failed to login');
     }
+    isPending.value = false;
   };
 
   const isEmail = computed(() => {
@@ -53,8 +61,8 @@
         v-model="password"
         autocomplete="current-password"
         type="password">
-        <template #label
-          >Пароль
+        <template #label>
+          Пароль
           <span class="text-sub">
             (<button
               class="underline"
@@ -68,9 +76,9 @@
       </VTextInput>
     </div>
     <template #footer>
-      <VButton :disabled="isCredentialsInvalid" class="flex-grow" type="submit"
-        >Войти</VButton
-      >
+      <VButton :disabled="isCredentialsInvalid" class="flex-grow" type="submit">
+        Войти
+      </VButton>
       <VButton appearance="link" class="flex-grow" @click="emit('change')">
         Войти по ссылке
       </VButton>

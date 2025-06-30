@@ -94,10 +94,7 @@
       </fieldset>
     </div>
     <template #footer>
-      <VButton
-        data-testid="save"
-        :disabled="isPending"
-        @click="saveCertificate">
+      <VButton data-testid="save" :loading="isPending" @click="saveCertificate">
         {{ isPending ? 'Сохраняется...' : 'Сохранить' }}
       </VButton>
     </template>

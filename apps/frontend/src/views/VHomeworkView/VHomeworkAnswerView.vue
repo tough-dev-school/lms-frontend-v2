@@ -111,8 +111,10 @@
     );
   });
 
-  const { mutateAsync: createAnswerMutation } =
-    useHomeworkAnswerCreateMutation(queryClient);
+  const {
+    mutateAsync: createAnswerMutation,
+    isPending: isCreateAnswerPending,
+  } = useHomeworkAnswerCreateMutation(queryClient);
 
   const handleDeleteAnswer = () => {
     router.push({
@@ -202,7 +204,10 @@
       </p>
       <VFeedbackGuide />
 
-      <VCreateAnswer v-model="commentText" @send="handleCreateComment" />
+      <VCreateAnswer
+        v-model="commentText"
+        :is-pending="isCreateAnswerPending"
+        @send="handleCreateComment" />
       <div v-if="isSent" class="card">
         Ответ отправлен!
         <a class="link" :href="ownAnswerHref">Вернуться к своему ответу</a>

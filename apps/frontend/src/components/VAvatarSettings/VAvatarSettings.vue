@@ -65,7 +65,8 @@
     <template #footer>
       <VButton
         data-testid="save"
-        :disabled="isSaveButtonDisabled || isUpdatePending"
+        :disabled="isSaveButtonDisabled"
+        :loading="isUpdatePending"
         @click="saveProfile"
         >{{ isUpdatePending ? 'Сохраняется...' : 'Сохранить' }}</VButton
       >

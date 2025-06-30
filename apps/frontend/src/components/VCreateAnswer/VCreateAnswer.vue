@@ -3,12 +3,18 @@
   import VButton from '@/components/VButton/VButton.vue';
   import { computed } from 'vue';
 
+  const props = defineProps<{
+    isPending: boolean;
+  }>();
+
   const emit = defineEmits<{
     send: [];
   }>();
 
   const text = defineModel<string>({ required: true });
-  const isDisabled = computed(() => !(text.value.length > 0));
+  const isDisabled = computed(
+    () => !(text.value.length > 0) || props.isPending,
+  );
 </script>
 
 <template>
@@ -18,8 +24,12 @@
       class="SendOwnAnswer__Editor"
       @send="emit('send')" />
     <div class="SendOwnAnswer__Footer">
-      <VButton :disabled="isDisabled" class="h-32" @click="emit('send')">
-        Сохранить
+      <VButton
+        :disabled="isDisabled"
+        :loading="isPending"
+        class="h-32"
+        @click="emit('send')">
+        {{ isPending ? 'Отправляется...' : 'Отправить' }}
       </VButton>
     </div>
   </div>

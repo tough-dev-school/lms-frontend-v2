@@ -7,7 +7,7 @@
   import { useQueryClient } from '@tanstack/vue-query';
 
   const queryClient = useQueryClient();
-  const { mutateAsync: updateUser, isPending } =
+  const { mutateAsync: updateUser, isPending: isUpdateUserPending } =
     useUpdateUserMutation(queryClient);
 
   const data = ref({
@@ -52,8 +52,11 @@
         data-testid="telegram" />
     </div>
     <template #footer>
-      <VButton data-testid="save" :disabled="isPending" @click="saveProfile">
-        {{ isPending ? 'Сохраняется...' : 'Сохранить' }}
+      <VButton
+        data-testid="save"
+        :loading="isUpdateUserPending"
+        @click="saveProfile">
+        {{ isUpdateUserPending ? 'Сохраняется...' : 'Сохранить' }}
       </VButton>
     </template>
   </VCard>

@@ -18,15 +18,21 @@
   const props = defineProps<Props>();
   const emit = defineEmits<{ save: [] }>();
 
-  const savePassword = async () => {
-    await auth.changePassword({
-      newPassword1: newPassword1.value,
-      newPassword2: newPassword2.value,
-      uid: props.uid,
-      token: props.token,
-    });
+  const isPending = ref(false);
 
-    emit('save');
+  const savePassword = async () => {
+    isPending.value = true;
+    try {
+      await auth.changePassword({
+        newPassword1: newPassword1.value,
+        newPassword2: newPassword2.value,
+        uid: props.uid,
+        token: props.token,
+      });
+
+      emit('save');
+    } catch {}
+    isPending.value = false;
   };
 </script>
 
@@ -45,7 +51,9 @@
         data-testid="password2" />
     </div>
     <template #footer>
-      <VButton data-testid="save" @click="savePassword">Сохранить</VButton>
+      <VButton :loading="isPending" data-testid="save" @click="savePassword">
+        {{ isPending ? 'Сохраняется...' : 'Сохранить' }}
+      </VButton>
     </template>
   </VCard>
 </template>
