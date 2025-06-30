@@ -1,4 +1,4 @@
-import useAuth from '@/stores/auth';
+import { useAuth } from '@/stores/auth';
 import type { InternalAxiosRequestConfig } from 'axios';
 import requestCaseMiddleware from './requestCaseMiddleware';
 import { cloneDeep } from 'lodash-es';

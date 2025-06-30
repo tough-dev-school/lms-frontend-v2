@@ -4,22 +4,25 @@ import { faker } from '@faker-js/faker';
 import useToasts, { VToastMessage } from '@/stores/toasts';
 import type VToast from '@/components/VToast/VToast.vue';
 import { vi, describe, beforeEach, expect, test } from 'vitest';
+import { ref } from 'vue';
 
 const MESSAGES = 10;
 
-vi.mock('@/stores/toasts', () => ({
-  useToasts: vi.fn().mockReturnValue({
-    messages: [...Array(MESSAGES)].map(() => {
-      return new VToastMessage(faker.lorem.sentence(), 'success', 10000);
-    }),
-    removeMessage: vi.fn(),
-  }),
-}));
+vi.mock('@/stores/toasts');
 
 describe('VToastFeed', () => {
   let wrapper: VueWrapper;
 
   beforeEach(async () => {
+    (useToasts as ReturnType<typeof vi.fn>).mockReturnValue({
+      messages: ref(
+        [...Array(MESSAGES)].map(() => {
+          return new VToastMessage(faker.lorem.sentence(), 'success', 10000);
+        }),
+      ),
+      removeMessage: vi.fn(),
+    });
+
     wrapper = mount(VToastFeed, {
       shallow: true,
     });
@@ -42,7 +45,7 @@ describe('VToastFeed', () => {
     expect(removeMessage).toHaveBeenCalledWith(messages.value[0].id);
   });
 
-  test('Feed has correct ammount of toasts', async () => {
+  test('Feed has correct amount of toasts', async () => {
     expect(getAllToasts()).toHaveLength(MESSAGES);
   });
 });

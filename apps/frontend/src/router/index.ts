@@ -3,9 +3,9 @@ import {
   createWebHistory,
   type RouteLocationNormalized,
 } from 'vue-router';
-import useAuth from '@/stores/auth';
-import loginByToken from '@/router/loginByToken';
-import loginById from '@/router/loginById';
+import { useAuth } from '@/stores/auth';
+import { loginByToken } from '@/router/loginByToken';
+import { loginById } from '@/router/loginById';
 import { useQueryClient } from '@tanstack/vue-query';
 import { baseQueryKey, fetchHomeworkAnswer } from '@/query';
 import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';

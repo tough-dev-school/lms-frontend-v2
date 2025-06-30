@@ -1,9 +1,7 @@
 import type { AuthToken } from '@/types';
 import * as authApi from '@/api/auth';
 import useToasts from './toasts';
-import { useQueryClient } from '@tanstack/vue-query';
-import { baseQueryKey } from '@/query';
-import { computed, watch } from 'vue';
+import { computed } from 'vue';
 import { createGlobalState, useStorage } from '@vueuse/core';
 
 type AuthStoreState = {
@@ -98,13 +96,13 @@ export const useAuth = createGlobalState(() => {
     storage.value.token = token;
   };
 
-  const queryClient = useQueryClient();
-  watch(
-    () => token.value,
-    () => {
-      queryClient.invalidateQueries({ queryKey: baseQueryKey() });
-    },
-  );
+  // const queryClient = useQueryClient();
+  // watch(
+  //   () => token.value,
+  //   () => {
+  //     queryClient.invalidateQueries({ queryKey: baseQueryKey() });
+  //   },
+  // );
 
   const removeToken = () => {
     token.value = undefined;
@@ -122,5 +120,3 @@ export const useAuth = createGlobalState(() => {
     removeToken,
   };
 });
-
-export default useAuth;

@@ -1,9 +1,8 @@
 import { faker } from '@faker-js/faker';
-import { vi, describe, beforeEach, expect, test } from 'vitest';
-import loginById from './loginById';
-import useAuth from '@/stores/auth';
+import { describe, beforeEach, expect, test, vi } from 'vitest';
+import { loginById } from './loginById';
+import { useAuth } from '@/stores/auth';
 import type { RouteLocationNormalized } from 'vue-router';
-import { createApp } from 'vue';
 
 const userId = faker.string.uuid();
 
@@ -13,18 +12,22 @@ const to: Partial<RouteLocationNormalized> = {
   },
 };
 
-describe('loginById', () => {
-  let auth: ReturnType<typeof useAuth>;
+vi.mock('@/stores/auth');
 
+describe('loginById', () => {
   beforeEach(() => {
-    auth = useAuth();
+    (useAuth as ReturnType<typeof vi.fn>).mockReturnValue({
+      loginWithUserId: vi.fn(),
+    });
   });
 
   test('should call loginWithUserId', async () => {
+    const { loginWithUserId } = useAuth();
+
     await loginById(to as RouteLocationNormalized);
 
-    expect(auth.loginWithUserId).toHaveBeenCalled();
-    expect(auth.loginWithUserId).toHaveBeenCalledWith(userId);
+    expect(loginWithUserId).toHaveBeenCalled();
+    expect(loginWithUserId).toHaveBeenCalledWith(userId);
   });
 
   test('should return directions to home', async () => {

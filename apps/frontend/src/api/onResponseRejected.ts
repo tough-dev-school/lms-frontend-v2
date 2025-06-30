@@ -1,4 +1,4 @@
-import useAuth from '@/stores/auth';
+import { useAuth } from '@/stores/auth';
 import type { AxiosError } from 'axios';
 import handleError from '@/utils/handleError';
 import responseCaseMiddleware from './responseCaseMiddleware';

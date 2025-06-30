@@ -4,7 +4,7 @@
   import VAvatar from '@/components/VAvatar/VAvatar.vue';
   import { useRouter } from 'vue-router';
   import { useUserQuery } from '@/query';
-  import useAuth from '@/stores/auth';
+  import { useAuth } from '@/stores/auth';
   import { getName } from '@/utils/getName';
 
   export interface ProfileMenuItem {

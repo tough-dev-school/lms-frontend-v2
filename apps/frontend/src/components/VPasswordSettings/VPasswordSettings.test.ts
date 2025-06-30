@@ -3,25 +3,27 @@ import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import VPasswordSettings from './VPasswordSettings.vue';
 import type VTextInput from '@/components/VTextInput/VTextInput.vue';
-import useAuth from '@/stores/auth';
+import { useAuth } from '@/stores/auth';
 import { faker } from '@faker-js/faker';
 import { nextTick } from 'vue';
 import VButton from '@/components/VButton/VButton.vue';
-
-type MockedAuth = ReturnType<typeof useAuth> & {
-  changePassword: ReturnType<typeof vi.fn>;
-};
 
 const defaultProps = {
   uid: faker.string.uuid(),
   token: faker.string.uuid(),
 };
 
+vi.mock('@/stores/auth');
+
 describe('VPasswordSettings', () => {
   let wrapper: VueWrapper<InstanceType<typeof VPasswordSettings>>;
-  let auth: MockedAuth;
+  const changePasswordMock = vi.fn();
 
   beforeEach(() => {
+    (useAuth as ReturnType<typeof vi.fn>).mockReturnValue({
+      changePassword: changePasswordMock,
+    });
+
     wrapper = mount(VPasswordSettings, {
       shallow: true,
       props: defaultProps,
@@ -38,8 +40,6 @@ describe('VPasswordSettings', () => {
         },
       },
     });
-
-    auth = useAuth() as MockedAuth;
   });
 
   const getPassword1Wrapper = () =>
@@ -49,14 +49,20 @@ describe('VPasswordSettings', () => {
   const getSaveWrapper = () =>
     wrapper.findComponent<typeof VButton>('[data-testid="save"]');
 
-  test('shows reset heading when no auth', () => {
+  test('shows reset heading when no auth', async () => {
+    wrapper.setProps({ token: undefined });
+
+    await nextTick();
+
     const title = wrapper.find('[data-testid="title"]').text();
     expect(title).toBe('Сброс пароля');
   });
 
-  test('shows change heading when has auth', async () => {
-    auth.$patch({ token: faker.string.uuid() });
+  test('shows change heading when has token prop', async () => {
+    wrapper.setProps({ token: faker.string.uuid() });
+
     await nextTick();
+
     const title = wrapper.find('[data-testid="title"]').text();
     expect(title).toBe('Пароль');
   });
@@ -69,8 +75,8 @@ describe('VPasswordSettings', () => {
     await getPassword2Wrapper().vm.$emit('update:modelValue', password2);
     await getSaveWrapper().trigger('click');
 
-    expect(auth.changePassword).toHaveBeenCalledTimes(1);
-    expect(auth.changePassword).toHaveBeenCalledWith({
+    expect(changePasswordMock).toHaveBeenCalledTimes(1);
+    expect(changePasswordMock).toHaveBeenCalledWith({
       newPassword1: password1,
       newPassword2: password2,
       uid: defaultProps.uid,

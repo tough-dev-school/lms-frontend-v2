@@ -3,7 +3,7 @@
   import VButton from '@/components/VButton/VButton.vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VTextInput from '@/components/VTextInput/VTextInput.vue';
-  import useAuth from '@/stores/auth';
+  import { useAuth } from '@/stores/auth';
 
   export interface Props {
     uid?: string;

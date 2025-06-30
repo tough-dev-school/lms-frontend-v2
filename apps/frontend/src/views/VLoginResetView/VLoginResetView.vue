@@ -3,7 +3,7 @@
   import VCard from '@/components/VCard/VCard.vue';
   import VTextInput from '@/components/VTextInput/VTextInput.vue';
   import { ref } from 'vue';
-  import useAuth from '@/stores/auth';
+  import { useAuth } from '@/stores/auth';
   import { useRouter } from 'vue-router';
   import VPublicLayout from '@/layouts/VPublicLayout/VPublicLayout.vue';
 
