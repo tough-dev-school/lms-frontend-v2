@@ -12,7 +12,6 @@ const Template: StoryFn = (args) => ({
   components: { VToastFeed },
   setup() {
     const toasts = useToasts();
-    toasts.$reset();
     [...Array(10)].forEach(() => toasts.addMessage(faker.lorem.sentence()));
 
     return { args };

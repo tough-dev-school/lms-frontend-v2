@@ -63,8 +63,10 @@ export const useAuth = createGlobalState(() => {
     uid?: string;
     token?: string;
   }) => {
-    const savedToast = () =>
-      useToasts().addMessage('Новый пароль сохранен', 'success');
+    const { addMessage } = useToasts();
+
+    const savedToast = () => addMessage('Новый пароль сохранен', 'success');
+
     if (uid && token) {
       try {
         await authApi.resetPassword(newPassword1, newPassword2, uid, token);
