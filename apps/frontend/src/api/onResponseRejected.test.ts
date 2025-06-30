@@ -1,8 +1,6 @@
 import useAuth from '@/stores/auth';
 import { vi, describe, beforeEach, expect, test } from 'vitest';
 import { createApp } from 'vue';
-import { setActivePinia } from 'pinia';
-import { createTestingPinia } from '@pinia/testing';
 import onResponseRejected from './onResponseRejected';
 import { cloneDeep } from 'lodash-es';
 import responseCaseMiddleware from './responseCaseMiddleware';
@@ -27,11 +25,6 @@ describe('custom axios', () => {
   let auth: ReturnType<typeof useAuth>;
 
   beforeEach(() => {
-    const app = createApp({});
-    const pinia = createTestingPinia({ createSpy: vi.fn });
-    app.use(pinia);
-    setActivePinia(pinia);
-
     auth = useAuth();
     auth.token = faker.string.uuid();
   });

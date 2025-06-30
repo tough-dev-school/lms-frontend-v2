@@ -4,8 +4,6 @@ import requestCaseMiddleware from './requestCaseMiddleware';
 import type { InternalAxiosRequestConfig } from 'axios';
 import { faker } from '@faker-js/faker';
 import { createApp } from 'vue';
-import { setActivePinia } from 'pinia';
-import { createTestingPinia } from '@pinia/testing';
 import useAuth from '@/stores/auth';
 
 vi.mock('./requestCaseMiddleware');
@@ -16,11 +14,6 @@ describe('onRequestFulfilled', () => {
   let authStore: any;
 
   beforeEach(() => {
-    const app = createApp({});
-    const pinia = createTestingPinia({ createSpy: vi.fn });
-    app.use(pinia);
-    setActivePinia(pinia);
-
     authStore = useAuth();
   });
 

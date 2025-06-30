@@ -13,7 +13,6 @@ const onRequestFulfilled = (
 
   config.headers = config.headers || {};
 
-  // Manage authorization via pinia
   if (token.value) {
     config.headers.Authorization = `Bearer ${token.value}`;
     config.headers.frkn = '1';

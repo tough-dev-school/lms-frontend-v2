@@ -1,9 +1,6 @@
-import { vi, describe, beforeEach, expect, test } from 'vitest';
+import { describe, beforeEach, expect, test } from 'vitest';
 import handleError, { DEFAULT_ERROR_MESSAGE } from '@/utils/handleError';
 import { faker } from '@faker-js/faker';
-import { createApp } from 'vue';
-import { setActivePinia } from 'pinia';
-import { createTestingPinia } from '@pinia/testing';
 import useToasts from '@/stores/toasts';
 
 const createError = (data: object = {}) => {
@@ -18,10 +15,6 @@ describe('handleError', () => {
   let toasts: ReturnType<typeof useToasts>;
 
   beforeEach(() => {
-    const app = createApp({});
-    const pinia = createTestingPinia({ createSpy: vi.fn });
-    app.use(pinia);
-    setActivePinia(pinia);
     toasts = useToasts();
   });
 

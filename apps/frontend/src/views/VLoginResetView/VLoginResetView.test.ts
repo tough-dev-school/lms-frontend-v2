@@ -6,7 +6,6 @@ import type VButton from '@/components/VButton/VButton.vue';
 import type VTextInput from '@/components/VTextInput/VTextInput.vue';
 import { faker } from '@faker-js/faker';
 import useAuth from '@/stores/auth';
-import { createTestingPinia } from '@pinia/testing';
 
 const defaultProps = {};
 
@@ -30,11 +29,6 @@ describe('VLoginResetView', () => {
       props: defaultProps,
       global: {
         renderStubDefaultSlot: true,
-        plugins: [
-          createTestingPinia({
-            createSpy: vi.fn,
-          }),
-        ],
         stubs: {
           VCard: false,
         },

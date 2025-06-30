@@ -8,7 +8,6 @@ import {
   QueryClient,
   type VueQueryPluginOptions,
 } from '@tanstack/vue-query';
-import { createTestingPinia } from '@pinia/testing';
 import { ref } from 'vue';
 import { useUserQuery } from '@/query';
 import type { User } from '@/api/generated-api';
@@ -61,12 +60,7 @@ const createWrapper = () => {
   return mount(VProfileMenu, {
     shallow: true,
     global: {
-      plugins: [
-        [VueQueryPlugin, options],
-        createTestingPinia({
-          createSpy: vi.fn,
-        }),
-      ],
+      plugins: [[VueQueryPlugin, options]],
       stubs: {
         RouterLink: RouterLinkStub,
       },

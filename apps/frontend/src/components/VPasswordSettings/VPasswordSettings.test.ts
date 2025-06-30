@@ -4,7 +4,6 @@ import type { VueWrapper } from '@vue/test-utils';
 import VPasswordSettings from './VPasswordSettings.vue';
 import type VTextInput from '@/components/VTextInput/VTextInput.vue';
 import useAuth from '@/stores/auth';
-import { createTestingPinia } from '@pinia/testing';
 import { faker } from '@faker-js/faker';
 import { nextTick } from 'vue';
 import VButton from '@/components/VButton/VButton.vue';
@@ -28,11 +27,6 @@ describe('VPasswordSettings', () => {
       props: defaultProps,
       global: {
         renderStubDefaultSlot: true,
-        plugins: [
-          createTestingPinia({
-            createSpy: vi.fn,
-          }),
-        ],
         stubs: {
           VCard: {
             template:

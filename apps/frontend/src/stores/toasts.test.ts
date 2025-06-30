@@ -1,7 +1,6 @@
-import { createPinia, setActivePinia } from 'pinia';
 import useToasts, { type VToastMessage } from './toasts';
 import { faker } from '@faker-js/faker';
-import { describe, beforeEach, expect, test } from 'vitest';
+import { describe, expect, test } from 'vitest';
 
 const MESSAGE_ONE = faker.string.uuid();
 const MESSAGE_TWO = faker.string.uuid();
@@ -9,76 +8,83 @@ const MESSAGE_THREE = faker.string.uuid();
 
 const MESSAGES = [MESSAGE_ONE, MESSAGE_TWO, MESSAGE_THREE];
 
+const getTexts = (messages: VToastMessage[]) => messages.map((m) => m.text);
+const findMessageByText = (text: string, messages: VToastMessage[]) =>
+  messages.find((m) => m.text === text);
+
 describe('toasts store', () => {
-  let toasts: ReturnType<typeof useToasts>;
-
-  beforeEach(() => {
-    setActivePinia(createPinia());
-    toasts = useToasts();
-  });
-
   const addDefaultMessages = () => {
-    MESSAGES.forEach((message) => toasts.addMessage(message));
+    const { addMessage } = useToasts();
+    MESSAGES.forEach((message) => addMessage(message));
   };
 
-  const getTexts = () => toasts.messages.map((message) => message.text);
-
-  const findMessageByText = (text: string) =>
-    toasts.messages.find((message: VToastMessage) => message.text === text);
-
   test('no toasts at start', () => {
-    expect(toasts.messages).toHaveLength(0);
+    const { messages } = useToasts();
+
+    expect(messages.value).toHaveLength(0);
   });
 
   test('addMessage adds message', () => {
     const text = faker.string.uuid();
 
-    toasts.addMessage(text);
+    const { addMessage, messages } = useToasts();
 
-    expect(getTexts()).toContain(text);
+    addMessage(text);
+
+    expect(getTexts(messages.value)).toContain(text);
   });
 
   test('removeMessage removes message if there is a message with given id', () => {
     addDefaultMessages();
 
-    const targetMessage = findMessageByText(MESSAGE_TWO);
+    const { removeMessage, messages } = useToasts();
 
-    toasts.removeMessage((targetMessage as VToastMessage).id); //# FIXME
+    const targetMessage = findMessageByText(MESSAGE_TWO, messages.value);
 
-    expect(getTexts()).toContain(MESSAGE_ONE);
-    expect(getTexts()).not.toContain(MESSAGE_TWO);
-    expect(getTexts()).toContain(MESSAGE_THREE);
+    removeMessage((targetMessage as VToastMessage).id); //# FIXME
+
+    expect(getTexts(messages.value)).toContain(MESSAGE_ONE);
+    expect(getTexts(messages.value)).not.toContain(MESSAGE_TWO);
+    expect(getTexts(messages.value)).toContain(MESSAGE_THREE);
   });
 
   test('removeMessage does nothing if no message with given id', () => {
     addDefaultMessages();
 
-    toasts.removeMessage('hello world');
+    const { removeMessage, messages } = useToasts();
 
-    expect(getTexts()).toContain(MESSAGE_ONE);
-    expect(getTexts()).toContain(MESSAGE_TWO);
-    expect(getTexts()).toContain(MESSAGE_THREE);
+    removeMessage('hello world');
+
+    expect(getTexts(messages.value)).toContain(MESSAGE_ONE);
+    expect(getTexts(messages.value)).toContain(MESSAGE_TWO);
+    expect(getTexts(messages.value)).toContain(MESSAGE_THREE);
   });
 
   test('toasts can be disabled', () => {
-    toasts.disable();
+    const { disabled } = useToasts();
 
-    expect(toasts.disabled).toBe(true);
+    disabled.value = true;
+
+    expect(disabled.value).toBe(true);
   });
 
   test('addMessage does nothing if disabled', () => {
     const text = faker.string.uuid();
 
-    toasts.disable();
-    toasts.addMessage(text);
+    const { disabled, addMessage, messages } = useToasts();
 
-    expect(getTexts()).not.toContain(text);
+    disabled.value = true;
+    addMessage(text);
+
+    expect(getTexts(messages.value)).not.toContain(text);
   });
 
   test('toasts can be re-enabled', () => {
-    toasts.disable();
-    toasts.enable();
+    const { disabled } = useToasts();
 
-    expect(toasts.disabled).toBe(false);
+    disabled.value = true;
+    disabled.value = false;
+
+    expect(disabled.value).toBe(false);
   });
 });
