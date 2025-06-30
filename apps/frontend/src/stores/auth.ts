@@ -96,14 +96,6 @@ export const useAuth = createGlobalState(() => {
     storage.value.token = token;
   };
 
-  // const queryClient = useQueryClient();
-  // watch(
-  //   () => token.value,
-  //   () => {
-  //     queryClient.invalidateQueries({ queryKey: baseQueryKey() });
-  //   },
-  // );
-
   const removeToken = () => {
     token.value = undefined;
   };

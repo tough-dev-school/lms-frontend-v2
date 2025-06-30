@@ -8,8 +8,13 @@ import type { AnswerTree } from './api/generated-api';
 import htmlToMarkdown from './utils/htmlToMarkdown';
 import { ContentType } from './api/generated-api';
 import type { PatchedUser } from './api/generated-api';
+import { useAuth } from './stores/auth';
 
-export const baseQueryKey = () => ['base'];
+export const baseQueryKey = () => {
+  const { token } = useAuth();
+
+  return ['base', { token: token.value }];
+};
 
 export const studiesKeys = {
   all: () => [...baseQueryKey(), 'studies'],
