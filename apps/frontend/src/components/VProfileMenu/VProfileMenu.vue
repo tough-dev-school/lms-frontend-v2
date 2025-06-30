@@ -18,7 +18,7 @@
   const menu = ref(null);
   const router = useRouter();
   const { data: user } = useUserQuery();
-  const auth = useAuth();
+  const { removeToken } = useAuth();
 
   onClickOutside(menu, () => (isOpen.value = false));
 
@@ -68,7 +68,7 @@
     {
       label: 'Выйти',
       action: () => {
-        auth.removeToken();
+        removeToken();
         router.push({ name: 'login' });
         isOpen.value = false;
       },

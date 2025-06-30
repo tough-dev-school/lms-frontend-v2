@@ -11,9 +11,9 @@ import { baseQueryKey, fetchHomeworkAnswer } from '@/query';
 import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
 
 const disallowAuthorized = () => {
-  const auth = useAuth();
+  const { token } = useAuth();
 
-  if (auth.token) return { name: 'home' };
+  if (token.value) return { name: 'home' };
 };
 
 export const routes = [
@@ -181,12 +181,12 @@ const router = createRouter({
 
 router.beforeEach(
   async (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
-    const auth = useAuth();
+    const { token } = useAuth();
 
     const queryClient = useQueryClient();
     queryClient.invalidateQueries({ queryKey: baseQueryKey() });
 
-    if (to.meta.unauthorizedOnly && auth.token) {
+    if (to.meta.unauthorizedOnly && token.value) {
       return { name: 'home' };
     }
 
@@ -196,7 +196,7 @@ router.beforeEach(
     }
 
     // Redirect to /login if unauthorized and route is not public
-    if (!(auth.token || to.meta.unauthorizedOnly)) {
+    if (!(token.value || to.meta.unauthorizedOnly)) {
       let query = {};
 
       if (to.fullPath !== '/') {

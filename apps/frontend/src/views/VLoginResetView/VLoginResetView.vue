@@ -7,7 +7,7 @@
   import { useRouter } from 'vue-router';
   import VPublicLayout from '@/layouts/VPublicLayout/VPublicLayout.vue';
 
-  const auth = useAuth();
+  const { requestReset } = useAuth();
   const router = useRouter();
 
   const email = ref('');
@@ -17,7 +17,7 @@
   const handleResetRequest = async () => {
     isPending.value = true;
     try {
-      await auth.requestReset(email.value);
+      await requestReset(email.value);
       router.push({ name: 'mail-sent', query: { email: email.value } });
     } catch {
       console.error('Failed to request reset');

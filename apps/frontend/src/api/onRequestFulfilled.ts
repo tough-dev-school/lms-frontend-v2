@@ -7,15 +7,15 @@ const onRequestFulfilled = (
   config: InternalAxiosRequestConfig,
   enableCaseMiddleware = true,
 ) => {
-  const auth = useAuth();
+  const { token } = useAuth();
 
   config = cloneDeep(config);
 
   config.headers = config.headers || {};
 
   // Manage authorization via pinia
-  if (auth.token) {
-    config.headers.Authorization = `Bearer ${auth.token}`;
+  if (token.value) {
+    config.headers.Authorization = `Bearer ${token.value}`;
     config.headers.frkn = '1';
   }
 
