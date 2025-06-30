@@ -91,6 +91,7 @@ export const useAuth = defineStore('auth', {
       this.token = undefined;
     },
   },
+  persist: true,
 });
 
 export const useInvalidateOnTokenChange = () => {
