@@ -11,18 +11,13 @@ import {
 import { ref } from 'vue';
 import { useUserQuery } from '@/query';
 import type { User } from '@/api/generated-api';
+import { useRouter } from 'vue-router';
 
 const routerPushMock = vi.fn();
 
-vi.mock('vue-router', () => ({
-  useRouter: () => ({
-    push: routerPushMock,
-  }),
-}));
+vi.mock('vue-router');
 
-vi.mock('@/query', () => ({
-  useUserQuery: vi.fn(),
-}));
+vi.mock('@/query');
 
 const getDefaultData = (): User => {
   faker.seed(1);
@@ -72,6 +67,11 @@ describe('VProfileMenu', () => {
   let wrapper: VueWrapper<InstanceType<typeof VProfileMenu>>;
 
   beforeEach(() => {
+    (useRouter as ReturnType<typeof vi.fn>).mockReturnValue({
+      push: routerPushMock,
+    });
+    vi.mocked(useUserQuery);
+
     wrapper = createWrapper();
   });
 

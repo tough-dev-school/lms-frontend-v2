@@ -6,17 +6,13 @@ import type VButton from '@/components/VButton/VButton.vue';
 import type VTextInput from '@/components/VTextInput/VTextInput.vue';
 import { faker } from '@faker-js/faker';
 import { useAuth } from '@/stores/auth';
+import { useRouter } from 'vue-router';
 
 const defaultProps = {};
 
 const routerPushMock = vi.fn();
 
-vi.mock('vue-router', () => ({
-  useRouter: () => ({
-    push: routerPushMock,
-  }),
-}));
-
+vi.mock('vue-router');
 vi.mock('@/stores/auth');
 
 const email = faker.internet.email();
@@ -28,6 +24,9 @@ describe('VLoginResetView', () => {
   beforeEach(() => {
     (useAuth as ReturnType<typeof vi.fn>).mockReturnValue({
       requestReset: requestResetMock,
+    });
+    (useRouter as ReturnType<typeof vi.fn>).mockReturnValue({
+      push: routerPushMock,
     });
 
     wrapper = mount(VLoginResetView, {

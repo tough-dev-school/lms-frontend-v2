@@ -9,6 +9,8 @@ import { cloneDeep } from 'lodash-es';
 import { faker } from '@faker-js/faker';
 import { mockAnswer } from '@/mocks/mockAnswer';
 import { mockUserSafe } from '@/mocks/mockUserSafe';
+import { useRemoveHomeworkReactionMutation } from '@/query';
+import { useAddHomeworkReactionMutation } from '@/query';
 
 const uuid = faker.string.uuid();
 
@@ -25,18 +27,8 @@ vi.mock('@formkit/auto-animate/vue', () => ({
   useAutoAnimate: () => [null],
 }));
 
-vi.mock('@/query', () => ({
-  useRemoveHomeworkReactionMutation: () => ({
-    mutateAsync: vi.fn(),
-  }),
-  useAddHomeworkReactionMutation: () => ({
-    mutateAsync: vi.fn(),
-  }),
-}));
-
-vi.mock('@tanstack/vue-query', () => ({
-  useQueryClient: () => ({}),
-}));
+vi.mock('@/query');
+vi.mock('@tanstack/vue-query');
 
 const defaultMountOptions = {
   props: defaultProps,
@@ -53,6 +45,16 @@ describe('VAnswer', () => {
   let wrapper: VueWrapper<InstanceType<typeof VAnswer>>;
 
   beforeEach(() => {
+    (
+      useRemoveHomeworkReactionMutation as ReturnType<typeof vi.fn>
+    ).mockReturnValue({
+      mutateAsync: vi.fn(),
+    });
+    (
+      useAddHomeworkReactionMutation as ReturnType<typeof vi.fn>
+    ).mockReturnValue({
+      mutateAsync: vi.fn(),
+    });
     wrapper = mount(VAnswer, defaultMountOptions);
   });
 
