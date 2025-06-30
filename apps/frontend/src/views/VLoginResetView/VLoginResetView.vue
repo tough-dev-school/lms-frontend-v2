@@ -42,9 +42,9 @@
           class="flex-grow"
           type="submit"
           data-testid="send"
-          :loading="isPending"
-          >Отправить письмо</VButton
-        >
+          :loading="isPending">
+          {{ isPending ? 'Отправляем письмо...' : 'Отправить письмо' }}
+        </VButton>
         <VButton
           appearance="link"
           class="flex-grow"

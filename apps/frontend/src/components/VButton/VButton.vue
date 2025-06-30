@@ -10,6 +10,7 @@
     appearance?: Appearance;
     size?: Type;
     tag?: string;
+    // loading and disabled are doing same thing but with different visuals
     loading?: boolean;
     disabled?: boolean;
   }

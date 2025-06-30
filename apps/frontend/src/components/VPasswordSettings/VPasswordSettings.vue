@@ -52,7 +52,7 @@
     </div>
     <template #footer>
       <VButton :loading="isPending" data-testid="save" @click="savePassword">
-        Сохранить
+        {{ isPending ? 'Сохраняется...' : 'Сохранить' }}
       </VButton>
     </template>
   </VCard>

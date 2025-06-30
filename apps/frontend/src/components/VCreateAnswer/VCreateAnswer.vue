@@ -29,7 +29,7 @@
         :loading="isPending"
         class="h-32"
         @click="emit('send')">
-        Сохранить
+        {{ isPending ? 'Отправляется...' : 'Отправить' }}
       </VButton>
     </div>
   </div>

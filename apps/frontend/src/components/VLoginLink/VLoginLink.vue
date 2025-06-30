@@ -40,7 +40,7 @@
         :disabled="!email"
         class="flex-grow"
         :loading="isPending">
-        Получить доступ
+        {{ isPending ? 'Отправляем письмо...' : 'Получить доступ' }}
       </VButton>
       <VButton
         appearance="link"
