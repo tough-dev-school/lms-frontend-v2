@@ -11,9 +11,7 @@ import { useDiplomasQuery } from '@/query';
 
 const defaultProps = {};
 
-vi.mock('@/query', () => ({
-  useDiplomasQuery: vi.fn(),
-}));
+vi.mock('@/query');
 
 const mockDiplomas = () =>
   flatten(

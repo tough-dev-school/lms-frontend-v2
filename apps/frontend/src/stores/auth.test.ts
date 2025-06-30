@@ -8,14 +8,6 @@ const username = faker.internet.userName();
 const password = faker.internet.password();
 const email = faker.internet.email();
 
-// vi.mock('@/api/auth', () => {
-//   return {
-//     loginWithCredentials: vi.fn(),
-//     sendLoginLink: vi.fn(),
-//     loginWithLink: vi.fn(),
-//   };
-// });
-
 vi.mock('@/api/auth');
 
 describe('toasts store', () => {

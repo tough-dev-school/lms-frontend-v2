@@ -4,6 +4,7 @@ import type { VueWrapper } from '@vue/test-utils';
 import VLoginChangeView from './VLoginChangeView.vue';
 import VPasswordSettings from '@/components/VPasswordSettings/VPasswordSettings.vue';
 import { faker } from '@faker-js/faker';
+import { useRouter } from 'vue-router';
 
 const uid = faker.string.uuid();
 const token = faker.string.uuid();
@@ -15,16 +16,16 @@ const defaultProps = {
 
 const routerPushMock = vi.fn();
 
-vi.mock('vue-router', () => ({
-  useRouter: () => ({
-    push: routerPushMock,
-  }),
-}));
+vi.mock('vue-router');
 
 describe('VLoginChangeView', () => {
   let wrapper: VueWrapper<InstanceType<typeof VLoginChangeView>>;
 
   beforeEach(() => {
+    (useRouter as ReturnType<typeof vi.fn>).mockReturnValue({
+      push: routerPushMock,
+    });
+
     wrapper = mount(VLoginChangeView, {
       shallow: true,
       props: defaultProps,

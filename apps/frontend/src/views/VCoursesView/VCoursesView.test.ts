@@ -14,9 +14,7 @@ import {
 
 const defaultStudies = faker.helpers.multiple(mockCourse, { count: 3 });
 
-vi.mock('@/query', () => ({
-  useStudiesQuery: vi.fn(),
-}));
+vi.mock('@/query');
 
 const createWrapper = (studies = defaultStudies) => {
   const queryClient = new QueryClient({
