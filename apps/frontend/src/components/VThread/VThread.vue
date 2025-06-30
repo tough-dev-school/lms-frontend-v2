@@ -48,7 +48,7 @@
     replyMode.value = false;
   });
 
-  const { mutateAsync: createComment } =
+  const { mutateAsync: createComment, isPending: isCreateCommentPending } =
     useHomeworkAnswerCreateMutation(queryClient);
 
   const commentText = useStorage(
@@ -108,6 +108,7 @@
       <VCreateAnswer
         v-show="replyMode"
         v-model="commentText"
+        :is-pending="isCreateCommentPending"
         @send="handleCreateComment" />
     </div>
   </div>

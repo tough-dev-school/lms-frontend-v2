@@ -12,9 +12,17 @@
 
   const email = ref('');
 
+  const isPending = ref(false);
+
   const handleResetRequest = async () => {
-    await auth.requestReset(email.value);
-    router.push({ name: 'mail-sent', query: { email: email.value } });
+    isPending.value = true;
+    try {
+      await auth.requestReset(email.value);
+      router.push({ name: 'mail-sent', query: { email: email.value } });
+    } catch {
+      console.error('Failed to request reset');
+    }
+    isPending.value = false;
   };
 </script>
 
@@ -34,6 +42,7 @@
           class="flex-grow"
           type="submit"
           data-testid="send"
+          :loading="isPending"
           >Отправить письмо</VButton
         >
         <VButton

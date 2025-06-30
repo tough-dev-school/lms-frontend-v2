@@ -46,8 +46,10 @@
   );
 
   const queryClient = useQueryClient();
-  const { mutateAsync: createAnswerMutation } =
-    useHomeworkAnswerCreateMutation(queryClient);
+  const {
+    mutateAsync: createAnswerMutation,
+    isPending: isCreateAnswerPending,
+  } = useHomeworkAnswerCreateMutation(queryClient);
 
   const handleCreateAnswer = async () => {
     const answer = await createAnswerMutation({
@@ -78,7 +80,10 @@
     </template>
     <section class="flex flex-col gap-24">
       <VHtmlContent :content="question.text" />
-      <VCreateAnswer v-model="draft" @send="handleCreateAnswer" />
+      <VCreateAnswer
+        v-model="draft"
+        :is-pending="isCreateAnswerPending"
+        @send="handleCreateAnswer" />
     </section>
   </VLoggedLayout>
   <VLoadingView v-else />

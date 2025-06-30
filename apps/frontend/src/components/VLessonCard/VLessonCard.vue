@@ -3,7 +3,7 @@
   import VTag from '@/components/VTag/VTag.vue';
   import VButton from '@/components/VButton/VButton.vue';
   import type {
-    LessonForUser,
+    Lesson,
     RecommendedVideoProviderEnum,
     VideoProvider,
   } from '@/api/generated-api';
@@ -11,7 +11,7 @@
   import { formatDateTime } from '@/utils/date';
 
   const props = defineProps<{
-    lesson: LessonForUser;
+    lesson: Lesson;
   }>();
 
   const name = computed(() => {
