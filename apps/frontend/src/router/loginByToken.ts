@@ -1,7 +1,7 @@
 import type { RouteLocationNormalized } from 'vue-router';
 import { useExchangeTokensMutation } from '@/query';
 import { useQueryClient } from '@tanstack/vue-query';
-import { useAuth } from '@/stores/auth';
+import { useAuth } from '@/composables/useAuth';
 
 export const loginByToken = async (to: RouteLocationNormalized) => {
   const queryClient = useQueryClient();

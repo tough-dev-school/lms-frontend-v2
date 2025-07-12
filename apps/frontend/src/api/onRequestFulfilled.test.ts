@@ -3,7 +3,7 @@ import onRequestFulfilled from './onRequestFulfilled';
 import requestCaseMiddleware from './requestCaseMiddleware';
 import type { InternalAxiosRequestConfig } from 'axios';
 import { faker } from '@faker-js/faker';
-import { useAuth } from '@/stores/auth';
+import { useAuth } from '@/composables/useAuth';
 
 vi.mock('./requestCaseMiddleware');
 

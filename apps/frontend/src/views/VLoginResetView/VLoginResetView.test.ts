@@ -5,7 +5,7 @@ import VLoginResetView from './VLoginResetView.vue';
 import type VButton from '@/components/VButton/VButton.vue';
 import type VTextInput from '@/components/VTextInput/VTextInput.vue';
 import { faker } from '@faker-js/faker';
-import { useAuth } from '@/stores/auth';
+import { useAuth } from '@/composables/useAuth';
 import { useRouter } from 'vue-router';
 
 const defaultProps = {};
@@ -13,7 +13,7 @@ const defaultProps = {};
 const routerPushMock = vi.fn();
 
 vi.mock('vue-router');
-vi.mock('@/stores/auth');
+vi.mock('@/composables/useAuth');
 
 const email = faker.internet.email();
 

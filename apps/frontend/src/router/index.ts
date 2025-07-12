@@ -3,7 +3,7 @@ import {
   createWebHistory,
   type RouteLocationNormalized,
 } from 'vue-router';
-import { useAuth } from '@/stores/auth';
+import { useAuth } from '@/composables/useAuth';
 import { loginByToken } from '@/router/loginByToken';
 import { loginById } from '@/router/loginById';
 import { useQueryClient } from '@tanstack/vue-query';

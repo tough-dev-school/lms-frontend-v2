@@ -2,7 +2,7 @@
   import VPreloader from '@/components/VPreloader/VPreloader.vue';
   import VPublicLayout from '@/layouts/VPublicLayout/VPublicLayout.vue';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
-  import { useAuth } from '@/stores/auth';
+  import { useAuth } from '@/composables/useAuth';
   import { ref, onMounted, onUnmounted } from 'vue';
 
   const { token } = useAuth();

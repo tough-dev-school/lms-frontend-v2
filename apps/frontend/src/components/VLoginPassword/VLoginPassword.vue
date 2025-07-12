@@ -3,7 +3,7 @@
   import VCard from '@/components/VCard/VCard.vue';
   import VTextInput from '@/components/VTextInput/VTextInput.vue';
   import { ref, computed } from 'vue';
-  import { useAuth } from '@/stores/auth';
+  import { useAuth } from '@/composables/useAuth';
   import { useRouter } from 'vue-router';
   import { useLoginWithCredentialsMutation } from '@/query';
   import { useQueryClient } from '@tanstack/vue-query';

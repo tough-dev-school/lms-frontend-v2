@@ -1,5 +1,5 @@
 import type { RouteLocationNormalized } from 'vue-router';
-import { useAuth } from '@/stores/auth';
+import { useAuth } from '@/composables/useAuth';
 import { useLoginWithUserIdMutation } from '@/query';
 import { useQueryClient } from '@tanstack/vue-query';
 

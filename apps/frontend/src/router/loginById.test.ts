@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { describe, beforeEach, expect, test, vi } from 'vitest';
 import { loginById } from './loginById';
-import { useAuth } from '@/stores/auth';
+import { useAuth } from '@/composables/useAuth';
 import type { RouteLocationNormalized } from 'vue-router';
 
 const userId = faker.string.uuid();
@@ -12,7 +12,7 @@ const to: Partial<RouteLocationNormalized> = {
   },
 };
 
-vi.mock('@/stores/auth');
+vi.mock('@/composables/useAuth');
 
 describe('loginById', () => {
   beforeEach(() => {

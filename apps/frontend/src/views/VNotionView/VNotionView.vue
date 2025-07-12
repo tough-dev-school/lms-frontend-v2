@@ -4,7 +4,7 @@
   import VCard from '@/components/VCard/VCard.vue';
   import VButton from '@/components/VButton/VButton.vue';
   import getNotionTitle from '@/utils/getNotionTitle';
-  import { useChatra } from '@/hooks/useChatra';
+  import { useChatra } from '@/composables/useChatra';
   import VNotionRenderer from '@/components/VNotionRenderer/VNotionRenderer.vue';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';

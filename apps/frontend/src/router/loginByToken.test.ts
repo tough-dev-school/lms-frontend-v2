@@ -1,10 +1,10 @@
 import { faker } from '@faker-js/faker';
 import { vi, describe, expect, test, beforeEach } from 'vitest';
 import { loginByToken } from './loginByToken';
-import { useAuth } from '@/stores/auth';
+import { useAuth } from '@/composables/useAuth';
 import type { RouteLocationNormalized } from 'vue-router';
 
-vi.mock('@/stores/auth');
+vi.mock('@/composables/useAuth');
 
 const passwordlessToken = faker.string.uuid();
 

@@ -14,7 +14,7 @@ import type {
 import htmlToMarkdown from './utils/htmlToMarkdown';
 import { ContentType } from './api/generated-api';
 import type { PatchedUser } from './api/generated-api';
-import { useAuth } from './stores/auth';
+import { useAuth } from './composables/useAuth';
 
 export const baseQueryKey = () => {
   const { token } = useAuth();

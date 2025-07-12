@@ -1,4 +1,4 @@
-import { useAuth } from '@/stores/auth';
+import { useAuth } from '@/composables/useAuth';
 import { vi, describe, beforeEach, expect, test } from 'vitest';
 import onResponseRejected from './onResponseRejected';
 import { cloneDeep } from 'lodash-es';
@@ -20,7 +20,7 @@ const defaultError = {
 
 vi.mock('@/utils/handleError');
 vi.mock('./responseCaseMiddleware');
-vi.mock('@/stores/auth');
+vi.mock('@/composables/useAuth');
 
 describe('custom axios', () => {
   const removeTokenMock = vi.fn();
