@@ -18,7 +18,6 @@ const defaultError = {
 };
 
 vi.mock('@/utils/handleError');
-vi.mock('./responseCaseMiddleware');
 vi.mock('@/composables/useAuth');
 
 describe('custom axios', () => {

@@ -1,5 +1,4 @@
 import type { UserSafe } from '@/api/generated-api';
-import responseCaseMiddleware from '@/api/responseCaseMiddleware';
 import { fakerRU as faker } from '@faker-js/faker';
 
 export const mockUserSafe = ({
@@ -11,7 +10,7 @@ export const mockUserSafe = ({
 } = {}): Required<UserSafe> => {
   if (seed) faker.seed(seed);
 
-  const data: Required<UserSafe> = {
+  return {
     uuid: faker.string.uuid(),
     first_name: faker.person.firstName(),
     last_name: faker.person.lastName(),
@@ -20,8 +19,6 @@ export const mockUserSafe = ({
     avatar: faker.image.url(),
     ...payload,
   };
-
-  return responseCaseMiddleware(data) as Required<UserSafe>;
 };
 
 export const STATIC_AUTHOR_1: UserSafe = mockUserSafe({ seed: 1 });
