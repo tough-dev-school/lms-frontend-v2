@@ -6,7 +6,7 @@ const onRequestFulfilled = (config: InternalAxiosRequestConfig) => {
   // Django admin may pass tokens as url param
   const { token: localStorageToken } = useAuth();
   const urlToken = new URLSearchParams(window.location.search).get('t');
-  const token = urlToken || localStorageToken;
+  const token = urlToken || localStorageToken.value;
 
   config = cloneDeep(config);
 
