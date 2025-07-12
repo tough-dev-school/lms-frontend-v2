@@ -21,12 +21,12 @@ vi.mock('@/utils/handleError');
 vi.mock('@/composables/useAuth');
 
 describe('custom axios', () => {
-  const removeTokenMock = vi.fn();
+  const handleLogoutMock = vi.fn();
 
   beforeEach(() => {
     (useAuth as ReturnType<typeof vi.fn>).mockReturnValue({
-      removeToken: removeTokenMock,
       token: ref(faker.string.uuid()),
+      handleLogout: handleLogoutMock,
     });
   });
 
@@ -36,7 +36,7 @@ describe('custom axios', () => {
 
     onResponseRejected(error as unknown as AxiosError).catch(() => {});
 
-    expect(removeTokenMock).toHaveBeenCalledTimes(0);
+    expect(handleLogoutMock).toHaveBeenCalledTimes(0);
   });
 
   test('logout on 401', () => {
@@ -45,7 +45,7 @@ describe('custom axios', () => {
 
     onResponseRejected(error as unknown as AxiosError).catch(() => {});
 
-    expect(removeTokenMock).toHaveBeenCalledTimes(1);
+    expect(handleLogoutMock).toHaveBeenCalledTimes(1);
   });
 
   test('calls handleError with error for json errors', () => {
