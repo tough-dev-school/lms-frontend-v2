@@ -3,21 +3,24 @@
   import VCard from '@/components/VCard/VCard.vue';
   import VTextInput from '@/components/VTextInput/VTextInput.vue';
   import { ref } from 'vue';
-  import { useAuth } from '@/stores/auth';
   import { useRouter } from 'vue-router';
   import VPublicLayout from '@/layouts/VPublicLayout/VPublicLayout.vue';
+  import { useRequestPasswordResetMutation } from '@/query';
+  import { useQueryClient } from '@tanstack/vue-query';
 
-  const { requestReset } = useAuth();
   const router = useRouter();
-
+  const queryClient = useQueryClient();
   const email = ref('');
+
+  const { mutateAsync: requestReset } =
+    useRequestPasswordResetMutation(queryClient);
 
   const isPending = ref(false);
 
   const handleResetRequest = async () => {
     isPending.value = true;
     try {
-      await requestReset(email.value);
+      await requestReset({ email: email.value });
       router.push({ name: 'mail-sent', query: { email: email.value } });
     } catch {
       console.error('Failed to request reset');

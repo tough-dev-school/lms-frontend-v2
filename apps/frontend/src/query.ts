@@ -4,7 +4,13 @@ import { computed } from 'vue';
 import { toValue } from 'vue';
 import { api } from '@/api';
 import { queryOptions } from '@tanstack/vue-query';
-import type { AnswerTree } from './api/generated-api';
+import type {
+  AnswerTree,
+  JSONWebToken,
+  PasswordChange,
+  PasswordReset,
+  PasswordResetConfirm,
+} from './api/generated-api';
 import htmlToMarkdown from './utils/htmlToMarkdown';
 import { ContentType } from './api/generated-api';
 import type { PatchedUser } from './api/generated-api';
@@ -462,6 +468,74 @@ export const useUpdateUserAvatarMutation = (queryClient: QueryClient) => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: userKeys.all() });
+    },
+  });
+};
+
+export const useLoginWithCredentialsMutation = (queryClient: QueryClient) => {
+  return useMutation({
+    mutationFn: async (data: JSONWebToken) => await api.authTokenCreate(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: baseQueryKey() });
+    },
+  });
+};
+
+export const useLoginWithUserIdMutation = (queryClient: QueryClient) => {
+  return useMutation({
+    mutationFn: async (userId: number) => await api.authAsRetrieve(userId),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: baseQueryKey() });
+    },
+  });
+};
+
+export const useLoginWithLinkMutation = (queryClient: QueryClient) => {
+  return useMutation({
+    mutationFn: async ({ email }: { email: string }) =>
+      await api.authPasswordlessTokenRequestRetrieve(email),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: baseQueryKey() });
+    },
+  });
+};
+
+export const useExchangeTokensMutation = (queryClient: QueryClient) => {
+  return useMutation({
+    mutationFn: async ({ token }: { token: string }) =>
+      await api.authPasswordlessTokenRetrieve(token),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: baseQueryKey() });
+    },
+  });
+};
+
+export const useRequestPasswordResetMutation = (queryClient: QueryClient) => {
+  return useMutation({
+    mutationFn: async (data: PasswordReset) =>
+      await api.authPasswordResetCreate(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: baseQueryKey() });
+    },
+  });
+};
+
+export const useConfirmPasswordResetMutation = (queryClient: QueryClient) => {
+  return useMutation({
+    mutationFn: async (data: PasswordResetConfirm) =>
+      await api.authPasswordResetConfirmCreate(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: baseQueryKey() });
+    },
+  });
+};
+
+export const usePasswordChangeMutation = (queryClient: QueryClient) => {
+  return useMutation({
+    mutationFn: async (data: PasswordChange) =>
+      await api.authPasswordChangeCreate(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: baseQueryKey() });
     },
   });
 };

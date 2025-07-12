@@ -5,12 +5,20 @@
   import { ref, computed } from 'vue';
   import { useAuth } from '@/stores/auth';
   import { useRouter } from 'vue-router';
+  import { useLoginWithCredentialsMutation } from '@/query';
+  import { useQueryClient } from '@tanstack/vue-query';
 
   const props = defineProps<{
     next?: string;
   }>();
 
-  const { loginWithCredentials, token } = useAuth();
+  const queryClient = useQueryClient();
+
+  const { handleLogin } = useAuth();
+
+  const { mutateAsync: loginWithCredentials, isPending } =
+    useLoginWithCredentialsMutation(queryClient);
+
   const router = useRouter();
 
   const username = ref('');
@@ -20,21 +28,21 @@
     () => !(username.value && password.value),
   );
 
-  const isPending = ref(false);
-
-  const handleLogin = async () => {
-    isPending.value = true;
+  const handleSubmit = async () => {
     try {
-      await loginWithCredentials(username.value, password.value);
-      if (token.value) {
-        props.next
-          ? router.push({ path: decodeURIComponent(String(props.next)) })
-          : router.push({ name: 'home' });
-      }
+      const { token } = await loginWithCredentials({
+        username: username.value,
+        password: password.value,
+      });
+
+      handleLogin(token);
+
+      props.next
+        ? router.push({ path: decodeURIComponent(String(props.next)) })
+        : router.push({ name: 'home' });
     } catch {
       console.error('Failed to login');
     }
-    isPending.value = false;
   };
 
   const isEmail = computed(() => {
@@ -47,7 +55,7 @@
 </script>
 
 <template>
-  <VCard tag="form" title="Вход и регистрация" @submit.prevent="handleLogin">
+  <VCard tag="form" title="Вход и регистрация" @submit.prevent="handleSubmit">
     <div class="flex flex-col gap-16">
       <VTextInput
         v-model="username"
@@ -73,7 +81,11 @@
       </VTextInput>
     </div>
     <template #footer>
-      <VButton :disabled="isCredentialsInvalid" class="flex-grow" type="submit">
+      <VButton
+        :disabled="isCredentialsInvalid"
+        :loading="isPending"
+        class="flex-grow"
+        type="submit">
         Войти
       </VButton>
       <VButton appearance="link" class="flex-grow" @click="emit('change')">

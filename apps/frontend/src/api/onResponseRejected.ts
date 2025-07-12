@@ -7,10 +7,10 @@ const onResponseRejected = (
   error: AxiosError,
   enableCaseMiddleware: boolean,
 ) => {
-  const { removeToken, token } = useAuth();
+  const { token, handleLogout } = useAuth();
 
   if (error.response) {
-    if (error.response.status === 401 && token.value) removeToken();
+    if (error.response.status === 401 && token.value) handleLogout();
 
     if (error.response.status !== 401) {
       // Convert data keys to target case

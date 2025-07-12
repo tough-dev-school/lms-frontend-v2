@@ -711,7 +711,7 @@ export interface User {
 
 export interface UserSafe {
   /** @format uuid */
-  uuid?: string;
+  uuid: string;
   /**
    * Имя
    * @maxLength 150
