@@ -7,14 +7,17 @@ const onRequestFulfilled = (
   config: InternalAxiosRequestConfig,
   enableCaseMiddleware = true,
 ) => {
-  const { token } = useAuth();
+  // Django admin may pass tokens as url param
+  const { token: localStorageToken } = useAuth();
+  const urlToken = new URLSearchParams(window.location.search).get('t');
+  const token = urlToken || localStorageToken;
 
   config = cloneDeep(config);
 
   config.headers = config.headers || {};
 
-  if (token.value) {
-    config.headers.Authorization = `Bearer ${token.value}`;
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
     config.headers.frkn = '1';
   }
 
