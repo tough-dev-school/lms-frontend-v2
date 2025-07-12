@@ -7,10 +7,7 @@
   import { useRouter } from 'vue-router';
   import { useLoginWithCredentialsMutation } from '@/query';
   import { useQueryClient } from '@tanstack/vue-query';
-
-  const props = defineProps<{
-    next?: string;
-  }>();
+  import { useAuthRedirect } from '@/composables/useAuthRedirect';
 
   const queryClient = useQueryClient();
 
