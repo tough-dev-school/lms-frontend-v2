@@ -28,6 +28,8 @@
     () => !(username.value && password.value),
   );
 
+  const { redirectFromAuthAndRestoreRoute } = useAuthRedirect();
+
   const handleSubmit = async () => {
     try {
       const { token } = await loginWithCredentials({
@@ -37,9 +39,7 @@
 
       handleLogin(token);
 
-      props.next
-        ? router.push({ path: decodeURIComponent(String(props.next)) })
-        : router.push({ name: 'home' });
+      redirectFromAuthAndRestoreRoute();
     } catch {
       console.error('Failed to login');
     }
