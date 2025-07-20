@@ -1,38 +1,62 @@
-import { faker } from '@faker-js/faker';
-import { vi, describe, expect, test, beforeEach } from 'vitest';
+import { describe, expect, test, vi, beforeEach } from 'vitest';
 import { loginByToken } from './loginByToken';
-import { useAuth } from '@/stores/auth';
 import type { RouteLocationNormalized } from 'vue-router';
+import { faker } from '@faker-js/faker';
+import { useAuth } from '@/composables/useAuth';
+import { useExchangeTokensMutation } from '@/query';
+import { useQueryClient } from '@tanstack/vue-query';
+import { ref } from 'vue';
 
-vi.mock('@/stores/auth');
+vi.mock('@/composables/useAuth');
+vi.mock('@/query');
+vi.mock('@tanstack/vue-query');
 
-const passwordlessToken = faker.string.uuid();
-
-const to: Partial<RouteLocationNormalized> = {
-  params: {
-    passwordlessToken,
-  },
-};
+const mockHandleLogin = vi.fn();
+const mockMutateAsync = vi.fn();
 
 describe('loginByToken', () => {
-  beforeEach(() => {
-    (useAuth as ReturnType<typeof vi.fn>).mockReturnValue({
-      exchangeTokens: vi.fn(),
-    });
+  const token = faker.string.uuid();
+  const passwordlessToken = faker.string.uuid();
+  let mockRoute: RouteLocationNormalized;
+
+  beforeEach(async () => {
+    vi.clearAllMocks();
+
+    mockMutateAsync.mockResolvedValue({ token });
+
+    mockRoute = {
+      params: { passwordlessToken },
+    } as unknown as RouteLocationNormalized;
+
+    vi.mocked(useAuth).mockReturnValue({
+      handleLogin: mockHandleLogin,
+    } as any);
+
+    vi.mocked(useExchangeTokensMutation).mockReturnValue({
+      mutateAsync: mockMutateAsync,
+      isPending: ref(false),
+    } as any);
+
+    vi.mocked(useQueryClient).mockReturnValue({} as any);
   });
 
-  test('should call exchangeTokens', async () => {
-    const { exchangeTokens } = useAuth();
+  test('successfully exchanges token and returns home route', async () => {
+    const result = await loginByToken(mockRoute);
 
-    await loginByToken(to as RouteLocationNormalized);
-
-    expect(exchangeTokens).toHaveBeenCalled();
-    expect(exchangeTokens).toHaveBeenCalledWith(passwordlessToken);
+    expect(mockMutateAsync).toHaveBeenCalledWith({ token: passwordlessToken });
+    expect(mockHandleLogin).toHaveBeenCalledWith(token);
+    expect(result).toEqual({ name: 'home' });
   });
 
-  test('should return directions to home', async () => {
-    expect(await loginByToken(to as RouteLocationNormalized)).toStrictEqual({
-      name: 'home',
-    });
+  test('passes correct passwordlessToken to exchange mutation', async () => {
+    await loginByToken(mockRoute);
+
+    expect(mockMutateAsync).toHaveBeenCalledWith({ token: passwordlessToken });
+  });
+
+  test('calls handleLogin with returned token', async () => {
+    await loginByToken(mockRoute);
+
+    expect(mockHandleLogin).toHaveBeenCalledWith(token);
   });
 });

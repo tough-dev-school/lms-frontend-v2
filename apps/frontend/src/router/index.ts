@@ -3,12 +3,13 @@ import {
   createWebHistory,
   type RouteLocationNormalized,
 } from 'vue-router';
-import { useAuth } from '@/stores/auth';
+import { useAuth } from '@/composables/useAuth';
 import { loginByToken } from '@/router/loginByToken';
 import { loginById } from '@/router/loginById';
 import { useQueryClient } from '@tanstack/vue-query';
 import { baseQueryKey, fetchHomeworkAnswer } from '@/query';
 import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
+import { useAuthRedirect } from '@/composables/useAuthRedirect';
 
 const disallowAuthorized = () => {
   const { token } = useAuth();
@@ -196,17 +197,10 @@ router.beforeEach(
     }
 
     // Redirect to /login if unauthorized and route is not public
-    if (!(token.value || to.meta.unauthorizedOnly)) {
-      let query = {};
+    if (!(token.value || to.meta.unauthorizedOnly) && to.name !== 'home') {
+      const { redirectToAuthAndSaveRoute } = useAuthRedirect();
 
-      if (to.fullPath !== '/') {
-        query = { ...query, next: encodeURIComponent(to.fullPath) };
-      }
-
-      return {
-        name: 'login',
-        query,
-      };
+      redirectToAuthAndSaveRoute(to.fullPath);
     }
 
     // Reset title after navigation (except hash change)

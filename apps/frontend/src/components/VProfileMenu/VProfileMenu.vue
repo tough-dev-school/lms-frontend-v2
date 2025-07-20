@@ -4,7 +4,7 @@
   import VAvatar from '@/components/VAvatar/VAvatar.vue';
   import { useRouter } from 'vue-router';
   import { useUserQuery } from '@/query';
-  import { useAuth } from '@/stores/auth';
+  import { useAuth } from '@/composables/useAuth';
   import { getName } from '@/utils/getName';
 
   export interface ProfileMenuItem {
@@ -18,7 +18,7 @@
   const menu = ref(null);
   const router = useRouter();
   const { data: user } = useUserQuery();
-  const { removeToken } = useAuth();
+  const { handleLogout } = useAuth();
 
   onClickOutside(menu, () => (isOpen.value = false));
 
@@ -68,7 +68,7 @@
     {
       label: 'Выйти',
       action: () => {
-        removeToken();
+        handleLogout();
         router.push({ name: 'login' });
         isOpen.value = false;
       },

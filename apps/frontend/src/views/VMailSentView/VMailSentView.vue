@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import VCard from '@/components/VCard/VCard.vue';
   import { computed } from 'vue';
-  import { useChatra } from '@/hooks/useChatra';
+  import { useChatra } from '@/composables/useChatra';
   import { getProviderByEmail } from '@brachkow/email-providers';
   import VPublicLayout from '@/layouts/VPublicLayout/VPublicLayout.vue';
   import VButton from '@/components/VButton/VButton.vue';

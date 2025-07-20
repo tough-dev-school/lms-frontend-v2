@@ -3,19 +3,22 @@
   import VCard from '@/components/VCard/VCard.vue';
   import VTextInput from '@/components/VTextInput/VTextInput.vue';
   import { ref } from 'vue';
-  import { useAuth } from '@/stores/auth';
   import { useRouter } from 'vue-router';
+  import { useQueryClient } from '@tanstack/vue-query';
+  import { useLoginWithLinkMutation } from '@/query';
 
-  const { loginWithEmail } = useAuth();
   const router = useRouter();
-
+  const queryClient = useQueryClient();
   const email = ref('');
   const isPending = ref(false);
+
+  const { mutateAsync: loginWithLink } = useLoginWithLinkMutation(queryClient);
 
   const handleLogin = async () => {
     try {
       isPending.value = true;
-      await loginWithEmail(email.value);
+      await loginWithLink({ email: email.value });
+
       router.push({ name: 'mail-sent', query: { email: email.value } });
     } catch (e) {
       console.error('Failed to login with email');

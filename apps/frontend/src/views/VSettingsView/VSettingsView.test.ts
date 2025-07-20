@@ -1,15 +1,25 @@
-import { describe, beforeEach, expect, test } from 'vitest';
+import { describe, beforeEach, expect, test, vi } from 'vitest';
 import { mount, RouterLinkStub } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import VSettingsView from './VSettingsView.vue';
 import type { RouterLink } from 'vue-router';
+import { usePasswordChangeMutation } from '@/query';
+import { ref } from 'vue';
 
 const defaultProps = {};
+
+vi.mock('@/query');
+vi.mock('@tanstack/vue-query');
 
 describe('VSettingsView', () => {
   let wrapper: VueWrapper<InstanceType<typeof VSettingsView>>;
 
   beforeEach(() => {
+    vi.mocked(usePasswordChangeMutation).mockReturnValue({
+      mutateAsync: vi.fn(),
+      isPending: ref(false),
+    } as any);
+
     wrapper = mount(VSettingsView, {
       shallow: true,
       props: defaultProps,
