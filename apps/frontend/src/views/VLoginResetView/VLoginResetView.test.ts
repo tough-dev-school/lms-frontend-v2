@@ -7,6 +7,8 @@ import type VTextInput from '@/components/VTextInput/VTextInput.vue';
 import { faker } from '@faker-js/faker';
 import { useAuth } from '@/composables/useAuth';
 import { useRouter } from 'vue-router';
+import { ref } from 'vue';
+import { useRequestPasswordResetMutation } from '@/query';
 
 const defaultProps = {};
 
@@ -14,6 +16,8 @@ const routerPushMock = vi.fn();
 
 vi.mock('vue-router');
 vi.mock('@/composables/useAuth');
+vi.mock('@/query');
+vi.mock('@tanstack/vue-query');
 
 const email = faker.internet.email();
 
@@ -22,12 +26,17 @@ describe('VLoginResetView', () => {
   const requestResetMock = vi.fn();
 
   beforeEach(() => {
-    (useAuth as ReturnType<typeof vi.fn>).mockReturnValue({
+    vi.mocked(useAuth).mockReturnValue({
       requestReset: requestResetMock,
-    });
-    (useRouter as ReturnType<typeof vi.fn>).mockReturnValue({
+    } as any);
+    vi.mocked(useRouter).mockReturnValue({
       push: routerPushMock,
-    });
+    } as any);
+
+    vi.mocked(useRequestPasswordResetMutation).mockReturnValue({
+      mutateAsync: requestResetMock,
+      isPending: ref(false),
+    } as any);
 
     wrapper = mount(VLoginResetView, {
       shallow: true,
@@ -58,7 +67,7 @@ describe('VLoginResetView', () => {
     await getSendWrapper().trigger('submit');
 
     expect(requestResetMock).toHaveBeenCalledTimes(1);
-    expect(requestResetMock).toHaveBeenCalledWith(email);
+    expect(requestResetMock).toHaveBeenCalledWith({ email });
   });
 
   test('click on send redirects to mail-sent', async () => {
