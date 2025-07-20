@@ -1,38 +1,78 @@
-import { faker } from '@faker-js/faker';
-import { describe, beforeEach, expect, test, vi } from 'vitest';
+import { describe, expect, test, vi, beforeEach } from 'vitest';
 import { loginById } from './loginById';
-import { useAuth } from '@/composables/useAuth';
 import type { RouteLocationNormalized } from 'vue-router';
-
-const userId = faker.string.uuid();
-
-const to: Partial<RouteLocationNormalized> = {
-  params: {
-    userId,
-  },
-};
+import { faker } from '@faker-js/faker';
+import { useAuth } from '@/composables/useAuth';
+import { useLoginWithUserIdMutation } from '@/query';
+import { useQueryClient } from '@tanstack/vue-query';
+import { ref } from 'vue';
 
 vi.mock('@/composables/useAuth');
+vi.mock('@/query');
+vi.mock('@tanstack/vue-query');
+vi.mock('@/utils/useAuth');
+
+const mockHandleLogin = vi.fn();
+const mockMutateAsync = vi.fn();
 
 describe('loginById', () => {
   beforeEach(() => {
-    (useAuth as ReturnType<typeof vi.fn>).mockReturnValue({
-      loginWithUserId: vi.fn(),
-    });
+    vi.mocked(useAuth).mockReturnValue({
+      handleLogin: mockHandleLogin,
+    } as any);
+
+    vi.mocked(useLoginWithUserIdMutation).mockReturnValue({
+      mutateAsync: mockMutateAsync,
+      isPending: ref(false),
+    } as any);
+
+    vi.mocked(useQueryClient).mockReturnValue({} as any);
   });
 
-  test('should call loginWithUserId', async () => {
-    const { loginWithUserId } = useAuth();
+  test('successfully logs in user and returns home route', async () => {
+    const userId = faker.number.int({ min: 1, max: 1000 });
+    const token = faker.string.uuid();
 
-    await loginById(to as RouteLocationNormalized);
+    mockMutateAsync.mockResolvedValue({ token });
 
-    expect(loginWithUserId).toHaveBeenCalled();
-    expect(loginWithUserId).toHaveBeenCalledWith(userId);
+    const mockRoute = {
+      params: { userId: userId.toString() },
+    } as unknown as RouteLocationNormalized;
+
+    const result = await loginById(mockRoute);
+
+    expect(mockMutateAsync).toHaveBeenCalledWith(userId);
+    expect(mockHandleLogin).toHaveBeenCalledWith(token);
+    expect(result).toEqual({ name: 'home' });
   });
 
-  test('should return directions to home', async () => {
-    expect(await loginById(to as RouteLocationNormalized)).toStrictEqual({
-      name: 'home',
-    });
+  test('passes correct userId to login mutation', async () => {
+    const userId = 42;
+    const token = faker.string.uuid();
+
+    mockMutateAsync.mockResolvedValue({ token });
+
+    const mockRoute = {
+      params: { userId: userId.toString() },
+    } as unknown as RouteLocationNormalized;
+
+    await loginById(mockRoute);
+
+    expect(mockMutateAsync).toHaveBeenCalledWith(userId);
+  });
+
+  test('calls handleLogin with returned token', async () => {
+    const userId = faker.number.int({ min: 1, max: 1000 });
+    const token = faker.string.uuid();
+
+    mockMutateAsync.mockResolvedValue({ token });
+
+    const mockRoute = {
+      params: { userId: userId.toString() },
+    } as unknown as RouteLocationNormalized;
+
+    await loginById(mockRoute);
+
+    expect(mockHandleLogin).toHaveBeenCalledWith(token);
   });
 });
