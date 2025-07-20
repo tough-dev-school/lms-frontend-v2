@@ -197,10 +197,10 @@ router.beforeEach(
     }
 
     // Redirect to /login if unauthorized and route is not public
-    if (!(token.value || to.meta.unauthorizedOnly)) {
+    if (!(token.value || to.meta.unauthorizedOnly) && to.name !== 'home') {
       const { redirectToAuthAndSaveRoute } = useAuthRedirect();
 
-      redirectToAuthAndSaveRoute();
+      redirectToAuthAndSaveRoute(to.fullPath);
     }
 
     // Reset title after navigation (except hash change)

@@ -5,12 +5,12 @@ export const useAuthRedirect = () => {
 
   const paramName = 'returnTo';
 
-  const redirectToAuthAndSaveRoute = () => {
+  const redirectToAuthAndSaveRoute = (fullPath: string) => {
     router.push({
       name: 'login',
       query: {
         ...router.currentRoute.value.query,
-        [paramName]: encodeURIComponent(router.currentRoute.value.fullPath),
+        [paramName]: encodeURIComponent(fullPath),
       },
     });
   };
