@@ -484,7 +484,7 @@ export const useLoginWithCredentialsMutation = (queryClient: QueryClient) => {
 export const useLoginWithUserIdMutation = (queryClient: QueryClient) => {
   return useMutation({
     mutationFn: async (userId: number) => await api.authAsRetrieve(userId),
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: baseQueryKey() });
     },
   });
