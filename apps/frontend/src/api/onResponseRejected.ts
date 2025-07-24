@@ -1,6 +1,7 @@
 import { useAuth } from '@/composables/useAuth';
 import type { AxiosError } from 'axios';
 import handleError from '@/utils/handleError';
+import router from '@/router';
 
 const onResponseRejected = (error: AxiosError) => {
   const { token } = useAuth();
@@ -8,7 +9,7 @@ const onResponseRejected = (error: AxiosError) => {
   if (error.response) {
     if (error.response.status === 401) {
       token.value = undefined;
-      window.location.href = '/login';
+      router.push({ name: 'login' });
     }
 
     if (error.response.status !== 401) {
