@@ -35,7 +35,11 @@
       token.value = newToken;
 
       if (router.currentRoute.value.query.redirectTo) {
-        router.push(router.currentRoute.value.query.redirectTo as string);
+        router.push(
+          decodeURIComponent(
+            router.currentRoute.value.query.redirectTo as string,
+          ),
+        );
       } else {
         router.push({ name: 'home' });
       }

@@ -207,7 +207,10 @@ router.beforeEach(
 
       // Block access to protected routes
       if (to.meta.requiresAuth) {
-        return { name: 'login', query: { redirectTo: to.fullPath } };
+        return {
+          name: 'login',
+          query: { redirectTo: encodeURIComponent(to.fullPath) },
+        };
       }
     } else {
       // Redirect authorized users away from auth routes
