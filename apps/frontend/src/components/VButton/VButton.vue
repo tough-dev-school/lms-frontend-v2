@@ -4,8 +4,6 @@
 </script>
 
 <script lang="ts" setup>
-  import { withDefaults } from 'vue';
-
   export interface Props {
     appearance?: Appearance;
     size?: Type;
