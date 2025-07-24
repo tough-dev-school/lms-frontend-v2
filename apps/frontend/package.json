@@ -48,7 +48,7 @@
     "vue-tabler-icons": "^2.21.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250628.0",
+    "@cloudflare/workers-types": "^4.20250724.0",
     "@faker-js/faker": "^8.4.1",
     "@rushstack/eslint-patch": "^1.12.0",
     "@storybook/addon-docs": "^9.0.14",

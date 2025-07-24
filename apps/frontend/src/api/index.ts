@@ -3,9 +3,7 @@ import { Api, HttpClient } from './generated-api';
 import onRequestFulfilled from './onRequestFulfilled';
 
 export const createHttpClient = () => {
-  const httpClient = new HttpClient({
-    baseURL: import.meta.env.VITE_API_URL,
-  });
+  const httpClient = new HttpClient();
 
   httpClient.instance.interceptors.request.use((value) =>
     onRequestFulfilled(value),
