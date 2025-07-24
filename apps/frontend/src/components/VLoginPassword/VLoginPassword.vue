@@ -7,7 +7,6 @@
   import { useRouter } from 'vue-router';
   import { useLoginWithCredentialsMutation } from '@/query';
   import { useQueryClient } from '@tanstack/vue-query';
-  import { useAuthRedirect } from '@/composables/useAuthRedirect';
 
   const queryClient = useQueryClient();
 
@@ -25,8 +24,6 @@
     () => !(username.value && password.value),
   );
 
-  const { redirectFromAuthAndRestoreRoute } = useAuthRedirect();
-
   const handleSubmit = async () => {
     try {
       // @ts-expect-error #TODO JSONWebToken in, and out — must be fixed on backend
@@ -37,7 +34,11 @@
 
       token.value = newToken;
 
-      redirectFromAuthAndRestoreRoute();
+      if (router.currentRoute.value.query.redirectTo) {
+        router.push(router.currentRoute.value.query.redirectTo as string);
+      } else {
+        router.push({ name: 'home' });
+      }
     } catch {
       console.error('Failed to login');
     }

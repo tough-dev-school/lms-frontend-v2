@@ -9,7 +9,6 @@ import { loginById } from '@/router/loginById';
 import { useQueryClient } from '@tanstack/vue-query';
 import { baseQueryKey, fetchHomeworkAnswer } from '@/query';
 import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
-import { useAuthRedirect } from '@/composables/useAuthRedirect';
 
 export const routes = [
   {
@@ -183,7 +182,7 @@ const router = createRouter({
 });
 
 router.beforeEach(
-  async (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
+  (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
     // Reset title after navigation (except hash change)
     if (from.path !== to.path) {
       document.title = 'Школа Сильных Программистов';
@@ -208,7 +207,7 @@ router.beforeEach(
 
       // Block access to protected routes
       if (to.meta.requiresAuth) {
-        return { name: 'login' };
+        return { name: 'login', query: { redirectTo: to.fullPath } };
       }
     } else {
       // Redirect authorized users away from auth routes
