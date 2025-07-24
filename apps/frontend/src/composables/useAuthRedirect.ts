@@ -5,8 +5,8 @@ export const useAuthRedirect = () => {
 
   const paramName = 'returnTo';
 
-  const redirectToAuthAndSaveRoute = (fullPath: string) => {
-    router.push({
+  const redirectToAuthAndSaveRoute = async (fullPath: string) => {
+    await router.push({
       name: 'login',
       query: {
         ...router.currentRoute.value.query,
