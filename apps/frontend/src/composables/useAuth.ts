@@ -18,17 +18,7 @@ export const useAuth = createGlobalState(() => {
     },
   });
 
-  const handleLogout = () => {
-    token.value = undefined;
-  };
-
-  const handleLogin = (token: AuthToken) => {
-    storage.value.token = token;
-  };
-
   return {
     token,
-    handleLogout,
-    handleLogin,
   };
 });

@@ -11,7 +11,7 @@
 
   const queryClient = useQueryClient();
 
-  const { handleLogin } = useAuth();
+  const { token } = useAuth();
 
   const { mutateAsync: loginWithCredentials, isPending } =
     useLoginWithCredentialsMutation(queryClient);
@@ -29,12 +29,12 @@
 
   const handleSubmit = async () => {
     try {
-      const { token } = await loginWithCredentials({
+      const { token: newToken } = await loginWithCredentials({
         username: username.value,
         password: password.value,
       });
 
-      handleLogin(token);
+      token.value = newToken;
 
       redirectFromAuthAndRestoreRoute();
     } catch {
