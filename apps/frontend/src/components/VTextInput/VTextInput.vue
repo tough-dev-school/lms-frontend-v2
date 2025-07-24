@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-  import { withDefaults } from 'vue';
-
   export type AllowedTags =
     | 'text'
     | 'date'
