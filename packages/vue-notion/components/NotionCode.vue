@@ -3,7 +3,7 @@
     class="NotionCode"
     :data-lang="
       lang
-    "><code class="NotionCode__Element" :class="langClass" v-html="code"></code></pre>
+    "><code class="NotionCode__Element" v-html="code"></code></pre>
 </template>
 
 <script>
