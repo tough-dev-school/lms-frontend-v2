@@ -1,8 +1,10 @@
-// #FIXME Remove the ts-expect-error comments after @cloudflare/workers-types will be fixed
+import {
+  PagesFunction,
+  Response,
+  Request,
+  fetch,
+} from '@cloudflare/workers-types';
 
-import { PagesFunction } from '@cloudflare/workers-types';
-
-// Describe your allowed origins
 const ALLOWED_ORIGINS = ['lms-frontend-v2.pages.dev'];
 
 const isAllowedOrigin = (url: string) => {
@@ -11,7 +13,6 @@ const isAllowedOrigin = (url: string) => {
   );
 };
 
-// Describe your rewrites
 const getRewrites = (url: string): Record<string, string> => {
   const rewrites = {
     [`${new URL(url).origin}/api/`]: 'https://app.tough-dev.school/api/',
@@ -24,52 +25,49 @@ const getRewriteKey = (url: string, rewrites: Record<string, string>) => {
   return Object.keys(rewrites).find((key) => url.startsWith(key));
 };
 
-//@ts-expect-error
-export const onRequestOptions: PagesFunction = async (context) => {
-  const rewrites = getRewrites(context.request.url);
-  const rewriteKey = getRewriteKey(context.request.url, rewrites);
+const getRewriteUrl = (url: string) => {
+  const rewrites = getRewrites(url);
+  const rewriteKey = getRewriteKey(url, rewrites);
 
-  if (rewriteKey) {
+  return rewriteKey ? url.replace(rewriteKey, rewrites[rewriteKey]) : undefined;
+};
+
+export const onRequestOptions: PagesFunction = async (context) => {
+  const rewriteUrl = getRewriteUrl(context.request.url);
+
+  if (rewriteUrl && isAllowedOrigin(context.request.url)) {
     const response = new Response(null, {
       status: 204,
       headers: {
         'Access-Control-Allow-Headers': '*',
         'Access-Control-Allow-Methods': 'GET, OPTIONS',
         'Access-Control-Max-Age': '86400',
+        'Access-Control-Allow-Origin': '*',
       },
     });
 
-    if (isAllowedOrigin(context.request.url)) {
-      response.headers.set('Access-Control-Allow-Origin', '*');
-    }
-
     return response;
   }
+
   return await context.next();
 };
 
-//@ts-expect-error
-export const onRequest: PagesFunction = async (context) => {
-  const rewrites = getRewrites(context.request.url);
-  const rewriteKey = getRewriteKey(context.request.url, rewrites);
+export const onRequest: PagesFunction = async (context): Promise<Response> => {
+  const rewriteUrl = getRewriteUrl(context.request.url);
 
-  if (rewriteKey) {
-    const newUrl = context.request.url.replace(
-      rewriteKey,
-      rewrites[rewriteKey],
-    );
-    console.log(`${context.request.url} -> ${newUrl}`);
-    //@ts-expect-error
-    const immutableResponse = await fetch(new Request(newUrl, context.request));
-    const response = new Response(immutableResponse.body, immutableResponse);
-
-    if (isAllowedOrigin(context.request.url)) {
-      response.headers.set('Access-Control-Allow-Origin', '*');
-      response.headers.set('Access-Control-Max-Age', '86400');
-    }
-
-    return response;
+  if (!rewriteUrl) {
+    return await context.next();
   }
 
-  return await context.next();
+  const immutableResponse = await fetch(
+    new Request(rewriteUrl, context.request),
+  );
+  const response = new Response(immutableResponse.body, immutableResponse);
+
+  if (isAllowedOrigin(context.request.url)) {
+    response.headers.set('Access-Control-Allow-Origin', '*');
+    response.headers.set('Access-Control-Max-Age', '86400');
+  }
+
+  return response;
 };

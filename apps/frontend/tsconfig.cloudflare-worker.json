@@ -1,0 +1,10 @@
+{
+  "include": ["functions/_middleware.ts"],
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "lib": ["esnext"],
+    "types": ["@cloudflare/workers-types/experimental"]
+  }
+}
