@@ -9,24 +9,23 @@ import { loginById } from '@/router/loginById';
 import { useQueryClient } from '@tanstack/vue-query';
 import { baseQueryKey, fetchHomeworkAnswer } from '@/query';
 import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
-import { useAuthRedirect } from '@/composables/useAuthRedirect';
-
-const disallowAuthorized = () => {
-  const { token } = useAuth();
-
-  if (token.value) return { name: 'home' };
-};
 
 export const routes = [
   {
     path: '/',
     name: 'home',
     component: () => import('@/views/VCoursesView/VCoursesView.vue'),
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: '/settings',
     name: 'settings',
     component: () => import('@/views/VSettingsView/VSettingsView.vue'),
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: '/:courseId/modules',
@@ -35,6 +34,9 @@ export const routes = [
     props: (route: RouteLocationNormalized) => ({
       courseId: parseInt(route.params.courseId as string),
     }),
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: '/:courseId/module/:moduleId/lessons',
@@ -44,35 +46,35 @@ export const routes = [
       courseId: parseInt(route.params.courseId as string),
       moduleId: parseInt(route.params.moduleId as string),
     }),
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: '/login',
     name: 'login',
     component: () => import('@/views/VLoginView/VLoginView.vue'),
-    beforeEnter: [disallowAuthorized],
     meta: {
-      unauthorizedOnly: true,
+      requiresAuth: false,
     },
   },
   {
     path: '/login/mail-sent',
     name: 'mail-sent',
     component: () => import('@/views/VMailSentView/VMailSentView.vue'),
-    beforeEnter: [disallowAuthorized],
     props: (route: RouteLocationNormalized) => ({
       email: route.query.email as string | undefined,
     }),
     meta: {
-      unauthorizedOnly: true,
+      requiresAuth: false,
     },
   },
   {
     path: '/login/reset',
     name: 'login-reset',
     component: () => import('@/views/VLoginResetView/VLoginResetView.vue'),
-    beforeEnter: [disallowAuthorized],
     meta: {
-      unauthorizedOnly: true,
+      requiresAuth: false,
     },
   },
   {
@@ -83,9 +85,8 @@ export const routes = [
       uid: route.params.uid as string,
       token: route.params.token as string,
     }),
-    beforeEnter: [disallowAuthorized],
     meta: {
-      unauthorizedOnly: true,
+      requiresAuth: false,
     },
   },
   {
@@ -94,7 +95,7 @@ export const routes = [
     component: () => import('@/views/VLoadingView/VLoadingView.vue'),
     beforeEnter: [loginByToken],
     meta: {
-      unauthorizedOnly: true,
+      requiresAuth: false,
     },
   },
   {
@@ -181,7 +182,7 @@ const router = createRouter({
 });
 
 router.beforeEach(
-  async (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
+  (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
     // Reset title after navigation (except hash change)
     if (from.path !== to.path) {
       document.title = 'Школа Сильных Программистов';
@@ -197,15 +198,24 @@ router.beforeEach(
       return { name: 'home' };
     }
 
-    if (token.value) {
-      if (to.meta.unauthorizedOnly) {
-        return { name: 'home' };
+    // Check authentication
+    if (!token.value) {
+      // Allow access to routes that don't require auth
+      if (to.meta.requiresAuth === false) {
+        return;
+      }
+
+      // Block access to protected routes
+      if (to.meta.requiresAuth) {
+        return {
+          name: 'login',
+          query: { redirectTo: encodeURIComponent(to.fullPath) },
+        };
       }
     } else {
-      if (to.meta.unauthorizedOnly === false && to.name !== 'home') {
-        const { redirectToAuthAndSaveRoute } = useAuthRedirect();
-
-        redirectToAuthAndSaveRoute(to.fullPath);
+      // Redirect authorized users away from auth routes
+      if (to.meta.requiresAuth === false) {
+        return { name: 'home' };
       }
     }
   },
