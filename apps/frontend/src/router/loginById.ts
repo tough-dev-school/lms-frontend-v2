@@ -4,14 +4,14 @@ import { useLoginWithUserIdMutation } from '@/query';
 import { useQueryClient } from '@tanstack/vue-query';
 
 export const loginById = async (to: RouteLocationNormalized) => {
-  const { handleLogin } = useAuth();
+  const { token } = useAuth();
   const queryClient = useQueryClient();
 
   const { mutateAsync: loginWithUserId } =
     useLoginWithUserIdMutation(queryClient);
-  const { token } = await loginWithUserId(Number(to.params.userId));
+  const { token: newToken } = await loginWithUserId(Number(to.params.userId));
 
-  handleLogin(token);
+  token.value = newToken;
 
   return { name: 'home' };
 };

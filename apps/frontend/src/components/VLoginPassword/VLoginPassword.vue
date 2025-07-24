@@ -29,6 +29,7 @@
 
   const handleSubmit = async () => {
     try {
+      // @ts-expect-error #TODO JSONWebToken in, and out — must be fixed on backend
       const { token: newToken } = await loginWithCredentials({
         username: username.value,
         password: password.value,
