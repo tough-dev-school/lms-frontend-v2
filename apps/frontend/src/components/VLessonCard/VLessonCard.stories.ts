@@ -1,9 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VLessonCard from '@/components/VLessonCard/VLessonCard.vue';
-import type {
-  LessonForUser,
-  RecommendedVideoProviderEnum,
-} from '@/api/generated-api';
+import type { Lesson, RecommendedVideoProviderEnum } from '@/api/generated-api';
 import { mockQuestion } from '@/mocks/mockQuestion';
 
 export default {
@@ -27,7 +24,7 @@ const baseLesson = {
   id: 1,
 };
 
-const callWithVideo: LessonForUser = {
+const callWithVideo: Lesson = {
   ...baseLesson,
   question: mockQuestion(),
   call: {
@@ -52,7 +49,7 @@ const callWithVideo: LessonForUser = {
   },
 };
 
-const callWithoutVideo: LessonForUser = {
+const callWithoutVideo: Lesson = {
   ...baseLesson,
   question: mockQuestion(),
   call: {
@@ -65,7 +62,7 @@ const callWithoutVideo: LessonForUser = {
   },
 };
 
-const homeworkWithCrosschecks: LessonForUser = {
+const homeworkWithCrosschecks: Lesson = {
   ...baseLesson,
   question: mockQuestion(),
   homework: {
@@ -87,7 +84,7 @@ const homeworkWithCrosschecks: LessonForUser = {
   },
 };
 
-const homeworkWithoutCrosschecks: LessonForUser = {
+const homeworkWithoutCrosschecks: Lesson = {
   ...baseLesson,
   question: mockQuestion(),
   homework: {
@@ -105,7 +102,7 @@ const homeworkWithoutCrosschecks: LessonForUser = {
   },
 };
 
-const materialLesson: LessonForUser = {
+const materialLesson: Lesson = {
   ...baseLesson,
   question: mockQuestion(),
   material: {
@@ -186,6 +183,6 @@ export const ComplexLesson = {
         id: 'material-456',
         title: 'Дополнительные материалы по TypeScript',
       },
-    } as LessonForUser,
+    } as Lesson,
   },
 };
