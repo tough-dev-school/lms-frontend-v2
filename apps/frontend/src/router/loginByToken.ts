@@ -5,16 +5,16 @@ import { useAuth } from '@/composables/useAuth';
 
 export const loginByToken = async (to: RouteLocationNormalized) => {
   const queryClient = useQueryClient();
-  const { handleLogin } = useAuth();
+  const { token } = useAuth();
 
   const { mutateAsync: exchangeTokens } =
     useExchangeTokensMutation(queryClient);
 
-  const { token } = await exchangeTokens({
+  const { token: newToken } = await exchangeTokens({
     token: String(to.params.passwordlessToken),
   });
 
-  handleLogin(token);
+  token.value = newToken;
 
   return { name: 'home' };
 };
