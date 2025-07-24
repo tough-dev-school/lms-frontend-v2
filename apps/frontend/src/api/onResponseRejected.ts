@@ -3,10 +3,13 @@ import type { AxiosError } from 'axios';
 import handleError from '@/utils/handleError';
 
 const onResponseRejected = (error: AxiosError) => {
-  const { token, handleLogout } = useAuth();
+  const { token } = useAuth();
 
   if (error.response) {
-    if (error.response.status === 401 && token.value) handleLogout();
+    if (error.response.status === 401) {
+      token.value = undefined;
+      window.location.href = '/login';
+    }
 
     if (error.response.status !== 401) {
       // Handle error with default or custom message

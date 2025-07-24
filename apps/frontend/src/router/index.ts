@@ -182,29 +182,32 @@ const router = createRouter({
 
 router.beforeEach(
   async (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
+    // Reset title after navigation (except hash change)
+    if (from.path !== to.path) {
+      document.title = 'Школа Сильных Программистов';
+    }
+
     const { token } = useAuth();
 
     const queryClient = useQueryClient();
     queryClient.invalidateQueries({ queryKey: baseQueryKey() });
-
-    if (to.meta.unauthorizedOnly && token.value) {
-      return { name: 'home' };
-    }
 
     // Redirect to existing route if route does not exist
     if (!to.name) {
       return { name: 'home' };
     }
 
-    // Redirect to /login if unauthorized and route is not public
-    if (!(token.value || to.meta.unauthorizedOnly) && to.name !== 'home') {
-      const { redirectToAuthAndSaveRoute } = useAuthRedirect();
+    if (token.value) {
+      if (to.meta.unauthorizedOnly) {
+        return { name: 'home' };
+      }
+    } else {
+      if (to.meta.unauthorizedOnly === false && to.name !== 'home') {
+        const { redirectToAuthAndSaveRoute } = useAuthRedirect();
 
-      redirectToAuthAndSaveRoute(to.fullPath);
+        redirectToAuthAndSaveRoute(to.fullPath);
+      }
     }
-
-    // Reset title after navigation (except hash change)
-    if (from.path !== to.path) document.title = 'Школа Сильных Программистов';
   },
 );
 
