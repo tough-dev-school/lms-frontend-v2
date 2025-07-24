@@ -11,7 +11,7 @@
       "path": "./tsconfig.vitest.json"
     },
     {
-      "path": "./tsconfig.cloudflare-worker.json"
+      "path": "./functions/tsconfig.json"
     }
   ]
 }

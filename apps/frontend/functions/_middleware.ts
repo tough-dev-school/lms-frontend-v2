@@ -1,9 +1,4 @@
-import {
-  PagesFunction,
-  Response,
-  Request,
-  fetch,
-} from '@cloudflare/workers-types';
+import { PagesFunction } from '@cloudflare/workers-types/experimental';
 
 const ALLOWED_ORIGINS = ['lms-frontend-v2.pages.dev'];
 

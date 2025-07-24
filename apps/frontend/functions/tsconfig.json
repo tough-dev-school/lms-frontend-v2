@@ -1,5 +1,5 @@
 {
-  "include": ["functions/_middleware.ts"],
+  "include": ["_middleware.ts"],
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
