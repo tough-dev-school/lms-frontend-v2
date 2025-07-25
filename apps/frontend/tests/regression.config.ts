@@ -8,7 +8,7 @@ export default mergeConfig(
     test: {
       globals: true,
       include: ['./tests/regression.test.ts'],
-      testTimeout: 180000,
+      testTimeout: 180_000,
     },
   }),
 );
