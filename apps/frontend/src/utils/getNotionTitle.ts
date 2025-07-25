@@ -1,7 +1,10 @@
-import type { BlockMap } from '@/types';
+import type { MaterialSerilizer } from '@/api/generated-api';
 import idToUuid from './idToUuid';
 
-const getNotionTitle = (materialId: string, material: BlockMap) => {
+const getNotionTitle = (
+  materialId: string,
+  material: MaterialSerilizer['content'],
+) => {
   // as api is unofficial and poorly typed we just assume title value is a nested array and then flatten it with the magic number to convert it into string
   const getBlockTitle = (block: any): string | undefined =>
     block?.value?.properties?.title?.flat(100).join('');
