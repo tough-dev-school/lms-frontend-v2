@@ -35,10 +35,6 @@ export default defineConfig(
       // Disabled because they require more time to fix
       '@typescript-eslint/no-explicit-any': 'off',
 
-      // Disabled until we can update Vue
-      'vue/no-import-compiler-macros': 'off',
-      'vue/prefer-use-template-ref': 'off',
-
       // Changes for eslint-config-fans
       // Disabled for prettier: true
       'vue/html-indent': 'off',

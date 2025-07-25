@@ -10,7 +10,7 @@
 <script lang="ts" setup>
   /* eslint-disable import-x/first */
   import VAnswer from '@/components/VAnswer';
-  import { ref } from 'vue';
+  import { ref, useTemplateRef } from 'vue';
   import { onClickOutside, useStorage } from '@vueuse/core';
   import { useRoute, useRouter } from 'vue-router';
   import { useHomeworkAnswerCreateMutation } from '@/query';
@@ -42,7 +42,7 @@
     prepareForScroll(slug);
   };
 
-  const target = ref<HTMLElement | null>(null);
+  const target = useTemplateRef('target');
 
   onClickOutside(target, () => {
     replyMode.value = false;

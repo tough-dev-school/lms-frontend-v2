@@ -14,7 +14,7 @@
     ListIcon,
     PhotoIcon,
   } from 'vue-tabler-icons';
-  import { onBeforeUnmount, watch, ref } from 'vue';
+  import { onBeforeUnmount, watch, ref, useTemplateRef } from 'vue';
   import { onKeyDown, useKeyModifier, useFocusWithin } from '@vueuse/core';
   import VLoader from '@/components/VLoader/VLoader.vue';
   import { useHomeworkAnswerSendImageMutation } from '@/query';
@@ -29,7 +29,7 @@
     placeholder: '',
   });
 
-  const currentEditor = ref();
+  const currentEditor = useTemplateRef('currentEditor');
   const isImageLoading = ref(false);
   const { focused } = useFocusWithin(currentEditor);
 

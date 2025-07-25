@@ -4,9 +4,6 @@
 </script>
 
 <script lang="ts" setup>
-  // eslint-disable-next-line import-x/first
-  import { withDefaults } from 'vue';
-
   export interface Props {
     appearance?: Appearance;
     size?: Type;
