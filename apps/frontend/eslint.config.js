@@ -11,4 +11,10 @@ export default defineConfig(
       'import-x/first': 'off',
     },
   },
+  {
+    files: ['**/*'],
+    rules: {
+      'unicorn/filename-case': 'off',
+    },
+  },
 );
