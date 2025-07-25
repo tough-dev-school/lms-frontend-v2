@@ -1,8 +1,7 @@
 import type { MaterialSerilizer } from '@/api/generated-api';
-import type { BlockMap } from '@/types';
 import { mockBreadcrumbs } from './mockBreadcrumbs';
 
-const blockMap: BlockMap = {
+const blockMap: MaterialSerilizer['content'] = {
   'cf1379bf-bf5a-41f9-942f-31dd4253c178': {
     value: {
       id: 'cf1379bf-bf5a-41f9-942f-31dd4253c178',

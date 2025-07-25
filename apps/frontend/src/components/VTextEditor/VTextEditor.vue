@@ -14,7 +14,7 @@
     ListIcon,
     PhotoIcon,
   } from 'vue-tabler-icons';
-  import { onBeforeUnmount, watch, withDefaults, ref } from 'vue';
+  import { onBeforeUnmount, watch, ref } from 'vue';
   import { onKeyDown, useKeyModifier, useFocusWithin } from '@vueuse/core';
   import VLoader from '@/components/VLoader/VLoader.vue';
   import { useHomeworkAnswerSendImageMutation } from '@/query';

@@ -24,7 +24,7 @@
 
   const isEdit = ref(false);
 
-  const { mutateAsync: updateAnswerMutation } =
+  const { mutateAsync: updateAnswerMutation, isPending: isUpdatePending } =
     useHomeworkAnswerUpdateMutation(queryClient);
   const { mutateAsync: deleteAnswerMutation } =
     useHomeworkAnswerDeleteMutation(queryClient);
@@ -71,5 +71,9 @@
       <slot name="footer" />
     </template>
   </VAnswer>
-  <VCreateAnswer v-else-if="isEdit" v-model="text" @send="handleUpdate" />
+  <VCreateAnswer
+    v-else-if="isEdit"
+    v-model="text"
+    :is-pending="isUpdatePending"
+    @send="handleUpdate" />
 </template>

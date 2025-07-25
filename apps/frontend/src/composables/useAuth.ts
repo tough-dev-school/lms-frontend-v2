@@ -1,9 +1,8 @@
-import type { AuthToken } from '@/types';
 import { computed } from 'vue';
 import { createGlobalState, useStorage } from '@vueuse/core';
 
 interface AuthStoreState {
-  token: AuthToken | undefined;
+  token: string | undefined;
 }
 
 export const useAuth = createGlobalState(() => {
@@ -18,17 +17,7 @@ export const useAuth = createGlobalState(() => {
     },
   });
 
-  const handleLogout = () => {
-    token.value = undefined;
-  };
-
-  const handleLogin = (token: AuthToken) => {
-    storage.value.token = token;
-  };
-
   return {
     token,
-    handleLogout,
-    handleLogin,
   };
 });

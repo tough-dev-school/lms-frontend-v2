@@ -1,5 +1,4 @@
 <script setup lang="ts">
-  import { withDefaults } from 'vue';
   import VHeading from '@/components/VHeading/VHeading.vue';
 
   export interface Props {

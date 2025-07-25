@@ -15,8 +15,8 @@
   import { uuidToId } from '../lib/utils';
 
   export default {
-    props: ['item'],
     extends: Blockable,
+    props: ['item'],
     methods: { uuidToId },
   };
 </script>

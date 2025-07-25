@@ -11,25 +11,22 @@ vi.mock('@/composables/useAuth');
 vi.mock('@/query');
 vi.mock('@tanstack/vue-query');
 
-const mockHandleLogin = vi.fn();
 const mockMutateAsync = vi.fn();
 
 describe('loginByToken', () => {
-  const token = faker.string.uuid();
+  const tokenValue = faker.string.uuid();
   const passwordlessToken = faker.string.uuid();
   let mockRoute: RouteLocationNormalized;
 
   beforeEach(async () => {
-    vi.clearAllMocks();
-
-    mockMutateAsync.mockResolvedValue({ token });
+    mockMutateAsync.mockResolvedValue({ token: tokenValue });
 
     mockRoute = {
       params: { passwordlessToken },
     } as unknown as RouteLocationNormalized;
 
     vi.mocked(useAuth).mockReturnValue({
-      handleLogin: mockHandleLogin,
+      token: ref(undefined),
     } as any);
 
     vi.mocked(useExchangeTokensMutation).mockReturnValue({
@@ -42,10 +39,12 @@ describe('loginByToken', () => {
 
   test('successfully exchanges token and returns home route', async () => {
     const result = await loginByToken(mockRoute);
+    const { token } = useAuth();
 
     expect(mockMutateAsync).toHaveBeenCalledWith({ token: passwordlessToken });
-    expect(mockHandleLogin).toHaveBeenCalledWith(token);
     expect(result).toEqual({ name: 'home' });
+
+    expect(token.value).toEqual(tokenValue);
   });
 
   test('passes correct passwordlessToken to exchange mutation', async () => {
@@ -57,6 +56,8 @@ describe('loginByToken', () => {
   test('calls handleLogin with returned token', async () => {
     await loginByToken(mockRoute);
 
-    expect(mockHandleLogin).toHaveBeenCalledWith(token);
+    const { token } = useAuth();
+
+    expect(token.value).toEqual(tokenValue);
   });
 });

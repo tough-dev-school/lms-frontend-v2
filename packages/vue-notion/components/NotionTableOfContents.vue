@@ -13,10 +13,10 @@
   import NotionTableOfContentsItem from './NotionTableOfContentsItem.vue';
 
   export default {
-    extends: Blockable,
     components: {
       NotionTableOfContentsItem,
     },
+    extends: Blockable,
     setup(props) {
       // This computed retreives a correct order of block directly from page block,
       // because blockMap order can be wrong
