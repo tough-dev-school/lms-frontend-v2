@@ -26,8 +26,6 @@ export default defineConfig(
   },
   {
     rules: {
-      'no-empty': ['error', { allowEmptyCatch: true }],
-
       // Disabled due to legacy code patterns
       'unicorn/filename-case': 'off',
       'unicorn/prefer-string-replace-all': 'off',
