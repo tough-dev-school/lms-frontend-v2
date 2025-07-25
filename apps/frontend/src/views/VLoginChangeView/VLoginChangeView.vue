@@ -25,7 +25,9 @@
         token: props.token,
       });
       router.push({ name: 'login' });
-    } catch {}
+    } catch {
+      throw new Error('Failed to change password');
+    }
   };
 </script>
 
@@ -34,7 +36,6 @@
     <VPasswordResetForm
       title="Сброс пароля"
       :is-pending="isPending"
-      @save="handleSave"
-    />
+      @save="handleSave" />
   </VPublicLayout>
 </template>

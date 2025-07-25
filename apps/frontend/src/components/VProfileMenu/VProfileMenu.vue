@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { ref, computed } from 'vue';
+  import { ref, computed, useTemplateRef } from 'vue';
   import { onClickOutside } from '@vueuse/core';
   import VAvatar from '@/components/VAvatar/VAvatar.vue';
   import { useRouter } from 'vue-router';
@@ -15,7 +15,7 @@
   }
 
   const isOpen = ref(false);
-  const menu = ref(null);
+  const menu = useTemplateRef('menu');
   const router = useRouter();
   const { data: user } = useUserQuery();
   const { token } = useAuth();
@@ -88,13 +88,11 @@
         class="flex items-center gap-8 rounded-8 p-8 hover:bg-gray hover:bg-opacity-10"
         :class="{ VProfileMenu__Button_Active: isOpen }"
         data-testid="button"
-        @click="isOpen = !isOpen"
-      >
+        @click="isOpen = !isOpen">
         <VAvatar
           :user-id="user?.uuid ?? ''"
           :image="user?.avatar || undefined"
-          data-testid="avatar"
-        />
+          data-testid="avatar" />
         <ul class="flex flex-col items-start">
           <li class="text-black dark:text-white" data-testid="name">
             {{ fullName }}
@@ -109,18 +107,15 @@
       <nav
         v-if="isOpen"
         class="float-card absolute right-0 z-10 translate-y-8"
-        data-testid="menu"
-      >
+        data-testid="menu">
         <ul>
           <li
             v-for="item in menuItems.filter((item) => !item.isHidden)"
-            :key="item.id"
-          >
+            :key="item.id">
             <button
               class="VProfileMenu__Item"
               :data-testid="item.id"
-              @click="handleItemClick(item.action)"
-            >
+              @click="handleItemClick(item.action)">
               <span>{{ item.label }}</span>
             </button>
           </li>

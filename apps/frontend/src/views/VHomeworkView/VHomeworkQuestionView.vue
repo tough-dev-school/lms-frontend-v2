@@ -4,11 +4,15 @@
   import { useStorage } from '@vueuse/core';
   import { useRouter } from 'vue-router';
   import { useQueryClient } from '@tanstack/vue-query';
-  import { useHomeworkAnswerCreateMutation, useHomeworkQuestionQuery, useLessonsQuery  } from '@/query';
+  import {
+    useHomeworkAnswerCreateMutation,
+    useHomeworkQuestionQuery,
+    useLessonsQuery,
+  } from '@/query';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import VPillHomework from '@/components/VPillHomework/VPillHomework.vue';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
-    import { computed } from 'vue';
+  import { computed } from 'vue';
   import { useHomeworkBreadcrumbs } from './useHomeworkBreadcrumbs';
 
   interface Props {
@@ -16,10 +20,6 @@
   }
 
   const props = defineProps<Props>();
-  defineEmits<{
-    create: [answerId: string];
-    delete: [];
-  }>();
 
   const router = useRouter();
 
@@ -34,7 +34,7 @@
 
   const lesson = computed(() => {
     return lessons.value?.find(
-      (lesson) => lesson.id === question.value?.breadcrumbs.lesson?.id,
+      (l) => l.id === question.value?.breadcrumbs.lesson?.id,
     );
   });
 
@@ -73,8 +73,7 @@
   <VLoggedLayout
     v-if="!(isQuestionLoading && isLessonsLoading) && question && lesson"
     :breadcrumbs="breadcrumbs"
-    :title="question.name"
-  >
+    :title="question.name">
     <template #pill>
       <VPillHomework v-if="lesson?.homework" :stats="lesson?.homework" />
     </template>
@@ -83,8 +82,7 @@
       <VCreateAnswer
         v-model="draft"
         :is-pending="isCreateAnswerPending"
-        @send="handleCreateAnswer"
-      />
+        @send="handleCreateAnswer" />
     </section>
   </VLoggedLayout>
   <VLoadingView v-else />

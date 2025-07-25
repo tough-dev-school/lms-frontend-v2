@@ -3,7 +3,7 @@
   import { computed } from 'vue';
 
   export interface Props {
-    userId: string;
+    userId?: string;
     image?: string | null;
     size?: 'sm' | 'md';
   }
@@ -33,8 +33,7 @@
       'w-72': size === 'md',
     }"
     class="flex items-center justify-center rounded-full object-cover"
-    :src="image || defaultAvatar"
-  >
+    :src="image || defaultAvatar" />
 </template>
 
 <style scoped>

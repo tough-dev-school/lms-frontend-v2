@@ -9,7 +9,10 @@ import { cloneDeep } from 'lodash-es';
 import { faker } from '@faker-js/faker';
 import { mockAnswer } from '@/mocks/mockAnswer';
 import { mockUserSafe } from '@/mocks/mockUserSafe';
-import { useRemoveHomeworkReactionMutation, useAddHomeworkReactionMutation  } from '@/query';
+import {
+  useRemoveHomeworkReactionMutation,
+  useAddHomeworkReactionMutation,
+} from '@/query';
 
 const uuid = faker.string.uuid();
 
@@ -76,9 +79,9 @@ describe('VAnswer', () => {
   };
 
   test('props to display avatar passed to VAvatar', () => {
-    const { uuid } = defaultProps.answer.author;
+    const { uuid: id } = defaultProps.answer.author;
 
-    expect(getAvatarWrapper().props().userId).toBe(uuid);
+    expect(getAvatarWrapper().props().userId).toBe(id);
   });
 
   test('answer has author name', () => {
@@ -89,7 +92,7 @@ describe('VAnswer', () => {
 
   test('answer has relative date', () => {
     const years = 10;
-    const props = { ...defaultProps};
+    const props = { ...defaultProps };
     defaultProps.answer.created = dayjs()
       .subtract(years, 'years')
       .toISOString();

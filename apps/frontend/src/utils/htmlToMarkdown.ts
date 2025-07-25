@@ -21,11 +21,13 @@ const escapes: Array<[RegExp, string]> = [
 ];
 
 const URL_REGEX =
-  /[\w#%+.:=@~-]{1,256}\.[\d()a-z]{1,6}\b([\w#%&()+./:=?@~-]*)?/gi;  
+  /[\w#%+.:=@~-]{1,256}\.[\d()a-z]{1,6}\b([\w#%&()+./:=?@~-]*)?/gi;
 const regex = new RegExp(URL_REGEX);
 
 TurndownService.prototype.escape = function (string) {
-  if (string.match(regex)) {return string;}
+  if (regex.test(string)) {
+    return string;
+  }
   return escapes.reduce((accumulator, escape) => {
     return accumulator.replace(escape[0], escape[1]);
   }, string);

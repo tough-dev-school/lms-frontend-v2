@@ -16,7 +16,6 @@
     label?: string;
     tip?: string;
     error?: boolean | string;
-    modelValue: string;
     type?: AllowedTags;
   }
 
@@ -28,14 +27,9 @@
     label: undefined,
   });
 
-  const emit = defineEmits<{
-    'update:modelValue': [value: string];
-  }>();
-
-  const handleInput = (e: Event) => {
-    const value = (e.target as HTMLInputElement).value;
-    emit('update:modelValue', value);
-  };
+  const model = defineModel({
+    required: true,
+  });
 </script>
 
 <template>
@@ -44,8 +38,7 @@
       v-if="$slots.label || label"
       class="mb-8"
       :class="{ 'text-red': error }"
-      data-testid="label"
-    >
+      data-testid="label">
       <slot name="label">
         {{ label }}
       </slot>
@@ -58,16 +51,13 @@
         'border-red': error,
       }"
       data-testid="input"
-      :value="modelValue"
-      @input="handleInput"
-    >
+      v-model="model" />
     <div v-if="tip || error" class="mt-4">
       <p v-if="tip" data-testid="tip" class="text-sub text-gray">{{ tip }}</p>
       <p
         v-if="error && error !== true"
         data-testid="error"
-        class="text-sub text-red"
-      >
+        class="text-sub text-red">
         {{ error }}
       </p>
     </div>

@@ -7,7 +7,7 @@ const getNotionTitle = (
 ) => {
   // as api is unofficial and poorly typed we just assume title value is a nested array and then flatten it with the magic number to convert it into string
   const getBlockTitle = (block: any): string | undefined =>
-    block?.value?.properties?.title?.flat(100).join('');
+    block?.value?.properties?.title?.flat(Infinity).join('');
 
   const blockId = idToUuid(materialId);
   const firstBlockId = Object.keys(material)[0];
@@ -17,7 +17,6 @@ const getNotionTitle = (
   } else if (material[firstBlockId]?.value?.type === 'page') {
     return getBlockTitle(material[firstBlockId]); // using title of the first block as fallback title
   }
-  
 };
 
 export default getNotionTitle;

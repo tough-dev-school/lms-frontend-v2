@@ -15,7 +15,7 @@
   const { data: studies, isLoading } = useStudiesQuery();
 
   const study = computed(() =>
-    (studies.value || []).find((study) => study.id === props.courseId),
+    (studies.value || []).find((s) => s.id === props.courseId),
   );
 
   const courseName = computed(() => study.value?.name);
@@ -25,7 +25,7 @@
   const breadcrumbs = computed<Breadcrumb[]>(() => [
     { name: 'Мои курсы', to: { name: 'home' } },
     {
-      name: courseName.value ? courseName.value : 'Материалы курса',
+      name: courseName.value || 'Материалы курса',
       to: { name: 'modules', params: { courseId: props.courseId } },
     },
   ]);
@@ -46,29 +46,25 @@
   <VLoggedLayout
     v-if="!isLoading"
     :title="courseName"
-    :breadcrumbs="breadcrumbs"
-  >
+    :breadcrumbs="breadcrumbs">
     <template v-if="courseInfo.length > 0" #pill>
       <VPill>
         <template v-if="study?.calendar_google || study?.calendar_ios">
           <VPillItem>
             <div
-              class="font-medium text-center flex justify-center items-center flex-col"
-            >
+              class="font-medium text-center flex justify-center items-center flex-col">
               <div>Календарь событий</div>
               <div class="flex gap-16">
                 <a
                   v-if="study?.calendar_google"
                   class="link-bright"
-                  :href="study.calendar_google"
-                >
+                  :href="study.calendar_google">
                   Google
                 </a>
                 <a
                   v-if="study?.calendar_ios"
                   class="link-bright"
-                  :href="study.calendar_ios"
-                >
+                  :href="study.calendar_ios">
                   iOS
                 </a>
               </div>
@@ -80,8 +76,7 @@
           <VPillItem
             v-for="(link, index) in study.links"
             :key="index"
-            :to="link.url"
-          >
+            :to="link.url">
             {{ link.name }}
           </VPillItem>
         </template>
@@ -91,8 +86,7 @@
       <RouterLink
         v-for="(module, index) in modules"
         :key="module.id"
-        :to="{ name: 'lessons', params: { moduleId: module.id } }"
-      >
+        :to="{ name: 'lessons', params: { moduleId: module.id } }">
         <VModuleCard :key="module.id" :module="module" :index="index" />
       </RouterLink>
     </template>

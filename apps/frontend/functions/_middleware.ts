@@ -12,7 +12,7 @@ const getRewrites = (url: string): Record<string, string> => {
   const rewrites = {
     [`${new URL(url).origin}/api/`]: 'https://app.tough-dev.school/api/',
   };
-  console.log('Using rewrites:', rewrites);
+  console.warn('Using rewrites:', rewrites);
   return rewrites;
 };
 

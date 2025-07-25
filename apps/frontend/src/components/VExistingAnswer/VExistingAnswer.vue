@@ -49,9 +49,10 @@
         answerId: props.answer.slug,
         text: text.value,
       });
-    } catch {}
-
-    isEdit.value = false;
+      isEdit.value = false;
+    } catch {
+      throw new Error('Failed to update answer');
+    }
   };
 
   onMounted(() => {
@@ -65,8 +66,7 @@
       <VAnswerActions
         v-if="answer.is_editable"
         @edit="isEdit = true"
-        @delete="handleDelete"
-      />
+        @delete="handleDelete" />
     </template>
     <template #footer>
       <slot name="footer" />
@@ -76,6 +76,5 @@
     v-else-if="isEdit"
     v-model="text"
     :is-pending="isUpdatePending"
-    @send="handleUpdate"
-  />
+    @send="handleUpdate" />
 </template>

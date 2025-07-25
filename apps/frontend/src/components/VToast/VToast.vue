@@ -4,7 +4,7 @@
   export type ToastTypes = 'error' | 'success';
 
   export interface Props {
-    text: string;
+    text?: string;
     id: string;
     lifetime: number;
     type?: ToastTypes;
@@ -40,8 +40,7 @@
       'bg-red dark:bg-darkmode-red': type === 'error',
       'bg-green dark:bg-darkmode-green': type === 'success',
     }"
-    @click="emit('delete', id)"
-  >
+    @click="emit('delete', id)">
     {{ text }}
   </div>
 </template>
