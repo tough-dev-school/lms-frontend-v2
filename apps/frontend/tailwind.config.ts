@@ -1,7 +1,8 @@
+import type { Config } from 'tailwindcss';
+import typography from '@tailwindcss/typography';
+
 const spacing = (base: number, limit: number, unit = 'px') => {
-  const output: {
-    [key: string]: string;
-  } = {};
+  const output: Record<string, string> = {};
   let n = 1;
   let value: number;
 
@@ -15,7 +16,7 @@ const spacing = (base: number, limit: number, unit = 'px') => {
 };
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+const config: Config = {
   darkMode: 'class',
   content: ['./index.html', './src/**/*.{js,ts,vue,jsx,tsx}'],
   theme: {
@@ -84,9 +85,9 @@ module.exports = {
     },
     spacing: {
       inherit: 'inherit',
-      0: 0,
-      4: 4,
-      10: 10,
+      0: '0px',
+      4: '4px',
+      10: '10px',
       ...spacing(8, 512),
     },
     extend: {
@@ -94,5 +95,7 @@ module.exports = {
       padding: { module: 'calc((var(--module) - 1.5em) / 2)' },
     },
   },
-  plugins: [require('@tailwindcss/typography')],
+  plugins: [typography],
 };
+
+export default config;

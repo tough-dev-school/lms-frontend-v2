@@ -5,7 +5,8 @@
   import { ref, onMounted } from 'vue';
   import { useQueryClient } from '@tanstack/vue-query';
   import { useUpdateUserMutation, fetchUser } from '@/query';
-  import { GenderEnum, BlankEnum, type PatchedUser } from '@/api/generated-api';
+  import { GenderEnum, BlankEnum } from '@/api/generated-api';
+  import type { PatchedUser } from '@/api/generated-api';
 
   const queryClient = useQueryClient();
   const { mutateAsync: updateUser, isPending } =

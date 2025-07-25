@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { ref, computed } from 'vue';
+  import { ref, computed, useTemplateRef } from 'vue';
   import { onClickOutside } from '@vueuse/core';
   import VAvatar from '@/components/VAvatar/VAvatar.vue';
   import { useRouter } from 'vue-router';
@@ -15,7 +15,7 @@
   }
 
   const isOpen = ref(false);
-  const menu = ref(null);
+  const menu = useTemplateRef('menu');
   const router = useRouter();
   const { data: user } = useUserQuery();
   const { token } = useAuth();

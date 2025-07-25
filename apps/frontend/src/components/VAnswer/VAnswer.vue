@@ -55,8 +55,8 @@
           {{ getName(answer.author.first_name, answer.author.last_name) }}
         </div>
       </div>
-      <div class="flex-grow"></div>
-      <slot name="header"></slot>
+      <div class="flex-grow" />
+      <slot name="header" />
     </div>
     <VHtmlContent :content="answer.text" data-testid="content" />
     <div class="flex justify-start flex-wrap items-center gap-8">

@@ -3,5 +3,4 @@ export const HTML_CONTENT =
 export const LOREM_CONTENT =
   '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>';
 
-export const mockContent = (payload?: string) =>
-  payload ? payload : LOREM_CONTENT;
+export const mockContent = (payload?: string) => payload || LOREM_CONTENT;

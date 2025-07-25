@@ -3,7 +3,7 @@
   import { computed } from 'vue';
 
   export interface Props {
-    userId: string;
+    userId?: string;
     image?: string | null;
     size?: 'sm' | 'md';
   }

@@ -10,9 +10,9 @@ export function useCrossOriginImages() {
     useMutationObserver(
       document.querySelector('body'),
       (mutations) => {
-        const addedNodes = mutations.flatMap((mutation) =>
-          Array.from(mutation.addedNodes),
-        );
+        const addedNodes = mutations.flatMap((mutation) => [
+          ...mutation.addedNodes,
+        ]);
         for (const node of addedNodes) {
           if (node instanceof HTMLElement) {
             const images = node.querySelectorAll('img');

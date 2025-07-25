@@ -4,11 +4,14 @@
   import { useStorage } from '@vueuse/core';
   import { useRouter } from 'vue-router';
   import { useQueryClient } from '@tanstack/vue-query';
-  import { useHomeworkAnswerCreateMutation } from '@/query';
+  import {
+    useHomeworkAnswerCreateMutation,
+    useHomeworkQuestionQuery,
+    useLessonsQuery,
+  } from '@/query';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import VPillHomework from '@/components/VPillHomework/VPillHomework.vue';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
-  import { useHomeworkQuestionQuery, useLessonsQuery } from '@/query';
   import { computed } from 'vue';
   import { useHomeworkBreadcrumbs } from './useHomeworkBreadcrumbs';
 
@@ -30,14 +33,9 @@
 
   const lesson = computed(() => {
     return lessons.value?.find(
-      (lesson) => lesson.id === question.value?.breadcrumbs.lesson?.id,
+      (l) => l.id === question.value?.breadcrumbs.lesson?.id,
     );
   });
-
-  defineEmits<{
-    create: [answerId: string];
-    delete: [];
-  }>();
 
   const draft = useStorage(
     ['draft', props.questionId].filter(Boolean).join('-'),

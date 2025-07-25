@@ -1,4 +1,5 @@
-import useToasts, { type VToastMessage } from './toasts';
+import useToasts from './toasts';
+import type { VToastMessage } from './toasts';
 import { faker } from '@faker-js/faker';
 import { describe, expect, test } from 'vitest';
 

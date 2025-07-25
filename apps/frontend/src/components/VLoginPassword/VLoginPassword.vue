@@ -21,7 +21,7 @@
   const password = ref('');
 
   const isCredentialsInvalid = computed(
-    () => !(username.value && password.value),
+    () => !username.value || !password.value,
   );
 
   const handleSubmit = async () => {
@@ -79,8 +79,8 @@
               @click="router.push({ name: 'login-reset' })">
               Не помню пароль</button
             >)
-          </span></template
-        >
+          </span>
+        </template>
       </VTextInput>
     </div>
     <template #footer>

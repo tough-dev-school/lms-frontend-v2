@@ -52,7 +52,9 @@ describe('handleError', () => {
   });
 
   test('calls toast for each error in array', () => {
-    const messages = [...Array(10)].map(() => faker.lorem.sentence());
+    const messages = Array.from({ length: 10 }).map(() =>
+      faker.lorem.sentence(),
+    );
     const { addMessage } = useToasts();
     const error = createError({
       details: messages,

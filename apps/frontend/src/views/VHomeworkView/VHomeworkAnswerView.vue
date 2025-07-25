@@ -8,22 +8,22 @@
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
   import { useStorage } from '@vueuse/core';
   import VExistingAnswer from '@/components/VExistingAnswer';
-  import { useHomeworkCrosschecksQuery } from '@/query';
-  import { computed } from 'vue';
-  import { useRouter } from 'vue-router';
-  import { useQueryClient } from '@tanstack/vue-query';
-  import { useHomeworkAnswerCreateMutation } from '@/query';
-  import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
-  import VPillHomework from '@/components/VPillHomework/VPillHomework.vue';
-  import { useHomeworkBreadcrumbs } from './useHomeworkBreadcrumbs';
   import {
+    useHomeworkCrosschecksQuery,
+    useHomeworkAnswerCreateMutation,
     useHomeworkQuestionQuery,
     useLessonsQuery,
     useHomeworkAnswerQuery,
     useUserQuery,
     populateAnswersCacheFromDescendants,
   } from '@/query';
-  import { watch } from 'vue';
+  import { computed, watch } from 'vue';
+  import { useRouter } from 'vue-router';
+  import { useQueryClient } from '@tanstack/vue-query';
+  import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
+  import VPillHomework from '@/components/VPillHomework/VPillHomework.vue';
+  import { useHomeworkBreadcrumbs } from './useHomeworkBreadcrumbs';
+  import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
 
   const props = defineProps<{
     questionId: string;
@@ -45,7 +45,7 @@
 
   const lesson = computed(() => {
     return lessons.value?.find(
-      (lesson) => lesson.id === question.value?.breadcrumbs.lesson?.id,
+      (l) => l.id === question.value?.breadcrumbs.lesson?.id,
     );
   });
 
@@ -83,7 +83,7 @@
 
   const handleCreateComment = async () => {
     try {
-      const answer = await createAnswerMutation({
+      const createdAnswer = await createAnswerMutation({
         text: commentText.value,
         questionId: props.questionId,
         parentId: props.answerId,
@@ -93,7 +93,7 @@
 
       router.push({
         ...router.currentRoute.value,
-        hash: `#${answer.slug}`,
+        hash: `#${createdAnswer.slug}`,
       });
     } catch (error) {
       console.error(error);

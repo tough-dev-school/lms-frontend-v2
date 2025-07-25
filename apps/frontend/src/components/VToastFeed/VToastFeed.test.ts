@@ -16,8 +16,8 @@ describe('VToastFeed', () => {
   beforeEach(async () => {
     (useToasts as ReturnType<typeof vi.fn>).mockReturnValue({
       messages: ref(
-        [...Array(MESSAGES)].map(() => {
-          return new VToastMessage(faker.lorem.sentence(), 'success', 10000);
+        Array.from({ length: MESSAGES }).map(() => {
+          return new VToastMessage(faker.lorem.sentence(), 'success', 10_000);
         }),
       ),
       removeMessage: vi.fn(),

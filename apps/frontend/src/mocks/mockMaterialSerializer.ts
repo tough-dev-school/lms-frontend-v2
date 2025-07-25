@@ -219,7 +219,7 @@ const blockMap: MaterialSerilizer['content'] = {
           'https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a26dc863-571f-4984-a577-7f09f9b74d6c/1080px-Full_moon_partially_obscured_by_atmosphere.jpg',
         block_full_width: false,
         block_page_width: true,
-        block_aspect_ratio: 0.6666666666666666,
+        block_aspect_ratio: 0.666_666_666_666_666_6,
         copied_from_pointer: {
           id: 'f37e3833-d055-4cb1-a0c8-82ef8fb7b1aa',
           table: 'block',
@@ -459,7 +459,7 @@ const blockMap: MaterialSerilizer['content'] = {
       type: 'column',
       content: ['8c9fa12d-f740-482f-b9b7-404ae3438976'],
       format: {
-        column_ratio: 0.33333333333333337,
+        column_ratio: 0.333_333_333_333_333_37,
         copied_from_pointer: {
           id: '6cbfa93c-66e1-44cf-91c3-af03e11f0446',
           table: 'block',
@@ -476,7 +476,7 @@ const blockMap: MaterialSerilizer['content'] = {
       type: 'column',
       content: ['115efa0c-7784-4b94-bc4a-54fca32b0de1'],
       format: {
-        column_ratio: 0.33333333333333337,
+        column_ratio: 0.333_333_333_333_333_37,
         copied_from_pointer: {
           id: '7436ea94-592d-4684-baf5-ba137d9bce30',
           table: 'block',
@@ -493,7 +493,7 @@ const blockMap: MaterialSerilizer['content'] = {
       type: 'column',
       content: ['a5d62009-6b92-42c8-9c3a-780c6db4655e'],
       format: {
-        column_ratio: 0.3333333333333333,
+        column_ratio: 0.333_333_333_333_333_3,
         copied_from_pointer: {
           id: 'a22c34c2-36f2-4894-9a5e-f22df3ff8a2f',
           table: 'block',
@@ -694,9 +694,9 @@ const blockMap: MaterialSerilizer['content'] = {
         },
         table_block_column_order: ['vZw{', 'I_^}', 'vs@i'],
         table_block_column_format: {
-          'I_^}': { width: 232.66666666666666 },
-          'vZw{': { width: 232.66666666666666 },
-          'vs@i': { width: 232.66666666666666 },
+          'I_^}': { width: 232.666_666_666_666_66 },
+          'vZw{': { width: 232.666_666_666_666_66 },
+          'vs@i': { width: 232.666_666_666_666_66 },
         },
         table_block_column_header: true,
       },

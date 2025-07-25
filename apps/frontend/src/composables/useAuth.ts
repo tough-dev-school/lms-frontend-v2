@@ -2,9 +2,9 @@ import { computed, watch } from 'vue';
 import { createGlobalState, useStorage } from '@vueuse/core';
 import { useRouter } from 'vue-router';
 
-type AuthStoreState = {
+interface AuthStoreState {
   token: string | undefined;
-};
+}
 
 export const useAuth = createGlobalState(() => {
   const storage = useStorage<AuthStoreState>('auth', {

@@ -9,10 +9,7 @@ export const relativeDate = (date: dayjs.ConfigType) => {
   return dayjs().to(date);
 };
 
-export const formatDate = (
-  date: dayjs.ConfigType,
-  format: string = 'DD.MM.YYYY',
-) => {
+export const formatDate = (date: dayjs.ConfigType, format = 'DD.MM.YYYY') => {
   return dayjs(date).format(format);
 };
 

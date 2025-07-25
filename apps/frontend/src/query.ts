@@ -1,19 +1,22 @@
-import { QueryClient, useMutation, useQuery } from '@tanstack/vue-query';
+import {
+  QueryClient,
+  useMutation,
+  useQuery,
+  queryOptions,
+} from '@tanstack/vue-query';
 import type { MaybeRefOrGetter } from 'vue';
-import { computed } from 'vue';
-import { toValue } from 'vue';
+import { computed, toValue } from 'vue';
 import { api } from '@/api';
-import { queryOptions } from '@tanstack/vue-query';
 import type {
   AnswerTree,
   JSONWebToken,
   PasswordChange,
   PasswordReset,
   PasswordResetConfirm,
+  PatchedUser,
 } from './api/generated-api';
 import htmlToMarkdown from './utils/htmlToMarkdown';
 import { ContentType } from './api/generated-api';
-import type { PatchedUser } from './api/generated-api';
 import { useAuth } from './composables/useAuth';
 
 export const baseQueryKey = () => {
@@ -74,8 +77,11 @@ export const userKeys = {
 const studiesOptions = () => {
   return {
     queryKey: studiesKeys.lists(),
-    queryFn: async () =>
-      (await api.purchasedCoursesList({ page_size: 100 })).results,
+    queryFn: async () => {
+      const { results } = await api.purchasedCoursesList({ page_size: 100 });
+
+      return results;
+    },
   };
 };
 
@@ -88,8 +94,14 @@ export const useStudiesQuery = () => {
 const lessonsOptions = (moduleId: number | undefined) => {
   return {
     queryKey: lmsKeys.moduleLessons(moduleId),
-    queryFn: async () =>
-      (await api.lmsLessonsList({ module: moduleId, page_size: 1000 })).results,
+    queryFn: async () => {
+      const { results } = await api.lmsLessonsList({
+        module: moduleId,
+        page_size: 1000,
+      });
+
+      return results;
+    },
   };
 };
 
@@ -104,8 +116,14 @@ export const useLessonsQuery = (
 const modulesOptions = (courseId: number | undefined) => {
   return {
     queryKey: lmsKeys.courseModules(courseId),
-    queryFn: async () =>
-      (await api.lmsModulesList({ course: courseId, page_size: 100 })).results,
+    queryFn: async () => {
+      const { results } = await api.lmsModulesList({
+        course: courseId,
+        page_size: 100,
+      });
+
+      return results;
+    },
   };
 };
 
@@ -166,7 +184,11 @@ export const diplomasKeys = {
 const diplomasOptions = () => {
   return {
     queryKey: diplomasKeys.lists(),
-    queryFn: async () => (await api.diplomasList({ page_size: 100 })).results,
+    queryFn: async () => {
+      const { results } = await api.diplomasList({ page_size: 100 });
+
+      return results;
+    },
   };
 };
 
@@ -246,13 +268,14 @@ export const getHomeworkAnswersQueryOptions = ({
 }) => {
   return queryOptions({
     queryKey: homeworkKeys.questionAnswers({ questionId, authorId }),
-    queryFn: async () =>
-      (
-        await api.homeworkAnswersList({
-          question: questionId,
-          author: authorId,
-        })
-      ).results,
+    queryFn: async () => {
+      const { results } = await api.homeworkAnswersList({
+        question: questionId,
+        author: authorId,
+      });
+
+      return results;
+    },
   });
 };
 
@@ -417,7 +440,7 @@ export const useHomeworkAnswerSendImageMutation = () => {
       const formData = new FormData();
       formData.append('image', image);
 
-      // @ts-expect-error
+      // @ts-expect-error too complex
       return await api.homeworkAnswersImageCreate(formData, {
         type: ContentType.FormData,
       });
@@ -461,7 +484,7 @@ export const useUpdateUserAvatarMutation = (queryClient: QueryClient) => {
         formData.append('avatar', '');
       }
 
-      // @ts-expect-error
+      // @ts-expect-error too complex
       return await api.usersMePartialUpdate(formData, {
         type: ContentType.FormData,
       });

@@ -4,7 +4,7 @@
   export type ToastTypes = 'error' | 'success';
 
   export interface Props {
-    text: string;
+    text?: string;
     id: string;
     lifetime: number;
     type?: ToastTypes;

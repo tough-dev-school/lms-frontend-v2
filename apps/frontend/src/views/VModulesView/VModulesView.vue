@@ -15,7 +15,7 @@
   const { data: studies, isLoading } = useStudiesQuery();
 
   const study = computed(() =>
-    (studies.value || []).find((study) => study.id === props.courseId),
+    (studies.value || []).find((s) => s.id === props.courseId),
   );
 
   const courseName = computed(() => study.value?.name);
@@ -25,7 +25,7 @@
   const breadcrumbs = computed<Breadcrumb[]>(() => [
     { name: 'Мои курсы', to: { name: 'home' } },
     {
-      name: courseName.value ? courseName.value : 'Материалы курса',
+      name: courseName.value ?? 'Материалы курса',
       to: { name: 'modules', params: { courseId: props.courseId } },
     },
   ]);

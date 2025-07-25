@@ -1,8 +1,5 @@
-import {
-  createRouter,
-  createWebHistory,
-  type RouteLocationNormalized,
-} from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
+import type { RouteLocationNormalized } from 'vue-router';
 import { useAuth } from '@/composables/useAuth';
 import { loginByToken } from '@/router/loginByToken';
 import { loginById } from '@/router/loginById';
@@ -32,7 +29,7 @@ export const routes = [
     name: 'modules',
     component: () => import('@/views/VModulesView/VModulesView.vue'),
     props: (route: RouteLocationNormalized) => ({
-      courseId: parseInt(route.params.courseId as string),
+      courseId: Number.parseInt(route.params.courseId as string),
     }),
     meta: {
       requiresAuth: true,
@@ -43,8 +40,8 @@ export const routes = [
     name: 'lessons',
     component: () => import('@/views/VLessonsView/VLessonsView.vue'),
     props: (route: RouteLocationNormalized) => ({
-      courseId: parseInt(route.params.courseId as string),
-      moduleId: parseInt(route.params.moduleId as string),
+      courseId: Number.parseInt(route.params.courseId as string),
+      moduleId: Number.parseInt(route.params.moduleId as string),
     }),
     meta: {
       requiresAuth: true,
@@ -199,7 +196,12 @@ router.beforeEach(
     }
 
     // Check authentication
-    if (!token.value) {
+    if (token.value) {
+      // Redirect authorized users away from auth routes
+      if (to.meta.requiresAuth === false) {
+        return { name: 'home' };
+      }
+    } else {
       // Allow access to routes that don't require auth
       if (to.meta.requiresAuth === false) {
         return;
@@ -211,11 +213,6 @@ router.beforeEach(
           name: 'login',
           query: { redirectTo: encodeURIComponent(to.fullPath) },
         };
-      }
-    } else {
-      // Redirect authorized users away from auth routes
-      if (to.meta.requiresAuth === false) {
-        return { name: 'home' };
       }
     }
   },
