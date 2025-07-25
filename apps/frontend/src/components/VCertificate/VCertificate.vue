@@ -1,12 +1,14 @@
 <script lang="ts" setup>
-  import getCertificateLink from '@/utils/getCertificateLink';
   import type { Diploma } from '@/api/generated-api';
+  import { computed } from 'vue';
 
-  export interface Props {
+  const props = defineProps<{
     certificate: Diploma;
-  }
+  }>();
 
-  defineProps<Props>();
+  const certificateLink = computed(
+    () => `https://cert.tough-dev.school/${props.certificate.slug}/en`,
+  );
 
   const localeLabel = {
     RU: 'На русском',
@@ -20,19 +22,18 @@
       <img
         data-testid="image"
         :src="certificate.image"
-        :alt="certificate.course.name"
-      >
+        :alt="certificate.course.name" />
       <figcaption class="text-center" data-testid="label">
         {{ localeLabel[certificate.language] }}
       </figcaption>
     </figure>
     <div class="mt-8 flex flex-wrap justify-center gap-x-16 gap-y-8">
-      <a class="link" data-testid="download" :href="certificate.image" download>Скачать</a>
-      <a
-        class="link"
-        data-testid="linkedin"
-        :href="getCertificateLink(certificate.slug || '')"
-      >Ссылка для LinkedIn</a>
+      <a class="link" data-testid="download" :href="certificate.image" download
+        >Скачать</a
+      >
+      <a class="link" data-testid="linkedin" :href="certificateLink"
+        >Ссылка для LinkedIn</a
+      >
     </div>
   </div>
 </template>
