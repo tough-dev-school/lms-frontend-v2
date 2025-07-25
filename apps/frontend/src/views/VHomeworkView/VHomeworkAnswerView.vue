@@ -23,6 +23,7 @@
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import VPillHomework from '@/components/VPillHomework/VPillHomework.vue';
   import { useHomeworkBreadcrumbs } from './useHomeworkBreadcrumbs';
+  import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
 
   const props = defineProps<{
     questionId: string;

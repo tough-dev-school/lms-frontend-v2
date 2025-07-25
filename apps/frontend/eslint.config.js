@@ -18,7 +18,6 @@ export default defineConfig(
             'RouterLink',
             'avatar-cropper',
             'VDropdown',
-            'VLoadingView',
           ],
         },
       ],
