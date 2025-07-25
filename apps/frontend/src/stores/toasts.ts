@@ -1,6 +1,6 @@
-import { uuid } from '@/utils/uuid';
 import { createGlobalState } from '@vueuse/core';
 import { ref } from 'vue';
+import { nanoid } from 'nanoid';
 
 type VToastType = 'error' | 'success' | undefined;
 
@@ -13,7 +13,7 @@ export class VToastMessage {
   constructor(text: string, type: VToastType = undefined, lifetime = 5000) {
     this.text = text;
     this.type = type;
-    this.id = uuid();
+    this.id = nanoid();
     this.lifetime = lifetime;
   }
 }

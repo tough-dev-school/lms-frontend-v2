@@ -2,11 +2,11 @@ import { describe, beforeEach, expect, test } from 'vitest';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
 import VToast from '@/components/VToast/VToast.vue';
-import { uuid } from '@/utils/uuid';
+import { nanoid } from 'nanoid';
 
 const defaultProps = {
   text: faker.lorem.sentence(),
-  id: uuid(),
+  id: nanoid(),
   lifetime: 1000,
 };
 
@@ -27,5 +27,5 @@ describe('VToast', () => {
     expect(wrapper.emitted('delete')).toStrictEqual([[defaultProps.id]]);
   });
 
-  test.todo('emits delete after liftime end');
+  test.todo('emits delete after lifetime end');
 });

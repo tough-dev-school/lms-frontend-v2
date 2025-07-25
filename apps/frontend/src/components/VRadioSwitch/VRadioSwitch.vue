@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { nanoid } from 'nanoid';
   import type { TablerIconComponent } from 'vue-tabler-icons';
 
   export interface RadioOption {
@@ -9,14 +10,12 @@
 </script>
 
 <script lang="ts" setup>
-  import { v4 as uuidv4 } from 'uuid';
-
   defineProps<{
     modelValue: string;
     options: RadioOption[];
   }>();
   const emit = defineEmits<{ 'update:modelValue': [value: any] }>();
-  const radiogroup = uuidv4();
+  const radiogroup = nanoid();
 </script>
 
 <template>
