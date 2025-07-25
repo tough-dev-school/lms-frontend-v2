@@ -19,14 +19,16 @@
       <li
         v-for="(item, index) in props.items"
         :key="index"
-        class="flex items-center gap-4">
+        class="flex items-center gap-4"
+      >
         <template v-if="index > 0">
           <span class="mx-2 text-gray-400">/</span>
         </template>
         <RouterLink
           v-if="item.to"
           :class="index === props.items.length - 1 ? 'font-bold' : ''"
-          :to="item.to">
+          :to="item.to"
+        >
           {{ item.name }}
         </RouterLink>
       </li>

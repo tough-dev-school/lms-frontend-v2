@@ -29,14 +29,13 @@
     placeholder: '',
   });
 
-  const currentEditor = ref();
-  const isImageLoading = ref(false);
-  const { focused } = useFocusWithin(currentEditor);
-
   const emit = defineEmits<{
     'update:modelValue': [value: string];
     send: [];
   }>();
+  const currentEditor = ref();
+  const isImageLoading = ref(false);
+  const { focused } = useFocusWithin(currentEditor);
 
   const isMetaPressed = useKeyModifier('Meta');
 
@@ -102,7 +101,7 @@
       const { modelValue } = props;
       const isSame = editor.getHTML() === modelValue;
 
-      if (isSame) return;
+      if (isSame) {return;}
 
       editor.commands.setContent(modelValue, false);
     },
@@ -161,10 +160,12 @@
 <template>
   <div
     ref="currentEditor"
-    class="bg-white dark:bg-darkmode-layer2 px-16 rounded min-h-240 flex flex-col">
+    class="bg-white dark:bg-darkmode-layer2 px-16 rounded min-h-240 flex flex-col"
+  >
     <div
       v-if="editor"
-      class="flex items-center dark:text-white border-b border-lightgray dark:border-darkmode-border">
+      class="flex items-center dark:text-white border-b border-lightgray dark:border-darkmode-border"
+    >
       <button
         class="TextEditor__Button"
         :class="{
@@ -172,7 +173,8 @@
             level: 1,
           }),
         }"
-        @click="toggleHeading1">
+        @click="toggleHeading1"
+      >
         <H1Icon />
       </button>
       <button
@@ -182,7 +184,8 @@
             level: 2,
           }),
         }"
-        @click="toggleHeading2">
+        @click="toggleHeading2"
+      >
         <H2Icon />
       </button>
       <button
@@ -192,25 +195,29 @@
             level: 3,
           }),
         }"
-        @click="toggleHeading3">
+        @click="toggleHeading3"
+      >
         <H3Icon />
       </button>
       <button
         class="TextEditor__Button"
         :class="{ TextEditor__Button_Active: editor.isActive('bold') }"
-        @click="toggleBold">
+        @click="toggleBold"
+      >
         <BoldIcon />
       </button>
       <button
         class="TextEditor__Button"
         :class="{ TextEditor__Button_Active: editor.isActive('italic') }"
-        @click="toggleItalic">
+        @click="toggleItalic"
+      >
         <ItalicIcon />
       </button>
       <button
         class="TextEditor__Button"
         :class="{ TextEditor__Button_Active: editor.isActive('blockquote') }"
-        @click="toggleBlockquote">
+        @click="toggleBlockquote"
+      >
         <BlockquoteIcon />
       </button>
       <button
@@ -218,13 +225,15 @@
         :class="{
           TextEditor__Button_Active: editor.isActive('orderedList'),
         }"
-        @click="toggleOrderedList">
+        @click="toggleOrderedList"
+      >
         <ListNumbersIcon />
       </button>
       <button
         class="TextEditor__Button"
         :class="{ TextEditor__Button_Active: editor.isActive('bulletList') }"
-        @click="toggleUnorderedList">
+        @click="toggleUnorderedList"
+      >
         <ListIcon />
       </button>
       <label class="TextEditor__Button">
@@ -235,7 +244,7 @@
           accept="image/*"
           name="image"
           @change="addImage($event)"
-      /></label>
+        ></label>
     </div>
     <div v-if="isImageLoading" class="p-32">
       <VLoader />
@@ -243,7 +252,8 @@
     <EditorContent
       :editor="editor"
       class="TextEditor__Content prose flex-grow"
-      @click="editor.chain().focus().run()" />
+      @click="editor.chain().focus().run()"
+    />
   </div>
 </template>
 

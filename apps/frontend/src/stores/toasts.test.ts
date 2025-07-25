@@ -1,4 +1,5 @@
-import useToasts, { type VToastMessage } from './toasts';
+import useToasts from './toasts';
+import type {VToastMessage} from './toasts';
 import { faker } from '@faker-js/faker';
 import { describe, expect, test } from 'vitest';
 
@@ -15,7 +16,7 @@ const findMessageByText = (text: string, messages: VToastMessage[]) =>
 describe('toasts store', () => {
   const addDefaultMessages = () => {
     const { addMessage } = useToasts();
-    MESSAGES.forEach((message) => addMessage(message));
+    for (const message of MESSAGES) {addMessage(message);}
   };
 
   test('no toasts at start', () => {
@@ -41,7 +42,7 @@ describe('toasts store', () => {
 
     const targetMessage = findMessageByText(MESSAGE_TWO, messages.value);
 
-    removeMessage((targetMessage as VToastMessage).id); //# FIXME
+    removeMessage((targetMessage!).id); //# FIXME
 
     expect(getTexts(messages.value)).toContain(MESSAGE_ONE);
     expect(getTexts(messages.value)).not.toContain(MESSAGE_TWO);

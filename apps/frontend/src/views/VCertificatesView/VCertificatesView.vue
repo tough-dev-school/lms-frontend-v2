@@ -25,11 +25,13 @@
       :key="group.course"
       data-testid="certificate"
       :certificates="group.certificates"
-      :course="group.course" />
+      :course="group.course"
+    />
     <li
       v-if="groupedDiplomas.length === 0"
       data-testid="empty"
-      class="flex h-128 flex-grow items-center justify-center rounded border border-dashed border-gray text-center text-gray">
+      class="flex h-128 flex-grow items-center justify-center rounded border border-dashed border-gray text-center text-gray"
+    >
       Нет сертификатов
     </li>
   </VLoggedLayout>

@@ -22,5 +22,6 @@
     :is="answerId ? VHomeworkAnswerView : VHomeworkQuestionView"
     v-else
     :question-id="questionId"
-    :answer-id="answerId" />
+    :answer-id="answerId"
+  />
 </template>

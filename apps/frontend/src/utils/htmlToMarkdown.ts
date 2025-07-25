@@ -4,29 +4,29 @@ import TurndownService from 'turndown';
 // https://github.com/mixmark-io/turndown#escaping-markdown-characters
 // https://github.com/mixmark-io/turndown/blob/97e4535ca76bb2e70d9caa2aa4d4686956b06d44/src/turndown.js
 
-const escapes: [RegExp, string][] = [
+const escapes: Array<[RegExp, string]> = [
   [/\\/g, '\\\\'],
-  [/\*/g, '\\*'],
-  [/^-/g, '\\-'],
-  [/^\+ /g, '\\+ '],
-  [/^(=+)/g, '\\$1'],
-  [/^(#{1,6}) /g, '\\$1 '],
+  [/\*/g, String.raw`\*`],
+  [/^-/g, String.raw`\-`],
+  [/^\+ /g, String.raw`\+ `],
+  [/^(=+)/g, String.raw`\$1`],
+  [/^(#{1,6}) /g, String.raw`\$1 `],
   [/`/g, '\\`'],
-  [/^~~~/g, '\\~~~'],
-  [/\[/g, '\\['],
-  [/\]/g, '\\]'],
-  [/^>/g, '\\>'],
-  [/_/g, '\\_'],
-  [/^(\d+)\. /g, '$1\\. '],
+  [/^~~~/g, String.raw`\~~~`],
+  [/\[/g, String.raw`\[`],
+  [/]/g, String.raw`\]`],
+  [/^>/g, String.raw`\>`],
+  [/_/g, String.raw`\_`],
+  [/^(\d+)\. /g, String.raw`$1\. `],
 ];
 
 const URL_REGEX =
-  /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?/gi; // eslint-disable-line no-useless-escape
+  /[\w#%+.:=@~-]{1,256}\.[\d()a-z]{1,6}\b([\w#%&()+./:=?@~-]*)?/gi;  
 const regex = new RegExp(URL_REGEX);
 
 TurndownService.prototype.escape = function (string) {
-  if (string.match(regex)) return string;
-  return escapes.reduce(function (accumulator, escape) {
+  if (string.match(regex)) {return string;}
+  return escapes.reduce((accumulator, escape) => {
     return accumulator.replace(escape[0], escape[1]);
   }, string);
 };

@@ -8,13 +8,13 @@ const handleError = (error: any = DEFAULT_ERROR_MESSAGE) => {
   if (typeof error === 'string') {
     addMessage(error, 'error');
   } else {
-    Object.keys(error.response.data).forEach((key) => {
+    for (const key of Object.keys(error.response.data)) {
       const field = error.response.data[key];
       const fields = Array.isArray(field) ? field : [field];
       fields.forEach((error: string) => {
         addMessage(error, 'error');
       });
-    });
+    }
   }
 };
 

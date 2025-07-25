@@ -33,23 +33,23 @@
 
 <template>
   <div
-    class="overflow-hidden rounded bg-white p-16 shadow dark:bg-dark-gray phone:px-24 tablet:px-32">
+    class="overflow-hidden rounded bg-white p-16 shadow dark:bg-dark-gray phone:px-24 tablet:px-32"
+  >
     <p class="font-bold mb-8">Выберите работу коллеги по курсу для проверки:</p>
     <ol class="list-decimal list-inside mb-16">
       <li
         v-for="(crosscheck, index) in crosschecks"
         :key="crosscheck.answer.url"
-        data-testid="crosscheck">
-        <a class="link" :href="crosscheck.answer.url"
-          >{{
-            getStudentName({
-              firstName: crosscheck.answer.author.first_name,
-              lastName: crosscheck.answer.author.last_name,
-              index,
-            })
-          }}
-          ({{ getCrossCheckState(crosscheck.is_checked) }})</a
-        >
+        data-testid="crosscheck"
+      >
+        <a class="link" :href="crosscheck.answer.url">{{
+          getStudentName({
+            firstName: crosscheck.answer.author.first_name,
+            lastName: crosscheck.answer.author.last_name,
+            index,
+          })
+        }}
+          ({{ getCrossCheckState(crosscheck.is_checked) }})</a>
       </li>
     </ol>
     <p>

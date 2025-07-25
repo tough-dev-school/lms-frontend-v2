@@ -11,7 +11,7 @@ export function useCrossOriginImages() {
       document.querySelector('body'),
       (mutations) => {
         const addedNodes = mutations.flatMap((mutation) =>
-          Array.from(mutation.addedNodes),
+          [...mutation.addedNodes],
         );
         for (const node of addedNodes) {
           if (node instanceof HTMLElement) {

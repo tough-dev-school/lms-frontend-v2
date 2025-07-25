@@ -11,7 +11,7 @@ export const relativeDate = (date: dayjs.ConfigType) => {
 
 export const formatDate = (
   date: dayjs.ConfigType,
-  format: string = 'DD.MM.YYYY',
+  format = 'DD.MM.YYYY',
 ) => {
   return dayjs(date).format(format);
 };

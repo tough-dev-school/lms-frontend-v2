@@ -8,7 +8,7 @@ export const mockUserSafe = ({
   seed?: number;
   payload?: Partial<UserSafe>;
 } = {}): Required<UserSafe> => {
-  if (seed) faker.seed(seed);
+  if (seed) {faker.seed(seed);}
 
   return {
     uuid: faker.string.uuid(),

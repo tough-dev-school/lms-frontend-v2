@@ -12,7 +12,7 @@ const Template: StoryFn = (args) => ({
   components: { VToastFeed },
   setup() {
     const toasts = useToasts();
-    [...Array(10)].forEach(() => toasts.addMessage(faker.lorem.sentence()));
+    Array.from({length: 10}).forEach(() => toasts.addMessage(faker.lorem.sentence()));
 
     return { args };
   },

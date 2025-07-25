@@ -14,7 +14,8 @@
         <button
           class="link h-32 w-full px-8 text-left"
           data-testid="delete"
-          @click="emit('delete')">
+          @click="emit('delete')"
+        >
           Удалить
         </button>
       </li>
@@ -22,7 +23,8 @@
         <button
           class="link h-32 w-full px-8 text-left"
           data-testid="edit"
-          @click="emit('edit')">
+          @click="emit('edit')"
+        >
           Редактировать
         </button>
       </li>

@@ -1,3 +1,5 @@
-import VThreadProvider from './VThreadProvider.vue';
 
-export default VThreadProvider;
+
+
+
+export {default} from './VThreadProvider.vue';

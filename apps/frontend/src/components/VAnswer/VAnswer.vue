@@ -46,17 +46,19 @@
       <VAvatar
         data-testid="avatar"
         :user-id="answer.author.uuid"
-        :image="answer.author.avatar ?? undefined" />
+        :image="answer.author.avatar ?? undefined"
+      />
       <div>
         <div
           class="font-bold text-black dark:text-white"
           :class="{ VAnswer__Name_Own: isOwn }"
-          data-testid="name">
+          data-testid="name"
+        >
           {{ getName(answer.author.first_name, answer.author.last_name) }}
         </div>
       </div>
-      <div class="flex-grow"></div>
-      <slot name="header"></slot>
+      <div class="flex-grow" />
+      <slot name="header" />
     </div>
     <VHtmlContent :content="answer.text" data-testid="content" />
     <div class="flex justify-start flex-wrap items-center gap-8">
@@ -69,13 +71,15 @@
       <div
         v-if="!isOwn"
         ref="parent"
-        class="flex justify-start flex-wrap items-start gap-8">
+        class="flex justify-start flex-wrap items-start gap-8"
+      >
         <VButton
           appearance="secondary"
           size="inline"
           class="flex px-16 h-32 items-center justify-center text-[1.5rem]"
           data-testid="open"
-          @click="togglePalette">
+          @click="togglePalette"
+        >
           <MoodHappyIcon />
         </VButton>
         <VReactions
@@ -91,7 +95,8 @@
           @remove="
             (reactionId) =>
               sendRemoveReaction({ answerId: answer.slug, reactionId })
-          " />
+          "
+        />
       </div>
     </div>
   </div>

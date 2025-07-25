@@ -12,7 +12,8 @@
   <VLoggedLayout v-if="!isLoading" title="Мои курсы">
     <ul
       v-if="studies && studies.length > 0"
-      class="grid gap-16 tablet:gap-32 phone:gap-24">
+      class="grid gap-16 tablet:gap-32 phone:gap-24"
+    >
       <li v-for="(study, index) in studies" :key="index">
         <RouterLink
           class="link"
@@ -20,11 +21,13 @@
           :to="{
             name: 'modules',
             params: { courseId: study.id },
-          }">
+          }"
+        >
           <VCover
             :name="study.name"
             :image="study.cover"
-            class="rounded-16 overflow-hidden" />
+            class="rounded-16 overflow-hidden"
+          />
         </RouterLink>
       </li>
     </ul>
@@ -34,8 +37,7 @@
       <a
         href="https://tough-dev.school/?utm_source=lms&utm_campaign=footer"
         class="link"
-        >tough-dev.school</a
-      >.
+      >tough-dev.school</a>.
     </p>
   </VLoggedLayout>
   <VLoadingView v-else />

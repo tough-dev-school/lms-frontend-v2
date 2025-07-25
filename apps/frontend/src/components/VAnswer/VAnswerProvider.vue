@@ -1,8 +1,7 @@
 <script lang="ts" setup>
-  import { useHomeworkAnswerQuery } from '@/query';
+  import { useHomeworkAnswerQuery, useUserQuery  } from '@/query';
   import VAnswer from './VAnswer.vue';
-  import { useUserQuery } from '@/query';
-
+  
   const props = defineProps<{
     answerId: string;
   }>();

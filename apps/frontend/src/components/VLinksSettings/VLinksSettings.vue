@@ -41,21 +41,25 @@
       <VTextInput
         v-model="data.githubUsername"
         label="Ссылка на GitHub"
-        data-testid="github" />
+        data-testid="github"
+      />
       <VTextInput
         v-model="data.linkedinUsername"
         label="Ссылка на LinkedIn"
-        data-testid="linkedin" />
+        data-testid="linkedin"
+      />
       <VTextInput
         v-model="data.telegramUsername"
         label="Ссылка на Telegram"
-        data-testid="telegram" />
+        data-testid="telegram"
+      />
     </div>
     <template #footer>
       <VButton
         data-testid="save"
         :loading="isUpdateUserPending"
-        @click="saveProfile">
+        @click="saveProfile"
+      >
         {{ isUpdateUserPending ? 'Сохраняется...' : 'Сохранить' }}
       </VButton>
     </template>

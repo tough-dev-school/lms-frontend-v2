@@ -10,7 +10,7 @@ export class VToastMessage {
   lifetime: number;
   type: VToastType;
 
-  constructor(text: string, type: VToastType = undefined, lifetime = 5000) {
+  constructor(text: string, type?: VToastType, lifetime = 5000) {
     this.text = text;
     this.type = type;
     this.id = uuid();
@@ -22,8 +22,8 @@ const useToasts = createGlobalState(() => {
   const messages = ref<VToastMessage[]>([]);
   const disabled = ref(false);
 
-  const addMessage = (text: string, type: VToastType = undefined) => {
-    if (disabled.value) return;
+  const addMessage = (text: string, type?: VToastType) => {
+    if (disabled.value) {return;}
     messages.value = [...messages.value, new VToastMessage(text, type)];
   };
 

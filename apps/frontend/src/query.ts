@@ -1,19 +1,16 @@
-import { QueryClient, useMutation, useQuery } from '@tanstack/vue-query';
+import { QueryClient, useMutation, useQuery, queryOptions  } from '@tanstack/vue-query';
 import type { MaybeRefOrGetter } from 'vue';
-import { computed } from 'vue';
-import { toValue } from 'vue';
+import { computed, toValue  } from 'vue';
 import { api } from '@/api';
-import { queryOptions } from '@tanstack/vue-query';
 import type {
   AnswerTree,
   JSONWebToken,
   PasswordChange,
   PasswordReset,
-  PasswordResetConfirm,
+  PasswordResetConfirm, PatchedUser 
 } from './api/generated-api';
 import htmlToMarkdown from './utils/htmlToMarkdown';
 import { ContentType } from './api/generated-api';
-import type { PatchedUser } from './api/generated-api';
 import { useAuth } from './composables/useAuth';
 
 export const baseQueryKey = () => {
@@ -219,14 +216,14 @@ export const populateAnswersCacheFromDescendants = (
   const populate = (answer: AnswerTree) => {
     flatAnswers.push(answer);
 
-    if (answer.descendants.length) answer.descendants.forEach(populate);
+    if (answer.descendants.length) {answer.descendants.forEach(populate);}
   };
 
   populate(rootAnswer);
 
-  flatAnswers.forEach((answer) => {
+  for (const answer of flatAnswers) {
     queryClient.setQueryData(homeworkKeys.answer(answer.slug), answer);
-  });
+  }
 };
 
 export const useHomeworkAnswerQuery = (answerId: MaybeRefOrGetter<string>) => {

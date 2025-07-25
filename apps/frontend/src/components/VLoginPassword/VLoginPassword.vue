@@ -8,6 +8,10 @@
   import { useLoginWithCredentialsMutation } from '@/query';
   import { useQueryClient } from '@tanstack/vue-query';
 
+  const emit = defineEmits<{
+    change: [];
+  }>();
+
   const queryClient = useQueryClient();
 
   const { token } = useAuth();
@@ -21,7 +25,7 @@
   const password = ref('');
 
   const isCredentialsInvalid = computed(
-    () => !(username.value && password.value),
+    () => !username.value || !password.value,
   );
 
   const handleSubmit = async () => {
@@ -52,9 +56,6 @@
     return username.value.includes('@');
   });
 
-  const emit = defineEmits<{
-    change: [];
-  }>();
 </script>
 
 <template>
@@ -64,11 +65,13 @@
         v-model="username"
         autocomplete="username"
         label="Логин"
-        :type="isEmail ? 'email' : 'text'" />
+        :type="isEmail ? 'email' : 'text'"
+      />
       <VTextInput
         v-model="password"
         autocomplete="current-password"
-        type="password">
+        type="password"
+      >
         <template #label>
           Пароль
           <span class="text-sub">
@@ -76,11 +79,11 @@
               class="underline"
               type="button"
               tabindex="-1"
-              @click="router.push({ name: 'login-reset' })">
-              Не помню пароль</button
-            >)
-          </span></template
-        >
+              @click="router.push({ name: 'login-reset' })"
+            >
+              Не помню пароль</button>)
+          </span>
+        </template>
       </VTextInput>
     </div>
     <template #footer>
@@ -88,7 +91,8 @@
         :disabled="isCredentialsInvalid"
         :loading="isPending"
         class="flex-grow"
-        type="submit">
+        type="submit"
+      >
         Войти
       </VButton>
       <VButton appearance="link" class="flex-grow" @click="emit('change')">

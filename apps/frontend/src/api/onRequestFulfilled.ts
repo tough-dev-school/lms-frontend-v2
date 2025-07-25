@@ -18,14 +18,14 @@ const onRequestFulfilled = (config: InternalAxiosRequestConfig) => {
   }
 
   if (config.params !== undefined) {
-    Object.keys(config.params).forEach((paramName) => {
+    for (const paramName of Object.keys(config.params)) {
       if (
         Array.isArray(config.params[paramName]) &&
         config.params[paramName].length > 0
       ) {
         config.params[paramName] = config.params[paramName].join(',');
       }
-    });
+    }
   }
 
   return config;

@@ -1,6 +1,4 @@
-export interface Dictionary<T> {
-  [k: string]: T;
-}
+export type Dictionary<T> = Record<string, T>;
 
 export default function filterDictionary<T>(
   inputDictionary: Dictionary<T>,
@@ -9,7 +7,7 @@ export default function filterDictionary<T>(
   const outDict: Dictionary<T> = {};
   for (const k of Object.keys(inputDictionary)) {
     const thisValue = inputDictionary[k];
-    if (filterFunction(thisValue, k)) outDict[k] = thisValue;
+    if (filterFunction(thisValue, k)) {outDict[k] = thisValue;}
   }
   return outDict;
 }

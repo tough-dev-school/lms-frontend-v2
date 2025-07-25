@@ -17,7 +17,7 @@ const getNotionTitle = (
   } else if (material[firstBlockId]?.value?.type === 'page') {
     return getBlockTitle(material[firstBlockId]); // using title of the first block as fallback title
   }
-  return undefined;
+  
 };
 
 export default getNotionTitle;

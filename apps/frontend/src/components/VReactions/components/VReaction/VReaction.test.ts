@@ -1,7 +1,8 @@
 import { describe, beforeEach, expect, test } from 'vitest';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
-import VReaction, { type VReactionProps } from './VReaction.vue';
+import VReaction from './VReaction.vue';
+import type {VReactionProps} from './VReaction.vue';
 import { ALLOWED_REACTIONS } from '@/components/VReactions/VReactions.vue';
 import { getName } from '@/utils/getName';
 import type VAvatar from '@/components/VAvatar/VAvatar.vue';
@@ -59,7 +60,7 @@ describe('VReaction', () => {
   const getAvatarWrappers = () =>
     wrapper.findAllComponents<typeof VAvatar>('[data-testid="avatar"]');
 
-  const getLastAvatar = () => getAvatarWrappers().slice(-1)[0];
+  const getLastAvatar = () => getAvatarWrappers().at(-1);
 
   test('emit add on click if not already sent', () => {
     wrapper.trigger('click');

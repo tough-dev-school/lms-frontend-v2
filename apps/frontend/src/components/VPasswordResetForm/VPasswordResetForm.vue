@@ -28,12 +28,14 @@
         v-model="newPassword1"
         type="password"
         label="Новый пароль"
-        data-testid="password1" />
+        data-testid="password1"
+      />
       <VTextInput
         v-model="newPassword2"
         type="password"
         label="Повторите пароль"
-        data-testid="password2" />
+        data-testid="password2"
+      />
     </div>
     <template #footer>
       <VButton :loading="isPending" data-testid="save" type="submit">

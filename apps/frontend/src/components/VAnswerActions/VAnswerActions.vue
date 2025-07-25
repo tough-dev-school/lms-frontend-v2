@@ -14,11 +14,13 @@
       class="hidden tablet:flex"
       data-testid="desktop"
       @edit="emit('edit')"
-      @delete="emit('delete')" />
+      @delete="emit('delete')"
+    />
     <VAnswerActionsMobile
       class="tablet:hidden"
       data-testid="mobile"
       @edit="emit('edit')"
-      @delete="emit('delete')" />
+      @delete="emit('delete')"
+    />
   </div>
 </template>

@@ -5,9 +5,10 @@ import type VAvatar from '@/components/VAvatar/VAvatar.vue';
 import { faker } from '@faker-js/faker';
 import {
   VueQueryPlugin,
-  QueryClient,
-  type VueQueryPluginOptions,
+  QueryClient
+  
 } from '@tanstack/vue-query';
+import type {VueQueryPluginOptions} from '@tanstack/vue-query';
 import { ref } from 'vue';
 import { useUserQuery } from '@/query';
 import type { User } from '@/api/generated-api';

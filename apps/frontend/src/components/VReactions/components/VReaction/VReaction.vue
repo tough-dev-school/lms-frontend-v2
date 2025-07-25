@@ -32,7 +32,7 @@
   });
 
   const handleClick = () => {
-    if (props.disabled) return;
+    if (props.disabled) {return;}
     if (ownReaction.value) {
       emit('remove', ownReaction.value.slug);
     } else {
@@ -44,8 +44,8 @@
     return props.reactions
       .map((reaction) => reaction.author)
       .sort((a, b) => {
-        if (a.uuid === props.userId) return 1;
-        if (b.uuid === props.userId) return -1;
+        if (a.uuid === props.userId) {return 1;}
+        if (b.uuid === props.userId) {return -1;}
         return 0;
       });
   });
@@ -62,10 +62,12 @@
       'pl-8 pr-4': reactions.length !== 0,
       'px-16 justify-center': reactions.length === 0,
     }"
-    @click="handleClick">
+    @click="handleClick"
+  >
     <div
       class="flex h-24 w-24 items-center justify-center leading-none"
-      data-testid="emoji">
+      data-testid="emoji"
+    >
       {{ emoji }}
     </div>
     <div v-if="reactions.length > 0" class="flex items-center pr-16">
@@ -74,12 +76,14 @@
         :key="author.uuid"
         class="relative -mr-[12px] transition-all hover:z-50 hover:scale-125"
         data-testid="author"
-        :title="getName(author.first_name, author.last_name)">
+        :title="getName(author.first_name, author.last_name)"
+      >
         <VAvatar
           class="!w-24 !h-24"
           :user-id="author.uuid"
           :image="author.avatar"
-          data-testid="avatar" />
+          data-testid="avatar"
+        />
       </abbr>
     </div>
   </VButton>

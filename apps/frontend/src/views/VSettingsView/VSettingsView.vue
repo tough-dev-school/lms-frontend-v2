@@ -30,7 +30,8 @@
           <RouterLink
             class="link"
             :to="{ name: 'settings', hash: '#links' }"
-            data-testid="links-link">
+            data-testid="links-link"
+          >
             Ссылки
           </RouterLink>
         </li>
@@ -38,7 +39,8 @@
           <RouterLink
             class="link"
             data-testid="password-link"
-            :to="{ name: 'settings', hash: '#password' }">
+            :to="{ name: 'settings', hash: '#password' }"
+          >
             Пароль
           </RouterLink>
         </li>
@@ -47,14 +49,16 @@
             class="link"
             :to="{ name: 'settings', hash: '#certificate' }"
             data-testid="certificate-link"
-            >Данные для диплома</RouterLink
           >
+            Данные для диплома
+          </RouterLink>
         </li>
         <li>
           <RouterLink
             class="link"
             :to="{ name: 'settings', hash: '#avatar' }"
-            data-testid="avatar-link">
+            data-testid="avatar-link"
+          >
             Аватар
           </RouterLink>
         </li>
@@ -62,7 +66,8 @@
           <RouterLink
             class="link"
             :to="{ name: 'settings', hash: '#preferences' }"
-            data-testid="preferences-link">
+            data-testid="preferences-link"
+          >
             Настройки темы
           </RouterLink>
         </li>
@@ -74,7 +79,8 @@
       title="Пароль"
       data-testid="password-settings"
       :is-pending="isPasswordChangePending"
-      @save="handleSave" />
+      @save="handleSave"
+    />
     <VCertificateSettings id="certificate" data-testid="certificate-settings" />
     <VAvatarSettings id="avatar" data-testid="avatar-settings" />
     <VPreferencesSettings id="preferences" data-testid="preferences-settings" />

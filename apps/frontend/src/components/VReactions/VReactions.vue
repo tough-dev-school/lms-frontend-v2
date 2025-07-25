@@ -63,7 +63,7 @@
   });
 
   const isDisabled = (reactions: ReactionDetailed[] | undefined) => {
-    if (reactions === undefined) reactions = [];
+    if (reactions === undefined) {reactions = [];}
 
     // Reaction that is set can't be disabled
     if (
@@ -77,7 +77,7 @@
         (reaction) => reaction.author.uuid === user.value?.uuid,
       ).length < MAX_REACTIONS;
 
-    if (isUnderLimit) return false;
+    if (isUnderLimit) {return false;}
 
     return true;
   };
@@ -126,7 +126,8 @@
         :reactions="groupedReactions[emoji]"
         :disabled="isDisabled(groupedReactions[emoji])"
         @add="handleAdd"
-        @remove="handleRemove" />
+        @remove="handleRemove"
+      />
     </div>
     <div v-else class="flex flex-wrap items-start gap-8">
       <VReaction
@@ -137,7 +138,8 @@
         :reactions="reactionsGroup"
         :disabled="isDisabled(reactionsGroup)"
         @add="handleAdd"
-        @remove="handleRemove" />
+        @remove="handleRemove"
+      />
     </div>
   </div>
 </template>

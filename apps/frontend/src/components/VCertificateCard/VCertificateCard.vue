@@ -16,13 +16,15 @@
     tag="section"
     data-testid="container"
     class="grid gap-16"
-    :title="`Курс «${course}»`">
+    :title="`Курс «${course}»`"
+  >
     <ul class="grid gap-32 phone:grid-cols-2">
       <VCertificate
         v-for="certificate in certificates"
         :key="certificate.slug"
         data-testid="certificate"
-        :certificate="certificate" />
+        :certificate="certificate"
+      />
     </ul>
   </VCard>
 </template>

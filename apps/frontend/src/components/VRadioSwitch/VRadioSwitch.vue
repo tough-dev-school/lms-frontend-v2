@@ -25,13 +25,15 @@
       v-for="(option, index) in options"
       :key="index"
       class="RadioSwitch__Button"
-      :class="{ RadioSwitch__Button_Active: option.value === modelValue }">
+      :class="{ RadioSwitch__Button_Active: option.value === modelValue }"
+    >
       <input
         type="radio"
         :name="radiogroup"
         class="visually-hidden"
         :value="option.value"
-        @click="emit('update:modelValue', option.value)" />
+        @click="emit('update:modelValue', option.value)"
+      >
       <component :is="option.icon" />
       {{ option.label }}
     </label>

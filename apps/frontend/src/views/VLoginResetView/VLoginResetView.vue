@@ -38,21 +38,24 @@
         tip="Мы отправим ссылку для сброса пароля по этому адресу"
         type="email"
         autocomplete="username"
-        data-testid="email" />
+        data-testid="email"
+      />
       <template #footer>
         <VButton
           :disabled="!email"
           class="flex-grow"
           type="submit"
           data-testid="send"
-          :loading="isPending">
+          :loading="isPending"
+        >
           {{ isPending ? 'Отправляем письмо...' : 'Отправить письмо' }}
         </VButton>
         <VButton
           appearance="link"
           class="flex-grow"
           data-testid="password"
-          @click="router.push({ name: 'login' })">
+          @click="router.push({ name: 'login' })"
+        >
           Войти по паролю
         </VButton>
       </template>

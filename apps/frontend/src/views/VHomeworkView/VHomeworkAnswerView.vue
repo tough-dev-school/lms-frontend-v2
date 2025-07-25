@@ -8,23 +8,19 @@
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
   import { useStorage } from '@vueuse/core';
   import VExistingAnswer from '@/components/VExistingAnswer';
-  import { useHomeworkCrosschecksQuery } from '@/query';
-  import { computed } from 'vue';
-  import { useRouter } from 'vue-router';
-  import { useQueryClient } from '@tanstack/vue-query';
-  import { useHomeworkAnswerCreateMutation } from '@/query';
-  import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
-  import VPillHomework from '@/components/VPillHomework/VPillHomework.vue';
-  import { useHomeworkBreadcrumbs } from './useHomeworkBreadcrumbs';
-  import {
+  import { useHomeworkCrosschecksQuery, useHomeworkAnswerCreateMutation ,
     useHomeworkQuestionQuery,
     useLessonsQuery,
     useHomeworkAnswerQuery,
     useUserQuery,
-    populateAnswersCacheFromDescendants,
-  } from '@/query';
-  import { watch } from 'vue';
-
+    populateAnswersCacheFromDescendants } from '@/query';
+  import { computed, watch  } from 'vue';
+  import { useRouter } from 'vue-router';
+  import { useQueryClient } from '@tanstack/vue-query';
+    import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
+  import VPillHomework from '@/components/VPillHomework/VPillHomework.vue';
+  import { useHomeworkBreadcrumbs } from './useHomeworkBreadcrumbs';
+    
   const props = defineProps<{
     questionId: string;
     answerId: string;
@@ -72,7 +68,7 @@
       url.searchParams.set('answerId', props.answerId);
       return url.toString();
     }
-    return undefined;
+    
   });
 
   const commentText = useStorage(
@@ -138,7 +134,7 @@
   });
 
   const feedbackMessage = computed(() => {
-    if (!crosschecks.value?.length) return;
+    if (!crosschecks.value?.length) {return;}
 
     const completedCrosschecks = crosschecks.value.filter(
       (check) => check.is_checked,
@@ -165,13 +161,14 @@
         isLessonsLoading &&
         isUserLoading
       ) &&
-      question &&
-      answer &&
-      user &&
-      lesson
+        question &&
+        answer &&
+        user &&
+        lesson
     "
     :breadcrumbs="breadcrumbs"
-    :title="question.name">
+    :title="question.name"
+  >
     <template #pill>
       <VPillHomework v-if="lesson.homework" :stats="lesson.homework" />
     </template>
@@ -190,11 +187,13 @@
       </VDetails>
       <VExistingAnswer
         :answer-id="answer.slug"
-        @after-delete="handleDeleteAnswer" />
+        @after-delete="handleDeleteAnswer"
+      />
     </section>
     <VCrossChecks
       v-if="isOwnAnswer && crosschecks?.length"
-      :crosschecks="crosschecks" />
+      :crosschecks="crosschecks"
+    />
     <section class="flex flex-col gap-24">
       <VHeading tag="h2">
         {{ isOwnAnswer ? 'Коментарии вашей работы' : 'Коментарии' }}
@@ -207,7 +206,8 @@
       <VCreateAnswer
         v-model="commentText"
         :is-pending="isCreateAnswerPending"
-        @send="handleCreateComment" />
+        @send="handleCreateComment"
+      />
       <div v-if="isSent" class="card">
         Ответ отправлен!
         <a class="link" :href="ownAnswerHref">Вернуться к своему ответу</a>
@@ -216,7 +216,8 @@
         <VThread
           v-for="comment in answer.descendants"
           :key="comment.slug"
-          :answer-id="comment.slug" />
+          :answer-id="comment.slug"
+        />
       </template>
     </section>
   </VLoggedLayout>

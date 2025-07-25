@@ -7,6 +7,7 @@
   import { useQueryClient } from '@tanstack/vue-query';
   import { useLoginWithLinkMutation } from '@/query';
 
+  const emit = defineEmits<{ change: [] }>();
   const router = useRouter();
   const queryClient = useQueryClient();
   const email = ref('');
@@ -20,13 +21,12 @@
       await loginWithLink({ email: email.value });
 
       router.push({ name: 'mail-sent', query: { email: email.value } });
-    } catch (e) {
+    } catch {
       console.error('Failed to login with email');
     }
     isPending.value = false;
   };
 
-  const emit = defineEmits<{ change: [] }>();
 </script>
 
 <template>
@@ -36,20 +36,23 @@
       label="Электронная почта"
       tip="Мы отправим ссылку для входа по этому адресу"
       type="email"
-      autocomplete="username" />
+      autocomplete="username"
+    />
     <template #footer>
       <VButton
         type="submit"
         :disabled="!email"
         class="flex-grow"
-        :loading="isPending">
+        :loading="isPending"
+      >
         {{ isPending ? 'Отправляем письмо...' : 'Получить доступ' }}
       </VButton>
       <VButton
         appearance="link"
         data-testid="to-password-mode"
         class="flex-grow"
-        @click="emit('change')">
+        @click="emit('change')"
+      >
         Войти через пароль
       </VButton>
     </template>

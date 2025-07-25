@@ -41,7 +41,8 @@
     </VPillItem>
     <VPillItem
       v-if="stats.is_sent && stats.crosschecks"
-      :class="{ 'text-gray': crossCheckDate && !isOverCrossCheckDate }">
+      :class="{ 'text-gray': crossCheckDate && !isOverCrossCheckDate }"
+    >
       <div>
         <div>
           Работы коллег:
@@ -56,7 +57,8 @@
     </VPillItem>
     <VPillItem
       v-if="stats.question?.deadline"
-      :class="{ 'text-red': isOverdue }">
+      :class="{ 'text-red': isOverdue }"
+    >
       <div>
         <div>Дедлайн: {{ formatDate(stats.question?.deadline) }}</div>
         <div v-if="isOverdue">Просрочен</div>

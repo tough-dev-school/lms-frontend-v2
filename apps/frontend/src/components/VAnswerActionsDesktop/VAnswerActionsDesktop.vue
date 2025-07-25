@@ -15,7 +15,8 @@
       size="inline"
       class="h-32 px-16"
       data-testid="delete"
-      @click="emit('delete')">
+      @click="emit('delete')"
+    >
       <TrashXIcon />
     </VButton>
     <VButton
@@ -23,7 +24,8 @@
       size="inline"
       class="h-32 px-16"
       data-testid="edit"
-      @click="emit('edit')">
+      @click="emit('edit')"
+    >
       <PencilPlusIcon />
     </VButton>
   </div>

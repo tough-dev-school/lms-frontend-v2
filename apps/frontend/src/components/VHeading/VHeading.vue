@@ -18,7 +18,8 @@
       'text-h1': tag === 'h1',
       'text-h2': tag === 'h2',
       'text-h3': tag === 'h3',
-    }">
+    }"
+  >
     <slot />
   </component>
 </template>

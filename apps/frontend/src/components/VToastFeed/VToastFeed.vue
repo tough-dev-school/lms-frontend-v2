@@ -11,14 +11,16 @@
 
 <template>
   <div
-    class="container-fluid fixed right-0 top-16 left-0 flex flex-col items-center gap-8">
+    class="container-fluid fixed right-0 top-16 left-0 flex flex-col items-center gap-8"
+  >
     <TransitionGroup name="toast">
       <VToast
         v-for="message in messages"
         v-bind="message"
         :key="message.id"
         data-testid="toast"
-        @delete="handleDelete" />
+        @delete="handleDelete"
+      />
     </TransitionGroup>
   </div>
 </template>

@@ -14,10 +14,12 @@
     <VLoginLink
       v-if="mode === 'link'"
       data-testid="login-link"
-      @change="mode = 'password'" />
+      @change="mode = 'password'"
+    />
     <VLoginPassword
       v-else-if="mode === 'password'"
       data-testid="login-password"
-      @change="mode = 'link'" />
+      @change="mode = 'link'"
+    />
   </VPublicLayout>
 </template>

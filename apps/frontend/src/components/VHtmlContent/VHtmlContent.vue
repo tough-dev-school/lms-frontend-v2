@@ -11,7 +11,8 @@
   <!-- #TODO Check for XSS-->
   <article
     class="prose prose-pre:bg-transparent prose-a:break-words prose-custom"
-    v-html="content" />
+    v-html="content"
+  />
 </template>
 
 <style>

@@ -23,16 +23,15 @@
      * This is fucking hack to be able to check checkboxes and save state to localStorage that rendered via NotionRenderer
      */
 
-    document
-      .querySelectorAll('.notion-checkbox-wrapper input')
-      .forEach((checkbox) => {
+    for (const checkbox of document
+      .querySelectorAll('.notion-checkbox-wrapper input')) {
         // All checkboxes are disabled by default
         checkbox.disabled = false;
 
         // set checked state from localStorage
         const id = checkbox.parentElement.parentElement.id;
         checkbox.checked = !!localStorage.getItem(mapBlockId(id));
-      });
+      }
 
     useEventListener(document, 'change', (e) => {
       if (
@@ -60,7 +59,8 @@
       component: 'RouterLink',
       href: 'to',
     }"
-    :full-page="true" />
+    :full-page="true"
+  />
 </template>
 
 <style>

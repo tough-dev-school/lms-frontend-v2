@@ -33,7 +33,8 @@
       'w-72': size === 'md',
     }"
     class="flex items-center justify-center rounded-full object-cover"
-    :src="image || defaultAvatar" />
+    :src="image || defaultAvatar"
+  >
 </template>
 
 <style scoped>

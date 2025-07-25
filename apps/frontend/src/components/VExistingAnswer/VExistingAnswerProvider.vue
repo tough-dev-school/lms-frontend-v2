@@ -19,6 +19,7 @@
     v-if="answer && user"
     :answer="answer"
     :user="user"
-    @after-create="(slug) => emit('after-create', slug)" />
+    @after-create="(slug) => emit('after-create', slug)"
+  />
   <div v-else>Loading...</div>
 </template>

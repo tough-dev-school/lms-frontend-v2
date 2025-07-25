@@ -44,7 +44,8 @@
       v-if="$slots.label || label"
       class="mb-8"
       :class="{ 'text-red': error }"
-      data-testid="label">
+      data-testid="label"
+    >
       <slot name="label">
         {{ label }}
       </slot>
@@ -58,13 +59,15 @@
       }"
       data-testid="input"
       :value="modelValue"
-      @input="handleInput" />
+      @input="handleInput"
+    >
     <div v-if="tip || error" class="mt-4">
       <p v-if="tip" data-testid="tip" class="text-sub text-gray">{{ tip }}</p>
       <p
         v-if="error && error !== true"
         data-testid="error"
-        class="text-sub text-red">
+        class="text-sub text-red"
+      >
         {{ error }}
       </p>
     </div>

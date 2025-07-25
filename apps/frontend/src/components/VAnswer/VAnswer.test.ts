@@ -9,8 +9,7 @@ import { cloneDeep } from 'lodash-es';
 import { faker } from '@faker-js/faker';
 import { mockAnswer } from '@/mocks/mockAnswer';
 import { mockUserSafe } from '@/mocks/mockUserSafe';
-import { useRemoveHomeworkReactionMutation } from '@/query';
-import { useAddHomeworkReactionMutation } from '@/query';
+import { useRemoveHomeworkReactionMutation, useAddHomeworkReactionMutation  } from '@/query';
 
 const uuid = faker.string.uuid();
 
@@ -90,7 +89,7 @@ describe('VAnswer', () => {
 
   test('answer has relative date', () => {
     const years = 10;
-    const props = Object.assign({}, defaultProps);
+    const props = { ...defaultProps};
     defaultProps.answer.created = dayjs()
       .subtract(years, 'years')
       .toISOString();

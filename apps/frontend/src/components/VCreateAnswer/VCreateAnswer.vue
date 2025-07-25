@@ -7,11 +7,12 @@
     isPending: boolean;
   }>();
 
+  const text = defineModel<string>({ required: true });
+
   const emit = defineEmits<{
     send: [];
   }>();
 
-  const text = defineModel<string>({ required: true });
   const isDisabled = computed(
     () => !(text.value.length > 0) || props.isPending,
   );
@@ -22,13 +23,15 @@
     <VTextEditor
       v-model="text"
       class="SendOwnAnswer__Editor"
-      @send="emit('send')" />
+      @send="emit('send')"
+    />
     <div class="SendOwnAnswer__Footer">
       <VButton
         :disabled="isDisabled"
         :loading="isPending"
         class="h-32"
-        @click="emit('send')">
+        @click="emit('send')"
+      >
         {{ isPending ? 'Отправляется...' : 'Отправить' }}
       </VButton>
     </div>

@@ -13,7 +13,8 @@
     :class="{
       'hover:bg-lightgray hover:bg-opacity-20 cursor-pointer link-bright': to,
     }"
-    :href="to">
+    :href="to"
+  >
     <slot />
   </component>
 </template>

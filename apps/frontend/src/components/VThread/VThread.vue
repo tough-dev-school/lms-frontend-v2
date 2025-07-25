@@ -10,12 +10,11 @@
 <script lang="ts" setup>
   import VAnswer from '@/components/VAnswer';
   import { ref } from 'vue';
-  import { onClickOutside } from '@vueuse/core';
+  import { onClickOutside, useStorage  } from '@vueuse/core';
   import { useRoute, useRouter } from 'vue-router';
   import { useHomeworkAnswerCreateMutation } from '@/query';
   import { useQueryClient } from '@tanstack/vue-query';
-  import { useStorage } from '@vueuse/core';
-  import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
+    import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
   import VExistingAnswer from '@/components/VExistingAnswer';
   import type { AnswerTree, User } from '@/api/generated-api';
   import VThreadProvider from '.';
@@ -65,7 +64,7 @@
   );
 
   const handleCreateComment = async () => {
-    if (!props.answer) throw new Error('Answer not found');
+    if (!props.answer) {throw new Error('Answer not found');}
 
     try {
       const newComment = await createComment({
@@ -100,7 +99,8 @@
     <VExistingAnswer
       v-else
       :answer-id="answer.slug"
-      @after-create="handleMounted" />
+      @after-create="handleMounted"
+    />
     <button class="text-sm link" @click="replyMode = !replyMode">
       {{ replyMode ? 'Отменить' : 'Ответить' }}
     </button>
@@ -109,7 +109,8 @@
         v-show="replyMode"
         v-model="commentText"
         :is-pending="isCreateCommentPending"
-        @send="handleCreateComment" />
+        @send="handleCreateComment"
+      />
     </div>
   </div>
   <div v-if="answer.descendants.length > 0" class="thread-ruler mt-32">
@@ -117,7 +118,8 @@
       v-for="descendant in answer.descendants"
       :key="descendant.slug"
       :answer-id="descendant.slug"
-      @update="(slug) => handleUpdate(slug)" />
+      @update="(slug) => handleUpdate(slug)"
+    />
   </div>
 </template>
 

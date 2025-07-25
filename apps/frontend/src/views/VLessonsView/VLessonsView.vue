@@ -1,14 +1,12 @@
 <script lang="ts" setup>
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
-  import { useLessonsQuery } from '@/query';
+  import { useLessonsQuery, useStudiesQuery , useModuleQuery  } from '@/query';
   import { computed } from 'vue';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
-  import { useStudiesQuery } from '@/query';
-  import VLessonCard from '@/components/VLessonCard/VLessonCard.vue';
+    import VLessonCard from '@/components/VLessonCard/VLessonCard.vue';
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
-  import { useModuleQuery } from '@/query';
-
+  
   const props = defineProps<{
     courseId: number;
     moduleId: number;
@@ -25,7 +23,7 @@
   );
 
   const breadcrumbs = computed<Breadcrumb[]>(() => {
-    if (!courseName.value || !moduleName.value) return [];
+    if (!courseName.value || !moduleName.value) {return [];}
 
     return [
       { name: 'Мои курсы', to: { name: 'home' } },
@@ -55,7 +53,8 @@
   <VLoggedLayout
     v-if="!(isStudiesLoading || isModuleLoading || isLessonsLoading)"
     :title="moduleName"
-    :breadcrumbs="breadcrumbs">
+    :breadcrumbs="breadcrumbs"
+  >
     <VHtmlContent v-if="moduleText" :content="moduleText" />
     <div class="VLessonsView gap-32 flex flex-col">
       <div v-if="lessons && lessons.length > 0" class="VLessonsView__Layout">
@@ -63,7 +62,8 @@
           v-for="lesson in lessons"
           :key="lesson.id"
           class="VLessonsView__Item"
-          :lesson="lesson" />
+          :lesson="lesson"
+        />
       </div>
       <p v-else data-testid="empty" class="mb-16 text-center">
         Нет доступных уроков.

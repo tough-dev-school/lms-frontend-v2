@@ -34,7 +34,8 @@
       Button_Size_Inline: size === 'inline',
       Button_Loading: loading,
     }"
-    :disabled="loading || disabled">
+    :disabled="loading || disabled"
+  >
     <slot />
   </component>
 </template>
