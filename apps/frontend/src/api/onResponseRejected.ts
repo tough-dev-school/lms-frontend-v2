@@ -8,7 +8,6 @@ const onResponseRejected = (error: AxiosError) => {
   if (error.response) {
     if (error.response.status === 401) {
       token.value = undefined;
-      window.location.href = '/login';
     }
 
     if (error.response.status !== 401) {

@@ -1,6 +1,7 @@
 import type { AuthToken } from '@/types';
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import { createGlobalState, useStorage } from '@vueuse/core';
+import { useRouter } from 'vue-router';
 
 type AuthStoreState = {
   token: AuthToken | undefined;
@@ -16,6 +17,14 @@ export const useAuth = createGlobalState(() => {
     set: (value) => {
       storage.value.token = value;
     },
+  });
+
+  const router = useRouter();
+
+  watch(token, (value) => {
+    if (value === undefined && router.currentRoute.value.meta.requiresAuth) {
+      router.push({ name: 'login' });
+    }
   });
 
   return {
