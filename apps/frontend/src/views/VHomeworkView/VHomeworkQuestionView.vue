@@ -33,7 +33,7 @@
 
   const lesson = computed(() => {
     return lessons.value?.find(
-      (lesson) => lesson.id === question.value?.breadcrumbs.lesson?.id,
+      (l) => l.id === question.value?.breadcrumbs.lesson?.id,
     );
   });
 

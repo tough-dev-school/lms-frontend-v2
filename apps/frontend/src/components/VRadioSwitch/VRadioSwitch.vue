@@ -16,7 +16,7 @@
     modelValue: string;
     options: RadioOption[];
   }>();
-  const emit = defineEmits<{ 'update:modelValue': [value: any] }>();
+  const emit = defineEmits<{ 'update:modelValue': [string] }>();
   const radiogroup = uuidv4();
 </script>
 

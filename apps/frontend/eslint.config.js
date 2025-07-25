@@ -30,14 +30,11 @@ export default defineConfig(
 
       // Disabled due to legacy code patterns
       'unicorn/filename-case': 'off',
-      'unicorn/prefer-module': 'off',
       'unicorn/prefer-string-replace-all': 'off',
-      'unicorn/no-await-expression-member': 'off',
 
       // Disabled because they require more time to fix
-      'no-shadow': 'off',
-      'no-param-reassign': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
+
       // Disabled until we can update Vue
       'vue/no-import-compiler-macros': 'off',
       'vue/prefer-use-template-ref': 'off',

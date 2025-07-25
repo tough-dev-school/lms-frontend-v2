@@ -77,8 +77,11 @@ export const userKeys = {
 const studiesOptions = () => {
   return {
     queryKey: studiesKeys.lists(),
-    queryFn: async () =>
-      (await api.purchasedCoursesList({ page_size: 100 })).results,
+    queryFn: async () => {
+      const { results } = await api.purchasedCoursesList({ page_size: 100 });
+
+      return results;
+    },
   };
 };
 
@@ -91,8 +94,14 @@ export const useStudiesQuery = () => {
 const lessonsOptions = (moduleId: number | undefined) => {
   return {
     queryKey: lmsKeys.moduleLessons(moduleId),
-    queryFn: async () =>
-      (await api.lmsLessonsList({ module: moduleId, page_size: 1000 })).results,
+    queryFn: async () => {
+      const { results } = await api.lmsLessonsList({
+        module: moduleId,
+        page_size: 1000,
+      });
+
+      return results;
+    },
   };
 };
 
@@ -107,8 +116,14 @@ export const useLessonsQuery = (
 const modulesOptions = (courseId: number | undefined) => {
   return {
     queryKey: lmsKeys.courseModules(courseId),
-    queryFn: async () =>
-      (await api.lmsModulesList({ course: courseId, page_size: 100 })).results,
+    queryFn: async () => {
+      const { results } = await api.lmsModulesList({
+        course: courseId,
+        page_size: 100,
+      });
+
+      return results;
+    },
   };
 };
 
@@ -169,7 +184,11 @@ export const diplomasKeys = {
 const diplomasOptions = () => {
   return {
     queryKey: diplomasKeys.lists(),
-    queryFn: async () => (await api.diplomasList({ page_size: 100 })).results,
+    queryFn: async () => {
+      const { results } = await api.diplomasList({ page_size: 100 });
+
+      return results;
+    },
   };
 };
 
@@ -249,13 +268,14 @@ export const getHomeworkAnswersQueryOptions = ({
 }) => {
   return queryOptions({
     queryKey: homeworkKeys.questionAnswers({ questionId, authorId }),
-    queryFn: async () =>
-      (
-        await api.homeworkAnswersList({
-          question: questionId,
-          author: authorId,
-        })
-      ).results,
+    queryFn: async () => {
+      const { results } = await api.homeworkAnswersList({
+        question: questionId,
+        author: authorId,
+      });
+
+      return results;
+    },
   });
 };
 

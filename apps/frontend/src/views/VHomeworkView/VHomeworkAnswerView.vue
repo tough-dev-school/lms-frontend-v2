@@ -44,7 +44,7 @@
 
   const lesson = computed(() => {
     return lessons.value?.find(
-      (lesson) => lesson.id === question.value?.breadcrumbs.lesson?.id,
+      (l) => l.id === question.value?.breadcrumbs.lesson?.id,
     );
   });
 
@@ -82,7 +82,7 @@
 
   const handleCreateComment = async () => {
     try {
-      const answer = await createAnswerMutation({
+      const createdAnswer = await createAnswerMutation({
         text: commentText.value,
         questionId: props.questionId,
         parentId: props.answerId,
@@ -92,7 +92,7 @@
 
       router.push({
         ...router.currentRoute.value,
-        hash: `#${answer.slug}`,
+        hash: `#${createdAnswer.slug}`,
       });
     } catch (error) {
       console.error(error);

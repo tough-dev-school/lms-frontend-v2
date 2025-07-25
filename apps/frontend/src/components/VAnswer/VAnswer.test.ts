@@ -79,9 +79,9 @@ describe('VAnswer', () => {
   };
 
   test('props to display avatar passed to VAvatar', () => {
-    const { uuid } = defaultProps.answer.author;
+    const { uuid: authorUuid } = defaultProps.answer.author;
 
-    expect(getAvatarWrapper().props().userId).toBe(uuid);
+    expect(getAvatarWrapper().props().userId).toBe(authorUuid);
   });
 
   test('answer has author name', () => {

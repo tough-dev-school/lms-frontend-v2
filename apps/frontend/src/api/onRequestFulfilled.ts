@@ -2,13 +2,13 @@ import { useAuth } from '@/composables/useAuth';
 import type { InternalAxiosRequestConfig } from 'axios';
 import { cloneDeep } from 'lodash-es';
 
-const onRequestFulfilled = (config: InternalAxiosRequestConfig) => {
+const onRequestFulfilled = (requestConfig: InternalAxiosRequestConfig) => {
   // Django admin may pass tokens as url param
   const { token: localStorageToken } = useAuth();
   const urlToken = new URLSearchParams(window.location.search).get('t');
   const token = urlToken || localStorageToken.value;
 
-  config = cloneDeep(config);
+  const config = cloneDeep(requestConfig);
 
   config.headers = config.headers || {};
 

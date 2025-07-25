@@ -99,8 +99,8 @@
 
   watch(
     props,
-    (props) => {
-      const { modelValue } = props;
+    (newProps) => {
+      const { modelValue } = newProps;
       const isSame = editor.getHTML() === modelValue;
 
       if (isSame) return;

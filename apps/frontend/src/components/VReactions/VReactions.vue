@@ -62,9 +62,7 @@
     actualizeReactions();
   });
 
-  const isDisabled = (reactions: ReactionDetailed[] | undefined) => {
-    if (reactions === undefined) reactions = [];
-
+  const isDisabled = (reactions: ReactionDetailed[] = []) => {
     // Reaction that is set can't be disabled
     if (
       reactions.some((reaction) => reaction.author.uuid === user.value?.uuid)

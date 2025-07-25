@@ -11,8 +11,8 @@ const handleError = (error: any = DEFAULT_ERROR_MESSAGE) => {
     Object.keys(error.response.data).forEach((key) => {
       const field = error.response.data[key];
       const fields = Array.isArray(field) ? field : [field];
-      fields.forEach((error: string) => {
-        addMessage(error, 'error');
+      fields.forEach((message: string) => {
+        addMessage(message, 'error');
       });
     });
   }

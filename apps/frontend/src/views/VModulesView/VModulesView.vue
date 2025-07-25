@@ -15,7 +15,7 @@
   const { data: studies, isLoading } = useStudiesQuery();
 
   const study = computed(() =>
-    (studies.value || []).find((study) => study.id === props.courseId),
+    (studies.value || []).find((s) => s.id === props.courseId),
   );
 
   const courseName = computed(() => study.value?.name);
