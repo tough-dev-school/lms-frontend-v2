@@ -22,6 +22,7 @@ export const useAuth = createGlobalState(() => {
   const router = useRouter();
 
   watch(token, (value) => {
+    if (!router) return; // We need this because useAuth may be called before router is initialized
     if (value === undefined && router.currentRoute.value.meta.requiresAuth) {
       router.push({ name: 'login' });
     }
