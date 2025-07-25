@@ -5,7 +5,13 @@
     "vitest.config.*",
     "cypress.config.*",
     "nightwatch.conf.*",
-    "playwright.config.*"
+    "playwright.config.*",
+    "tailwind.config.*",
+    "tests/*.config.*",
+    "tests/regression.test.ts",
+    "tests/unit.config.ts",
+    ".storybook/*.ts",
+    "generate-sdk.ts"
   ],
   "compilerOptions": {
     "composite": true,
