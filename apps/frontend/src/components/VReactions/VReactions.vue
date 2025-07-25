@@ -28,7 +28,7 @@
   import VReaction from './components/VReaction/VReaction.vue';
   import { groupBy, debounce } from 'lodash-es';
   import { useUserQuery } from '@/query';
-  import { uuid } from '@/utils/uuid';
+  import { nanoid } from 'nanoid';
 
   const props = withDefaults(defineProps<VReactionsProps>(), {
     open: false,
@@ -90,7 +90,7 @@
   });
 
   const handleAdd = (emoji: ReactionEmoji) => {
-    const reactionId = uuid();
+    const reactionId = nanoid();
     // Optimistically add the reaction
     if (user.value) {
       localReactions.value = [
