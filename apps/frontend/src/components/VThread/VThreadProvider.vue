@@ -1,9 +1,11 @@
 <script lang="ts" setup>
-  import { useUserQuery } from '@/query';
-  import { useHomeworkAnswerQuery } from '@/query';
+  import {
+    useUserQuery,
+    useHomeworkAnswerQuery,
+    populateAnswersCacheFromDescendants,
+  } from '@/query';
   import { watch } from 'vue';
   import { useQueryClient } from '@tanstack/vue-query';
-  import { populateAnswersCacheFromDescendants } from '@/query';
   import VThread from './VThread.vue';
 
   const queryClient = useQueryClient();
@@ -32,6 +34,6 @@
     v-if="answer && user"
     :answer="answer"
     :user="user"
-    @update="(slug) => emit('update', slug)" />
+    @update="(slug: string) => emit('update', slug)" />
   <div v-else>Loading...</div>
 </template>

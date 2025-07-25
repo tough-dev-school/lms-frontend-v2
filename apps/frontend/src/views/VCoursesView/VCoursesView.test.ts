@@ -6,11 +6,8 @@ import { nextTick, ref } from 'vue';
 import { faker } from '@faker-js/faker';
 import { mockCourse } from '@/mocks/mockCourse';
 import { useStudiesQuery } from '@/query';
-import {
-  VueQueryPlugin,
-  QueryClient,
-  type VueQueryPluginOptions,
-} from '@tanstack/vue-query';
+import { VueQueryPlugin, QueryClient } from '@tanstack/vue-query';
+import type { VueQueryPluginOptions } from '@tanstack/vue-query';
 
 const defaultStudies = faker.helpers.multiple(mockCourse, { count: 3 });
 

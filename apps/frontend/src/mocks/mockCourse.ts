@@ -1,4 +1,4 @@
-import { type Course } from '@/api/generated-api';
+import type { Course } from '@/api/generated-api';
 import { faker } from '@faker-js/faker';
 
 export const mockCourse = (payload: Partial<Course> = {}): Required<Course> => {

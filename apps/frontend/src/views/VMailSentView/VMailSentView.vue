@@ -22,8 +22,9 @@
         Мы отправили ссылку по адресу {{ email }}. Если письма долго нет —
         посмотрите пожалуйста в спаме. Если и там нет —
         <button class="link" @click="chatra('openChat', true)">
-          напишите нам</button
-        >.
+          напишите нам
+        </button>
+        .
       </div>
       <template #footer>
         <VButton

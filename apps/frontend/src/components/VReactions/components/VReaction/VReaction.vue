@@ -11,6 +11,7 @@
 </script>
 
 <script lang="ts" setup>
+  /* eslint-disable import-x/first */
   import VAvatar from '@/components/VAvatar/VAvatar.vue';
   import { computed } from 'vue';
   import { getName } from '@/utils/getName';

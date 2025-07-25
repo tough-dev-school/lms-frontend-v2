@@ -1,8 +1,7 @@
 <script lang="ts" setup>
   import VPublicLayout from '@/layouts/VPublicLayout/VPublicLayout.vue';
-  import VBreadcrumbs, {
-    type Breadcrumb,
-  } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
+  import VBreadcrumbs from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
+  import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
   import VHeading from '@/components/VHeading/VHeading.vue';
   import VProfileMenu from '@/components/VProfileMenu/VProfileMenu.vue';
   import { useTitle } from '@vueuse/core';

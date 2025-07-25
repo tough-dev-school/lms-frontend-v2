@@ -46,9 +46,9 @@
           <RouterLink
             class="link"
             :to="{ name: 'settings', hash: '#certificate' }"
-            data-testid="certificate-link"
-            >Данные для диплома</RouterLink
-          >
+            data-testid="certificate-link">
+            Данные для диплома
+          </RouterLink>
         </li>
         <li>
           <RouterLink

@@ -1,3 +1,6 @@
+/* eslint-disable unicorn/prefer-regexp-test */
+/* eslint-disable unicorn/better-regex */
+/* eslint-disable unicorn/prefer-string-raw */
 import TurndownService from 'turndown';
 
 // De-escape links, see:

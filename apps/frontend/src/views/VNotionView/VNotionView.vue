@@ -112,9 +112,9 @@
             support@tough-dev.school</a
           >
         </p>
-        <VButton appearance="link" @click="router.push({ name: 'home' })"
-          >На главную</VButton
-        >
+        <VButton appearance="link" @click="router.push({ name: 'home' })">
+          На главную
+        </VButton>
       </div>
     </VLoggedLayout>
   </template>

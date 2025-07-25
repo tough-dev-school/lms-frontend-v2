@@ -3,11 +3,8 @@ import { RouterLinkStub, mount, VueWrapper } from '@vue/test-utils';
 import VProfileMenu from '@/components/VProfileMenu/VProfileMenu.vue';
 import type VAvatar from '@/components/VAvatar/VAvatar.vue';
 import { faker } from '@faker-js/faker';
-import {
-  VueQueryPlugin,
-  QueryClient,
-  type VueQueryPluginOptions,
-} from '@tanstack/vue-query';
+import { VueQueryPlugin, QueryClient } from '@tanstack/vue-query';
+import type { VueQueryPluginOptions } from '@tanstack/vue-query';
 import { ref } from 'vue';
 import { useUserQuery } from '@/query';
 import type { User } from '@/api/generated-api';

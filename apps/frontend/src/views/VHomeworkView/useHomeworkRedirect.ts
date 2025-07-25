@@ -1,4 +1,5 @@
-import { ref, watch, onBeforeMount, type Ref } from 'vue';
+import { ref, watch, onBeforeMount } from 'vue';
+import type { Ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useQueryClient } from '@tanstack/vue-query';
 import { fetchUser, fetchHomeworkAnswer, fetchHomeworkAnswers } from '@/query';

@@ -49,9 +49,10 @@
         answerId: props.answer.slug,
         text: text.value,
       });
-    } catch {}
-
-    isEdit.value = false;
+      isEdit.value = false;
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   onMounted(() => {

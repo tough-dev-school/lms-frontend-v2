@@ -2,7 +2,8 @@ import { vi, describe, beforeEach, expect, test, afterEach } from 'vitest';
 import { mount, VueWrapper } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
 import VMailSentView from './VMailSentView.vue';
-import { getProviderById, type Provider } from '@brachkow/email-providers';
+import { getProviderById } from '@brachkow/email-providers';
+import type { Provider } from '@brachkow/email-providers';
 
 const GMAIL = getProviderById('GMAIL') as Provider;
 const MAILRU = getProviderById('MAILRU') as Provider;

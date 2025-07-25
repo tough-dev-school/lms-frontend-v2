@@ -76,13 +76,13 @@ describe('visual regression test for', () => {
     // },
   ];
 
-  scenarios.forEach((test) => {
+  scenarios.forEach((scenario) => {
     VIEWPORTS.forEach((viewport) => {
       COLOR_SCHEMES.forEach((colorScheme) => {
         tests.push([
-          `${test.name} — ${viewport[0]}×${viewport[1]} ${colorScheme}`,
-          test.path,
-          test.action ? test.action : async () => {},
+          `${scenario.name} — ${viewport[0]}×${viewport[1]} ${colorScheme}`,
+          scenario.path,
+          scenario.action || (async () => {}),
           viewport[0],
           viewport[1],
           colorScheme,
@@ -112,6 +112,7 @@ describe('visual regression test for', () => {
   test.each(tests)(
     '%s',
     async (name, route, action, width, height, colorScheme) => {
+      // eslint-disable-next-line no-console
       console.log(`Running test ${++testIndex} of ${tests.length}: ${name}`);
       await page.setViewportSize({ width, height });
 
@@ -134,7 +135,7 @@ describe('visual regression test for', () => {
         customDiffConfig: {
           ssim: 'fast',
         },
-        failureThreshold: Math.pow(16, 2),
+        failureThreshold: 16 ** 2,
         failureThresholdType: 'pixel',
         storeReceivedOnFailure: true,
         customReceivedPostfix: '',

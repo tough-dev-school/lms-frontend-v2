@@ -25,7 +25,9 @@
         token: props.token,
       });
       router.push({ name: 'login' });
-    } catch {}
+    } catch (error) {
+      console.error(error);
+    }
   };
 </script>
 

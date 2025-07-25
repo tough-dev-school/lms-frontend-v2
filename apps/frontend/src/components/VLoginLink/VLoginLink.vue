@@ -20,7 +20,7 @@
       await loginWithLink({ email: email.value });
 
       router.push({ name: 'mail-sent', query: { email: email.value } });
-    } catch (e) {
+    } catch {
       console.error('Failed to login with email');
     }
     isPending.value = false;

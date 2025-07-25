@@ -8,6 +8,7 @@
 </script>
 
 <script lang="ts" setup>
+  /* eslint-disable import-x/first */
   // @ts-nocheck
   import { NotionRenderer } from 'vue-notion';
   import { onMounted } from 'vue';

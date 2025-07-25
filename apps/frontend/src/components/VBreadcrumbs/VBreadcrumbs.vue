@@ -3,6 +3,8 @@
 
   export interface Breadcrumb {
     name: string;
+    // #FIXME
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     to?: any;
   }
 
