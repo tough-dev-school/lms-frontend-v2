@@ -2,6 +2,7 @@ import useToasts from '@/stores/toasts';
 
 export const DEFAULT_ERROR_MESSAGE = 'Ошибка!';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const handleError = (error: any = DEFAULT_ERROR_MESSAGE) => {
   const { addMessage } = useToasts();
 

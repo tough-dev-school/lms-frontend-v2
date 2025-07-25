@@ -3,8 +3,9 @@ import useToasts from '@/stores/toasts';
 import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
 import { useQueryClient } from '@tanstack/vue-query';
 import { userKeys } from '@/query';
+import type { Component } from 'vue';
 
-const layoutDecorator = (story: any, layout: any) => ({
+const layoutDecorator = (story: Component, layout: Component) => ({
   components: { layout, story },
   template: '<layout><story /></layout>',
   setup() {
@@ -28,7 +29,7 @@ const layoutDecorator = (story: any, layout: any) => ({
   },
 });
 
-const defaultLayoutDecorator = (story: any) =>
+const defaultLayoutDecorator = (story: Component) =>
   layoutDecorator(story, VTransparentComponent);
 
 export { defaultLayoutDecorator };

@@ -30,9 +30,6 @@ export default defineConfig(
       'unicorn/filename-case': 'off',
       'unicorn/prefer-string-replace-all': 'off',
 
-      // Disabled because they require more time to fix
-      '@typescript-eslint/no-explicit-any': 'off',
-
       // Changes for eslint-config-fans
       // Disabled for prettier: true
       'vue/html-indent': 'off',

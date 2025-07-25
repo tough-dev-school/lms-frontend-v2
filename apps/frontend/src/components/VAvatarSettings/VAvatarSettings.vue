@@ -28,6 +28,8 @@
     await updateAvatar(file.value || null);
   };
 
+  // #FIXME
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const showPreview = async (cropperInstance: any) => {
     avatar.value = cropperInstance!.getCroppedCanvas()!.toDataURL();
 

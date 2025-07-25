@@ -6,6 +6,7 @@ const getNotionTitle = (
   material: MaterialSerilizer['content'],
 ) => {
   // as api is unofficial and poorly typed we just assume title value is a nested array and then flatten it with the magic number to convert it into string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getBlockTitle = (block: any): string | undefined =>
     // eslint-disable-next-line unicorn/no-magic-array-flat-depth
     block?.value?.properties?.title?.flat(100).join('');
