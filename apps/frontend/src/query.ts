@@ -1,19 +1,22 @@
-import { QueryClient, useMutation, useQuery } from '@tanstack/vue-query';
+import {
+  QueryClient,
+  useMutation,
+  useQuery,
+  queryOptions,
+} from '@tanstack/vue-query';
 import type { MaybeRefOrGetter } from 'vue';
-import { computed } from 'vue';
-import { toValue } from 'vue';
+import { computed, toValue } from 'vue';
 import { api } from '@/api';
-import { queryOptions } from '@tanstack/vue-query';
 import type {
   AnswerTree,
   JSONWebToken,
   PasswordChange,
   PasswordReset,
   PasswordResetConfirm,
+  PatchedUser,
 } from './api/generated-api';
 import htmlToMarkdown from './utils/htmlToMarkdown';
 import { ContentType } from './api/generated-api';
-import type { PatchedUser } from './api/generated-api';
 import { useAuth } from './composables/useAuth';
 
 export const baseQueryKey = () => {
@@ -417,7 +420,7 @@ export const useHomeworkAnswerSendImageMutation = () => {
       const formData = new FormData();
       formData.append('image', image);
 
-      // @ts-expect-error
+      // @ts-expect-error too complex
       return await api.homeworkAnswersImageCreate(formData, {
         type: ContentType.FormData,
       });
@@ -461,7 +464,7 @@ export const useUpdateUserAvatarMutation = (queryClient: QueryClient) => {
         formData.append('avatar', '');
       }
 
-      // @ts-expect-error
+      // @ts-expect-error too complex
       return await api.usersMePartialUpdate(formData, {
         type: ContentType.FormData,
       });
@@ -484,7 +487,7 @@ export const useLoginWithCredentialsMutation = (queryClient: QueryClient) => {
 export const useLoginWithUserIdMutation = (queryClient: QueryClient) => {
   return useMutation({
     mutationFn: async (userId: number) => await api.authAsRetrieve(userId),
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: baseQueryKey() });
     },
   });

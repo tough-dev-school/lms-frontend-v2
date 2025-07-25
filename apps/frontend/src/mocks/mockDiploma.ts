@@ -1,7 +1,8 @@
 // #FIXME Split into separate modules
 
 import { faker } from '@faker-js/faker';
-import { type Diploma, LanguageEnum } from '@/api/generated-api';
+import { LanguageEnum } from '@/api/generated-api';
+import type { Diploma } from '@/api/generated-api';
 import { mockLocale } from './mockLocale';
 import { mockUserSafe, STATIC_AUTHOR_1 } from './mockUserSafe';
 

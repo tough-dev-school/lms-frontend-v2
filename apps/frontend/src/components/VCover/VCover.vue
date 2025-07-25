@@ -10,9 +10,7 @@
   const props = defineProps<Props>();
 
   const clearName = computed(() => {
-    const additionalInfoStart = props.name
-      .split('')
-      .findIndex((item) => item === '(');
+    const additionalInfoStart = [...props.name].indexOf('(');
 
     if (additionalInfoStart > 0) {
       return props.name.slice(0, additionalInfoStart).trim();
@@ -31,9 +29,9 @@
         <VHeading
           tag="div"
           class="text-center text-h1 text-white"
-          data-testid="auto-cover"
-          >{{ clearName }}</VHeading
-        >
+          data-testid="auto-cover">
+          {{ clearName }}
+        </VHeading>
       </div>
       <img
         v-if="image"

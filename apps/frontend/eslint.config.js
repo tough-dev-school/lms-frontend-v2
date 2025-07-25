@@ -1,0 +1,56 @@
+import { defineConfig, GLOB_VUE } from 'eslint-config-fans';
+
+export default defineConfig(
+  {
+    typescript: true,
+    vue: true,
+    prettier: true,
+    strict: false,
+  },
+  {
+    files: [GLOB_VUE],
+    rules: {
+      'vue/no-undef-components': [
+        'error',
+        {
+          ignorePatterns: [
+            'RouterView',
+            'RouterLink',
+            'avatar-cropper',
+            'VDropdown',
+            'VLoadingView',
+          ],
+        },
+      ],
+    },
+  },
+  {
+    rules: {
+      'no-empty': ['error', { allowEmptyCatch: true }],
+
+      // Disabled due to legacy code patterns
+      'unicorn/filename-case': 'off',
+      'unicorn/prefer-module': 'off',
+      'unicorn/prefer-string-replace-all': 'off',
+      'unicorn/no-await-expression-member': 'off',
+
+      // Disabled because they require more time to fix
+      'no-shadow': 'off',
+      'no-param-reassign': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+      // Disabled until we can update Vue
+      'vue/no-import-compiler-macros': 'off',
+      'vue/prefer-use-template-ref': 'off',
+
+      // Changes for eslint-config-fans
+      // Disabled for prettier: true
+      'vue/html-indent': 'off',
+      'vue/html-self-closing': 'off',
+      'vue/html-closing-bracket-newline': 'off',
+      // Disabled because it's a too opinionated stylistic rule
+      'vue/define-macros-order': 'off',
+      // Disabled because the config cannot detect the node version for some reason
+      'n/no-unsupported-features/es-syntax': 'off',
+    },
+  },
+);

@@ -22,7 +22,7 @@
   const password = ref('');
 
   const isCredentialsInvalid = computed(
-    () => !(username.value && password.value),
+    () => !username.value || !password.value,
   );
 
   const { redirectFromAuthAndRestoreRoute } = useAuthRedirect();
@@ -73,8 +73,8 @@
               @click="router.push({ name: 'login-reset' })">
               Не помню пароль</button
             >)
-          </span></template
-        >
+          </span>
+        </template>
       </VTextInput>
     </div>
     <template #footer>

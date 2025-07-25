@@ -1,5 +1,6 @@
 import { fetchHomeworkQuestion } from '@/query';
-import { onMounted, ref, toValue, type MaybeRefOrGetter } from 'vue';
+import { onMounted, ref, toValue } from 'vue';
+import type { MaybeRefOrGetter } from 'vue';
 import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
 import { useQueryClient } from '@tanstack/vue-query';
 

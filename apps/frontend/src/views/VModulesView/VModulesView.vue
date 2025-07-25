@@ -25,7 +25,7 @@
   const breadcrumbs = computed<Breadcrumb[]>(() => [
     { name: 'Мои курсы', to: { name: 'home' } },
     {
-      name: courseName.value ? courseName.value : 'Материалы курса',
+      name: courseName.value ?? 'Материалы курса',
       to: { name: 'modules', params: { courseId: props.courseId } },
     },
   ]);

@@ -1,6 +1,4 @@
-export interface Dictionary<T> {
-  [k: string]: T;
-}
+export type Dictionary<T> = Record<string, T>;
 
 export default function filterDictionary<T>(
   inputDictionary: Dictionary<T>,

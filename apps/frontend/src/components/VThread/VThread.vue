@@ -8,13 +8,13 @@
 </script>
 
 <script lang="ts" setup>
+  /* eslint-disable import-x/first */
   import VAnswer from '@/components/VAnswer';
   import { ref } from 'vue';
-  import { onClickOutside } from '@vueuse/core';
+  import { onClickOutside, useStorage } from '@vueuse/core';
   import { useRoute, useRouter } from 'vue-router';
   import { useHomeworkAnswerCreateMutation } from '@/query';
   import { useQueryClient } from '@tanstack/vue-query';
-  import { useStorage } from '@vueuse/core';
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
   import VExistingAnswer from '@/components/VExistingAnswer';
   import type { AnswerTree, User } from '@/api/generated-api';
@@ -83,7 +83,7 @@
         hash: `#${newComment.slug}`,
       });
     } catch (error) {
-      console.log(error);
+      console.warn(error);
     }
   };
 

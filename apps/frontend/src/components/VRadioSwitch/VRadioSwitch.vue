@@ -9,6 +9,7 @@
 </script>
 
 <script lang="ts" setup>
+  /* eslint-disable import-x/first */
   import { v4 as uuidv4 } from 'uuid';
 
   defineProps<{

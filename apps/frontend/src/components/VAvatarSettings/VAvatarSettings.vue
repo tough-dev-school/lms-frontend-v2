@@ -67,9 +67,9 @@
         data-testid="save"
         :disabled="isSaveButtonDisabled"
         :loading="isUpdatePending"
-        @click="saveProfile"
-        >{{ isUpdatePending ? 'Сохраняется...' : 'Сохранить' }}</VButton
-      >
+        @click="saveProfile">
+        {{ isUpdatePending ? 'Сохраняется...' : 'Сохранить' }}
+      </VButton>
     </template>
   </VCard>
 </template>

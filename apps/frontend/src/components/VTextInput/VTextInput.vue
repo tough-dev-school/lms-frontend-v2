@@ -18,7 +18,7 @@
     label?: string;
     tip?: string;
     error?: boolean | string;
-    modelValue: string;
+    modelValue?: string;
     type?: AllowedTags;
   }
 
@@ -34,8 +34,8 @@
     'update:modelValue': [value: string];
   }>();
 
-  const handleInput = (e: Event) => {
-    const value = (e.target as HTMLInputElement).value;
+  const handleInput = (event: Event) => {
+    const value = (event.target as HTMLInputElement).value;
     emit('update:modelValue', value);
   };
 </script>

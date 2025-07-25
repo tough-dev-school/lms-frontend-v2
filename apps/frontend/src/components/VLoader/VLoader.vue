@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-  interface PropTypes {
+  interface Props {
     width?: string;
     height?: string;
   }
 
-  withDefaults(defineProps<PropTypes>(), {
+  withDefaults(defineProps<Props>(), {
     width: '2.5em',
     height: '2.5em',
   });

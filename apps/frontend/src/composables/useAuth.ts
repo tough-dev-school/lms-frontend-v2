@@ -2,9 +2,9 @@ import type { AuthToken } from '@/types';
 import { computed } from 'vue';
 import { createGlobalState, useStorage } from '@vueuse/core';
 
-type AuthStoreState = {
+interface AuthStoreState {
   token: AuthToken | undefined;
-};
+}
 
 export const useAuth = createGlobalState(() => {
   const storage = useStorage<AuthStoreState>('auth', {

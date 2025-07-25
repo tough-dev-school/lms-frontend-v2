@@ -24,6 +24,7 @@
 </script>
 
 <script lang="ts" setup>
+  /* eslint-disable import-x/first */
   import { computed, watch, ref, onMounted } from 'vue';
   import VReaction from './components/VReaction/VReaction.vue';
   import { groupBy, debounce } from 'lodash-es';
@@ -38,7 +39,6 @@
   const emit = defineEmits<{
     add: [emoji: ReactionEmoji, slug: string];
     remove: [reactionId: string];
-    close: [];
   }>();
 
   const { data: user } = useUserQuery();
@@ -67,7 +67,7 @@
 
     // Reaction that is set can't be disabled
     if (
-      reactions.find((reaction) => reaction.author.uuid === user.value?.uuid)
+      reactions.some((reaction) => reaction.author.uuid === user.value?.uuid)
     ) {
       return false;
     }

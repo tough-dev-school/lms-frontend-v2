@@ -1,8 +1,7 @@
 <script lang="ts" setup>
   import VCard from '@/components/VCard/VCard.vue';
-  import VRadioSwitch, {
-    type RadioOption,
-  } from '@/components/VRadioSwitch/VRadioSwitch.vue';
+  import VRadioSwitch from '@/components/VRadioSwitch/VRadioSwitch.vue';
+  import type { RadioOption } from '@/components/VRadioSwitch/VRadioSwitch.vue';
   import { MoonFilledIcon, DevicesIcon, SunFilledIcon } from 'vue-tabler-icons';
   import { useColorMode } from '@vueuse/core';
 

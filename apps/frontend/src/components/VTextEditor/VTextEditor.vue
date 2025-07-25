@@ -20,7 +20,7 @@
   import { useHomeworkAnswerSendImageMutation } from '@/query';
 
   export interface Props {
-    modelValue: string;
+    modelValue?: string;
     placeholder?: string;
   }
 
@@ -40,9 +40,9 @@
 
   const isMetaPressed = useKeyModifier('Meta');
 
-  onKeyDown('Enter', (e) => {
+  onKeyDown('Enter', (event) => {
     if (isMetaPressed.value && focused.value) {
-      e.preventDefault();
+      event.preventDefault();
       emit('send');
     }
   });
@@ -71,6 +71,7 @@
           isImageLoading.value = true;
           const file = event.dataTransfer.files[0];
 
+          // eslint-disable-next-line promise/catch-or-return
           sendImage(file).then(({ image }) => {
             const { schema } = view.state;
             const coordinates = view.posAtCoords({
