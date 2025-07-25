@@ -1,8 +1,15 @@
-import { defineConfig } from 'eslint-config-fans';
+import { defineConfig, GLOB_SRC_EXT } from 'eslint-config-fans';
 
-export default defineConfig({
-  // Enable features based on your project
-  typescript: true,
-  vue: true,
-  prettier: true,
-});
+export default defineConfig(
+  {
+    typescript: true,
+    vue: true,
+    prettier: true,
+  },
+  {
+    files: [GLOB_SRC_EXT],
+    rules: {
+      'prettier/prettier': ['warn', { usePrettierrc: true }],
+    },
+  },
+);
