@@ -91,16 +91,19 @@
     <VLoggedLayout
       :title="notionTitle"
       :show-title="false"
-      :breadcrumbs="breadcrumbs">
+      :breadcrumbs="breadcrumbs"
+    >
       <template v-if="material">
         <VCard
-          class="pt-32 bg-white dark:bg-dark-black p-8 phone:p-24 rounded-16 shadow">
+          class="pt-32 bg-white dark:bg-dark-black p-8 phone:p-24 rounded-16 shadow"
+        >
           <VNotionRenderer :material-id="materialId" :block-map="material" />
         </VCard>
       </template>
       <div
         v-else-if="!material"
-        class="center flex max-w-[400px] flex-col text-center">
+        class="center flex max-w-[400px] flex-col text-center"
+      >
         <p>Материал не найден :(</p>
         <p>
           Если кажется что здесь какая-то ошибка напишите
@@ -111,9 +114,9 @@
           <a
             class="link"
             href="mailto:
-    support@tough-dev.school">
-            support@tough-dev.school</a
+    support@tough-dev.school"
           >
+            support@tough-dev.school</a>
         </p>
         <VButton appearance="link" @click="router.push({ name: 'home' })">
           На главную

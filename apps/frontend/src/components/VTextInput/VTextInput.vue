@@ -38,26 +38,29 @@
       v-if="$slots.label || label"
       class="mb-8"
       :class="{ 'text-red': error }"
-      data-testid="label">
+      data-testid="label"
+    >
       <slot name="label">
         {{ label }}
       </slot>
     </div>
     <input
-      :type="type"
       v-bind="$attrs"
+      v-model="model"
+      :type="type"
       class="leading-1.5 block h-module w-full rounded-8 border bg-white p-module text-black placeholder:text-gray focus:border-blue focus:outline-none border-white"
       :class="{
         'border-red': error,
       }"
       data-testid="input"
-      v-model="model" />
+    >
     <div v-if="tip || error" class="mt-4">
       <p v-if="tip" data-testid="tip" class="text-sub text-gray">{{ tip }}</p>
       <p
         v-if="error && error !== true"
         data-testid="error"
-        class="text-sub text-red">
+        class="text-sub text-red"
+      >
         {{ error }}
       </p>
     </div>

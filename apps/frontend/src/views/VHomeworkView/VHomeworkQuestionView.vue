@@ -73,7 +73,8 @@
   <VLoggedLayout
     v-if="!(isQuestionLoading && isLessonsLoading) && question && lesson"
     :breadcrumbs="breadcrumbs"
-    :title="question.name">
+    :title="question.name"
+  >
     <template #pill>
       <VPillHomework v-if="lesson?.homework" :stats="lesson?.homework" />
     </template>
@@ -82,7 +83,8 @@
       <VCreateAnswer
         v-model="draft"
         :is-pending="isCreateAnswerPending"
-        @send="handleCreateAnswer" />
+        @send="handleCreateAnswer"
+      />
     </section>
   </VLoggedLayout>
   <VLoadingView v-else />

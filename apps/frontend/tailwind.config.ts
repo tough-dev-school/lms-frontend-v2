@@ -1,7 +1,5 @@
 const spacing = (base: number, limit: number, unit = 'px') => {
-  const output: {
-    [key: string]: string;
-  } = {};
+  const output: Record<string, string> = {};
   let n = 1;
   let value: number;
 

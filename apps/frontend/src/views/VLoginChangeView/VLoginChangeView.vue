@@ -36,6 +36,7 @@
     <VPasswordResetForm
       title="Сброс пароля"
       :is-pending="isPending"
-      @save="handleSave" />
+      @save="handleSave"
+    />
   </VPublicLayout>
 </template>

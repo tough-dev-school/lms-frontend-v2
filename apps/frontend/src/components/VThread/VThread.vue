@@ -101,7 +101,8 @@
     <VExistingAnswer
       v-else
       :answer-id="answer.slug"
-      @after-create="handleMounted" />
+      @after-create="handleMounted"
+    />
     <button class="text-sm link" @click="replyMode = !replyMode">
       {{ replyMode ? 'Отменить' : 'Ответить' }}
     </button>
@@ -110,7 +111,8 @@
         v-show="replyMode"
         v-model="commentText"
         :is-pending="isCreateCommentPending"
-        @send="handleCreateComment" />
+        @send="handleCreateComment"
+      />
     </div>
   </div>
   <div v-if="answer.descendants.length > 0" class="thread-ruler mt-32">
@@ -118,7 +120,8 @@
       v-for="descendant in answer.descendants"
       :key="descendant.slug"
       :answer-id="descendant.slug"
-      @update="(slug) => handleUpdate(slug)" />
+      @update="(slug) => handleUpdate(slug)"
+    />
   </div>
 </template>
 

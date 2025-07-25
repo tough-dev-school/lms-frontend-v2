@@ -55,7 +55,8 @@
   <VLoggedLayout
     v-if="!(isStudiesLoading || isModuleLoading || isLessonsLoading)"
     :title="moduleName"
-    :breadcrumbs="breadcrumbs">
+    :breadcrumbs="breadcrumbs"
+  >
     <VHtmlContent v-if="moduleText" :content="moduleText" />
     <div class="VLessonsView gap-32 flex flex-col">
       <div v-if="lessons && lessons.length > 0" class="VLessonsView__Layout">
@@ -63,7 +64,8 @@
           v-for="lesson in lessons"
           :key="lesson.id"
           class="VLessonsView__Item"
-          :lesson="lesson" />
+          :lesson="lesson"
+        />
       </div>
       <p v-else data-testid="empty" class="mb-16 text-center">
         Нет доступных уроков.

@@ -25,11 +25,13 @@
     <div class="flex w-full items-center justify-center bg-black">
       <div class="pb-[40%]" />
       <div
-        class="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center">
+        class="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center"
+      >
         <VHeading
           tag="div"
           class="text-center text-h1 text-white"
-          data-testid="auto-cover">
+          data-testid="auto-cover"
+        >
           {{ clearName }}
         </VHeading>
       </div>
@@ -37,7 +39,8 @@
         v-if="image"
         :src="image"
         class="absolute top-0 left-0 right-0 h-full w-full object-fill"
-        data-testid="image-cover" />
+        data-testid="image-cover"
+      >
     </div>
   </div>
 </template>
