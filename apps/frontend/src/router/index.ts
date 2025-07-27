@@ -108,6 +108,9 @@ export const routes = [
     props: (route: RouteLocationNormalized) => ({
       materialId: route.params.materialId as string,
     }),
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: '/homework/:questionId',
@@ -117,6 +120,9 @@ export const routes = [
       questionId: route.params.questionId as string,
       answerId: route.query.answerId as string | undefined,
     }),
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: '/homework/answers/:answerId/',
@@ -134,6 +140,9 @@ export const routes = [
       },
     ],
     component: () => import('@/views/VLoadingView/VLoadingView.vue'),
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: '/homework/questions/:questionId',
@@ -147,6 +156,9 @@ export const routes = [
         };
       },
     ],
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: '/homework/question-admin/:questionId',
@@ -160,11 +172,17 @@ export const routes = [
         };
       },
     ],
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: '/certificates',
     name: 'certificates',
     component: () => import('@/views/VCertificatesView/VCertificatesView.vue'),
+    meta: {
+      requiresAuth: true,
+    },
   },
 ];
 
