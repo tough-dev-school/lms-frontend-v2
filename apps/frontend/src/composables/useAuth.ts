@@ -1,6 +1,7 @@
 import { computed, watch } from 'vue';
 import { createGlobalState, useStorage } from '@vueuse/core';
 import { useRouter } from 'vue-router';
+import { AllowMeta } from '@/router';
 
 interface AuthStoreState {
   token: string | undefined;
@@ -22,7 +23,10 @@ export const useAuth = createGlobalState(() => {
 
   watch(token, (value) => {
     if (!router) return; // We need this because useAuth may be called before router is initialized
-    if (value === undefined && router.currentRoute.value.meta.requiresAuth) {
+    if (
+      value === undefined &&
+      router.currentRoute.value.meta.allow === AllowMeta.Authorized
+    ) {
       router.push({ name: 'login' });
     }
   });

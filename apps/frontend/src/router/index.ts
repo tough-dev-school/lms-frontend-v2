@@ -7,13 +7,19 @@ import { useQueryClient } from '@tanstack/vue-query';
 import { baseQueryKey, fetchHomeworkAnswer } from '@/query';
 import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
 
+export enum AllowMeta {
+  Authorized = 'authorized',
+  Unauthorized = 'unauthorized',
+  Everyone = 'everyone',
+}
+
 export const routes = [
   {
     path: '/',
     name: 'home',
     component: () => import('@/views/VCoursesView/VCoursesView.vue'),
     meta: {
-      requiresAuth: true,
+      allow: AllowMeta.Authorized,
     },
   },
   {
@@ -21,7 +27,7 @@ export const routes = [
     name: 'settings',
     component: () => import('@/views/VSettingsView/VSettingsView.vue'),
     meta: {
-      requiresAuth: true,
+      allow: AllowMeta.Authorized,
     },
   },
   {
@@ -32,7 +38,7 @@ export const routes = [
       courseId: Number.parseInt(route.params.courseId as string),
     }),
     meta: {
-      requiresAuth: true,
+      allow: AllowMeta.Authorized,
     },
   },
   {
@@ -44,7 +50,7 @@ export const routes = [
       moduleId: Number.parseInt(route.params.moduleId as string),
     }),
     meta: {
-      requiresAuth: true,
+      allow: AllowMeta.Authorized,
     },
   },
   {
@@ -52,7 +58,7 @@ export const routes = [
     name: 'login',
     component: () => import('@/views/VLoginView/VLoginView.vue'),
     meta: {
-      requiresAuth: false,
+      allow: AllowMeta.Unauthorized,
     },
   },
   {
@@ -63,7 +69,7 @@ export const routes = [
       email: route.query.email as string | undefined,
     }),
     meta: {
-      requiresAuth: false,
+      allow: AllowMeta.Unauthorized,
     },
   },
   {
@@ -71,7 +77,7 @@ export const routes = [
     name: 'login-reset',
     component: () => import('@/views/VLoginResetView/VLoginResetView.vue'),
     meta: {
-      requiresAuth: false,
+      allow: AllowMeta.Unauthorized,
     },
   },
   {
@@ -83,7 +89,7 @@ export const routes = [
       token: route.params.token as string,
     }),
     meta: {
-      requiresAuth: false,
+      allow: AllowMeta.Unauthorized,
     },
   },
   {
@@ -92,7 +98,7 @@ export const routes = [
     component: () => import('@/views/VLoadingView/VLoadingView.vue'),
     beforeEnter: [loginByToken],
     meta: {
-      requiresAuth: false,
+      allow: AllowMeta.Unauthorized,
     },
   },
   {
@@ -100,6 +106,9 @@ export const routes = [
     name: 'auth-as',
     component: () => import('@/views/VLoadingView/VLoadingView.vue'),
     beforeEnter: [loginById],
+    meta: {
+      allow: AllowMeta.Everyone,
+    },
   },
   {
     path: '/materials/:materialId',
@@ -109,7 +118,7 @@ export const routes = [
       materialId: route.params.materialId as string,
     }),
     meta: {
-      requiresAuth: true,
+      allow: AllowMeta.Authorized,
     },
   },
   {
@@ -121,7 +130,7 @@ export const routes = [
       answerId: route.query.answerId as string | undefined,
     }),
     meta: {
-      requiresAuth: true,
+      allow: AllowMeta.Authorized,
     },
   },
   {
@@ -141,7 +150,7 @@ export const routes = [
     ],
     component: () => import('@/views/VLoadingView/VLoadingView.vue'),
     meta: {
-      requiresAuth: true,
+      allow: AllowMeta.Authorized,
     },
   },
   {
@@ -157,7 +166,7 @@ export const routes = [
       },
     ],
     meta: {
-      requiresAuth: true,
+      allow: AllowMeta.Authorized,
     },
   },
   {
@@ -173,7 +182,7 @@ export const routes = [
       },
     ],
     meta: {
-      requiresAuth: true,
+      allow: AllowMeta.Authorized,
     },
   },
   {
@@ -181,7 +190,7 @@ export const routes = [
     name: 'certificates',
     component: () => import('@/views/VCertificatesView/VCertificatesView.vue'),
     meta: {
-      requiresAuth: true,
+      allow: AllowMeta.Authorized,
     },
   },
 ];
@@ -216,17 +225,21 @@ router.beforeEach(
     // Check authentication
     if (token.value) {
       // Redirect authorized users away from auth routes
-      if (to.meta.requiresAuth === false) {
+      if (to.meta.allow === AllowMeta.Unauthorized) {
         return { name: 'home' };
       }
     } else {
       // Allow access to routes that don't require auth
-      if (to.meta.requiresAuth === false) {
+      if (
+        [AllowMeta.Unauthorized, AllowMeta.Everyone].includes(
+          to.meta.allow as AllowMeta,
+        )
+      ) {
         return;
       }
 
       // Block access to protected routes
-      if (to.meta.requiresAuth) {
+      if (to.meta.allow === AllowMeta.Authorized) {
         return {
           name: 'login',
           query: { redirectTo: encodeURIComponent(to.fullPath) },
