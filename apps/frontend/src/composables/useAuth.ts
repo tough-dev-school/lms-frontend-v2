@@ -1,7 +1,7 @@
 import { computed, watch } from 'vue';
 import { createGlobalState, useStorage } from '@vueuse/core';
 import { useRouter } from 'vue-router';
-import { AllowMeta } from '@/router';
+import { AllowMeta } from '@/types';
 
 interface AuthStoreState {
   token: string | undefined;

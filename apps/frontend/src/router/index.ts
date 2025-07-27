@@ -6,12 +6,7 @@ import { loginById } from '@/router/loginById';
 import { useQueryClient } from '@tanstack/vue-query';
 import { baseQueryKey, fetchHomeworkAnswer } from '@/query';
 import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
-
-export enum AllowMeta {
-  Authorized = 'authorized',
-  Unauthorized = 'unauthorized',
-  Everyone = 'everyone',
-}
+import { AllowMeta } from '@/types';
 
 export const routes = [
   {
