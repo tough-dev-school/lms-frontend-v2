@@ -7,12 +7,11 @@
   import {
     useHomeworkAnswerCreateMutation,
     useHomeworkQuestionQuery,
-    useLessonsQuery,
+    useLessonQuery,
   } from '@/query';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import VPillHomework from '@/components/VPillHomework/VPillHomework.vue';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
-  import { computed } from 'vue';
   import { useHomeworkBreadcrumbs } from './useHomeworkBreadcrumbs';
 
   interface Props {
@@ -27,15 +26,9 @@
   const { data: question, isLoading: isQuestionLoading } =
     useHomeworkQuestionQuery(() => props.questionId);
 
-  const { data: lessons, isLoading: isLessonsLoading } = useLessonsQuery(
-    question.value?.breadcrumbs.module.id,
+  const { data: lesson, isLoading: isLessonLoading } = useLessonQuery(
+    () => question.value?.breadcrumbs.lesson?.id,
   );
-
-  const lesson = computed(() => {
-    return lessons.value?.find(
-      (l) => l.id === question.value?.breadcrumbs.lesson?.id,
-    );
-  });
 
   const draft = useStorage(
     ['draft', props.questionId].filter(Boolean).join('-'),
@@ -70,7 +63,7 @@
 
 <template>
   <VLoggedLayout
-    v-if="!(isQuestionLoading && isLessonsLoading) && question && lesson"
+    v-if="!(isQuestionLoading && isLessonLoading) && question && lesson"
     :breadcrumbs="breadcrumbs"
     :title="question.name">
     <template #pill>
