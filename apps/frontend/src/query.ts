@@ -33,6 +33,7 @@ export const studiesKeys = {
 export const lmsKeys = {
   all: () => [...baseQueryKey(), 'lms'],
   lessons: () => [...lmsKeys.all(), 'lessons'],
+  lesson: (lessonId?: number) => [...lmsKeys.lessons(), { lessonId }],
   moduleLessons: (moduleId?: number) => [...lmsKeys.lessons(), { moduleId }],
   modules: () => [...lmsKeys.all(), 'modules'],
   module: (moduleId: number) => [...lmsKeys.modules(), { moduleId }],
@@ -112,6 +113,27 @@ export const useLessonsQuery = (
 
   return useQuery(options);
 };
+
+const lessonOptions = (lessonId?: number) => {
+  return {
+    queryKey: lmsKeys.lesson(lessonId),
+    queryFn: async () => lessonId && (await api.lmsLessonsRetrieve(lessonId)),
+    enabled: lessonId !== undefined,
+  };
+};
+
+export const useLessonQuery = (
+  lessonId: MaybeRefOrGetter<number | undefined>,
+) => {
+  const options = computed(() => lessonOptions(toValue(lessonId)));
+
+  return useQuery(options);
+};
+
+export const fetchLesson = async (
+  queryClient: QueryClient,
+  { lessonId }: { lessonId: number },
+) => queryClient.fetchQuery(lessonOptions(lessonId));
 
 const modulesOptions = (courseId: number | undefined) => {
   return {

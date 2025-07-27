@@ -12,10 +12,10 @@
     useHomeworkCrosschecksQuery,
     useHomeworkAnswerCreateMutation,
     useHomeworkQuestionQuery,
-    useLessonsQuery,
     useHomeworkAnswerQuery,
     useUserQuery,
     populateAnswersCacheFromDescendants,
+    useLessonQuery,
   } from '@/query';
   import { computed, watch } from 'vue';
   import { useRouter } from 'vue-router';
@@ -39,15 +39,9 @@
     () => props.answerId,
   );
 
-  const { data: lessons, isLoading: isLessonsLoading } = useLessonsQuery(
-    question.value?.breadcrumbs.module.id,
+  const { data: lesson, isLoading: isLessonLoading } = useLessonQuery(
+    () => question.value?.breadcrumbs.lesson?.id,
   );
-
-  const lesson = computed(() => {
-    return lessons.value?.find(
-      (l) => l.id === question.value?.breadcrumbs.lesson?.id,
-    );
-  });
 
   const { data: user, isLoading: isUserLoading } = useUserQuery();
 
@@ -162,7 +156,7 @@
       !(
         isQuestionLoading &&
         isAnswerLoading &&
-        isLessonsLoading &&
+        isLessonLoading &&
         isUserLoading
       ) &&
       question &&
