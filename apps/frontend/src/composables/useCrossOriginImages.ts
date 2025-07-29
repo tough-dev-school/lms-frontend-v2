@@ -20,6 +20,8 @@ export function useCrossOriginImages() {
             const images = node.querySelectorAll('img');
             for (const image of images) {
               image.crossOrigin = 'anonymous';
+              // Assume all images come from our CDN which supports HTTPS and CORS.
+              image.src = image.src.replace('http:', 'https:');
             }
           }
         }
