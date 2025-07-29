@@ -191,7 +191,7 @@
       :crosschecks="crosschecks" />
     <section class="flex flex-col gap-24">
       <VHeading tag="h2">
-        {{ isOwnAnswer ? 'Коментарии вашей работы' : 'Коментарии' }}
+        {{ isOwnAnswer ? 'Комментарии вашей работы' : 'Комментарии' }}
       </VHeading>
       <p v-if="isOwnAnswer && feedbackMessage">
         {{ feedbackMessage }}
