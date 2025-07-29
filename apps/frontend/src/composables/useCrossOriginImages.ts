@@ -6,6 +6,8 @@ import { onMounted } from 'vue';
  * See https://whatwebcando.today/articles/opaque-responses-service-worker/
  */
 export function useCrossOriginImages() {
+  if (import.meta.env.DEV) return;
+
   onMounted(() => {
     useMutationObserver(
       document.querySelector('body'),
