@@ -22,7 +22,7 @@
       <img
         data-testid="image"
         :src="certificate.image"
-        :alt="certificate.course.name" />
+        :alt="certificate.course.product_name" />
       <figcaption class="text-center" data-testid="label">
         {{ localeLabel[certificate.language] }}
       </figcaption>

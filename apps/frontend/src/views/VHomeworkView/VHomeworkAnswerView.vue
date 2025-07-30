@@ -191,12 +191,14 @@
       :crosschecks="crosschecks" />
     <section class="flex flex-col gap-24">
       <VHeading tag="h2">
-        {{ isOwnAnswer ? 'Коментарии вашей работы' : 'Коментарии' }}
+        {{ isOwnAnswer ? 'Комментарии вашей работы' : 'Комментарии' }}
       </VHeading>
       <p v-if="isOwnAnswer && feedbackMessage">
         {{ feedbackMessage }}
       </p>
-      <VFeedbackGuide />
+      <VFeedbackGuide
+        v-if="question.course?.homework_check_recommendations"
+        :guide="question.course.homework_check_recommendations" />
 
       <VCreateAnswer
         v-model="commentText"

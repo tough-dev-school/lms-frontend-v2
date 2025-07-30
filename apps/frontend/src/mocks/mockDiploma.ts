@@ -9,7 +9,7 @@ import { mockUserSafe, STATIC_AUTHOR_1 } from './mockUserSafe';
 export const mockDiplomaData = (): Diploma => {
   return {
     course: {
-      name: faker.commerce.productName(),
+      product_name: faker.commerce.productName(),
     },
     slug: faker.string.uuid(),
     language: mockLocale(),
@@ -24,7 +24,7 @@ export const mockDiplomaSet = (payload: Diploma): Diploma[] => {
     return {
       ...payload,
       language: locale,
-      course: { name: payload.course.name },
+      course: { product_name: payload.course.product_name },
     };
   });
 };
@@ -32,7 +32,7 @@ export const mockDiplomaSet = (payload: Diploma): Diploma[] => {
 export const STATIC_DIPLOMA_1: Diploma = {
   ...mockDiplomaData(),
   course: {
-    name: 'Amazing Course',
+    product_name: 'Amazing Course',
   },
   student: STATIC_AUTHOR_1,
 };
@@ -40,7 +40,7 @@ export const STATIC_DIPLOMA_1: Diploma = {
 export const STATIC_DIPLOMA_2: Diploma = {
   ...mockDiplomaData(),
   course: {
-    name: 'Cool Course',
+    product_name: 'Cool Course',
   },
   student: STATIC_AUTHOR_1,
 };
@@ -48,7 +48,7 @@ export const STATIC_DIPLOMA_2: Diploma = {
 export const STATIC_DIPLOMA_3: Diploma = {
   ...mockDiplomaData(),
   course: {
-    name: 'Pro Course',
+    product_name: 'Pro Course',
   },
   student: STATIC_AUTHOR_1,
 };
