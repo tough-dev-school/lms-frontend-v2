@@ -57,16 +57,19 @@ describe('VCertificatesView', () => {
 
   test('has a card for each course', () => {
     expect(getCertificateCardsWrappers()).toHaveLength(
-      uniq(mockDiplomasData.map((diploma) => diploma.course.name)).length,
+      uniq(mockDiplomasData.map((diploma) => diploma.course.product_name))
+        .length,
     );
   });
 
   test('passes props to card', async () => {
-    const courseName = mockDiplomasData[0].course.name;
+    const courseName = mockDiplomasData[0].course.product_name;
 
     expect(getCertificateCardWrapper().props().course).toBe(courseName);
     expect(getCertificateCardWrapper().props().certificates).toStrictEqual(
-      mockDiplomasData.filter((diploma) => diploma.course.name === courseName),
+      mockDiplomasData.filter(
+        (diploma) => diploma.course.product_name === courseName,
+      ),
     );
   });
 

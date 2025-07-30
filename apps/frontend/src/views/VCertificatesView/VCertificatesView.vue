@@ -9,7 +9,10 @@
   const { data: diplomas, isLoading } = useDiplomasQuery();
 
   const groupedDiplomas = computed(() => {
-    const groups = groupBy(diplomas.value, (diploma) => diploma.course.name);
+    const groups = groupBy(
+      diplomas.value,
+      (diploma) => diploma.course.product_name,
+    );
 
     return Object.keys(groups).map((key) => ({
       course: key,

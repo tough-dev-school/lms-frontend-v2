@@ -21,7 +21,7 @@ export const Default = {
   render: Template,
 
   args: {
-    course: diplomas[0].course.name,
+    course: diplomas[0].course.product_name,
     certificates: diplomas.map((diploma) => {
       diploma.image = 'https://picsum.photos/1480/1048';
       return diploma;

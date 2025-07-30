@@ -12,6 +12,7 @@ export const mockLMSCourse = (
     chat: faker.internet.url(),
     calendar_ios: faker.internet.url(),
     calendar_google: faker.internet.url(),
+    homework_check_recommendations: faker.lorem.words(3),
     ...payload,
   };
 };

@@ -9,7 +9,7 @@ import VCard from '@/components/VCard/VCard.vue';
 const diplomas = mockDiplomaSet(mockDiplomaData());
 
 const defaultProps = {
-  course: diplomas[0].course.name,
+  course: diplomas[0].course.product_name,
   certificates: diplomas,
 };
 
