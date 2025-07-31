@@ -1,5 +1,5 @@
 import { useMutationObserver } from '@vueuse/core';
-import { onMounted } from 'vue';
+import { onBeforeMount } from 'vue';
 
 /** Make all images cross-origin in order to avoid opaque responses that take up too much cache space
  *
@@ -8,7 +8,17 @@ import { onMounted } from 'vue';
 export function useCrossOriginImages() {
   if (import.meta.env.DEV) return;
 
-  onMounted(() => {
+  const enableCrossOriginImages = (root: HTMLElement) => {
+    const images = root.querySelectorAll('img');
+
+    for (const image of images) {
+      image.crossOrigin = 'anonymous';
+      // Assume all images come from our CDN which supports HTTPS and CORS.
+      image.src = image.src.replace('http:', 'https:');
+    }
+  };
+
+  onBeforeMount(() =>
     useMutationObserver(
       document.querySelector('body'),
       (mutations) => {
@@ -17,12 +27,7 @@ export function useCrossOriginImages() {
         ]);
         for (const node of addedNodes) {
           if (node instanceof HTMLElement) {
-            const images = node.querySelectorAll('img');
-            for (const image of images) {
-              image.crossOrigin = 'anonymous';
-              // Assume all images come from our CDN which supports HTTPS and CORS.
-              image.src = image.src.replace('http:', 'https:');
-            }
+            enableCrossOriginImages(node);
           }
         }
       },
@@ -30,6 +35,6 @@ export function useCrossOriginImages() {
         childList: true,
         subtree: true,
       },
-    );
-  });
+    ),
+  );
 }
