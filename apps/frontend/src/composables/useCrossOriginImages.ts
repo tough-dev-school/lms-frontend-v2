@@ -14,7 +14,10 @@ export function useCrossOriginImages() {
     for (const image of images) {
       image.crossOrigin = 'anonymous';
       // Assume all images come from our CDN which supports HTTPS and CORS.
-      image.src = image.src.replace('http:', 'https:');
+      const src = image.src.replace('http:', 'https:');
+      // Src should come after crossorigin: https://github.com/vuejs/core/issues/4680
+      image.removeAttribute('src');
+      image.src = src;
     }
   };
 
