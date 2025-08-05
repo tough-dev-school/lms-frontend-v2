@@ -16,7 +16,8 @@
           <img
             v-if="f.bookmark_icon"
             :alt="getTextContent(title || properties.link)"
-            :src="f.bookmark_icon" />
+            :src="f.bookmark_icon"
+            crossorigin="anonymous" />
           <div>
             <NotionTextRenderer :text="properties.link" v-bind="pass" />
           </div>
@@ -25,7 +26,8 @@
       <div v-if="f.bookmark_cover" class="notion-bookmark-image">
         <img
           :alt="getTextContent(title || properties.link)"
-          :src="f.bookmark_cover" />
+          :src="f.bookmark_cover"
+          crossorigin="anonymous" />
       </div>
     </a>
   </div>
