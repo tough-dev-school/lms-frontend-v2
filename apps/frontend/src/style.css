@@ -3,11 +3,47 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'PT Root UI';
+  font-family: 'PT Root UI VF';
   src:
     url('assets/fonts/PT-Root-UI_VF.woff2') format('woff2'),
     url('assets/fonts/PT-Root-UI_VF.woff') format('woff');
   font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PT Root UI';
+  src:
+    url('assets/fonts/PT-Root-UI_Regular.woff2') format('woff2'),
+    url('assets/fonts/PT-Root-UI_Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PT Root UI';
+  src:
+    url('assets/fonts/PT-Root-UI_Medium.woff2') format('woff2'),
+    url('assets/fonts/PT-Root-UI_Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PT Root UI';
+  src:
+    url('assets/fonts/PT-Root-UI_Light.woff2') format('woff2'),
+    url('assets/fonts/PT-Root-UI_Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PT Root UI';
+  src:
+    url('assets/fonts/PT-Root-UI_Bold.woff2') format('woff2'),
+    url('assets/fonts/PT-Root-UI_Bold.woff') format('woff');
+  font-weight: 700;
   font-style: normal;
 }
 

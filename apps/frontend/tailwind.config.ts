@@ -15,14 +15,16 @@ const spacing = (base: number, limit: number, unit = 'px') => {
   return output;
 };
 
+const PT_ROOT_UI_FONT = ['PT Root UI VF', 'PT Root UI'];
+
 /** @type {import('tailwindcss').Config} */
 const config: Config = {
   darkMode: 'class',
   content: ['./index.html', './src/**/*.{js,ts,vue,jsx,tsx}'],
   theme: {
     fontFamily: {
-      display: ['Inter', 'PT Root UI', 'sans-serif'],
-      body: ['PT Root UI', 'sans-serif'],
+      display: ['Inter', ...PT_ROOT_UI_FONT, 'sans-serif'],
+      body: [...PT_ROOT_UI_FONT, 'sans-serif'],
     },
     screens: {
       se: '370px',
