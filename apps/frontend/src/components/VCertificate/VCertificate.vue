@@ -1,5 +1,6 @@
 <script lang="ts" setup>
   import type { Diploma } from '@/api/generated-api';
+  import { getCrossOriginImgAttrs } from '@/utils/getCrossOriginImageAttributes';
   import { computed } from 'vue';
 
   const props = defineProps<{
@@ -21,8 +22,8 @@
     <figure>
       <img
         data-testid="image"
-        :src="certificate.image"
-        :alt="certificate.course.product_name" />
+        :alt="certificate.course.product_name"
+        v-bind="getCrossOriginImgAttrs(certificate.image)" />
       <figcaption class="text-center" data-testid="label">
         {{ localeLabel[certificate.language] }}
       </figcaption>

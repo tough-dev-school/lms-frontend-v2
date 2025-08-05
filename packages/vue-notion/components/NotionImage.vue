@@ -4,7 +4,11 @@
     :href="src"
     :data-lightbox="contentId"
     :style="f.block_aspect_ratio ? aspectRatioStyle : basicStyle">
-    <img class="notion-image-inset" :alt="alt || 'Notion image'" :src="src" />
+    <img
+      class="notion-image-inset"
+      :alt="alt || 'Notion image'"
+      :src="src"
+      crossorigin="anonymous" />
   </a>
 </template>
 
