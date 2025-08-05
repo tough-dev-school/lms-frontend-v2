@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'PT Root UI';
+  src:
+    url('assets/fonts/PT-Root-UI_VF.woff2') format('woff2'),
+    url('assets/fonts/PT-Root-UI_VF.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
   --module: 52px;
 }

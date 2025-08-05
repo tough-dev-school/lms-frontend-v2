@@ -1,4 +1,3 @@
-import '../src/fonts.css';
 import '../src/style.css';
 import { setup } from '@storybook/vue3-vite';
 import FloatingVue from 'floating-vue';
