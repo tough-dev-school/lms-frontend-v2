@@ -2,6 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'PT Root UI VF';
+  src:
+    url('assets/fonts/pt-root-ui_vf.woff2') format('woff2'),
+    url('assets/fonts/pt-root-ui_vf.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'PT Root UI';
+  src:
+    url('assets/fonts/pt-root-ui_regular.woff2') format('woff2'),
+    url('assets/fonts/pt-root-ui_regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PT Root UI';
+  src:
+    url('assets/fonts/pt-root-ui_medium.woff2') format('woff2'),
+    url('assets/fonts/pt-root-ui_medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PT Root UI';
+  src:
+    url('assets/fonts/pt-root-ui_light.woff2') format('woff2'),
+    url('assets/fonts/pt-root-ui_light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PT Root UI';
+  src:
+    url('assets/fonts/pt-root-ui_bold.woff2') format('woff2'),
+    url('assets/fonts/pt-root-ui_bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
 :root {
   --module: 52px;
 }
