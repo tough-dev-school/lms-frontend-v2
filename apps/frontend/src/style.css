@@ -7,8 +7,6 @@
   src:
     url('assets/fonts/pt-root-ui_vf.woff2') format('woff2'),
     url('assets/fonts/pt-root-ui_vf.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
 }
 
 @font-face {
