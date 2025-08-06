@@ -67,6 +67,16 @@
       return undefined;
     }
 
+    result.push({
+      name: notionTitle.value ?? '',
+      to: {
+        name: 'materials',
+        params: {
+          materialId: materialData.value.content.slug,
+        },
+      },
+    });
+
     return result;
   });
 
