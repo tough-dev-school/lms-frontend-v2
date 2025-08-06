@@ -15,7 +15,7 @@ const spacing = (base: number, limit: number, unit = 'px') => {
   return output;
 };
 
-const PT_ROOT_UI_FONT = ['PT Root UI VF', 'PT Root UI'];
+const PT_ROOT_UI_FONT = ['PT Root UI'];
 
 /** @type {import('tailwindcss').Config} */
 const config: Config = {
