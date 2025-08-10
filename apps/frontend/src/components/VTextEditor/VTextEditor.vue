@@ -178,7 +178,7 @@
     class="bg-white dark:bg-darkmode-layer2 px-16 rounded min-h-240 flex flex-col">
     <div
       v-if="editor"
-      class="flex items-center dark:text-white border-b border-lightgray dark:border-darkmode-border">
+      class="sticky top-0 z-10 bg-white dark:bg-darkmode-layer2 flex items-center dark:text-white border-b border-lightgray dark:border-darkmode-border">
       <button
         class="TextEditor__Button"
         :class="{
