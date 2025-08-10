@@ -15,28 +15,47 @@
     ListIcon,
     PhotoIcon,
   } from 'vue-tabler-icons';
-  import { onBeforeUnmount, watch, ref, useTemplateRef } from 'vue';
+  import { onBeforeUnmount, ref, useTemplateRef } from 'vue';
   import { onKeyDown, useKeyModifier, useFocusWithin } from '@vueuse/core';
   import VLoader from '@/components/VLoader/VLoader.vue';
   import { useHomeworkAnswerSendImageMutation } from '@/query';
 
-  export interface Props {
-    placeholder?: string;
-  }
+  const props = withDefaults(
+    defineProps<{
+      placeholder?: string;
+    }>(),
+    {
+      placeholder: '',
+    },
+  );
 
-  const props = withDefaults(defineProps<Props>(), {
-    placeholder: '',
-  });
+  /**
+   * IO of text in LMS is quite complicated:
+   *
+   * - TipTap takes JSON or HTML as input, but can output JSON, HTML, or Markdown
+   * - LMS takes Markdown as input, but can output Markdown or HTML
+   * - Users want to use Markdown
+   *
+   * So what we do:
+   * - Inputs
+   *   - HTML is used as input for TipTap
+   *   - Markdown is used as input for TipTap
+   * - Outputs
+   *   - HTML produced by tiptap is used to store state in memory
+   *   - Markdown produced by tiptap is used to be sent to LMS
+   */
 
-  const model = defineModel<string>({ required: true });
-  const markdown = defineModel<string>({ required: true });
+  const html = defineModel<string>('html', { required: true });
+  /**
+   * Setting this model is not used to set editor state
+   */
+  const markdown = defineModel<string>('markdown', { required: true });
 
   const currentEditor = useTemplateRef('currentEditor');
   const isImageLoading = ref(false);
   const { focused } = useFocusWithin(currentEditor);
 
   const emit = defineEmits<{
-    'update:modelValue': [value: string];
     send: [];
   }>();
 
@@ -60,7 +79,7 @@
   ];
 
   const editor = new Editor({
-    content: model.value,
+    content: html.value,
     extensions,
     editorProps: {
       handleDrop: (view, event, slice, moved) => {
@@ -96,26 +115,13 @@
       },
     },
     onUpdate: () => {
-      model.value = editor.getHTML();
+      html.value = editor.getHTML();
       markdown.value = renderToMarkdown({
         content: editor.state.doc,
         extensions,
       });
     },
   });
-
-  watch(
-    props,
-    (newProps) => {
-      const { modelValue } = newProps;
-      const isSame = editor.getHTML() === modelValue;
-
-      if (isSame) return;
-
-      editor.commands.setContent(modelValue, { emitUpdate: false });
-    },
-    { deep: true },
-  );
 
   const toggleHeading1 = () => {
     editor.chain().focus().toggleHeading({ level: 1 }).run();

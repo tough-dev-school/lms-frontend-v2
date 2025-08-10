@@ -51,7 +51,7 @@
   const { mutateAsync: createComment, isPending: isCreateCommentPending } =
     useHomeworkAnswerCreateMutation(queryClient);
 
-  const commentText = useStorage(
+  const html = useStorage(
     [
       'commentText',
       props.answer.question,
@@ -64,6 +64,9 @@
     localStorage,
   );
 
+  // We don't cache markdown as it's not used to set editor state
+  const markdown = ref('');
+
   const handleCreateComment = async () => {
     if (!props.answer) throw new Error('Answer not found');
 
@@ -71,10 +74,11 @@
       const newComment = await createComment({
         questionId: props.answer.question,
         parentId: props.answer.slug,
-        text: commentText.value,
+        textInMarkdown: markdown.value,
       });
 
-      commentText.value = '';
+      html.value = '';
+      markdown.value = '';
 
       replyMode.value = false;
 
@@ -107,7 +111,8 @@
     <div class="thread-ruler" :class="{ 'mt-16': replyMode }">
       <VCreateAnswer
         v-show="replyMode"
-        v-model="commentText"
+        v-model:html="html"
+        v-model:markdown="markdown"
         :is-pending="isCreateCommentPending"
         @send="handleCreateComment" />
     </div>
