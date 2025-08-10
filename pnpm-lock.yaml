@@ -47,6 +47,9 @@ importers:
       '@tiptap/starter-kit':
         specifier: ^3.1.0
         version: 3.1.0
+      '@tiptap/static-renderer':
+        specifier: ^3.1.0
+        version: 3.1.0(@tiptap/core@3.1.0(@tiptap/pm@3.1.0))(@tiptap/pm@3.1.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@tiptap/vue-3':
         specifier: ^3.1.0
         version: 3.1.0(@floating-ui/dom@1.1.1)(@tiptap/core@3.1.0(@tiptap/pm@3.1.0))(@tiptap/pm@3.1.0)(vue@3.5.17(typescript@5.8.3))
@@ -68,9 +71,6 @@ importers:
       minidenticons:
         specifier: ^4.2.1
         version: 4.2.1
-      turndown:
-        specifier: ^7.2.0
-        version: 7.2.0
       uuid:
         specifier: ^9.0.1
         version: 9.0.1
@@ -1669,9 +1669,6 @@ packages:
       '@types/react': '>=16'
       react: '>=16'
 
-  '@mixmark-io/domino@2.2.0':
-    resolution: {integrity: sha512-Y28PR25bHXUg88kCV7nivXrP2Nj2RueZ3/l/jdx6J9f8J4nsEGcgX0Qe6lt7Pa+J79+kPiJU3LguR6O/6zrLOw==}
-
   '@napi-rs/wasm-runtime@0.2.12':
     resolution: {integrity: sha512-ZVWUcfwY4E/yPitQJl481FjFo3K22D6qF0DuFH6Y/nbnE11GY5uguDxZMGXPQ8WQ0128MXQD7TnfHyK4oWoIJQ==}
 
@@ -2163,6 +2160,14 @@ packages:
 
   '@tiptap/starter-kit@3.1.0':
     resolution: {integrity: sha512-L+9WfA+XO4mwq4b0lEUr540q+jIENhZiVSNhOYdWlRyan+HCV60BkC8E/nBuqCk6tbM1jEqFQjVBqJWwjBsalQ==}
+
+  '@tiptap/static-renderer@3.1.0':
+    resolution: {integrity: sha512-un2IUUtLSAoFHFDJtGFJg72cJdhLHMFCeaQ+at8lsu8SG6cGDrqUJQCEMvy9auhsZa2g47GQpxyhAga+DpNssQ==}
+    peerDependencies:
+      '@tiptap/core': ^3.1.0
+      '@tiptap/pm': ^3.1.0
+      react: ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^17.0.0 || ^18.0.0 || ^19.0.0
 
   '@tiptap/vue-3@3.1.0':
     resolution: {integrity: sha512-tCZrxWNB074CrLPHH0ti5JRwjPprmy2nPaMOQ6oOOUWpHoHItp/hPjy01Gfwotyn9fEW4wJZcPsbHfVzSuZTIA==}
@@ -8170,9 +8175,6 @@ packages:
   tunnel-agent@0.6.0:
     resolution: {integrity: sha512-McnNiV1l8RYeY8tBgEpuodCC1mLUdbSN+CYBL7kJsJNInOP8UjDDEwdk6Mw60vdLLrr5NHKZhMAOSrR2NZuQ+w==}
 
-  turndown@7.2.0:
-    resolution: {integrity: sha512-eCZGBN4nNNqM9Owkv9HAtWRYfLA4h909E/WGAWWBpmB275ehNhZyk87/Tpvjbp0jjNl9XwCsbe6bm6CqFsgD+A==}
-
   type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
     engines: {node: '>= 0.8.0'}
@@ -10353,8 +10355,6 @@ snapshots:
       '@types/react': 18.3.11
       react: 18.2.0
 
-  '@mixmark-io/domino@2.2.0': {}
-
   '@napi-rs/wasm-runtime@0.2.12':
     dependencies:
       '@emnapi/core': 1.4.5
@@ -10874,6 +10874,13 @@ snapshots:
       '@tiptap/extension-underline': 3.1.0(@tiptap/core@3.1.0(@tiptap/pm@3.1.0))
       '@tiptap/extensions': 3.1.0(@tiptap/core@3.1.0(@tiptap/pm@3.1.0))(@tiptap/pm@3.1.0)
       '@tiptap/pm': 3.1.0
+
+  '@tiptap/static-renderer@3.1.0(@tiptap/core@3.1.0(@tiptap/pm@3.1.0))(@tiptap/pm@3.1.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+    dependencies:
+      '@tiptap/core': 3.1.0(@tiptap/pm@3.1.0)
+      '@tiptap/pm': 3.1.0
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
 
   '@tiptap/vue-3@3.1.0(@floating-ui/dom@1.1.1)(@tiptap/core@3.1.0(@tiptap/pm@3.1.0))(@tiptap/pm@3.1.0)(vue@3.5.17(typescript@5.8.3))':
     dependencies:
@@ -17765,10 +17772,6 @@ snapshots:
   tunnel-agent@0.6.0:
     dependencies:
       safe-buffer: 5.2.1
-
-  turndown@7.2.0:
-    dependencies:
-      '@mixmark-io/domino': 2.2.0
 
   type-check@0.4.0:
     dependencies:

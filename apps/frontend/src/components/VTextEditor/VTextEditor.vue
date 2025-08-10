@@ -1,8 +1,9 @@
 <script setup lang="ts">
   import { Placeholder } from '@tiptap/extensions';
-  import { EditorContent, Editor } from '@tiptap/vue-3';
+  import { Editor, EditorContent } from '@tiptap/vue-3';
   import StarterKit from '@tiptap/starter-kit';
   import Image from '@tiptap/extension-image';
+  import { renderToMarkdown } from '@tiptap/static-renderer/pm/markdown';
   import {
     BoldIcon,
     H1Icon,
@@ -20,14 +21,15 @@
   import { useHomeworkAnswerSendImageMutation } from '@/query';
 
   export interface Props {
-    modelValue?: string;
     placeholder?: string;
   }
 
   const props = withDefaults(defineProps<Props>(), {
-    modelValue: '',
     placeholder: '',
   });
+
+  const model = defineModel<string>({ required: true });
+  const markdown = defineModel<string>({ required: true });
 
   const currentEditor = useTemplateRef('currentEditor');
   const isImageLoading = ref(false);
@@ -49,15 +51,17 @@
 
   const { mutateAsync: sendImage } = useHomeworkAnswerSendImageMutation();
 
+  const extensions = [
+    StarterKit,
+    Placeholder.configure({
+      placeholder: props.placeholder,
+    }),
+    Image.configure({ inline: true }),
+  ];
+
   const editor = new Editor({
-    content: props.modelValue,
-    extensions: [
-      StarterKit,
-      Placeholder.configure({
-        placeholder: props.placeholder,
-      }),
-      Image.configure({ inline: true }),
-    ],
+    content: model.value,
+    extensions,
     editorProps: {
       handleDrop: (view, event, slice, moved) => {
         if (
@@ -92,8 +96,11 @@
       },
     },
     onUpdate: () => {
-      const html = editor.getHTML();
-      emit('update:modelValue', html);
+      model.value = editor.getHTML();
+      markdown.value = renderToMarkdown({
+        content: editor.state.doc,
+        extensions,
+      });
     },
   });
 
