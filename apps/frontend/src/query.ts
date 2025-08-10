@@ -15,7 +15,6 @@ import type {
   PasswordResetConfirm,
   PatchedUser,
 } from './api/generated-api';
-import htmlToMarkdown from './utils/htmlToMarkdown';
 import { ContentType } from './api/generated-api';
 import { useAuth } from './composables/useAuth';
 
@@ -384,16 +383,16 @@ export const useHomeworkCrosschecksQuery = (
 export const useHomeworkAnswerCreateMutation = (queryClient: QueryClient) => {
   return useMutation({
     mutationFn: async ({
-      text,
+      textInMarkdown,
       questionId,
       parentId,
     }: {
-      text: string;
+      textInMarkdown: string;
       questionId: string;
       parentId?: string;
     }) => {
       return await api.homeworkAnswersCreate({
-        text: htmlToMarkdown(text),
+        text: textInMarkdown,
         question: questionId,
         parent: parentId,
       });
@@ -416,13 +415,13 @@ export const useHomeworkAnswerUpdateMutation = (queryClient: QueryClient) => {
   return useMutation({
     mutationFn: async ({
       answerId,
-      text,
+      textInMarkdown,
     }: {
       answerId: string;
-      text: string;
+      textInMarkdown: string;
     }) =>
       await api.homeworkAnswersPartialUpdate(answerId, {
-        text: htmlToMarkdown(text),
+        text: textInMarkdown,
       }),
     onSuccess: (_, { answerId }) => {
       queryClient.invalidateQueries({

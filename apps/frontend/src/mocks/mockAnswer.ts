@@ -1,7 +1,6 @@
 import dayjs from 'dayjs';
 import { faker } from '@faker-js/faker';
 import { mockUserSafe } from './mockUserSafe';
-import htmlToMarkdown from '@/utils/htmlToMarkdown';
 import { LOREM_CONTENT, mockContent } from './mockContent';
 import type { AnswerTree } from '@/api/generated-api';
 
@@ -16,7 +15,7 @@ export const mockAnswer = (
     question: faker.string.uuid(),
     author: mockUserSafe(),
     text,
-    src: htmlToMarkdown(text),
+    src: 'markdown produced from .text will be here',
     has_descendants: false,
     reactions: [],
     is_editable: true,

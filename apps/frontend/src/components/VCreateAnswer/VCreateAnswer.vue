@@ -11,16 +11,19 @@
     send: [];
   }>();
 
-  const text = defineModel<string>({ required: true });
+  const html = defineModel<string>('html', { required: true });
+  const markdown = defineModel<string>('markdown', { required: true });
+
   const isDisabled = computed(
-    () => !(text.value.length > 0) || props.isPending,
+    () => !(html.value.length > 0) || props.isPending,
   );
 </script>
 
 <template>
   <div class="SendOwnAnswer__Container">
     <VTextEditor
-      v-model="text"
+      v-model:html="html"
+      v-model:markdown="markdown"
       class="SendOwnAnswer__Editor"
       @send="emit('send')" />
     <div class="SendOwnAnswer__Footer">

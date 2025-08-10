@@ -17,7 +17,7 @@
     populateAnswersCacheFromDescendants,
     useLessonQuery,
   } from '@/query';
-  import { computed, watch } from 'vue';
+  import { computed, ref, watch } from 'vue';
   import { useRouter } from 'vue-router';
   import { useQueryClient } from '@tanstack/vue-query';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
@@ -69,21 +69,24 @@
     return undefined;
   });
 
-  const commentText = useStorage(
+  const html = useStorage(
     ['commentText', props.questionId, props.answerId].filter(Boolean).join('-'),
     '',
     localStorage,
   );
 
+  const markdown = ref('');
+
   const handleCreateComment = async () => {
     try {
       const createdAnswer = await createAnswerMutation({
-        text: commentText.value,
+        textInMarkdown: markdown.value,
         questionId: props.questionId,
         parentId: props.answerId,
       });
 
-      commentText.value = '';
+      markdown.value = '';
+      html.value = '';
 
       router.push({
         ...router.currentRoute.value,
@@ -201,7 +204,8 @@
         :guide="question.course.homework_check_recommendations" />
 
       <VCreateAnswer
-        v-model="commentText"
+        v-model:html="html"
+        v-model:markdown="markdown"
         :is-pending="isCreateAnswerPending"
         @send="handleCreateComment" />
       <div v-if="isSent" class="card">

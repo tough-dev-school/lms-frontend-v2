@@ -1,8 +1,10 @@
 <script setup lang="ts">
-  import Placeholder from '@tiptap/extension-placeholder';
-  import { EditorContent, Editor } from '@tiptap/vue-3';
+  import { Placeholder } from '@tiptap/extensions';
+  import { Editor, EditorContent } from '@tiptap/vue-3';
   import StarterKit from '@tiptap/starter-kit';
   import Image from '@tiptap/extension-image';
+  import { marked } from 'marked';
+  import { renderToMarkdown } from '@tiptap/static-renderer/pm/markdown';
   import {
     BoldIcon,
     H1Icon,
@@ -12,29 +14,51 @@
     BlockquoteIcon,
     ListNumbersIcon,
     ListIcon,
+    LinkIcon,
+    LinkOffIcon,
     PhotoIcon,
   } from 'vue-tabler-icons';
-  import { onBeforeUnmount, watch, ref, useTemplateRef } from 'vue';
+  import { onBeforeUnmount, ref, useTemplateRef } from 'vue';
   import { onKeyDown, useKeyModifier, useFocusWithin } from '@vueuse/core';
   import VLoader from '@/components/VLoader/VLoader.vue';
   import { useHomeworkAnswerSendImageMutation } from '@/query';
 
-  export interface Props {
-    modelValue?: string;
-    placeholder?: string;
-  }
+  const props = withDefaults(
+    defineProps<{
+      placeholder?: string;
+    }>(),
+    {
+      placeholder: '',
+    },
+  );
 
-  const props = withDefaults(defineProps<Props>(), {
-    modelValue: '',
-    placeholder: '',
-  });
+  /**
+   * IO of text in LMS is quite complicated:
+   *
+   * - TipTap takes JSON or HTML as input, but can output JSON, HTML, or Markdown
+   * - LMS takes Markdown as input, but can output Markdown or HTML
+   * - Users want to use Markdown
+   *
+   * So what we do:
+   * - Inputs
+   *   - HTML is used as input for TipTap
+   *   - Markdown is used as input for TipTap
+   * - Outputs
+   *   - HTML produced by tiptap is used to store state in memory
+   *   - Markdown produced by tiptap is used to be sent to LMS
+   */
+
+  const html = defineModel<string>('html', { required: true });
+  /**
+   * Setting this model is not used to set editor state
+   */
+  const markdown = defineModel<string>('markdown', { required: true });
 
   const currentEditor = useTemplateRef('currentEditor');
   const isImageLoading = ref(false);
   const { focused } = useFocusWithin(currentEditor);
 
   const emit = defineEmits<{
-    'update:modelValue': [value: string];
     send: [];
   }>();
 
@@ -47,18 +71,96 @@
     }
   });
 
+  const editLink = () => {
+    const previousUrl = (editor.getAttributes('link')?.href as string) || '';
+    // eslint-disable-next-line no-alert
+    const url = window.prompt('Enter URL', previousUrl);
+    if (url === null) return;
+    if (url === '') {
+      editor.chain().focus().extendMarkRange('link').unsetLink().run();
+      return;
+    }
+    editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
+  };
+
+  onKeyDown('k', (event) => {
+    if (isMetaPressed.value && focused.value) {
+      event.preventDefault();
+      editLink();
+    }
+  });
+
   const { mutateAsync: sendImage } = useHomeworkAnswerSendImageMutation();
 
+  const extensions = [
+    StarterKit.configure({
+      link: {
+        openOnClick: false,
+        autolink: true,
+        linkOnPaste: true,
+        defaultProtocol: 'https',
+      },
+    }),
+    Placeholder.configure({
+      placeholder: props.placeholder,
+    }),
+    Image.configure({ inline: true }),
+  ];
+
   const editor = new Editor({
-    content: props.modelValue,
-    extensions: [
-      StarterKit,
-      Placeholder.configure({
-        placeholder: props.placeholder,
-      }),
-      Image.configure({ inline: true }),
-    ],
+    content: html.value,
+    extensions,
     editorProps: {
+      handlePaste: (_view, event) => {
+        // Handle image paste
+        const items = [...(event.clipboardData?.items || [])];
+        const imageItem = items.find((item) => item.type.startsWith('image/'));
+
+        if (imageItem) {
+          event.preventDefault();
+          isImageLoading.value = true;
+
+          const file = imageItem.getAsFile();
+          if (file) {
+            // Handle image upload in the background
+            void sendImage(file)
+              .then(({ image }) => {
+                editor.commands.setImage({ src: image });
+              })
+              .catch((error) => {
+                console.error('Failed to upload pasted image:', error);
+              })
+              .finally(() => {
+                isImageLoading.value = false;
+              });
+          } else {
+            isImageLoading.value = false;
+          }
+          return true;
+        }
+
+        // Handle markdown paste
+        const markdownFromClipboard =
+          event.clipboardData?.getData('text/markdown') || '';
+        const textFromClipboard =
+          event.clipboardData?.getData('text/plain') || '';
+
+        const candidate = markdownFromClipboard || textFromClipboard;
+        if (!candidate) return false;
+
+        const looksLikeMarkdown =
+          !!markdownFromClipboard ||
+          /^(\s{0,3}#{1,6}\s|\*\s|-\s|\d+\.\s|>\s|`{1,3}|!\[|\[.*?]\(.*?\))/m.test(
+            candidate,
+          );
+        if (!looksLikeMarkdown) return false;
+
+        event.preventDefault();
+        const htmlFromMarkdown = marked.parse(candidate);
+        // Insert converted HTML at current selection
+        editor.chain().focus().insertContent(String(htmlFromMarkdown)).run();
+        return true;
+      },
       handleDrop: (view, event, slice, moved) => {
         if (
           !moved &&
@@ -92,23 +194,13 @@
       },
     },
     onUpdate: () => {
-      const html = editor.getHTML();
-      emit('update:modelValue', html);
+      html.value = editor.getHTML();
+      markdown.value = renderToMarkdown({
+        content: editor.state.doc,
+        extensions,
+      });
     },
   });
-
-  watch(
-    props,
-    (newProps) => {
-      const { modelValue } = newProps;
-      const isSame = editor.getHTML() === modelValue;
-
-      if (isSame) return;
-
-      editor.commands.setContent(modelValue, false);
-    },
-    { deep: true },
-  );
 
   const toggleHeading1 = () => {
     editor.chain().focus().toggleHeading({ level: 1 }).run();
@@ -165,7 +257,7 @@
     class="bg-white dark:bg-darkmode-layer2 px-16 rounded min-h-240 flex flex-col">
     <div
       v-if="editor"
-      class="flex items-center dark:text-white border-b border-lightgray dark:border-darkmode-border">
+      class="sticky top-0 z-10 bg-white dark:bg-darkmode-layer2 flex items-center dark:text-white border-b border-lightgray dark:border-darkmode-border">
       <button
         class="TextEditor__Button"
         :class="{
@@ -207,6 +299,18 @@
         :class="{ TextEditor__Button_Active: editor.isActive('italic') }"
         @click="toggleItalic">
         <ItalicIcon />
+      </button>
+      <button
+        class="TextEditor__Button"
+        :class="{ TextEditor__Button_Active: editor.isActive('link') }"
+        @click="editLink">
+        <LinkIcon />
+      </button>
+      <button
+        class="TextEditor__Button"
+        :disabled="!editor.isActive('link')"
+        @click="editor.chain().focus().unsetLink().run()">
+        <LinkOffIcon />
       </button>
       <button
         class="TextEditor__Button"
