@@ -14,6 +14,8 @@
     BlockquoteIcon,
     ListNumbersIcon,
     ListIcon,
+    LinkIcon,
+    LinkOffIcon,
     PhotoIcon,
   } from 'vue-tabler-icons';
   import { onBeforeUnmount, ref, useTemplateRef } from 'vue';
@@ -69,10 +71,36 @@
     }
   });
 
+  const editLink = () => {
+    const previousUrl = (editor.getAttributes('link')?.href as string) || '';
+    // eslint-disable-next-line no-alert
+    const url = window.prompt('Enter URL', previousUrl);
+    if (url === null) return;
+    if (url === '') {
+      editor.chain().focus().extendMarkRange('link').unsetLink().run();
+      return;
+    }
+    editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
+  };
+
+  onKeyDown('k', (event) => {
+    if (isMetaPressed.value && focused.value) {
+      event.preventDefault();
+      editLink();
+    }
+  });
+
   const { mutateAsync: sendImage } = useHomeworkAnswerSendImageMutation();
 
   const extensions = [
-    StarterKit,
+    StarterKit.configure({
+      link: {
+        openOnClick: false,
+        autolink: true,
+        linkOnPaste: true,
+        defaultProtocol: 'https',
+      },
+    }),
     Placeholder.configure({
       placeholder: props.placeholder,
     }),
@@ -243,6 +271,18 @@
         :class="{ TextEditor__Button_Active: editor.isActive('italic') }"
         @click="toggleItalic">
         <ItalicIcon />
+      </button>
+      <button
+        class="TextEditor__Button"
+        :class="{ TextEditor__Button_Active: editor.isActive('link') }"
+        @click="editLink">
+        <LinkIcon />
+      </button>
+      <button
+        class="TextEditor__Button"
+        :disabled="!editor.isActive('link')"
+        @click="editor.chain().focus().unsetLink().run()">
+        <LinkOffIcon />
       </button>
       <button
         class="TextEditor__Button"
