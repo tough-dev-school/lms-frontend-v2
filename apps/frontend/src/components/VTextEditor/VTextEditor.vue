@@ -18,7 +18,7 @@
     LinkOffIcon,
     PhotoIcon,
   } from 'vue-tabler-icons';
-  import { onBeforeUnmount, ref, useTemplateRef } from 'vue';
+  import { onBeforeUnmount, ref, useTemplateRef, watch } from 'vue';
   import { onKeyDown, useKeyModifier, useFocusWithin } from '@vueuse/core';
   import VLoader from '@/components/VLoader/VLoader.vue';
   import { useHomeworkAnswerSendImageMutation } from '@/query';
@@ -202,6 +202,17 @@
     },
   });
 
+  watch(
+    () => html.value,
+    (newHtml) => {
+      const isSame = editor.getHTML() === newHtml;
+
+      if (isSame) return;
+
+      editor.commands.setContent(newHtml, { emitUpdate: false });
+    },
+    { deep: true },
+  );
   const toggleHeading1 = () => {
     editor.chain().focus().toggleHeading({ level: 1 }).run();
   };
