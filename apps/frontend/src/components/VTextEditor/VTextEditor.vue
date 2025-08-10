@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import Placeholder from '@tiptap/extension-placeholder';
+  import { Placeholder } from '@tiptap/extensions';
   import { EditorContent, Editor } from '@tiptap/vue-3';
   import StarterKit from '@tiptap/starter-kit';
   import Image from '@tiptap/extension-image';
@@ -105,7 +105,7 @@
 
       if (isSame) return;
 
-      editor.commands.setContent(modelValue, false);
+      editor.commands.setContent(modelValue, { emitUpdate: false });
     },
     { deep: true },
   );
