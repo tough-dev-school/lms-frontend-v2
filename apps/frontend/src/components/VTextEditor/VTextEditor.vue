@@ -111,7 +111,35 @@
     content: html.value,
     extensions,
     editorProps: {
-      handlePaste: (view, event) => {
+      handlePaste: (_view, event) => {
+        // Handle image paste
+        const items = [...(event.clipboardData?.items || [])];
+        const imageItem = items.find((item) => item.type.startsWith('image/'));
+
+        if (imageItem) {
+          event.preventDefault();
+          isImageLoading.value = true;
+
+          const file = imageItem.getAsFile();
+          if (file) {
+            // Handle image upload in the background
+            void sendImage(file)
+              .then(({ image }) => {
+                editor.commands.setImage({ src: image });
+              })
+              .catch((error) => {
+                console.error('Failed to upload pasted image:', error);
+              })
+              .finally(() => {
+                isImageLoading.value = false;
+              });
+          } else {
+            isImageLoading.value = false;
+          }
+          return true;
+        }
+
+        // Handle markdown paste
         const markdownFromClipboard =
           event.clipboardData?.getData('text/markdown') || '';
         const textFromClipboard =
