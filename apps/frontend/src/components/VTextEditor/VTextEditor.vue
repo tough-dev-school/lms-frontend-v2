@@ -200,6 +200,12 @@
         extensions,
       });
     },
+    onCreate: () => {
+      markdown.value = renderToMarkdown({
+        content: editor.state.doc,
+        extensions,
+      });
+    },
   });
 
   watch(
