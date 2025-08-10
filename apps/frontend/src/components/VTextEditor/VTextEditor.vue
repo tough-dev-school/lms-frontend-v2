@@ -3,6 +3,7 @@
   import { Editor, EditorContent } from '@tiptap/vue-3';
   import StarterKit from '@tiptap/starter-kit';
   import Image from '@tiptap/extension-image';
+  import { marked } from 'marked';
   import { renderToMarkdown } from '@tiptap/static-renderer/pm/markdown';
   import {
     BoldIcon,
@@ -82,6 +83,28 @@
     content: html.value,
     extensions,
     editorProps: {
+      handlePaste: (view, event) => {
+        const markdownFromClipboard =
+          event.clipboardData?.getData('text/markdown') || '';
+        const textFromClipboard =
+          event.clipboardData?.getData('text/plain') || '';
+
+        const candidate = markdownFromClipboard || textFromClipboard;
+        if (!candidate) return false;
+
+        const looksLikeMarkdown =
+          !!markdownFromClipboard ||
+          /^(\s{0,3}#{1,6}\s|\*\s|-\s|\d+\.\s|>\s|`{1,3}|!\[|\[.*?]\(.*?\))/m.test(
+            candidate,
+          );
+        if (!looksLikeMarkdown) return false;
+
+        event.preventDefault();
+        const htmlFromMarkdown = marked.parse(candidate);
+        // Insert converted HTML at current selection
+        editor.chain().focus().insertContent(String(htmlFromMarkdown)).run();
+        return true;
+      },
       handleDrop: (view, event, slice, moved) => {
         if (
           !moved &&
