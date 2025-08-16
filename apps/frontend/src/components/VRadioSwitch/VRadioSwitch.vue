@@ -1,10 +1,10 @@
 <script lang="ts">
-  import type { TablerIconComponent } from 'vue-tabler-icons';
+  import type { Icon } from '@tabler/icons-vue';
 
   export interface RadioOption {
     value: string;
     label: string;
-    icon: TablerIconComponent;
+    icon: Icon;
   }
 </script>
 

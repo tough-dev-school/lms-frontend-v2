@@ -24,6 +24,7 @@
     "@brachkow/email-providers": "^1.2.0",
     "@formkit/auto-animate": "^0.8.1",
     "@sentry/vue": "^8.34.0",
+    "@tabler/icons-vue": "^3.34.1",
     "@tanstack/vue-query": "^5.81.5",
     "@tiptap/extension-image": "^3.1.0",
     "@tiptap/extension-link": "^3.1.0",
@@ -43,8 +44,7 @@
     "vue": "^3.5.17",
     "vue-avatar-cropper": "^6.1.1",
     "vue-notion": "workspace:*",
-    "vue-router": "^4.5.1",
-    "vue-tabler-icons": "^2.21.0"
+    "vue-router": "^4.5.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250724.0",

@@ -1,12 +1,12 @@
 import { describe, expect, test } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 import VRadioSwitch from './VRadioSwitch.vue';
-import { SunFilledIcon, MoonFilledIcon } from 'vue-tabler-icons';
+import { IconSunFilled, IconMoonFilled } from '@tabler/icons-vue';
 
 describe('VRadioSwitch', () => {
   const options = [
-    { value: 'option1', label: 'Опция 1', icon: SunFilledIcon },
-    { value: 'option2', label: 'Опция 2', icon: MoonFilledIcon },
+    { value: 'option1', label: 'Опция 1', icon: IconSunFilled },
+    { value: 'option2', label: 'Опция 2', icon: IconMoonFilled },
   ];
 
   test('renders all options', () => {
@@ -17,8 +17,8 @@ describe('VRadioSwitch', () => {
       },
       global: {
         components: {
-          SunFilledIcon,
-          MoonFilledIcon,
+          IconSunFilled,
+          IconMoonFilled,
         },
       },
     });

@@ -5,7 +5,7 @@
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
   import { computed, ref } from 'vue';
   import VReactions from '@/components/VReactions/VReactions.vue';
-  import { MoodHappyIcon } from 'vue-tabler-icons';
+  import { IconMoodHappy } from '@tabler/icons-vue';
   import { useAutoAnimate } from '@formkit/auto-animate/vue';
   import VButton from '@/components/VButton/VButton.vue';
   import {
@@ -78,7 +78,7 @@
           class="flex px-16 h-32 items-center justify-center text-[1.5rem]"
           data-testid="open"
           @click="togglePalette">
-          <MoodHappyIcon />
+          <IconMoodHappy />
         </VButton>
         <VReactions
           :answer-id="answer.slug"

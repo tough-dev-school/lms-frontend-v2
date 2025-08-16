@@ -3,25 +3,26 @@
   import { getExtensions } from '@/utils/tiptapExtensions';
   import { marked } from 'marked';
   import {
-    BoldIcon,
-    H1Icon,
-    H2Icon,
-    H3Icon,
-    ItalicIcon,
-    BlockquoteIcon,
-    ListNumbersIcon,
-    ListIcon,
-    LinkIcon,
-    LinkOffIcon,
-    PhotoIcon,
-    TableIcon,
-    ColumnInsertLeftIcon,
-    ColumnInsertRightIcon,
-    RowInsertTopIcon,
-    RowInsertBottomIcon,
-    MinusIcon,
-    TableOffIcon,
-  } from 'vue-tabler-icons';
+    IconBold,
+    IconH1,
+    IconH2,
+    IconH3,
+    IconItalic,
+    IconBlockquote,
+    IconListNumbers,
+    IconList,
+    IconLink,
+    IconLinkOff,
+    IconPhoto,
+    IconTable,
+    IconColumnInsertLeft,
+    IconColumnInsertRight,
+    IconRowInsertTop,
+    IconRowInsertBottom,
+    IconRowRemove,
+    IconColumnRemove,
+    IconTableOff,
+  } from '@tabler/icons-vue';
   import { onBeforeUnmount, ref, useTemplateRef, watch } from 'vue';
   import { onKeyDown, useKeyModifier, useFocusWithin } from '@vueuse/core';
   import VLoader from '@/components/VLoader/VLoader.vue';
@@ -296,7 +297,7 @@
           }),
         }"
         @click="toggleHeading1">
-        <H1Icon />
+        <IconH1 />
       </button>
       <button
         class="TextEditor__Button"
@@ -306,7 +307,7 @@
           }),
         }"
         @click="toggleHeading2">
-        <H2Icon />
+        <IconH2 />
       </button>
       <button
         class="TextEditor__Button"
@@ -316,37 +317,37 @@
           }),
         }"
         @click="toggleHeading3">
-        <H3Icon />
+        <IconH3 />
       </button>
       <button
         class="TextEditor__Button"
         :class="{ TextEditor__Button_Active: editor.isActive('bold') }"
         @click="toggleBold">
-        <BoldIcon />
+        <IconBold />
       </button>
       <button
         class="TextEditor__Button"
         :class="{ TextEditor__Button_Active: editor.isActive('italic') }"
         @click="toggleItalic">
-        <ItalicIcon />
+        <IconItalic />
       </button>
       <button
         class="TextEditor__Button"
         :class="{ TextEditor__Button_Active: editor.isActive('link') }"
         @click="editLink">
-        <LinkIcon />
+        <IconLink />
       </button>
       <button
         class="TextEditor__Button"
         :disabled="!editor.isActive('link')"
         @click="editor.chain().focus().unsetLink().run()">
-        <LinkOffIcon />
+        <IconLinkOff />
       </button>
       <button
         class="TextEditor__Button"
         :class="{ TextEditor__Button_Active: editor.isActive('blockquote') }"
         @click="toggleBlockquote">
-        <BlockquoteIcon />
+        <IconBlockquote />
       </button>
       <button
         class="TextEditor__Button"
@@ -354,48 +355,48 @@
           TextEditor__Button_Active: editor.isActive('orderedList'),
         }"
         @click="toggleOrderedList">
-        <ListNumbersIcon />
+        <IconListNumbers />
       </button>
       <button
         class="TextEditor__Button"
         :class="{ TextEditor__Button_Active: editor.isActive('bulletList') }"
         @click="toggleUnorderedList">
-        <ListIcon />
+        <IconList />
       </button>
       <button
         class="TextEditor__Button"
         :class="{ TextEditor__Button_Active: editor.isActive('table') }"
         @click="insertTable">
-        <TableIcon />
+        <IconTable />
       </button>
       <template v-if="editor.isActive('table')">
         <div class="mx-4 w-1 h-16 bg-lightgray dark:bg-darkmode-border" />
         <button class="TextEditor__Button" @click="addColumnBefore">
-          <ColumnInsertLeftIcon />
+          <IconColumnInsertLeft />
         </button>
         <button class="TextEditor__Button" @click="addColumnAfter">
-          <ColumnInsertRightIcon />
+          <IconColumnInsertRight />
         </button>
         <button class="TextEditor__Button" @click="deleteColumn">
-          <MinusIcon />
+          <IconColumnRemove />
         </button>
         <div class="mx-4 w-1 h-16 bg-lightgray dark:bg-darkmode-border" />
         <button class="TextEditor__Button" @click="addRowBefore">
-          <RowInsertTopIcon />
+          <IconRowInsertTop />
         </button>
         <button class="TextEditor__Button" @click="addRowAfter">
-          <RowInsertBottomIcon />
+          <IconRowInsertBottom />
         </button>
         <button class="TextEditor__Button" @click="deleteRow">
-          <MinusIcon />
+          <IconRowRemove />
         </button>
         <div class="mx-4 w-1 h-16 bg-lightgray dark:bg-darkmode-border" />
         <button class="TextEditor__Button" @click="deleteTable">
-          <TableOffIcon />
+          <IconTableOff />
         </button>
       </template>
       <label class="TextEditor__Button">
-        <PhotoIcon />
+        <IconPhoto />
         <input
           class="visually-hidden"
           type="file"

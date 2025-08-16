@@ -29,6 +29,9 @@ importers:
       '@sentry/vue':
         specifier: ^8.34.0
         version: 8.34.0(vue@3.5.17(typescript@5.8.3))
+      '@tabler/icons-vue':
+        specifier: ^3.34.1
+        version: 3.34.1(vue@3.5.17(typescript@5.8.3))
       '@tanstack/vue-query':
         specifier: ^5.81.5
         version: 5.81.5(vue@3.5.17(typescript@5.8.3))
@@ -92,9 +95,6 @@ importers:
       vue-router:
         specifier: ^4.5.1
         version: 4.5.1(vue@3.5.17(typescript@5.8.3))
-      vue-tabler-icons:
-        specifier: ^2.21.0
-        version: 2.21.0
     devDependencies:
       '@cloudflare/workers-types':
         specifier: ^4.20250724.0
@@ -1987,6 +1987,14 @@ packages:
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: '>=9.0.0'
+
+  '@tabler/icons-vue@3.34.1':
+    resolution: {integrity: sha512-bUJHhZYnhSo7pNueHWn9z2Lx9F2GY54a6D4Fd6HP0n0G5h9fTeq4mYSV2Ptcxr/gMetx7IC1PF5SA+tOhAdZmA==}
+    peerDependencies:
+      vue: '>=3.0.1'
+
+  '@tabler/icons@3.34.1':
+    resolution: {integrity: sha512-9gTnUvd7Fd/DmQgr3MKY+oJLa1RfNsQo8c/ir3TJAWghOuZXodbtbVp0QBY2DxWuuvrSZFys0HEbv1CoiI5y6A==}
 
   '@tailwindcss/typography@0.5.10':
     resolution: {integrity: sha512-Pe8BuPJQJd3FfRnm6H0ulKIGoMEQS+Vq01R6M5aCrFB/ccR/shT+0kXLjouGC1gFLm9hopTFN+DMP0pfwRWzPw==}
@@ -8608,9 +8616,6 @@ packages:
   vue-style-loader@4.1.3:
     resolution: {integrity: sha512-sFuh0xfbtpRlKfm39ss/ikqs9AbKCoXZBpHeVZ8Tx650o0k0q/YCM7FRvigtxpACezfq6af+a7JeqVTWvncqDg==}
 
-  vue-tabler-icons@2.21.0:
-    resolution: {integrity: sha512-rEZYPd37j1sd/9gBFtC1u8wj3Pz1S3gLP1tgexvnivzQPXphc6M+7XuTSOd7wtdpaLt1sQgDmuQxIgczzrvf0A==}
-
   vue-template-compiler@2.7.15:
     resolution: {integrity: sha512-yQxjxMptBL7UAog00O8sANud99C6wJF+7kgbcwqkvA38vCGF7HWE66w0ZFnS/kX5gSoJr/PQ4/oS3Ne2pW37Og==}
 
@@ -10681,6 +10686,13 @@ snapshots:
       espree: 10.4.0
       estraverse: 5.3.0
       picomatch: 4.0.3
+
+  '@tabler/icons-vue@3.34.1(vue@3.5.17(typescript@5.8.3))':
+    dependencies:
+      '@tabler/icons': 3.34.1
+      vue: 3.5.17(typescript@5.8.3)
+
+  '@tabler/icons@3.34.1': {}
 
   '@tailwindcss/typography@0.5.10(tailwindcss@3.4.17)':
     dependencies:
@@ -18313,8 +18325,6 @@ snapshots:
     dependencies:
       hash-sum: 1.0.2
       loader-utils: 1.4.2
-
-  vue-tabler-icons@2.21.0: {}
 
   vue-template-compiler@2.7.15:
     dependencies:
