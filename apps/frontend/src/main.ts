@@ -6,7 +6,7 @@ import FloatingVue from 'floating-vue';
 import 'floating-vue/dist/style.css';
 import * as Sentry from '@sentry/vue';
 import AvatarCropper from 'vue-avatar-cropper';
-import { VueQueryPlugin } from '@tanstack/vue-query';
+import { QueryClient, VueQueryPlugin } from '@tanstack/vue-query';
 
 const app = createApp(App);
 
@@ -29,20 +29,17 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-export const vueQueryConfig = {
-  enableDevtoolsV6Plugin: true,
-  queryClientConfig: {
-    defaultOptions: {
-      queries: {
-        refetchOnWindowFocus: false,
-        staleTime: Infinity,
-        retry: false,
-      },
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      staleTime: Infinity,
+      retry: false,
     },
   },
-};
+});
 
-app.use(VueQueryPlugin, vueQueryConfig);
+app.use(VueQueryPlugin, { queryClient });
 
 app.use(FloatingVue);
 app.use(AvatarCropper);
