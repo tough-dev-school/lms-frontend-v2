@@ -14,6 +14,13 @@
     LinkIcon,
     LinkOffIcon,
     PhotoIcon,
+    TableIcon,
+    ColumnInsertLeftIcon,
+    ColumnInsertRightIcon,
+    RowInsertTopIcon,
+    RowInsertBottomIcon,
+    MinusIcon,
+    TableOffIcon,
   } from 'vue-tabler-icons';
   import { onBeforeUnmount, ref, useTemplateRef, watch } from 'vue';
   import { onKeyDown, useKeyModifier, useFocusWithin } from '@vueuse/core';
@@ -221,6 +228,42 @@
     editor.chain().focus().toggleBulletList().run();
   };
 
+  const insertTable = () => {
+    editor
+      .chain()
+      .focus()
+      .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
+      .run();
+  };
+
+  const addColumnBefore = () => {
+    editor.chain().focus().addColumnBefore().run();
+  };
+
+  const addColumnAfter = () => {
+    editor.chain().focus().addColumnAfter().run();
+  };
+
+  const deleteColumn = () => {
+    editor.chain().focus().deleteColumn().run();
+  };
+
+  const addRowBefore = () => {
+    editor.chain().focus().addRowBefore().run();
+  };
+
+  const addRowAfter = () => {
+    editor.chain().focus().addRowAfter().run();
+  };
+
+  const deleteRow = () => {
+    editor.chain().focus().deleteRow().run();
+  };
+
+  const deleteTable = () => {
+    editor.chain().focus().deleteTable().run();
+  };
+
   const addImage = async (event: Event) => {
     isImageLoading.value = true;
     if (event.target) {
@@ -319,6 +362,38 @@
         @click="toggleUnorderedList">
         <ListIcon />
       </button>
+      <button
+        class="TextEditor__Button"
+        :class="{ TextEditor__Button_Active: editor.isActive('table') }"
+        @click="insertTable">
+        <TableIcon />
+      </button>
+      <template v-if="editor.isActive('table')">
+        <div class="mx-4 w-1 h-16 bg-lightgray dark:bg-darkmode-border" />
+        <button class="TextEditor__Button" @click="addColumnBefore">
+          <ColumnInsertLeftIcon />
+        </button>
+        <button class="TextEditor__Button" @click="addColumnAfter">
+          <ColumnInsertRightIcon />
+        </button>
+        <button class="TextEditor__Button" @click="deleteColumn">
+          <MinusIcon />
+        </button>
+        <div class="mx-4 w-1 h-16 bg-lightgray dark:bg-darkmode-border" />
+        <button class="TextEditor__Button" @click="addRowBefore">
+          <RowInsertTopIcon />
+        </button>
+        <button class="TextEditor__Button" @click="addRowAfter">
+          <RowInsertBottomIcon />
+        </button>
+        <button class="TextEditor__Button" @click="deleteRow">
+          <MinusIcon />
+        </button>
+        <div class="mx-4 w-1 h-16 bg-lightgray dark:bg-darkmode-border" />
+        <button class="TextEditor__Button" @click="deleteTable">
+          <TableOffIcon />
+        </button>
+      </template>
       <label class="TextEditor__Button">
         <PhotoIcon />
         <input
@@ -360,5 +435,17 @@
   .ProseMirror p.is-editor-empty:first-child::before {
     content: attr(data-placeholder);
     @apply pointer-events-none float-left h-0 text-gray;
+  }
+
+  .ProseMirror table {
+    @apply border border-lightgray dark:border-darkmode-border;
+  }
+
+  .ProseMirror th {
+    @apply bg-lightgray dark:bg-darkmode-layer3 font-bold p-8;
+  }
+
+  .ProseMirror td {
+    @apply border border-lightgray dark:border-darkmode-border p-8;
   }
 </style>

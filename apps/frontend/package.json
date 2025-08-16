@@ -27,6 +27,7 @@
     "@tanstack/vue-query": "^5.81.5",
     "@tiptap/extension-image": "^3.1.0",
     "@tiptap/extension-link": "^3.1.0",
+    "@tiptap/extension-table": "^3.2.0",
     "@tiptap/extensions": "^3.1.0",
     "@tiptap/pm": "^3.1.0",
     "@tiptap/starter-kit": "^3.1.0",
