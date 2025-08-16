@@ -288,89 +288,100 @@
     class="bg-white dark:bg-darkmode-layer2 px-16 rounded min-h-240 flex flex-col">
     <div
       v-if="editor"
-      class="sticky top-0 z-10 bg-white dark:bg-darkmode-layer2 flex items-center dark:text-white border-b border-lightgray dark:border-darkmode-border">
-      <button
-        class="TextEditor__Button"
-        :class="{
-          TextEditor__Button_Active: editor.isActive('heading', {
-            level: 1,
-          }),
-        }"
-        @click="toggleHeading1">
-        <IconH1 />
-      </button>
-      <button
-        class="TextEditor__Button"
-        :class="{
-          TextEditor__Button_Active: editor.isActive('heading', {
-            level: 2,
-          }),
-        }"
-        @click="toggleHeading2">
-        <IconH2 />
-      </button>
-      <button
-        class="TextEditor__Button"
-        :class="{
-          TextEditor__Button_Active: editor.isActive('heading', {
-            level: 3,
-          }),
-        }"
-        @click="toggleHeading3">
-        <IconH3 />
-      </button>
-      <button
-        class="TextEditor__Button"
-        :class="{ TextEditor__Button_Active: editor.isActive('bold') }"
-        @click="toggleBold">
-        <IconBold />
-      </button>
-      <button
-        class="TextEditor__Button"
-        :class="{ TextEditor__Button_Active: editor.isActive('italic') }"
-        @click="toggleItalic">
-        <IconItalic />
-      </button>
-      <button
-        class="TextEditor__Button"
-        :class="{ TextEditor__Button_Active: editor.isActive('link') }"
-        @click="editLink">
-        <IconLink />
-      </button>
-      <button
-        class="TextEditor__Button"
-        :disabled="!editor.isActive('link')"
-        @click="editor.chain().focus().unsetLink().run()">
-        <IconLinkOff />
-      </button>
-      <button
-        class="TextEditor__Button"
-        :class="{ TextEditor__Button_Active: editor.isActive('blockquote') }"
-        @click="toggleBlockquote">
-        <IconBlockquote />
-      </button>
-      <button
-        class="TextEditor__Button"
-        :class="{
-          TextEditor__Button_Active: editor.isActive('orderedList'),
-        }"
-        @click="toggleOrderedList">
-        <IconListNumbers />
-      </button>
-      <button
-        class="TextEditor__Button"
-        :class="{ TextEditor__Button_Active: editor.isActive('bulletList') }"
-        @click="toggleUnorderedList">
-        <IconList />
-      </button>
-      <button
-        class="TextEditor__Button"
-        :class="{ TextEditor__Button_Active: editor.isActive('table') }"
-        @click="insertTable">
-        <IconTable />
-      </button>
-      <template v-if="editor.isActive('table')">
-        <div class="mx-4 w-1 h-16 bg-lightgray dark:bg-darkmode-border" />
+      class="sticky top-0 z-10 bg-white dark:bg-darkmode-layer2 dark:text-white border-b border-lightgray dark:border-darkmode-border">
+      <div class="flex items-center">
+        <button
+          class="TextEditor__Button"
+          :class="{
+            TextEditor__Button_Active: editor.isActive('heading', {
+              level: 1,
+            }),
+          }"
+          @click="toggleHeading1">
+          <IconH1 />
+        </button>
+        <button
+          class="TextEditor__Button"
+          :class="{
+            TextEditor__Button_Active: editor.isActive('heading', {
+              level: 2,
+            }),
+          }"
+          @click="toggleHeading2">
+          <IconH2 />
+        </button>
+        <button
+          class="TextEditor__Button"
+          :class="{
+            TextEditor__Button_Active: editor.isActive('heading', {
+              level: 3,
+            }),
+          }"
+          @click="toggleHeading3">
+          <IconH3 />
+        </button>
+        <button
+          class="TextEditor__Button"
+          :class="{ TextEditor__Button_Active: editor.isActive('bold') }"
+          @click="toggleBold">
+          <IconBold />
+        </button>
+        <button
+          class="TextEditor__Button"
+          :class="{ TextEditor__Button_Active: editor.isActive('italic') }"
+          @click="toggleItalic">
+          <IconItalic />
+        </button>
+        <button
+          class="TextEditor__Button"
+          :class="{ TextEditor__Button_Active: editor.isActive('link') }"
+          @click="editLink">
+          <IconLink />
+        </button>
+        <button
+          class="TextEditor__Button"
+          :disabled="!editor.isActive('link')"
+          @click="editor.chain().focus().unsetLink().run()">
+          <IconLinkOff />
+        </button>
+        <button
+          class="TextEditor__Button"
+          :class="{ TextEditor__Button_Active: editor.isActive('blockquote') }"
+          @click="toggleBlockquote">
+          <IconBlockquote />
+        </button>
+        <button
+          class="TextEditor__Button"
+          :class="{
+            TextEditor__Button_Active: editor.isActive('orderedList'),
+          }"
+          @click="toggleOrderedList">
+          <IconListNumbers />
+        </button>
+        <button
+          class="TextEditor__Button"
+          :class="{ TextEditor__Button_Active: editor.isActive('bulletList') }"
+          @click="toggleUnorderedList">
+          <IconList />
+        </button>
+        <label class="TextEditor__Button">
+          <IconPhoto />
+          <input
+            class="visually-hidden"
+            type="file"
+            accept="image/*"
+            name="image"
+            @change="addImage($event)"
+        /></label>
+        <button
+          class="TextEditor__Button"
+          :class="{ TextEditor__Button_Active: editor.isActive('table') }"
+          @click="insertTable">
+          <IconTable />
+        </button>
+      </div>
+      <div v-if="editor.isActive('table')" class="flex items-center">
+        <div>Для таблицы:</div>
         <button class="TextEditor__Button" @click="addColumnBefore">
           <IconColumnInsertLeft />
         </button>
@@ -394,16 +405,7 @@
         <button class="TextEditor__Button" @click="deleteTable">
           <IconTableOff />
         </button>
-      </template>
-      <label class="TextEditor__Button">
-        <IconPhoto />
-        <input
-          class="visually-hidden"
-          type="file"
-          accept="image/*"
-          name="image"
-          @change="addImage($event)"
-      /></label>
+      </div>
     </div>
     <div v-if="isImageLoading" class="p-32">
       <VLoader />
@@ -418,7 +420,7 @@
 <style>
   .TextEditor {
     &__Button {
-      @apply flex h-32 items-center justify-center px-8 hover:bg-lightgray dark:hover:bg-darkmode-layer3 transition-colors;
+      @apply flex aspect-square items-center justify-center px-8 hover:bg-lightgray dark:hover:bg-darkmode-layer3 transition-colors;
       &_Active {
         @apply bg-lightgray dark:bg-darkmode-layer3;
       }
