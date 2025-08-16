@@ -3,10 +3,10 @@ import type { RouteLocationNormalized } from 'vue-router';
 import { useAuth } from '@/composables/useAuth';
 import { loginByToken } from '@/router/loginByToken';
 import { loginById } from '@/router/loginById';
-import { useQueryClient } from '@tanstack/vue-query';
 import { baseQueryKey, fetchHomeworkAnswer } from '@/query';
 import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
 import { AllowMeta } from '@/types';
+import { queryClient } from '@/queryClient';
 
 export const routes = [
   {
@@ -141,7 +141,6 @@ export const routes = [
     name: 'homework-answer-old',
     beforeEnter: [
       async (to: RouteLocationNormalized) => {
-        const queryClient = useQueryClient();
         const answerId = to.params.answerId as string;
         const answer = await fetchHomeworkAnswer(queryClient, { answerId });
         return {
@@ -217,7 +216,6 @@ router.beforeEach(
 
     const { token } = useAuth();
 
-    const queryClient = useQueryClient();
     queryClient.invalidateQueries({ queryKey: baseQueryKey() });
 
     // Redirect to existing route if route does not exist
