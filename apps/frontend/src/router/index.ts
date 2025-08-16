@@ -57,6 +57,14 @@ export const routes = [
     },
   },
   {
+    path: '/logout',
+    name: 'logout',
+    component: () => import('@/views/VLogoutView/VLogoutView.vue'),
+    meta: {
+      allow: AllowMeta.Authorized,
+    },
+  },
+  {
     path: '/login/mail-sent',
     name: 'mail-sent',
     component: () => import('@/views/VMailSentView/VMailSentView.vue'),
