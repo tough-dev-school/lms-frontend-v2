@@ -451,4 +451,8 @@
   .ProseMirror td {
     @apply border border-lightgray dark:border-darkmode-border p-8;
   }
+
+  .ProseMirror .tableWrapper {
+    @apply overflow-x-auto;
+  }
 </style>
