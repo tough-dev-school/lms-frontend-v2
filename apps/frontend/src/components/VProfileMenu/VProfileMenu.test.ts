@@ -139,10 +139,10 @@ describe('VProfileMenu', () => {
     expect(routerPushMock).toHaveBeenCalledWith({ name: 'settings' });
   });
 
-  test('Logout button redirects to login page', async () => {
+  test('Logout button redirects to logout page', async () => {
     await getButton().trigger('click');
     await getLogoutButton().trigger('click');
 
-    expect(routerPushMock).toHaveBeenCalledWith({ name: 'login' });
+    expect(routerPushMock).toHaveBeenCalledWith({ name: 'logout' });
   });
 });
