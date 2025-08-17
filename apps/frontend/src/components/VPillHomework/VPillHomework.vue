@@ -3,7 +3,7 @@
   import VPillItem from '@/components/VPill/VPillItem.vue';
   import type { HomeworkStats } from '@/api/generated-api';
   import { computed } from 'vue';
-  import { formatDate } from '@/utils/date';
+  import { formatDate, formatDateTime } from '@/utils/date';
   import dayjs from 'dayjs';
 
   const props = defineProps<{
@@ -58,7 +58,7 @@
       v-if="stats.question?.deadline"
       :class="{ 'text-red': isOverdue }">
       <div>
-        <div>Дедлайн: {{ formatDate(stats.question?.deadline) }}</div>
+        <div>Дедлайн: {{ formatDateTime(stats.question?.deadline) }}</div>
         <div v-if="isOverdue">Просрочен</div>
       </div>
     </VPillItem>
