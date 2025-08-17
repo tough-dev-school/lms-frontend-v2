@@ -2,8 +2,6 @@ import './style.css';
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
-import FloatingVue from 'floating-vue';
-import 'floating-vue/dist/style.css';
 import * as Sentry from '@sentry/vue';
 import AvatarCropper from 'vue-avatar-cropper';
 import { QueryClient, VueQueryPlugin } from '@tanstack/vue-query';
@@ -40,8 +38,6 @@ const queryClient = new QueryClient({
 });
 
 app.use(VueQueryPlugin, { queryClient });
-
-app.use(FloatingVue);
 app.use(AvatarCropper);
 
 app.use(router);
