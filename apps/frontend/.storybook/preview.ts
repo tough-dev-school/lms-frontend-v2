@@ -1,7 +1,5 @@
 import '../src/style.css';
 import { setup } from '@storybook/vue3-vite';
-import FloatingVue from 'floating-vue';
-import 'floating-vue/dist/style.css';
 import { VueQueryPlugin } from '@tanstack/vue-query';
 import { queryClient } from '../src/queryClient';
 import type { Preview } from '@storybook/vue3-vite';
@@ -44,7 +42,6 @@ const preview: Preview = {
 };
 
 setup((app) => {
-  app.use(FloatingVue);
   app.use(VueQueryPlugin, {
     queryClient,
   });
