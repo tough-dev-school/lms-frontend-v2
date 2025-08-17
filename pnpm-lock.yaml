@@ -62,9 +62,6 @@ importers:
       dayjs:
         specifier: ^1.11.13
         version: 1.11.13
-      floating-vue:
-        specifier: 2.0.0-beta.24
-        version: 2.0.0-beta.24(vue@3.5.17(typescript@5.8.3))
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -4912,15 +4909,6 @@ packages:
   flatted@3.3.3:
     resolution: {integrity: sha512-GX+ysw4PBCz0PzosHDepZGANEuFCMLrnRTiEy9McGjmkCQYwRq4A/X786G/fjM/+OjsWSU1ZrY5qyARZmO/uwg==}
 
-  floating-vue@2.0.0-beta.24:
-    resolution: {integrity: sha512-URSzP6YXaF4u1oZ9XGL8Sn8puuM7ivp5jkOUrpy5Q1mfo9BfGppJOn+ierTmsSUfJEeHBae8KT7r5DeI3vQIEw==}
-    peerDependencies:
-      '@nuxt/kit': ^3.2.0
-      vue: ^3.2.0
-    peerDependenciesMeta:
-      '@nuxt/kit':
-        optional: true
-
   flow-parser@0.273.1:
     resolution: {integrity: sha512-UTTfeYIhxYJ7xuW+HL9oyx6lnUGx1+W5Cyo8hOPgMrDU49GANfONtkb9dguDvIyQ20fz8CHZwB25ZP2206bBWQ==}
     engines: {node: '>=0.4.0'}
@@ -8586,11 +8574,6 @@ packages:
       vue:
         optional: true
 
-  vue-resize@2.0.0-alpha.1:
-    resolution: {integrity: sha512-7+iqOueLU7uc9NrMfrzbG8hwMqchfVfSzpVlCMeJQe4pyibqyoifDNbKTZvwxZKDvGkB+PdFeKvnGZMoEb8esg==}
-    peerDependencies:
-      vue: ^3.0.0
-
   vue-router@4.5.1:
     resolution: {integrity: sha512-ogAF3P97NPm8fJsE4by9dwSYtDwXIY1nFY9T6DyQnGHd1E2Da94w9JIolpe42LJGIl0DwOHBi8TcRPlPGwbTtw==}
     peerDependencies:
@@ -12152,10 +12135,6 @@ snapshots:
     dependencies:
       acorn: 8.14.1
 
-  acorn-import-attributes@1.9.5(acorn@8.15.0):
-    dependencies:
-      acorn: 8.15.0
-
   acorn-jsx@5.3.2(acorn@8.15.0):
     dependencies:
       acorn: 8.15.0
@@ -14277,12 +14256,6 @@ snapshots:
   flat@5.0.2: {}
 
   flatted@3.3.3: {}
-
-  floating-vue@2.0.0-beta.24(vue@3.5.17(typescript@5.8.3)):
-    dependencies:
-      '@floating-ui/dom': 1.1.1
-      vue: 3.5.17(typescript@5.8.3)
-      vue-resize: 2.0.0-alpha.1(vue@3.5.17(typescript@5.8.3))
 
   flow-parser@0.273.1: {}
 
@@ -18290,10 +18263,6 @@ snapshots:
     optionalDependencies:
       vue: 3.5.17(typescript@5.8.3)
 
-  vue-resize@2.0.0-alpha.1(vue@3.5.17(typescript@5.8.3)):
-    dependencies:
-      vue: 3.5.17(typescript@5.8.3)
-
   vue-router@4.5.1(vue@3.5.17(typescript@5.8.3)):
     dependencies:
       '@vue/devtools-api': 6.6.4
@@ -18488,8 +18457,8 @@ snapshots:
       '@webassemblyjs/ast': 1.14.1
       '@webassemblyjs/wasm-edit': 1.14.1
       '@webassemblyjs/wasm-parser': 1.14.1
-      acorn: 8.15.0
-      acorn-import-attributes: 1.9.5(acorn@8.15.0)
+      acorn: 8.14.1
+      acorn-import-attributes: 1.9.5(acorn@8.14.1)
       browserslist: 4.25.0
       chrome-trace-event: 1.0.4
       enhanced-resolve: 5.18.1
