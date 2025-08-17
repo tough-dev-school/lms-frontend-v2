@@ -37,8 +37,8 @@ describe('VRadioSwitch', () => {
       },
       global: {
         components: {
-          SunFilledIcon,
-          MoonFilledIcon,
+          IconSunFilled,
+          IconMoonFilled,
         },
       },
     });
@@ -56,8 +56,8 @@ describe('VRadioSwitch', () => {
       },
       global: {
         components: {
-          SunFilledIcon,
-          MoonFilledIcon,
+          IconSunFilled,
+          IconMoonFilled,
         },
       },
     });
