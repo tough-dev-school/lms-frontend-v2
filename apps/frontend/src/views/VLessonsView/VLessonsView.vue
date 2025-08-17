@@ -54,7 +54,7 @@
     v-if="!(isStudiesLoading || isModuleLoading || isLessonsLoading)"
     :title="moduleName"
     :breadcrumbs="breadcrumbs">
-    <VHtmlContent v-if="moduleText" :content="moduleText" />
+    <VHtmlContent v-if="moduleText" :html="moduleText" />
     <div class="VLessonsView gap-32 flex flex-col">
       <div v-if="lessons && lessons.length > 0" class="VLessonsView__Layout">
         <VLessonCard

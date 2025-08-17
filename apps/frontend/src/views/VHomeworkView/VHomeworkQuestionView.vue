@@ -70,7 +70,7 @@
       <VPillHomework v-if="lesson?.homework" :stats="lesson?.homework" />
     </template>
     <section class="flex flex-col gap-24">
-      <VHtmlContent :content="question.text" />
+      <VHtmlContent :html="question.text" />
       <VCreateAnswer
         v-model="content"
         :is-pending="isCreateAnswerPending"
