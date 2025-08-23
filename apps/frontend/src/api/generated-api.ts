@@ -58,6 +58,8 @@ export interface Answer {
   /** @format uuid */
   parent: string;
   text: string;
+  legacy_text?: string;
+  content?: any;
   src: string;
   has_descendants: boolean;
   is_editable: boolean;
@@ -76,6 +78,7 @@ export interface AnswerCreate {
   /** @format uuid */
   parent?: string | null;
   text: string;
+  content?: any;
 }
 
 export interface AnswerImage {
@@ -104,6 +107,8 @@ export interface AnswerTree {
   /** @format uuid */
   parent: string;
   text: string;
+  legacy_text?: string;
+  content?: any;
   src: string;
   has_descendants: boolean;
   is_editable: boolean;
@@ -111,9 +116,9 @@ export interface AnswerTree {
   descendants: AnswerTree[];
 }
 
-/** For swagger only */
 export interface AnswerUpdate {
   text: string;
+  content?: any;
 }
 
 export interface Breadcrumbs {
@@ -210,7 +215,7 @@ export interface CourseLink {
 }
 
 export interface CourseSimple {
-  /** @maxLength 255 */
+  name?: string;
   /**
    * Название для международных покупок
    * @maxLength 255
@@ -411,6 +416,10 @@ export interface NotionMaterial {
   title?: string;
 }
 
+export interface Ok {
+  ok?: boolean;
+}
+
 export interface OrderDraft {
   course: CourseSimple;
   price: Price;
@@ -533,12 +542,9 @@ export interface PasswordResetConfirm {
   token: string;
 }
 
-export interface PatchedAnswerCreate {
-  /** @format uuid */
-  question?: string;
-  /** @format uuid */
-  parent?: string | null;
+export interface PatchedAnswerUpdate {
   text?: string;
+  content?: any;
 }
 
 export interface PatchedDiploma {
@@ -701,11 +707,6 @@ export interface ReactionDetailed {
   answer: string;
 }
 
-/** Serializer used for refreshing JWTs. */
-export interface RefreshAuthToken {
-  token: string;
-}
-
 export interface RestAuthDetail {
   detail?: string;
 }
@@ -724,6 +725,10 @@ export interface TemporarySoonToBeDepricatedQuestion {
    * @format date-time
    */
   deadline?: string | null;
+}
+
+export interface Token {
+  token?: string;
 }
 
 export interface User {
@@ -1311,7 +1316,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     authAsRetrieve: (userId: number, params: RequestParams = {}) =>
-      this.http.request<Record<string, string>, any>({
+      this.http.request<Token, any>({
         path: `/api/v2/auth/as/${userId}/`,
         method: 'GET',
         secure: true,
@@ -1397,7 +1402,7 @@ export class Api<SecurityDataType extends unknown> {
       token: string,
       params: RequestParams = {},
     ) =>
-      this.http.request<Record<string, string>, any>({
+      this.http.request<Token, any>({
         path: `/api/v2/auth/passwordless-token/${token}/`,
         method: 'GET',
         secure: true,
@@ -1417,7 +1422,7 @@ export class Api<SecurityDataType extends unknown> {
       userEmail: string,
       params: RequestParams = {},
     ) =>
-      this.http.request<Record<string, boolean>, any>({
+      this.http.request<Ok, any>({
         path: `/api/v2/auth/passwordless-token/request/${userEmail}/`,
         method: 'GET',
         secure: true,
@@ -1435,26 +1440,6 @@ export class Api<SecurityDataType extends unknown> {
     authTokenCreate: (data: JSONWebToken, params: RequestParams = {}) =>
       this.http.request<JSONWebToken, any>({
         path: `/api/v2/auth/token/`,
-        method: 'POST',
-        body: data,
-        type: ContentType.Json,
-        format: 'json',
-        ...params,
-      }),
-
-    /**
-     * @description API View that returns a refreshed token (with new expiration) based on existing token If 'orig_iat' field (original issued-at-time) is found it will first check if it's within expiration window, then copy it to the new token.
-     *
-     * @tags auth
-     * @name AuthTokenRefreshCreate
-     * @request POST:/api/v2/auth/token/refresh/
-     */
-    authTokenRefreshCreate: (
-      data: RefreshAuthToken,
-      params: RequestParams = {},
-    ) =>
-      this.http.request<RefreshAuthToken, any>({
-        path: `/api/v2/auth/token/refresh/`,
         method: 'POST',
         body: data,
         type: ContentType.Json,
@@ -1792,10 +1777,10 @@ export class Api<SecurityDataType extends unknown> {
      */
     homeworkAnswersPartialUpdate: (
       slug: string,
-      data: PatchedAnswerCreate,
+      data: PatchedAnswerUpdate,
       params: RequestParams = {},
     ) =>
-      this.http.request<AnswerCreate, any>({
+      this.http.request<AnswerUpdate, any>({
         path: `/api/v2/homework/answers/${slug}/`,
         method: 'PATCH',
         body: data,
