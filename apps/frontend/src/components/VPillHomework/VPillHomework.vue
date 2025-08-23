@@ -44,12 +44,12 @@
       :class="{ 'text-gray': crossCheckDate && !isOverCrossCheckDate }">
       <div>
         <div>
-          Работы коллег:
+          Работы на проверку:
           {{ stats.crosschecks?.checked }} /
           {{ stats.crosschecks?.total }}
         </div>
         <div v-if="crossCheckDate && !isOverCrossCheckDate">
-          Задание появится:
+          отправим
           {{ formatDate(crossCheckDate) }}
         </div>
       </div>

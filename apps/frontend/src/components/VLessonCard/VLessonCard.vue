@@ -58,6 +58,12 @@
     </div>
     <div v-if="lesson.homework">
       <table class="w-full">
+        <tr>
+          <td class="font-bold">Статус</td>
+          <td class="text-right whitespace-nowrap">
+            {{ lesson.homework.is_sent ? 'Отправлена' : 'Не отправлена' }}
+          </td>
+        </tr>
         <tr v-if="lesson.homework.crosschecks">
           <td class="font-bold">Проверенные домашки коллег</td>
           <td class="text-right">
