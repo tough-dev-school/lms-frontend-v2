@@ -3,7 +3,7 @@ import { VueWrapper, mount, RouterLinkStub } from '@vue/test-utils';
 import VAnswer from '@/components/VAnswer/VAnswer.vue';
 import { getName } from '@/utils/getName';
 import type VAvatar from '@/components/VAvatar/VAvatar.vue';
-import type VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
+import type VAnswerContent from '@/components/VAnswerContent/VAnswerContent.vue';
 import dayjs from 'dayjs';
 import { cloneDeep } from 'lodash-es';
 import { faker } from '@faker-js/faker';
@@ -70,7 +70,7 @@ describe('VAnswer', () => {
     return wrapper.findComponent<typeof VAvatar>('[data-testid="avatar"]');
   };
   const getContentWrapper = () => {
-    return wrapper.findComponent<typeof VHtmlContent>(
+    return wrapper.findComponent<typeof VAnswerContent>(
       '[data-testid="content"]',
     );
   };
@@ -101,8 +101,8 @@ describe('VAnswer', () => {
     expect(getDateWrapper().text()).toContain(years);
   });
 
-  test('props to render content passed to VHtmlContent', () => {
-    expect(getContentWrapper().props().html).toBe(defaultProps.answer.content);
+  test('props to render content passed to VAnswerContent', () => {
+    expect(getContentWrapper().props().answer).toBe(defaultProps.answer);
   });
 
   test('answer has own badge if user is not matching author', () => {
