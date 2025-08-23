@@ -57,8 +57,7 @@ export interface Answer {
   author: UserSafe;
   /** @format uuid */
   parent: string;
-  text: string;
-  legacy_text?: string;
+  legacy_text: string;
   content?: any;
   src: string;
   has_descendants: boolean;
@@ -77,8 +76,7 @@ export interface AnswerCreate {
   question: string;
   /** @format uuid */
   parent?: string | null;
-  text: string;
-  content?: any;
+  content: any;
 }
 
 export interface AnswerImage {
@@ -106,8 +104,7 @@ export interface AnswerTree {
   author: UserSafe;
   /** @format uuid */
   parent: string;
-  text: string;
-  legacy_text?: string;
+  legacy_text: string;
   content?: any;
   src: string;
   has_descendants: boolean;
@@ -117,8 +114,7 @@ export interface AnswerTree {
 }
 
 export interface AnswerUpdate {
-  text: string;
-  content?: any;
+  content: any;
 }
 
 export interface Breadcrumbs {
