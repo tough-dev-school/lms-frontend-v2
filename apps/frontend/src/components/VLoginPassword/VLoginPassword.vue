@@ -58,7 +58,7 @@
 </script>
 
 <template>
-  <VCard tag="form" title="Вход и регистрация" @submit.prevent="handleSubmit">
+  <VCard tag="form" title="Вход" @submit.prevent="handleSubmit">
     <div class="flex flex-col gap-16">
       <VTextInput
         v-model="username"

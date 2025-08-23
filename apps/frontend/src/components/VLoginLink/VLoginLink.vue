@@ -30,10 +30,10 @@
 </script>
 
 <template>
-  <VCard tag="form" title="Вход и регистрация" @submit.prevent="handleLogin">
+  <VCard tag="form" title="Вход" @submit.prevent="handleLogin">
     <VTextInput
       v-model="email"
-      label="Электронная почта"
+      label="Почта, на которую купили курс"
       tip="Мы отправим ссылку для входа по этому адресу"
       type="email"
       autocomplete="username" />
