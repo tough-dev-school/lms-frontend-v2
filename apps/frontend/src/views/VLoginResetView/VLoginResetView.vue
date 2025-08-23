@@ -34,7 +34,7 @@
     <VCard tag="form" title="Сброс пароля" @submit.prevent="handleResetRequest">
       <VTextInput
         v-model="email"
-        label="Электронная почта"
+        label="Почта, на которую купили курс"
         tip="Мы отправим ссылку для сброса пароля по этому адресу"
         type="email"
         autocomplete="username"
