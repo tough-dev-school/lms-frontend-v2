@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { Editor, EditorContent } from '@tiptap/vue-3';
-  import { getExtensions } from '@/utils/tiptapExtensions';
+  import { getExtensions } from '@/utils/tiptap';
   import { marked } from 'marked';
   import {
     IconBold,
@@ -53,7 +53,7 @@
    *   - Markdown produced by tiptap is used to be sent to LMS
    */
 
-  const content = defineModel<string>({ required: true });
+  const content = defineModel<string | object>({ required: true });
 
   const currentEditor = useTemplateRef('currentEditor');
   const isImageLoading = ref(false);
@@ -182,7 +182,10 @@
       },
     },
     onUpdate: () => {
-      content.value = editor.getHTML();
+      content.value = editor.getJSON();
+    },
+    onCreate: () => {
+      content.value = editor.getJSON();
     },
   });
 

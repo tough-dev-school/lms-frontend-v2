@@ -25,3 +25,8 @@ export const getExtensions = ({ placeholder }: { placeholder: string }) => [
     },
   }),
 ];
+
+export const getEmptyContent = () => ({
+  type: 'doc',
+  content: [{ type: 'paragraph' }],
+});

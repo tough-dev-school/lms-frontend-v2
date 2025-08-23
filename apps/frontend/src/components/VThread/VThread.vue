@@ -11,13 +11,15 @@
   /* eslint-disable import-x/first */
   import VAnswer from '@/components/VAnswer';
   import { ref, useTemplateRef } from 'vue';
-  import { onClickOutside, useStorage } from '@vueuse/core';
+  import { onClickOutside } from '@vueuse/core';
   import { useRoute, useRouter } from 'vue-router';
   import { useHomeworkAnswerCreateMutation } from '@/query';
   import { useQueryClient } from '@tanstack/vue-query';
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
   import VExistingAnswer from '@/components/VExistingAnswer';
   import type { AnswerTree, User } from '@/api/generated-api';
+  import { useEditorAutosave } from '@/composables/useEditorAutosave';
+  import { getEmptyContent } from '@/utils/tiptap';
   import VThreadProvider from '.';
 
   const props = defineProps<{
@@ -51,18 +53,12 @@
   const { mutateAsync: createComment, isPending: isCreateCommentPending } =
     useHomeworkAnswerCreateMutation(queryClient);
 
-  const content = useStorage(
-    [
-      'commentText',
-      props.answer.question,
-      props.answer.slug,
-      props.answer.parent,
-    ]
-      .filter(Boolean)
-      .join('-'),
-    '',
-    localStorage,
-  );
+  const { content } = useEditorAutosave([
+    'commentText',
+    props.answer.question,
+    props.answer.slug,
+    props.answer.parent,
+  ]);
 
   const handleCreateComment = async () => {
     if (!props.answer) throw new Error('Answer not found');
@@ -74,7 +70,7 @@
         content: content.value,
       });
 
-      content.value = '';
+      content.value = getEmptyContent();
 
       replyMode.value = false;
 

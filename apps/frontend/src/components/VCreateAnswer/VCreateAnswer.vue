@@ -11,10 +11,10 @@
     send: [];
   }>();
 
-  const content = defineModel<string>({ required: true });
+  const content = defineModel<string | object>({ required: true });
 
   const isDisabled = computed(
-    () => !(content.value.length > 0) || props.isPending,
+    () => !content.value.content.content || props.isPending,
   );
 </script>
 

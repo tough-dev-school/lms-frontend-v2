@@ -1,17 +1,7 @@
 <script lang="ts" setup>
-  import { computed } from 'vue';
-  import { generateHTML } from '@tiptap/vue-3';
-  import { getExtensions } from '@/utils/tiptapExtensions';
-
-  const props = defineProps<{
-    content: string | object;
+  defineProps<{
+    html: string;
   }>();
-
-  const html = computed(() => {
-    if (typeof props.content === 'string') return props.content;
-
-    return generateHTML(props.content, getExtensions({ placeholder: '' }));
-  });
 </script>
 
 <template>

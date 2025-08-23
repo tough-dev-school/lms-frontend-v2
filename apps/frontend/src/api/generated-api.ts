@@ -59,7 +59,6 @@ export interface Answer {
   parent: string;
   legacy_text: string;
   content?: any;
-  src: string;
   has_descendants: boolean;
   is_editable: boolean;
   reactions: ReactionDetailed[];

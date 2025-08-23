@@ -2,7 +2,7 @@
   import VAvatar from '@/components/VAvatar/VAvatar.vue';
   import { relativeDate } from '@/utils/date';
   import { getName } from '@/utils/getName';
-  import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
+  import VAnswerContent from '@/components/VAnswerContent/VAnswerContent.vue';
   import { computed, ref } from 'vue';
   import VReactions from '@/components/VReactions/VReactions.vue';
   import { IconMoodHappy } from '@tabler/icons-vue';
@@ -58,9 +58,7 @@
       <div class="flex-grow" />
       <slot name="header" />
     </div>
-    <VHtmlContent
-      :content="answer.content ?? answer.legacy_text"
-      data-testid="content" />
+    <VAnswerContent :answer="answer" data-testid="content" />
     <div class="flex justify-start flex-wrap items-center gap-8">
       <slot name="footer" />
       <div class="text-sub leading-tight text-gray" data-testid="date">

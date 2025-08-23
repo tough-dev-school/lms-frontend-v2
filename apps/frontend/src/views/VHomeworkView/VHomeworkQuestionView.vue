@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
-  import { useStorage } from '@vueuse/core';
+  import { useEditorAutosave } from '@/composables/useEditorAutosave';
   import { useRouter } from 'vue-router';
   import { useQueryClient } from '@tanstack/vue-query';
   import {
@@ -30,11 +30,7 @@
     () => question.value?.breadcrumbs.lesson?.id,
   );
 
-  const content = useStorage(
-    ['draft', props.questionId].filter(Boolean).join('-'),
-    '',
-    localStorage,
-  );
+  const { content } = useEditorAutosave(['draft', props.questionId]);
 
   const queryClient = useQueryClient();
   const {
@@ -70,7 +66,7 @@
       <VPillHomework v-if="lesson?.homework" :stats="lesson?.homework" />
     </template>
     <section class="flex flex-col gap-24">
-      <VHtmlContent :content="question.text" />
+      <VHtmlContent :html="question.text" />
       <VCreateAnswer
         v-model="content"
         :is-pending="isCreateAnswerPending"

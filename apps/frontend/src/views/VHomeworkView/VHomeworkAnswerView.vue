@@ -6,7 +6,7 @@
   import VCrossChecks from '@/components/VCrossChecks/VCrossChecks.vue';
   import VDetails from '@/components/VDetails/VDetails.vue';
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
-  import { useStorage } from '@vueuse/core';
+  import { useEditorAutosave } from '@/composables/useEditorAutosave';
   import VExistingAnswer from '@/components/VExistingAnswer';
   import {
     useHomeworkCrosschecksQuery,
@@ -24,6 +24,7 @@
   import VPillHomework from '@/components/VPillHomework/VPillHomework.vue';
   import { useHomeworkBreadcrumbs } from './useHomeworkBreadcrumbs';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
+  import { getEmptyContent } from '@/utils/tiptap';
 
   const props = defineProps<{
     questionId: string;
@@ -69,11 +70,11 @@
     return undefined;
   });
 
-  const content = useStorage(
-    ['commentText', props.questionId, props.answerId].filter(Boolean).join('-'),
-    '',
-    localStorage,
-  );
+  const { content } = useEditorAutosave([
+    'commentText',
+    props.questionId,
+    props.answerId,
+  ]);
 
   const handleCreateComment = async () => {
     try {
@@ -83,7 +84,7 @@
         parentId: props.answerId,
       });
 
-      content.value = '';
+      content.value = getEmptyContent();
 
       router.push({
         ...router.currentRoute.value,
@@ -180,7 +181,7 @@
       </div>
       <VDetails>
         <template #summary> Текст задания </template>
-        <VHtmlContent :content="question.text" />
+        <VHtmlContent :html="question.text" />
       </VDetails>
       <VExistingAnswer
         :answer-id="answer.slug"
