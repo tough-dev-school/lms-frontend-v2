@@ -60,7 +60,7 @@
       <table class="w-full">
         <tr>
           <td class="font-bold">Статус</td>
-          <td class="text-right">
+          <td class="text-right whitespace-nowrap">
             {{ lesson.homework.is_sent ? 'Отправлена' : 'Не отправлена' }}
           </td>
         </tr>
