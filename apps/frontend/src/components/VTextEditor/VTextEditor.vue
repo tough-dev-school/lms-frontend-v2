@@ -454,7 +454,7 @@
   }
 
   .ProseMirror table {
-    @apply border border-lightgray dark:border-darkmode-border;
+    @apply border border-lightgray dark:border-darkmode-border bg-white;
   }
 
   .ProseMirror th {
