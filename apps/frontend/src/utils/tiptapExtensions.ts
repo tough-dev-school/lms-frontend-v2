@@ -1,7 +1,7 @@
 import StarterKit from '@tiptap/starter-kit';
 import { Placeholder } from '@tiptap/extensions';
 import Image from '@tiptap/extension-image';
-// import type { Extension } from '@tiptap/vue-3';
+import { TableKit } from '@tiptap/extension-table';
 
 export const getExtensions = ({ placeholder }: { placeholder: string }) => [
   StarterKit.configure({
@@ -16,4 +16,12 @@ export const getExtensions = ({ placeholder }: { placeholder: string }) => [
     placeholder,
   }),
   Image.configure({ inline: true }),
+  TableKit.configure({
+    table: {
+      resizable: true, // this is important to get tableWrapper
+      HTMLAttributes: {
+        class: 'border-collapse table-auto w-full',
+      },
+    },
+  }),
 ];

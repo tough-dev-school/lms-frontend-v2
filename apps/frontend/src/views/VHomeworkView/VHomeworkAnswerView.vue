@@ -180,7 +180,7 @@
       </div>
       <VDetails>
         <template #summary> Текст задания </template>
-        <VHtmlContent :html="question.text" />
+        <VHtmlContent :content="question.text" />
       </VDetails>
       <VExistingAnswer
         :answer-id="answer.slug"
