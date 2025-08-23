@@ -47,7 +47,7 @@
     try {
       await updateAnswerMutation({
         answerId: props.answer.slug,
-        content,
+        content: content.value,
       });
       isEdit.value = false;
     } catch (error) {
