@@ -23,7 +23,7 @@
     IconColumnRemove,
     IconTableOff,
   } from '@tabler/icons-vue';
-  import { onBeforeUnmount, ref, useTemplateRef, watch } from 'vue';
+  import { onBeforeUnmount, ref, useTemplateRef, watch, computed } from 'vue';
   import { onKeyDown, useKeyModifier, useFocusWithin } from '@vueuse/core';
   import VLoader from '@/components/VLoader/VLoader.vue';
   import { useHomeworkAnswerSendImageMutation } from '@/query';
@@ -183,9 +183,11 @@
     },
     onUpdate: () => {
       content.value = editor.getJSON();
+      isEditorEmpty.value = editor.isEmpty;
     },
     onCreate: () => {
       content.value = editor.getJSON();
+      isEditorEmpty.value = editor.isEmpty;
     },
   });
 
@@ -279,6 +281,14 @@
     }
     isImageLoading.value = false;
   };
+
+  const isEditorEmpty = ref(true);
+
+  const isEmpty = computed(() => isEditorEmpty.value);
+
+  defineExpose({
+    isEmpty,
+  });
 
   onBeforeUnmount(() => {
     editor.destroy();
