@@ -27,6 +27,7 @@
   import { onKeyDown, useKeyModifier, useFocusWithin } from '@vueuse/core';
   import VLoader from '@/components/VLoader/VLoader.vue';
   import { useHomeworkAnswerSendImageMutation } from '@/query';
+  import { isEqual } from 'lodash-es';
 
   const props = withDefaults(
     defineProps<{
@@ -193,12 +194,12 @@
 
   watch(
     () => content.value,
-    (newHtml) => {
-      const isSame = editor.getHTML() === newHtml;
+    (newContent) => {
+      const isSame = isEqual(editor.getJSON(), newContent);
 
       if (isSame) return;
 
-      editor.commands.setContent(newHtml, { emitUpdate: false });
+      editor.commands.setContent(newContent, { emitUpdate: false });
     },
     { deep: true },
   );
