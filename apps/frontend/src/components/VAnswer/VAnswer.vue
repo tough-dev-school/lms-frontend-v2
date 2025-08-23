@@ -58,7 +58,9 @@
       <div class="flex-grow" />
       <slot name="header" />
     </div>
-    <VHtmlContent :content="answer.text" data-testid="content" />
+    <VHtmlContent
+      :content="answer.content ?? answer.legacy_text"
+      data-testid="content" />
     <div class="flex justify-start flex-wrap items-center gap-8">
       <slot name="footer" />
       <div class="text-sub leading-tight text-gray" data-testid="date">

@@ -1,10 +1,7 @@
 <script setup lang="ts">
-  import { Placeholder } from '@tiptap/extensions';
   import { Editor, EditorContent } from '@tiptap/vue-3';
-  import StarterKit from '@tiptap/starter-kit';
-  import Image from '@tiptap/extension-image';
+  import { getExtensions } from '@/utils/tiptapExtensions';
   import { marked } from 'marked';
-  import { renderToMarkdown } from '@tiptap/static-renderer/pm/markdown';
   import {
     BoldIcon,
     H1Icon,
@@ -48,11 +45,7 @@
    *   - Markdown produced by tiptap is used to be sent to LMS
    */
 
-  const html = defineModel<string>('html', { required: true });
-  /**
-   * Setting this model is not used to set editor state
-   */
-  const markdown = defineModel<string>('markdown', { required: true });
+  const content = defineModel<string>({ required: true });
 
   const currentEditor = useTemplateRef('currentEditor');
   const isImageLoading = ref(false);
@@ -92,23 +85,10 @@
 
   const { mutateAsync: sendImage } = useHomeworkAnswerSendImageMutation();
 
-  const extensions = [
-    StarterKit.configure({
-      link: {
-        openOnClick: false,
-        autolink: true,
-        linkOnPaste: true,
-        defaultProtocol: 'https',
-      },
-    }),
-    Placeholder.configure({
-      placeholder: props.placeholder,
-    }),
-    Image.configure({ inline: true }),
-  ];
+  const extensions = getExtensions({ placeholder: props.placeholder });
 
   const editor = new Editor({
-    content: html.value,
+    content: content.value,
     extensions,
     editorProps: {
       handlePaste: (_view, event) => {
@@ -194,22 +174,12 @@
       },
     },
     onUpdate: () => {
-      html.value = editor.getHTML();
-      markdown.value = renderToMarkdown({
-        content: editor.state.doc,
-        extensions,
-      });
-    },
-    onCreate: () => {
-      markdown.value = renderToMarkdown({
-        content: editor.state.doc,
-        extensions,
-      });
+      content.value = editor.getHTML();
     },
   });
 
   watch(
-    () => html.value,
+    () => content.value,
     (newHtml) => {
       const isSame = editor.getHTML() === newHtml;
 

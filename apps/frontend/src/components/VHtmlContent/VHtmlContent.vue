@@ -1,9 +1,17 @@
 <script lang="ts" setup>
-  export interface Props {
-    content: string;
-  }
+  import { computed } from 'vue';
+  import { generateHTML } from '@tiptap/vue-3';
+  import { getExtensions } from '@/utils/tiptapExtensions';
 
-  defineProps<Props>();
+  const props = defineProps<{
+    content: string | object;
+  }>();
+
+  const html = computed(() => {
+    if (typeof props.content === 'string') return props.content;
+
+    return generateHTML(props.content, getExtensions({ placeholder: '' }));
+  });
 </script>
 
 <template>
@@ -11,7 +19,7 @@
   <!-- #TODO Check for XSS-->
   <article
     class="prose prose-pre:bg-transparent prose-a:break-words prose-custom"
-    v-html="content" />
+    v-html="html" />
 </template>
 
 <style>

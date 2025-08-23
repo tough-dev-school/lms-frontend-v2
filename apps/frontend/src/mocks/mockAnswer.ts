@@ -14,8 +14,16 @@ export const mockAnswer = (
     slug: faker.string.uuid(),
     question: faker.string.uuid(),
     author: mockUserSafe(),
-    text,
-    src: 'markdown produced from .text will be here',
+    content: {
+      type: 'doc',
+      content: [
+        {
+          type: 'paragraph',
+          content: [{ type: 'text', text }],
+        },
+      ],
+    },
+    legacy_text: text,
     has_descendants: false,
     reactions: [],
     is_editable: true,

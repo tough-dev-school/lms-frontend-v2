@@ -383,16 +383,16 @@ export const useHomeworkCrosschecksQuery = (
 export const useHomeworkAnswerCreateMutation = (queryClient: QueryClient) => {
   return useMutation({
     mutationFn: async ({
-      textInMarkdown,
+      content,
       questionId,
       parentId,
     }: {
-      textInMarkdown: string;
+      content: string | object;
       questionId: string;
       parentId?: string;
     }) => {
       return await api.homeworkAnswersCreate({
-        text: textInMarkdown,
+        content,
         question: questionId,
         parent: parentId,
       });
@@ -415,13 +415,13 @@ export const useHomeworkAnswerUpdateMutation = (queryClient: QueryClient) => {
   return useMutation({
     mutationFn: async ({
       answerId,
-      textInMarkdown,
+      content,
     }: {
       answerId: string;
-      textInMarkdown: string;
+      content: string | object;
     }) =>
       await api.homeworkAnswersPartialUpdate(answerId, {
-        text: textInMarkdown,
+        content,
       }),
     onSuccess: (_, { answerId }) => {
       queryClient.invalidateQueries({

@@ -9,7 +9,6 @@
     useHomeworkQuestionQuery,
     useLessonQuery,
   } from '@/query';
-  import { ref } from 'vue';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import VPillHomework from '@/components/VPillHomework/VPillHomework.vue';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
@@ -31,12 +30,11 @@
     () => question.value?.breadcrumbs.lesson?.id,
   );
 
-  const html = useStorage(
+  const content = useStorage(
     ['draft', props.questionId].filter(Boolean).join('-'),
     '',
     localStorage,
   );
-  const markdown = ref('');
 
   const queryClient = useQueryClient();
   const {
@@ -46,7 +44,7 @@
 
   const handleCreateAnswer = async () => {
     const answer = await createAnswerMutation({
-      textInMarkdown: markdown.value,
+      content: content.value,
       questionId: props.questionId,
       parentId: undefined,
     });
@@ -74,8 +72,7 @@
     <section class="flex flex-col gap-24">
       <VHtmlContent :content="question.text" />
       <VCreateAnswer
-        v-model:html="html"
-        v-model:markdown="markdown"
+        v-model="content"
         :is-pending="isCreateAnswerPending"
         @send="handleCreateAnswer" />
     </section>
