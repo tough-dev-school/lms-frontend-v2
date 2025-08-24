@@ -13,6 +13,10 @@
 </template>
 
 <style>
+  .prose {
+    @apply flex flex-col;
+  }
+
   .prose > *:first-child {
     margin-top: 0;
   }
