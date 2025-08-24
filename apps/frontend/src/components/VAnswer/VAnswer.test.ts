@@ -102,7 +102,9 @@ describe('VAnswer', () => {
   });
 
   test('props to render content passed to VAnswerContent', () => {
-    expect(getContentWrapper().props().answer).toBe(defaultProps.answer);
+    expect(getContentWrapper().props().answer).toStrictEqual(
+      defaultProps.answer,
+    );
   });
 
   test('answer has own badge if user is not matching author', () => {
