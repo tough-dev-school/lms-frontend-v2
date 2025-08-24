@@ -6,8 +6,7 @@
 <template>
   <a
     class="z-50 fixed aspect-square w-48 items-center justify-center flex shadow-sm bottom-16 right-24 rounded-full bg-blue text-white"
-    :href="SUPPORT_CHAT_URL"
-    target="_blank">
+    :href="SUPPORT_CHAT_URL">
     <IconBrandTelegram />
   </a>
 </template>
