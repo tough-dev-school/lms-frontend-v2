@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-  import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
   import { useEditorAutosave } from '@/composables/useEditorAutosave';
   import { useRouter } from 'vue-router';
@@ -13,6 +12,7 @@
   import VPillHomework from '@/components/VPillHomework/VPillHomework.vue';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
   import { useHomeworkBreadcrumbs } from './useHomeworkBreadcrumbs';
+  import VMakrdownContent from '@/components/VMakrdownContent/VMakrdownContent.vue';
 
   interface Props {
     questionId: string;
@@ -66,7 +66,7 @@
       <VPillHomework v-if="lesson?.homework" :stats="lesson?.homework" />
     </template>
     <section class="flex flex-col gap-24">
-      <VHtmlContent :html="question.text" />
+      <VMakrdownContent :markdown="question.markdown_text" />
       <VCreateAnswer
         v-model="content"
         :is-pending="isCreateAnswerPending"

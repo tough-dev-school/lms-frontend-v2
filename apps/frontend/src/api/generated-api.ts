@@ -657,7 +657,7 @@ export interface Question {
    * @maxLength 256
    */
   name: string;
-  text: string;
+  markdown_text: string;
   /**
    * Дедлайн
    * @format date-time
@@ -674,7 +674,7 @@ export interface QuestionDetail {
    * @maxLength 256
    */
   name: string;
-  text: string;
+  markdown_text: string;
   /**
    * Дедлайн
    * @format date-time
