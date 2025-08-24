@@ -303,7 +303,7 @@
     <div
       v-if="editor"
       class="sticky top-0 z-10 bg-white dark:bg-darkmode-layer2 dark:text-white border-b border-lightgray dark:border-darkmode-border">
-      <div class="flex items-center">
+      <div class="flex items-center flex-wrap">
         <button
           class="TextEditor__Button"
           :class="{

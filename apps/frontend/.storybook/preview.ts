@@ -2,6 +2,8 @@ import '../src/style.css';
 import { setup } from '@storybook/vue3-vite';
 import { VueQueryPlugin } from '@tanstack/vue-query';
 import { queryClient } from '../src/queryClient';
+import { createRouter, createWebHistory } from 'vue-router';
+import { routes } from '../src/router';
 import type { Preview } from '@storybook/vue3-vite';
 
 const preview: Preview = {
@@ -45,6 +47,14 @@ setup((app) => {
   app.use(VueQueryPlugin, {
     queryClient,
   });
+
+  // Create a router instance for Storybook without navigation guards
+  const router = createRouter({
+    history: createWebHistory(),
+    routes,
+  });
+
+  app.use(router);
 });
 
 export default preview;

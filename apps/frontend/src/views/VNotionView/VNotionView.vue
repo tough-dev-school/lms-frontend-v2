@@ -72,7 +72,7 @@
       to: {
         name: 'materials',
         params: {
-          materialId: materialData.value.content.slug,
+          materialId: props.materialId,
         },
       },
     });
