@@ -74,6 +74,30 @@ describe('visual regression test for', () => {
       name: 'Materials Missing',
       path: '/iframe?id=app-vnotionview--empty&viewMode=story',
     },
+    {
+      name: 'Modules',
+      path: '/iframe?id=app-vmodulesview--default&viewMode=story',
+    },
+    {
+      name: 'No Modules',
+      path: '/iframe?id=app-vmodulesview--empty&viewMode=story',
+    },
+    {
+      name: 'Modules Without Extra Info',
+      path: '/iframe?id=app-vmodulesview--without-extra-info&viewMode=story',
+    },
+    {
+      name: 'Lessons',
+      path: '/iframe?id=app-vlessonsview--default&viewMode=story',
+    },
+    {
+      name: 'No Lessons',
+      path: '/iframe?id=app-vlessonsview--empty&viewMode=story',
+    },
+    {
+      name: 'Lessons Without Module Text',
+      path: '/iframe?id=app-vlessonsview--without-module-text&viewMode=story',
+    },
   ];
 
   scenarios.forEach((scenario) => {
