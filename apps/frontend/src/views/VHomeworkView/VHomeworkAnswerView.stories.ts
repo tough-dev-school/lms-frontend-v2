@@ -30,7 +30,7 @@ const STATIC_QUESTION: QuestionDetail = {
   ...mockQuestion({
     slug: 'javascript-fundamentals',
     name: 'Основы JavaScript',
-    text: '<p>Выполните задания по основам JavaScript. Создайте простое приложение, которое демонстрирует работу с переменными, функциями и объектами.</p>',
+    markdown_text: `Выполните задания по основам JavaScript. Создайте простое приложение, которое демонстрирует работу с переменными, функциями и объектами.`,
     deadline: '2024-02-01T23:59:00Z',
   }),
   homework: {
