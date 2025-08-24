@@ -1,18 +1,16 @@
 <script lang="ts" setup>
   import VCard from '@/components/VCard/VCard.vue';
   import { computed } from 'vue';
-  import { useChatra } from '@/composables/useChatra';
   import { getProviderByEmail } from '@brachkow/email-providers';
   import VPublicLayout from '@/layouts/VPublicLayout/VPublicLayout.vue';
   import VButton from '@/components/VButton/VButton.vue';
+  import { SUPPORT_CHAT_URL } from '@/constants';
 
   const props = defineProps<{
     email?: string;
   }>();
 
   const emailProvider = computed(() => getProviderByEmail(props.email ?? ''));
-
-  const { chatra } = useChatra();
 </script>
 
 <template>
@@ -21,9 +19,7 @@
       <div data-testid="message">
         Мы отправили ссылку по адресу {{ email }}. Если письма долго нет —
         посмотрите пожалуйста в спаме. Если и там нет —
-        <button class="link" @click="chatra('openChat', true)">
-          напишите нам
-        </button>
+        <a class="link" :href="SUPPORT_CHAT_URL"> напишите нам </a>
         .
       </div>
       <template #footer>

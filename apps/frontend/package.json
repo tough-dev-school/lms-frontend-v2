@@ -24,6 +24,7 @@
     "@brachkow/email-providers": "^1.2.0",
     "@formkit/auto-animate": "^0.8.1",
     "@sentry/vue": "^8.34.0",
+    "@tabler/icons-vue": "^3.34.1",
     "@tanstack/vue-query": "^5.81.5",
     "@tiptap/extension-image": "^3.1.0",
     "@tiptap/extension-link": "^3.1.0",
