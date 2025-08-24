@@ -98,6 +98,22 @@ describe('visual regression test for', () => {
       name: 'Lessons Without Module Text',
       path: '/iframe?id=app-vlessonsview--without-module-text&viewMode=story',
     },
+    {
+      name: 'Homework Question',
+      path: '/iframe?id=app-vhomeworkquestionview--default&viewMode=story',
+    },
+    {
+      name: 'Homework Answer',
+      path: '/iframe?id=app-vhomeworkanswerview--default&viewMode=story',
+    },
+    {
+      name: 'Homework Answer Other User',
+      path: '/iframe?id=app-vhomeworkanswerview--other-user-answer&viewMode=story',
+    },
+    {
+      name: 'Homework Answer Without CrossChecks',
+      path: '/iframe?id=app-vhomeworkanswerview--without-cross-checks&viewMode=story',
+    },
   ];
 
   scenarios.forEach((scenario) => {
