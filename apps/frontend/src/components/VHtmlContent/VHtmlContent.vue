@@ -13,6 +13,10 @@
 </template>
 
 <style>
+  .prose {
+    display: grid;
+  }
+
   .prose > *:first-child {
     margin-top: 0;
   }
