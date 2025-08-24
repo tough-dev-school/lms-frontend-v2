@@ -170,7 +170,7 @@
     <template #pill>
       <VPillHomework v-if="lesson.homework" :stats="lesson.homework" />
     </template>
-    <section class="flex flex-col gap-24">
+    <section class="VHomeworkAnswerView__Section -mt-16">
       <div v-if="isOwnAnswer" class="card mb-16 bg-accent-green">
         <VHeading tag="h3" class="mb-8">
           Поделитесь ссылкой на сделанную домашку
@@ -183,20 +183,31 @@
         <template #summary> Текст задания </template>
         <VHtmlContent :html="question.text" />
       </VDetails>
+    </section>
+    <section class="VHomeworkAnswerView__Section">
+      <VHeading tag="h2"> Отправленная работа</VHeading>
       <VExistingAnswer
         :answer-id="answer.slug"
         @after-delete="handleDeleteAnswer" />
     </section>
-    <VCrossChecks
-      v-if="isOwnAnswer && crosschecks?.length"
-      :crosschecks="crosschecks" />
-    <section class="flex flex-col gap-24">
+    <section>
+      <VCrossChecks
+        v-if="isOwnAnswer && crosschecks?.length"
+        :crosschecks="crosschecks" />
+    </section>
+    <section class="VHomeworkAnswerView__Section">
       <VHeading tag="h2">
         {{ isOwnAnswer ? 'Комментарии вашей работы' : 'Комментарии' }}
       </VHeading>
       <p v-if="isOwnAnswer && feedbackMessage">
         {{ feedbackMessage }}
       </p>
+      <template v-if="answer.descendants">
+        <VThread
+          v-for="comment in answer.descendants"
+          :key="comment.slug"
+          :answer-id="comment.slug" />
+      </template>
       <VFeedbackGuide
         v-if="question.course?.homework_check_recommendations"
         :guide="question.course.homework_check_recommendations" />
@@ -209,13 +220,15 @@
         Ответ отправлен!
         <a class="link" :href="ownAnswerHref">Вернуться к своему ответу</a>
       </div>
-      <template v-if="answer.descendants">
-        <VThread
-          v-for="comment in answer.descendants"
-          :key="comment.slug"
-          :answer-id="comment.slug" />
-      </template>
     </section>
   </VLoggedLayout>
   <VLoadingView v-else />
 </template>
+
+<style scoped>
+  .VHomeworkAnswerView {
+    &__Section {
+      @apply flex flex-col gap-24;
+    }
+  }
+</style>
