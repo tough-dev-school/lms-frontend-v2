@@ -5,7 +5,6 @@ import { mockCourse } from '@/mocks/mockCourse';
 import { mockModule } from '@/mocks/mockModule';
 import { studiesKeys, lmsKeys } from '@/query';
 import { useQueryClient } from '@tanstack/vue-query';
-import { faker } from '@faker-js/faker';
 
 export default {
   title: 'App/VModulesView',
@@ -29,7 +28,29 @@ const STATIC_COURSE = mockCourse({
   ],
 });
 
-const STATIC_MODULES = faker.helpers.multiple(mockModule, { count: 3 });
+const STATIC_MODULES = [
+  mockModule({
+    id: 1,
+    name: 'Введение в асинхронную архитектуру',
+    description: 'Основные принципы и подходы',
+    text: '<p>В этом модуле мы изучим основные принципы асинхронной архитектуры и познакомимся с базовыми концепциями.</p>',
+    start_date: '2024-01-15T00:00:00Z',
+  }),
+  mockModule({
+    id: 2,
+    name: 'Паттерны асинхронного программирования',
+    description: 'Event-driven architecture, CQRS, Event Sourcing',
+    text: '<p>Изучаем основные паттерны асинхронной архитектуры: событийно-ориентированную архитектуру, CQRS и Event Sourcing.</p>',
+    start_date: '2024-02-01T00:00:00Z',
+  }),
+  mockModule({
+    id: 3,
+    name: 'Практическая реализация',
+    description: 'Реализация асинхронных систем на практике',
+    text: '<p>Применяем изученные принципы на практике, создавая реальные асинхронные системы.</p>',
+    start_date: '2024-02-15T00:00:00Z',
+  }),
+];
 
 const Template: StoryFn = (args) => ({
   components: { VModulesView },
