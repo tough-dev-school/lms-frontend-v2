@@ -4,12 +4,12 @@
   import VCard from '@/components/VCard/VCard.vue';
   import VButton from '@/components/VButton/VButton.vue';
   import getNotionTitle from '@/utils/getNotionTitle';
-  import { useChatra } from '@/composables/useChatra';
   import VNotionRenderer from '@/components/VNotionRenderer/VNotionRenderer.vue';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
   import { useMaterialQuery } from '@/query';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
+  import { SUPPORT_EMAIL, SUPPORT_CHAT_URL } from '@/constants';
 
   const props = defineProps<{
     materialId: string;
@@ -79,8 +79,6 @@
 
     return result;
   });
-
-  const { chatra } = useChatra();
 </script>
 
 <template>
@@ -100,17 +98,12 @@
         class="center flex max-w-[400px] flex-col text-center">
         <p>Материал не найден :(</p>
         <p>
-          Если кажется что здесь какая-то ошибка напишите
-          <button class="link" @click="chatra('openChat', true)">
-            в чат в углу экрана
-          </button>
+          Если кажется что здесь какая-то ошибка напишите в поддержку
+          <a class="link" :href="SUPPORT_CHAT_URL"> в чат в углу экрана </a>
           или на
-          <a
-            class="link"
-            href="mailto:
-    support@tough-dev.school">
-            support@tough-dev.school</a
-          >
+          <a class="link" href="mailto:{{ SUPPORT_EMAIL }}">
+            {{ SUPPORT_EMAIL }}
+          </a>
         </p>
         <VButton appearance="link" @click="router.push({ name: 'home' })">
           На главную
