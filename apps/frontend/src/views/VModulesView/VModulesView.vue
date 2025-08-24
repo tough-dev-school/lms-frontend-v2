@@ -86,7 +86,10 @@
       <RouterLink
         v-for="(module, index) in modules"
         :key="module.id"
-        :to="{ name: 'lessons', params: { moduleId: module.id } }">
+        :to="{
+          name: 'lessons',
+          params: { courseId: props.courseId, moduleId: module.id },
+        }">
         <VModuleCard :key="module.id" :module="module" :index="index" />
       </RouterLink>
     </template>
