@@ -14,7 +14,7 @@
 
 <style>
   .prose {
-    display: grid;
+    @apply flex flex-col;
   }
 
   .prose > *:first-child {
