@@ -218,6 +218,7 @@ export const OtherUserAnswer = {
     answerId: 'answer-456',
     question: STATIC_QUESTION,
     answer: mockAnswer({
+      ...STATIC_ANSWER,
       slug: 'answer-456',
       question: 'javascript-fundamentals',
       author: mockUserSafe({ seed: 2 }),
