@@ -2,7 +2,6 @@
   import VHeading from '@/components/VHeading/VHeading.vue';
   import VThread from '@/components/VThread';
   import VFeedbackGuide from '@/components/VFeedbackGuide/VFeedbackGuide.vue';
-  import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
   import VCrossChecks from '@/components/VCrossChecks/VCrossChecks.vue';
   import VDetails from '@/components/VDetails/VDetails.vue';
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
@@ -25,6 +24,7 @@
   import { useHomeworkBreadcrumbs } from './useHomeworkBreadcrumbs';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
   import { getEmptyContent } from '@/utils/tiptap';
+  import VMakrdownContent from '@/components/VMakrdownContent/VMakrdownContent.vue';
 
   const props = defineProps<{
     questionId: string;
@@ -181,7 +181,7 @@
       </div>
       <VDetails>
         <template #summary> Текст задания </template>
-        <VHtmlContent :html="question.text" />
+        <VMakrdownContent :markdown="question.markdown_text" />
       </VDetails>
     </section>
     <section class="VHomeworkAnswerView__Section">
