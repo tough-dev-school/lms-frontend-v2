@@ -19,12 +19,19 @@ export default {
 
 // Mock data using existing patterns
 const STATIC_QUESTION: QuestionDetail = {
-  ...mockQuestion({
-    slug: 'react-components',
-    name: 'Создание React компонентов',
-    text: '<h2>Задание: Создание React компонентов</h2><p>В этом задании вам необходимо создать несколько React компонентов для простого приложения.</p><h3>Требования:</h3><ul><li>Создайте компонент Header с навигационным меню</li><li>Реализуйте компонент ProductCard для отображения товара</li><li>Добавьте обработчики событий для пользовательского взаимодействия</li></ul><p>Убедитесь, что ваш код следует лучшим практикам React и содержит необходимые комментарии.</p>',
-    deadline: '2024-02-15T23:59:00Z',
-  }),
+  slug: 'react-components',
+  name: 'Создание React компонентов',
+  text: '<h2>Задание: Создание React компонентов</h2><p>В этом задании вам необходимо создать несколько React компонентов для простого приложения.</p><h3>Требования:</h3><ul><li>Создайте компонент Header с навигационным меню</li><li>Реализуйте компонент ProductCard для отображения товара</li><li>Добавьте обработчики событий для пользовательского взаимодействия</li></ul><p>Убедитесь, что ваш код следует лучшим практикам React и содержит необходимые комментарии.</p>',
+  deadline: '2024-02-15T23:59:00Z',
+  homework: {
+    is_sent: false,
+    question: {
+      slug: 'react-components',
+      name: 'Создание React компонентов',
+      text: 'Создайте несколько React компонентов согласно требованиям',
+      deadline: '2024-02-15T23:59:00Z',
+    },
+  },
   breadcrumbs: {
     module: mockModule({
       id: 2,
@@ -32,7 +39,11 @@ const STATIC_QUESTION: QuestionDetail = {
     }),
     lesson: {
       id: 2,
-      name: 'Компоненты и Props',
+    },
+    course: {
+      id: 1,
+      name: 'Курс веб-разработки',
+      slug: 'web-development',
     },
   },
   course: {

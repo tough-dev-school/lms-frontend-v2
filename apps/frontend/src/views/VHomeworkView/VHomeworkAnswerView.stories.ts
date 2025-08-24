@@ -7,7 +7,12 @@ import { mockQuestion } from '@/mocks/mockQuestion';
 import { mockModule } from '@/mocks/mockModule';
 import { homeworkKeys, userKeys, lmsKeys } from '@/query';
 import { useQueryClient } from '@tanstack/vue-query';
-import type { QuestionDetail, Lesson, CrossCheck } from '@/api/generated-api';
+import type {
+  QuestionDetail,
+  Lesson,
+  CrossCheck,
+  AnswerTree,
+} from '@/api/generated-api';
 
 export default {
   title: 'App/VHomeworkAnswerView',
@@ -28,6 +33,19 @@ const STATIC_QUESTION: QuestionDetail = {
     text: '<p>Выполните задания по основам JavaScript. Создайте простое приложение, которое демонстрирует работу с переменными, функциями и объектами.</p>',
     deadline: '2024-02-01T23:59:00Z',
   }),
+  homework: {
+    is_sent: true,
+    crosschecks: {
+      total: 5,
+      checked: 3,
+    },
+    question: {
+      slug: 'javascript-fundamentals',
+      name: 'Основы JavaScript',
+      text: 'Выполните задания по основам JavaScript',
+      deadline: '2024-02-01T23:59:00Z',
+    },
+  },
   breadcrumbs: {
     module: mockModule({
       id: 1,
@@ -35,7 +53,11 @@ const STATIC_QUESTION: QuestionDetail = {
     }),
     lesson: {
       id: 1,
-      name: 'JavaScript для начинающих',
+    },
+    course: {
+      id: 1,
+      name: 'Курс веб-разработки',
+      slug: 'web-development',
     },
   },
   course: {
@@ -109,29 +131,29 @@ const STATIC_ANSWER = mockAnswer({
 
 const STATIC_CROSSCHECKS: CrossCheck[] = [
   {
-    id: 1,
     is_checked: true,
     answer: {
       slug: 'other-answer-1',
-      question: 'javascript-fundamentals',
+      url: '/homework/javascript-fundamentals?answerId=other-answer-1',
+      question: mockQuestion({ slug: 'javascript-fundamentals' }),
       author: mockUserSafe({ seed: 3 }),
     },
   },
   {
-    id: 2,
     is_checked: true,
     answer: {
       slug: 'other-answer-2',
-      question: 'javascript-fundamentals',
+      url: '/homework/javascript-fundamentals?answerId=other-answer-2',
+      question: mockQuestion({ slug: 'javascript-fundamentals' }),
       author: mockUserSafe({ seed: 4 }),
     },
   },
   {
-    id: 3,
     is_checked: false,
     answer: {
       slug: 'other-answer-3',
-      question: 'javascript-fundamentals',
+      url: '/homework/javascript-fundamentals?answerId=other-answer-3',
+      question: mockQuestion({ slug: 'javascript-fundamentals' }),
       author: mockUserSafe({ seed: 5 }),
     },
   },
@@ -153,7 +175,7 @@ const Template: StoryFn = (args) => ({
 
       // Set up query data for each descendant comment
       if (args.answer.descendants) {
-        args.answer.descendants.forEach((descendant) => {
+        args.answer.descendants.forEach((descendant: AnswerTree) => {
           queryClient.setQueryData(
             homeworkKeys.answer(descendant.slug),
             descendant,
