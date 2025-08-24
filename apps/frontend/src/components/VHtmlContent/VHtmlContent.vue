@@ -1,9 +1,7 @@
 <script lang="ts" setup>
-  export interface Props {
-    content: string;
-  }
-
-  defineProps<Props>();
+  defineProps<{
+    html: string;
+  }>();
 </script>
 
 <template>
@@ -11,7 +9,7 @@
   <!-- #TODO Check for XSS-->
   <article
     class="prose prose-pre:bg-transparent prose-a:break-words prose-custom"
-    v-html="content" />
+    v-html="html" />
 </template>
 
 <style>
@@ -20,5 +18,22 @@
   }
   .prose > *:last-child {
     margin-bottom: 0;
+  }
+
+  /* Table styles to match VTextEditor */
+  .prose table {
+    @apply border border-lightgray dark:border-darkmode-border border-collapse table-auto w-full bg-white;
+  }
+
+  .prose th {
+    @apply bg-lightgray dark:bg-darkmode-layer3 font-bold p-8;
+  }
+
+  .prose td {
+    @apply border border-lightgray dark:border-darkmode-border p-8;
+  }
+
+  .prose .tableWrapper {
+    @apply overflow-x-auto;
   }
 </style>

@@ -1,27 +1,33 @@
 <script setup lang="ts">
-  import { Placeholder } from '@tiptap/extensions';
   import { Editor, EditorContent } from '@tiptap/vue-3';
-  import StarterKit from '@tiptap/starter-kit';
-  import Image from '@tiptap/extension-image';
+  import { getExtensions } from '@/utils/tiptap';
   import { marked } from 'marked';
-  import { renderToMarkdown } from '@tiptap/static-renderer/pm/markdown';
   import {
-    BoldIcon,
-    H1Icon,
-    H2Icon,
-    H3Icon,
-    ItalicIcon,
-    BlockquoteIcon,
-    ListNumbersIcon,
-    ListIcon,
-    LinkIcon,
-    LinkOffIcon,
-    PhotoIcon,
-  } from 'vue-tabler-icons';
-  import { onBeforeUnmount, ref, useTemplateRef, watch } from 'vue';
+    IconBold,
+    IconH1,
+    IconH2,
+    IconH3,
+    IconItalic,
+    IconBlockquote,
+    IconListNumbers,
+    IconList,
+    IconLink,
+    IconLinkOff,
+    IconPhoto,
+    IconTable,
+    IconColumnInsertLeft,
+    IconColumnInsertRight,
+    IconRowInsertTop,
+    IconRowInsertBottom,
+    IconRowRemove,
+    IconColumnRemove,
+    IconTableOff,
+  } from '@tabler/icons-vue';
+  import { onBeforeUnmount, ref, useTemplateRef, watch, computed } from 'vue';
   import { onKeyDown, useKeyModifier, useFocusWithin } from '@vueuse/core';
   import VLoader from '@/components/VLoader/VLoader.vue';
   import { useHomeworkAnswerSendImageMutation } from '@/query';
+  import { isEqual } from 'lodash-es';
 
   const props = withDefaults(
     defineProps<{
@@ -48,11 +54,7 @@
    *   - Markdown produced by tiptap is used to be sent to LMS
    */
 
-  const html = defineModel<string>('html', { required: true });
-  /**
-   * Setting this model is not used to set editor state
-   */
-  const markdown = defineModel<string>('markdown', { required: true });
+  const content = defineModel<string | object>({ required: true });
 
   const currentEditor = useTemplateRef('currentEditor');
   const isImageLoading = ref(false);
@@ -92,23 +94,10 @@
 
   const { mutateAsync: sendImage } = useHomeworkAnswerSendImageMutation();
 
-  const extensions = [
-    StarterKit.configure({
-      link: {
-        openOnClick: false,
-        autolink: true,
-        linkOnPaste: true,
-        defaultProtocol: 'https',
-      },
-    }),
-    Placeholder.configure({
-      placeholder: props.placeholder,
-    }),
-    Image.configure({ inline: true }),
-  ];
+  const extensions = getExtensions({ placeholder: props.placeholder });
 
   const editor = new Editor({
-    content: html.value,
+    content: content.value,
     extensions,
     editorProps: {
       handlePaste: (_view, event) => {
@@ -194,28 +183,23 @@
       },
     },
     onUpdate: () => {
-      html.value = editor.getHTML();
-      markdown.value = renderToMarkdown({
-        content: editor.state.doc,
-        extensions,
-      });
+      content.value = editor.getJSON();
+      isEditorEmpty.value = editor.isEmpty;
     },
     onCreate: () => {
-      markdown.value = renderToMarkdown({
-        content: editor.state.doc,
-        extensions,
-      });
+      content.value = editor.getJSON();
+      isEditorEmpty.value = editor.isEmpty;
     },
   });
 
   watch(
-    () => html.value,
-    (newHtml) => {
-      const isSame = editor.getHTML() === newHtml;
+    () => content.value,
+    (newContent) => {
+      const isSame = isEqual(editor.getJSON(), newContent);
 
       if (isSame) return;
 
-      editor.commands.setContent(newHtml, { emitUpdate: false });
+      editor.commands.setContent(newContent, { emitUpdate: false });
     },
     { deep: true },
   );
@@ -251,6 +235,42 @@
     editor.chain().focus().toggleBulletList().run();
   };
 
+  const insertTable = () => {
+    editor
+      .chain()
+      .focus()
+      .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
+      .run();
+  };
+
+  const addColumnBefore = () => {
+    editor.chain().focus().addColumnBefore().run();
+  };
+
+  const addColumnAfter = () => {
+    editor.chain().focus().addColumnAfter().run();
+  };
+
+  const deleteColumn = () => {
+    editor.chain().focus().deleteColumn().run();
+  };
+
+  const addRowBefore = () => {
+    editor.chain().focus().addRowBefore().run();
+  };
+
+  const addRowAfter = () => {
+    editor.chain().focus().addRowAfter().run();
+  };
+
+  const deleteRow = () => {
+    editor.chain().focus().deleteRow().run();
+  };
+
+  const deleteTable = () => {
+    editor.chain().focus().deleteTable().run();
+  };
+
   const addImage = async (event: Event) => {
     isImageLoading.value = true;
     if (event.target) {
@@ -263,6 +283,14 @@
     isImageLoading.value = false;
   };
 
+  const isEditorEmpty = ref(true);
+
+  const isEmpty = computed(() => isEditorEmpty.value);
+
+  defineExpose({
+    isEmpty,
+  });
+
   onBeforeUnmount(() => {
     editor.destroy();
   });
@@ -274,90 +302,124 @@
     class="bg-white dark:bg-darkmode-layer2 px-16 rounded min-h-240 flex flex-col">
     <div
       v-if="editor"
-      class="sticky top-0 z-10 bg-white dark:bg-darkmode-layer2 flex items-center dark:text-white border-b border-lightgray dark:border-darkmode-border">
-      <button
-        class="TextEditor__Button"
-        :class="{
-          TextEditor__Button_Active: editor.isActive('heading', {
-            level: 1,
-          }),
-        }"
-        @click="toggleHeading1">
-        <H1Icon />
-      </button>
-      <button
-        class="TextEditor__Button"
-        :class="{
-          TextEditor__Button_Active: editor.isActive('heading', {
-            level: 2,
-          }),
-        }"
-        @click="toggleHeading2">
-        <H2Icon />
-      </button>
-      <button
-        class="TextEditor__Button"
-        :class="{
-          TextEditor__Button_Active: editor.isActive('heading', {
-            level: 3,
-          }),
-        }"
-        @click="toggleHeading3">
-        <H3Icon />
-      </button>
-      <button
-        class="TextEditor__Button"
-        :class="{ TextEditor__Button_Active: editor.isActive('bold') }"
-        @click="toggleBold">
-        <BoldIcon />
-      </button>
-      <button
-        class="TextEditor__Button"
-        :class="{ TextEditor__Button_Active: editor.isActive('italic') }"
-        @click="toggleItalic">
-        <ItalicIcon />
-      </button>
-      <button
-        class="TextEditor__Button"
-        :class="{ TextEditor__Button_Active: editor.isActive('link') }"
-        @click="editLink">
-        <LinkIcon />
-      </button>
-      <button
-        class="TextEditor__Button"
-        :disabled="!editor.isActive('link')"
-        @click="editor.chain().focus().unsetLink().run()">
-        <LinkOffIcon />
-      </button>
-      <button
-        class="TextEditor__Button"
-        :class="{ TextEditor__Button_Active: editor.isActive('blockquote') }"
-        @click="toggleBlockquote">
-        <BlockquoteIcon />
-      </button>
-      <button
-        class="TextEditor__Button"
-        :class="{
-          TextEditor__Button_Active: editor.isActive('orderedList'),
-        }"
-        @click="toggleOrderedList">
-        <ListNumbersIcon />
-      </button>
-      <button
-        class="TextEditor__Button"
-        :class="{ TextEditor__Button_Active: editor.isActive('bulletList') }"
-        @click="toggleUnorderedList">
-        <ListIcon />
-      </button>
-      <label class="TextEditor__Button">
-        <PhotoIcon />
-        <input
-          class="visually-hidden"
-          type="file"
-          accept="image/*"
-          name="image"
-          @change="addImage($event)"
-      /></label>
+      class="sticky top-0 z-10 bg-white dark:bg-darkmode-layer2 dark:text-white border-b border-lightgray dark:border-darkmode-border">
+      <div class="flex items-center">
+        <button
+          class="TextEditor__Button"
+          :class="{
+            TextEditor__Button_Active: editor.isActive('heading', {
+              level: 1,
+            }),
+          }"
+          @click="toggleHeading1">
+          <IconH1 />
+        </button>
+        <button
+          class="TextEditor__Button"
+          :class="{
+            TextEditor__Button_Active: editor.isActive('heading', {
+              level: 2,
+            }),
+          }"
+          @click="toggleHeading2">
+          <IconH2 />
+        </button>
+        <button
+          class="TextEditor__Button"
+          :class="{
+            TextEditor__Button_Active: editor.isActive('heading', {
+              level: 3,
+            }),
+          }"
+          @click="toggleHeading3">
+          <IconH3 />
+        </button>
+        <button
+          class="TextEditor__Button"
+          :class="{ TextEditor__Button_Active: editor.isActive('bold') }"
+          @click="toggleBold">
+          <IconBold />
+        </button>
+        <button
+          class="TextEditor__Button"
+          :class="{ TextEditor__Button_Active: editor.isActive('italic') }"
+          @click="toggleItalic">
+          <IconItalic />
+        </button>
+        <button
+          class="TextEditor__Button"
+          :class="{ TextEditor__Button_Active: editor.isActive('link') }"
+          @click="editLink">
+          <IconLink />
+        </button>
+        <button
+          class="TextEditor__Button"
+          :disabled="!editor.isActive('link')"
+          @click="editor.chain().focus().unsetLink().run()">
+          <IconLinkOff />
+        </button>
+        <button
+          class="TextEditor__Button"
+          :class="{ TextEditor__Button_Active: editor.isActive('blockquote') }"
+          @click="toggleBlockquote">
+          <IconBlockquote />
+        </button>
+        <button
+          class="TextEditor__Button"
+          :class="{
+            TextEditor__Button_Active: editor.isActive('orderedList'),
+          }"
+          @click="toggleOrderedList">
+          <IconListNumbers />
+        </button>
+        <button
+          class="TextEditor__Button"
+          :class="{ TextEditor__Button_Active: editor.isActive('bulletList') }"
+          @click="toggleUnorderedList">
+          <IconList />
+        </button>
+        <label class="TextEditor__Button">
+          <IconPhoto />
+          <input
+            class="visually-hidden"
+            type="file"
+            accept="image/*"
+            name="image"
+            @change="addImage($event)"
+        /></label>
+        <button
+          class="TextEditor__Button"
+          :class="{ TextEditor__Button_Active: editor.isActive('table') }"
+          @click="insertTable">
+          <IconTable />
+        </button>
+      </div>
+      <div v-if="editor.isActive('table')" class="flex items-center">
+        <div>Для таблицы:</div>
+        <button class="TextEditor__Button" @click="addColumnBefore">
+          <IconColumnInsertLeft />
+        </button>
+        <button class="TextEditor__Button" @click="addColumnAfter">
+          <IconColumnInsertRight />
+        </button>
+        <button class="TextEditor__Button" @click="deleteColumn">
+          <IconColumnRemove />
+        </button>
+        <div class="mx-4 w-1 h-16 bg-lightgray dark:bg-darkmode-border" />
+        <button class="TextEditor__Button" @click="addRowBefore">
+          <IconRowInsertTop />
+        </button>
+        <button class="TextEditor__Button" @click="addRowAfter">
+          <IconRowInsertBottom />
+        </button>
+        <button class="TextEditor__Button" @click="deleteRow">
+          <IconRowRemove />
+        </button>
+        <div class="mx-4 w-1 h-16 bg-lightgray dark:bg-darkmode-border" />
+        <button class="TextEditor__Button" @click="deleteTable">
+          <IconTableOff />
+        </button>
+      </div>
     </div>
     <div v-if="isImageLoading" class="p-32">
       <VLoader />
@@ -372,7 +434,7 @@
 <style>
   .TextEditor {
     &__Button {
-      @apply flex h-32 items-center justify-center px-8 hover:bg-lightgray dark:hover:bg-darkmode-layer3 transition-colors;
+      @apply flex aspect-square items-center justify-center px-8 hover:bg-lightgray dark:hover:bg-darkmode-layer3 transition-colors;
       &_Active {
         @apply bg-lightgray dark:bg-darkmode-layer3;
       }
@@ -390,5 +452,21 @@
   .ProseMirror p.is-editor-empty:first-child::before {
     content: attr(data-placeholder);
     @apply pointer-events-none float-left h-0 text-gray;
+  }
+
+  .ProseMirror table {
+    @apply border border-lightgray dark:border-darkmode-border bg-white;
+  }
+
+  .ProseMirror th {
+    @apply bg-lightgray dark:bg-darkmode-layer3 font-bold p-8;
+  }
+
+  .ProseMirror td {
+    @apply border border-lightgray dark:border-darkmode-border p-8;
+  }
+
+  .ProseMirror .tableWrapper {
+    @apply overflow-x-auto;
   }
 </style>

@@ -5,7 +5,7 @@ import VHtmlContent from './VHtmlContent.vue';
 import { faker } from '@faker-js/faker';
 
 const defaultProps = {
-  content: `<p>${faker.lorem.words(10)}</p>`,
+  html: `<p>${faker.lorem.words(10)}</p>`,
 };
 
 describe('VHtmlContent', () => {
@@ -16,6 +16,6 @@ describe('VHtmlContent', () => {
   });
 
   test('renders html from props', () => {
-    expect(wrapper.html()).toContain(defaultProps.content);
+    expect(wrapper.html()).toContain(defaultProps.html);
   });
 });

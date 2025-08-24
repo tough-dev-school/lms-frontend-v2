@@ -19,6 +19,6 @@ export const Default = {
   render: Template,
 
   args: {
-    content: mockContent(),
+    html: mockContent(),
   },
 };

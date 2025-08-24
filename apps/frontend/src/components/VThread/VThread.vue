@@ -11,13 +11,15 @@
   /* eslint-disable import-x/first */
   import VAnswer from '@/components/VAnswer';
   import { ref, useTemplateRef } from 'vue';
-  import { onClickOutside, useStorage } from '@vueuse/core';
+  import { onClickOutside } from '@vueuse/core';
   import { useRoute, useRouter } from 'vue-router';
   import { useHomeworkAnswerCreateMutation } from '@/query';
   import { useQueryClient } from '@tanstack/vue-query';
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
   import VExistingAnswer from '@/components/VExistingAnswer';
   import type { AnswerTree, User } from '@/api/generated-api';
+  import { useEditorAutosave } from '@/composables/useEditorAutosave';
+  import { getEmptyContent } from '@/utils/tiptap';
   import VThreadProvider from '.';
 
   const props = defineProps<{
@@ -51,21 +53,12 @@
   const { mutateAsync: createComment, isPending: isCreateCommentPending } =
     useHomeworkAnswerCreateMutation(queryClient);
 
-  const html = useStorage(
-    [
-      'commentText',
-      props.answer.question,
-      props.answer.slug,
-      props.answer.parent,
-    ]
-      .filter(Boolean)
-      .join('-'),
-    '',
-    localStorage,
-  );
-
-  // We don't cache markdown as it's not used to set editor state
-  const markdown = ref('');
+  const { content } = useEditorAutosave([
+    'commentText',
+    props.answer.question,
+    props.answer.slug,
+    props.answer.parent,
+  ]);
 
   const handleCreateComment = async () => {
     if (!props.answer) throw new Error('Answer not found');
@@ -74,11 +67,10 @@
       const newComment = await createComment({
         questionId: props.answer.question,
         parentId: props.answer.slug,
-        textInMarkdown: markdown.value,
+        content: content.value,
       });
 
-      html.value = '';
-      markdown.value = '';
+      content.value = getEmptyContent();
 
       replyMode.value = false;
 
@@ -111,8 +103,7 @@
     <div class="thread-ruler" :class="{ 'mt-16': replyMode }">
       <VCreateAnswer
         v-show="replyMode"
-        v-model:html="html"
-        v-model:markdown="markdown"
+        v-model="content"
         :is-pending="isCreateCommentPending"
         @send="handleCreateComment" />
     </div>

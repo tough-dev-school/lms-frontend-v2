@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-  import { DotsVerticalIcon } from 'vue-tabler-icons';
+  import { IconDotsVertical } from '@tabler/icons-vue';
 </script>
 
 <template>
   <VDropdown placement="bottom-end">
     <button class="text-gray transition-colors hover:text-black">
-      <DotsVerticalIcon />
+      <IconDotsVertical />
     </button>
     <template #popper>
       <slot />

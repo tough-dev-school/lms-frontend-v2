@@ -41,14 +41,13 @@
     }
   };
 
-  const html = ref<string>(props.answer.text ?? '');
-  const markdown = ref<string>(props.answer.src ?? '');
+  const content = ref<string>(props.answer.content ?? props.answer.legacy_text);
 
   const handleUpdate = async () => {
     try {
       await updateAnswerMutation({
         answerId: props.answer.slug,
-        textInMarkdown: markdown.value,
+        content: content.value,
       });
       isEdit.value = false;
     } catch (error) {
@@ -75,8 +74,7 @@
   </VAnswer>
   <VCreateAnswer
     v-else-if="isEdit"
-    v-model:html="html"
-    v-model:markdown="markdown"
+    v-model="content"
     :is-pending="isUpdatePending"
     @send="handleUpdate" />
 </template>

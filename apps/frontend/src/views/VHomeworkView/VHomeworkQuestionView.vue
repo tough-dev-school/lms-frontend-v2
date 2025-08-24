@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
-  import { useStorage } from '@vueuse/core';
+  import { useEditorAutosave } from '@/composables/useEditorAutosave';
   import { useRouter } from 'vue-router';
   import { useQueryClient } from '@tanstack/vue-query';
   import {
@@ -9,7 +9,6 @@
     useHomeworkQuestionQuery,
     useLessonQuery,
   } from '@/query';
-  import { ref } from 'vue';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import VPillHomework from '@/components/VPillHomework/VPillHomework.vue';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
@@ -31,12 +30,7 @@
     () => question.value?.breadcrumbs.lesson?.id,
   );
 
-  const html = useStorage(
-    ['draft', props.questionId].filter(Boolean).join('-'),
-    '',
-    localStorage,
-  );
-  const markdown = ref('');
+  const { content } = useEditorAutosave(['draft', props.questionId]);
 
   const queryClient = useQueryClient();
   const {
@@ -46,7 +40,7 @@
 
   const handleCreateAnswer = async () => {
     const answer = await createAnswerMutation({
-      textInMarkdown: markdown.value,
+      content: content.value,
       questionId: props.questionId,
       parentId: undefined,
     });
@@ -72,10 +66,9 @@
       <VPillHomework v-if="lesson?.homework" :stats="lesson?.homework" />
     </template>
     <section class="flex flex-col gap-24">
-      <VHtmlContent :content="question.text" />
+      <VHtmlContent :html="question.text" />
       <VCreateAnswer
-        v-model:html="html"
-        v-model:markdown="markdown"
+        v-model="content"
         :is-pending="isCreateAnswerPending"
         @send="handleCreateAnswer" />
     </section>

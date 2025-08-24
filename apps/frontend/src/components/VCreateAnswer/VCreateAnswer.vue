@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import VTextEditor from '@/components/VTextEditor/VTextEditor.vue';
   import VButton from '@/components/VButton/VButton.vue';
-  import { computed } from 'vue';
+  import { computed, useTemplateRef } from 'vue';
 
   const props = defineProps<{
     isPending: boolean;
@@ -11,19 +11,20 @@
     send: [];
   }>();
 
-  const html = defineModel<string>('html', { required: true });
-  const markdown = defineModel<string>('markdown', { required: true });
+  const content = defineModel<string | object>({ required: true });
+
+  const editor = useTemplateRef<InstanceType<typeof VTextEditor>>('editor');
 
   const isDisabled = computed(
-    () => !(html.value.length > 0) || props.isPending,
+    () => editor.value?.isEmpty !== false || props.isPending,
   );
 </script>
 
 <template>
   <div class="SendOwnAnswer__Container">
     <VTextEditor
-      v-model:html="html"
-      v-model:markdown="markdown"
+      ref="editor"
+      v-model="content"
       class="SendOwnAnswer__Editor"
       @send="emit('send')" />
     <div class="SendOwnAnswer__Footer">
