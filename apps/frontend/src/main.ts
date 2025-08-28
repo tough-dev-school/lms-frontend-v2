@@ -4,7 +4,8 @@ import App from './App.vue';
 import router from './router';
 import * as Sentry from '@sentry/vue';
 import AvatarCropper from 'vue-avatar-cropper';
-import { QueryClient, VueQueryPlugin } from '@tanstack/vue-query';
+import { VueQueryPlugin } from '@tanstack/vue-query';
+import { queryClient } from './queryClient';
 
 const app = createApp(App);
 
@@ -26,16 +27,6 @@ if (process.env.NODE_ENV === 'production') {
     replaysOnErrorSampleRate: 0.8,
   });
 }
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      staleTime: Infinity,
-      retry: false,
-    },
-  },
-});
 
 app.use(VueQueryPlugin, { queryClient });
 app.use(AvatarCropper);
