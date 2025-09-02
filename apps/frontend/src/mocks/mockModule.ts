@@ -3,6 +3,7 @@ import { faker } from '@faker-js/faker';
 
 export const mockModule = (payload: Partial<Module> = {}): Required<Module> => {
   return {
+    has_started: faker.datatype.boolean(),
     id: faker.number.int(),
     name: faker.lorem.words(3),
     description: faker.lorem.words(3),
