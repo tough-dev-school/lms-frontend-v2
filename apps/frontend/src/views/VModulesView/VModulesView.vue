@@ -7,6 +7,7 @@
   import VPillItem from '@/components/VPill/VPillItem.vue';
   import VModuleCard from '@/components/VModuleCard/VModuleCard.vue';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
+  import { RouterLink } from 'vue-router';
 
   const props = defineProps<{
     courseId: number;
@@ -85,15 +86,22 @@
     <div
       v-if="modules && modules.length > 0"
       class="grid gap-16 tablet:gap-32 phone:gap-24">
-      <RouterLink
+      <component
+        v-bind="
+          module.has_started
+            ? {
+                to: {
+                  name: 'lessons',
+                  params: { courseId: props.courseId, moduleId: module.id },
+                },
+              }
+            : {}
+        "
+        :is="module.has_started ? RouterLink : 'div'"
         v-for="(module, index) in modules"
-        :key="module.id"
-        :to="{
-          name: 'lessons',
-          params: { courseId: props.courseId, moduleId: module.id },
-        }">
+        :key="module.id">
         <VModuleCard :key="module.id" :module="module" :index="index" />
-      </RouterLink>
+      </component>
     </div>
 
     <p v-else data-testid="empty" class="mb-16 text-center">
