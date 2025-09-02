@@ -82,7 +82,9 @@
         </template>
       </VPill>
     </template>
-    <template v-if="modules && modules.length > 0">
+    <div
+      v-if="modules && modules.length > 0"
+      class="grid gap-16 tablet:gap-32 phone:gap-24">
       <RouterLink
         v-for="(module, index) in modules"
         :key="module.id"
@@ -92,7 +94,7 @@
         }">
         <VModuleCard :key="module.id" :module="module" :index="index" />
       </RouterLink>
-    </template>
+    </div>
 
     <p v-else data-testid="empty" class="mb-16 text-center">
       Нет доступных модулей.
