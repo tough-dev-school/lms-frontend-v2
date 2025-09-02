@@ -26,6 +26,9 @@
     :class="[
       cardClass(index),
       'VModuleCard text-black min-h-120 rounded-16 p-16 tablet:p-24 flex flex-col gap-8',
+      module.has_started
+        ? 'transition-all hover:scale-[1.02] ease-out duration-100 origin-center hover:shadow'
+        : 'grayscale pointer-events-none cursor-not-allowed',
     ]">
     <div v-if="module.start_date" class="flex justify-start">
       <VTag>{{ formatDate(module.start_date, 'DD.MM') }}</VTag>
@@ -36,9 +39,3 @@
     </p>
   </div>
 </template>
-
-<style scoped>
-  .VModuleCard {
-    @apply transition-transform hover:scale-[1.01] origin-center;
-  }
-</style>

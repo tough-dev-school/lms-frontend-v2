@@ -35,6 +35,7 @@ const STATIC_MODULES = [
     description: 'Основные принципы и подходы',
     text: '<p>В этом модуле мы изучим основные принципы асинхронной архитектуры и познакомимся с базовыми концепциями.</p>',
     start_date: '2024-01-15T00:00:00Z',
+    has_started: true,
   }),
   mockModule({
     id: 2,
@@ -42,6 +43,7 @@ const STATIC_MODULES = [
     description: 'Event-driven architecture, CQRS, Event Sourcing',
     text: '<p>Изучаем основные паттерны асинхронной архитектуры: событийно-ориентированную архитектуру, CQRS и Event Sourcing.</p>',
     start_date: '2024-02-01T00:00:00Z',
+    has_started: true,
   }),
   mockModule({
     id: 3,
@@ -49,6 +51,7 @@ const STATIC_MODULES = [
     description: 'Реализация асинхронных систем на практике',
     text: '<p>Применяем изученные принципы на практике, создавая реальные асинхронные системы.</p>',
     start_date: '2024-02-15T00:00:00Z',
+    has_started: false,
   }),
 ];
 

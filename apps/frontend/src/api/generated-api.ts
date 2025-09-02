@@ -390,14 +390,36 @@ export interface Module {
    * Дата начала
    * @format date-time
    */
-  start_date?: string | null;
+  start_date: string | null;
+  has_started: boolean;
   /**
    * Подзаг
    * @maxLength 512
    */
-  description?: string | null;
+  description: string | null;
   /** Текст */
   text: string | null;
+}
+
+export interface ModuleDetail {
+  id: number;
+  /** @maxLength 255 */
+  name: string;
+  /**
+   * Дата начала
+   * @format date-time
+   */
+  start_date: string | null;
+  has_started: boolean;
+  /**
+   * Подзаг
+   * @maxLength 512
+   */
+  description: string | null;
+  /** Текст */
+  text: string | null;
+  lesson_count: number;
+  single_lesson_id: number;
 }
 
 export interface NotionMaterial {
