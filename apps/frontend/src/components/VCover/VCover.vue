@@ -1,6 +1,5 @@
 <script lang="ts" setup>
   import VHeading from '@/components/VHeading/VHeading.vue';
-  import { getCrossOriginImgAttrs } from '@/utils/getCrossOriginImageAttributes';
   import { computed } from 'vue';
 
   export interface Props {
@@ -38,8 +37,7 @@
         v-if="image"
         :src="image"
         class="absolute top-0 left-0 right-0 h-full w-full object-fill"
-        data-testid="image-cover"
-        v-bind="getCrossOriginImgAttrs(image)" />
+        data-testid="image-cover" />
     </div>
   </div>
 </template>

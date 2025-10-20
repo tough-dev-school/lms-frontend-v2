@@ -13,11 +13,7 @@
       </div>
     </label>
     <div v-if="imageUrl" class="notion-todo-image">
-      <img
-        :src="imageUrl"
-        :alt="imageAlt"
-        crossorigin="anonymous"
-        @error="handleImageError" />
+      <img :src="imageUrl" :alt="imageAlt" @error="handleImageError" />
     </div>
     <div v-if="block.value.content">
       <NotionRenderer
