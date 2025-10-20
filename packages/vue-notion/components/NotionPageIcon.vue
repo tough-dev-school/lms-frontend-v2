@@ -6,7 +6,6 @@
       big ? 'notion-page-icon-cover' : 'notion-page-icon',
     ]"
     :src="icon"
-    crossorigin="anonymous"
     :alt="title ? getTextContent(title) : 'Icon'" />
   <span
     v-else-if="icon"

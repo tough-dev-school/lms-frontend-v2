@@ -8,8 +8,7 @@
       class="notion-page-cover"
       :style="coverStyle"
       :alt="getTextContent(title)"
-      :src="format.page_cover"
-      crossorigin="anonymous" />
+      :src="format.page_cover" />
     <main
       :class="[
         'notion-page',
