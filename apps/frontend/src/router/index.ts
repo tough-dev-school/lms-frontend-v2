@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import type { RouteLocationNormalized } from 'vue-router';
+import type { RouteLocation, RouteLocationNormalized } from 'vue-router';
 import { useAuth } from '@/composables/useAuth';
 import { loginByToken } from '@/router/loginByToken';
 import { loginById } from '@/router/loginById';
@@ -137,6 +137,37 @@ export const routes = [
     },
   },
   {
+    path: '/certificates',
+    name: 'certificates',
+    component: () => import('@/views/VCertificatesView/VCertificatesView.vue'),
+    meta: {
+      allow: AllowMeta.Authorized,
+    },
+  },
+  // Redirects for backward compatibility — please do not use them. They should be removed in the future in coordination with backend.
+  {
+    path: '/',
+    name: 'home',
+    redirect: '/courses',
+  },
+  {
+    path: '/:courseId/modules',
+    redirect: (to: RouteLocation) => ({
+      name: 'course',
+      params: { courseId: to.params.courseId },
+    }),
+  },
+  {
+    path: '/:courseId/module/:moduleId/lessons',
+    redirect: (to: RouteLocation) => ({
+      name: 'module',
+      params: {
+        courseId: to.params.courseId,
+        moduleId: to.params.moduleId,
+      },
+    }),
+  },
+  {
     path: '/homework/answers/:answerId/',
     name: 'homework-answer-old',
     beforeEnter: [
@@ -183,14 +214,6 @@ export const routes = [
         };
       },
     ],
-    meta: {
-      allow: AllowMeta.Authorized,
-    },
-  },
-  {
-    path: '/certificates',
-    name: 'certificates',
-    component: () => import('@/views/VCertificatesView/VCertificatesView.vue'),
     meta: {
       allow: AllowMeta.Authorized,
     },
