@@ -9,7 +9,10 @@ interface Scenario {
   action?: () => Promise<void>;
 }
 
-type ColorScheme = 'light' | 'dark';
+enum ColorScheme {
+  Light = 'light',
+  Dark = 'dark',
+}
 
 type Test = [string, string, () => Promise<void>, number, number, ColorScheme];
 
@@ -21,7 +24,19 @@ const VIEWPORTS: Viewport[] = [
   [320, 560],
 ];
 
-const COLOR_SCHEMES: ColorScheme[] = ['light', 'dark'];
+const getColorSchemes = (): ColorScheme[] => {
+  const envColorScheme = process.env.COLOR_SCHEME;
+  if (
+    envColorScheme === ColorScheme.Light ||
+    envColorScheme === ColorScheme.Dark
+  ) {
+    return [envColorScheme];
+  }
+
+  return [ColorScheme.Light, ColorScheme.Dark];
+};
+
+const COLOR_SCHEMES: ColorScheme[] = getColorSchemes();
 
 describe('visual regression test for', () => {
   let browser: playwright.Browser;
@@ -159,7 +174,7 @@ describe('visual regression test for', () => {
         waitUntil: 'networkidle',
       });
 
-      if (colorScheme === 'dark') {
+      if (colorScheme === ColorScheme.Dark) {
         await page.evaluate(() => {
           document.documentElement.classList.add('dark');
         });
