@@ -48,26 +48,22 @@ export enum BlankEnum {
 
 export interface Answer {
   /** @format date-time */
-  created: string;
+  created?: string;
   /** @format date-time */
-  modified: string;
+  modified?: string | null;
   /** @format uuid */
-  slug: string;
+  slug?: string;
   question: string;
   author: UserSafe;
   /** @format uuid */
-  parent: string;
-  legacy_text: string;
+  parent?: string;
+  text?: string;
+  legacy_text?: string;
   content?: any;
-  has_descendants: boolean;
-  is_editable: boolean;
+  src: string;
+  has_descendants?: boolean;
+  is_editable?: boolean;
   reactions: ReactionDetailed[];
-}
-
-export interface AnswerCommentTree {
-  /** @format uuid */
-  slug: string;
-  descendants: AnswerTree[];
 }
 
 export interface AnswerCreate {
@@ -75,7 +71,8 @@ export interface AnswerCreate {
   question: string;
   /** @format uuid */
   parent?: string | null;
-  content: any;
+  text: string;
+  content?: any;
 }
 
 export interface AnswerImage {
@@ -103,16 +100,18 @@ export interface AnswerTree {
   author: UserSafe;
   /** @format uuid */
   parent: string;
-  legacy_text: string;
+  text?: string;
+  legacy_text?: string;
   content?: any;
-  has_descendants: boolean;
-  is_editable: boolean;
+  src: string;
+  has_descendants?: boolean;
+  is_editable?: boolean;
   reactions: ReactionDetailed[];
   descendants: AnswerTree[];
 }
 
 export interface AnswerUpdate {
-  content: any;
+  content: Record<string, any>;
 }
 
 export interface Breadcrumbs {
@@ -159,8 +158,11 @@ export interface Course {
    * @pattern ^[-a-zA-Z0-9_]+$
    */
   slug: string;
-  /** @maxLength 255 */
-  name: string;
+  name?: string;
+  /**
+   * Название
+   * @maxLength 255
+   */
   product_name: string;
   /**
    * Тариф
@@ -254,6 +256,7 @@ export interface CourseWithPrice {
 }
 
 export interface CrossCheck {
+  id?: number;
   answer: AnswerSimple;
   is_checked: boolean;
 }
@@ -422,6 +425,13 @@ export interface ModuleDetail {
   single_lesson_id: number;
 }
 
+export interface NotionCacheEntryStatus {
+  /** @format date-time */
+  fetch_started?: string | null;
+  /** @format date-time */
+  fetch_complete?: string | null;
+}
+
 export interface NotionMaterial {
   id: string;
   /**
@@ -447,8 +457,8 @@ export interface OrderDraftRequest {
   /**
    * * `b2b` - B2B
    * * `dolyame` - Долями
-   * * `stripe` - Stripe USD
-   * * `stripe_kz` - Stripe KZT
+   * * `stripe` - Страйп
+   * * `stripe_kz` - Страйп
    * * `tinkoff_bank` - Тинькофф
    * * `zero_price` - Бесплатно
    */
@@ -519,7 +529,7 @@ export interface PaginatedLessonList {
   results: Lesson[];
 }
 
-export interface PaginatedModuleList {
+export interface PaginatedModuleDetailList {
   /** @example 123 */
   count: number;
   /**
@@ -532,7 +542,7 @@ export interface PaginatedModuleList {
    * @example "http://api.example.org/accounts/?page=2"
    */
   previous?: string | null;
-  results: Module[];
+  results: ModuleDetail[];
 }
 
 export interface PasswordChange {
@@ -559,8 +569,7 @@ export interface PasswordResetConfirm {
 }
 
 export interface PatchedAnswerUpdate {
-  text?: string;
-  content?: any;
+  content?: Record<string, any>;
 }
 
 export interface PatchedDiploma {
@@ -583,6 +592,11 @@ export interface PatchedUser {
   id?: number;
   /** @format uuid */
   uuid?: string;
+  /**
+   * Статус персонала
+   * Отметьте, если пользователь может входить в административную часть сайта.
+   */
+  is_staff?: boolean;
   /**
    * Имя пользователя
    * Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
@@ -651,8 +665,8 @@ export interface Purchase {
   /**
    * * `b2b` - B2B
    * * `dolyame` - Долями
-   * * `stripe` - Stripe USD
-   * * `stripe_kz` - Stripe KZT
+   * * `stripe` - Страйп
+   * * `stripe_kz` - Страйп
    * * `tinkoff_bank` - Тинькофф
    * * `zero_price` - Бесплатно
    */
@@ -687,6 +701,41 @@ export interface Question {
   deadline?: string | null;
 }
 
+export interface QuestionCourse {
+  id?: number;
+  /**
+   * @maxLength 50
+   * @pattern ^[-a-zA-Z0-9_]+$
+   */
+  slug: string;
+  name?: string;
+  /**
+   * Обложка
+   * Обложка курса
+   * @format uri
+   */
+  cover?: string;
+  /**
+   * Чат
+   * @format uri
+   * @maxLength 200
+   */
+  chat?: string | null;
+  /**
+   * Календарь (iOS)
+   * @format uri
+   * @maxLength 200
+   */
+  calendar_ios?: string | null;
+  /**
+   * Календарь (Google)
+   * @format uri
+   * @maxLength 200
+   */
+  calendar_google?: string | null;
+  /** Рекомендации по проверке домашки */
+  homework_check_recommendations?: string;
+}
 export interface QuestionDetail {
   breadcrumbs: Breadcrumbs;
   /** @format uuid */
@@ -704,7 +753,7 @@ export interface QuestionDetail {
   deadline?: string | null;
   /** Requires *any* model annotaded with statistics. For annotation examples check homework.QuestionQuerySet */
   homework: HomeworkStats;
-  course?: LMSCourse;
+  course?: QuestionCourse;
 }
 
 export interface ReactionCreate {
@@ -735,7 +784,6 @@ export interface TemporarySoonToBeDepricatedQuestion {
    * @maxLength 256
    */
   name: string;
-  text?: string;
   /**
    * Дедлайн
    * @format date-time
@@ -751,6 +799,11 @@ export interface User {
   id: number;
   /** @format uuid */
   uuid: string;
+  /**
+   * Статус персонала
+   * Отметьте, если пользователь может входить в административную часть сайта.
+   */
+  is_staff?: boolean;
   /**
    * Имя пользователя
    * Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
@@ -968,6 +1021,7 @@ export enum LangEnum {
   Tr = 'tr',
   Tt = 'tt',
   Udm = 'udm',
+  Ug = 'ug',
   Uk = 'uk',
   Ur = 'ur',
   Uz = 'uz',
@@ -1074,6 +1128,7 @@ export enum DocsSchemaRetrieveParams1LangEnum {
   Tr = 'tr',
   Tt = 'tt',
   Udm = 'udm',
+  Ug = 'ug',
   Uk = 'uk',
   Ur = 'ur',
   Uz = 'uz',
@@ -1091,16 +1146,6 @@ export interface HomeworkAnswersListParams {
   page_size?: number;
   /** @format uuid */
   question?: string;
-}
-
-export interface HomeworkCommentsListParams {
-  /** Несколько значений могут быть разделены запятыми. */
-  answer: string[];
-}
-
-export interface HomeworkCrosschecksListParams {
-  /** Несколько значений могут быть разделены запятыми. */
-  question: string[];
 }
 
 export interface LmsLessonsListParams {
@@ -1845,27 +1890,6 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * @description Recursively list answer comments
-     *
-     * @tags homework
-     * @name HomeworkCommentsList
-     * @request GET:/api/v2/homework/comments/
-     * @secure
-     */
-    homeworkCommentsList: (
-      query: HomeworkCommentsListParams,
-      params: RequestParams = {},
-    ) =>
-      this.http.request<AnswerCommentTree[], any>({
-        path: `/api/v2/homework/comments/`,
-        method: 'GET',
-        query: query,
-        secure: true,
-        format: 'json',
-        ...params,
-      }),
-
-    /**
      * @description Crosscheck status
      *
      * @tags homework
@@ -1873,14 +1897,10 @@ export class Api<SecurityDataType extends unknown> {
      * @request GET:/api/v2/homework/crosschecks/
      * @secure
      */
-    homeworkCrosschecksList: (
-      query: HomeworkCrosschecksListParams,
-      params: RequestParams = {},
-    ) =>
+    homeworkCrosschecksList: (params: RequestParams = {}) =>
       this.http.request<CrossCheck[], any>({
         path: `/api/v2/homework/crosschecks/`,
         method: 'GET',
-        query: query,
         secure: true,
         format: 'json',
         ...params,
@@ -1947,7 +1967,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     lmsModulesList: (query: LmsModulesListParams, params: RequestParams = {}) =>
-      this.http.request<PaginatedModuleList, any>({
+      this.http.request<PaginatedModuleDetailList, any>({
         path: `/api/v2/lms/modules/`,
         method: 'GET',
         query: query,
@@ -1965,7 +1985,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     lmsModulesRetrieve: (id: number, params: RequestParams = {}) =>
-      this.http.request<Module, any>({
+      this.http.request<ModuleDetail, any>({
         path: `/api/v2/lms/modules/${id}/`,
         method: 'GET',
         secure: true,
@@ -1987,6 +2007,39 @@ export class Api<SecurityDataType extends unknown> {
         method: 'GET',
         secure: true,
         format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description Get material update status
+     *
+     * @tags materials
+     * @name MaterialsStatusRetrieve
+     * @request GET:/api/v2/materials/{page_id}/status/
+     * @secure
+     */
+    materialsStatusRetrieve: (pageId: string, params: RequestParams = {}) =>
+      this.http.request<NotionCacheEntryStatus, any>({
+        path: `/api/v2/materials/${pageId}/status/`,
+        method: 'GET',
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description Trigger material update
+     *
+     * @tags materials
+     * @name MaterialsUpdateUpdate
+     * @request PUT:/api/v2/materials/{page_id}/update/
+     * @secure
+     */
+    materialsUpdateUpdate: (pageId: string, params: RequestParams = {}) =>
+      this.http.request<void, any>({
+        path: `/api/v2/materials/${pageId}/update/`,
+        method: 'PUT',
+        secure: true,
         ...params,
       }),
 
