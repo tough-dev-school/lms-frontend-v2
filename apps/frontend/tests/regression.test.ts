@@ -9,7 +9,10 @@ interface Scenario {
   action?: () => Promise<void>;
 }
 
-type ColorScheme = 'light' | 'dark';
+enum ColorScheme {
+  Light = 'light',
+  Dark = 'dark',
+}
 
 type Test = [string, string, () => Promise<void>, number, number, ColorScheme];
 
@@ -23,11 +26,14 @@ const VIEWPORTS: Viewport[] = [
 
 const getColorSchemes = (): ColorScheme[] => {
   const envColorScheme = process.env.COLOR_SCHEME;
-  if (envColorScheme === 'light' || envColorScheme === 'dark') {
+  if (
+    envColorScheme === ColorScheme.Light ||
+    envColorScheme === ColorScheme.Dark
+  ) {
     return [envColorScheme];
   }
 
-  return ['light', 'dark'];
+  return [ColorScheme.Light, ColorScheme.Dark];
 };
 
 const COLOR_SCHEMES: ColorScheme[] = getColorSchemes();
@@ -168,7 +174,7 @@ describe('visual regression test for', () => {
         waitUntil: 'networkidle',
       });
 
-      if (colorScheme === 'dark') {
+      if (colorScheme === ColorScheme.Dark) {
         await page.evaluate(() => {
           document.documentElement.classList.add('dark');
         });
