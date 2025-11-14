@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
-import VModulesView from './VModulesView.vue';
+import VCourseView from './VCourseView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import { mockCourse } from '@/mocks/mockCourse';
 import { mockModule } from '@/mocks/mockModule';
@@ -7,8 +7,8 @@ import { studiesKeys, lmsKeys } from '@/query';
 import { useQueryClient } from '@tanstack/vue-query';
 
 export default {
-  title: 'App/VModulesView',
-  component: VModulesView,
+  title: 'App/VCourseView',
+  component: VCourseView,
   decorators: [defaultLayoutDecorator],
   parameters: { layout: 'fullscreen' },
   args: {
@@ -56,7 +56,7 @@ const STATIC_MODULES = [
 ];
 
 const Template: StoryFn = (args) => ({
-  components: { VModulesView },
+  components: { VCourseView },
   setup() {
     const queryClient = useQueryClient();
 
@@ -72,7 +72,7 @@ const Template: StoryFn = (args) => ({
 
     return { args };
   },
-  template: '<VModulesView v-bind="args" />',
+  template: '<VCourseView v-bind="args" />',
 });
 
 export const Default = {

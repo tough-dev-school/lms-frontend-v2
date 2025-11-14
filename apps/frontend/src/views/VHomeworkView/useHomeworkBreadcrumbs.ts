@@ -40,7 +40,7 @@ export const useHomeworkBreadcrumbs = (
       result.push({
         name: question.breadcrumbs.module.name,
         to: {
-          name: 'lessons',
+          name: 'module',
           params: {
             courseId: question.breadcrumbs.course.id,
             moduleId: question.breadcrumbs.module.id,

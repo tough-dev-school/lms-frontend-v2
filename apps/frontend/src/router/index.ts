@@ -28,7 +28,7 @@ export const routes = [
   {
     path: '/courses/:courseId',
     name: 'course',
-    component: () => import('@/views/VModulesView/VModulesView.vue'),
+    component: () => import('@/views/VCourseView/VCourseView.vue'),
     props: (route: RouteLocationNormalized) => ({
       courseId: Number.parseInt(route.params.courseId as string),
     }),
@@ -37,9 +37,9 @@ export const routes = [
     },
   },
   {
-    path: '/:courseId/module/:moduleId/lessons',
-    name: 'lessons',
-    component: () => import('@/views/VLessonsView/VLessonsView.vue'),
+    path: '/courses/:courseId/modules/:moduleId',
+    name: 'module',
+    component: () => import('@/views/VModuleView/VModuleView.vue'),
     props: (route: RouteLocationNormalized) => ({
       courseId: Number.parseInt(route.params.courseId as string),
       moduleId: Number.parseInt(route.params.moduleId as string),

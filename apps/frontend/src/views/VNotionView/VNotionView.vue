@@ -58,7 +58,7 @@
       result.push({
         name: materialData.value.breadcrumbs.module.name,
         to: {
-          name: 'lessons',
+          name: 'module',
           params: {
             courseId: materialData.value.breadcrumbs.course.id,
             moduleId: materialData.value.breadcrumbs.module.id,

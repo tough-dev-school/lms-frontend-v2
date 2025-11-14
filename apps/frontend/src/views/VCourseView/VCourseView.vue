@@ -91,7 +91,7 @@
           module.has_started
             ? {
                 to: {
-                  name: 'lessons',
+                  name: 'module',
                   params: { courseId: props.courseId, moduleId: module.id },
                 },
               }

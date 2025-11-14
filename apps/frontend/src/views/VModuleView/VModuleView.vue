@@ -34,7 +34,7 @@
       {
         name: moduleName.value,
         to: {
-          name: 'lessons',
+          name: 'module',
           params: { courseId: props.courseId, moduleId: props.moduleId },
         },
       },
