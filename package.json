@@ -1,7 +1,6 @@
 {
   "name": "lms-frontend-v2",
   "type": "module",
-  "packageManager": "pnpm@10.12.4",
   "scripts": {
     "test:lint": "pnpm -r run test:lint",
     "test:format": "pnpm -r run test:format",
