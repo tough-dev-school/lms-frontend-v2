@@ -67,7 +67,7 @@ describe('VCoursesView', () => {
 
   test('click on studies redirects to material', async () => {
     expect(getStudyWrapper().props().to).toStrictEqual({
-      name: 'modules',
+      name: 'course',
       params: { courseId: defaultStudies[0].id },
     });
   });

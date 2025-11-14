@@ -44,7 +44,7 @@ describe('loginById', () => {
 
     expect(mockMutateAsync).toHaveBeenCalledWith(userId);
     expect(token.value).toEqual(tokenValue);
-    expect(result).toEqual({ name: 'home' });
+    expect(result).toEqual({ name: 'courses' });
   });
 
   test('passes correct userId to login mutation', async () => {

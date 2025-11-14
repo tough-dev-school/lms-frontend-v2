@@ -12,7 +12,9 @@ export const useHomeworkBreadcrumbs = (
   const breadcrumbs = ref<Breadcrumb[]>();
 
   onMounted(async () => {
-    const result: Breadcrumb[] = [{ name: 'Мои курсы', to: { name: 'home' } }];
+    const result: Breadcrumb[] = [
+      { name: 'Мои курсы', to: { name: 'courses' } },
+    ];
 
     const question = await fetchHomeworkQuestion(queryClient, {
       questionId: toValue(questionId),
@@ -24,7 +26,7 @@ export const useHomeworkBreadcrumbs = (
       result.push({
         name: question.breadcrumbs.course.name,
         to: {
-          name: 'modules',
+          name: 'course',
           params: {
             courseId: question.breadcrumbs.course.id,
           },
@@ -38,7 +40,7 @@ export const useHomeworkBreadcrumbs = (
       result.push({
         name: question.breadcrumbs.module.name,
         to: {
-          name: 'lessons',
+          name: 'module',
           params: {
             courseId: question.breadcrumbs.course.id,
             moduleId: question.breadcrumbs.module.id,

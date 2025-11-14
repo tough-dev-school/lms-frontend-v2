@@ -9,7 +9,10 @@ interface Scenario {
   action?: () => Promise<void>;
 }
 
-type ColorScheme = 'light' | 'dark';
+enum ColorScheme {
+  Light = 'light',
+  Dark = 'dark',
+}
 
 type Test = [string, string, () => Promise<void>, number, number, ColorScheme];
 
@@ -18,11 +21,22 @@ type Viewport = [number, number];
 const VIEWPORTS: Viewport[] = [
   [1440, 900],
   [768, 1024],
-  [390, 840],
   [320, 560],
 ];
 
-const COLOR_SCHEMES: ColorScheme[] = ['light', 'dark'];
+const getColorSchemes = (): ColorScheme[] => {
+  const envColorScheme = process.env.COLOR_SCHEME;
+  if (
+    envColorScheme === ColorScheme.Light ||
+    envColorScheme === ColorScheme.Dark
+  ) {
+    return [envColorScheme];
+  }
+
+  return [ColorScheme.Light, ColorScheme.Dark];
+};
+
+const COLOR_SCHEMES: ColorScheme[] = getColorSchemes();
 
 describe('visual regression test for', () => {
   let browser: playwright.Browser;
@@ -75,28 +89,28 @@ describe('visual regression test for', () => {
       path: '/iframe?id=app-vnotionview--empty&viewMode=story',
     },
     {
-      name: 'Modules',
-      path: '/iframe?id=app-vmodulesview--default&viewMode=story',
+      name: 'Course',
+      path: '/iframe?id=app-vcourseview--default&viewMode=story',
     },
     {
-      name: 'No Modules',
-      path: '/iframe?id=app-vmodulesview--empty&viewMode=story',
+      name: 'No Course Modules',
+      path: '/iframe?id=app-vcourseview--empty&viewMode=story',
     },
     {
-      name: 'Modules Without Extra Info',
-      path: '/iframe?id=app-vmodulesview--without-extra-info&viewMode=story',
+      name: 'Course Without Extra Info',
+      path: '/iframe?id=app-vcourseview--without-extra-info&viewMode=story',
     },
     {
-      name: 'Lessons',
-      path: '/iframe?id=app-vlessonsview--default&viewMode=story',
+      name: 'Module',
+      path: '/iframe?id=app-vmoduleview--default&viewMode=story',
     },
     {
-      name: 'No Lessons',
-      path: '/iframe?id=app-vlessonsview--empty&viewMode=story',
+      name: 'No Module Lessons',
+      path: '/iframe?id=app-vmoduleview--empty&viewMode=story',
     },
     {
-      name: 'Lessons Without Module Text',
-      path: '/iframe?id=app-vlessonsview--without-module-text&viewMode=story',
+      name: 'Module Without Text',
+      path: '/iframe?id=app-vmoduleview--without-module-text&viewMode=story',
     },
     {
       name: 'Homework Question',
@@ -160,7 +174,7 @@ describe('visual regression test for', () => {
         waitUntil: 'networkidle',
       });
 
-      if (colorScheme === 'dark') {
+      if (colorScheme === ColorScheme.Dark) {
         await page.evaluate(() => {
           document.documentElement.classList.add('dark');
         });

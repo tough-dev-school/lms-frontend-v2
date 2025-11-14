@@ -41,7 +41,7 @@
           ),
         );
       } else {
-        router.push({ name: 'home' });
+        router.push({ name: 'courses' });
       }
     } catch {
       console.error('Failed to login');
