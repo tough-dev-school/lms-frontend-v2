@@ -3,6 +3,7 @@ import {
   useMutation,
   useQuery,
   queryOptions,
+  skipToken,
 } from '@tanstack/vue-query';
 import type { MaybeRefOrGetter } from 'vue';
 import { computed, toValue } from 'vue';
@@ -114,11 +115,13 @@ export const useLessonsQuery = (
 };
 
 const lessonOptions = (lessonId?: number) => {
-  return {
+  return queryOptions({
     queryKey: lmsKeys.lesson(lessonId),
-    queryFn: async () => lessonId && (await api.lmsLessonsRetrieve(lessonId)),
-    enabled: lessonId !== undefined,
-  };
+    queryFn:
+      lessonId === undefined
+        ? skipToken
+        : async () => await api.lmsLessonsRetrieve(lessonId),
+  });
 };
 
 export const useLessonQuery = (

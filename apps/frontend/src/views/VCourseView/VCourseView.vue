@@ -7,7 +7,6 @@
   import VPillItem from '@/components/VPill/VPillItem.vue';
   import VModuleCard from '@/components/VModuleCard/VModuleCard.vue';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
-  import { RouterLink } from 'vue-router';
 
   const props = defineProps<{
     courseId: number;
@@ -47,37 +46,50 @@
   <VLoggedLayout
     v-if="!isLoading"
     :title="courseName"
-    :breadcrumbs="breadcrumbs">
-    <template v-if="courseInfo.length > 0" #pill>
+    :breadcrumbs="breadcrumbs"
+  >
+    <template
+      v-if="courseInfo.length > 0"
+      #pill
+    >
       <VPill>
         <template v-if="study?.calendar_google || study?.calendar_ios">
           <VPillItem>
             <div
-              class="font-medium text-center flex justify-center items-center flex-col">
+              class="flex flex-col items-center justify-center text-center font-medium"
+            >
               <div>Календарь событий</div>
               <div class="flex gap-16">
                 <a
                   v-if="study?.calendar_google"
                   class="link-bright"
-                  :href="study.calendar_google">
+                  :href="study.calendar_google"
+                >
                   Google
                 </a>
                 <a
                   v-if="study?.calendar_ios"
                   class="link-bright"
-                  :href="study.calendar_ios">
+                  :href="study.calendar_ios"
+                >
                   iOS
                 </a>
               </div>
             </div>
           </VPillItem>
         </template>
-        <VPillItem v-if="study?.chat" :to="study.chat"> Чат </VPillItem>
+        <VPillItem
+          v-if="study?.chat"
+          :to="study.chat"
+        >
+          Чат
+        </VPillItem>
         <template v-if="study?.links?.length">
           <VPillItem
             v-for="(link, index) in study.links"
             :key="index"
-            :to="link.url">
+            :to="link.url"
+          >
             {{ link.name }}
           </VPillItem>
         </template>
@@ -85,26 +97,22 @@
     </template>
     <div
       v-if="modules && modules.length > 0"
-      class="grid gap-16 tablet:gap-32 phone:gap-24">
-      <component
-        v-bind="
-          module.has_started
-            ? {
-                to: {
-                  name: 'module',
-                  params: { courseId: props.courseId, moduleId: module.id },
-                },
-              }
-            : {}
-        "
-        :is="module.has_started ? RouterLink : 'div'"
+      class="grid gap-16 phone:gap-24 tablet:gap-32"
+    >
+      <VModuleCard
         v-for="(module, index) in modules"
-        :key="module.id">
-        <VModuleCard :key="module.id" :module="module" :index="index" />
-      </component>
+        :key="module.id"
+        :course-id="courseId"
+        :module="module"
+        :index="index"
+      />
     </div>
 
-    <p v-else data-testid="empty" class="mb-16 text-center">
+    <p
+      v-else
+      data-testid="empty"
+      class="mb-16 text-center"
+    >
       Нет доступных модулей.
     </p>
   </VLoggedLayout>
