@@ -33,8 +33,13 @@ jobs:
         run: pnpm run storybook:preview &
         working-directory: apps/frontend
 
-      - name: Run visual regression tests
-        run: pnpm run test:regression
+      - name: Run light mode visual regression tests
+        run: COLOR_SCHEME=light pnpm run test:regression
+        working-directory: apps/frontend
+
+      - name: Run dark mode visual regression tests
+        if: success()
+        run: COLOR_SCHEME=dark pnpm run test:regression
         working-directory: apps/frontend
 
       - name: Saving diffs 📥

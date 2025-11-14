@@ -22,7 +22,16 @@ const VIEWPORTS: Viewport[] = [
   [320, 560],
 ];
 
-const COLOR_SCHEMES: ColorScheme[] = ['light', 'dark'];
+const getColorSchemes = (): ColorScheme[] => {
+  const envColorScheme = process.env.COLOR_SCHEME;
+  if (envColorScheme === 'light' || envColorScheme === 'dark') {
+    return [envColorScheme];
+  }
+
+  return ['light', 'dark'];
+};
+
+const COLOR_SCHEMES: ColorScheme[] = getColorSchemes();
 
 describe('visual regression test for', () => {
   let browser: playwright.Browser;
