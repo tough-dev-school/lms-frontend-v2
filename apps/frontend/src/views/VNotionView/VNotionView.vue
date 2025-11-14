@@ -34,7 +34,9 @@
   });
 
   const breadcrumbs = computed(() => {
-    const result: Breadcrumb[] = [{ name: 'Мои курсы', to: { name: 'home' } }];
+    const result: Breadcrumb[] = [
+      { name: 'Мои курсы', to: { name: 'courses' } },
+    ];
 
     if (!materialData.value) return undefined;
 
@@ -42,7 +44,7 @@
       result.push({
         name: materialData.value.breadcrumbs.course.name,
         to: {
-          name: 'modules',
+          name: 'course',
           params: {
             courseId: materialData.value.breadcrumbs.course.id,
           },
@@ -56,7 +58,7 @@
       result.push({
         name: materialData.value.breadcrumbs.module.name,
         to: {
-          name: 'lessons',
+          name: 'module',
           params: {
             courseId: materialData.value.breadcrumbs.course.id,
             moduleId: materialData.value.breadcrumbs.module.id,
@@ -105,7 +107,7 @@
             {{ SUPPORT_EMAIL }}
           </a>
         </p>
-        <VButton appearance="link" @click="router.push({ name: 'home' })">
+        <VButton appearance="link" @click="router.push({ name: 'courses' })">
           На главную
         </VButton>
       </div>

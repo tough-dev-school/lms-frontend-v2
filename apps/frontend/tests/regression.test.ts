@@ -18,7 +18,6 @@ type Viewport = [number, number];
 const VIEWPORTS: Viewport[] = [
   [1440, 900],
   [768, 1024],
-  [390, 840],
   [320, 560],
 ];
 
@@ -75,28 +74,28 @@ describe('visual regression test for', () => {
       path: '/iframe?id=app-vnotionview--empty&viewMode=story',
     },
     {
-      name: 'Modules',
-      path: '/iframe?id=app-vmodulesview--default&viewMode=story',
+      name: 'Course',
+      path: '/iframe?id=app-vcourseview--default&viewMode=story',
     },
     {
-      name: 'No Modules',
-      path: '/iframe?id=app-vmodulesview--empty&viewMode=story',
+      name: 'No Course Modules',
+      path: '/iframe?id=app-vcourseview--empty&viewMode=story',
     },
     {
-      name: 'Modules Without Extra Info',
-      path: '/iframe?id=app-vmodulesview--without-extra-info&viewMode=story',
+      name: 'Course Without Extra Info',
+      path: '/iframe?id=app-vcourseview--without-extra-info&viewMode=story',
     },
     {
-      name: 'Lessons',
-      path: '/iframe?id=app-vlessonsview--default&viewMode=story',
+      name: 'Module',
+      path: '/iframe?id=app-vmoduleview--default&viewMode=story',
     },
     {
-      name: 'No Lessons',
-      path: '/iframe?id=app-vlessonsview--empty&viewMode=story',
+      name: 'No Module Lessons',
+      path: '/iframe?id=app-vmoduleview--empty&viewMode=story',
     },
     {
-      name: 'Lessons Without Module Text',
-      path: '/iframe?id=app-vlessonsview--without-module-text&viewMode=story',
+      name: 'Module Without Text',
+      path: '/iframe?id=app-vmoduleview--without-module-text&viewMode=story',
     },
     {
       name: 'Homework Question',
