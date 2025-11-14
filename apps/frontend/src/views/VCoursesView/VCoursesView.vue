@@ -18,7 +18,7 @@
           class="link"
           data-testid="study"
           :to="{
-            name: 'modules',
+            name: 'course',
             params: { courseId: study.id },
           }">
           <VCover

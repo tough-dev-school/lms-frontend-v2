@@ -26,15 +26,15 @@
     if (!courseName.value || !moduleName.value) return [];
 
     return [
-      { name: 'Мои курсы', to: { name: 'home' } },
+      { name: 'Мои курсы', to: { name: 'courses' } },
       {
         name: courseName.value ?? 'Материалы курса',
-        to: { name: 'modules', params: { courseId: props.courseId } },
+        to: { name: 'course', params: { courseId: props.courseId } },
       },
       {
         name: moduleName.value,
         to: {
-          name: 'lessons',
+          name: 'module',
           params: { courseId: props.courseId, moduleId: props.moduleId },
         },
       },

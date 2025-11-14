@@ -37,7 +37,7 @@
     {
       label: 'На главную',
       action: () => {
-        router.push({ name: 'home' });
+        router.push({ name: 'courses' });
       },
       id: 'home',
     },

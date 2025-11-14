@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
-import VLessonsView from './VLessonsView.vue';
+import VModuleView from './VModuleView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import { mockCourse } from '@/mocks/mockCourse';
 import { mockModule } from '@/mocks/mockModule';
@@ -9,8 +9,8 @@ import { useQueryClient } from '@tanstack/vue-query';
 import type { Lesson, RecommendedVideoProviderEnum } from '@/api/generated-api';
 
 export default {
-  title: 'App/VLessonsView',
-  component: VLessonsView,
+  title: 'App/VModuleView',
+  component: VModuleView,
   decorators: [defaultLayoutDecorator],
   parameters: { layout: 'fullscreen' },
   args: {
@@ -98,7 +98,7 @@ const STATIC_LESSONS: Lesson[] = [
 ];
 
 const Template: StoryFn = (args) => ({
-  components: { VLessonsView },
+  components: { VModuleView },
   setup() {
     const queryClient = useQueryClient();
 
@@ -117,7 +117,7 @@ const Template: StoryFn = (args) => ({
 
     return { args };
   },
-  template: '<VLessonsView v-bind="args" />',
+  template: '<VModuleView v-bind="args" />',
 });
 
 export const Default = {

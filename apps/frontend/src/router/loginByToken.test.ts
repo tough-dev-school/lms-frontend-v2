@@ -42,7 +42,7 @@ describe('loginByToken', () => {
     const { token } = useAuth();
 
     expect(mockMutateAsync).toHaveBeenCalledWith({ token: passwordlessToken });
-    expect(result).toEqual({ name: 'home' });
+    expect(result).toEqual({ name: 'courses' });
 
     expect(token.value).toEqual(tokenValue);
   });
