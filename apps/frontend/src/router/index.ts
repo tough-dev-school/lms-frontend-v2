@@ -10,14 +10,6 @@ import { queryClient } from '@/queryClient';
 
 export const routes = [
   {
-    path: '/courses',
-    name: 'courses',
-    component: () => import('@/views/VCoursesView/VCoursesView.vue'),
-    meta: {
-      allow: AllowMeta.Authorized,
-    },
-  },
-  {
     path: '/settings',
     name: 'settings',
     component: () => import('@/views/VSettingsView/VSettingsView.vue'),
@@ -26,8 +18,16 @@ export const routes = [
     },
   },
   {
-    path: '/:courseId/modules',
-    name: 'modules',
+    path: '/courses',
+    name: 'courses',
+    component: () => import('@/views/VCoursesView/VCoursesView.vue'),
+    meta: {
+      allow: AllowMeta.Authorized,
+    },
+  },
+  {
+    path: '/courses/:courseId',
+    name: 'course',
     component: () => import('@/views/VModulesView/VModulesView.vue'),
     props: (route: RouteLocationNormalized) => ({
       courseId: Number.parseInt(route.params.courseId as string),

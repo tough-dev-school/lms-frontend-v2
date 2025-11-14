@@ -44,7 +44,7 @@
       result.push({
         name: materialData.value.breadcrumbs.course.name,
         to: {
-          name: 'modules',
+          name: 'course',
           params: {
             courseId: materialData.value.breadcrumbs.course.id,
           },

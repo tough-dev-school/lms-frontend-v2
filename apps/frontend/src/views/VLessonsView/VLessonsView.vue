@@ -29,7 +29,7 @@
       { name: 'Мои курсы', to: { name: 'courses' } },
       {
         name: courseName.value ?? 'Материалы курса',
-        to: { name: 'modules', params: { courseId: props.courseId } },
+        to: { name: 'course', params: { courseId: props.courseId } },
       },
       {
         name: moduleName.value,
