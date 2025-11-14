@@ -8,8 +8,9 @@
   <!-- eslint-disable vue/no-v-html -->
   <!-- #TODO Check for XSS-->
   <article
-    class="prose prose-pre:bg-transparent prose-a:break-words prose-custom"
-    v-html="html" />
+    class="prose-custom prose prose-a:break-words prose-pre:bg-transparent"
+    v-html="html"
+  />
 </template>
 
 <style>
@@ -26,15 +27,15 @@
 
   /* Table styles to match VTextEditor */
   .prose table {
-    @apply border border-lightgray dark:border-darkmode-border border-collapse table-auto w-full bg-white;
+    @apply w-full table-auto border-collapse border border-gray bg-transparent dark:border-darkmode-border;
   }
 
   .prose th {
-    @apply bg-lightgray dark:bg-darkmode-layer3 font-bold p-8;
+    @apply bg-transparent p-8 font-bold;
   }
 
   .prose td {
-    @apply border border-lightgray dark:border-darkmode-border p-8;
+    @apply border border-gray p-8 dark:border-darkmode-border;
   }
 
   .prose .tableWrapper {
