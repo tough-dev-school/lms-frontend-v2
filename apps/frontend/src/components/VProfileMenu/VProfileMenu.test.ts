@@ -122,7 +122,7 @@ describe('VProfileMenu', () => {
     await getButton().trigger('click');
     await getHomeButton().trigger('click');
 
-    expect(routerPushMock).toHaveBeenCalledWith({ name: 'home' });
+    expect(routerPushMock).toHaveBeenCalledWith({ name: 'courses' });
   });
 
   test('Certificates button redirects to certificates page', async () => {

@@ -13,5 +13,5 @@ export const loginById = async (to: RouteLocationNormalized) => {
 
   token.value = newToken;
 
-  return { name: 'home' };
+  return { name: 'courses' };
 };

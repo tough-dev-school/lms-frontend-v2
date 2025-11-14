@@ -24,7 +24,7 @@
   const { data: modules } = useModulesQuery(() => props.courseId);
 
   const breadcrumbs = computed<Breadcrumb[]>(() => [
-    { name: 'Мои курсы', to: { name: 'home' } },
+    { name: 'Мои курсы', to: { name: 'courses' } },
     {
       name: courseName.value ?? 'Материалы курса',
       to: { name: 'modules', params: { courseId: props.courseId } },

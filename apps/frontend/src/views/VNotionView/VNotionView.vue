@@ -34,7 +34,9 @@
   });
 
   const breadcrumbs = computed(() => {
-    const result: Breadcrumb[] = [{ name: 'Мои курсы', to: { name: 'home' } }];
+    const result: Breadcrumb[] = [
+      { name: 'Мои курсы', to: { name: 'courses' } },
+    ];
 
     if (!materialData.value) return undefined;
 
@@ -105,7 +107,7 @@
             {{ SUPPORT_EMAIL }}
           </a>
         </p>
-        <VButton appearance="link" @click="router.push({ name: 'home' })">
+        <VButton appearance="link" @click="router.push({ name: 'courses' })">
           На главную
         </VButton>
       </div>

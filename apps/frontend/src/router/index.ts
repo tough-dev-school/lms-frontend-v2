@@ -10,8 +10,8 @@ import { queryClient } from '@/queryClient';
 
 export const routes = [
   {
-    path: '/',
-    name: 'home',
+    path: '/courses',
+    name: 'courses',
     component: () => import('@/views/VCoursesView/VCoursesView.vue'),
     meta: {
       allow: AllowMeta.Authorized,
@@ -220,14 +220,14 @@ router.beforeEach(
 
     // Redirect to existing route if route does not exist
     if (!to.name) {
-      return { name: 'home' };
+      return { name: 'courses' };
     }
 
     // Check authentication
     if (token.value) {
       // Redirect authorized users away from auth routes
       if (to.meta.allow === AllowMeta.Unauthorized) {
-        return { name: 'home' };
+        return { name: 'courses' };
       }
     } else {
       // Allow access to routes that don't require auth

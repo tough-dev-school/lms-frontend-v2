@@ -12,7 +12,9 @@ export const useHomeworkBreadcrumbs = (
   const breadcrumbs = ref<Breadcrumb[]>();
 
   onMounted(async () => {
-    const result: Breadcrumb[] = [{ name: 'Мои курсы', to: { name: 'home' } }];
+    const result: Breadcrumb[] = [
+      { name: 'Мои курсы', to: { name: 'courses' } },
+    ];
 
     const question = await fetchHomeworkQuestion(queryClient, {
       questionId: toValue(questionId),
