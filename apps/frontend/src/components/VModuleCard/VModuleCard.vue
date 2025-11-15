@@ -30,22 +30,26 @@
   };
 
   const to = computed(() => {
-    if (props.module.has_started) return undefined;
+    if (!props.module.has_started) return undefined;
 
-    if (onlyLesson.value?.material) {
-      return {
-        name: 'materials',
-        params: {
-          materialId: onlyLesson.value.material.id,
-        },
-      };
-    } else if (onlyLesson.value?.question) {
-      return {
-        name: 'homework',
-        params: { questionId: onlyLesson.value.question.slug },
-      };
-    } else if (onlyLesson.value?.call && onlyLesson.value.call.url) {
-      return onlyLesson.value.call.url;
+    if (props.module.lesson_count === 1) {
+      if (!onlyLesson.value) return undefined;
+
+      if (onlyLesson.value.call?.url) {
+        return onlyLesson.value.call.url;
+      } else if (onlyLesson.value.material) {
+        return {
+          name: 'materials',
+          params: {
+            materialId: onlyLesson.value.material.id,
+          },
+        };
+      } else if (onlyLesson.value.question) {
+        return {
+          name: 'homework',
+          params: { questionId: onlyLesson.value.question.slug },
+        };
+      }
     }
 
     return {
@@ -64,7 +68,7 @@
 
   const componentVariant = computed(() => {
     if (typeof to.value === 'string') return 'a';
-    if (props.module.has_started) return RouterLink;
+    if (to.value && props.module.has_started) return RouterLink;
     return 'div';
   });
 </script>
@@ -80,15 +84,25 @@
         ? 'origin-center transition-all duration-100 ease-out hover:scale-[1.02] hover:shadow'
         : 'pointer-events-none cursor-not-allowed grayscale',
     ]"
+    data-testid="module-card"
   >
     <div
       v-if="module.start_date"
       class="flex justify-start"
+      data-testid="module-start-date"
     >
       <VTag>{{ formatDate(module.start_date, 'DD.MM') }}</VTag>
     </div>
-    <VHeading tag="h3">{{ module.name }}</VHeading>
-    <p v-if="module.description">
+    <VHeading
+      tag="h3"
+      data-testid="module-name"
+    >
+      {{ module.name }}
+    </VHeading>
+    <p
+      v-if="module.description"
+      data-testid="module-description"
+    >
       {{ module.description }}
     </p>
   </component>
