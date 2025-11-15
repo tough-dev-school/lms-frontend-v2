@@ -8,9 +8,6 @@ importers:
 
   .:
     devDependencies:
-      '@ast-grep/cli':
-        specifier: ^0.39.9
-        version: 0.39.9
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -288,53 +285,6 @@ packages:
     engines: {node: '>= 20'}
     peerDependencies:
       '@types/json-schema': ^7.0.15
-
-  '@ast-grep/cli-darwin-arm64@0.39.9':
-    resolution: {integrity: sha512-DCmooChgotx4uu8B8rKfCAD05P8Au1lXn4wVLDJMbYYUxVjYIaF+fdjKj+hTRD2POAtQHtHN1F2l9gl8zcQAyw==}
-    engines: {node: '>= 10'}
-    cpu: [arm64]
-    os: [darwin]
-
-  '@ast-grep/cli-darwin-x64@0.39.9':
-    resolution: {integrity: sha512-0jMyF0DOXjDmL61VuT8l/QRcBKbJQeMEEhH7G6sUF+mBuFBjYjoSEDg9+FSjUU+vPN3flJ99Kg4pT+einy+pjg==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [darwin]
-
-  '@ast-grep/cli-linux-arm64-gnu@0.39.9':
-    resolution: {integrity: sha512-fygNBarEJB4LS4kLk+v//s1AWH7iTRX/vUdepsVivmP8MAwdsQJQ3HH/uKgoE+KFj2FCrq9CxfaCswlpbFtdpg==}
-    engines: {node: '>= 10'}
-    cpu: [arm64]
-    os: [linux]
-
-  '@ast-grep/cli-linux-x64-gnu@0.39.9':
-    resolution: {integrity: sha512-StC8APEfKqMKt23+JE40BLMFAx6KAQZfy8UTZM2rSUGUYetjZDoTVYnfh1aaH+oyIQzB+ef11dRsMp/ls5Pilg==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [linux]
-
-  '@ast-grep/cli-win32-arm64-msvc@0.39.9':
-    resolution: {integrity: sha512-HbIwYoh7NlJfYn957+9wj6bywQdGy2S+KpFj4Is7hnto6Yh1eRyG0szZkr6kzJuXQxF5NZoE12odWgTElpDUAg==}
-    engines: {node: '>= 10'}
-    cpu: [arm64]
-    os: [win32]
-
-  '@ast-grep/cli-win32-ia32-msvc@0.39.9':
-    resolution: {integrity: sha512-SMFSuTRzeM3857UX467YCy6uIi7onwOxf6YGlNsOwg6ShiWcNodssoPCir9kZccLoSp+9dxANmV/6n8CMHwH0w==}
-    engines: {node: '>= 10'}
-    cpu: [ia32]
-    os: [win32]
-
-  '@ast-grep/cli-win32-x64-msvc@0.39.9':
-    resolution: {integrity: sha512-+Kopx/NUEmFORNmQ/nsHXvnqoOuj45vCrDhQ/cj01D4AoeQ9MxbzVAk8sjSJsJbazDaV9if41+HTAhpVWhC4CQ==}
-    engines: {node: '>= 10'}
-    cpu: [x64]
-    os: [win32]
-
-  '@ast-grep/cli@0.39.9':
-    resolution: {integrity: sha512-qMtu3GplcMS4PRefPtOeN2slcn6s+ccDiMRk+RvEQoxJqflNbKZi3ZbYq7O2Xh49N/VjeiU3n+5WYHaVFFEyAg==}
-    engines: {node: '>= 12.0.0'}
-    hasBin: true
 
   '@ast-grep/napi-darwin-arm64@0.39.9':
     resolution: {integrity: sha512-0gdBC2oPBkIBsh89yUXxJeK37QYRbp1qNZVuRGizT666ljgCw+2NIxHeQGNjwWuI0+g3exrd8FyqD3gMixRx3w==}
@@ -2728,10 +2678,6 @@ packages:
   dequal@2.0.3:
     resolution: {integrity: sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA==}
     engines: {node: '>=6'}
-
-  detect-libc@2.1.2:
-    resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
-    engines: {node: '>=8'}
 
   devlop@1.1.0:
     resolution: {integrity: sha512-RWmIqhcFf1lRYBvNmr7qTNuyCt/7/ns2jbpp1+PalgE/rDQcBT0fioSMUpJ93irlUhC5hrg4cYqe6U+0ImW0rA==}
@@ -5820,39 +5766,6 @@ snapshots:
       '@types/json-schema': 7.0.15
       js-yaml: 4.1.0
 
-  '@ast-grep/cli-darwin-arm64@0.39.9':
-    optional: true
-
-  '@ast-grep/cli-darwin-x64@0.39.9':
-    optional: true
-
-  '@ast-grep/cli-linux-arm64-gnu@0.39.9':
-    optional: true
-
-  '@ast-grep/cli-linux-x64-gnu@0.39.9':
-    optional: true
-
-  '@ast-grep/cli-win32-arm64-msvc@0.39.9':
-    optional: true
-
-  '@ast-grep/cli-win32-ia32-msvc@0.39.9':
-    optional: true
-
-  '@ast-grep/cli-win32-x64-msvc@0.39.9':
-    optional: true
-
-  '@ast-grep/cli@0.39.9':
-    dependencies:
-      detect-libc: 2.1.2
-    optionalDependencies:
-      '@ast-grep/cli-darwin-arm64': 0.39.9
-      '@ast-grep/cli-darwin-x64': 0.39.9
-      '@ast-grep/cli-linux-arm64-gnu': 0.39.9
-      '@ast-grep/cli-linux-x64-gnu': 0.39.9
-      '@ast-grep/cli-win32-arm64-msvc': 0.39.9
-      '@ast-grep/cli-win32-ia32-msvc': 0.39.9
-      '@ast-grep/cli-win32-x64-msvc': 0.39.9
-
   '@ast-grep/napi-darwin-arm64@0.39.9':
     optional: true
 
@@ -8442,8 +8355,6 @@ snapshots:
   delayed-stream@1.0.0: {}
 
   dequal@2.0.3: {}
-
-  detect-libc@2.1.2: {}
 
   devlop@1.1.0:
     dependencies:
