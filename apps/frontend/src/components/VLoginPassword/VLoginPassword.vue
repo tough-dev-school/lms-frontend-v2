@@ -26,7 +26,6 @@
 
   const handleSubmit = async () => {
     try {
-      // @ts-expect-error #TODO JSONWebToken in, and out — must be fixed on backend
       const { token: newToken } = await loginWithCredentials({
         username: username.value,
         password: password.value,
@@ -58,17 +57,23 @@
 </script>
 
 <template>
-  <VCard tag="form" title="Вход" @submit.prevent="handleSubmit">
+  <VCard
+    tag="form"
+    title="Вход"
+    @submit.prevent="handleSubmit"
+  >
     <div class="flex flex-col gap-16">
       <VTextInput
         v-model="username"
         autocomplete="username"
         label="Логин"
-        :type="isEmail ? 'email' : 'text'" />
+        :type="isEmail ? 'email' : 'text'"
+      />
       <VTextInput
         v-model="password"
         autocomplete="current-password"
-        type="password">
+        type="password"
+      >
         <template #label>
           Пароль
           <span class="text-sub">
@@ -76,7 +81,8 @@
               class="underline"
               type="button"
               tabindex="-1"
-              @click="router.push({ name: 'login-reset' })">
+              @click="router.push({ name: 'login-reset' })"
+            >
               Не помню пароль</button
             >)
           </span>
@@ -88,10 +94,15 @@
         :disabled="isCredentialsInvalid"
         :loading="isPending"
         class="flex-grow"
-        type="submit">
+        type="submit"
+      >
         Войти
       </VButton>
-      <VButton appearance="link" class="flex-grow" @click="emit('change')">
+      <VButton
+        appearance="link"
+        class="flex-grow"
+        @click="emit('change')"
+      >
         Войти по ссылке
       </VButton>
     </template>

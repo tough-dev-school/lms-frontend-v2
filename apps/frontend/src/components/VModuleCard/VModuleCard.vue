@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import VHeading from '@/components/VHeading/VHeading.vue';
-  import type { ModuleDetail, Lesson } from '@/api/generated-api';
+  import type { ModuleDetail, Lesson } from '@/api/generated/generated-api';
   import VTag from '../VTag/VTag.vue';
   import { formatDate } from '@/utils/date';
   import { RouterLink } from 'vue-router';

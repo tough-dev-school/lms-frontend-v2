@@ -6,7 +6,7 @@
     Lesson,
     RecommendedVideoProviderEnum,
     VideoProvider,
-  } from '@/api/generated-api';
+  } from '@/api/generated/generated-api';
   import { computed } from 'vue';
   import { formatDateTime } from '@/utils/date';
 
@@ -42,10 +42,11 @@
   <div
     :class="[
       'VLessonCard flex flex-col gap-10',
-      'dark:!bg-accent-yellow !bg-accent-yellow text-black flex-shrink py-24 rounded-16 p-16 tablet:p-24',
-    ]">
+      'flex-shrink rounded-16 !bg-accent-yellow p-16 py-24 text-black dark:!bg-accent-yellow tablet:p-24',
+    ]"
+  >
     <div class="flex flex-col gap-16">
-      <div class="empty:hidden gap-8 flex flex-wrap">
+      <div class="flex flex-wrap gap-8 empty:hidden">
         <VTag v-if="lesson.call?.datetime">
           {{ formatDateTime(lesson.call.datetime) }}
         </VTag>
@@ -53,14 +54,20 @@
           Дедлайн {{ formatDateTime(lesson.homework.question.deadline) }}
         </VTag>
       </div>
-      <VHeading v-if="name" tag="h3" class="mb-8">{{ name }}</VHeading>
+      <VHeading
+        v-if="name"
+        tag="h3"
+        class="mb-8"
+      >
+        {{ name }}
+      </VHeading>
       <p v-if="description">{{ description }}</p>
     </div>
     <div v-if="lesson.homework">
       <table class="w-full">
         <tr>
           <td class="font-bold">Статус</td>
-          <td class="text-right whitespace-nowrap">
+          <td class="whitespace-nowrap text-right">
             {{ lesson.homework.is_sent ? 'Отправлена' : 'Не отправлена' }}
           </td>
         </tr>
@@ -89,13 +96,20 @@
               lesson.call.recommended_video_provider,
             ).src
           "
-          target="_blank">
+          target="_blank"
+        >
           <VButton class="VLessonCard__Button"> Смотреть запись </VButton>
         </a>
       </template>
-      <template v-else>
-        <a :href="lesson.call.url" target="_blank">
-          <VButton class="VLessonCard__Button" appearance="secondary">
+      <template v-else-if="lesson.call.url">
+        <a
+          :href="lesson.call.url"
+          target="_blank"
+        >
+          <VButton
+            class="VLessonCard__Button"
+            appearance="secondary"
+          >
             Подключиться
           </VButton>
         </a>
@@ -106,7 +120,8 @@
       :to="{
         name: 'materials',
         params: { materialId: lesson.material.id },
-      }">
+      }"
+    >
       <VButton class="VLessonCard__Button"> Читать </VButton>
     </RouterLink>
     <RouterLink
@@ -114,7 +129,8 @@
       :to="{
         name: 'homework',
         params: { questionId: lesson.homework.question.slug },
-      }">
+      }"
+    >
       <VButton class="VLessonCard__Button"> Открыть </VButton>
     </RouterLink>
   </div>
@@ -123,6 +139,6 @@
 <style scoped>
   .VLessonCard__Button {
     --module: 40px;
-    @apply bg-white rounded-8 w-full;
+    @apply w-full rounded-8 bg-white;
   }
 </style>

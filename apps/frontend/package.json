@@ -18,7 +18,7 @@
     "storybook": "storybook dev -p 3001",
     "storybook:build": "storybook build",
     "storybook:preview": "serve storybook-static/",
-    "generate-sdk": "node --experimental-strip-types generate-sdk.ts; prettier --write src/api/generated-api.ts"
+    "generate-api": "node --experimental-strip-types generate-sdk.ts; prettier --write src/api/generated/*.ts; tsx patch-api.ts"
   },
   "dependencies": {
     "@brachkow/email-providers": "^1.2.0",
@@ -47,6 +47,7 @@
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
+    "@ast-grep/napi": "^0.39.9",
     "@cloudflare/workers-types": "^4.20250724.0",
     "@faker-js/faker": "^8.4.1",
     "@storybook/addon-docs": "^9.0.14",

@@ -5,8 +5,8 @@
   import { ref, onMounted } from 'vue';
   import { useQueryClient } from '@tanstack/vue-query';
   import { useUpdateUserMutation, fetchUser } from '@/query';
-  import { GenderEnum, BlankEnum } from '@/api/generated-api';
-  import type { PatchedUser } from '@/api/generated-api';
+  import { GenderEnum, BlankEnum } from '@/api/generated/generated-api';
+  import type { PatchedUser } from '@/api/generated/generated-api';
 
   const queryClient = useQueryClient();
   const { mutateAsync: updateUser, isPending } =
@@ -59,19 +59,23 @@
       <VTextInput
         v-model="data.firstName"
         data-testid="firstName"
-        label="Имя" />
+        label="Имя"
+      />
       <VTextInput
         v-model="data.lastName"
         data-testid="lastName"
-        label="Фамилия" />
+        label="Фамилия"
+      />
       <VTextInput
         v-model="data.firstNameEn"
         data-testid="firstNameEn"
-        label="Имя (на английском)" />
+        label="Имя (на английском)"
+      />
       <VTextInput
         v-model="data.lastNameEn"
         data-testid="lastNameEn"
-        label="Фамилия (на английском)" />
+        label="Фамилия (на английском)"
+      />
       <fieldset class="flex flex-wrap gap-16">
         <legend class="Label">Пол</legend>
         <label class="cursor-pointer"
@@ -80,7 +84,8 @@
             name="gender"
             data-testid="gender-male"
             :checked="data.gender === GenderEnum.Male"
-            @click="data.gender = GenderEnum.Male" />
+            @click="data.gender = GenderEnum.Male"
+          />
           Мужской</label
         >
         <label class="cursor-pointer"
@@ -89,13 +94,18 @@
             name="gender"
             data-testid="gender-female"
             :checked="data.gender === GenderEnum.Female"
-            @click="data.gender = GenderEnum.Female" />
+            @click="data.gender = GenderEnum.Female"
+          />
           Женский</label
         >
       </fieldset>
     </div>
     <template #footer>
-      <VButton data-testid="save" :loading="isPending" @click="saveCertificate">
+      <VButton
+        data-testid="save"
+        :loading="isPending"
+        @click="saveCertificate"
+      >
         {{ isPending ? 'Сохраняется...' : 'Сохранить' }}
       </VButton>
     </template>

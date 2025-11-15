@@ -5,7 +5,7 @@ import { mockQuestion } from '@/mocks/mockQuestion';
 import { mockModule } from '@/mocks/mockModule';
 import { homeworkKeys, lmsKeys } from '@/query';
 import { useQueryClient } from '@tanstack/vue-query';
-import type { QuestionDetail, Lesson } from '@/api/generated-api';
+import type { QuestionDetail, Lesson } from '@/api/generated/generated-api';
 
 export default {
   title: 'App/VHomeworkQuestionView',
@@ -34,7 +34,6 @@ const STATIC_QUESTION: QuestionDetail = {
     question: {
       slug: 'react-components',
       name: 'Создание React компонентов',
-      text: 'Создайте несколько React компонентов согласно требованиям',
       deadline: '2024-02-15T23:59:00Z',
     },
   },
@@ -50,9 +49,15 @@ const STATIC_QUESTION: QuestionDetail = {
       id: 1,
       name: 'Курс веб-разработки',
       slug: 'web-development',
+      chat: 'https://t.me/test',
+      calendar_ios: 'https://calendar.apple.com/test',
+      calendar_google: 'https://calendar.google.com/test',
     },
   },
   course: {
+    chat: 'https://t.me/test',
+    calendar_ios: 'https://calendar.apple.com/test',
+    calendar_google: 'https://calendar.google.com/test',
     id: 1,
     name: 'Курс веб-разработки',
     slug: 'web-development',
@@ -69,7 +74,6 @@ const STATIC_LESSON: Lesson = {
     question: {
       slug: 'react-components',
       name: 'Создание React компонентов',
-      text: 'Создайте несколько React компонентов согласно требованиям',
       deadline: '2024-02-15T23:59:00Z',
     },
   },

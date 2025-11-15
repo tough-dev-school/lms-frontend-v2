@@ -48,11 +48,11 @@ export enum BlankEnum {
 
 export interface Answer {
   /** @format date-time */
-  created?: string;
+  created: string;
   /** @format date-time */
-  modified?: string | null;
+  modified: string | null;
   /** @format uuid */
-  slug?: string;
+  slug: string;
   question: string;
   author: UserSafe;
   /** @format uuid */
@@ -61,8 +61,8 @@ export interface Answer {
   legacy_text?: string;
   content?: any;
   src: string;
-  has_descendants?: boolean;
-  is_editable?: boolean;
+  has_descendants: boolean;
+  is_editable: boolean;
   reactions: ReactionDetailed[];
 }
 
@@ -93,19 +93,19 @@ export interface AnswerTree {
   /** @format date-time */
   created: string;
   /** @format date-time */
-  modified: string;
+  modified: string | null;
   /** @format uuid */
   slug: string;
   question: string;
   author: UserSafe;
   /** @format uuid */
-  parent: string;
+  parent?: string;
   text?: string;
   legacy_text?: string;
   content?: any;
   src: string;
-  has_descendants?: boolean;
-  is_editable?: boolean;
+  has_descendants: boolean;
+  is_editable: boolean;
   reactions: ReactionDetailed[];
   descendants: AnswerTree[];
 }
@@ -130,13 +130,13 @@ export interface Call {
    * Описание
    * @maxLength 512
    */
-  description?: string | null;
+  description: string | null;
   /**
    * Ссылка
    * @format uri
    * @maxLength 255
    */
-  url: string;
+  url: string | null;
   video: VideoProvider[];
   /**
    * Дата
@@ -148,7 +148,7 @@ export interface Call {
 
 export interface CommentStats {
   comments: number;
-  hidden_before_crosscheck_completed: number;
+  hidden_before_crosscheck_completed: number | null;
 }
 
 export interface Course {
@@ -158,7 +158,7 @@ export interface Course {
    * @pattern ^[-a-zA-Z0-9_]+$
    */
   slug: string;
-  name?: string;
+  name: string;
   /**
    * Название
    * @maxLength 255
@@ -168,7 +168,7 @@ export interface Course {
    * Тариф
    * @maxLength 64
    */
-  tariff_name?: string | null;
+  tariff_name: string | null;
   home_page_slug: string;
   /**
    * Обложка
@@ -181,20 +181,20 @@ export interface Course {
    * @format uri
    * @maxLength 200
    */
-  chat?: string | null;
+  chat: string | null;
   /**
    * Календарь (iOS)
    * @format uri
    * @maxLength 200
    */
-  calendar_ios?: string | null;
+  calendar_ios: string | null;
   /**
    * Календарь (Google)
    * @format uri
    * @maxLength 200
    */
-  calendar_google?: string | null;
-  links?: CourseLink[];
+  calendar_google: string | null;
+  links: CourseLink[];
 }
 
 export interface CourseLink {
@@ -211,12 +211,12 @@ export interface CourseLink {
 }
 
 export interface CourseSimple {
-  name?: string;
+  name: string;
   /**
    * Название для международных покупок
    * @maxLength 255
    */
-  name_international?: string;
+  name_international: string;
   /**
    * Название
    * @maxLength 255
@@ -226,7 +226,7 @@ export interface CourseSimple {
    * Тариф
    * @maxLength 64
    */
-  tariff_name?: string | null;
+  tariff_name: string | null;
 }
 
 /** Course with commercial data. Requires bank context */
@@ -236,12 +236,12 @@ export interface CourseWithPrice {
    * @pattern ^[-a-zA-Z0-9_]+$
    */
   slug: string;
-  name?: string;
+  name: string;
   /**
    * Название для международных покупок
    * @maxLength 255
    */
-  name_international?: string;
+  name_international: string;
   /**
    * Название
    * @maxLength 255
@@ -251,12 +251,12 @@ export interface CourseWithPrice {
    * Тариф
    * @maxLength 64
    */
-  tariff_name?: string | null;
+  tariff_name: string | null;
   price?: Price;
 }
 
 export interface CrossCheck {
-  id?: number;
+  id: number;
   answer: AnswerSimple;
   is_checked: boolean;
 }
@@ -269,7 +269,7 @@ export interface CrossCheckStats {
 export interface Diploma {
   course: CourseSimple;
   /** @maxLength 32 */
-  slug?: string;
+  slug: string;
   /** Язык */
   language: LanguageEnum;
   /**
@@ -297,7 +297,7 @@ export interface DiplomaCreate {
 export interface DiplomaRetrieve {
   course: CourseSimple;
   /** @maxLength 32 */
-  slug?: string;
+  slug: string;
   /** Язык */
   language: LanguageEnum;
   /**
@@ -326,7 +326,7 @@ export interface HomeworkStats {
  */
 export interface JSONWebToken {
   password: string;
-  token: string;
+  token?: string;
   username: string;
 }
 
@@ -337,7 +337,6 @@ export interface LMSCourse {
    * @pattern ^[-a-zA-Z0-9_]+$
    */
   slug: string;
-  /** @maxLength 255 */
   name: string;
   /**
    * Обложка
@@ -350,26 +349,26 @@ export interface LMSCourse {
    * @format uri
    * @maxLength 200
    */
-  chat?: string | null;
+  chat: string | null;
   /**
    * Календарь (iOS)
    * @format uri
    * @maxLength 200
    */
-  calendar_ios?: string | null;
+  calendar_ios: string | null;
   /**
    * Календарь (Google)
    * @format uri
    * @maxLength 200
    */
-  calendar_google?: string | null;
+  calendar_google: string | null;
   /** Рекомендации по проверке домашки */
   homework_check_recommendations?: string;
 }
 
 /** Serialize lesson for the user, lesson should be annotated with crosschecks stats */
 export interface Lesson {
-  id?: number;
+  id: number;
   material?: NotionMaterial;
   homework?: HomeworkStats;
   question: Question;
@@ -427,9 +426,9 @@ export interface ModuleDetail {
 
 export interface NotionCacheEntryStatus {
   /** @format date-time */
-  fetch_started?: string | null;
+  fetch_started: string | null;
   /** @format date-time */
-  fetch_complete?: string | null;
+  fetch_complete: string | null;
 }
 
 export interface NotionMaterial {
@@ -443,7 +442,7 @@ export interface NotionMaterial {
 }
 
 export interface Ok {
-  ok?: boolean;
+  ok: boolean;
 }
 
 export interface OrderDraft {
@@ -472,12 +471,12 @@ export interface PaginatedAnswerList {
    * @format uri
    * @example "http://api.example.org/accounts/?page=4"
    */
-  next?: string | null;
+  next: string | null;
   /**
    * @format uri
    * @example "http://api.example.org/accounts/?page=2"
    */
-  previous?: string | null;
+  previous: string | null;
   results: Answer[];
 }
 
@@ -488,12 +487,12 @@ export interface PaginatedCourseList {
    * @format uri
    * @example "http://api.example.org/accounts/?page=4"
    */
-  next?: string | null;
+  next: string | null;
   /**
    * @format uri
    * @example "http://api.example.org/accounts/?page=2"
    */
-  previous?: string | null;
+  previous: string | null;
   results: Course[];
 }
 
@@ -504,12 +503,12 @@ export interface PaginatedDiplomaList {
    * @format uri
    * @example "http://api.example.org/accounts/?page=4"
    */
-  next?: string | null;
+  next: string | null;
   /**
    * @format uri
    * @example "http://api.example.org/accounts/?page=2"
    */
-  previous?: string | null;
+  previous: string | null;
   results: Diploma[];
 }
 
@@ -520,12 +519,12 @@ export interface PaginatedLessonList {
    * @format uri
    * @example "http://api.example.org/accounts/?page=4"
    */
-  next?: string | null;
+  next: string | null;
   /**
    * @format uri
    * @example "http://api.example.org/accounts/?page=2"
    */
-  previous?: string | null;
+  previous: string | null;
   results: Lesson[];
 }
 
@@ -536,12 +535,12 @@ export interface PaginatedModuleDetailList {
    * @format uri
    * @example "http://api.example.org/accounts/?page=4"
    */
-  next?: string | null;
+  next: string | null;
   /**
    * @format uri
    * @example "http://api.example.org/accounts/?page=2"
    */
-  previous?: string | null;
+  previous: string | null;
   results: ModuleDetail[];
 }
 
@@ -687,7 +686,7 @@ export interface Purchase {
 
 export interface Question {
   /** @format uuid */
-  slug?: string;
+  slug: string;
   /**
    * Название
    * @maxLength 256
@@ -698,17 +697,17 @@ export interface Question {
    * Дедлайн
    * @format date-time
    */
-  deadline?: string | null;
+  deadline: string | null;
 }
 
 export interface QuestionCourse {
-  id?: number;
+  id: number;
   /**
    * @maxLength 50
    * @pattern ^[-a-zA-Z0-9_]+$
    */
   slug: string;
-  name?: string;
+  name: string;
   /**
    * Обложка
    * Обложка курса
@@ -720,22 +719,23 @@ export interface QuestionCourse {
    * @format uri
    * @maxLength 200
    */
-  chat?: string | null;
+  chat: string | null;
   /**
    * Календарь (iOS)
    * @format uri
    * @maxLength 200
    */
-  calendar_ios?: string | null;
+  calendar_ios: string | null;
   /**
    * Календарь (Google)
    * @format uri
    * @maxLength 200
    */
-  calendar_google?: string | null;
+  calendar_google: string | null;
   /** Рекомендации по проверке домашки */
   homework_check_recommendations?: string;
 }
+
 export interface QuestionDetail {
   breadcrumbs: Breadcrumbs;
   /** @format uuid */
@@ -750,7 +750,7 @@ export interface QuestionDetail {
    * Дедлайн
    * @format date-time
    */
-  deadline?: string | null;
+  deadline: string | null;
   /** Requires *any* model annotaded with statistics. For annotation examples check homework.QuestionQuerySet */
   homework: HomeworkStats;
   course?: QuestionCourse;
@@ -778,7 +778,7 @@ export interface RestAuthDetail {
 
 export interface TemporarySoonToBeDepricatedQuestion {
   /** @format uuid */
-  slug?: string;
+  slug: string;
   /**
    * Название
    * @maxLength 256
@@ -788,7 +788,7 @@ export interface TemporarySoonToBeDepricatedQuestion {
    * Дедлайн
    * @format date-time
    */
-  deadline?: string | null;
+  deadline: string | null;
 }
 
 export interface Token {
@@ -803,7 +803,7 @@ export interface User {
    * Статус персонала
    * Отметьте, если пользователь может входить в административную часть сайта.
    */
-  is_staff?: boolean;
+  is_staff: boolean;
   /**
    * Имя пользователя
    * Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
@@ -849,7 +849,7 @@ export interface User {
    * Аватар
    * @format uri
    */
-  avatar?: string | null;
+  avatar: string | null;
 }
 
 export interface UserSafe {
@@ -879,7 +879,7 @@ export interface UserSafe {
    * Аватар
    * @format uri
    */
-  avatar?: string | null;
+  avatar: string | null;
 }
 
 export interface VideoProvider {
@@ -1191,7 +1191,7 @@ export type QueryParamsType = Record<string | number, any>;
 export interface FullRequestParams
   extends Omit<AxiosRequestConfig, 'data' | 'params' | 'url' | 'responseType'> {
   /** set parameter to `true` for call `securityWorker` for this request */
-  secure?: boolean;
+  secure: boolean;
   /** request path */
   path: string;
   /** content type of request body */
@@ -1211,10 +1211,10 @@ export type RequestParams = Omit<
 
 export interface ApiConfig<SecurityDataType = unknown>
   extends Omit<AxiosRequestConfig, 'data' | 'cancelToken'> {
-  securityWorker?: (
+  securityWorker: (
     securityData: SecurityDataType | null,
   ) => Promise<AxiosRequestConfig | void> | AxiosRequestConfig | void;
-  secure?: boolean;
+  secure: boolean;
   format?: ResponseType;
 }
 
