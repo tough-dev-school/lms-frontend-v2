@@ -7,8 +7,9 @@ import { faker } from '@faker-js/faker';
 import { usePurchasedCoursesList } from '@/api/generated/hooks';
 import { VueQueryPlugin, QueryClient } from '@tanstack/vue-query';
 import type { VueQueryPluginOptions } from '@tanstack/vue-query';
+import { createCourse } from '@/api/generated';
 
-const defaultStudies = faker.helpers.multiple(mockCourse, { count: 3 });
+const defaultStudies = faker.helpers.multiple(createCourse, { count: 3 });
 
 vi.mock('@/api/generated/hooks');
 

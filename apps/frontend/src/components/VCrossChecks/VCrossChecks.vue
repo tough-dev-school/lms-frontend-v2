@@ -6,7 +6,7 @@
     crosschecks: CrossCheck[];
   }>();
 
-  const getCrossCheckState = (isChecked: boolean) => {
+  const getCrossCheckState = (isChecked: CrossCheck['is_checked']) => {
     if (isChecked) {
       return 'проверено';
     }
