@@ -1,23 +1,25 @@
 import type { RouteLocationNormalized } from 'vue-router';
-import { useAuthPasswordlessTokenRetrieve } from '@/api/generated/hooks';
 import { useQueryClient } from '@tanstack/vue-query';
 import { useAuth } from '@/composables/useAuth';
+import { authPasswordlessTokenRetrieve } from '@/api/generated';
 
 export const loginByToken = async (to: RouteLocationNormalized) => {
   const queryClient = useQueryClient();
   const { token } = useAuth();
 
-  const { mutateAsync: exchangeTokens } = useAuthPasswordlessTokenRetrieve({
-    mutation: {
-      onSuccess: () => {
-        queryClient.invalidateQueries();
-      },
-    },
-  });
+  const exchangeTokens = async (passwordlessToken: string) => {
+    try {
+      const response = await authPasswordlessTokenRetrieve(passwordlessToken);
+      queryClient.invalidateQueries();
+      return response;
+    } catch {
+      throw new Error('Failed to login');
+    }
+  };
 
-  const { token: newToken } = await exchangeTokens({
-    token: String(to.params.passwordlessToken),
-  });
+  const { token: newToken } = await exchangeTokens(
+    String(to.params.passwordlessToken),
+  );
 
   token.value = newToken;
 

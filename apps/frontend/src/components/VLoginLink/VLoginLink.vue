@@ -5,26 +5,27 @@
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
   import { useQueryClient } from '@tanstack/vue-query';
-  import { useAuthPasswordlessTokenRequestRetrieve } from '@/api/generated/hooks';
+  import { authPasswordlessTokenRequestRetrieve } from '@/api/generated';
 
   const router = useRouter();
   const queryClient = useQueryClient();
   const email = ref('');
   const isPending = ref(false);
 
-  const { mutateAsync: loginWithLink } =
-    useAuthPasswordlessTokenRequestRetrieve({
-      mutation: {
-        onSuccess: () => {
-          queryClient.invalidateQueries();
-        },
-      },
-    });
+  const loginWithLink = async (userEmail: string) => {
+    try {
+      const response = await authPasswordlessTokenRequestRetrieve(userEmail);
+      queryClient.invalidateQueries();
+      return response;
+    } catch {
+      throw new Error('Failed to login');
+    }
+  };
 
   const handleLogin = async () => {
     try {
       isPending.value = true;
-      await loginWithLink({ email: email.value });
+      await loginWithLink(email.value);
 
       router.push({ name: 'mail-sent', query: { email: email.value } });
     } catch {

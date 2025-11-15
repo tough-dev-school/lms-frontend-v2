@@ -5,6 +5,7 @@ import {
   createCourse,
   createModule,
   createQuestion,
+  createTemporarySoonToBeDepricatedQuestion,
 } from '@/api/generated/mocks';
 import {
   purchasedCoursesListQueryKey,
@@ -74,9 +75,9 @@ const STATIC_LESSONS: Lesson[] = [
         checked: 3,
       },
       question: {
+        ...createTemporarySoonToBeDepricatedQuestion(),
         slug: 'async-fundamentals',
         name: 'Основы асинхронности',
-        text: 'Выполните задания по работе с Promise и async/await',
         deadline: '2024-01-25T23:59:00Z',
       },
     },
@@ -97,9 +98,9 @@ const STATIC_LESSONS: Lesson[] = [
     homework: {
       is_sent: false,
       question: {
+        ...createTemporarySoonToBeDepricatedQuestion(),
         slug: 'event-sourcing',
         name: 'Event Sourcing',
-        text: 'Изучите концепции Event Sourcing',
         deadline: '2024-02-01T23:59:00Z',
       },
     },
