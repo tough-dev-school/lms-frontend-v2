@@ -116,7 +116,7 @@ export const routes = [
   {
     path: '/materials/:materialId',
     name: 'materials',
-    component: () => import('@/views/VNotionView/VMaterialView.vue'),
+    component: () => import('@/views/VMaterialView/VMaterialView.vue'),
     props: (route: RouteLocationNormalized) => ({
       materialId: route.params.materialId as string,
     }),
