@@ -145,7 +145,7 @@ const fixOptionalProperties: ApplyPatch = (ast) => {
       }
 
       // nullable fields (string | null) can't be undefined
-      if (typeText.includes('string | null')) {
+      if (/\w+ \| null/.test(typeText)) {
         const newText = text.replace('?:', ':');
         edits.push({
           start: node.range().start.index,
