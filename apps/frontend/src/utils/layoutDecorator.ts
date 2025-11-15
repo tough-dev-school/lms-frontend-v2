@@ -2,7 +2,7 @@ import { mockUserId, USER_1 } from '@/mocks/mockUserId';
 import useToasts from '@/stores/toasts';
 import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
 import { useQueryClient } from '@tanstack/vue-query';
-import { userKeys } from '@/query';
+import { usersMeRetrieveQueryKey } from '@/api/generated/hooks';
 import type { Component } from 'vue';
 
 const layoutDecorator = (story: Component, layout: Component) => ({
@@ -13,7 +13,7 @@ const layoutDecorator = (story: Component, layout: Component) => ({
     disable();
 
     const queryClient = useQueryClient();
-    queryClient.setQueryData(userKeys.me(), {
+    queryClient.setQueryData(usersMeRetrieveQueryKey(), {
       id: '',
       uuid: mockUserId(USER_1),
       username: 'johndoe@demo.com',

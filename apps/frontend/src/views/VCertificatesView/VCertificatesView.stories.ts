@@ -3,7 +3,7 @@ import VCertificatesView from './VCertificatesView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import { mockDiplomaSet, STATIC_DIPLOMAS } from '@/mocks/mockDiploma';
 import { flatten } from 'lodash-es';
-import { diplomasKeys } from '@/query';
+import { diplomasListQueryKey } from '@/api/generated/hooks';
 import { useQueryClient } from '@tanstack/vue-query';
 
 export default {
@@ -28,8 +28,13 @@ export const Default = {
       setup() {
         const queryClient = useQueryClient();
 
-        queryClient.setQueryData(diplomasKeys.lists(), () =>
-          flatten(STATIC_DIPLOMAS.map((diploma) => mockDiplomaSet(diploma))),
+        queryClient.setQueryData(
+          diplomasListQueryKey({ page_size: 100 }),
+          () => ({
+            results: flatten(
+              STATIC_DIPLOMAS.map((diploma) => mockDiplomaSet(diploma)),
+            ),
+          }),
         );
       },
       template: '<story />',
@@ -44,7 +49,10 @@ export const Empty = {
       setup() {
         const queryClient = useQueryClient();
 
-        queryClient.setQueryData(diplomasKeys.lists(), () => []);
+        queryClient.setQueryData(
+          diplomasListQueryKey({ page_size: 100 }),
+          () => ({ results: [] }),
+        );
       },
       template: '<story />',
     }),

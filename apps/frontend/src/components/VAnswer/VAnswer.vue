@@ -9,9 +9,10 @@
   import { useAutoAnimate } from '@formkit/auto-animate/vue';
   import VButton from '@/components/VButton/VButton.vue';
   import {
-    useRemoveHomeworkReactionMutation,
-    useAddHomeworkReactionMutation,
-  } from '@/query';
+    useHomeworkAnswersReactionsDestroy,
+    useHomeworkAnswersReactionsCreate,
+    homeworkAnswersRetrieveQueryKey,
+  } from '@/api/generated/hooks';
   import { useQueryClient } from '@tanstack/vue-query';
   import type { AnswerTree, UserSafe } from '@/api/generated-api';
 
@@ -28,11 +29,26 @@
 
   const queryClient = useQueryClient();
 
-  const { mutateAsync: sendAddReaction } =
-    useAddHomeworkReactionMutation(queryClient);
+  const { mutateAsync: sendAddReaction } = useHomeworkAnswersReactionsCreate({
+    mutation: {
+      onSuccess: (_, variables) => {
+        queryClient.invalidateQueries({
+          queryKey: homeworkAnswersRetrieveQueryKey(variables.slug),
+        });
+      },
+    },
+  });
 
   const { mutateAsync: sendRemoveReaction } =
-    useRemoveHomeworkReactionMutation(queryClient);
+    useHomeworkAnswersReactionsDestroy({
+      mutation: {
+        onSuccess: (_, variables) => {
+          queryClient.invalidateQueries({
+            queryKey: homeworkAnswersRetrieveQueryKey(variables.slug),
+          });
+        },
+      },
+    });
 
   const togglePalette = () => (isPaletteOpen.value = !isPaletteOpen.value);
   const closePalette = () => (isPaletteOpen.value = false);
@@ -46,22 +62,30 @@
       <VAvatar
         data-testid="avatar"
         :user-id="answer.author.uuid"
-        :image="answer.author.avatar ?? undefined" />
+        :image="answer.author.avatar ?? undefined"
+      />
       <div>
         <div
           class="font-bold text-black dark:text-white"
           :class="{ VAnswer__Name_Own: isOwn }"
-          data-testid="name">
+          data-testid="name"
+        >
           {{ getName(answer.author.first_name, answer.author.last_name) }}
         </div>
       </div>
       <div class="flex-grow" />
       <slot name="header" />
     </div>
-    <VAnswerContent :answer="answer" data-testid="content" />
-    <div class="flex justify-start flex-wrap items-center gap-8">
+    <VAnswerContent
+      :answer="answer"
+      data-testid="content"
+    />
+    <div class="flex flex-wrap items-center justify-start gap-8">
       <slot name="footer" />
-      <div class="text-sub leading-tight text-gray" data-testid="date">
+      <div
+        class="text-sub leading-tight text-gray"
+        data-testid="date"
+      >
         {{ relativeDate(answer.created) }}
       </div>
     </div>
@@ -69,13 +93,15 @@
       <div
         v-if="!isOwn"
         ref="parent"
-        class="flex justify-start flex-wrap items-start gap-8">
+        class="flex flex-wrap items-start justify-start gap-8"
+      >
         <VButton
           appearance="secondary"
           size="inline"
-          class="flex px-16 h-32 items-center justify-center text-[1.5rem]"
+          class="flex h-32 items-center justify-center px-16 text-[1.5rem]"
           data-testid="open"
-          @click="togglePalette">
+          @click="togglePalette"
+        >
           <IconMoodHappy />
         </VButton>
         <VReactions
@@ -85,13 +111,13 @@
           :disabled="isOwn"
           @close="closePalette"
           @add="
-            (emoji) =>
-              sendAddReaction({ answerId: answer.slug, reaction: emoji })
+            (emoji) => sendAddReaction({ slug: answer.slug, data: { emoji } })
           "
           @remove="
             (reactionId) =>
-              sendRemoveReaction({ answerId: answer.slug, reactionId })
-          " />
+              sendRemoveReaction({ slug: answer.slug, id: reactionId })
+          "
+        />
       </div>
     </div>
   </div>

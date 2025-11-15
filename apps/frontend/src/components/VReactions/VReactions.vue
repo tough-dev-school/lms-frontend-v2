@@ -28,7 +28,7 @@
   import { computed, watch, ref, onMounted } from 'vue';
   import VReaction from './components/VReaction/VReaction.vue';
   import { groupBy, debounce } from 'lodash-es';
-  import { useUserQuery } from '@/query';
+  import { useUsersMeRetrieve } from '@/api/generated/hooks';
   import { uuid } from '@/utils/uuid';
 
   const props = withDefaults(defineProps<VReactionsProps>(), {
@@ -41,7 +41,7 @@
     remove: [reactionId: string];
   }>();
 
-  const { data: user } = useUserQuery();
+  const { data: user } = useUsersMeRetrieve();
 
   const localReactions = ref<ReactionDetailed[]>([]);
 
@@ -115,7 +115,10 @@
 
 <template>
   <div class="flex flex-wrap items-start gap-8">
-    <div v-if="open" class="flex flex-wrap items-start gap-8">
+    <div
+      v-if="open"
+      class="flex flex-wrap items-start gap-8"
+    >
       <VReaction
         v-for="emoji in ALLOWED_REACTIONS"
         :key="emoji"
@@ -124,9 +127,13 @@
         :reactions="groupedReactions[emoji]"
         :disabled="isDisabled(groupedReactions[emoji])"
         @add="handleAdd"
-        @remove="handleRemove" />
+        @remove="handleRemove"
+      />
     </div>
-    <div v-else class="flex flex-wrap items-start gap-8">
+    <div
+      v-else
+      class="flex flex-wrap items-start gap-8"
+    >
       <VReaction
         v-for="(reactionsGroup, emoji) in groupedReactions"
         :key="emoji"
@@ -135,7 +142,8 @@
         :reactions="reactionsGroup"
         :disabled="isDisabled(reactionsGroup)"
         @add="handleAdd"
-        @remove="handleRemove" />
+        @remove="handleRemove"
+      />
     </div>
   </div>
 </template>

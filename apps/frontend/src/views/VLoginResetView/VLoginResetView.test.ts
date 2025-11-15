@@ -8,7 +8,7 @@ import { faker } from '@faker-js/faker';
 import { useAuth } from '@/composables/useAuth';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
-import { useRequestPasswordResetMutation } from '@/query';
+import { useAuthPasswordResetCreate } from '@/api/generated/hooks';
 
 const defaultProps = {};
 
@@ -16,7 +16,7 @@ const routerPushMock = vi.fn();
 
 vi.mock('vue-router');
 vi.mock('@/composables/useAuth');
-vi.mock('@/query');
+vi.mock('@/api/generated/hooks');
 vi.mock('@tanstack/vue-query');
 
 const email = faker.internet.email();
@@ -33,7 +33,7 @@ describe('VLoginResetView', () => {
       push: routerPushMock,
     } as any);
 
-    vi.mocked(useRequestPasswordResetMutation).mockReturnValue({
+    vi.mocked(useAuthPasswordResetCreate).mockReturnValue({
       mutateAsync: requestResetMock,
       isPending: ref(false),
     } as any);

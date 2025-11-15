@@ -3,7 +3,10 @@ import VHomeworkQuestionView from './VHomeworkQuestionView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import { mockQuestion } from '@/mocks/mockQuestion';
 import { mockModule } from '@/mocks/mockModule';
-import { homeworkKeys, lmsKeys } from '@/query';
+import {
+  homeworkQuestionsRetrieveQueryKey,
+  lmsLessonsRetrieveQueryKey,
+} from '@/api/generated/hooks';
 import { useQueryClient } from '@tanstack/vue-query';
 import type { QuestionDetail, Lesson } from '@/api/generated-api';
 
@@ -82,12 +85,15 @@ const Template: StoryFn = (args) => ({
 
     if (args.question) {
       queryClient.setQueryData(
-        homeworkKeys.question(args.questionId),
+        homeworkQuestionsRetrieveQueryKey(args.questionId),
         args.question,
       );
     }
     if (args.lesson) {
-      queryClient.setQueryData(lmsKeys.lesson(args.lesson.id), args.lesson);
+      queryClient.setQueryData(
+        lmsLessonsRetrieveQueryKey(args.lesson.id),
+        args.lesson,
+      );
     }
 
     return { args };

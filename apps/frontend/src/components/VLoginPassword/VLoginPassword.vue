@@ -5,15 +5,20 @@
   import { ref, computed } from 'vue';
   import { useAuth } from '@/composables/useAuth';
   import { useRouter } from 'vue-router';
-  import { useLoginWithCredentialsMutation } from '@/query';
+  import { useAuthTokenCreate } from '@/api/generated/hooks';
   import { useQueryClient } from '@tanstack/vue-query';
 
   const queryClient = useQueryClient();
 
   const { token } = useAuth();
 
-  const { mutateAsync: loginWithCredentials, isPending } =
-    useLoginWithCredentialsMutation(queryClient);
+  const { mutateAsync: loginWithCredentials, isPending } = useAuthTokenCreate({
+    mutation: {
+      onSuccess: () => {
+        queryClient.invalidateQueries();
+      },
+    },
+  });
 
   const router = useRouter();
 
@@ -28,8 +33,10 @@
     try {
       // @ts-expect-error #TODO JSONWebToken in, and out — must be fixed on backend
       const { token: newToken } = await loginWithCredentials({
-        username: username.value,
-        password: password.value,
+        data: {
+          username: username.value,
+          password: password.value,
+        },
       });
 
       token.value = newToken;
@@ -58,17 +65,23 @@
 </script>
 
 <template>
-  <VCard tag="form" title="Вход" @submit.prevent="handleSubmit">
+  <VCard
+    tag="form"
+    title="Вход"
+    @submit.prevent="handleSubmit"
+  >
     <div class="flex flex-col gap-16">
       <VTextInput
         v-model="username"
         autocomplete="username"
         label="Логин"
-        :type="isEmail ? 'email' : 'text'" />
+        :type="isEmail ? 'email' : 'text'"
+      />
       <VTextInput
         v-model="password"
         autocomplete="current-password"
-        type="password">
+        type="password"
+      >
         <template #label>
           Пароль
           <span class="text-sub">
@@ -76,7 +89,8 @@
               class="underline"
               type="button"
               tabindex="-1"
-              @click="router.push({ name: 'login-reset' })">
+              @click="router.push({ name: 'login-reset' })"
+            >
               Не помню пароль</button
             >)
           </span>
@@ -88,10 +102,15 @@
         :disabled="isCredentialsInvalid"
         :loading="isPending"
         class="flex-grow"
-        type="submit">
+        type="submit"
+      >
         Войти
       </VButton>
-      <VButton appearance="link" class="flex-grow" @click="emit('change')">
+      <VButton
+        appearance="link"
+        class="flex-grow"
+        @click="emit('change')"
+      >
         Войти по ссылке
       </VButton>
     </template>

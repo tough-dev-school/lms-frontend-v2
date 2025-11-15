@@ -3,7 +3,7 @@
   import { onClickOutside } from '@vueuse/core';
   import VAvatar from '@/components/VAvatar/VAvatar.vue';
   import { useRouter } from 'vue-router';
-  import { useUserQuery } from '@/query';
+  import { useUsersMeRetrieve } from '@/api/generated/hooks';
   import { getName } from '@/utils/getName';
 
   export interface ProfileMenuItem {
@@ -16,7 +16,7 @@
   const isOpen = ref(false);
   const menu = useTemplateRef('menu');
   const router = useRouter();
-  const { data: user } = useUserQuery();
+  const { data: user } = useUsersMeRetrieve();
 
   onClickOutside(menu, () => (isOpen.value = false));
 
@@ -78,22 +78,33 @@
 </script>
 
 <template>
-  <div ref="menu" class="relative">
+  <div
+    ref="menu"
+    class="relative"
+  >
     <div class="flex items-center gap-8">
       <button
         class="flex items-center gap-8 rounded-8 p-8 hover:bg-gray hover:bg-opacity-10"
         :class="{ VProfileMenu__Button_Active: isOpen }"
         data-testid="button"
-        @click="isOpen = !isOpen">
+        @click="isOpen = !isOpen"
+      >
         <VAvatar
           :user-id="user?.uuid ?? ''"
           :image="user?.avatar || undefined"
-          data-testid="avatar" />
+          data-testid="avatar"
+        />
         <ul class="flex flex-col items-start">
-          <li class="text-black dark:text-white" data-testid="name">
+          <li
+            class="text-black dark:text-white"
+            data-testid="name"
+          >
             {{ fullName }}
           </li>
-          <li class="text-sub text-gray" data-testid="username">
+          <li
+            class="text-sub text-gray"
+            data-testid="username"
+          >
             {{ user?.username }}
           </li>
         </ul>
@@ -103,15 +114,18 @@
       <nav
         v-if="isOpen"
         class="float-card absolute right-0 z-10 translate-y-8"
-        data-testid="menu">
+        data-testid="menu"
+      >
         <ul>
           <li
             v-for="item in menuItems.filter((item) => !item.isHidden)"
-            :key="item.id">
+            :key="item.id"
+          >
             <button
               class="VProfileMenu__Item"
               :data-testid="item.id"
-              @click="handleItemClick(item.action)">
+              @click="handleItemClick(item.action)"
+            >
               <span>{{ item.label }}</span>
             </button>
           </li>

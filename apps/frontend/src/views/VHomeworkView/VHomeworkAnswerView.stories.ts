@@ -5,7 +5,13 @@ import { mockAnswer } from '@/mocks/mockAnswer';
 import { mockUserSafe, STATIC_AUTHOR_1 } from '@/mocks/mockUserSafe';
 import { mockQuestion } from '@/mocks/mockQuestion';
 import { mockModule } from '@/mocks/mockModule';
-import { homeworkKeys, userKeys, lmsKeys } from '@/query';
+import {
+  homeworkQuestionsRetrieveQueryKey,
+  homeworkAnswersRetrieveQueryKey,
+  usersMeRetrieveQueryKey,
+  lmsLessonsRetrieveQueryKey,
+  homeworkCrosschecksListQueryKey,
+} from '@/api/generated/hooks';
 import { useQueryClient } from '@tanstack/vue-query';
 import type {
   QuestionDetail,
@@ -166,33 +172,39 @@ const Template: StoryFn = (args) => ({
 
     if (args.question) {
       queryClient.setQueryData(
-        homeworkKeys.question(args.questionId),
+        homeworkQuestionsRetrieveQueryKey(args.questionId),
         args.question,
       );
     }
     if (args.answer) {
-      queryClient.setQueryData(homeworkKeys.answer(args.answerId), args.answer);
+      queryClient.setQueryData(
+        homeworkAnswersRetrieveQueryKey(args.answerId),
+        args.answer,
+      );
 
       // Set up query data for each descendant comment
       if (args.answer.descendants) {
         args.answer.descendants.forEach((descendant: AnswerTree) => {
           queryClient.setQueryData(
-            homeworkKeys.answer(descendant.slug),
+            homeworkAnswersRetrieveQueryKey(descendant.slug),
             descendant,
           );
         });
       }
     }
     if (args.lesson) {
-      queryClient.setQueryData(lmsKeys.lesson(args.lesson.id), args.lesson);
+      queryClient.setQueryData(
+        lmsLessonsRetrieveQueryKey(args.lesson.id),
+        args.lesson,
+      );
     }
     if (args.user) {
-      queryClient.setQueryData(userKeys.me(), args.user);
+      queryClient.setQueryData(usersMeRetrieveQueryKey(), args.user);
     }
     if (args.crosschecks !== undefined) {
       queryClient.setQueryData(
-        homeworkKeys.crosschecks(args.questionId),
-        args.crosschecks,
+        homeworkCrosschecksListQueryKey({ question: [args.questionId] }),
+        { results: args.crosschecks },
       );
     }
 

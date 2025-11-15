@@ -10,9 +10,9 @@ import { faker } from '@faker-js/faker';
 import { mockAnswer } from '@/mocks/mockAnswer';
 import { mockUserSafe } from '@/mocks/mockUserSafe';
 import {
-  useRemoveHomeworkReactionMutation,
-  useAddHomeworkReactionMutation,
-} from '@/query';
+  useHomeworkAnswersReactionsDestroy,
+  useHomeworkAnswersReactionsCreate,
+} from '@/api/generated/hooks';
 
 const uuid = faker.string.uuid();
 
@@ -29,7 +29,7 @@ vi.mock('@formkit/auto-animate/vue', () => ({
   useAutoAnimate: () => [null],
 }));
 
-vi.mock('@/query');
+vi.mock('@/api/generated/hooks');
 vi.mock('@tanstack/vue-query');
 
 const defaultMountOptions = {
@@ -48,12 +48,12 @@ describe('VAnswer', () => {
 
   beforeEach(() => {
     (
-      useRemoveHomeworkReactionMutation as ReturnType<typeof vi.fn>
+      useHomeworkAnswersReactionsDestroy as ReturnType<typeof vi.fn>
     ).mockReturnValue({
       mutateAsync: vi.fn(),
     });
     (
-      useAddHomeworkReactionMutation as ReturnType<typeof vi.fn>
+      useHomeworkAnswersReactionsCreate as ReturnType<typeof vi.fn>
     ).mockReturnValue({
       mutateAsync: vi.fn(),
     });

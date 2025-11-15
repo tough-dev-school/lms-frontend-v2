@@ -4,7 +4,11 @@ import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import { mockCourse } from '@/mocks/mockCourse';
 import { mockModule } from '@/mocks/mockModule';
 import { mockQuestion } from '@/mocks/mockQuestion';
-import { studiesKeys, lmsKeys } from '@/query';
+import {
+  purchasedCoursesListQueryKey,
+  lmsModulesRetrieveQueryKey,
+  lmsLessonsListQueryKey,
+} from '@/api/generated/hooks';
 import { useQueryClient } from '@tanstack/vue-query';
 import type { Lesson, RecommendedVideoProviderEnum } from '@/api/generated-api';
 
@@ -103,15 +107,21 @@ const Template: StoryFn = (args) => ({
     const queryClient = useQueryClient();
 
     if (args.studies) {
-      queryClient.setQueryData(studiesKeys.lists(), args.studies);
+      queryClient.setQueryData(
+        purchasedCoursesListQueryKey({ page_size: 100 }),
+        { results: args.studies },
+      );
     }
     if (args.module) {
-      queryClient.setQueryData(lmsKeys.module(args.moduleId), args.module);
+      queryClient.setQueryData(
+        lmsModulesRetrieveQueryKey(args.moduleId),
+        args.module,
+      );
     }
     if (args.lessons !== undefined) {
       queryClient.setQueryData(
-        lmsKeys.moduleLessons(args.moduleId),
-        args.lessons,
+        lmsLessonsListQueryKey({ module: args.moduleId, page_size: 1000 }),
+        { results: args.lessons },
       );
     }
 

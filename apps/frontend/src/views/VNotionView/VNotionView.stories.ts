@@ -4,7 +4,7 @@ import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import { mockMaterial } from '@/mocks/mockMaterialSerializer';
 import { mockLMSCourse } from '@/mocks/mockLMSCourse';
 import { mockModule } from '@/mocks/mockModule';
-import { materialsKeys } from '@/query';
+import { materialsRetrieveQueryKey } from '@/api/generated/hooks';
 import { useQueryClient } from '@tanstack/vue-query';
 import type { MaterialSerilizer } from '@/api/generated-api';
 
@@ -45,11 +45,14 @@ const Template: StoryFn = (args) => ({
 
     if (args.materialId === MOCK_MATERIAL_ID) {
       queryClient.setQueryData(
-        materialsKeys.materials(MOCK_MATERIAL_ID),
+        materialsRetrieveQueryKey(MOCK_MATERIAL_ID),
         STATIC_MATERIAL_DATA,
       );
     } else {
-      queryClient.setQueryData(materialsKeys.materials(args.materialId), null);
+      queryClient.setQueryData(
+        materialsRetrieveQueryKey(args.materialId),
+        null,
+      );
     }
 
     return { args };

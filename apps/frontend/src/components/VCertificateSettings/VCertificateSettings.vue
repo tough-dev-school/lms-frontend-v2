@@ -4,13 +4,22 @@
   import VCard from '@/components/VCard/VCard.vue';
   import { ref, onMounted } from 'vue';
   import { useQueryClient } from '@tanstack/vue-query';
-  import { useUpdateUserMutation, fetchUser } from '@/query';
+  import {
+    useUsersMePartialUpdate,
+    usersMeRetrieveQueryKey,
+    usersMeRetrieveQueryOptions,
+  } from '@/api/generated/hooks';
   import { GenderEnum, BlankEnum } from '@/api/generated-api';
   import type { PatchedUser } from '@/api/generated-api';
 
   const queryClient = useQueryClient();
-  const { mutateAsync: updateUser, isPending } =
-    useUpdateUserMutation(queryClient);
+  const { mutateAsync: updateUser, isPending } = useUsersMePartialUpdate({
+    mutation: {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: usersMeRetrieveQueryKey() });
+      },
+    },
+  });
 
   const data = ref<{
     firstName: Required<PatchedUser>['first_name'];
@@ -28,16 +37,18 @@
 
   const saveCertificate = async () => {
     await updateUser({
-      first_name: data.value.firstName,
-      last_name: data.value.lastName,
-      first_name_en: data.value.firstNameEn,
-      last_name_en: data.value.lastNameEn,
-      gender: data.value.gender,
+      data: {
+        first_name: data.value.firstName,
+        last_name: data.value.lastName,
+        first_name_en: data.value.firstNameEn,
+        last_name_en: data.value.lastNameEn,
+        gender: data.value.gender,
+      },
     });
   };
 
   onMounted(async () => {
-    const user = await fetchUser(queryClient);
+    const user = await queryClient.fetchQuery(usersMeRetrieveQueryOptions());
 
     data.value = {
       firstName: user.first_name ?? '',
@@ -59,19 +70,23 @@
       <VTextInput
         v-model="data.firstName"
         data-testid="firstName"
-        label="Имя" />
+        label="Имя"
+      />
       <VTextInput
         v-model="data.lastName"
         data-testid="lastName"
-        label="Фамилия" />
+        label="Фамилия"
+      />
       <VTextInput
         v-model="data.firstNameEn"
         data-testid="firstNameEn"
-        label="Имя (на английском)" />
+        label="Имя (на английском)"
+      />
       <VTextInput
         v-model="data.lastNameEn"
         data-testid="lastNameEn"
-        label="Фамилия (на английском)" />
+        label="Фамилия (на английском)"
+      />
       <fieldset class="flex flex-wrap gap-16">
         <legend class="Label">Пол</legend>
         <label class="cursor-pointer"
@@ -80,7 +95,8 @@
             name="gender"
             data-testid="gender-male"
             :checked="data.gender === GenderEnum.Male"
-            @click="data.gender = GenderEnum.Male" />
+            @click="data.gender = GenderEnum.Male"
+          />
           Мужской</label
         >
         <label class="cursor-pointer"
@@ -89,13 +105,18 @@
             name="gender"
             data-testid="gender-female"
             :checked="data.gender === GenderEnum.Female"
-            @click="data.gender = GenderEnum.Female" />
+            @click="data.gender = GenderEnum.Female"
+          />
           Женский</label
         >
       </fieldset>
     </div>
     <template #footer>
-      <VButton data-testid="save" :loading="isPending" @click="saveCertificate">
+      <VButton
+        data-testid="save"
+        :loading="isPending"
+        @click="saveCertificate"
+      >
         {{ isPending ? 'Сохраняется...' : 'Сохранить' }}
       </VButton>
     </template>

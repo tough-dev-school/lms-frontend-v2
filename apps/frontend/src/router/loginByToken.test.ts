@@ -3,12 +3,12 @@ import { loginByToken } from './loginByToken';
 import type { RouteLocationNormalized } from 'vue-router';
 import { faker } from '@faker-js/faker';
 import { useAuth } from '@/composables/useAuth';
-import { useExchangeTokensMutation } from '@/query';
+import { useAuthPasswordlessTokenRetrieve } from '@/api/generated/hooks';
 import { useQueryClient } from '@tanstack/vue-query';
 import { ref } from 'vue';
 
 vi.mock('@/composables/useAuth');
-vi.mock('@/query');
+vi.mock('@/api/generated/hooks');
 vi.mock('@tanstack/vue-query');
 
 const mockMutateAsync = vi.fn();
@@ -29,7 +29,7 @@ describe('loginByToken', () => {
       token: ref(undefined),
     } as any);
 
-    vi.mocked(useExchangeTokensMutation).mockReturnValue({
+    vi.mocked(useAuthPasswordlessTokenRetrieve).mockReturnValue({
       mutateAsync: mockMutateAsync,
       isPending: ref(false),
     } as any);

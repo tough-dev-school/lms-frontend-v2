@@ -3,7 +3,7 @@ import type { RouteLocation, RouteLocationNormalized } from 'vue-router';
 import { useAuth } from '@/composables/useAuth';
 import { loginByToken } from '@/router/loginByToken';
 import { loginById } from '@/router/loginById';
-import { baseQueryKey, fetchHomeworkAnswer } from '@/query';
+import { homeworkAnswersRetrieveQueryOptions } from '@/api/generated/hooks';
 import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
 import { AllowMeta } from '@/types';
 import { queryClient } from '@/queryClient';
@@ -173,7 +173,9 @@ export const routes = [
     beforeEnter: [
       async (to: RouteLocationNormalized) => {
         const answerId = to.params.answerId as string;
-        const answer = await fetchHomeworkAnswer(queryClient, { answerId });
+        const answer = await queryClient.fetchQuery(
+          homeworkAnswersRetrieveQueryOptions(answerId),
+        );
         return {
           name: 'homework',
           params: { questionId: answer.question },
@@ -239,7 +241,7 @@ router.beforeEach(
 
     const { token } = useAuth();
 
-    queryClient.invalidateQueries({ queryKey: baseQueryKey() });
+    queryClient.invalidateQueries();
 
     // Redirect to existing route if route does not exist
     if (!to.name) {

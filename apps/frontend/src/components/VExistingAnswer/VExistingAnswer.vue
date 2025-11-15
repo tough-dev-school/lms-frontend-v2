@@ -5,9 +5,11 @@
   import { ref, onMounted } from 'vue';
   import { useQueryClient } from '@tanstack/vue-query';
   import {
-    useHomeworkAnswerUpdateMutation,
-    useHomeworkAnswerDeleteMutation,
-  } from '@/query';
+    useHomeworkAnswersPartialUpdate,
+    useHomeworkAnswersDestroy,
+    homeworkAnswersRetrieveQueryKey,
+    lmsLessonsListQueryKey,
+  } from '@/api/generated/hooks';
   import type { AnswerTree, UserSafe } from '@/api/generated-api';
 
   const props = defineProps<{
@@ -25,15 +27,37 @@
   const isEdit = ref(false);
 
   const { mutateAsync: updateAnswerMutation, isPending: isUpdatePending } =
-    useHomeworkAnswerUpdateMutation(queryClient);
-  const { mutateAsync: deleteAnswerMutation } =
-    useHomeworkAnswerDeleteMutation(queryClient);
+    useHomeworkAnswersPartialUpdate({
+      mutation: {
+        onSuccess: (_, variables) => {
+          queryClient.invalidateQueries({
+            queryKey: homeworkAnswersRetrieveQueryKey(variables.slug),
+          });
+          queryClient.invalidateQueries({
+            queryKey: lmsLessonsListQueryKey(),
+          });
+        },
+      },
+    });
+  const { mutateAsync: deleteAnswerMutation } = useHomeworkAnswersDestroy({
+    mutation: {
+      onSuccess: () => {
+        if (props.answer.parent) {
+          queryClient.invalidateQueries({
+            queryKey: homeworkAnswersRetrieveQueryKey(props.answer.parent),
+          });
+        }
+        queryClient.invalidateQueries({
+          queryKey: lmsLessonsListQueryKey(),
+        });
+      },
+    },
+  });
 
   const handleDelete = async () => {
     try {
       await deleteAnswerMutation({
-        answerId: props.answer.slug,
-        parentId: props.answer.parent,
+        slug: props.answer.slug,
       });
       emit('after-delete');
     } catch (error) {
@@ -46,8 +70,10 @@
   const handleUpdate = async () => {
     try {
       await updateAnswerMutation({
-        answerId: props.answer.slug,
-        content: content.value,
+        slug: props.answer.slug,
+        data: {
+          content: content.value,
+        },
       });
       isEdit.value = false;
     } catch (error) {
@@ -61,12 +87,17 @@
 </script>
 
 <template>
-  <VAnswer v-if="!isEdit" :answer="answer" :user="user">
+  <VAnswer
+    v-if="!isEdit"
+    :answer="answer"
+    :user="user"
+  >
     <template #header>
       <VAnswerActions
         v-if="answer.is_editable"
         @edit="isEdit = true"
-        @delete="handleDelete" />
+        @delete="handleDelete"
+      />
     </template>
     <template #footer>
       <slot name="footer" />
@@ -76,5 +107,6 @@
     v-else-if="isEdit"
     v-model="content"
     :is-pending="isUpdatePending"
-    @send="handleUpdate" />
+    @send="handleUpdate"
+  />
 </template>

@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VCertificateSettings from '@/components/VCertificateSettings/VCertificateSettings.vue';
-import { userKeys } from '@/query';
+import { usersMeRetrieveQueryKey } from '@/api/generated/hooks';
 import { useQueryClient } from '@tanstack/vue-query';
 import { mockUserSafe } from '@/mocks/mockUserSafe';
 
@@ -14,7 +14,7 @@ const Template: StoryFn = (args) => ({
   setup() {
     const queryClient = useQueryClient();
 
-    queryClient.setQueryData(userKeys.me(), mockUserSafe());
+    queryClient.setQueryData(usersMeRetrieveQueryKey(), mockUserSafe());
 
     return { args };
   },

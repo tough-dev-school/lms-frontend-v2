@@ -6,7 +6,7 @@ import { faker } from '@faker-js/faker';
 import { VueQueryPlugin, QueryClient } from '@tanstack/vue-query';
 import type { VueQueryPluginOptions } from '@tanstack/vue-query';
 import { ref } from 'vue';
-import { useUserQuery } from '@/query';
+import { useUsersMeRetrieve } from '@/api/generated/hooks';
 import type { User } from '@/api/generated-api';
 import { useRouter } from 'vue-router';
 
@@ -14,7 +14,7 @@ const routerPushMock = vi.fn();
 
 vi.mock('vue-router');
 
-vi.mock('@/query');
+vi.mock('@/api/generated/hooks');
 
 const getDefaultData = (): User => {
   faker.seed(1);
@@ -40,7 +40,7 @@ const createWrapper = () => {
 
   queryClient.setQueryData(['base', 'user', 'me'], getDefaultData());
 
-  vi.mocked(useUserQuery).mockReturnValue({
+  vi.mocked(useUsersMeRetrieve).mockReturnValue({
     data: ref(getDefaultData()),
     isLoading: ref(false),
   } as any);
@@ -67,7 +67,7 @@ describe('VProfileMenu', () => {
     (useRouter as ReturnType<typeof vi.fn>).mockReturnValue({
       push: routerPushMock,
     });
-    vi.mocked(useUserQuery);
+    vi.mocked(useUsersMeRetrieve);
 
     wrapper = createWrapper();
   });

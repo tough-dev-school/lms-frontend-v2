@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import { useRouter } from 'vue-router';
   import VPublicLayout from '@/layouts/VPublicLayout/VPublicLayout.vue';
-  import { useConfirmPasswordResetMutation } from '@/query';
+  import { useAuthPasswordResetConfirmCreate } from '@/api/generated/hooks';
   import { useQueryClient } from '@tanstack/vue-query';
   import VPasswordResetForm from '@/components/VPasswordResetForm/VPasswordResetForm.vue';
 
@@ -14,15 +14,23 @@
   const queryClient = useQueryClient();
 
   const { mutateAsync: changePassword, isPending } =
-    useConfirmPasswordResetMutation(queryClient);
+    useAuthPasswordResetConfirmCreate({
+      mutation: {
+        onSuccess: () => {
+          queryClient.invalidateQueries();
+        },
+      },
+    });
 
   const handleSave = async (password: string) => {
     try {
       await changePassword({
-        new_password1: password,
-        new_password2: password,
-        uid: props.uid,
-        token: props.token,
+        data: {
+          new_password1: password,
+          new_password2: password,
+          uid: props.uid,
+          token: props.token,
+        },
       });
       router.push({ name: 'login' });
     } catch (error) {
@@ -36,6 +44,7 @@
     <VPasswordResetForm
       title="Сброс пароля"
       :is-pending="isPending"
-      @save="handleSave" />
+      @save="handleSave"
+    />
   </VPublicLayout>
 </template>

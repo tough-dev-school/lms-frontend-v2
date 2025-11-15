@@ -3,7 +3,10 @@ import VCourseView from './VCourseView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import { mockCourse } from '@/mocks/mockCourse';
 import { mockModule } from '@/mocks/mockModule';
-import { studiesKeys, lmsKeys } from '@/query';
+import {
+  purchasedCoursesListQueryKey,
+  lmsModulesListQueryKey,
+} from '@/api/generated/hooks';
 import { useQueryClient } from '@tanstack/vue-query';
 
 export default {
@@ -61,12 +64,15 @@ const Template: StoryFn = (args) => ({
     const queryClient = useQueryClient();
 
     if (args.studies) {
-      queryClient.setQueryData(studiesKeys.lists(), args.studies);
+      queryClient.setQueryData(
+        purchasedCoursesListQueryKey({ page_size: 100 }),
+        { results: args.studies },
+      );
     }
     if (args.modules !== undefined) {
       queryClient.setQueryData(
-        lmsKeys.courseModules(args.courseId),
-        args.modules,
+        lmsModulesListQueryKey({ course: args.courseId, page_size: 100 }),
+        { results: args.modules },
       );
     }
 

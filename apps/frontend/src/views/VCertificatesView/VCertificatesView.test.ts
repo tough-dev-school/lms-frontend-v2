@@ -7,11 +7,11 @@ import { uniq, flatten } from 'lodash-es';
 import { nextTick, ref } from 'vue';
 import { faker } from '@faker-js/faker';
 import { vi, describe, beforeEach, expect, test } from 'vitest';
-import { useDiplomasQuery } from '@/query';
+import { useDiplomasList } from '@/api/generated/hooks';
 
 const defaultProps = {};
 
-vi.mock('@/query');
+vi.mock('@/api/generated/hooks');
 
 const mockDiplomas = () =>
   flatten(
@@ -27,8 +27,8 @@ describe('VCertificatesView', () => {
   beforeEach(() => {
     mockDiplomasData = mockDiplomas();
 
-    vi.mocked(useDiplomasQuery).mockReturnValue({
-      data: ref(mockDiplomasData),
+    vi.mocked(useDiplomasList).mockReturnValue({
+      data: ref({ results: mockDiplomasData }),
       isLoading: ref(false),
     } as any);
 
@@ -78,8 +78,8 @@ describe('VCertificatesView', () => {
   });
 
   test('has an empty message if no certififcates', async () => {
-    vi.mocked(useDiplomasQuery).mockReturnValue({
-      data: ref([]),
+    vi.mocked(useDiplomasList).mockReturnValue({
+      data: ref({ results: [] }),
       isLoading: ref(false),
     } as any);
 

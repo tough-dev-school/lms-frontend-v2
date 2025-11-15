@@ -8,14 +8,16 @@
   import { useEditorAutosave } from '@/composables/useEditorAutosave';
   import VExistingAnswer from '@/components/VExistingAnswer';
   import {
-    useHomeworkCrosschecksQuery,
-    useHomeworkAnswerCreateMutation,
-    useHomeworkQuestionQuery,
-    useHomeworkAnswerQuery,
-    useUserQuery,
-    populateAnswersCacheFromDescendants,
-    useLessonQuery,
-  } from '@/query';
+    useHomeworkCrosschecksList,
+    useHomeworkAnswersCreate,
+    useHomeworkQuestionsRetrieve,
+    useHomeworkAnswersRetrieve,
+    useUsersMeRetrieve,
+    useLmsLessonsRetrieve,
+    homeworkAnswersRetrieveQueryKey,
+    homeworkCrosschecksListQueryKey,
+    lmsLessonsListQueryKey,
+  } from '@/api/generated/hooks';
   import { computed, watch } from 'vue';
   import { useRouter } from 'vue-router';
   import { useQueryClient } from '@tanstack/vue-query';
@@ -25,6 +27,7 @@
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
   import { getEmptyContent } from '@/utils/tiptap';
   import VMakrdownContent from '@/components/VMakrdownContent/VMakrdownContent.vue';
+  import type { AnswerTree } from '@/api/generated-api';
 
   const props = defineProps<{
     questionId: string;
@@ -35,22 +38,37 @@
 
   const { breadcrumbs } = useHomeworkBreadcrumbs(() => props.questionId);
   const { data: question, isLoading: isQuestionLoading } =
-    useHomeworkQuestionQuery(() => props.questionId);
-  const { data: answer, isLoading: isAnswerLoading } = useHomeworkAnswerQuery(
-    () => props.answerId,
+    useHomeworkQuestionsRetrieve(computed(() => props.questionId));
+  const { data: answer, isLoading: isAnswerLoading } =
+    useHomeworkAnswersRetrieve(computed(() => props.answerId));
+
+  const { data: lesson, isLoading: isLessonLoading } = useLmsLessonsRetrieve(
+    computed(() => question.value?.breadcrumbs.lesson?.id),
   );
 
-  const { data: lesson, isLoading: isLessonLoading } = useLessonQuery(
-    () => question.value?.breadcrumbs.lesson?.id,
-  );
+  const { data: user, isLoading: isUserLoading } = useUsersMeRetrieve();
 
-  const { data: user, isLoading: isUserLoading } = useUserQuery();
+  const populateAnswersCacheFromDescendants = (rootAnswer: AnswerTree) => {
+    const flatAnswers: AnswerTree[] = [];
+
+    const populate = (a: AnswerTree) => {
+      flatAnswers.push(a);
+
+      if (a.descendants.length) a.descendants.forEach(populate);
+    };
+
+    populate(rootAnswer);
+
+    flatAnswers.forEach((a) => {
+      queryClient.setQueryData(homeworkAnswersRetrieveQueryKey(a.slug), a);
+    });
+  };
 
   watch(
     () => answer.value,
     () => {
       if (answer.value) {
-        populateAnswersCacheFromDescendants(queryClient, answer.value);
+        populateAnswersCacheFromDescendants(answer.value);
       }
     },
   );
@@ -79,9 +97,11 @@
   const handleCreateComment = async () => {
     try {
       const createdAnswer = await createAnswerMutation({
-        content: content.value,
-        questionId: props.questionId,
-        parentId: props.answerId,
+        data: {
+          content: content.value,
+          question: props.questionId,
+          parent: props.answerId,
+        },
       });
 
       content.value = getEmptyContent();
@@ -95,9 +115,11 @@
     }
   };
 
-  const { data: crosschecks } = useHomeworkCrosschecksQuery(
-    () => props.questionId,
+  const { data: crosschecksData } = useHomeworkCrosschecksList(
+    computed(() => ({ question: [props.questionId] })),
   );
+
+  const crosschecks = computed(() => crosschecksData.value?.results);
 
   const isSent = computed(() => {
     return crosschecks.value?.some(
@@ -109,7 +131,23 @@
   const {
     mutateAsync: createAnswerMutation,
     isPending: isCreateAnswerPending,
-  } = useHomeworkAnswerCreateMutation(queryClient);
+  } = useHomeworkAnswersCreate({
+    mutation: {
+      onSuccess: (data) => {
+        queryClient.invalidateQueries({
+          queryKey: homeworkAnswersRetrieveQueryKey(data.parent),
+        });
+        queryClient.invalidateQueries({
+          queryKey: homeworkCrosschecksListQueryKey({
+            question: [props.questionId],
+          }),
+        });
+        queryClient.invalidateQueries({
+          queryKey: lmsLessonsListQueryKey(),
+        });
+      },
+    },
+  });
 
   const handleDeleteAnswer = () => {
     router.push({
@@ -166,13 +204,23 @@
       lesson
     "
     :breadcrumbs="breadcrumbs"
-    :title="question.name">
+    :title="question.name"
+  >
     <template #pill>
-      <VPillHomework v-if="lesson.homework" :stats="lesson.homework" />
+      <VPillHomework
+        v-if="lesson.homework"
+        :stats="lesson.homework"
+      />
     </template>
     <section class="VHomeworkAnswerView__Section -mt-16">
-      <div v-if="isOwnAnswer" class="card mb-16 bg-accent-green">
-        <VHeading tag="h3" class="mb-8">
+      <div
+        v-if="isOwnAnswer"
+        class="card mb-16 bg-accent-green"
+      >
+        <VHeading
+          tag="h3"
+          class="mb-8"
+        >
           Поделитесь ссылкой на сделанную домашку
         </VHeading>
         <div class="block select-all">
@@ -188,12 +236,14 @@
       <VHeading tag="h2"> Отправленная работа</VHeading>
       <VExistingAnswer
         :answer-id="answer.slug"
-        @after-delete="handleDeleteAnswer" />
+        @after-delete="handleDeleteAnswer"
+      />
     </section>
     <section>
       <VCrossChecks
         v-if="isOwnAnswer && crosschecks?.length"
-        :crosschecks="crosschecks" />
+        :crosschecks="crosschecks"
+      />
     </section>
     <section class="VHomeworkAnswerView__Section">
       <VHeading tag="h2">
@@ -206,19 +256,29 @@
         <VThread
           v-for="comment in answer.descendants"
           :key="comment.slug"
-          :answer-id="comment.slug" />
+          :answer-id="comment.slug"
+        />
       </template>
       <VFeedbackGuide
         v-if="question.course?.homework_check_recommendations"
-        :guide="question.course.homework_check_recommendations" />
+        :guide="question.course.homework_check_recommendations"
+      />
 
       <VCreateAnswer
         v-model="content"
         :is-pending="isCreateAnswerPending"
-        @send="handleCreateComment" />
-      <div v-if="isSent" class="card">
+        @send="handleCreateComment"
+      />
+      <div
+        v-if="isSent"
+        class="card"
+      >
         Ответ отправлен!
-        <a class="link" :href="ownAnswerHref">Вернуться к своему ответу</a>
+        <a
+          class="link"
+          :href="ownAnswerHref"
+          >Вернуться к своему ответу</a
+        >
       </div>
     </section>
   </VLoggedLayout>

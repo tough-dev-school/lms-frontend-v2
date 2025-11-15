@@ -13,7 +13,12 @@
   import { ref, useTemplateRef } from 'vue';
   import { onClickOutside } from '@vueuse/core';
   import { useRoute, useRouter } from 'vue-router';
-  import { useHomeworkAnswerCreateMutation } from '@/query';
+  import {
+    useHomeworkAnswersCreate,
+    homeworkAnswersRetrieveQueryKey,
+    homeworkCrosschecksListQueryKey,
+    lmsLessonsListQueryKey,
+  } from '@/api/generated/hooks';
   import { useQueryClient } from '@tanstack/vue-query';
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
   import VExistingAnswer from '@/components/VExistingAnswer';
@@ -51,7 +56,23 @@
   });
 
   const { mutateAsync: createComment, isPending: isCreateCommentPending } =
-    useHomeworkAnswerCreateMutation(queryClient);
+    useHomeworkAnswersCreate({
+      mutation: {
+        onSuccess: (data) => {
+          queryClient.invalidateQueries({
+            queryKey: homeworkAnswersRetrieveQueryKey(data.parent),
+          });
+          queryClient.invalidateQueries({
+            queryKey: homeworkCrosschecksListQueryKey({
+              question: [props.answer.question],
+            }),
+          });
+          queryClient.invalidateQueries({
+            queryKey: lmsLessonsListQueryKey(),
+          });
+        },
+      },
+    });
 
   const { content } = useEditorAutosave([
     'commentText',
@@ -65,9 +86,11 @@
 
     try {
       const newComment = await createComment({
-        questionId: props.answer.question,
-        parentId: props.answer.slug,
-        content: content.value,
+        data: {
+          question: props.answer.question,
+          parent: props.answer.slug,
+          content: content.value,
+        },
       });
 
       content.value = getEmptyContent();
@@ -91,34 +114,52 @@
 </script>
 
 <template>
-  <div ref="target" class="group">
-    <VAnswer v-if="answer.author.uuid !== user.uuid" :answer-id="answer.slug" />
+  <div
+    ref="target"
+    class="group"
+  >
+    <VAnswer
+      v-if="answer.author.uuid !== user.uuid"
+      :answer-id="answer.slug"
+    />
     <VExistingAnswer
       v-else
       :answer-id="answer.slug"
-      @after-create="handleMounted" />
-    <button class="text-sm link" @click="replyMode = !replyMode">
+      @after-create="handleMounted"
+    />
+    <button
+      class="text-sm link"
+      @click="replyMode = !replyMode"
+    >
       {{ replyMode ? 'Отменить' : 'Ответить' }}
     </button>
-    <div class="thread-ruler" :class="{ 'mt-16': replyMode }">
+    <div
+      class="thread-ruler"
+      :class="{ 'mt-16': replyMode }"
+    >
       <VCreateAnswer
         v-show="replyMode"
         v-model="content"
         :is-pending="isCreateCommentPending"
-        @send="handleCreateComment" />
+        @send="handleCreateComment"
+      />
     </div>
   </div>
-  <div v-if="answer.descendants.length > 0" class="thread-ruler mt-32">
+  <div
+    v-if="answer.descendants.length > 0"
+    class="thread-ruler mt-32"
+  >
     <VThreadProvider
       v-for="descendant in answer.descendants"
       :key="descendant.slug"
       :answer-id="descendant.slug"
-      @update="(slug) => handleUpdate(slug)" />
+      @update="(slug) => handleUpdate(slug)"
+    />
   </div>
 </template>
 
 <style>
   .thread-ruler {
-    @apply flex flex-col gap-16 pl-8 transition-colors tablet:pl-16 border-l border-gray border-opacity-20 hover:border-opacity-100;
+    @apply flex flex-col gap-16 border-l border-gray border-opacity-20 pl-8 transition-colors hover:border-opacity-100 tablet:pl-16;
   }
 </style>
