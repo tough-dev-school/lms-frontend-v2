@@ -111,11 +111,12 @@
           :disabled="isOwn"
           @close="closePalette"
           @add="
-            (emoji) => sendAddReaction({ slug: answer.slug, data: { emoji } })
+            (emoji) =>
+              sendAddReaction({ answerId: answer.slug, reaction: emoji })
           "
           @remove="
             (reactionId) =>
-              sendRemoveReaction({ slug: answer.slug, id: reactionId })
+              sendRemoveReaction({ answerId: answer.slug, reactionId })
           "
         />
       </div>

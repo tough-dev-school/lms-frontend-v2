@@ -5,7 +5,6 @@ import {
   createQuestion,
   createModule,
   createTemporarySoonToBeDepricatedQuestion,
-  createCourse,
   createQuestionCourse,
 } from '@/api/generated/mocks';
 import {
@@ -55,10 +54,12 @@ const STATIC_QUESTION: QuestionDetail = {
       id: 2,
     },
     course: {
-      ...createCourse(),
       id: 1,
       name: 'Курс веб-разработки',
       slug: 'web-development',
+      chat: 'https://t.me/test',
+      calendar_ios: 'https://calendar.apple.com/test',
+      calendar_google: 'https://calendar.google.com/test',
     },
   },
   course: {

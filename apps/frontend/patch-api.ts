@@ -99,7 +99,12 @@ const fixOptionalProperties: ApplyPatch = (ast) => {
       const typeNode = children.at(-1);
       if (!typeNode) return;
 
-      const typeText = typeNode.text();
+      let typeText = typeNode.text();
+
+      // Remove the leading colon and space from type annotation
+      if (typeText.startsWith(': ')) {
+        typeText = typeText.slice(2);
+      }
 
       // Primary keys (slug, id, uuid) can't be undefined
       if (['slug', 'id', 'uuid'].includes(name)) {
@@ -123,8 +128,39 @@ const fixOptionalProperties: ApplyPatch = (ast) => {
         return;
       }
 
+      if (name === 'created') {
+        const newText = text.replace('?:', ':');
+        edits.push({
+          start: node.range().start.index,
+          end: node.range().end.index,
+          replacement: newText,
+        });
+        return;
+      }
+
+      if (name === 'breadcrumbs') {
+        const newText = text.replace('?:', ':');
+        edits.push({
+          start: node.range().start.index,
+          end: node.range().end.index,
+          replacement: newText,
+        });
+        return;
+      }
+
+      // booleans can't be undefined
+      if (typeText === 'boolean') {
+        const newText = text.replace('?:', ':');
+        edits.push({
+          start: node.range().start.index,
+          end: node.range().end.index,
+          replacement: newText,
+        });
+        return;
+      }
+
       // nullable fields (string | null) can't be undefined
-      if (typeText.includes('string | null')) {
+      if (/\w+ \| null/.test(typeText)) {
         const newText = text.replace('?:', ':');
         edits.push({
           start: node.range().start.index,
