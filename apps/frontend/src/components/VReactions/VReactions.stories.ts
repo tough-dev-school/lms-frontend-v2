@@ -2,6 +2,7 @@ import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VReactions from './VReactions.vue';
 import VCard from '@/components/VCard/VCard.vue';
 import { faker } from '@faker-js/faker';
+import { createReactionDetailed } from '@/api/generated/mocks';
 
 export default {
   title: 'Reactions/VReactions',
@@ -25,7 +26,7 @@ const Template: StoryFn = (args) => ({
 export const Default = {
   render: Template,
   args: {
-    reactions: faker.helpers.multiple(mockReactionDetailed, { count: 15 }),
+    reactions: faker.helpers.multiple(createReactionDetailed, { count: 15 }),
     open: false,
     disabled: false,
   },
@@ -34,7 +35,7 @@ export const Default = {
 export const Open = {
   render: Template,
   args: {
-    reactions: faker.helpers.multiple(mockReactionDetailed, { count: 15 }),
+    reactions: faker.helpers.multiple(createReactionDetailed, { count: 15 }),
     open: true,
     disabled: false,
   },
@@ -43,7 +44,7 @@ export const Open = {
 export const Disabled = {
   render: Template,
   args: {
-    reactions: faker.helpers.multiple(mockReactionDetailed, { count: 15 }),
+    reactions: faker.helpers.multiple(createReactionDetailed, { count: 15 }),
     open: true,
     disabled: true,
   },

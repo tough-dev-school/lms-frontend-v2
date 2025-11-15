@@ -3,7 +3,7 @@ import type { VueWrapper } from '@vue/test-utils';
 import VCertificatesView from './VCertificatesView.vue';
 import type VCertificateCard from '@/components/VCertificateCard/VCertificateCard.vue';
 import { createDiploma } from '@/api/generated/mocks';
-import { languageEnumEnum } from '@/api/generated/types';
+import { LanguageEnum } from '@/api/generated/types';
 import type { Diploma } from '@/api/generated/types';
 import { uniq, flatten } from 'lodash-es';
 import { nextTick, ref } from 'vue';
@@ -16,11 +16,16 @@ const defaultProps = {};
 vi.mock('@/api/generated/hooks');
 
 const createDiplomaSet = (payload: Diploma): Diploma[] => {
-  return Object.values(languageEnumEnum).map((locale) => {
+  return Object.values(LanguageEnum).map((locale) => {
     return {
       ...payload,
       language: locale,
-      course: { product_name: payload.course.product_name },
+      course: {
+        name: payload.course.name,
+        name_international: payload.course.name_international,
+        product_name: payload.course.product_name,
+        tariff_name: payload.course.tariff_name,
+      },
     };
   });
 };

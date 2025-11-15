@@ -1,7 +1,7 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VCoursesView from './VCoursesView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
-import { STATIC_STUDY } from '@/api/generated/mocks';
+import { createCourse } from '@/api/generated/mocks';
 import { purchasedCoursesListQueryKey } from '@/api/generated/hooks';
 import { useQueryClient } from '@tanstack/vue-query';
 
@@ -28,7 +28,7 @@ export const Default = {
         const queryClient = useQueryClient();
         queryClient.setQueryData(
           purchasedCoursesListQueryKey({ page_size: 100 }),
-          { results: [STATIC_STUDY] },
+          { results: [createCourse()] },
         );
       },
       template: '<story />',

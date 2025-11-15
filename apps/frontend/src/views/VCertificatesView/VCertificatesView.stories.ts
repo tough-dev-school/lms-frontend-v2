@@ -2,7 +2,7 @@ import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VCertificatesView from './VCertificatesView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import { createDiploma, createUserSafe } from '@/api/generated/mocks';
-import { languageEnumEnum } from '@/api/generated/types';
+import { LanguageEnum } from '@/api/generated/types';
 import { flatten } from 'lodash-es';
 import { diplomasListQueryKey } from '@/api/generated/hooks';
 import { useQueryClient } from '@tanstack/vue-query';
@@ -11,26 +11,46 @@ import type { Diploma } from '@/api/generated/types';
 const STATIC_AUTHOR_1 = createUserSafe();
 
 const createDiplomaSet = (payload: Diploma): Diploma[] => {
-  return Object.values(languageEnumEnum).map((locale) => {
+  return Object.values(LanguageEnum).map((locale) => {
     return {
       ...payload,
       language: locale,
-      course: { product_name: payload.course.product_name },
+      course: {
+        name: payload.course.name,
+        name_international: payload.course.name_international,
+        product_name: payload.course.product_name,
+        tariff_name: payload.course.tariff_name,
+      },
     };
   });
 };
 
 const STATIC_DIPLOMAS = [
   createDiploma({
-    course: { product_name: 'Amazing Course' },
+    course: {
+      name: 'Amazing Course',
+      name_international: 'Amazing Course',
+      product_name: 'Amazing Course',
+      tariff_name: 'Amazing Course',
+    },
     student: STATIC_AUTHOR_1,
   }),
   createDiploma({
-    course: { product_name: 'Cool Course' },
+    course: {
+      name: 'Cool Course',
+      name_international: 'Cool Course',
+      product_name: 'Cool Course',
+      tariff_name: 'Cool Course',
+    },
     student: STATIC_AUTHOR_1,
   }),
   createDiploma({
-    course: { product_name: 'Pro Course' },
+    course: {
+      name: 'Pro Course',
+      name_international: 'Pro Course',
+      product_name: 'Pro Course',
+      tariff_name: 'Pro Course',
+    },
     student: STATIC_AUTHOR_1,
   }),
 ];
