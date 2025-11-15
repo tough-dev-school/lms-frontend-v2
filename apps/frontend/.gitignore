@@ -30,5 +30,4 @@ coverage
 
 storybook-static
 src/__image_snapshots__/__diff_output__
-src/api/generated
 
