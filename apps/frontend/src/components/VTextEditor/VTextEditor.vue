@@ -299,11 +299,13 @@
 <template>
   <div
     ref="currentEditor"
-    class="bg-white dark:bg-darkmode-layer2 px-16 rounded min-h-240 flex flex-col">
+    class="flex min-h-240 flex-col rounded bg-white px-16 dark:bg-darkmode-layer2"
+  >
     <div
       v-if="editor"
-      class="sticky top-0 z-10 bg-white dark:bg-darkmode-layer2 dark:text-white border-b border-lightgray dark:border-darkmode-border">
-      <div class="flex items-center flex-wrap">
+      class="sticky top-0 z-10 border-b border-lightgray bg-white dark:border-darkmode-border dark:bg-darkmode-layer2 dark:text-white"
+    >
+      <div class="flex flex-wrap items-center">
         <button
           class="TextEditor__Button"
           :class="{
@@ -311,7 +313,8 @@
               level: 1,
             }),
           }"
-          @click="toggleHeading1">
+          @click="toggleHeading1"
+        >
           <IconH1 />
         </button>
         <button
@@ -321,7 +324,8 @@
               level: 2,
             }),
           }"
-          @click="toggleHeading2">
+          @click="toggleHeading2"
+        >
           <IconH2 />
         </button>
         <button
@@ -331,37 +335,43 @@
               level: 3,
             }),
           }"
-          @click="toggleHeading3">
+          @click="toggleHeading3"
+        >
           <IconH3 />
         </button>
         <button
           class="TextEditor__Button"
           :class="{ TextEditor__Button_Active: editor.isActive('bold') }"
-          @click="toggleBold">
+          @click="toggleBold"
+        >
           <IconBold />
         </button>
         <button
           class="TextEditor__Button"
           :class="{ TextEditor__Button_Active: editor.isActive('italic') }"
-          @click="toggleItalic">
+          @click="toggleItalic"
+        >
           <IconItalic />
         </button>
         <button
           class="TextEditor__Button"
           :class="{ TextEditor__Button_Active: editor.isActive('link') }"
-          @click="editLink">
+          @click="editLink"
+        >
           <IconLink />
         </button>
         <button
           class="TextEditor__Button"
           :disabled="!editor.isActive('link')"
-          @click="editor.chain().focus().unsetLink().run()">
+          @click="editor.chain().focus().unsetLink().run()"
+        >
           <IconLinkOff />
         </button>
         <button
           class="TextEditor__Button"
           :class="{ TextEditor__Button_Active: editor.isActive('blockquote') }"
-          @click="toggleBlockquote">
+          @click="toggleBlockquote"
+        >
           <IconBlockquote />
         </button>
         <button
@@ -369,13 +379,15 @@
           :class="{
             TextEditor__Button_Active: editor.isActive('orderedList'),
           }"
-          @click="toggleOrderedList">
+          @click="toggleOrderedList"
+        >
           <IconListNumbers />
         </button>
         <button
           class="TextEditor__Button"
           :class="{ TextEditor__Button_Active: editor.isActive('bulletList') }"
-          @click="toggleUnorderedList">
+          @click="toggleUnorderedList"
+        >
           <IconList />
         </button>
         <label class="TextEditor__Button">
@@ -390,51 +402,80 @@
         <button
           class="TextEditor__Button"
           :class="{ TextEditor__Button_Active: editor.isActive('table') }"
-          @click="insertTable">
+          @click="insertTable"
+        >
           <IconTable />
         </button>
       </div>
-      <div v-if="editor.isActive('table')" class="flex items-center">
+      <div
+        v-if="editor.isActive('table')"
+        class="flex items-center"
+      >
         <div>Для таблицы:</div>
-        <button class="TextEditor__Button" @click="addColumnBefore">
+        <button
+          class="TextEditor__Button"
+          @click="addColumnBefore"
+        >
           <IconColumnInsertLeft />
         </button>
-        <button class="TextEditor__Button" @click="addColumnAfter">
+        <button
+          class="TextEditor__Button"
+          @click="addColumnAfter"
+        >
           <IconColumnInsertRight />
         </button>
-        <button class="TextEditor__Button" @click="deleteColumn">
+        <button
+          class="TextEditor__Button"
+          @click="deleteColumn"
+        >
           <IconColumnRemove />
         </button>
-        <div class="mx-4 w-1 h-16 bg-lightgray dark:bg-darkmode-border" />
-        <button class="TextEditor__Button" @click="addRowBefore">
+        <div class="w-1 mx-4 h-16 bg-lightgray dark:bg-darkmode-border" />
+        <button
+          class="TextEditor__Button"
+          @click="addRowBefore"
+        >
           <IconRowInsertTop />
         </button>
-        <button class="TextEditor__Button" @click="addRowAfter">
+        <button
+          class="TextEditor__Button"
+          @click="addRowAfter"
+        >
           <IconRowInsertBottom />
         </button>
-        <button class="TextEditor__Button" @click="deleteRow">
+        <button
+          class="TextEditor__Button"
+          @click="deleteRow"
+        >
           <IconRowRemove />
         </button>
-        <div class="mx-4 w-1 h-16 bg-lightgray dark:bg-darkmode-border" />
-        <button class="TextEditor__Button" @click="deleteTable">
+        <div class="w-1 mx-4 h-16 bg-lightgray dark:bg-darkmode-border" />
+        <button
+          class="TextEditor__Button"
+          @click="deleteTable"
+        >
           <IconTableOff />
         </button>
       </div>
     </div>
-    <div v-if="isImageLoading" class="p-32">
+    <div
+      v-if="isImageLoading"
+      class="p-32"
+    >
       <VLoader />
     </div>
     <EditorContent
       :editor="editor"
       class="TextEditor__Content prose flex-grow"
-      @click="editor.chain().focus().run()" />
+      @click="editor.chain().focus().run()"
+    />
   </div>
 </template>
 
 <style>
   .TextEditor {
     &__Button {
-      @apply flex aspect-square items-center justify-center px-8 hover:bg-lightgray dark:hover:bg-darkmode-layer3 transition-colors;
+      @apply flex aspect-square items-center justify-center px-8 transition-colors hover:bg-lightgray dark:hover:bg-darkmode-layer3;
       &_Active {
         @apply bg-lightgray dark:bg-darkmode-layer3;
       }
@@ -452,18 +493,6 @@
   .ProseMirror p.is-editor-empty:first-child::before {
     content: attr(data-placeholder);
     @apply pointer-events-none float-left h-0 text-gray;
-  }
-
-  .ProseMirror table {
-    @apply border border-lightgray dark:border-darkmode-border bg-white;
-  }
-
-  .ProseMirror th {
-    @apply bg-lightgray dark:bg-darkmode-layer3 font-bold p-8;
-  }
-
-  .ProseMirror td {
-    @apply border border-lightgray dark:border-darkmode-border p-8;
   }
 
   .ProseMirror .tableWrapper {
