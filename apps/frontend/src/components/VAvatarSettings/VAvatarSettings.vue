@@ -5,24 +5,13 @@
   import VButton from '@/components/VButton/VButton.vue';
   import {
     useUsersMeRetrieve,
-    useUsersMePartialUpdate,
     usersMeRetrieveQueryKey,
   } from '@/api/generated/hooks';
   import { useQueryClient } from '@tanstack/vue-query';
-  import { ContentType } from '@/api/generated/types';
+  import { createHttpClient } from '@/api/client';
 
   const queryClient = useQueryClient();
   const { data: user } = useUsersMeRetrieve();
-  const { mutateAsync: updateUser, isPending: isUpdatePending } =
-    useUsersMePartialUpdate({
-      mutation: {
-        onSuccess: () => {
-          queryClient.invalidateQueries({
-            queryKey: usersMeRetrieveQueryKey(),
-          });
-        },
-      },
-    });
 
   const avatar = ref();
   const file = ref();
@@ -37,6 +26,8 @@
     file.value = undefined;
   };
 
+  const isUpdatePending = ref(false);
+
   const saveProfile = async () => {
     const avatarFile = file.value || null;
     const formData = new FormData();
@@ -46,15 +37,25 @@
       formData.append('avatar', '');
     }
 
-    // @ts-expect-error formData type issue
-    await updateUser(
-      { data: formData },
-      {
-        client: {
-          type: ContentType.FormData,
+    isUpdatePending.value = true;
+
+    const httpClient = createHttpClient();
+
+    try {
+      await httpClient.post('/api/v2/users/me/', {
+        data: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
         },
-      },
-    );
+      });
+      queryClient.invalidateQueries({
+        queryKey: usersMeRetrieveQueryKey(),
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      isUpdatePending.value = false;
+    }
   };
 
   // #FIXME

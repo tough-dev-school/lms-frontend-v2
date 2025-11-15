@@ -28,6 +28,8 @@ export default defineConfig({
         path: './types',
         banner,
       },
+      enumType: 'enum',
+      enumSuffix: '',
     }),
     pluginClient({
       importPath: '../../client.ts',

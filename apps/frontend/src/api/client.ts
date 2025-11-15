@@ -24,9 +24,7 @@ export interface ResponseConfig<TData = unknown> {
   statusText: string;
 }
 
-export const client = async <TData, TError = unknown, TVariables = unknown>(
-  config: RequestConfig<TVariables>,
-): Promise<ResponseConfig<TData>> => {
+export const createHttpClient = () => {
   const httpClient = axios.create();
 
   httpClient.interceptors.request.use((value) => onRequestFulfilled(value));
@@ -35,6 +33,15 @@ export const client = async <TData, TError = unknown, TVariables = unknown>(
     (value) => value,
     (value) => onResponseRejected(value),
   );
+
+  return httpClient;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const client = async <TData, TError = unknown, TVariables = unknown>(
+  config: RequestConfig<TVariables>,
+): Promise<ResponseConfig<TData>> => {
+  const httpClient = createHttpClient();
 
   const response = await httpClient({
     method: config.method,

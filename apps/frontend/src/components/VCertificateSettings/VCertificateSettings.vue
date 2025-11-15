@@ -32,7 +32,7 @@
     lastName: '',
     firstNameEn: '',
     lastNameEn: '',
-    gender: BlankEnum.Value,
+    gender: '' as unknown as BlankEnum,
   });
 
   const saveCertificate = async () => {
@@ -55,7 +55,7 @@
       lastName: user.last_name ?? '',
       firstNameEn: user.first_name_en ?? '',
       lastNameEn: user.last_name_en ?? '',
-      gender: user.gender ?? GenderEnum.Male,
+      gender: user.gender ?? GenderEnum.male,
     };
   });
 </script>
@@ -94,8 +94,8 @@
             type="radio"
             name="gender"
             data-testid="gender-male"
-            :checked="data.gender === GenderEnum.Male"
-            @click="data.gender = GenderEnum.Male"
+            :checked="data.gender === GenderEnum.male"
+            @click="data.gender = GenderEnum.male"
           />
           Мужской</label
         >
@@ -104,8 +104,8 @@
             type="radio"
             name="gender"
             data-testid="gender-female"
-            :checked="data.gender === GenderEnum.Female"
-            @click="data.gender = GenderEnum.Female"
+            :checked="data.gender === GenderEnum.female"
+            @click="data.gender = GenderEnum.female"
           />
           Женский</label
         >
