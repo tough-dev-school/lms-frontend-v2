@@ -50,3 +50,5 @@ export const client = async <TData, TError = unknown, TVariables = unknown>(
     statusText: response.statusText,
   };
 };
+
+export default client;
