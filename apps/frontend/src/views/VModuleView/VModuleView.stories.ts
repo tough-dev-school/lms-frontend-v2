@@ -70,7 +70,6 @@ const STATIC_LESSONS: Lesson[] = [
       question: {
         slug: 'async-fundamentals',
         name: 'Основы асинхронности',
-        text: 'Выполните задания по работе с Promise и async/await',
         deadline: '2024-01-25T23:59:00Z',
       },
     },
@@ -93,7 +92,6 @@ const STATIC_LESSONS: Lesson[] = [
       question: {
         slug: 'event-sourcing',
         name: 'Event Sourcing',
-        text: 'Изучите концепции Event Sourcing',
         deadline: '2024-02-01T23:59:00Z',
       },
     },

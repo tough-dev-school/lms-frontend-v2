@@ -81,7 +81,6 @@ const homeworkWithCrosschecks: Lesson = {
     question: {
       slug: 'javascript-fundamentals',
       name: 'Основы JavaScript',
-      text: 'Выполните задания по основам JavaScript',
       deadline: '2024-01-25T23:59:00Z',
     },
   },
@@ -99,7 +98,6 @@ const homeworkWithoutCrosschecks: Lesson = {
     question: {
       slug: 'css-layouts',
       name: 'CSS Layouts',
-      text: 'Создайте адаптивный layout',
       deadline: '2024-01-30T23:59:00Z',
     },
   },
@@ -182,6 +180,7 @@ export const ComplexLesson = {
           deadline: '2024-02-10T23:59:00Z',
         },
       },
+      question: mockQuestion(),
       material: {
         id: 'material-456',
         title: 'Дополнительные материалы по TypeScript',

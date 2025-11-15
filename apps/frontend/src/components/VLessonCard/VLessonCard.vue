@@ -101,7 +101,7 @@
           <VButton class="VLessonCard__Button"> Смотреть запись </VButton>
         </a>
       </template>
-      <template v-else>
+      <template v-else-if="lesson.call.url">
         <a
           :href="lesson.call.url"
           target="_blank"

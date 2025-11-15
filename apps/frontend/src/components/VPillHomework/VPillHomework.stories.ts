@@ -25,7 +25,7 @@ export const NotSent: Story = {
       },
       question: {
         name: 'Homework 1',
-        text: 'Complete the assignment',
+        slug: 'homework-1',
         deadline: tomorrow.toISOString(),
       },
     },
@@ -42,7 +42,7 @@ export const NotSentOverdue: Story = {
       },
       question: {
         name: 'Homework 1',
-        text: 'Complete the assignment',
+        slug: 'homework-1',
         deadline: yesterday.toISOString(),
       },
     },
@@ -59,7 +59,7 @@ export const Sent: Story = {
       },
       question: {
         name: 'Homework 1',
-        text: 'Complete the assignment',
+        slug: 'homework-1',
         deadline: tomorrow.toISOString(),
       },
       crosschecks: {
@@ -80,7 +80,7 @@ export const SentWithPendingCrosscheck: Story = {
       },
       question: {
         name: 'Homework 1',
-        text: 'Complete the assignment',
+        slug: 'homework-1',
         deadline: today.toISOString(),
       },
       crosschecks: {
@@ -101,7 +101,7 @@ export const SentWithFutureCrosscheck: Story = {
       },
       question: {
         name: 'Homework 1',
-        text: 'Complete the assignment',
+        slug: 'homework-1',
         deadline: twoDaysAgo.toISOString(),
       },
       crosschecks: {

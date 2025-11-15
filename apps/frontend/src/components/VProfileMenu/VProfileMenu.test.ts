@@ -25,6 +25,7 @@ const getDefaultData = (): User => {
     first_name: faker.person.firstName(),
     last_name: faker.person.lastName(),
     avatar: faker.image.avatar(),
+    is_staff: false,
   };
 };
 

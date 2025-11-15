@@ -10,6 +10,9 @@ export const mockDiplomaData = (): Diploma => {
   return {
     course: {
       product_name: faker.commerce.productName(),
+      name: faker.commerce.productName(),
+      name_international: faker.commerce.productName(),
+      tariff_name: faker.commerce.productName(),
     },
     slug: faker.string.uuid(),
     language: mockLocale(),
@@ -24,7 +27,12 @@ export const mockDiplomaSet = (payload: Diploma): Diploma[] => {
     return {
       ...payload,
       language: locale,
-      course: { product_name: payload.course.product_name },
+      course: {
+        product_name: payload.course.product_name,
+        name: payload.course.name,
+        name_international: payload.course.name_international,
+        tariff_name: payload.course.tariff_name,
+      },
     };
   });
 };
@@ -33,6 +41,9 @@ export const STATIC_DIPLOMA_1: Diploma = {
   ...mockDiplomaData(),
   course: {
     product_name: 'Amazing Course',
+    name: 'Amazing Course',
+    name_international: 'Amazing Course',
+    tariff_name: 'Amazing Course',
   },
   student: STATIC_AUTHOR_1,
 };
@@ -41,6 +52,9 @@ export const STATIC_DIPLOMA_2: Diploma = {
   ...mockDiplomaData(),
   course: {
     product_name: 'Cool Course',
+    name: 'Cool Course',
+    name_international: 'Cool Course',
+    tariff_name: 'Cool Course',
   },
   student: STATIC_AUTHOR_1,
 };
@@ -49,6 +63,9 @@ export const STATIC_DIPLOMA_3: Diploma = {
   ...mockDiplomaData(),
   course: {
     product_name: 'Pro Course',
+    name: 'Pro Course',
+    name_international: 'Pro Course',
+    tariff_name: 'Pro Course',
   },
   student: STATIC_AUTHOR_1,
 };

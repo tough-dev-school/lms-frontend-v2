@@ -5,6 +5,7 @@ import { faker } from '@faker-js/faker';
 import { ALLOWED_REACTIONS } from '@/components/VReactions/VReactions.vue';
 import { mockReactionDetailed } from '@/mocks/mockReactionDetailed';
 import { times } from 'lodash-es';
+import { mockUserSafe } from '@/mocks/mockUserSafe';
 
 const userId = faker.string.uuid();
 const emoji = faker.helpers.arrayElement(ALLOWED_REACTIONS);
@@ -39,7 +40,9 @@ export const Own = {
     userId,
     emoji,
     reactions: [
-      ...times(1, () => mockReactionDetailed({ author: { uuid: userId } })),
+      ...times(1, () =>
+        mockReactionDetailed({ author: { ...mockUserSafe(), uuid: userId } }),
+      ),
       ...times(3, () => mockReactionDetailed()),
     ],
   },
