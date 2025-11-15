@@ -30,30 +30,28 @@
   };
 
   const to = computed(() => {
-    if (props.module.has_started) {
-      if (onlyLesson.value) {
-        if (onlyLesson.value.material) {
-          return {
-            name: 'materials',
-            params: {
-              materialId: onlyLesson.value.material.id,
-            },
-          };
-        } else if (onlyLesson.value.question) {
-          return {
-            name: 'homework',
-            params: { questionId: onlyLesson.value.question.slug },
-          };
-        } else if (onlyLesson.value.call) {
-          window.open(onlyLesson.value.call.url, '_blank');
-        }
-      }
+    if (props.module.has_started) return undefined;
+
+    if (onlyLesson.value?.material) {
       return {
-        name: 'module',
-        params: { courseId: props.courseId, moduleId: props.module.id },
+        name: 'materials',
+        params: {
+          materialId: onlyLesson.value.material.id,
+        },
       };
+    } else if (onlyLesson.value?.question) {
+      return {
+        name: 'homework',
+        params: { questionId: onlyLesson.value.question.slug },
+      };
+    } else if (onlyLesson.value?.call && onlyLesson.value.call.url) {
+      return onlyLesson.value.call.url;
     }
-    return undefined;
+
+    return {
+      name: 'module',
+      params: { courseId: props.courseId, moduleId: props.module.id },
+    };
   });
 
   onBeforeMount(async () => {
@@ -63,15 +61,21 @@
       });
     }
   });
+
+  const componentVariant = computed(() => {
+    if (typeof to.value === 'string') return 'a';
+    if (props.module.has_started) return RouterLink;
+    return 'div';
+  });
 </script>
 
 <template>
   <component
-    :is="module.has_started ? RouterLink : 'div'"
-    :to="to"
+    :is="componentVariant"
+    v-bind="componentVariant === 'a' ? { href: to } : { to }"
+    class="VModuleCard flex min-h-120 flex-col gap-8 rounded-16 p-16 text-black tablet:p-24"
     :class="[
       cardClass(index),
-      'VModuleCard flex min-h-120 flex-col gap-8 rounded-16 p-16 text-black tablet:p-24',
       module.has_started
         ? 'origin-center transition-all duration-100 ease-out hover:scale-[1.02] hover:shadow'
         : 'pointer-events-none cursor-not-allowed grayscale',
