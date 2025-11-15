@@ -18,7 +18,7 @@
     "storybook": "storybook dev -p 3001",
     "storybook:build": "storybook build",
     "storybook:preview": "serve storybook-static/",
-    "generate-api": "kubb generate"
+    "generate-api": "kubb generate; tsx patch-api.ts"
   },
   "dependencies": {
     "@brachkow/email-providers": "^1.2.0",
