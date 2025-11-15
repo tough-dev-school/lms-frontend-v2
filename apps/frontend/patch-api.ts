@@ -5,26 +5,53 @@ import { parse, SgNode, Lang } from '@ast-grep/napi';
 const typesDirectory = 'src/api/generated/types';
 const files = fs.readdirSync(typesDirectory);
 
-function applyTransformations(fileContent: string): string {
+interface Edit {
+  start: number;
+  end: number;
+  replacement: string;
+}
+
+type ApplyPatch = (ast: SgNode) => Edit[];
+
+const getAst = (fileContent: string) => {
   const ast = parse(Lang.TypeScript, fileContent);
-  const root = ast.root();
+  return ast.root();
+};
 
-  const edits: { start: number; end: number; replacement: string }[] = [];
+const applyTransformations = (edits: Edit[], fileContent: string) => {
+  edits.sort((a, b) => b.start - a.start);
 
-  // Kubb issues: Remove readonly modifiers
-  root.findAll({ rule: { kind: 'readonly_type' } }).forEach((node: SgNode) => {
+  // Apply edits from end to start
+  let result = fileContent;
+  edits.forEach((edit) => {
+    result =
+      result.slice(0, edit.start) + edit.replacement + result.slice(edit.end);
+  });
+
+  return result;
+};
+
+const removeReadonlyModifiers: ApplyPatch = (ast) => {
+  const edits: Edit[] = [];
+
+  ast.findAll({ rule: { kind: 'readonly_type' } }).forEach((node: SgNode) => {
     const readonlyNode = node.child(0);
     if (readonlyNode?.text() === 'readonly') {
       edits.push({
         start: readonlyNode.range().start.index,
-        end: readonlyNode.range().end.index + 1, // +1 for the space after
+        end: readonlyNode.range().end.index + 1,
         replacement: '',
       });
     }
   });
 
-  // Backend issues: Fix optional properties
-  root
+  return edits;
+};
+
+const fixOptionalProperties: ApplyPatch = (ast) => {
+  const edits: Edit[] = [];
+
+  ast
     .findAll({ rule: { kind: 'property_signature' } })
     .forEach((node: SgNode) => {
       const text = node.text();
@@ -100,22 +127,22 @@ function applyTransformations(fileContent: string): string {
       }
     });
 
-  // Sort edits by start position in descending order to apply from end to start
-  edits.sort((a, b) => b.start - a.start);
+  return edits;
+};
 
-  // Apply edits from end to start
-  let result = fileContent;
-  edits.forEach((edit) => {
-    result =
-      result.slice(0, edit.start) + edit.replacement + result.slice(edit.end);
-  });
-
-  return result;
-}
-
-files.forEach((file) => {
+for (const file of files) {
   const filePath = path.join(typesDirectory, file);
-  const fileContent = fs.readFileSync(filePath, 'utf8');
-  const transformedContent = applyTransformations(fileContent);
-  fs.writeFileSync(filePath, transformedContent);
-});
+  let fileContent = fs.readFileSync(filePath, 'utf8');
+  const patches: ApplyPatch[] = [
+    removeReadonlyModifiers,
+    fixOptionalProperties,
+  ];
+
+  for (const patch of patches) {
+    const ast = getAst(fileContent);
+    const edits = patch(ast);
+    fileContent = applyTransformations(edits, fileContent);
+  }
+
+  fs.writeFileSync(filePath, fileContent);
+}
