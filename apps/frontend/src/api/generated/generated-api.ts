@@ -737,7 +737,7 @@ export interface QuestionCourse {
 }
 
 export interface QuestionDetail {
-  breadcrumbs?: Breadcrumbs;
+  breadcrumbs: Breadcrumbs;
   /** @format uuid */
   slug: string;
   /**

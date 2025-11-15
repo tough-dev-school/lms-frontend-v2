@@ -138,6 +138,16 @@ const fixOptionalProperties: ApplyPatch = (ast) => {
         return;
       }
 
+      if (name === 'breadcrumbs') {
+        const newText = text.replace('?:', ':');
+        edits.push({
+          start: node.range().start.index,
+          end: node.range().end.index,
+          replacement: newText,
+        });
+        return;
+      }
+
       // booleans can't be undefined
       if (typeText === 'boolean') {
         const newText = text.replace('?:', ':');
