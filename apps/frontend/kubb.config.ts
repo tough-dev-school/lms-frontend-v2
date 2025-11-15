@@ -11,7 +11,9 @@ const banner = '/* eslint-disable */\n// @ts-nocheck';
 export default defineConfig({
   root: '.',
   input: {
-    path: 'http://localhost:8000/api/v2/docs/schema/',
+    path: process.env.CI
+      ? 'https://lms.tough-dev.school/api/v2/docs/schema/'
+      : 'http://localhost:8000/api/v2/docs/schema/',
   },
   output: {
     path: './src/api/generated',
