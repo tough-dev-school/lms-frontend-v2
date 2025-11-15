@@ -36,6 +36,20 @@ function applyTransformations(fileContent: string): string {
 
       if (!questionMark) return;
 
+      // Skip transformation for Patched/Create types (partial updates/creation)
+      let parent = node.parent();
+      while (parent) {
+        const parentText = parent.text();
+        if (
+          (parent.kind() === 'interface_declaration' ||
+            parent.kind() === 'type_alias_declaration') &&
+          (parentText.includes('Patched') || parentText.includes('Create'))
+        ) {
+          return;
+        }
+        parent = parent.parent();
+      }
+
       const children = node.children();
       const typeNode = children.at(-1);
       if (!typeNode) return;
