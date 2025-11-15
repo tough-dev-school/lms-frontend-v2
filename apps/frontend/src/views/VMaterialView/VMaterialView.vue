@@ -88,26 +88,43 @@
     <VLoggedLayout
       :title="notionTitle"
       :show-title="false"
-      :breadcrumbs="breadcrumbs">
+      :breadcrumbs="breadcrumbs"
+    >
       <template v-if="material">
         <VCard
-          class="pt-32 bg-white dark:bg-dark-black p-8 phone:p-24 rounded-16 shadow">
-          <VNotionRenderer :material-id="materialId" :block-map="material" />
+          class="rounded-16 bg-white p-8 pt-32 shadow dark:bg-dark-black phone:p-24"
+        >
+          <VNotionRenderer
+            :material-id="materialId"
+            :block-map="material"
+          />
         </VCard>
       </template>
       <div
         v-else-if="!material"
-        class="center flex max-w-[400px] flex-col text-center">
+        class="center flex max-w-[400px] flex-col text-center"
+      >
         <p>Материал не найден :(</p>
         <p>
           Если кажется что здесь какая-то ошибка напишите в поддержку
-          <a class="link" :href="SUPPORT_CHAT_URL"> в чат в углу экрана </a>
+          <a
+            class="link"
+            :href="SUPPORT_CHAT_URL"
+          >
+            в чат в углу экрана
+          </a>
           или на
-          <a class="link" href="mailto:{{ SUPPORT_EMAIL }}">
+          <a
+            class="link"
+            href="mailto:{{ SUPPORT_EMAIL }}"
+          >
             {{ SUPPORT_EMAIL }}
           </a>
         </p>
-        <VButton appearance="link" @click="router.push({ name: 'courses' })">
+        <VButton
+          appearance="link"
+          @click="router.push({ name: 'courses' })"
+        >
           На главную
         </VButton>
       </div>
@@ -129,7 +146,7 @@
   }
 
   .notion-callout {
-    @apply border-0 items-start;
+    @apply items-start border-0;
   }
 
   .notion-simple-table-data {

@@ -1,5 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
-import VNotionView from './VNotionView.vue';
+import VMaterialView from './VMaterialView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import { mockMaterial } from '@/mocks/mockMaterialSerializer';
 import { mockLMSCourse } from '@/mocks/mockLMSCourse';
@@ -9,8 +9,8 @@ import { useQueryClient } from '@tanstack/vue-query';
 import type { MaterialSerilizer } from '@/api/generated/generated-api';
 
 export default {
-  title: 'App/VNotionView',
-  component: VNotionView,
+  title: 'App/VMaterialView',
+  component: VMaterialView,
   decorators: [defaultLayoutDecorator],
   parameters: { layout: 'fullscreen' },
 } as Meta;
@@ -39,7 +39,7 @@ const STATIC_MATERIAL_DATA: MaterialSerilizer = {
 };
 
 const Template: StoryFn = (args) => ({
-  components: { VNotionView },
+  components: { VMaterialView },
   setup() {
     const queryClient = useQueryClient();
 
@@ -54,7 +54,7 @@ const Template: StoryFn = (args) => ({
 
     return { args };
   },
-  template: '<VNotionView v-bind="args" />',
+  template: '<VMaterialView v-bind="args" />',
 });
 
 export const Default = {

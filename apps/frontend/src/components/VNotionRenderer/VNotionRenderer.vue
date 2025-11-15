@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { BlockMap } from '@/query/types/materials';
 
-  export interface VNotionViewProps {
+  export interface VMaterialViewProps {
     blockMap: BlockMap;
     materialId: string;
   }
@@ -14,7 +14,7 @@
   import { onMounted } from 'vue';
   import { useEventListener } from '@vueuse/core';
 
-  const props = defineProps<VNotionViewProps>();
+  const props = defineProps<VMaterialViewProps>();
 
   const mapPageUrl = (materialId: string) => `/materials/${materialId}`;
   const mapBlockId = (id: string) => `${props.materialId}-${id}}`;
@@ -61,7 +61,8 @@
       component: 'RouterLink',
       href: 'to',
     }"
-    :full-page="true" />
+    :full-page="true"
+  />
 </template>
 
 <style>
