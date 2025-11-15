@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { HomeworkCrosschecksListQueryResponse } from "../types/HomeworkCrosschecksList.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { HomeworkCrosschecksListQueryResponse } from "../types/HomeworkCrosschecksList";
 
 function getHomeworkCrosschecksListUrl() {
   const res = { method: 'GET', url: `/api/v2/homework/crosschecks/` as const }  

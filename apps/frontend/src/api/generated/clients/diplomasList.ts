@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { DiplomasListQueryResponse, DiplomasListQueryParams } from "../types/DiplomasList.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { DiplomasListQueryResponse, DiplomasListQueryParams } from "../types/DiplomasList";
 
 function getDiplomasListUrl() {
   const res = { method: 'GET', url: `/api/v2/diplomas/` as const }  

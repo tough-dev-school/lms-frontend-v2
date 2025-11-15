@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { PaginatedLessonList } from "../types/PaginatedLessonList.ts";
-import { createLesson } from "./createLesson.ts";
+import type { PaginatedLessonList } from "../types/PaginatedLessonList";
+import { createLesson } from "./createLesson";
 import { faker } from "@faker-js/faker";
 
 export function createPaginatedLessonList(data?: Partial<PaginatedLessonList>): PaginatedLessonList {

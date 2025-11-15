@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { MaterialsRetrieveQueryResponse } from "../types/MaterialsRetrieve.ts";
+import type { MaterialsRetrieveQueryResponse } from "../types/MaterialsRetrieve";
 import { http } from "msw";
 
 export function materialsRetrieveHandlerResponse200(data: MaterialsRetrieveQueryResponse) {

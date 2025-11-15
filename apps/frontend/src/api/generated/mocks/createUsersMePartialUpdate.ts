@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import type { UsersMePartialUpdateMutationResponse } from "../types/UsersMePartialUpdate.ts";
-import { createPatchedUser } from "./createPatchedUser.ts";
-import { createUser } from "./createUser.ts";
+import type { UsersMePartialUpdateMutationResponse } from "../types/UsersMePartialUpdate";
+import { createPatchedUser } from "./createPatchedUser";
+import { createUser } from "./createUser";
 import { faker } from "@faker-js/faker";
 
 export function createUsersMePartialUpdate200() {

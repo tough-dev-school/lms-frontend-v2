@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { Token } from "../types/Token.ts";
+import type { Token } from "../types/Token";
 import { faker } from "@faker-js/faker";
 
 export function createToken(data?: Partial<Token>): Token {

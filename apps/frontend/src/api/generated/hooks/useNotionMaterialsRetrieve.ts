@@ -5,12 +5,12 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { NotionMaterialsRetrieveQueryResponse, NotionMaterialsRetrievePathParams } from "../types/NotionMaterialsRetrieve.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { NotionMaterialsRetrieveQueryResponse, NotionMaterialsRetrievePathParams } from "../types/NotionMaterialsRetrieve";
 import type { QueryKey, QueryClient, QueryObserverOptions, UseQueryReturnType } from "@tanstack/vue-query";
 import type { MaybeRefOrGetter } from "vue";
-import { notionMaterialsRetrieve } from "../clients/notionMaterialsRetrieve.ts";
+import { notionMaterialsRetrieve } from "../clients/notionMaterialsRetrieve";
 import { queryOptions, useQuery } from "@tanstack/vue-query";
 import { toValue } from "vue";
 

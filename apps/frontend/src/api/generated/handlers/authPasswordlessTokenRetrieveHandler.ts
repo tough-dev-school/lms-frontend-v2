@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { AuthPasswordlessTokenRetrieveQueryResponse } from "../types/AuthPasswordlessTokenRetrieve.ts";
+import type { AuthPasswordlessTokenRetrieveQueryResponse } from "../types/AuthPasswordlessTokenRetrieve";
 import { http } from "msw";
 
 export function authPasswordlessTokenRetrieveHandlerResponse200(data: AuthPasswordlessTokenRetrieveQueryResponse) {

@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { QuestionDetail } from "./QuestionDetail.ts";
+import type { QuestionDetail } from "./QuestionDetail";
 
 export type HomeworkQuestionsRetrievePathParams = {
     /**

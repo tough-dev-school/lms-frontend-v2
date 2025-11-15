@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { CourseWithPrice } from "./CourseWithPrice.ts";
+import type { CourseWithPrice } from "./CourseWithPrice";
 
 export type CourseGroupsCoursesListPathParams = {
     /**

@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { HomeworkAnswersReactionsDestroyMutationResponse } from "../types/HomeworkAnswersReactionsDestroy.ts";
+import type { HomeworkAnswersReactionsDestroyMutationResponse } from "../types/HomeworkAnswersReactionsDestroy";
 import { http } from "msw";
 
 export function homeworkAnswersReactionsDestroyHandlerResponse204(data?: HomeworkAnswersReactionsDestroyMutationResponse) {

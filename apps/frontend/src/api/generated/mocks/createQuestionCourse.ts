@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { QuestionCourse } from "../types/QuestionCourse.ts";
+import type { QuestionCourse } from "../types/QuestionCourse";
 import { faker } from "@faker-js/faker";
 
 export function createQuestionCourse(data?: Partial<QuestionCourse>): QuestionCourse {

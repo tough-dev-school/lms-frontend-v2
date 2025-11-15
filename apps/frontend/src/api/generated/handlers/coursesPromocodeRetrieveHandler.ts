@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { CoursesPromocodeRetrieveQueryResponse } from "../types/CoursesPromocodeRetrieve.ts";
+import type { CoursesPromocodeRetrieveQueryResponse } from "../types/CoursesPromocodeRetrieve";
 import { http } from "msw";
 
 export function coursesPromocodeRetrieveHandlerResponse200(data: CoursesPromocodeRetrieveQueryResponse) {

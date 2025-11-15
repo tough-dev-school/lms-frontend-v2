@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { CoursesPromocodeRetrieveQueryResponse, CoursesPromocodeRetrievePathParams, CoursesPromocodeRetrieveQueryParams } from "../types/CoursesPromocodeRetrieve.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { CoursesPromocodeRetrieveQueryResponse, CoursesPromocodeRetrievePathParams, CoursesPromocodeRetrieveQueryParams } from "../types/CoursesPromocodeRetrieve";
 
 function getCoursesPromocodeRetrieveUrl(slug: CoursesPromocodeRetrievePathParams["slug"]) {
   const res = { method: 'GET', url: `/api/v2/courses/${slug}/promocode/` as const }  

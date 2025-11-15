@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { OrdersDraftCreateMutationResponse } from "../types/OrdersDraftCreate.ts";
+import type { OrdersDraftCreateMutationResponse } from "../types/OrdersDraftCreate";
 import { http } from "msw";
 
 export function ordersDraftCreateHandlerResponse200(data: OrdersDraftCreateMutationResponse) {

@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { AnswerCreate } from "../types/AnswerCreate.ts";
+import type { AnswerCreate } from "../types/AnswerCreate";
 import { faker } from "@faker-js/faker";
 
 export function createAnswerCreate(data?: Partial<AnswerCreate>): AnswerCreate {

@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { ReactionCreate } from "./ReactionCreate.ts";
-import type { ReactionDetailed } from "./ReactionDetailed.ts";
+import type { ReactionCreate } from "./ReactionCreate";
+import type { ReactionDetailed } from "./ReactionDetailed";
 
 export type HomeworkAnswersReactionsCreatePathParams = {
     /**

@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import type { HomeworkAnswersReactionsCreatePathParams, HomeworkAnswersReactionsCreateMutationResponse } from "../types/HomeworkAnswersReactionsCreate.ts";
-import { createReactionCreate } from "./createReactionCreate.ts";
-import { createReactionDetailed } from "./createReactionDetailed.ts";
+import type { HomeworkAnswersReactionsCreatePathParams, HomeworkAnswersReactionsCreateMutationResponse } from "../types/HomeworkAnswersReactionsCreate";
+import { createReactionCreate } from "./createReactionCreate";
+import { createReactionDetailed } from "./createReactionDetailed";
 import { faker } from "@faker-js/faker";
 
 export function createHomeworkAnswersReactionsCreatePathParams(data?: Partial<HomeworkAnswersReactionsCreatePathParams>): HomeworkAnswersReactionsCreatePathParams {

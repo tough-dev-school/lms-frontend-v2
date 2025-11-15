@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { AuthAsRetrieveQueryResponse, AuthAsRetrievePathParams } from "../types/AuthAsRetrieve.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { AuthAsRetrieveQueryResponse, AuthAsRetrievePathParams } from "../types/AuthAsRetrieve";
 
 function getAuthAsRetrieveUrl(user_id: AuthAsRetrievePathParams["user_id"]) {
   const res = { method: 'GET', url: `/api/v2/auth/as/${user_id}/` as const }  

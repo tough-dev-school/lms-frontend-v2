@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { Breadcrumbs } from "./Breadcrumbs.ts";
+import type { Breadcrumbs } from "./Breadcrumbs";
 
 export type MaterialSerilizer = {
     /**

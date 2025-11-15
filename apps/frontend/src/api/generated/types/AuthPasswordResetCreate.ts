@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { PasswordReset } from "./PasswordReset.ts";
+import type { PasswordReset } from "./PasswordReset";
 
 export type AuthPasswordResetCreate200 = PasswordReset;
 

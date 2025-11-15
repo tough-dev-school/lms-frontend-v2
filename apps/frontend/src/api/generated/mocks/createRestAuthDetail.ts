@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { RestAuthDetail } from "../types/RestAuthDetail.ts";
+import type { RestAuthDetail } from "../types/RestAuthDetail";
 import { faker } from "@faker-js/faker";
 
 export function createRestAuthDetail(data?: Partial<RestAuthDetail>): RestAuthDetail {

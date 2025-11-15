@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { BlankEnum } from "./BlankEnum.ts";
-import type { GenderEnum } from "./GenderEnum.ts";
+import type { BlankEnum } from "./BlankEnum";
+import type { GenderEnum } from "./GenderEnum";
 
 export type User = {
     /**

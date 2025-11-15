@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { HomeworkQuestionsRetrievePathParams, HomeworkQuestionsRetrieveQueryResponse } from "../types/HomeworkQuestionsRetrieve.ts";
-import { createQuestionDetail } from "./createQuestionDetail.ts";
+import type { HomeworkQuestionsRetrievePathParams, HomeworkQuestionsRetrieveQueryResponse } from "../types/HomeworkQuestionsRetrieve";
+import { createQuestionDetail } from "./createQuestionDetail";
 import { faker } from "@faker-js/faker";
 
 export function createHomeworkQuestionsRetrievePathParams(data?: Partial<HomeworkQuestionsRetrievePathParams>): HomeworkQuestionsRetrievePathParams {

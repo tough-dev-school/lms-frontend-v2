@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import type { LessonPlain } from "./LessonPlain.ts";
-import type { LMSCourse } from "./LMSCourse.ts";
-import type { Module } from "./Module.ts";
+import type { LessonPlain } from "./LessonPlain";
+import type { LMSCourse } from "./LMSCourse";
+import type { Module } from "./Module";
 
 export type Breadcrumbs = {
     /**

@@ -5,10 +5,10 @@
 * Do not edit manually.
 */
 
-import type { DiplomaRetrieve } from "../types/DiplomaRetrieve.ts";
-import { createCourseSimple } from "./createCourseSimple.ts";
-import { createLanguageEnum } from "./createLanguageEnum.ts";
-import { createUserSafe } from "./createUserSafe.ts";
+import type { DiplomaRetrieve } from "../types/DiplomaRetrieve";
+import { createCourseSimple } from "./createCourseSimple";
+import { createLanguageEnum } from "./createLanguageEnum";
+import { createUserSafe } from "./createUserSafe";
 import { faker } from "@faker-js/faker";
 
 export function createDiplomaRetrieve(data?: Partial<DiplomaRetrieve>): DiplomaRetrieve {

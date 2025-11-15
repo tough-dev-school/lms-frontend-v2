@@ -5,12 +5,12 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { HomeworkAnswersRetrieveQueryResponse, HomeworkAnswersRetrievePathParams } from "../types/HomeworkAnswersRetrieve.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { HomeworkAnswersRetrieveQueryResponse, HomeworkAnswersRetrievePathParams } from "../types/HomeworkAnswersRetrieve";
 import type { QueryKey, QueryClient, QueryObserverOptions, UseQueryReturnType } from "@tanstack/vue-query";
 import type { MaybeRefOrGetter } from "vue";
-import { homeworkAnswersRetrieve } from "../clients/homeworkAnswersRetrieve.ts";
+import { homeworkAnswersRetrieve } from "../clients/homeworkAnswersRetrieve";
 import { queryOptions, useQuery } from "@tanstack/vue-query";
 import { toValue } from "vue";
 

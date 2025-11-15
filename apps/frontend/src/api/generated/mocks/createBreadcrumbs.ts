@@ -5,10 +5,10 @@
 * Do not edit manually.
 */
 
-import type { Breadcrumbs } from "../types/Breadcrumbs.ts";
-import { createLessonPlain } from "./createLessonPlain.ts";
-import { createLMSCourse } from "./createLMSCourse.ts";
-import { createModule } from "./createModule.ts";
+import type { Breadcrumbs } from "../types/Breadcrumbs";
+import { createLessonPlain } from "./createLessonPlain";
+import { createLMSCourse } from "./createLMSCourse";
+import { createModule } from "./createModule";
 import { faker } from "@faker-js/faker";
 
 export function createBreadcrumbs(data?: Partial<Breadcrumbs>): Breadcrumbs {

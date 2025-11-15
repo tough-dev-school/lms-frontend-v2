@@ -5,12 +5,12 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { CoursesPromocodeRetrieveQueryResponse, CoursesPromocodeRetrievePathParams, CoursesPromocodeRetrieveQueryParams } from "../types/CoursesPromocodeRetrieve.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { CoursesPromocodeRetrieveQueryResponse, CoursesPromocodeRetrievePathParams, CoursesPromocodeRetrieveQueryParams } from "../types/CoursesPromocodeRetrieve";
 import type { QueryKey, QueryClient, QueryObserverOptions, UseQueryReturnType } from "@tanstack/vue-query";
 import type { MaybeRefOrGetter } from "vue";
-import { coursesPromocodeRetrieve } from "../clients/coursesPromocodeRetrieve.ts";
+import { coursesPromocodeRetrieve } from "../clients/coursesPromocodeRetrieve";
 import { queryOptions, useQuery } from "@tanstack/vue-query";
 import { toValue } from "vue";
 

@@ -5,10 +5,10 @@
 * Do not edit manually.
 */
 
-import type { Call } from "./Call.ts";
-import type { HomeworkStats } from "./HomeworkStats.ts";
-import type { NotionMaterial } from "./NotionMaterial.ts";
-import type { Question } from "./Question.ts";
+import type { Call } from "./Call";
+import type { HomeworkStats } from "./HomeworkStats";
+import type { NotionMaterial } from "./NotionMaterial";
+import type { Question } from "./Question";
 
 /**
  * @description Serialize lesson for the user, lesson should be annotated with crosschecks stats

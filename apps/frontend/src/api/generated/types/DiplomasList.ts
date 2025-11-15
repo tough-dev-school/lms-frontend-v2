@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { PaginatedDiplomaList } from "./PaginatedDiplomaList.ts";
+import type { PaginatedDiplomaList } from "./PaginatedDiplomaList";
 
 export type DiplomasListQueryParams = {
     /**

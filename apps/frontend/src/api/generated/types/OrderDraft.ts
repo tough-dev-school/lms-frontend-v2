@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { CourseSimple } from "./CourseSimple.ts";
-import type { Price } from "./Price.ts";
+import type { CourseSimple } from "./CourseSimple";
+import type { Price } from "./Price";
 
 export type OrderDraft = {
     /**

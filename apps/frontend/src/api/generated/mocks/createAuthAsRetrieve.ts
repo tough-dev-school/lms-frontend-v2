@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { AuthAsRetrievePathParams, AuthAsRetrieveQueryResponse } from "../types/AuthAsRetrieve.ts";
-import { createToken } from "./createToken.ts";
+import type { AuthAsRetrievePathParams, AuthAsRetrieveQueryResponse } from "../types/AuthAsRetrieve";
+import { createToken } from "./createToken";
 import { faker } from "@faker-js/faker";
 
 export function createAuthAsRetrievePathParams(data?: Partial<AuthAsRetrievePathParams>): AuthAsRetrievePathParams {

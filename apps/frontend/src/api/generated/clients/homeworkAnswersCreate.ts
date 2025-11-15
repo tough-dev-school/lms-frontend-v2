@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { HomeworkAnswersCreateMutationRequest, HomeworkAnswersCreateMutationResponse } from "../types/HomeworkAnswersCreate.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { HomeworkAnswersCreateMutationRequest, HomeworkAnswersCreateMutationResponse } from "../types/HomeworkAnswersCreate";
 
 function getHomeworkAnswersCreateUrl() {
   const res = { method: 'POST', url: `/api/v2/homework/answers/` as const }  

@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { CoursesPurchaseCreatePathParams, CoursesPurchaseCreateMutationResponse } from "../types/CoursesPurchaseCreate.ts";
-import { createPurchase } from "./createPurchase.ts";
+import type { CoursesPurchaseCreatePathParams, CoursesPurchaseCreateMutationResponse } from "../types/CoursesPurchaseCreate";
+import { createPurchase } from "./createPurchase";
 import { faker } from "@faker-js/faker";
 
 export function createCoursesPurchaseCreatePathParams(data?: Partial<CoursesPurchaseCreatePathParams>): CoursesPurchaseCreatePathParams {

@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { PaginatedLessonList } from "./PaginatedLessonList.ts";
+import type { PaginatedLessonList } from "./PaginatedLessonList";
 
 export type LmsLessonsListQueryParams = {
     /**

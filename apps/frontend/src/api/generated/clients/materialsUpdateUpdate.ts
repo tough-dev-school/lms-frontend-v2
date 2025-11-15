@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { MaterialsUpdateUpdateMutationResponse, MaterialsUpdateUpdatePathParams } from "../types/MaterialsUpdateUpdate.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { MaterialsUpdateUpdateMutationResponse, MaterialsUpdateUpdatePathParams } from "../types/MaterialsUpdateUpdate";
 
 function getMaterialsUpdateUpdateUrl(page_id: MaterialsUpdateUpdatePathParams["page_id"]) {
   const res = { method: 'PUT', url: `/api/v2/materials/${page_id}/update/` as const }  

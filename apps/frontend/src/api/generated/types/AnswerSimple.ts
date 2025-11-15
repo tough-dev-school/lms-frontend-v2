@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { Question } from "./Question.ts";
-import type { UserSafe } from "./UserSafe.ts";
+import type { Question } from "./Question";
+import type { UserSafe } from "./UserSafe";
 
 export type AnswerSimple = {
     /**

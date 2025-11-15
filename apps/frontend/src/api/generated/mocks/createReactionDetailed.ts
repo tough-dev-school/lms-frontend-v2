@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { ReactionDetailed } from "../types/ReactionDetailed.ts";
-import { createUserSafe } from "./createUserSafe.ts";
+import type { ReactionDetailed } from "../types/ReactionDetailed";
+import { createUserSafe } from "./createUserSafe";
 import { faker } from "@faker-js/faker";
 
 export function createReactionDetailed(data?: Partial<ReactionDetailed>): ReactionDetailed {

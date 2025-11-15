@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { MaterialSerilizer } from "./MaterialSerilizer.ts";
+import type { MaterialSerilizer } from "./MaterialSerilizer";
 
 export type MaterialsRetrievePathParams = {
     /**

@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { PasswordResetConfirm } from "./PasswordResetConfirm.ts";
-import type { RestAuthDetail } from "./RestAuthDetail.ts";
+import type { PasswordResetConfirm } from "./PasswordResetConfirm";
+import type { RestAuthDetail } from "./RestAuthDetail";
 
 export type AuthPasswordResetConfirmCreate200 = RestAuthDetail;
 

@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { Token } from "./Token.ts";
+import type { Token } from "./Token";
 
 export type AuthAsRetrievePathParams = {
     /**

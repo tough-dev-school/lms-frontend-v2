@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { CourseGroupsCoursesListQueryResponse, CourseGroupsCoursesListPathParams, CourseGroupsCoursesListQueryParams } from "../types/CourseGroupsCoursesList.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { CourseGroupsCoursesListQueryResponse, CourseGroupsCoursesListPathParams, CourseGroupsCoursesListQueryParams } from "../types/CourseGroupsCoursesList";
 
 function getCourseGroupsCoursesListUrl(slug: CourseGroupsCoursesListPathParams["slug"]) {
   const res = { method: 'GET', url: `/api/v2/course-groups/${slug}/courses/` as const }  

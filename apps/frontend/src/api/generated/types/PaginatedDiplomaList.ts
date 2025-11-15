@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { Diploma } from "./Diploma.ts";
+import type { Diploma } from "./Diploma";
 
 export type PaginatedDiplomaList = {
     /**

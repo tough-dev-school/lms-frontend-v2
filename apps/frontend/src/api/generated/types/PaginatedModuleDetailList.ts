@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { ModuleDetail } from "./ModuleDetail.ts";
+import type { ModuleDetail } from "./ModuleDetail";
 
 export type PaginatedModuleDetailList = {
     /**

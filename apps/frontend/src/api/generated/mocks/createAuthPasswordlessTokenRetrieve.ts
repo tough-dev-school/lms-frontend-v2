@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { AuthPasswordlessTokenRetrievePathParams, AuthPasswordlessTokenRetrieveQueryResponse } from "../types/AuthPasswordlessTokenRetrieve.ts";
-import { createToken } from "./createToken.ts";
+import type { AuthPasswordlessTokenRetrievePathParams, AuthPasswordlessTokenRetrieveQueryResponse } from "../types/AuthPasswordlessTokenRetrieve";
+import { createToken } from "./createToken";
 import { faker } from "@faker-js/faker";
 
 export function createAuthPasswordlessTokenRetrievePathParams(data?: Partial<AuthPasswordlessTokenRetrievePathParams>): AuthPasswordlessTokenRetrievePathParams {

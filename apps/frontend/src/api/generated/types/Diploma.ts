@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import type { CourseSimple } from "./CourseSimple.ts";
-import type { LanguageEnum } from "./LanguageEnum.ts";
-import type { UserSafe } from "./UserSafe.ts";
+import type { CourseSimple } from "./CourseSimple";
+import type { LanguageEnum } from "./LanguageEnum";
+import type { UserSafe } from "./UserSafe";
 
 export type Diploma = {
     /**

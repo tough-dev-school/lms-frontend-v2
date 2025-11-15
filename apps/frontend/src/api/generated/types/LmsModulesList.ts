@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { PaginatedModuleDetailList } from "./PaginatedModuleDetailList.ts";
+import type { PaginatedModuleDetailList } from "./PaginatedModuleDetailList";
 
 export type LmsModulesListQueryParams = {
     /**

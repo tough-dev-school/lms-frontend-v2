@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { LessonPlain } from "../types/LessonPlain.ts";
+import type { LessonPlain } from "../types/LessonPlain";
 import { faker } from "@faker-js/faker";
 
 export function createLessonPlain(data?: Partial<LessonPlain>): LessonPlain {

@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { HomeworkQuestionsRetrieveQueryResponse, HomeworkQuestionsRetrievePathParams } from "../types/HomeworkQuestionsRetrieve.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { HomeworkQuestionsRetrieveQueryResponse, HomeworkQuestionsRetrievePathParams } from "../types/HomeworkQuestionsRetrieve";
 
 function getHomeworkQuestionsRetrieveUrl(slug: HomeworkQuestionsRetrievePathParams["slug"]) {
   const res = { method: 'GET', url: `/api/v2/homework/questions/${slug}/` as const }  

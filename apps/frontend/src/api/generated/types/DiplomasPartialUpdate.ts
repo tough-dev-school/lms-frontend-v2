@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { Diploma } from "./Diploma.ts";
-import type { PatchedDiploma } from "./PatchedDiploma.ts";
+import type { Diploma } from "./Diploma";
+import type { PatchedDiploma } from "./PatchedDiploma";
 
 export type DiplomasPartialUpdatePathParams = {
     /**

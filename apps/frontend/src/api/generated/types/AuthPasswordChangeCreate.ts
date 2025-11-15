@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { PasswordChange } from "./PasswordChange.ts";
-import type { RestAuthDetail } from "./RestAuthDetail.ts";
+import type { PasswordChange } from "./PasswordChange";
+import type { RestAuthDetail } from "./RestAuthDetail";
 
 export type AuthPasswordChangeCreate200 = RestAuthDetail;
 

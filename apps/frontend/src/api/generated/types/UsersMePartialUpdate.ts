@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { PatchedUser } from "./PatchedUser.ts";
-import type { User } from "./User.ts";
+import type { PatchedUser } from "./PatchedUser";
+import type { User } from "./User";
 
 export type UsersMePartialUpdate200 = User;
 

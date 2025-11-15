@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { UserSafe } from "./UserSafe.ts";
+import type { UserSafe } from "./UserSafe";
 
 export type ReactionDetailed = {
     /**

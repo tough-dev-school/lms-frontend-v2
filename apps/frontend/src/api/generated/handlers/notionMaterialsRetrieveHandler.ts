@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { NotionMaterialsRetrieveQueryResponse } from "../types/NotionMaterialsRetrieve.ts";
+import type { NotionMaterialsRetrieveQueryResponse } from "../types/NotionMaterialsRetrieve";
 import { http } from "msw";
 
 export function notionMaterialsRetrieveHandlerResponse200(data?: NotionMaterialsRetrieveQueryResponse) {

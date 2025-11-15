@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import type { User } from "../types/User.ts";
-import { createBlankEnum } from "./createBlankEnum.ts";
-import { createGenderEnum } from "./createGenderEnum.ts";
+import type { User } from "../types/User";
+import { createBlankEnum } from "./createBlankEnum";
+import { createGenderEnum } from "./createGenderEnum";
 import { faker } from "@faker-js/faker";
 
 export function createUser(data?: Partial<User>): User {

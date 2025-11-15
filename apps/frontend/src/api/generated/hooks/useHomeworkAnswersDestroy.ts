@@ -5,12 +5,12 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { HomeworkAnswersDestroyMutationResponse, HomeworkAnswersDestroyPathParams } from "../types/HomeworkAnswersDestroy.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { HomeworkAnswersDestroyMutationResponse, HomeworkAnswersDestroyPathParams } from "../types/HomeworkAnswersDestroy";
 import type { MutationObserverOptions, QueryClient } from "@tanstack/vue-query";
 import type { MaybeRefOrGetter } from "vue";
-import { homeworkAnswersDestroy } from "../clients/homeworkAnswersDestroy.ts";
+import { homeworkAnswersDestroy } from "../clients/homeworkAnswersDestroy";
 import { useMutation } from "@tanstack/vue-query";
 
 export const homeworkAnswersDestroyMutationKey = () => [{ url: '/api/v2/homework/answers/:slug/' }] as const

@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { JSONWebToken } from "./JSONWebToken.ts";
+import type { JSONWebToken } from "./JSONWebToken";
 
 export type AuthTokenCreate200 = Omit<NonNullable<JSONWebToken>, "password" | "username">;
 

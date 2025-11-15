@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { LanguageEnum } from "./LanguageEnum.ts";
+import type { LanguageEnum } from "./LanguageEnum";
 
 export type DiplomaCreate = {
     /**

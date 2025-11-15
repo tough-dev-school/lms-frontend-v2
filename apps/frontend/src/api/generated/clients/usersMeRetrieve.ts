@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { UsersMeRetrieveQueryResponse } from "../types/UsersMeRetrieve.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { UsersMeRetrieveQueryResponse } from "../types/UsersMeRetrieve";
 
 function getUsersMeRetrieveUrl() {
   const res = { method: 'GET', url: `/api/v2/users/me/` as const }  

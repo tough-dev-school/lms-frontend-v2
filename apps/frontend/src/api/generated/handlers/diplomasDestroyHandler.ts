@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { DiplomasDestroyMutationResponse } from "../types/DiplomasDestroy.ts";
+import type { DiplomasDestroyMutationResponse } from "../types/DiplomasDestroy";
 import { http } from "msw";
 
 export function diplomasDestroyHandlerResponse204(data?: DiplomasDestroyMutationResponse) {

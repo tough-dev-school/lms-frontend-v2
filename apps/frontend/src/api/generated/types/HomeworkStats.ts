@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import type { CommentStats } from "./CommentStats.ts";
-import type { CrossCheckStats } from "./CrossCheckStats.ts";
-import type { TemporarySoonToBeDepricatedQuestion } from "./TemporarySoonToBeDepricatedQuestion.ts";
+import type { CommentStats } from "./CommentStats";
+import type { CrossCheckStats } from "./CrossCheckStats";
+import type { TemporarySoonToBeDepricatedQuestion } from "./TemporarySoonToBeDepricatedQuestion";
 
 /**
  * @description Requires *any* model annotaded with statistics. For annotation examples check homework.QuestionQuerySet

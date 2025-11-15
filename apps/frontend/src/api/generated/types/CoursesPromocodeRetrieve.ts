@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { Price } from "./Price.ts";
+import type { Price } from "./Price";
 
 export type CoursesPromocodeRetrievePathParams = {
     /**

@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { CrossCheckStats } from "../types/CrossCheckStats.ts";
+import type { CrossCheckStats } from "../types/CrossCheckStats";
 import { faker } from "@faker-js/faker";
 
 export function createCrossCheckStats(data?: Partial<CrossCheckStats>): CrossCheckStats {

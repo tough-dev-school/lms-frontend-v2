@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { UsersMePartialUpdateMutationResponse } from "../types/UsersMePartialUpdate.ts";
+import type { UsersMePartialUpdateMutationResponse } from "../types/UsersMePartialUpdate";
 import { http } from "msw";
 
 export function usersMePartialUpdateHandlerResponse200(data: UsersMePartialUpdateMutationResponse) {

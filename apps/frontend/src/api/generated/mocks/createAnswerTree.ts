@@ -5,10 +5,10 @@
 * Do not edit manually.
 */
 
-import type { AnswerTree } from "../types/AnswerTree.ts";
-import { createAnswer } from "./createAnswer.ts";
-import { createReactionDetailed } from "./createReactionDetailed.ts";
-import { createUserSafe } from "./createUserSafe.ts";
+import type { AnswerTree } from "../types/AnswerTree";
+import { createAnswer } from "./createAnswer";
+import { createReactionDetailed } from "./createReactionDetailed";
+import { createUserSafe } from "./createUserSafe";
 import { faker } from "@faker-js/faker";
 
 export function createAnswerTree(data?: Partial<AnswerTree>): AnswerTree {

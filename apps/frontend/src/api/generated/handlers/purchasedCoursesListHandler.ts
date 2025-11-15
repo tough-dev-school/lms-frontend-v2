@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { PurchasedCoursesListQueryResponse } from "../types/PurchasedCoursesList.ts";
+import type { PurchasedCoursesListQueryResponse } from "../types/PurchasedCoursesList";
 import { http } from "msw";
 
 export function purchasedCoursesListHandlerResponse200(data: PurchasedCoursesListQueryResponse) {

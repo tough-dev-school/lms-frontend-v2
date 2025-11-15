@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { DiplomaCreate } from "./DiplomaCreate.ts";
+import type { DiplomaCreate } from "./DiplomaCreate";
 
 export type DiplomasCreate201 = DiplomaCreate;
 

@@ -5,12 +5,12 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { LmsLessonsListQueryResponse, LmsLessonsListQueryParams } from "../types/LmsLessonsList.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { LmsLessonsListQueryResponse, LmsLessonsListQueryParams } from "../types/LmsLessonsList";
 import type { QueryKey, QueryClient, QueryObserverOptions, UseQueryReturnType } from "@tanstack/vue-query";
 import type { MaybeRefOrGetter } from "vue";
-import { lmsLessonsList } from "../clients/lmsLessonsList.ts";
+import { lmsLessonsList } from "../clients/lmsLessonsList";
 import { queryOptions, useQuery } from "@tanstack/vue-query";
 import { toValue } from "vue";
 

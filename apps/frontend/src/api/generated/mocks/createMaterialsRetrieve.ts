@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { MaterialsRetrievePathParams, MaterialsRetrieveQueryResponse } from "../types/MaterialsRetrieve.ts";
-import { createMaterialSerilizer } from "./createMaterialSerilizer.ts";
+import type { MaterialsRetrievePathParams, MaterialsRetrieveQueryResponse } from "../types/MaterialsRetrieve";
+import { createMaterialSerilizer } from "./createMaterialSerilizer";
 import { faker } from "@faker-js/faker";
 
 export function createMaterialsRetrievePathParams(data?: Partial<MaterialsRetrievePathParams>): MaterialsRetrievePathParams {

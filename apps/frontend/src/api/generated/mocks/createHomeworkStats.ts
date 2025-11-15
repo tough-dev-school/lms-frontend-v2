@@ -5,10 +5,10 @@
 * Do not edit manually.
 */
 
-import type { HomeworkStats } from "../types/HomeworkStats.ts";
-import { createCommentStats } from "./createCommentStats.ts";
-import { createCrossCheckStats } from "./createCrossCheckStats.ts";
-import { createTemporarySoonToBeDepricatedQuestion } from "./createTemporarySoonToBeDepricatedQuestion.ts";
+import type { HomeworkStats } from "../types/HomeworkStats";
+import { createCommentStats } from "./createCommentStats";
+import { createCrossCheckStats } from "./createCrossCheckStats";
+import { createTemporarySoonToBeDepricatedQuestion } from "./createTemporarySoonToBeDepricatedQuestion";
 import { faker } from "@faker-js/faker";
 
 /**

@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { AuthAsRetrieveQueryResponse } from "../types/AuthAsRetrieve.ts";
+import type { AuthAsRetrieveQueryResponse } from "../types/AuthAsRetrieve";
 import { http } from "msw";
 
 export function authAsRetrieveHandlerResponse200(data: AuthAsRetrieveQueryResponse) {

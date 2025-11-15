@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { Purchase } from "./Purchase.ts";
+import type { Purchase } from "./Purchase";
 
 export type CoursesPurchaseCreatePathParams = {
     /**

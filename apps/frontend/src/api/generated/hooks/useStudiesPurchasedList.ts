@@ -5,12 +5,12 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { StudiesPurchasedListQueryResponse, StudiesPurchasedListQueryParams } from "../types/StudiesPurchasedList.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { StudiesPurchasedListQueryResponse, StudiesPurchasedListQueryParams } from "../types/StudiesPurchasedList";
 import type { QueryKey, QueryClient, QueryObserverOptions, UseQueryReturnType } from "@tanstack/vue-query";
 import type { MaybeRefOrGetter } from "vue";
-import { studiesPurchasedList } from "../clients/studiesPurchasedList.ts";
+import { studiesPurchasedList } from "../clients/studiesPurchasedList";
 import { queryOptions, useQuery } from "@tanstack/vue-query";
 import { toValue } from "vue";
 

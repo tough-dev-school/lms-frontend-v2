@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { VideoProvider } from "../types/VideoProvider.ts";
+import type { VideoProvider } from "../types/VideoProvider";
 import { faker } from "@faker-js/faker";
 
 export function createVideoProvider(data?: Partial<VideoProvider>): VideoProvider {

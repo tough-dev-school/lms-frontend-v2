@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { CourseGroupsCoursesListPathParams, CourseGroupsCoursesListQueryParams, CourseGroupsCoursesList200, CourseGroupsCoursesListQueryResponse } from "../types/CourseGroupsCoursesList.ts";
-import { createCourseWithPrice } from "./createCourseWithPrice.ts";
+import type { CourseGroupsCoursesListPathParams, CourseGroupsCoursesListQueryParams, CourseGroupsCoursesList200, CourseGroupsCoursesListQueryResponse } from "../types/CourseGroupsCoursesList";
+import { createCourseWithPrice } from "./createCourseWithPrice";
 import { faker } from "@faker-js/faker";
 
 export function createCourseGroupsCoursesListPathParams(data?: Partial<CourseGroupsCoursesListPathParams>): CourseGroupsCoursesListPathParams {

@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { CourseSimple } from "../types/CourseSimple.ts";
+import type { CourseSimple } from "../types/CourseSimple";
 import { faker } from "@faker-js/faker";
 
 export function createCourseSimple(data?: Partial<CourseSimple>): CourseSimple {

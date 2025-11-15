@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { AnswerImage } from "./AnswerImage.ts";
+import type { AnswerImage } from "./AnswerImage";
 
 export type HomeworkAnswersImageCreate201 = AnswerImage;
 

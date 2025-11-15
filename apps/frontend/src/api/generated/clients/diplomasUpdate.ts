@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { DiplomasUpdateMutationRequest, DiplomasUpdateMutationResponse, DiplomasUpdatePathParams } from "../types/DiplomasUpdate.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { DiplomasUpdateMutationRequest, DiplomasUpdateMutationResponse, DiplomasUpdatePathParams } from "../types/DiplomasUpdate";
 
 function getDiplomasUpdateUrl(slug: DiplomasUpdatePathParams["slug"]) {
   const res = { method: 'PUT', url: `/api/v2/diplomas/${slug}/` as const }  

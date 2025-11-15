@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { CoursesPromocodeRetrievePathParams, CoursesPromocodeRetrieveQueryParams, CoursesPromocodeRetrieveQueryResponse } from "../types/CoursesPromocodeRetrieve.ts";
-import { createPrice } from "./createPrice.ts";
+import type { CoursesPromocodeRetrievePathParams, CoursesPromocodeRetrieveQueryParams, CoursesPromocodeRetrieveQueryResponse } from "../types/CoursesPromocodeRetrieve";
+import { createPrice } from "./createPrice";
 import { faker } from "@faker-js/faker";
 
 export function createCoursesPromocodeRetrievePathParams(data?: Partial<CoursesPromocodeRetrievePathParams>): CoursesPromocodeRetrievePathParams {

@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { DiplomasRetrievePathParams, DiplomasRetrieveQueryResponse } from "../types/DiplomasRetrieve.ts";
-import { createDiplomaRetrieve } from "./createDiplomaRetrieve.ts";
+import type { DiplomasRetrievePathParams, DiplomasRetrieveQueryResponse } from "../types/DiplomasRetrieve";
+import { createDiplomaRetrieve } from "./createDiplomaRetrieve";
 import { faker } from "@faker-js/faker";
 
 export function createDiplomasRetrievePathParams(data?: Partial<DiplomasRetrievePathParams>): DiplomasRetrievePathParams {

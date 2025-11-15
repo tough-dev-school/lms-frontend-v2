@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { LmsLessonsListQueryParams, LmsLessonsListQueryResponse } from "../types/LmsLessonsList.ts";
-import { createPaginatedLessonList } from "./createPaginatedLessonList.ts";
+import type { LmsLessonsListQueryParams, LmsLessonsListQueryResponse } from "../types/LmsLessonsList";
+import { createPaginatedLessonList } from "./createPaginatedLessonList";
 import { faker } from "@faker-js/faker";
 
 export function createLmsLessonsListQueryParams(data?: Partial<LmsLessonsListQueryParams>): LmsLessonsListQueryParams {

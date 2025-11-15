@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { AuthTokenCreateMutationResponse } from "../types/AuthTokenCreate.ts";
+import type { AuthTokenCreateMutationResponse } from "../types/AuthTokenCreate";
 import { http } from "msw";
 
 export function authTokenCreateHandlerResponse200(data: AuthTokenCreateMutationResponse) {

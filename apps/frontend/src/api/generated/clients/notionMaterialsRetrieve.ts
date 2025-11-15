@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { NotionMaterialsRetrieveQueryResponse, NotionMaterialsRetrievePathParams } from "../types/NotionMaterialsRetrieve.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { NotionMaterialsRetrieveQueryResponse, NotionMaterialsRetrievePathParams } from "../types/NotionMaterialsRetrieve";
 
 function getNotionMaterialsRetrieveUrl(page_id: NotionMaterialsRetrievePathParams["page_id"]) {
   const res = { method: 'GET', url: `/api/v2/notion/materials/${page_id}/` as const }  

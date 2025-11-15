@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { PaginatedCourseList } from "../types/PaginatedCourseList.ts";
-import { createCourse } from "./createCourse.ts";
+import type { PaginatedCourseList } from "../types/PaginatedCourseList";
+import { createCourse } from "./createCourse";
 import { faker } from "@faker-js/faker";
 
 export function createPaginatedCourseList(data?: Partial<PaginatedCourseList>): PaginatedCourseList {

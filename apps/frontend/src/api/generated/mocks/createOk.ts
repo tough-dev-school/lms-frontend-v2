@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { Ok } from "../types/Ok.ts";
+import type { Ok } from "../types/Ok";
 import { faker } from "@faker-js/faker";
 
 export function createOk(data?: Partial<Ok>): Ok {

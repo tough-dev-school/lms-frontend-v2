@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { PaginatedAnswerList } from "../types/PaginatedAnswerList.ts";
-import { createAnswer } from "./createAnswer.ts";
+import type { PaginatedAnswerList } from "../types/PaginatedAnswerList";
+import { createAnswer } from "./createAnswer";
 import { faker } from "@faker-js/faker";
 
 export function createPaginatedAnswerList(data?: Partial<PaginatedAnswerList>): PaginatedAnswerList {

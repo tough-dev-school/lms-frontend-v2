@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { DiplomasCreateMutationResponse } from "../types/DiplomasCreate.ts";
-import { createDiplomaCreate } from "./createDiplomaCreate.ts";
+import type { DiplomasCreateMutationResponse } from "../types/DiplomasCreate";
+import { createDiplomaCreate } from "./createDiplomaCreate";
 import { faker } from "@faker-js/faker";
 
 export function createDiplomasCreate201() {

@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { Ok } from "./Ok.ts";
+import type { Ok } from "./Ok";
 
 export type AuthPasswordlessTokenRequestRetrievePathParams = {
     /**

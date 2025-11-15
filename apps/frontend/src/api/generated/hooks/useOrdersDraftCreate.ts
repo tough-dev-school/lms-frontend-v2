@@ -5,12 +5,12 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { OrdersDraftCreateMutationRequest, OrdersDraftCreateMutationResponse } from "../types/OrdersDraftCreate.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { OrdersDraftCreateMutationRequest, OrdersDraftCreateMutationResponse } from "../types/OrdersDraftCreate";
 import type { MutationObserverOptions, QueryClient } from "@tanstack/vue-query";
 import type { MaybeRefOrGetter } from "vue";
-import { ordersDraftCreate } from "../clients/ordersDraftCreate.ts";
+import { ordersDraftCreate } from "../clients/ordersDraftCreate";
 import { useMutation } from "@tanstack/vue-query";
 
 export const ordersDraftCreateMutationKey = () => [{ url: '/api/v2/orders/draft/' }] as const

@@ -5,12 +5,12 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { DiplomasCreateMutationRequest, DiplomasCreateMutationResponse } from "../types/DiplomasCreate.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { DiplomasCreateMutationRequest, DiplomasCreateMutationResponse } from "../types/DiplomasCreate";
 import type { MutationObserverOptions, QueryClient } from "@tanstack/vue-query";
 import type { MaybeRefOrGetter } from "vue";
-import { diplomasCreate } from "../clients/diplomasCreate.ts";
+import { diplomasCreate } from "../clients/diplomasCreate";
 import { useMutation } from "@tanstack/vue-query";
 
 export const diplomasCreateMutationKey = () => [{ url: '/api/v2/diplomas/' }] as const

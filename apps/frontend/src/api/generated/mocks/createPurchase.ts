@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { Purchase } from "../types/Purchase.ts";
-import { createDesiredBankEnum } from "./createDesiredBankEnum.ts";
+import type { Purchase } from "../types/Purchase";
+import { createDesiredBankEnum } from "./createDesiredBankEnum";
 import { faker } from "@faker-js/faker";
 
 export function createPurchase(data?: Partial<Purchase>): Purchase {

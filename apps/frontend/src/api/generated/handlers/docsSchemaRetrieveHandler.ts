@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { DocsSchemaRetrieveQueryResponse } from "../types/DocsSchemaRetrieve.ts";
+import type { DocsSchemaRetrieveQueryResponse } from "../types/DocsSchemaRetrieve";
 import { http } from "msw";
 
 export function docsSchemaRetrieveHandlerResponse200(data: DocsSchemaRetrieveQueryResponse) {

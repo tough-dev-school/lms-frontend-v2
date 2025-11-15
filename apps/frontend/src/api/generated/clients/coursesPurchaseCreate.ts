@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { CoursesPurchaseCreateMutationRequest, CoursesPurchaseCreateMutationResponse, CoursesPurchaseCreatePathParams } from "../types/CoursesPurchaseCreate.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { CoursesPurchaseCreateMutationRequest, CoursesPurchaseCreateMutationResponse, CoursesPurchaseCreatePathParams } from "../types/CoursesPurchaseCreate";
 
 function getCoursesPurchaseCreateUrl(slug: CoursesPurchaseCreatePathParams["slug"]) {
   const res = { method: 'POST', url: `/api/v2/courses/${slug}/purchase/` as const }  

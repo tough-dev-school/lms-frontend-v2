@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { HomeworkAnswersUpdateMutationResponse } from "../types/HomeworkAnswersUpdate.ts";
+import type { HomeworkAnswersUpdateMutationResponse } from "../types/HomeworkAnswersUpdate";
 import { http } from "msw";
 
 export function homeworkAnswersUpdateHandlerResponse200(data: HomeworkAnswersUpdateMutationResponse) {

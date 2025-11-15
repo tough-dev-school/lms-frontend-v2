@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { LanguageEnum } from "../types/LanguageEnum.ts";
+import type { LanguageEnum } from "../types/LanguageEnum";
 import { faker } from "@faker-js/faker";
 
 /**

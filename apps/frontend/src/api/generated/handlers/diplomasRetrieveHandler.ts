@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { DiplomasRetrieveQueryResponse } from "../types/DiplomasRetrieve.ts";
+import type { DiplomasRetrieveQueryResponse } from "../types/DiplomasRetrieve";
 import { http } from "msw";
 
 export function diplomasRetrieveHandlerResponse200(data: DiplomasRetrieveQueryResponse) {

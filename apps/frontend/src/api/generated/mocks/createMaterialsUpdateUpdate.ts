@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { MaterialsUpdateUpdatePathParams, MaterialsUpdateUpdateMutationResponse } from "../types/MaterialsUpdateUpdate.ts";
+import type { MaterialsUpdateUpdatePathParams, MaterialsUpdateUpdateMutationResponse } from "../types/MaterialsUpdateUpdate";
 import { faker } from "@faker-js/faker";
 
 export function createMaterialsUpdateUpdatePathParams(data?: Partial<MaterialsUpdateUpdatePathParams>): MaterialsUpdateUpdatePathParams {

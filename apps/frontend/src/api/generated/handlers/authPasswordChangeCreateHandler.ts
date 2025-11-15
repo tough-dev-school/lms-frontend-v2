@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { AuthPasswordChangeCreateMutationResponse } from "../types/AuthPasswordChangeCreate.ts";
+import type { AuthPasswordChangeCreateMutationResponse } from "../types/AuthPasswordChangeCreate";
 import { http } from "msw";
 
 export function authPasswordChangeCreateHandlerResponse200(data: AuthPasswordChangeCreateMutationResponse) {

@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { DesiredBankEnum } from "../types/DesiredBankEnum.ts";
+import type { DesiredBankEnum } from "../types/DesiredBankEnum";
 import { faker } from "@faker-js/faker";
 
 /**

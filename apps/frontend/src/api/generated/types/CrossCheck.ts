@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { AnswerSimple } from "./AnswerSimple.ts";
+import type { AnswerSimple } from "./AnswerSimple";
 
 export type CrossCheck = {
     /**

@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { Course } from "./Course.ts";
+import type { Course } from "./Course";
 
 export type PaginatedCourseList = {
     /**

@@ -5,10 +5,10 @@
 * Do not edit manually.
 */
 
-import type { QuestionDetail } from "../types/QuestionDetail.ts";
-import { createBreadcrumbs } from "./createBreadcrumbs.ts";
-import { createHomeworkStats } from "./createHomeworkStats.ts";
-import { createQuestionCourse } from "./createQuestionCourse.ts";
+import type { QuestionDetail } from "../types/QuestionDetail";
+import { createBreadcrumbs } from "./createBreadcrumbs";
+import { createHomeworkStats } from "./createHomeworkStats";
+import { createQuestionCourse } from "./createQuestionCourse";
 import { faker } from "@faker-js/faker";
 
 export function createQuestionDetail(data?: Partial<QuestionDetail>): QuestionDetail {

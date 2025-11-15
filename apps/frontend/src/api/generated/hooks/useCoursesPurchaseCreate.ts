@@ -5,12 +5,12 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { CoursesPurchaseCreateMutationRequest, CoursesPurchaseCreateMutationResponse, CoursesPurchaseCreatePathParams } from "../types/CoursesPurchaseCreate.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { CoursesPurchaseCreateMutationRequest, CoursesPurchaseCreateMutationResponse, CoursesPurchaseCreatePathParams } from "../types/CoursesPurchaseCreate";
 import type { MutationObserverOptions, QueryClient } from "@tanstack/vue-query";
 import type { MaybeRefOrGetter } from "vue";
-import { coursesPurchaseCreate } from "../clients/coursesPurchaseCreate.ts";
+import { coursesPurchaseCreate } from "../clients/coursesPurchaseCreate";
 import { useMutation } from "@tanstack/vue-query";
 
 export const coursesPurchaseCreateMutationKey = () => [{ url: '/api/v2/courses/:slug/purchase/' }] as const

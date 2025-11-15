@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { AnswerCreate } from "./AnswerCreate.ts";
-import type { AnswerTree } from "./AnswerTree.ts";
+import type { AnswerCreate } from "./AnswerCreate";
+import type { AnswerTree } from "./AnswerTree";
 
 export type HomeworkAnswersCreate201 = AnswerTree;
 

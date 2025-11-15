@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { UsersMeRetrieveQueryResponse } from "../types/UsersMeRetrieve.ts";
-import { createUser } from "./createUser.ts";
+import type { UsersMeRetrieveQueryResponse } from "../types/UsersMeRetrieve";
+import { createUser } from "./createUser";
 import { faker } from "@faker-js/faker";
 
 export function createUsersMeRetrieve200() {

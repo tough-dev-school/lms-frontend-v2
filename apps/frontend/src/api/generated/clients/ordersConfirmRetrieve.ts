@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { OrdersConfirmRetrieveQueryResponse, OrdersConfirmRetrievePathParams } from "../types/OrdersConfirmRetrieve.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { OrdersConfirmRetrieveQueryResponse, OrdersConfirmRetrievePathParams } from "../types/OrdersConfirmRetrieve";
 
 function getOrdersConfirmRetrieveUrl(slug: OrdersConfirmRetrievePathParams["slug"]) {
   const res = { method: 'GET', url: `/api/v2/orders/${slug}/confirm/` as const }  

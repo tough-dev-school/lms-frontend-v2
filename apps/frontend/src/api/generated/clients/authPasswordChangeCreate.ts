@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { AuthPasswordChangeCreateMutationRequest, AuthPasswordChangeCreateMutationResponse } from "../types/AuthPasswordChangeCreate.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { AuthPasswordChangeCreateMutationRequest, AuthPasswordChangeCreateMutationResponse } from "../types/AuthPasswordChangeCreate";
 
 function getAuthPasswordChangeCreateUrl() {
   const res = { method: 'POST', url: `/api/v2/auth/password/change/` as const }  

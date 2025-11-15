@@ -5,11 +5,11 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { UsersMeRetrieveQueryResponse } from "../types/UsersMeRetrieve.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { UsersMeRetrieveQueryResponse } from "../types/UsersMeRetrieve";
 import type { QueryKey, QueryClient, QueryObserverOptions, UseQueryReturnType } from "@tanstack/vue-query";
-import { usersMeRetrieve } from "../clients/usersMeRetrieve.ts";
+import { usersMeRetrieve } from "../clients/usersMeRetrieve";
 import { queryOptions, useQuery } from "@tanstack/vue-query";
 import { toValue } from "vue";
 

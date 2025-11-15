@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { LmsModulesRetrieveQueryResponse, LmsModulesRetrievePathParams } from "../types/LmsModulesRetrieve.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { LmsModulesRetrieveQueryResponse, LmsModulesRetrievePathParams } from "../types/LmsModulesRetrieve";
 
 function getLmsModulesRetrieveUrl(id: LmsModulesRetrievePathParams["id"]) {
   const res = { method: 'GET', url: `/api/v2/lms/modules/${id}/` as const }  

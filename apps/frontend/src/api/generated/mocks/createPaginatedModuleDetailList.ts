@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { PaginatedModuleDetailList } from "../types/PaginatedModuleDetailList.ts";
-import { createModuleDetail } from "./createModuleDetail.ts";
+import type { PaginatedModuleDetailList } from "../types/PaginatedModuleDetailList";
+import { createModuleDetail } from "./createModuleDetail";
 import { faker } from "@faker-js/faker";
 
 export function createPaginatedModuleDetailList(data?: Partial<PaginatedModuleDetailList>): PaginatedModuleDetailList {

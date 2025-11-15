@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { MaterialsUpdateUpdateMutationResponse } from "../types/MaterialsUpdateUpdate.ts";
+import type { MaterialsUpdateUpdateMutationResponse } from "../types/MaterialsUpdateUpdate";
 import { http } from "msw";
 
 export function materialsUpdateUpdateHandlerResponse200(data?: MaterialsUpdateUpdateMutationResponse) {

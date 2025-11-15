@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { DiplomasDestroyPathParams, DiplomasDestroyMutationResponse } from "../types/DiplomasDestroy.ts";
+import type { DiplomasDestroyPathParams, DiplomasDestroyMutationResponse } from "../types/DiplomasDestroy";
 import { faker } from "@faker-js/faker";
 
 export function createDiplomasDestroyPathParams(data?: Partial<DiplomasDestroyPathParams>): DiplomasDestroyPathParams {

@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import type { HomeworkAnswersPartialUpdatePathParams, HomeworkAnswersPartialUpdateMutationResponse } from "../types/HomeworkAnswersPartialUpdate.ts";
-import { createAnswerUpdate } from "./createAnswerUpdate.ts";
-import { createPatchedAnswerUpdate } from "./createPatchedAnswerUpdate.ts";
+import type { HomeworkAnswersPartialUpdatePathParams, HomeworkAnswersPartialUpdateMutationResponse } from "../types/HomeworkAnswersPartialUpdate";
+import { createAnswerUpdate } from "./createAnswerUpdate";
+import { createPatchedAnswerUpdate } from "./createPatchedAnswerUpdate";
 import { faker } from "@faker-js/faker";
 
 export function createHomeworkAnswersPartialUpdatePathParams(data?: Partial<HomeworkAnswersPartialUpdatePathParams>): HomeworkAnswersPartialUpdatePathParams {

@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import type { OrderDraft } from "../types/OrderDraft.ts";
-import { createCourseSimple } from "./createCourseSimple.ts";
-import { createPrice } from "./createPrice.ts";
+import type { OrderDraft } from "../types/OrderDraft";
+import { createCourseSimple } from "./createCourseSimple";
+import { createPrice } from "./createPrice";
 import { faker } from "@faker-js/faker";
 
 export function createOrderDraft(data?: Partial<OrderDraft>): OrderDraft {

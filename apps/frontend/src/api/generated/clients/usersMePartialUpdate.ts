@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { UsersMePartialUpdateMutationRequest, UsersMePartialUpdateMutationResponse } from "../types/UsersMePartialUpdate.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { UsersMePartialUpdateMutationRequest, UsersMePartialUpdateMutationResponse } from "../types/UsersMePartialUpdate";
 
 function getUsersMePartialUpdateUrl() {
   const res = { method: 'PATCH', url: `/api/v2/users/me/` as const }  

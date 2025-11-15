@@ -5,12 +5,12 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { AuthPasswordResetConfirmCreateMutationRequest, AuthPasswordResetConfirmCreateMutationResponse } from "../types/AuthPasswordResetConfirmCreate.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { AuthPasswordResetConfirmCreateMutationRequest, AuthPasswordResetConfirmCreateMutationResponse } from "../types/AuthPasswordResetConfirmCreate";
 import type { MutationObserverOptions, QueryClient } from "@tanstack/vue-query";
 import type { MaybeRefOrGetter } from "vue";
-import { authPasswordResetConfirmCreate } from "../clients/authPasswordResetConfirmCreate.ts";
+import { authPasswordResetConfirmCreate } from "../clients/authPasswordResetConfirmCreate";
 import { useMutation } from "@tanstack/vue-query";
 
 export const authPasswordResetConfirmCreateMutationKey = () => [{ url: '/api/v2/auth/password/reset/confirm/' }] as const

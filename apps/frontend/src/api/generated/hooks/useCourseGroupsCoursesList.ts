@@ -5,12 +5,12 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { CourseGroupsCoursesListQueryResponse, CourseGroupsCoursesListPathParams, CourseGroupsCoursesListQueryParams } from "../types/CourseGroupsCoursesList.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { CourseGroupsCoursesListQueryResponse, CourseGroupsCoursesListPathParams, CourseGroupsCoursesListQueryParams } from "../types/CourseGroupsCoursesList";
 import type { QueryKey, QueryClient, QueryObserverOptions, UseQueryReturnType } from "@tanstack/vue-query";
 import type { MaybeRefOrGetter } from "vue";
-import { courseGroupsCoursesList } from "../clients/courseGroupsCoursesList.ts";
+import { courseGroupsCoursesList } from "../clients/courseGroupsCoursesList";
 import { queryOptions, useQuery } from "@tanstack/vue-query";
 import { toValue } from "vue";
 

@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { PurchasedCoursesListQueryResponse, PurchasedCoursesListQueryParams } from "../types/PurchasedCoursesList.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { PurchasedCoursesListQueryResponse, PurchasedCoursesListQueryParams } from "../types/PurchasedCoursesList";
 
 function getPurchasedCoursesListUrl() {
   const res = { method: 'GET', url: `/api/v2/purchased-courses/` as const }  

@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { MaterialSerilizer } from "../types/MaterialSerilizer.ts";
-import { createBreadcrumbs } from "./createBreadcrumbs.ts";
+import type { MaterialSerilizer } from "../types/MaterialSerilizer";
+import { createBreadcrumbs } from "./createBreadcrumbs";
 import { faker } from "@faker-js/faker";
 
 export function createMaterialSerilizer(data?: Partial<MaterialSerilizer>): MaterialSerilizer {

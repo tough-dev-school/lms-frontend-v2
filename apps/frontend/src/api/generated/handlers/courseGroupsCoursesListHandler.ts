@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { CourseGroupsCoursesListQueryResponse } from "../types/CourseGroupsCoursesList.ts";
+import type { CourseGroupsCoursesListQueryResponse } from "../types/CourseGroupsCoursesList";
 import { http } from "msw";
 
 export function courseGroupsCoursesListHandlerResponse200(data: CourseGroupsCoursesListQueryResponse) {

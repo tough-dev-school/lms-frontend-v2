@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { DiplomasListQueryParams, DiplomasListQueryResponse } from "../types/DiplomasList.ts";
-import { createPaginatedDiplomaList } from "./createPaginatedDiplomaList.ts";
+import type { DiplomasListQueryParams, DiplomasListQueryResponse } from "../types/DiplomasList";
+import { createPaginatedDiplomaList } from "./createPaginatedDiplomaList";
 import { faker } from "@faker-js/faker";
 
 export function createDiplomasListQueryParams(data?: Partial<DiplomasListQueryParams>): DiplomasListQueryParams {

@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { CrossCheck } from "../types/CrossCheck.ts";
-import { createAnswerSimple } from "./createAnswerSimple.ts";
+import type { CrossCheck } from "../types/CrossCheck";
+import { createAnswerSimple } from "./createAnswerSimple";
 import { faker } from "@faker-js/faker";
 
 export function createCrossCheck(data?: Partial<CrossCheck>): CrossCheck {

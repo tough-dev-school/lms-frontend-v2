@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { Answer } from "./Answer.ts";
+import type { Answer } from "./Answer";
 
 export type PaginatedAnswerList = {
     /**

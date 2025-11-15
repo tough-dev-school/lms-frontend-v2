@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { CourseLink } from "./CourseLink.ts";
+import type { CourseLink } from "./CourseLink";
 
 export type Course = {
     /**

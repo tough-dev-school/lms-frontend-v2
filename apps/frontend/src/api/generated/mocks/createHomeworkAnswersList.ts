@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { HomeworkAnswersListQueryParams, HomeworkAnswersListQueryResponse } from "../types/HomeworkAnswersList.ts";
-import { createPaginatedAnswerList } from "./createPaginatedAnswerList.ts";
+import type { HomeworkAnswersListQueryParams, HomeworkAnswersListQueryResponse } from "../types/HomeworkAnswersList";
+import { createPaginatedAnswerList } from "./createPaginatedAnswerList";
 import { faker } from "@faker-js/faker";
 
 export function createHomeworkAnswersListQueryParams(data?: Partial<HomeworkAnswersListQueryParams>): HomeworkAnswersListQueryParams {

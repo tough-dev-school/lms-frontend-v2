@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { User } from "./User.ts";
+import type { User } from "./User";
 
 export type UsersMeRetrieve200 = User;
 

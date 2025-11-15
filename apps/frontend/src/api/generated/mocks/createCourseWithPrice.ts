@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { CourseWithPrice } from "../types/CourseWithPrice.ts";
-import { createPrice } from "./createPrice.ts";
+import type { CourseWithPrice } from "../types/CourseWithPrice";
+import { createPrice } from "./createPrice";
 import { faker } from "@faker-js/faker";
 
 /**

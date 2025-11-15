@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { HomeworkAnswersRetrieveQueryResponse } from "../types/HomeworkAnswersRetrieve.ts";
+import type { HomeworkAnswersRetrieveQueryResponse } from "../types/HomeworkAnswersRetrieve";
 import { http } from "msw";
 
 export function homeworkAnswersRetrieveHandlerResponse200(data: HomeworkAnswersRetrieveQueryResponse) {

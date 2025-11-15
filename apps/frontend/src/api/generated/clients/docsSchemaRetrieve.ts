@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { DocsSchemaRetrieveQueryResponse, DocsSchemaRetrieveQueryParams } from "../types/DocsSchemaRetrieve.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { DocsSchemaRetrieveQueryResponse, DocsSchemaRetrieveQueryParams } from "../types/DocsSchemaRetrieve";
 
 function getDocsSchemaRetrieveUrl() {
   const res = { method: 'GET', url: `/api/v2/docs/schema/` as const }  

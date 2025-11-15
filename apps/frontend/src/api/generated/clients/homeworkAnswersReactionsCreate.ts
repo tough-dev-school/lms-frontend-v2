@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { HomeworkAnswersReactionsCreateMutationRequest, HomeworkAnswersReactionsCreateMutationResponse, HomeworkAnswersReactionsCreatePathParams } from "../types/HomeworkAnswersReactionsCreate.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { HomeworkAnswersReactionsCreateMutationRequest, HomeworkAnswersReactionsCreateMutationResponse, HomeworkAnswersReactionsCreatePathParams } from "../types/HomeworkAnswersReactionsCreate";
 
 function getHomeworkAnswersReactionsCreateUrl(answer_slug: HomeworkAnswersReactionsCreatePathParams["answer_slug"]) {
   const res = { method: 'POST', url: `/api/v2/homework/answers/${answer_slug}/reactions/` as const }  

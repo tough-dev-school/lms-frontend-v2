@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { AuthPasswordlessTokenRequestRetrieveQueryResponse, AuthPasswordlessTokenRequestRetrievePathParams } from "../types/AuthPasswordlessTokenRequestRetrieve.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { AuthPasswordlessTokenRequestRetrieveQueryResponse, AuthPasswordlessTokenRequestRetrievePathParams } from "../types/AuthPasswordlessTokenRequestRetrieve";
 
 function getAuthPasswordlessTokenRequestRetrieveUrl(user_email: AuthPasswordlessTokenRequestRetrievePathParams["user_email"]) {
   const res = { method: 'GET', url: `/api/v2/auth/passwordless-token/request/${user_email}/` as const }  

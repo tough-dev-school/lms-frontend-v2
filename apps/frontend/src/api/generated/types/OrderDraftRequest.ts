@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { DesiredBankEnum } from "./DesiredBankEnum.ts";
+import type { DesiredBankEnum } from "./DesiredBankEnum";
 
 export type OrderDraftRequest = {
     /**

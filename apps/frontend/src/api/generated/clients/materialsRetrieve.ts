@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { MaterialsRetrieveQueryResponse, MaterialsRetrievePathParams } from "../types/MaterialsRetrieve.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { MaterialsRetrieveQueryResponse, MaterialsRetrievePathParams } from "../types/MaterialsRetrieve";
 
 function getMaterialsRetrieveUrl(page_id: MaterialsRetrievePathParams["page_id"]) {
   const res = { method: 'GET', url: `/api/v2/materials/${page_id}/` as const }  

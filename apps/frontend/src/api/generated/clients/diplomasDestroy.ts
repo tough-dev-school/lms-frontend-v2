@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { DiplomasDestroyMutationResponse, DiplomasDestroyPathParams } from "../types/DiplomasDestroy.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { DiplomasDestroyMutationResponse, DiplomasDestroyPathParams } from "../types/DiplomasDestroy";
 
 function getDiplomasDestroyUrl(slug: DiplomasDestroyPathParams["slug"]) {
   const res = { method: 'DELETE', url: `/api/v2/diplomas/${slug}/` as const }  

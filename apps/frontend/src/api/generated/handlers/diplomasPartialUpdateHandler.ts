@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { DiplomasPartialUpdateMutationResponse } from "../types/DiplomasPartialUpdate.ts";
+import type { DiplomasPartialUpdateMutationResponse } from "../types/DiplomasPartialUpdate";
 import { http } from "msw";
 
 export function diplomasPartialUpdateHandlerResponse200(data: DiplomasPartialUpdateMutationResponse) {

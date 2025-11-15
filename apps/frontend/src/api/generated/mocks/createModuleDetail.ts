@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { ModuleDetail } from "../types/ModuleDetail.ts";
+import type { ModuleDetail } from "../types/ModuleDetail";
 import { faker } from "@faker-js/faker";
 
 export function createModuleDetail(data?: Partial<ModuleDetail>): ModuleDetail {

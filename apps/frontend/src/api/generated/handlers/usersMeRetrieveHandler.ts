@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { UsersMeRetrieveQueryResponse } from "../types/UsersMeRetrieve.ts";
+import type { UsersMeRetrieveQueryResponse } from "../types/UsersMeRetrieve";
 import { http } from "msw";
 
 export function usersMeRetrieveHandlerResponse200(data: UsersMeRetrieveQueryResponse) {

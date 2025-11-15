@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { RecommendedVideoProviderEnum } from "../types/RecommendedVideoProviderEnum.ts";
+import type { RecommendedVideoProviderEnum } from "../types/RecommendedVideoProviderEnum";
 import { faker } from "@faker-js/faker";
 
 export function createRecommendedVideoProviderEnum() {

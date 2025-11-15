@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { ReactionCreate } from "../types/ReactionCreate.ts";
+import type { ReactionCreate } from "../types/ReactionCreate";
 import { faker } from "@faker-js/faker";
 
 export function createReactionCreate(data?: Partial<ReactionCreate>): ReactionCreate {

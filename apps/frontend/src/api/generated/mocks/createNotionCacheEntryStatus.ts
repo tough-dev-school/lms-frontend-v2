@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { NotionCacheEntryStatus } from "../types/NotionCacheEntryStatus.ts";
+import type { NotionCacheEntryStatus } from "../types/NotionCacheEntryStatus";
 import { faker } from "@faker-js/faker";
 
 export function createNotionCacheEntryStatus(data?: Partial<NotionCacheEntryStatus>): NotionCacheEntryStatus {

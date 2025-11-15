@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { CommentStats } from "../types/CommentStats.ts";
+import type { CommentStats } from "../types/CommentStats";
 import { faker } from "@faker-js/faker";
 
 export function createCommentStats(data?: Partial<CommentStats>): CommentStats {

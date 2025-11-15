@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import type { AnswerSimple } from "../types/AnswerSimple.ts";
-import { createQuestion } from "./createQuestion.ts";
-import { createUserSafe } from "./createUserSafe.ts";
+import type { AnswerSimple } from "../types/AnswerSimple";
+import { createQuestion } from "./createQuestion";
+import { createUserSafe } from "./createUserSafe";
 import { faker } from "@faker-js/faker";
 
 export function createAnswerSimple(data?: Partial<AnswerSimple>): AnswerSimple {

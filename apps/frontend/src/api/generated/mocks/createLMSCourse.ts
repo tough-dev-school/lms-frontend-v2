@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { LMSCourse } from "../types/LMSCourse.ts";
+import type { LMSCourse } from "../types/LMSCourse";
 import { faker } from "@faker-js/faker";
 
 export function createLMSCourse(data?: Partial<LMSCourse>): LMSCourse {

@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { DiplomasRetrieveQueryResponse, DiplomasRetrievePathParams } from "../types/DiplomasRetrieve.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { DiplomasRetrieveQueryResponse, DiplomasRetrievePathParams } from "../types/DiplomasRetrieve";
 
 function getDiplomasRetrieveUrl(slug: DiplomasRetrievePathParams["slug"]) {
   const res = { method: 'GET', url: `/api/v2/diplomas/${slug}/` as const }  

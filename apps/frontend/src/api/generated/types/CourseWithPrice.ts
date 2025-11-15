@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { Price } from "./Price.ts";
+import type { Price } from "./Price";
 
 /**
  * @description Course with commercial data. Requires bank context

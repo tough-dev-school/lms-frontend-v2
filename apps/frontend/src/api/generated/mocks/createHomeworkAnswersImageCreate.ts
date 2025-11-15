@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { HomeworkAnswersImageCreateMutationResponse } from "../types/HomeworkAnswersImageCreate.ts";
-import { createAnswerImage } from "./createAnswerImage.ts";
+import type { HomeworkAnswersImageCreateMutationResponse } from "../types/HomeworkAnswersImageCreate";
+import { createAnswerImage } from "./createAnswerImage";
 import { faker } from "@faker-js/faker";
 
 export function createHomeworkAnswersImageCreate201() {

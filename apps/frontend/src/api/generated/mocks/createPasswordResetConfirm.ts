@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { PasswordResetConfirm } from "../types/PasswordResetConfirm.ts";
+import type { PasswordResetConfirm } from "../types/PasswordResetConfirm";
 import { faker } from "@faker-js/faker";
 
 /**

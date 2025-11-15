@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { RecommendedVideoProviderEnum } from "./RecommendedVideoProviderEnum.ts";
-import type { VideoProvider } from "./VideoProvider.ts";
+import type { RecommendedVideoProviderEnum } from "./RecommendedVideoProviderEnum";
+import type { VideoProvider } from "./VideoProvider";
 
 export type Call = {
     /**

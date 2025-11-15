@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { PaginatedCourseList } from "./PaginatedCourseList.ts";
+import type { PaginatedCourseList } from "./PaginatedCourseList";
 
 export type StudiesPurchasedListQueryParams = {
     /**

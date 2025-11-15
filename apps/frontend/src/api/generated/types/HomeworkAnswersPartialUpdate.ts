@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { AnswerUpdate } from "./AnswerUpdate.ts";
-import type { PatchedAnswerUpdate } from "./PatchedAnswerUpdate.ts";
+import type { AnswerUpdate } from "./AnswerUpdate";
+import type { PatchedAnswerUpdate } from "./PatchedAnswerUpdate";
 
 export type HomeworkAnswersPartialUpdatePathParams = {
     /**

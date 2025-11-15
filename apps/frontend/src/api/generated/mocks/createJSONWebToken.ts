@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { JSONWebToken } from "../types/JSONWebToken.ts";
+import type { JSONWebToken } from "../types/JSONWebToken";
 import { faker } from "@faker-js/faker";
 
 /**

@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { OrdersConfirmRetrievePathParams, OrdersConfirmRetrieveQueryResponse } from "../types/OrdersConfirmRetrieve.ts";
+import type { OrdersConfirmRetrievePathParams, OrdersConfirmRetrieveQueryResponse } from "../types/OrdersConfirmRetrieve";
 import { faker } from "@faker-js/faker";
 
 export function createOrdersConfirmRetrievePathParams(data?: Partial<OrdersConfirmRetrievePathParams>): OrdersConfirmRetrievePathParams {

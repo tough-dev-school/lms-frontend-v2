@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { PurchasedCoursesListQueryParams, PurchasedCoursesListQueryResponse } from "../types/PurchasedCoursesList.ts";
-import { createPaginatedCourseList } from "./createPaginatedCourseList.ts";
+import type { PurchasedCoursesListQueryParams, PurchasedCoursesListQueryResponse } from "../types/PurchasedCoursesList";
+import { createPaginatedCourseList } from "./createPaginatedCourseList";
 import { faker } from "@faker-js/faker";
 
 export function createPurchasedCoursesListQueryParams(data?: Partial<PurchasedCoursesListQueryParams>): PurchasedCoursesListQueryParams {

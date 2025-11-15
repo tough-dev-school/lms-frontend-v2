@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { CrossCheck } from "./CrossCheck.ts";
+import type { CrossCheck } from "./CrossCheck";
 
 export type HomeworkCrosschecksList200 = CrossCheck[];
 

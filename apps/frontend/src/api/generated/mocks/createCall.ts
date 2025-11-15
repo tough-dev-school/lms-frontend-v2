@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import type { Call } from "../types/Call.ts";
-import { createRecommendedVideoProviderEnum } from "./createRecommendedVideoProviderEnum.ts";
-import { createVideoProvider } from "./createVideoProvider.ts";
+import type { Call } from "../types/Call";
+import { createRecommendedVideoProviderEnum } from "./createRecommendedVideoProviderEnum";
+import { createVideoProvider } from "./createVideoProvider";
 import { faker } from "@faker-js/faker";
 
 export function createCall(data?: Partial<Call>): Call {

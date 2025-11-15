@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { AuthTokenCreateMutationRequest, AuthTokenCreateMutationResponse } from "../types/AuthTokenCreate.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { AuthTokenCreateMutationRequest, AuthTokenCreateMutationResponse } from "../types/AuthTokenCreate";
 
 function getAuthTokenCreateUrl() {
   const res = { method: 'POST', url: `/api/v2/auth/token/` as const }  

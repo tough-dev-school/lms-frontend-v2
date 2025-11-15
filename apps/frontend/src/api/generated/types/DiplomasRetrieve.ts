@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { DiplomaRetrieve } from "./DiplomaRetrieve.ts";
+import type { DiplomaRetrieve } from "./DiplomaRetrieve";
 
 export type DiplomasRetrievePathParams = {
     /**

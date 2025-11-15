@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { OrdersDraftCreateMutationRequest, OrdersDraftCreateMutationResponse } from "../types/OrdersDraftCreate.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { OrdersDraftCreateMutationRequest, OrdersDraftCreateMutationResponse } from "../types/OrdersDraftCreate";
 
 function getOrdersDraftCreateUrl() {
   const res = { method: 'POST', url: `/api/v2/orders/draft/` as const }  

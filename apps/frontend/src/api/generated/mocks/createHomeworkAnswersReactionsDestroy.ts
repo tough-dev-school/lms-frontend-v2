@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { HomeworkAnswersReactionsDestroyPathParams, HomeworkAnswersReactionsDestroyMutationResponse } from "../types/HomeworkAnswersReactionsDestroy.ts";
+import type { HomeworkAnswersReactionsDestroyPathParams, HomeworkAnswersReactionsDestroyMutationResponse } from "../types/HomeworkAnswersReactionsDestroy";
 import { faker } from "@faker-js/faker";
 
 export function createHomeworkAnswersReactionsDestroyPathParams(data?: Partial<HomeworkAnswersReactionsDestroyPathParams>): HomeworkAnswersReactionsDestroyPathParams {

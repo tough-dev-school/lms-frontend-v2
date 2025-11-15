@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { LmsModulesListQueryResponse } from "../types/LmsModulesList.ts";
+import type { LmsModulesListQueryResponse } from "../types/LmsModulesList";
 import { http } from "msw";
 
 export function lmsModulesListHandlerResponse200(data: LmsModulesListQueryResponse) {

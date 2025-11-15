@@ -5,12 +5,12 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { MaterialsRetrieveQueryResponse, MaterialsRetrievePathParams } from "../types/MaterialsRetrieve.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { MaterialsRetrieveQueryResponse, MaterialsRetrievePathParams } from "../types/MaterialsRetrieve";
 import type { QueryKey, QueryClient, QueryObserverOptions, UseQueryReturnType } from "@tanstack/vue-query";
 import type { MaybeRefOrGetter } from "vue";
-import { materialsRetrieve } from "../clients/materialsRetrieve.ts";
+import { materialsRetrieve } from "../clients/materialsRetrieve";
 import { queryOptions, useQuery } from "@tanstack/vue-query";
 import { toValue } from "vue";
 

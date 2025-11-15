@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { DiplomasUpdateMutationResponse } from "../types/DiplomasUpdate.ts";
+import type { DiplomasUpdateMutationResponse } from "../types/DiplomasUpdate";
 import { http } from "msw";
 
 export function diplomasUpdateHandlerResponse200(data: DiplomasUpdateMutationResponse) {

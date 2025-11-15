@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { AnswerImage } from "../types/AnswerImage.ts";
+import type { AnswerImage } from "../types/AnswerImage";
 import { faker } from "@faker-js/faker";
 
 export function createAnswerImage(data?: Partial<AnswerImage>): AnswerImage {

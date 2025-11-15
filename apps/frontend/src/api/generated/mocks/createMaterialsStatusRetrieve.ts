@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { MaterialsStatusRetrievePathParams, MaterialsStatusRetrieveQueryResponse } from "../types/MaterialsStatusRetrieve.ts";
-import { createNotionCacheEntryStatus } from "./createNotionCacheEntryStatus.ts";
+import type { MaterialsStatusRetrievePathParams, MaterialsStatusRetrieveQueryResponse } from "../types/MaterialsStatusRetrieve";
+import { createNotionCacheEntryStatus } from "./createNotionCacheEntryStatus";
 import { faker } from "@faker-js/faker";
 
 export function createMaterialsStatusRetrievePathParams(data?: Partial<MaterialsStatusRetrievePathParams>): MaterialsStatusRetrievePathParams {

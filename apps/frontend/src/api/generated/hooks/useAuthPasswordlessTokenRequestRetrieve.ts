@@ -5,12 +5,12 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { AuthPasswordlessTokenRequestRetrieveQueryResponse, AuthPasswordlessTokenRequestRetrievePathParams } from "../types/AuthPasswordlessTokenRequestRetrieve.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { AuthPasswordlessTokenRequestRetrieveQueryResponse, AuthPasswordlessTokenRequestRetrievePathParams } from "../types/AuthPasswordlessTokenRequestRetrieve";
 import type { QueryKey, QueryClient, QueryObserverOptions, UseQueryReturnType } from "@tanstack/vue-query";
 import type { MaybeRefOrGetter } from "vue";
-import { authPasswordlessTokenRequestRetrieve } from "../clients/authPasswordlessTokenRequestRetrieve.ts";
+import { authPasswordlessTokenRequestRetrieve } from "../clients/authPasswordlessTokenRequestRetrieve";
 import { queryOptions, useQuery } from "@tanstack/vue-query";
 import { toValue } from "vue";
 

@@ -5,11 +5,11 @@
 * Do not edit manually.
 */
 
-import type { Lesson } from "../types/Lesson.ts";
-import { createCall } from "./createCall.ts";
-import { createHomeworkStats } from "./createHomeworkStats.ts";
-import { createNotionMaterial } from "./createNotionMaterial.ts";
-import { createQuestion } from "./createQuestion.ts";
+import type { Lesson } from "../types/Lesson";
+import { createCall } from "./createCall";
+import { createHomeworkStats } from "./createHomeworkStats";
+import { createNotionMaterial } from "./createNotionMaterial";
+import { createQuestion } from "./createQuestion";
 import { faker } from "@faker-js/faker";
 
 /**

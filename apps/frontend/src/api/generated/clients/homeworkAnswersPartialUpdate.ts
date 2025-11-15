@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { HomeworkAnswersPartialUpdateMutationRequest, HomeworkAnswersPartialUpdateMutationResponse, HomeworkAnswersPartialUpdatePathParams } from "../types/HomeworkAnswersPartialUpdate.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { HomeworkAnswersPartialUpdateMutationRequest, HomeworkAnswersPartialUpdateMutationResponse, HomeworkAnswersPartialUpdatePathParams } from "../types/HomeworkAnswersPartialUpdate";
 
 function getHomeworkAnswersPartialUpdateUrl(slug: HomeworkAnswersPartialUpdatePathParams["slug"]) {
   const res = { method: 'PATCH', url: `/api/v2/homework/answers/${slug}/` as const }  

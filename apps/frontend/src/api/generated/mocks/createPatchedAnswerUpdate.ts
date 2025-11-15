@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { PatchedAnswerUpdate } from "../types/PatchedAnswerUpdate.ts";
+import type { PatchedAnswerUpdate } from "../types/PatchedAnswerUpdate";
 import { faker } from "@faker-js/faker";
 
 export function createPatchedAnswerUpdate(data?: Partial<PatchedAnswerUpdate>): PatchedAnswerUpdate {

@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { Price } from "../types/Price.ts";
+import type { Price } from "../types/Price";
 import { faker } from "@faker-js/faker";
 
 export function createPrice(data?: Partial<Price>): Price {

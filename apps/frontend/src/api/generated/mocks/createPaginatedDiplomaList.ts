@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { PaginatedDiplomaList } from "../types/PaginatedDiplomaList.ts";
-import { createDiploma } from "./createDiploma.ts";
+import type { PaginatedDiplomaList } from "../types/PaginatedDiplomaList";
+import { createDiploma } from "./createDiploma";
 import { faker } from "@faker-js/faker";
 
 export function createPaginatedDiplomaList(data?: Partial<PaginatedDiplomaList>): PaginatedDiplomaList {

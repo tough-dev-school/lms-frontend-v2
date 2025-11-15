@@ -5,12 +5,12 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { UsersMePartialUpdateMutationRequest, UsersMePartialUpdateMutationResponse } from "../types/UsersMePartialUpdate.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { UsersMePartialUpdateMutationRequest, UsersMePartialUpdateMutationResponse } from "../types/UsersMePartialUpdate";
 import type { MutationObserverOptions, QueryClient } from "@tanstack/vue-query";
 import type { MaybeRefOrGetter } from "vue";
-import { usersMePartialUpdate } from "../clients/usersMePartialUpdate.ts";
+import { usersMePartialUpdate } from "../clients/usersMePartialUpdate";
 import { useMutation } from "@tanstack/vue-query";
 
 export const usersMePartialUpdateMutationKey = () => [{ url: '/api/v2/users/me/' }] as const

@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { HomeworkCrosschecksList200, HomeworkCrosschecksListQueryResponse } from "../types/HomeworkCrosschecksList.ts";
-import { createCrossCheck } from "./createCrossCheck.ts";
+import type { HomeworkCrosschecksList200, HomeworkCrosschecksListQueryResponse } from "../types/HomeworkCrosschecksList";
+import { createCrossCheck } from "./createCrossCheck";
 import { faker } from "@faker-js/faker";
 
 export function createHomeworkCrosschecksList200(data?: HomeworkCrosschecksList200): HomeworkCrosschecksList200 {

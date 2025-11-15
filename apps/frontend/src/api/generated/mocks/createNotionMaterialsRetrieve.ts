@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { NotionMaterialsRetrievePathParams, NotionMaterialsRetrieveQueryResponse } from "../types/NotionMaterialsRetrieve.ts";
+import type { NotionMaterialsRetrievePathParams, NotionMaterialsRetrieveQueryResponse } from "../types/NotionMaterialsRetrieve";
 import { faker } from "@faker-js/faker";
 
 export function createNotionMaterialsRetrievePathParams(data?: Partial<NotionMaterialsRetrievePathParams>): NotionMaterialsRetrievePathParams {

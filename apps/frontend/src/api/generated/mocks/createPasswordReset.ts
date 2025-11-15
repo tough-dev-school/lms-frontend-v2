@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { PasswordReset } from "../types/PasswordReset.ts";
+import type { PasswordReset } from "../types/PasswordReset";
 import { faker } from "@faker-js/faker";
 
 /**

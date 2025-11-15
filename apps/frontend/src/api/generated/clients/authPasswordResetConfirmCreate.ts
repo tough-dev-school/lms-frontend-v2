@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { AuthPasswordResetConfirmCreateMutationRequest, AuthPasswordResetConfirmCreateMutationResponse } from "../types/AuthPasswordResetConfirmCreate.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { AuthPasswordResetConfirmCreateMutationRequest, AuthPasswordResetConfirmCreateMutationResponse } from "../types/AuthPasswordResetConfirmCreate";
 
 function getAuthPasswordResetConfirmCreateUrl() {
   const res = { method: 'POST', url: `/api/v2/auth/password/reset/confirm/` as const }  

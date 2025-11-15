@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { LmsModulesRetrievePathParams, LmsModulesRetrieveQueryResponse } from "../types/LmsModulesRetrieve.ts";
-import { createModuleDetail } from "./createModuleDetail.ts";
+import type { LmsModulesRetrievePathParams, LmsModulesRetrieveQueryResponse } from "../types/LmsModulesRetrieve";
+import { createModuleDetail } from "./createModuleDetail";
 import { faker } from "@faker-js/faker";
 
 export function createLmsModulesRetrievePathParams(data?: Partial<LmsModulesRetrievePathParams>): LmsModulesRetrievePathParams {

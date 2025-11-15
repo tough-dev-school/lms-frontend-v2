@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { DiplomasUpdatePathParams, DiplomasUpdateMutationResponse } from "../types/DiplomasUpdate.ts";
-import { createDiploma } from "./createDiploma.ts";
+import type { DiplomasUpdatePathParams, DiplomasUpdateMutationResponse } from "../types/DiplomasUpdate";
+import { createDiploma } from "./createDiploma";
 import { faker } from "@faker-js/faker";
 
 export function createDiplomasUpdatePathParams(data?: Partial<DiplomasUpdatePathParams>): DiplomasUpdatePathParams {

@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { HomeworkAnswersRetrievePathParams, HomeworkAnswersRetrieveQueryResponse } from "../types/HomeworkAnswersRetrieve.ts";
-import { createAnswerTree } from "./createAnswerTree.ts";
+import type { HomeworkAnswersRetrievePathParams, HomeworkAnswersRetrieveQueryResponse } from "../types/HomeworkAnswersRetrieve";
+import { createAnswerTree } from "./createAnswerTree";
 import { faker } from "@faker-js/faker";
 
 export function createHomeworkAnswersRetrievePathParams(data?: Partial<HomeworkAnswersRetrievePathParams>): HomeworkAnswersRetrievePathParams {

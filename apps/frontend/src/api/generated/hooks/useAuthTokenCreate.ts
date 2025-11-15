@@ -5,12 +5,12 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { AuthTokenCreateMutationRequest, AuthTokenCreateMutationResponse } from "../types/AuthTokenCreate.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { AuthTokenCreateMutationRequest, AuthTokenCreateMutationResponse } from "../types/AuthTokenCreate";
 import type { MutationObserverOptions, QueryClient } from "@tanstack/vue-query";
 import type { MaybeRefOrGetter } from "vue";
-import { authTokenCreate } from "../clients/authTokenCreate.ts";
+import { authTokenCreate } from "../clients/authTokenCreate";
 import { useMutation } from "@tanstack/vue-query";
 
 export const authTokenCreateMutationKey = () => [{ url: '/api/v2/auth/token/' }] as const

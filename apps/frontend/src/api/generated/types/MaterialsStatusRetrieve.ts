@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { NotionCacheEntryStatus } from "./NotionCacheEntryStatus.ts";
+import type { NotionCacheEntryStatus } from "./NotionCacheEntryStatus";
 
 export type MaterialsStatusRetrievePathParams = {
     /**

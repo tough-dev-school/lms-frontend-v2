@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { GenderEnum } from "../types/GenderEnum.ts";
+import type { GenderEnum } from "../types/GenderEnum";
 import { faker } from "@faker-js/faker";
 
 /**

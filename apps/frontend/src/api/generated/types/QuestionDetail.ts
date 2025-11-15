@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import type { Breadcrumbs } from "./Breadcrumbs.ts";
-import type { HomeworkStats } from "./HomeworkStats.ts";
-import type { QuestionCourse } from "./QuestionCourse.ts";
+import type { Breadcrumbs } from "./Breadcrumbs";
+import type { HomeworkStats } from "./HomeworkStats";
+import type { QuestionCourse } from "./QuestionCourse";
 
 export type QuestionDetail = {
     readonly breadcrumbs?: Breadcrumbs;

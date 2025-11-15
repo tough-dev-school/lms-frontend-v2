@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import type { HomeworkAnswersCreateMutationResponse } from "../types/HomeworkAnswersCreate.ts";
-import { createAnswerCreate } from "./createAnswerCreate.ts";
-import { createAnswerTree } from "./createAnswerTree.ts";
+import type { HomeworkAnswersCreateMutationResponse } from "../types/HomeworkAnswersCreate";
+import { createAnswerCreate } from "./createAnswerCreate";
+import { createAnswerTree } from "./createAnswerTree";
 import { faker } from "@faker-js/faker";
 
 export function createHomeworkAnswersCreate201() {

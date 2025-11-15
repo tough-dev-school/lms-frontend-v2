@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { HomeworkAnswersUpdateMutationRequest, HomeworkAnswersUpdateMutationResponse, HomeworkAnswersUpdatePathParams } from "../types/HomeworkAnswersUpdate.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { HomeworkAnswersUpdateMutationRequest, HomeworkAnswersUpdateMutationResponse, HomeworkAnswersUpdatePathParams } from "../types/HomeworkAnswersUpdate";
 
 function getHomeworkAnswersUpdateUrl(slug: HomeworkAnswersUpdatePathParams["slug"]) {
   const res = { method: 'PUT', url: `/api/v2/homework/answers/${slug}/` as const }  

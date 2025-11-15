@@ -5,12 +5,12 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { DiplomasRetrieveQueryResponse, DiplomasRetrievePathParams } from "../types/DiplomasRetrieve.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { DiplomasRetrieveQueryResponse, DiplomasRetrievePathParams } from "../types/DiplomasRetrieve";
 import type { QueryKey, QueryClient, QueryObserverOptions, UseQueryReturnType } from "@tanstack/vue-query";
 import type { MaybeRefOrGetter } from "vue";
-import { diplomasRetrieve } from "../clients/diplomasRetrieve.ts";
+import { diplomasRetrieve } from "../clients/diplomasRetrieve";
 import { queryOptions, useQuery } from "@tanstack/vue-query";
 import { toValue } from "vue";
 

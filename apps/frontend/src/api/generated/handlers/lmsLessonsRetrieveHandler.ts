@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { LmsLessonsRetrieveQueryResponse } from "../types/LmsLessonsRetrieve.ts";
+import type { LmsLessonsRetrieveQueryResponse } from "../types/LmsLessonsRetrieve";
 import { http } from "msw";
 
 export function lmsLessonsRetrieveHandlerResponse200(data: LmsLessonsRetrieveQueryResponse) {

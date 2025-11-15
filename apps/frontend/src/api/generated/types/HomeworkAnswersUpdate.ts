@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { AnswerTree } from "./AnswerTree.ts";
-import type { AnswerUpdate } from "./AnswerUpdate.ts";
+import type { AnswerTree } from "./AnswerTree";
+import type { AnswerUpdate } from "./AnswerUpdate";
 
 export type HomeworkAnswersUpdatePathParams = {
     /**

@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { AnswerTree } from "./AnswerTree.ts";
+import type { AnswerTree } from "./AnswerTree";
 
 export type HomeworkAnswersRetrievePathParams = {
     /**

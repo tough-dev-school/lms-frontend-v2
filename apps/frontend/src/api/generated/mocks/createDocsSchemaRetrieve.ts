@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { DocsSchemaRetrieveQueryParams, DocsSchemaRetrieve200, DocsSchemaRetrieveQueryResponse } from "../types/DocsSchemaRetrieve.ts";
+import type { DocsSchemaRetrieveQueryParams, DocsSchemaRetrieve200, DocsSchemaRetrieveQueryResponse } from "../types/DocsSchemaRetrieve";
 import { faker } from "@faker-js/faker";
 
 export function createDocsSchemaRetrieveQueryParams(data?: Partial<DocsSchemaRetrieveQueryParams>): DocsSchemaRetrieveQueryParams {

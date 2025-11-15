@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import type { Answer } from "./Answer.ts";
-import type { ReactionDetailed } from "./ReactionDetailed.ts";
-import type { UserSafe } from "./UserSafe.ts";
+import type { Answer } from "./Answer";
+import type { ReactionDetailed } from "./ReactionDetailed";
+import type { UserSafe } from "./UserSafe";
 
 export type AnswerTree = {
     /**

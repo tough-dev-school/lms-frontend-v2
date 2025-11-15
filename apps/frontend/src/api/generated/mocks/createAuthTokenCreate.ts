@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { AuthTokenCreateMutationResponse } from "../types/AuthTokenCreate.ts";
-import { createJSONWebToken } from "./createJSONWebToken.ts";
+import type { AuthTokenCreateMutationResponse } from "../types/AuthTokenCreate";
+import { createJSONWebToken } from "./createJSONWebToken";
 import { faker } from "@faker-js/faker";
 
 export function createAuthTokenCreate200() {

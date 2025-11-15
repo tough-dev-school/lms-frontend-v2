@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { HomeworkAnswersReactionsDestroyMutationResponse, HomeworkAnswersReactionsDestroyPathParams } from "../types/HomeworkAnswersReactionsDestroy.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { HomeworkAnswersReactionsDestroyMutationResponse, HomeworkAnswersReactionsDestroyPathParams } from "../types/HomeworkAnswersReactionsDestroy";
 
 function getHomeworkAnswersReactionsDestroyUrl(answer_slug: HomeworkAnswersReactionsDestroyPathParams["answer_slug"], slug: HomeworkAnswersReactionsDestroyPathParams["slug"]) {
   const res = { method: 'DELETE', url: `/api/v2/homework/answers/${answer_slug}/reactions/${slug}/` as const }  

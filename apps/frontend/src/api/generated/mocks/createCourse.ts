@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { Course } from "../types/Course.ts";
-import { createCourseLink } from "./createCourseLink.ts";
+import type { Course } from "../types/Course";
+import { createCourseLink } from "./createCourseLink";
 import { faker } from "@faker-js/faker";
 
 export function createCourse(data?: Partial<Course>): Course {

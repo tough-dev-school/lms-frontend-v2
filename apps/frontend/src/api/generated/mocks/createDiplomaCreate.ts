@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { DiplomaCreate } from "../types/DiplomaCreate.ts";
-import { createLanguageEnum } from "./createLanguageEnum.ts";
+import type { DiplomaCreate } from "../types/DiplomaCreate";
+import { createLanguageEnum } from "./createLanguageEnum";
 import { faker } from "@faker-js/faker";
 
 export function createDiplomaCreate(data?: Partial<DiplomaCreate>): DiplomaCreate {

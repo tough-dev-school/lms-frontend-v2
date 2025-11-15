@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { Question } from "../types/Question.ts";
+import type { Question } from "../types/Question";
 import { faker } from "@faker-js/faker";
 
 export function createQuestion(data?: Partial<Question>): Question {

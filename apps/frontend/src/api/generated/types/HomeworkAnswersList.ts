@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { PaginatedAnswerList } from "./PaginatedAnswerList.ts";
+import type { PaginatedAnswerList } from "./PaginatedAnswerList";
 
 export type HomeworkAnswersListQueryParams = {
     /**

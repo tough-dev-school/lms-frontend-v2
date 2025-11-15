@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { BlankEnum } from "../types/BlankEnum.ts";
+import type { BlankEnum } from "../types/BlankEnum";
 import { faker } from "@faker-js/faker";
 
 export function createBlankEnum() {

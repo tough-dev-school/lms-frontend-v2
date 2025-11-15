@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { NotionMaterial } from "../types/NotionMaterial.ts";
+import type { NotionMaterial } from "../types/NotionMaterial";
 import { faker } from "@faker-js/faker";
 
 export function createNotionMaterial(data?: Partial<NotionMaterial>): NotionMaterial {

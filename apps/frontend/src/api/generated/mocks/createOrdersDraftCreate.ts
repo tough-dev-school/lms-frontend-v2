@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import type { OrdersDraftCreateMutationResponse } from "../types/OrdersDraftCreate.ts";
-import { createOrderDraft } from "./createOrderDraft.ts";
-import { createOrderDraftRequest } from "./createOrderDraftRequest.ts";
+import type { OrdersDraftCreateMutationResponse } from "../types/OrdersDraftCreate";
+import { createOrderDraft } from "./createOrderDraft";
+import { createOrderDraftRequest } from "./createOrderDraftRequest";
 import { faker } from "@faker-js/faker";
 
 export function createOrdersDraftCreate200() {

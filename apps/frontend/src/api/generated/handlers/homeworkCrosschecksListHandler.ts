@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { HomeworkCrosschecksListQueryResponse } from "../types/HomeworkCrosschecksList.ts";
+import type { HomeworkCrosschecksListQueryResponse } from "../types/HomeworkCrosschecksList";
 import { http } from "msw";
 
 export function homeworkCrosschecksListHandlerResponse200(data: HomeworkCrosschecksListQueryResponse) {

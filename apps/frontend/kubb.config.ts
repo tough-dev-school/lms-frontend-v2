@@ -16,6 +16,9 @@ export default defineConfig({
   output: {
     path: './src/api/generated',
     clean: true,
+    extension: {
+      '.ts': '',
+    },
   },
   plugins: [
     pluginOas({
@@ -30,7 +33,7 @@ export default defineConfig({
       enumSuffix: '',
     }),
     pluginClient({
-      importPath: '../../client.ts',
+      importPath: '../../client',
       output: {
         path: './clients',
         banner,
@@ -51,7 +54,7 @@ export default defineConfig({
     }),
     pluginVueQuery({
       client: {
-        importPath: '../../client.ts',
+        importPath: '../../client',
       },
       output: {
         path: './hooks',

@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { TemporarySoonToBeDepricatedQuestion } from "../types/TemporarySoonToBeDepricatedQuestion.ts";
+import type { TemporarySoonToBeDepricatedQuestion } from "../types/TemporarySoonToBeDepricatedQuestion";
 import { faker } from "@faker-js/faker";
 
 export function createTemporarySoonToBeDepricatedQuestion(data?: Partial<TemporarySoonToBeDepricatedQuestion>): TemporarySoonToBeDepricatedQuestion {

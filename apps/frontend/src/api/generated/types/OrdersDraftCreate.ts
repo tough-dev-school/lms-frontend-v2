@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { OrderDraft } from "./OrderDraft.ts";
-import type { OrderDraftRequest } from "./OrderDraftRequest.ts";
+import type { OrderDraft } from "./OrderDraft";
+import type { OrderDraftRequest } from "./OrderDraftRequest";
 
 export type OrdersDraftCreate200 = OrderDraft;
 

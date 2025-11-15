@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { UserSafe } from "../types/UserSafe.ts";
+import type { UserSafe } from "../types/UserSafe";
 import { faker } from "@faker-js/faker";
 
 export function createUserSafe(data?: Partial<UserSafe>): UserSafe {

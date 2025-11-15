@@ -5,7 +5,7 @@
 * Do not edit manually.
 */
 
-import type { PasswordChange } from "../types/PasswordChange.ts";
+import type { PasswordChange } from "../types/PasswordChange";
 import { faker } from "@faker-js/faker";
 
 export function createPasswordChange(data?: Partial<PasswordChange>): PasswordChange {

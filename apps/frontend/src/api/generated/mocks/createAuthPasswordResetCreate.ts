@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { AuthPasswordResetCreateMutationResponse } from "../types/AuthPasswordResetCreate.ts";
-import { createPasswordReset } from "./createPasswordReset.ts";
+import type { AuthPasswordResetCreateMutationResponse } from "../types/AuthPasswordResetCreate";
+import { createPasswordReset } from "./createPasswordReset";
 import { faker } from "@faker-js/faker";
 
 export function createAuthPasswordResetCreate200() {

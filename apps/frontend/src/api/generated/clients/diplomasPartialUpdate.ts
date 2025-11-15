@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import fetch from "../../client.ts";
-import type { RequestConfig, ResponseErrorConfig } from "../../client.ts";
-import type { DiplomasPartialUpdateMutationRequest, DiplomasPartialUpdateMutationResponse, DiplomasPartialUpdatePathParams } from "../types/DiplomasPartialUpdate.ts";
+import fetch from "../../client";
+import type { RequestConfig, ResponseErrorConfig } from "../../client";
+import type { DiplomasPartialUpdateMutationRequest, DiplomasPartialUpdateMutationResponse, DiplomasPartialUpdatePathParams } from "../types/DiplomasPartialUpdate";
 
 function getDiplomasPartialUpdateUrl(slug: DiplomasPartialUpdatePathParams["slug"]) {
   const res = { method: 'PATCH', url: `/api/v2/diplomas/${slug}/` as const }  

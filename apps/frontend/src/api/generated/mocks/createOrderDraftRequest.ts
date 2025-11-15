@@ -5,8 +5,8 @@
 * Do not edit manually.
 */
 
-import type { OrderDraftRequest } from "../types/OrderDraftRequest.ts";
-import { createDesiredBankEnum } from "./createDesiredBankEnum.ts";
+import type { OrderDraftRequest } from "../types/OrderDraftRequest";
+import { createDesiredBankEnum } from "./createDesiredBankEnum";
 import { faker } from "@faker-js/faker";
 
 export function createOrderDraftRequest(data?: Partial<OrderDraftRequest>): OrderDraftRequest {
