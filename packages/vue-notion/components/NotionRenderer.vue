@@ -43,6 +43,7 @@
       imageOptions: Object,
       todo: { type: Boolean, default: false },
     },
+    emits: ['bookmark'],
     data() {
       return {
         observer: null,
@@ -141,14 +142,7 @@
       updateUrlHash(blockId) {
         if (!blockId) return;
 
-        const newHash = `#${blockId}`;
-        if (window.location.hash !== newHash) {
-          window.history.replaceState(
-            null,
-            '',
-            `${window.location.pathname}${window.location.search}${newHash}`,
-          );
-        }
+        this.$emit('bookmark', blockId);
       },
     },
   };

@@ -87,6 +87,16 @@
     return result;
   });
 
+  const handleBookmark = (blockId: string) => {
+    router.replace({
+      ...router.currentRoute.value,
+      query: {
+        ...router.currentRoute.value.query,
+        bookmark: blockId,
+      },
+    });
+  };
+
   useNotionCheckboxHack(props.materialId);
 </script>
 
@@ -109,6 +119,7 @@
               href: 'to',
             }"
             :full-page="true"
+            @bookmark="handleBookmark"
           />
         </VCard>
       </template>
