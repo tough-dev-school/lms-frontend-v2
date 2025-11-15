@@ -47,6 +47,7 @@
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
+    "@ast-grep/napi": "^0.39.9",
     "@cloudflare/workers-types": "^4.20250724.0",
     "@faker-js/faker": "^8.4.1",
     "@storybook/addon-docs": "^9.0.14",
