@@ -10,5 +10,5 @@ export type RestAuthDetail = {
     /**
      * @type string | undefined
     */
-    readonly detail?: string;
+    detail?: string;
 };

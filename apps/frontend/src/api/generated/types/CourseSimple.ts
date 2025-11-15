@@ -10,7 +10,7 @@ export type CourseSimple = {
     /**
      * @type string | undefined
     */
-    readonly name?: string;
+    name: string;
     /**
      * @maxLength 255
      * @type string
@@ -25,5 +25,5 @@ export type CourseSimple = {
      * @maxLength 64
      * @type string
     */
-    tariff_name?: string | null;
+    tariff_name: string | null;
 };

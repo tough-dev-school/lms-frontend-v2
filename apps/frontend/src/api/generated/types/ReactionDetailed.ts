@@ -11,7 +11,7 @@ export type ReactionDetailed = {
     /**
      * @type string | undefined, uuid
     */
-    slug?: string;
+    slug: string;
     /**
      * @maxLength 10
      * @type string

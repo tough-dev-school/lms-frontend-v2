@@ -10,11 +10,11 @@ import type { HomeworkStats } from "./HomeworkStats";
 import type { QuestionCourse } from "./QuestionCourse";
 
 export type QuestionDetail = {
-    readonly breadcrumbs?: Breadcrumbs;
+    breadcrumbs: Breadcrumbs;
     /**
      * @type string | undefined, uuid
     */
-    slug?: string;
+    slug: string;
     /**
      * @maxLength 256
      * @type string
@@ -27,11 +27,11 @@ export type QuestionDetail = {
     /**
      * @type string, date-time
     */
-    deadline?: string | null;
+    deadline: string | null;
     /**
      * @description Requires *any* model annotaded with statistics. For annotation examples check homework.QuestionQuerySet
      * @type object
     */
     homework: HomeworkStats;
-    readonly course?: QuestionCourse;
+    course?: QuestionCourse;
 };

@@ -14,5 +14,5 @@ export type CommentStats = {
     /**
      * @type integer
     */
-    readonly hidden_before_crosscheck_completed?: number | null;
+    hidden_before_crosscheck_completed: number | null;
 };

@@ -13,15 +13,15 @@ export type AnswerTree = {
     /**
      * @type string | undefined, date-time
     */
-    readonly created?: string;
+    created: string;
     /**
      * @type string, date-time
     */
-    modified?: string | null;
+    modified: string | null;
     /**
      * @type string | undefined, uuid
     */
-    slug?: string;
+    slug: string;
     /**
      * @type string
     */
@@ -33,15 +33,15 @@ export type AnswerTree = {
     /**
      * @type string | undefined, uuid
     */
-    readonly parent?: string;
+    parent?: string;
     /**
      * @type string | undefined
     */
-    readonly text?: string;
+    text?: string;
     /**
      * @type string | undefined
     */
-    readonly legacy_text?: string;
+    legacy_text?: string;
     content?: any;
     /**
      * @type string
@@ -50,11 +50,11 @@ export type AnswerTree = {
     /**
      * @type boolean | undefined
     */
-    readonly has_descendants?: boolean;
+    has_descendants: boolean;
     /**
      * @type boolean | undefined
     */
-    readonly is_editable?: boolean;
+    is_editable: boolean;
     /**
      * @type array
     */
@@ -62,5 +62,5 @@ export type AnswerTree = {
     /**
      * @type array | undefined
     */
-    readonly descendants?: Answer[];
+    descendants: Answer[];
 };

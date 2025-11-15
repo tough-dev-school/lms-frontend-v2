@@ -20,7 +20,7 @@ export type CourseWithPrice = {
     /**
      * @type string | undefined
     */
-    readonly name?: string;
+    name: string;
     /**
      * @maxLength 255
      * @type string
@@ -35,6 +35,6 @@ export type CourseWithPrice = {
      * @maxLength 64
      * @type string
     */
-    tariff_name?: string | null;
-    readonly price?: Price;
+    tariff_name: string | null;
+    price?: Price;
 };

@@ -18,7 +18,7 @@ export type Diploma = {
      * @maxLength 32
      * @type string | undefined
     */
-    slug?: string;
+    slug: string;
     language: LanguageEnum;
     /**
      * @type string, uri

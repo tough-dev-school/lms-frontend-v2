@@ -18,19 +18,19 @@ export type Call = {
      * @maxLength 512
      * @type string
     */
-    description?: string | null;
+    description: string | null;
     /**
      * @maxLength 255
      * @type string, uri
     */
-    url?: string | null;
+    url: string | null;
     /**
      * @type array | undefined
     */
-    readonly video?: VideoProvider[];
+    video: VideoProvider[];
     /**
      * @type string, date-time
     */
-    datetime?: string | null;
-    readonly recommended_video_provider?: RecommendedVideoProviderEnum | null;
+    datetime: string | null;
+    recommended_video_provider: RecommendedVideoProviderEnum | null;
 };

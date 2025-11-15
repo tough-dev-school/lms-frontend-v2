@@ -10,7 +10,7 @@ export type Module = {
     /**
      * @type integer | undefined
     */
-    readonly id?: number;
+    id: number;
     /**
      * @maxLength 255
      * @type string
@@ -19,18 +19,18 @@ export type Module = {
     /**
      * @type string, date-time
     */
-    start_date?: string | null;
+    start_date: string | null;
     /**
      * @type boolean | undefined
     */
-    readonly has_started?: boolean;
+    has_started: boolean;
     /**
      * @maxLength 512
      * @type string
     */
-    description?: string | null;
+    description: string | null;
     /**
      * @type string
     */
-    readonly text?: string | null;
+    text: string | null;
 };

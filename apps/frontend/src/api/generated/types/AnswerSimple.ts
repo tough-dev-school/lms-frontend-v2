@@ -12,7 +12,7 @@ export type AnswerSimple = {
     /**
      * @type string | undefined, uuid
     */
-    slug?: string;
+    slug: string;
     /**
      * @type string, uri
     */

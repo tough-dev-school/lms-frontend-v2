@@ -17,7 +17,7 @@ export type JSONWebToken = {
     /**
      * @type string | undefined
     */
-    readonly token?: string;
+    token?: string;
     /**
      * @type string
     */

@@ -10,9 +10,9 @@ export type NotionCacheEntryStatus = {
     /**
      * @type string, date-time
     */
-    fetch_started?: string | null;
+    fetch_started: string | null;
     /**
      * @type string, date-time
     */
-    fetch_complete?: string | null;
+    fetch_complete: string | null;
 };

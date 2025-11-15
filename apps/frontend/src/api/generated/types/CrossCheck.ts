@@ -11,7 +11,7 @@ export type CrossCheck = {
     /**
      * @type integer | undefined
     */
-    readonly id?: number;
+    id: number;
     /**
      * @type object
     */
@@ -19,5 +19,5 @@ export type CrossCheck = {
     /**
      * @type boolean | undefined
     */
-    readonly is_checked?: boolean;
+    is_checked: boolean;
 };

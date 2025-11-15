@@ -10,7 +10,7 @@ export type QuestionCourse = {
     /**
      * @type integer | undefined
     */
-    readonly id?: number;
+    id: number;
     /**
      * @maxLength 50
      * @pattern ^[-a-zA-Z0-9_]+$
@@ -20,7 +20,7 @@ export type QuestionCourse = {
     /**
      * @type string | undefined
     */
-    readonly name?: string;
+    name: string;
     /**
      * @description Обложка курса
      * @type string | undefined, uri
@@ -30,19 +30,19 @@ export type QuestionCourse = {
      * @maxLength 200
      * @type string, uri
     */
-    chat?: string | null;
+    chat: string | null;
     /**
      * @maxLength 200
      * @type string, uri
     */
-    calendar_ios?: string | null;
+    calendar_ios: string | null;
     /**
      * @maxLength 200
      * @type string, uri
     */
-    calendar_google?: string | null;
+    calendar_google: string | null;
     /**
      * @type string | undefined
     */
-    readonly homework_check_recommendations?: string;
+    homework_check_recommendations?: string;
 };

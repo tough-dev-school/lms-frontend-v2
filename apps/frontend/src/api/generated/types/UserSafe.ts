@@ -10,7 +10,7 @@ export type UserSafe = {
     /**
      * @type string | undefined, uuid
     */
-    uuid?: string;
+    uuid: string;
     /**
      * @maxLength 150
      * @type string | undefined
@@ -34,5 +34,5 @@ export type UserSafe = {
     /**
      * @type string, uri
     */
-    avatar?: string | null;
+    avatar: string | null;
 };

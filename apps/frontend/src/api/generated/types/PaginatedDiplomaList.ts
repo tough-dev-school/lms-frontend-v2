@@ -15,11 +15,11 @@ export type PaginatedDiplomaList = {
     /**
      * @type string, uri
     */
-    next?: string | null;
+    next: string | null;
     /**
      * @type string, uri
     */
-    previous?: string | null;
+    previous: string | null;
     /**
      * @type array
     */

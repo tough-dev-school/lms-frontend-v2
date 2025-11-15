@@ -11,7 +11,7 @@ export type Course = {
     /**
      * @type integer | undefined
     */
-    readonly id?: number;
+    id: number;
     /**
      * @maxLength 50
      * @pattern ^[-a-zA-Z0-9_]+$
@@ -21,7 +21,7 @@ export type Course = {
     /**
      * @type string | undefined
     */
-    readonly name?: string;
+    name: string;
     /**
      * @maxLength 255
      * @type string
@@ -31,7 +31,7 @@ export type Course = {
      * @maxLength 64
      * @type string
     */
-    tariff_name?: string | null;
+    tariff_name: string | null;
     /**
      * @type string
     */
@@ -45,19 +45,19 @@ export type Course = {
      * @maxLength 200
      * @type string, uri
     */
-    chat?: string | null;
+    chat: string | null;
     /**
      * @maxLength 200
      * @type string, uri
     */
-    calendar_ios?: string | null;
+    calendar_ios: string | null;
     /**
      * @maxLength 200
      * @type string, uri
     */
-    calendar_google?: string | null;
+    calendar_google: string | null;
     /**
      * @type array | undefined
     */
-    readonly links?: CourseLink[];
+    links: CourseLink[];
 };

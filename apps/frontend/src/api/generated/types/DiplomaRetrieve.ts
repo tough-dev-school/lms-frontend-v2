@@ -18,7 +18,7 @@ export type DiplomaRetrieve = {
      * @maxLength 32
      * @type string | undefined
     */
-    slug?: string;
+    slug: string;
     language: LanguageEnum;
     /**
      * @type string, uri
@@ -31,7 +31,7 @@ export type DiplomaRetrieve = {
     /**
      * @type object | undefined
     */
-    readonly other_languages?: {
+    other_languages?: {
         [key: string]: any;
     };
 };

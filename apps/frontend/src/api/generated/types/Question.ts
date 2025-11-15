@@ -10,7 +10,7 @@ export type Question = {
     /**
      * @type string | undefined, uuid
     */
-    slug?: string;
+    slug: string;
     /**
      * @maxLength 256
      * @type string
@@ -23,5 +23,5 @@ export type Question = {
     /**
      * @type string, date-time
     */
-    deadline?: string | null;
+    deadline: string | null;
 };

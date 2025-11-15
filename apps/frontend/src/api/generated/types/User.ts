@@ -12,16 +12,16 @@ export type User = {
     /**
      * @type integer | undefined
     */
-    readonly id?: number;
+    id: number;
     /**
      * @type string | undefined, uuid
     */
-    uuid?: string;
+    uuid: string;
     /**
      * @description Отметьте, если пользователь может входить в административную часть сайта.
      * @type boolean | undefined
     */
-    is_staff?: boolean;
+    is_staff: boolean;
     /**
      * @description Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
      * @maxLength 150
@@ -73,5 +73,5 @@ export type User = {
     /**
      * @type string, uri
     */
-    avatar?: string | null;
+    avatar: string | null;
 };

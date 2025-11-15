@@ -17,12 +17,12 @@ export type Lesson = {
     /**
      * @type integer | undefined
     */
-    readonly id?: number;
+    id: number;
     /**
      * @type object | undefined
     */
     material?: NotionMaterial;
-    readonly homework?: HomeworkStats;
+    homework?: HomeworkStats;
     /**
      * @type object
     */

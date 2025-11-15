@@ -12,7 +12,7 @@ export type PatchedUser = {
     /**
      * @type integer | undefined
     */
-    readonly id?: number;
+    id?: number;
     /**
      * @type string | undefined, uuid
     */

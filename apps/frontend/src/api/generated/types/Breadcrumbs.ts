@@ -18,5 +18,5 @@ export type Breadcrumbs = {
      * @type object
     */
     course: LMSCourse;
-    readonly lesson?: LessonPlain;
+    lesson?: LessonPlain;
 };

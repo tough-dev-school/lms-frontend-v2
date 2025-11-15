@@ -10,5 +10,5 @@ export type Ok = {
     /**
      * @type boolean | undefined
     */
-    readonly ok?: boolean;
+    ok: boolean;
 };

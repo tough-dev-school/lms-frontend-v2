@@ -10,5 +10,5 @@ export type Token = {
     /**
      * @type string | undefined
     */
-    readonly token?: string;
+    token?: string;
 };
