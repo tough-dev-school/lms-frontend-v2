@@ -43,12 +43,9 @@ const client = async <TData, TError = unknown, TVariables = unknown>(
 ): Promise<ResponseConfig<TData>> => {
   const httpClient = createHttpClient();
 
+  // @ts-expect-error axios types are not compatible with our request config
   const response = await httpClient({
-    method: config.method,
-    url: config.url,
-    data: config.data,
-    signal: config.signal,
-    headers: config.headers,
+    ...config,
   });
 
   return {
