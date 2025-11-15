@@ -99,7 +99,12 @@ const fixOptionalProperties: ApplyPatch = (ast) => {
       const typeNode = children.at(-1);
       if (!typeNode) return;
 
-      const typeText = typeNode.text();
+      let typeText = typeNode.text();
+
+      // Remove the leading colon and space from type annotation
+      if (typeText.startsWith(': ')) {
+        typeText = typeText.slice(2);
+      }
 
       // Primary keys (slug, id, uuid) can't be undefined
       if (['slug', 'id', 'uuid'].includes(name)) {
