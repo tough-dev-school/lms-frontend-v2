@@ -1,6 +1,9 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VLessonCard from '@/components/VLessonCard/VLessonCard.vue';
-import type { Lesson, RecommendedVideoProviderEnum } from '@/api/generated-api';
+import type {
+  Lesson,
+  RecommendedVideoProviderEnum,
+} from '@/api/generated/generated-api';
 import { mockQuestion } from '@/mocks/mockQuestion';
 
 export default {

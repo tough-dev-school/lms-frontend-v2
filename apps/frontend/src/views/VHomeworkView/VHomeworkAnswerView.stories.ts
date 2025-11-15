@@ -12,7 +12,7 @@ import type {
   Lesson,
   CrossCheck,
   AnswerTree,
-} from '@/api/generated-api';
+} from '@/api/generated/generated-api';
 
 export default {
   title: 'App/VHomeworkAnswerView',

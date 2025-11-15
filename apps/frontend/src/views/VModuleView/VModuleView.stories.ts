@@ -6,7 +6,10 @@ import { mockModule } from '@/mocks/mockModule';
 import { mockQuestion } from '@/mocks/mockQuestion';
 import { studiesKeys, lmsKeys } from '@/query';
 import { useQueryClient } from '@tanstack/vue-query';
-import type { Lesson, RecommendedVideoProviderEnum } from '@/api/generated-api';
+import type {
+  Lesson,
+  RecommendedVideoProviderEnum,
+} from '@/api/generated/generated-api';
 
 export default {
   title: 'App/VModuleView',

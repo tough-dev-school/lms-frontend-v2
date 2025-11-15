@@ -17,7 +17,7 @@
   import { useQueryClient } from '@tanstack/vue-query';
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
   import VExistingAnswer from '@/components/VExistingAnswer';
-  import type { AnswerTree, User } from '@/api/generated-api';
+  import type { AnswerTree, User } from '@/api/generated/generated-api';
   import { useEditorAutosave } from '@/composables/useEditorAutosave';
   import { getEmptyContent } from '@/utils/tiptap';
   import VThreadProvider from '.';
@@ -91,34 +91,52 @@
 </script>
 
 <template>
-  <div ref="target" class="group">
-    <VAnswer v-if="answer.author.uuid !== user.uuid" :answer-id="answer.slug" />
+  <div
+    ref="target"
+    class="group"
+  >
+    <VAnswer
+      v-if="answer.author.uuid !== user.uuid"
+      :answer-id="answer.slug"
+    />
     <VExistingAnswer
       v-else
       :answer-id="answer.slug"
-      @after-create="handleMounted" />
-    <button class="text-sm link" @click="replyMode = !replyMode">
+      @after-create="handleMounted"
+    />
+    <button
+      class="text-sm link"
+      @click="replyMode = !replyMode"
+    >
       {{ replyMode ? 'Отменить' : 'Ответить' }}
     </button>
-    <div class="thread-ruler" :class="{ 'mt-16': replyMode }">
+    <div
+      class="thread-ruler"
+      :class="{ 'mt-16': replyMode }"
+    >
       <VCreateAnswer
         v-show="replyMode"
         v-model="content"
         :is-pending="isCreateCommentPending"
-        @send="handleCreateComment" />
+        @send="handleCreateComment"
+      />
     </div>
   </div>
-  <div v-if="answer.descendants.length > 0" class="thread-ruler mt-32">
+  <div
+    v-if="answer.descendants.length > 0"
+    class="thread-ruler mt-32"
+  >
     <VThreadProvider
       v-for="descendant in answer.descendants"
       :key="descendant.slug"
       :answer-id="descendant.slug"
-      @update="(slug) => handleUpdate(slug)" />
+      @update="(slug) => handleUpdate(slug)"
+    />
   </div>
 </template>
 
 <style>
   .thread-ruler {
-    @apply flex flex-col gap-16 pl-8 transition-colors tablet:pl-16 border-l border-gray border-opacity-20 hover:border-opacity-100;
+    @apply flex flex-col gap-16 border-l border-gray border-opacity-20 pl-8 transition-colors hover:border-opacity-100 tablet:pl-16;
   }
 </style>

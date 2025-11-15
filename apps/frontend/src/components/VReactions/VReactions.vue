@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ReactionDetailed } from '@/api/generated-api';
+  import type { ReactionDetailed } from '@/api/generated/generated-api';
 
   export enum ReactionEmoji {
     LIKE = '👍',
@@ -115,7 +115,10 @@
 
 <template>
   <div class="flex flex-wrap items-start gap-8">
-    <div v-if="open" class="flex flex-wrap items-start gap-8">
+    <div
+      v-if="open"
+      class="flex flex-wrap items-start gap-8"
+    >
       <VReaction
         v-for="emoji in ALLOWED_REACTIONS"
         :key="emoji"
@@ -124,9 +127,13 @@
         :reactions="groupedReactions[emoji]"
         :disabled="isDisabled(groupedReactions[emoji])"
         @add="handleAdd"
-        @remove="handleRemove" />
+        @remove="handleRemove"
+      />
     </div>
-    <div v-else class="flex flex-wrap items-start gap-8">
+    <div
+      v-else
+      class="flex flex-wrap items-start gap-8"
+    >
       <VReaction
         v-for="(reactionsGroup, emoji) in groupedReactions"
         :key="emoji"
@@ -135,7 +142,8 @@
         :reactions="reactionsGroup"
         :disabled="isDisabled(reactionsGroup)"
         @add="handleAdd"
-        @remove="handleRemove" />
+        @remove="handleRemove"
+      />
     </div>
   </div>
 </template>

@@ -14,8 +14,8 @@ import type {
   PasswordReset,
   PasswordResetConfirm,
   PatchedUser,
-} from './api/generated-api';
-import { ContentType } from './api/generated-api';
+} from './api/generated/generated-api';
+import { ContentType } from './api/generated/generated-api';
 import { useAuth } from './composables/useAuth';
 
 export const baseQueryKey = () => {

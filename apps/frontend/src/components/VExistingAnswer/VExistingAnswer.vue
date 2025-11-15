@@ -8,7 +8,7 @@
     useHomeworkAnswerUpdateMutation,
     useHomeworkAnswerDeleteMutation,
   } from '@/query';
-  import type { AnswerTree, UserSafe } from '@/api/generated-api';
+  import type { AnswerTree, UserSafe } from '@/api/generated/generated-api';
 
   const props = defineProps<{
     answer: AnswerTree;
@@ -61,12 +61,17 @@
 </script>
 
 <template>
-  <VAnswer v-if="!isEdit" :answer="answer" :user="user">
+  <VAnswer
+    v-if="!isEdit"
+    :answer="answer"
+    :user="user"
+  >
     <template #header>
       <VAnswerActions
         v-if="answer.is_editable"
         @edit="isEdit = true"
-        @delete="handleDelete" />
+        @delete="handleDelete"
+      />
     </template>
     <template #footer>
       <slot name="footer" />
@@ -76,5 +81,6 @@
     v-else-if="isEdit"
     v-model="content"
     :is-pending="isUpdatePending"
-    @send="handleUpdate" />
+    @send="handleUpdate"
+  />
 </template>

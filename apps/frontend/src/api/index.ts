@@ -1,5 +1,5 @@
 import onResponseRejected from './onResponseRejected';
-import { Api, HttpClient } from './generated-api';
+import { Api, HttpClient } from './generated/generated-api';
 import onRequestFulfilled from './onRequestFulfilled';
 
 export const createHttpClient = () => {
