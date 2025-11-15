@@ -123,6 +123,16 @@ const fixOptionalProperties: ApplyPatch = (ast) => {
         return;
       }
 
+      if (name === 'created') {
+        const newText = text.replace('?:', ':');
+        edits.push({
+          start: node.range().start.index,
+          end: node.range().end.index,
+          replacement: newText,
+        });
+        return;
+      }
+
       // nullable fields (string | null) can't be undefined
       if (typeText.includes('string | null')) {
         const newText = text.replace('?:', ':');
