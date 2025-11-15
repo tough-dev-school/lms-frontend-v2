@@ -7,7 +7,7 @@
   import { computed, watch } from 'vue';
   import { useQueryClient } from '@tanstack/vue-query';
   import VThread from './VThread.vue';
-  import type { AnswerTree } from '@/api/generated/types';
+  import type { Answer, AnswerTree } from '@/api/generated/types';
 
   const queryClient = useQueryClient();
   const props = defineProps<{
@@ -24,12 +24,14 @@
   );
 
   const populateAnswersCacheFromDescendants = (rootAnswer: AnswerTree) => {
-    const flatAnswers: AnswerTree[] = [];
+    const flatAnswers: Answer[] = [];
 
-    const populate = (a: AnswerTree) => {
+    const populate = (a: Answer | AnswerTree) => {
       flatAnswers.push(a);
 
-      if (a.descendants.length) a.descendants.forEach(populate);
+      if ('descendants' in a && a.descendants.length) {
+        a.descendants.forEach((v) => populate(v));
+      }
     };
 
     populate(rootAnswer);
