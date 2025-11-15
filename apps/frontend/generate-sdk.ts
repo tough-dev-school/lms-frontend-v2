@@ -6,7 +6,7 @@ const OPENAPI_URL = 'http://localhost:8000/api/v2/docs/schema/?format=json';
 const SWAGGER_FILE = path.resolve(process.cwd(), './swagger.json');
 const GENERATED_API_FILE = path.resolve(
   process.cwd(),
-  './src/api/generated-api.ts',
+  './src/api/generated/generated-api.ts',
 );
 
 const openapiData = await fetch(OPENAPI_URL).then((response) =>
@@ -17,7 +17,7 @@ writeFileSync(SWAGGER_FILE, JSON.stringify(openapiData, null, 2));
 
 await generateApi({
   input: SWAGGER_FILE,
-  output: path.resolve(process.cwd(), './src/api/'),
+  output: path.resolve(process.cwd(), './src/api/generated/'),
   httpClientType: 'axios',
   singleHttpClient: true,
   extractEnums: true,

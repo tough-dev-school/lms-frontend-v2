@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { parse, SgNode, Lang } from '@ast-grep/napi';
 
-const typesDirectory = 'src/api/generated/types';
+const typesDirectory = 'src/api/generated/';
 const files = fs.readdirSync(typesDirectory);
 
 interface Edit {
