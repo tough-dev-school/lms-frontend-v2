@@ -7,7 +7,7 @@
   import { computed, watch } from 'vue';
   import { useQueryClient } from '@tanstack/vue-query';
   import VThread from './VThread.vue';
-  import type { AnswerTree } from '@/api/generated-api';
+  import type { AnswerTree } from '@/api/generated/types';
 
   const queryClient = useQueryClient();
   const props = defineProps<{

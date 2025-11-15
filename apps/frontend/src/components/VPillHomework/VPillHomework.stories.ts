@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import VPillHomework from './VPillHomework.vue';
 import dayjs from 'dayjs';
+import { createTemporarySoonToBeDepricatedQuestion } from '@/api/generated';
 
 const meta = {
   component: VPillHomework,
@@ -24,8 +25,7 @@ export const NotSent: Story = {
         hidden_before_crosscheck_completed: 0,
       },
       question: {
-        name: 'Homework 1',
-        text: 'Complete the assignment',
+        ...createTemporarySoonToBeDepricatedQuestion(),
         deadline: tomorrow.toISOString(),
       },
     },
@@ -41,8 +41,7 @@ export const NotSentOverdue: Story = {
         hidden_before_crosscheck_completed: 0,
       },
       question: {
-        name: 'Homework 1',
-        text: 'Complete the assignment',
+        ...createTemporarySoonToBeDepricatedQuestion(),
         deadline: yesterday.toISOString(),
       },
     },
@@ -58,8 +57,7 @@ export const Sent: Story = {
         hidden_before_crosscheck_completed: 0,
       },
       question: {
-        name: 'Homework 1',
-        text: 'Complete the assignment',
+        ...createTemporarySoonToBeDepricatedQuestion(),
         deadline: tomorrow.toISOString(),
       },
       crosschecks: {
@@ -79,8 +77,7 @@ export const SentWithPendingCrosscheck: Story = {
         hidden_before_crosscheck_completed: 2,
       },
       question: {
-        name: 'Homework 1',
-        text: 'Complete the assignment',
+        ...createTemporarySoonToBeDepricatedQuestion(),
         deadline: today.toISOString(),
       },
       crosschecks: {
@@ -100,8 +97,7 @@ export const SentWithFutureCrosscheck: Story = {
         hidden_before_crosscheck_completed: 0,
       },
       question: {
-        name: 'Homework 1',
-        text: 'Complete the assignment',
+        ...createTemporarySoonToBeDepricatedQuestion(),
         deadline: twoDaysAgo.toISOString(),
       },
       crosschecks: {

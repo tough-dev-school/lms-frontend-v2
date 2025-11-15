@@ -6,6 +6,8 @@ import {
   createUserSafe,
   createQuestion,
   createModule,
+  createCourse,
+  createTemporarySoonToBeDepricatedQuestion,
 } from '@/api/generated/mocks';
 import {
   homeworkQuestionsRetrieveQueryKey,
@@ -50,9 +52,9 @@ const STATIC_QUESTION: QuestionDetail = {
       checked: 3,
     },
     question: {
+      ...createTemporarySoonToBeDepricatedQuestion(),
       slug: 'javascript-fundamentals',
       name: 'Основы JavaScript',
-      text: 'Выполните задания по основам JavaScript',
       deadline: '2024-02-01T23:59:00Z',
     },
   },
@@ -65,12 +67,14 @@ const STATIC_QUESTION: QuestionDetail = {
       id: 1,
     },
     course: {
+      ...createCourse(),
       id: 1,
       name: 'Курс веб-разработки',
       slug: 'web-development',
     },
   },
   course: {
+    ...createCourse(),
     id: 1,
     name: 'Курс веб-разработки',
     slug: 'web-development',
@@ -89,9 +93,9 @@ const STATIC_LESSON: Lesson = {
       checked: 3,
     },
     question: {
+      ...createTemporarySoonToBeDepricatedQuestion(),
       slug: 'javascript-fundamentals',
       name: 'Основы JavaScript',
-      text: 'Выполните задания по основам JavaScript',
       deadline: '2024-02-01T23:59:00Z',
     },
   },
@@ -141,6 +145,7 @@ const STATIC_ANSWER = createAnswerTree({
 
 const STATIC_CROSSCHECKS: CrossCheck[] = [
   {
+    id: 1,
     is_checked: true,
     answer: {
       slug: 'other-answer-1',
@@ -150,6 +155,7 @@ const STATIC_CROSSCHECKS: CrossCheck[] = [
     },
   },
   {
+    id: 2,
     is_checked: true,
     answer: {
       slug: 'other-answer-2',
@@ -159,6 +165,7 @@ const STATIC_CROSSCHECKS: CrossCheck[] = [
     },
   },
   {
+    id: 3,
     is_checked: false,
     answer: {
       slug: 'other-answer-3',

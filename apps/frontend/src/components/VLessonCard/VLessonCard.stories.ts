@@ -4,7 +4,10 @@ import type {
   Lesson,
   RecommendedVideoProviderEnum,
 } from '@/api/generated/types';
-import { createQuestion } from '@/api/generated/mocks';
+import {
+  createQuestion,
+  createTemporarySoonToBeDepricatedQuestion,
+} from '@/api/generated/mocks';
 
 export default {
   title: 'UI/VLessonCard',
@@ -79,10 +82,9 @@ const homeworkWithCrosschecks: Lesson = {
       checked: 3,
     },
     question: {
+      ...createTemporarySoonToBeDepricatedQuestion(),
       slug: 'javascript-fundamentals',
       name: 'Основы JavaScript',
-      text: 'Выполните задания по основам JavaScript',
-      deadline: '2024-01-25T23:59:00Z',
     },
   },
 };
@@ -97,10 +99,9 @@ const homeworkWithoutCrosschecks: Lesson = {
     },
     is_sent: false,
     question: {
+      ...createTemporarySoonToBeDepricatedQuestion(),
       slug: 'css-layouts',
       name: 'CSS Layouts',
-      text: 'Создайте адаптивный layout',
-      deadline: '2024-01-30T23:59:00Z',
     },
   },
 };
@@ -181,6 +182,13 @@ export const ComplexLesson = {
           text: 'Реализуйте типизированную архитектуру',
           deadline: '2024-02-10T23:59:00Z',
         },
+      },
+      question: {
+        ...createQuestion(),
+        slug: 'typescript-advanced',
+        name: 'Продвинутый TypeScript',
+        text: 'Реализуйте типизированную архитектуру',
+        deadline: '2024-02-10T23:59:00Z',
       },
       material: {
         id: 'material-456',

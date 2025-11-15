@@ -3,7 +3,7 @@ import VReaction from './VReaction.vue';
 import VCard from '@/components/VCard/VCard.vue';
 import { faker } from '@faker-js/faker';
 import { ALLOWED_REACTIONS } from '@/components/VReactions/VReactions.vue';
-import { createReactionDetailed } from '@/api/generated/mocks';
+import { createReactionDetailed, createUserSafe } from '@/api/generated/mocks';
 import { times } from 'lodash-es';
 
 const userId = faker.string.uuid();
@@ -39,7 +39,13 @@ export const Own = {
     userId,
     emoji,
     reactions: [
-      ...times(1, () => createReactionDetailed({ author: { uuid: userId } })),
+      ...times(1, () =>
+        createReactionDetailed({
+          author: createUserSafe({
+            uuid: userId,
+          }),
+        }),
+      ),
       ...times(3, () => createReactionDetailed()),
     ],
   },

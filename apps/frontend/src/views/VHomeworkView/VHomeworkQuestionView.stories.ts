@@ -1,7 +1,13 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VHomeworkQuestionView from './VHomeworkQuestionView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
-import { createQuestion, createModule } from '@/api/generated/mocks';
+import {
+  createQuestion,
+  createModule,
+  createTemporarySoonToBeDepricatedQuestion,
+  createCourse,
+  createQuestionCourse,
+} from '@/api/generated/mocks';
 import {
   homeworkQuestionsRetrieveQueryKey,
   lmsLessonsRetrieveQueryKey,
@@ -34,9 +40,9 @@ const STATIC_QUESTION: QuestionDetail = {
   homework: {
     is_sent: false,
     question: {
+      ...createTemporarySoonToBeDepricatedQuestion(),
       slug: 'react-components',
       name: 'Создание React компонентов',
-      text: 'Создайте несколько React компонентов согласно требованиям',
       deadline: '2024-02-15T23:59:00Z',
     },
   },
@@ -49,12 +55,14 @@ const STATIC_QUESTION: QuestionDetail = {
       id: 2,
     },
     course: {
+      ...createCourse(),
       id: 1,
       name: 'Курс веб-разработки',
       slug: 'web-development',
     },
   },
   course: {
+    ...createQuestionCourse(),
     id: 1,
     name: 'Курс веб-разработки',
     slug: 'web-development',
@@ -69,9 +77,9 @@ const STATIC_LESSON: Lesson = {
   homework: {
     is_sent: false,
     question: {
+      ...createTemporarySoonToBeDepricatedQuestion(),
       slug: 'react-components',
       name: 'Создание React компонентов',
-      text: 'Создайте несколько React компонентов согласно требованиям',
       deadline: '2024-02-15T23:59:00Z',
     },
   },
