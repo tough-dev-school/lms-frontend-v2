@@ -14,8 +14,8 @@ import type {
   PasswordReset,
   PasswordResetConfirm,
   PatchedUser,
-} from './api/generated-api';
-import { ContentType } from './api/generated-api';
+} from './api/generated/generated-api';
+import { ContentType } from './api/generated/generated-api';
 import { useAuth } from './composables/useAuth';
 
 export const baseQueryKey = () => {
@@ -387,7 +387,7 @@ export const useHomeworkAnswerCreateMutation = (queryClient: QueryClient) => {
       questionId,
       parentId,
     }: {
-      content: string | object;
+      content: Record<string, unknown>;
       questionId: string;
       parentId?: string;
     }) => {
@@ -418,7 +418,7 @@ export const useHomeworkAnswerUpdateMutation = (queryClient: QueryClient) => {
       content,
     }: {
       answerId: string;
-      content: string | object;
+      content: Record<string, unknown>;
     }) =>
       await api.homeworkAnswersPartialUpdate(answerId, {
         content,

@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { faker } from '@faker-js/faker';
 import { mockUserSafe } from './mockUserSafe';
-import type { AnswerTree } from '@/api/generated-api';
+import type { AnswerTree } from '@/api/generated/generated-api';
 
 export const mockAnswer = (
   payload: Partial<AnswerTree> = {},

@@ -1,4 +1,4 @@
-import type { UserSafe } from '@/api/generated-api';
+import type { UserSafe } from '@/api/generated/generated-api';
 import { fakerRU as faker } from '@faker-js/faker';
 
 export const mockUserSafe = ({

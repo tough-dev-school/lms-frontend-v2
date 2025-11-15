@@ -1,4 +1,4 @@
-import type { Breadcrumbs } from '@/api/generated-api';
+import type { Breadcrumbs } from '@/api/generated/generated-api';
 import { mockModule } from './mockModule';
 import { mockLMSCourse } from './mockLMSCourse';
 import { mockLessonPlain } from './mockLessonPlain';

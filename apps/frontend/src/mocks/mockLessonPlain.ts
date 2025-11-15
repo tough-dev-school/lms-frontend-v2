@@ -1,4 +1,4 @@
-import type { LessonPlain } from '@/api/generated-api';
+import type { LessonPlain } from '@/api/generated/generated-api';
 import { faker } from '@faker-js/faker';
 
 export const mockLessonPlain = (

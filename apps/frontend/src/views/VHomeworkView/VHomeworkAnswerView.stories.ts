@@ -12,7 +12,7 @@ import type {
   Lesson,
   CrossCheck,
   AnswerTree,
-} from '@/api/generated-api';
+} from '@/api/generated/generated-api';
 
 export default {
   title: 'App/VHomeworkAnswerView',
@@ -42,7 +42,6 @@ const STATIC_QUESTION: QuestionDetail = {
     question: {
       slug: 'javascript-fundamentals',
       name: 'Основы JavaScript',
-      text: 'Выполните задания по основам JavaScript',
       deadline: '2024-02-01T23:59:00Z',
     },
   },
@@ -58,6 +57,9 @@ const STATIC_QUESTION: QuestionDetail = {
       id: 1,
       name: 'Курс веб-разработки',
       slug: 'web-development',
+      chat: 'https://t.me/test',
+      calendar_ios: 'https://calendar.apple.com/test',
+      calendar_google: 'https://calendar.google.com/test',
     },
   },
   course: {
@@ -66,6 +68,9 @@ const STATIC_QUESTION: QuestionDetail = {
     slug: 'web-development',
     homework_check_recommendations:
       'При проверке домашних заданий обратите внимание на чистоту кода, правильность реализации алгоритмов и соответствие требованиям.',
+    chat: 'https://t.me/test',
+    calendar_ios: 'https://calendar.apple.com/test',
+    calendar_google: 'https://calendar.google.com/test',
   },
 };
 
@@ -81,7 +86,6 @@ const STATIC_LESSON: Lesson = {
     question: {
       slug: 'javascript-fundamentals',
       name: 'Основы JavaScript',
-      text: 'Выполните задания по основам JavaScript',
       deadline: '2024-02-01T23:59:00Z',
     },
   },
@@ -131,6 +135,7 @@ const STATIC_ANSWER = mockAnswer({
 
 const STATIC_CROSSCHECKS: CrossCheck[] = [
   {
+    id: 1,
     is_checked: true,
     answer: {
       slug: 'other-answer-1',
@@ -140,6 +145,7 @@ const STATIC_CROSSCHECKS: CrossCheck[] = [
     },
   },
   {
+    id: 2,
     is_checked: true,
     answer: {
       slug: 'other-answer-2',
@@ -149,6 +155,7 @@ const STATIC_CROSSCHECKS: CrossCheck[] = [
     },
   },
   {
+    id: 3,
     is_checked: false,
     answer: {
       slug: 'other-answer-3',
