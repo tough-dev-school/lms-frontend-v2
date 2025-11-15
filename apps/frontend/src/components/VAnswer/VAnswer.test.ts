@@ -7,8 +7,7 @@ import type VAnswerContent from '@/components/VAnswerContent/VAnswerContent.vue'
 import dayjs from 'dayjs';
 import { cloneDeep } from 'lodash-es';
 import { faker } from '@faker-js/faker';
-import { mockAnswer } from '@/mocks/mockAnswer';
-import { mockUserSafe } from '@/mocks/mockUserSafe';
+import { createAnswerTree, createUserSafe } from '@/api/generated/mocks';
 import {
   useHomeworkAnswersReactionsDestroy,
   useHomeworkAnswersReactionsCreate,
@@ -17,11 +16,9 @@ import {
 const uuid = faker.string.uuid();
 
 const defaultProps = {
-  answer: mockAnswer(),
-  user: mockUserSafe({
-    payload: {
-      uuid,
-    },
+  answer: createAnswerTree(),
+  user: createUserSafe({
+    uuid,
   }),
 };
 

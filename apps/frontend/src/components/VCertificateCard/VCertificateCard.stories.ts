@@ -1,6 +1,8 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VCertificateCard from '@/components/VCertificateCard/VCertificateCard.vue';
-import { mockDiplomaData, mockDiplomaSet } from '@/mocks/mockDiploma';
+import { createDiploma } from '@/api/generated/mocks';
+import { languageEnumEnum } from '@/api/generated/types';
+import type { Diploma } from '@/api/generated/types';
 
 export default {
   title: 'UI/VCertificateCard',
@@ -15,7 +17,17 @@ const Template: StoryFn = (args) => ({
   template: '<VCertificateCard v-bind="args">This is card</VCertificateCard>',
 });
 
-const diplomas = mockDiplomaSet(mockDiplomaData());
+const createDiplomaSet = (payload: Diploma): Diploma[] => {
+  return Object.values(languageEnumEnum).map((locale) => {
+    return {
+      ...payload,
+      language: locale,
+      course: { product_name: payload.course.product_name },
+    };
+  });
+};
+
+const diplomas = createDiplomaSet(createDiploma());
 
 export const Default = {
   render: Template,

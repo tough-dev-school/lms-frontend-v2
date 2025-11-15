@@ -1,10 +1,12 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VHomeworkAnswerView from './VHomeworkAnswerView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
-import { mockAnswer } from '@/mocks/mockAnswer';
-import { mockUserSafe, STATIC_AUTHOR_1 } from '@/mocks/mockUserSafe';
-import { mockQuestion } from '@/mocks/mockQuestion';
-import { mockModule } from '@/mocks/mockModule';
+import {
+  createAnswerTree,
+  createUserSafe,
+  createQuestion,
+  createModule,
+} from '@/api/generated/mocks';
 import {
   homeworkQuestionsRetrieveQueryKey,
   homeworkAnswersRetrieveQueryKey,
@@ -31,9 +33,11 @@ export default {
   },
 } as Meta;
 
+const STATIC_AUTHOR_1 = createUserSafe();
+
 // Mock data using existing patterns
 const STATIC_QUESTION: QuestionDetail = {
-  ...mockQuestion({
+  ...createQuestion({
     slug: 'javascript-fundamentals',
     name: 'Основы JavaScript',
     markdown_text: `Выполните задания по основам JavaScript. Создайте простое приложение, которое демонстрирует работу с переменными, функциями и объектами.`,
@@ -53,7 +57,7 @@ const STATIC_QUESTION: QuestionDetail = {
     },
   },
   breadcrumbs: {
-    module: mockModule({
+    module: createModule({
       id: 1,
       name: 'Основы программирования',
     }),
@@ -77,7 +81,7 @@ const STATIC_QUESTION: QuestionDetail = {
 
 const STATIC_LESSON: Lesson = {
   id: 1,
-  question: mockQuestion(),
+  question: createQuestion(),
   homework: {
     is_sent: true,
     crosschecks: {
@@ -93,7 +97,7 @@ const STATIC_LESSON: Lesson = {
   },
 };
 
-const STATIC_ANSWER = mockAnswer({
+const STATIC_ANSWER = createAnswerTree({
   slug: 'answer-123',
   question: 'javascript-fundamentals',
   author: STATIC_AUTHOR_1,
@@ -112,11 +116,11 @@ const STATIC_ANSWER = mockAnswer({
     ],
   },
   descendants: [
-    mockAnswer({
+    createAnswerTree({
       slug: 'comment-1',
       question: 'javascript-fundamentals',
       parent: 'answer-123',
-      author: mockUserSafe({ seed: 2 }),
+      author: createUserSafe(),
       content: {
         type: 'doc',
         content: [
@@ -141,8 +145,8 @@ const STATIC_CROSSCHECKS: CrossCheck[] = [
     answer: {
       slug: 'other-answer-1',
       url: '/homework/javascript-fundamentals?answerId=other-answer-1',
-      question: mockQuestion({ slug: 'javascript-fundamentals' }),
-      author: mockUserSafe({ seed: 3 }),
+      question: createQuestion({ slug: 'javascript-fundamentals' }),
+      author: createUserSafe(),
     },
   },
   {
@@ -150,8 +154,8 @@ const STATIC_CROSSCHECKS: CrossCheck[] = [
     answer: {
       slug: 'other-answer-2',
       url: '/homework/javascript-fundamentals?answerId=other-answer-2',
-      question: mockQuestion({ slug: 'javascript-fundamentals' }),
-      author: mockUserSafe({ seed: 4 }),
+      question: createQuestion({ slug: 'javascript-fundamentals' }),
+      author: createUserSafe(),
     },
   },
   {
@@ -159,8 +163,8 @@ const STATIC_CROSSCHECKS: CrossCheck[] = [
     answer: {
       slug: 'other-answer-3',
       url: '/homework/javascript-fundamentals?answerId=other-answer-3',
-      question: mockQuestion({ slug: 'javascript-fundamentals' }),
-      author: mockUserSafe({ seed: 5 }),
+      question: createQuestion({ slug: 'javascript-fundamentals' }),
+      author: createUserSafe(),
     },
   },
 ];
@@ -229,11 +233,11 @@ export const OtherUserAnswer = {
   args: {
     answerId: 'answer-456',
     question: STATIC_QUESTION,
-    answer: mockAnswer({
+    answer: createAnswerTree({
       ...STATIC_ANSWER,
       slug: 'answer-456',
       question: 'javascript-fundamentals',
-      author: mockUserSafe({ seed: 2 }),
+      author: createUserSafe(),
     }),
     lesson: STATIC_LESSON,
     user: STATIC_AUTHOR_1,

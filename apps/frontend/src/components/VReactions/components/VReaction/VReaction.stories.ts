@@ -3,7 +3,7 @@ import VReaction from './VReaction.vue';
 import VCard from '@/components/VCard/VCard.vue';
 import { faker } from '@faker-js/faker';
 import { ALLOWED_REACTIONS } from '@/components/VReactions/VReactions.vue';
-import { mockReactionDetailed } from '@/mocks/mockReactionDetailed';
+import { createReactionDetailed } from '@/api/generated/mocks';
 import { times } from 'lodash-es';
 
 const userId = faker.string.uuid();
@@ -28,7 +28,7 @@ export const Default = {
     userId,
     emoji,
     reactions: times(faker.number.int({ min: 1, max: 10 }), () =>
-      mockReactionDetailed(),
+      createReactionDetailed(),
     ),
   },
 };
@@ -39,8 +39,8 @@ export const Own = {
     userId,
     emoji,
     reactions: [
-      ...times(1, () => mockReactionDetailed({ author: { uuid: userId } })),
-      ...times(3, () => mockReactionDetailed()),
+      ...times(1, () => createReactionDetailed({ author: { uuid: userId } })),
+      ...times(3, () => createReactionDetailed()),
     ],
   },
 };
@@ -51,7 +51,7 @@ export const Disabled = {
     userId,
     emoji,
     reactions: times(faker.number.int({ min: 1, max: 10 }), () =>
-      mockReactionDetailed(),
+      createReactionDetailed(),
     ),
     disabled: true,
   },

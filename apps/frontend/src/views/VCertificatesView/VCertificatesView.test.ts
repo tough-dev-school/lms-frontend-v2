@@ -2,7 +2,9 @@ import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import VCertificatesView from './VCertificatesView.vue';
 import type VCertificateCard from '@/components/VCertificateCard/VCertificateCard.vue';
-import { mockDiplomaData, mockDiplomaSet } from '@/mocks/mockDiploma';
+import { createDiploma } from '@/api/generated/mocks';
+import { languageEnumEnum } from '@/api/generated/types';
+import type { Diploma } from '@/api/generated/types';
 import { uniq, flatten } from 'lodash-es';
 import { nextTick, ref } from 'vue';
 import { faker } from '@faker-js/faker';
@@ -13,9 +15,19 @@ const defaultProps = {};
 
 vi.mock('@/api/generated/hooks');
 
+const createDiplomaSet = (payload: Diploma): Diploma[] => {
+  return Object.values(languageEnumEnum).map((locale) => {
+    return {
+      ...payload,
+      language: locale,
+      course: { product_name: payload.course.product_name },
+    };
+  });
+};
+
 const mockDiplomas = () =>
   flatten(
-    faker.helpers.multiple(() => mockDiplomaSet(mockDiplomaData()), {
+    faker.helpers.multiple(() => createDiplomaSet(createDiploma()), {
       count: 5,
     }),
   );

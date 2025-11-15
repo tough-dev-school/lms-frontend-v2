@@ -1,8 +1,7 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VHomeworkQuestionView from './VHomeworkQuestionView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
-import { mockQuestion } from '@/mocks/mockQuestion';
-import { mockModule } from '@/mocks/mockModule';
+import { createQuestion, createModule } from '@/api/generated/mocks';
 import {
   homeworkQuestionsRetrieveQueryKey,
   lmsLessonsRetrieveQueryKey,
@@ -42,7 +41,7 @@ const STATIC_QUESTION: QuestionDetail = {
     },
   },
   breadcrumbs: {
-    module: mockModule({
+    module: createModule({
       id: 2,
       name: 'React разработка',
     }),
@@ -66,7 +65,7 @@ const STATIC_QUESTION: QuestionDetail = {
 
 const STATIC_LESSON: Lesson = {
   id: 2,
-  question: mockQuestion(),
+  question: createQuestion(),
   homework: {
     is_sent: false,
     question: {

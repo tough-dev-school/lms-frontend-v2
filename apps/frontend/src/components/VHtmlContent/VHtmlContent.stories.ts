@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
-import { mockContent } from '@/mocks/mockContent';
+import { mockContent } from '@/api/generated/mocks';
 
 export default {
   title: 'Answer/VHtmlContent',

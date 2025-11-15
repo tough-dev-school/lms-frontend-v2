@@ -4,7 +4,6 @@ import VCoursesView from './VCoursesView.vue';
 import type { RouterLink } from 'vue-router';
 import { nextTick, ref } from 'vue';
 import { faker } from '@faker-js/faker';
-import { mockCourse } from '@/mocks/mockCourse';
 import { usePurchasedCoursesList } from '@/api/generated/hooks';
 import { VueQueryPlugin, QueryClient } from '@tanstack/vue-query';
 import type { VueQueryPluginOptions } from '@tanstack/vue-query';
