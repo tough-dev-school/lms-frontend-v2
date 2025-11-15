@@ -11,7 +11,7 @@
     "tests/unit.config.ts",
     ".storybook/main.ts",
     ".storybook/preview.ts",
-    "generate-sdk.ts",
+    "kubb.config.ts",
     "src/queryClient.ts"
   ],
   "compilerOptions": {

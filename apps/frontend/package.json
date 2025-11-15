@@ -18,7 +18,7 @@
     "storybook": "storybook dev -p 3001",
     "storybook:build": "storybook build",
     "storybook:preview": "serve storybook-static/",
-    "generate-sdk": "node --experimental-strip-types generate-sdk.ts"
+    "generate-api": "kubb generate"
   },
   "dependencies": {
     "@brachkow/email-providers": "^1.2.0",
@@ -49,6 +49,13 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250724.0",
     "@faker-js/faker": "^8.4.1",
+    "@kubb/cli": "^4.5.9",
+    "@kubb/core": "^4.5.9",
+    "@kubb/plugin-client": "^4.5.9",
+    "@kubb/plugin-msw": "^4.5.9",
+    "@kubb/plugin-oas": "^4.5.9",
+    "@kubb/plugin-ts": "^4.5.9",
+    "@kubb/plugin-vue-query": "^4.5.9",
     "@storybook/addon-docs": "^9.0.14",
     "@storybook/vue3-vite": "^9.0.14",
     "@tailwindcss/typography": "^0.5.10",
