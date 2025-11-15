@@ -48,7 +48,7 @@ const callWithVideo: Lesson = {
       },
     ],
     recommended_video_provider:
-      'youtube' as RecommendedVideoProviderEnum.Youtube,
+      'youtube' as RecommendedVideoProviderEnum.youtube,
   },
 };
 
