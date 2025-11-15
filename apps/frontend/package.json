@@ -18,7 +18,7 @@
     "storybook": "storybook dev -p 3001",
     "storybook:build": "storybook build",
     "storybook:preview": "serve storybook-static/",
-    "generate-sdk": "node --experimental-strip-types generate-sdk.ts; tsx patch-api.ts"
+    "generate-api": "node --experimental-strip-types generate-sdk.ts; tsx patch-api.ts"
   },
   "dependencies": {
     "@brachkow/email-providers": "^1.2.0",
