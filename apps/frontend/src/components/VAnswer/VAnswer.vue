@@ -33,7 +33,7 @@
     mutation: {
       onSuccess: (_, variables) => {
         queryClient.invalidateQueries({
-          queryKey: homeworkAnswersRetrieveQueryKey(variables.slug),
+          queryKey: homeworkAnswersRetrieveQueryKey(variables.answer_slug),
         });
       },
     },
