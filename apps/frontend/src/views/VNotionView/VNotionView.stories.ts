@@ -6,7 +6,7 @@ import { mockLMSCourse } from '@/mocks/mockLMSCourse';
 import { mockModule } from '@/mocks/mockModule';
 import { materialsRetrieveQueryKey } from '@/api/generated/hooks';
 import { useQueryClient } from '@tanstack/vue-query';
-import type { MaterialSerilizer } from '@/api/generated-api';
+import type { MaterialSerilizer } from '@/api/generated/types';
 
 export default {
   title: 'App/VNotionView',

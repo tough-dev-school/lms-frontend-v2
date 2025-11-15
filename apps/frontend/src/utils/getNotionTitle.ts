@@ -1,4 +1,4 @@
-import type { MaterialSerilizer } from '@/api/generated-api';
+import type { MaterialSerilizer } from '@/api/generated/types';
 import idToUuid from './idToUuid';
 
 const getNotionTitle = (

@@ -27,7 +27,7 @@
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
   import { getEmptyContent } from '@/utils/tiptap';
   import VMakrdownContent from '@/components/VMakrdownContent/VMakrdownContent.vue';
-  import type { AnswerTree } from '@/api/generated-api';
+  import type { AnswerTree } from '@/api/generated/types';
 
   const props = defineProps<{
     questionId: string;

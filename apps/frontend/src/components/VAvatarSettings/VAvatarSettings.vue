@@ -9,7 +9,7 @@
     usersMeRetrieveQueryKey,
   } from '@/api/generated/hooks';
   import { useQueryClient } from '@tanstack/vue-query';
-  import { ContentType } from '@/api/generated-api';
+  import { ContentType } from '@/api/generated/types';
 
   const queryClient = useQueryClient();
   const { data: user } = useUsersMeRetrieve();

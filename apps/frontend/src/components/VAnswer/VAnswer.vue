@@ -14,7 +14,7 @@
     homeworkAnswersRetrieveQueryKey,
   } from '@/api/generated/hooks';
   import { useQueryClient } from '@tanstack/vue-query';
-  import type { AnswerTree, UserSafe } from '@/api/generated-api';
+  import type { AnswerTree, UserSafe } from '@/api/generated/types';
 
   const props = defineProps<{
     answer: AnswerTree;

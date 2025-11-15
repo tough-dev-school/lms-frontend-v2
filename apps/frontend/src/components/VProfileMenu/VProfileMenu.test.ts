@@ -7,7 +7,7 @@ import { VueQueryPlugin, QueryClient } from '@tanstack/vue-query';
 import type { VueQueryPluginOptions } from '@tanstack/vue-query';
 import { ref } from 'vue';
 import { useUsersMeRetrieve } from '@/api/generated/hooks';
-import type { User } from '@/api/generated-api';
+import type { User } from '@/api/generated/types';
 import { useRouter } from 'vue-router';
 
 const routerPushMock = vi.fn();

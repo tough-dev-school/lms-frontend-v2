@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import VCard from '@/components/VCard/VCard.vue';
-  import type { Diploma } from '@/api/generated-api';
+  import type { Diploma } from '@/api/generated/types';
   import VCertificate from '@/components/VCertificate/VCertificate.vue';
 
   export interface Props {
@@ -16,13 +16,15 @@
     tag="section"
     data-testid="container"
     class="grid gap-16"
-    :title="`Курс «${course}»`">
+    :title="`Курс «${course}»`"
+  >
     <ul class="grid gap-32 phone:grid-cols-2">
       <VCertificate
         v-for="certificate in certificates"
         :key="certificate.slug"
         data-testid="certificate"
-        :certificate="certificate" />
+        :certificate="certificate"
+      />
     </ul>
   </VCard>
 </template>

@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { mockEmoji } from './mockEmoji';
 import { mockUserSafe, STATIC_AUTHOR_1, STATIC_AUTHOR_2 } from './mockUserSafe';
-import type { ReactionDetailed } from '@/api/generated-api';
+import type { ReactionDetailed } from '@/api/generated/types';
 import { ReactionEmoji } from '@/components/VReactions/VReactions.vue';
 
 export const mockReactionDetailed = (

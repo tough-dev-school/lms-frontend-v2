@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ReactionDetailed } from '@/api/generated-api';
+  import type { ReactionDetailed } from '@/api/generated/types';
 
   export enum ReactionEmoji {
     LIKE = '👍',

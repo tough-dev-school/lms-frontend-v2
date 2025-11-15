@@ -1,4 +1,4 @@
-import type { Module } from '@/api/generated-api';
+import type { Module } from '@/api/generated/types';
 import { faker } from '@faker-js/faker';
 import dayjs from 'dayjs';
 

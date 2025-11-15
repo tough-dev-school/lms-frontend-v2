@@ -9,8 +9,8 @@
     usersMeRetrieveQueryKey,
     usersMeRetrieveQueryOptions,
   } from '@/api/generated/hooks';
-  import { GenderEnum, BlankEnum } from '@/api/generated-api';
-  import type { PatchedUser } from '@/api/generated-api';
+  import { GenderEnum, BlankEnum } from '@/api/generated/types';
+  import type { PatchedUser } from '@/api/generated/types';
 
   const queryClient = useQueryClient();
   const { mutateAsync: updateUser, isPending } = useUsersMePartialUpdate({

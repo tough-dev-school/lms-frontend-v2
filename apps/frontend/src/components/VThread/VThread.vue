@@ -22,7 +22,7 @@
   import { useQueryClient } from '@tanstack/vue-query';
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
   import VExistingAnswer from '@/components/VExistingAnswer';
-  import type { AnswerTree, User } from '@/api/generated-api';
+  import type { AnswerTree, User } from '@/api/generated/types';
   import { useEditorAutosave } from '@/composables/useEditorAutosave';
   import { getEmptyContent } from '@/utils/tiptap';
   import VThreadProvider from '.';

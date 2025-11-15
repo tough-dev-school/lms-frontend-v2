@@ -8,7 +8,7 @@ import {
   lmsLessonsRetrieveQueryKey,
 } from '@/api/generated/hooks';
 import { useQueryClient } from '@tanstack/vue-query';
-import type { QuestionDetail, Lesson } from '@/api/generated-api';
+import type { QuestionDetail, Lesson } from '@/api/generated/types';
 
 export default {
   title: 'App/VHomeworkQuestionView',

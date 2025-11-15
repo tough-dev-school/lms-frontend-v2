@@ -10,7 +10,7 @@
     homeworkAnswersRetrieveQueryKey,
     lmsLessonsListQueryKey,
   } from '@/api/generated/hooks';
-  import type { AnswerTree, UserSafe } from '@/api/generated-api';
+  import type { AnswerTree, UserSafe } from '@/api/generated/types';
 
   const props = defineProps<{
     answer: AnswerTree;

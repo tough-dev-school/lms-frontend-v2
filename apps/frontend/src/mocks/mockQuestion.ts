@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import type { Question } from '@/api/generated-api';
+import type { Question } from '@/api/generated/types';
 
 export const mockQuestion = (
   payload: Partial<Question> = {},

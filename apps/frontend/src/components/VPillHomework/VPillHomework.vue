@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import VPill from '@/components/VPill/VPill.vue';
   import VPillItem from '@/components/VPill/VPillItem.vue';
-  import type { HomeworkStats } from '@/api/generated-api';
+  import type { HomeworkStats } from '@/api/generated/types';
   import { computed } from 'vue';
   import { formatDate, formatDateTime } from '@/utils/date';
   import dayjs from 'dayjs';
@@ -41,7 +41,8 @@
     </VPillItem>
     <VPillItem
       v-if="stats.is_sent && stats.crosschecks"
-      :class="{ 'text-gray': crossCheckDate && !isOverCrossCheckDate }">
+      :class="{ 'text-gray': crossCheckDate && !isOverCrossCheckDate }"
+    >
       <div>
         <div>
           Работы на проверку:
@@ -56,7 +57,8 @@
     </VPillItem>
     <VPillItem
       v-if="stats.question?.deadline"
-      :class="{ 'text-red': isOverdue }">
+      :class="{ 'text-red': isOverdue }"
+    >
       <div>
         <div>Дедлайн: {{ formatDateTime(stats.question?.deadline) }}</div>
         <div v-if="isOverdue">Просрочен</div>

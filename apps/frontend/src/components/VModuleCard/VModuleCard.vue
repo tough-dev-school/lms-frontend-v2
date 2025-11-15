@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import VHeading from '@/components/VHeading/VHeading.vue';
-  import type { Module } from '@/api/generated-api';
+  import type { Module } from '@/api/generated/types';
   import VTag from '../VTag/VTag.vue';
   import { formatDate } from '@/utils/date';
 
@@ -25,12 +25,16 @@
   <div
     :class="[
       cardClass(index),
-      'VModuleCard text-black min-h-120 rounded-16 p-16 tablet:p-24 flex flex-col gap-8',
+      'VModuleCard flex min-h-120 flex-col gap-8 rounded-16 p-16 text-black tablet:p-24',
       module.has_started
-        ? 'transition-all hover:scale-[1.02] ease-out duration-100 origin-center hover:shadow'
-        : 'grayscale pointer-events-none cursor-not-allowed',
-    ]">
-    <div v-if="module.start_date" class="flex justify-start">
+        ? 'origin-center transition-all duration-100 ease-out hover:scale-[1.02] hover:shadow'
+        : 'pointer-events-none cursor-not-allowed grayscale',
+    ]"
+  >
+    <div
+      v-if="module.start_date"
+      class="flex justify-start"
+    >
       <VTag>{{ formatDate(module.start_date, 'DD.MM') }}</VTag>
     </div>
     <VHeading tag="h3">{{ module.name }}</VHeading>
