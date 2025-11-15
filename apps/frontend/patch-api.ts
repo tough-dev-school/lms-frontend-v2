@@ -12,12 +12,14 @@ files.forEach((file) => {
   fileContent = fileContent.replace(/readonly /g, '');
 
   // Backend side issues:
-  fileContent = fileContent.replace(/(slug|id|uuid)\?:/g, '$1:');
-  fileContent = fileContent.replace(/(name)\?:/g, '$1:');
+  fileContent = fileContent.replace(/(slug|id|uuid)\?:/g, '$1:'); // primary key can't be undefined
+  fileContent = fileContent.replace(/(name)\?:/g, '$1:'); // name can't be undefined
   fileContent = fileContent.replace(
     /(\w+)\?: string \| null;/g,
     '$1: string | null;',
-  );
+  ); // nullable fields can't be undefined
+
+  fileContent = fileContent.replace(/(\w+)\?: (\w+)\[];/g, '$1: $2[];'); // array can't be undefined, they can be empty
 
   fs.writeFileSync(filePath, fileContent);
 });
