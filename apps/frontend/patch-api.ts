@@ -34,6 +34,24 @@ const applyTransformations = (edits: Edit[], fileContent: string) => {
 const removeReadonlyModifiers: ApplyPatch = (ast) => {
   const edits: Edit[] = [];
 
+  // Handle readonly in property signatures (e.g., readonly price?: Price)
+  ast
+    .findAll({ rule: { kind: 'property_signature' } })
+    .forEach((node: SgNode) => {
+      const children = node.children();
+      for (const child of children) {
+        if (child.text() === 'readonly') {
+          edits.push({
+            start: child.range().start.index,
+            end: child.range().end.index + 1,
+            replacement: '',
+          });
+          break;
+        }
+      }
+    });
+
+  // Handle readonly_type for type-level readonly (e.g., readonly string[])
   ast.findAll({ rule: { kind: 'readonly_type' } }).forEach((node: SgNode) => {
     const readonlyNode = node.child(0);
     if (readonlyNode?.text() === 'readonly') {
