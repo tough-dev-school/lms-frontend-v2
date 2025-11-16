@@ -30,6 +30,7 @@
     useHomeworkAnswerDeleteMutation(queryClient);
 
   const handleDelete = async () => {
+    if (!confirm('Вы уверены, что хотите удалить этот ответ?')) return;
     try {
       await deleteAnswerMutation({
         answerId: props.answer.slug,
