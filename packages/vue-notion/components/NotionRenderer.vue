@@ -43,7 +43,7 @@
       imageOptions: Object,
       todo: { type: Boolean, default: false },
     },
-    emits: ['bookmark'],
+    emits: ['bookmark', 'mounted'],
     data() {
       return {
         observer: null,
@@ -55,6 +55,7 @@
       if (this.level === 0) {
         this.setupScrollObserver();
       }
+      this.$emit('mounted');
     },
     beforeUnmount() {
       if (this.observer) {

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import { useRouter } from 'vue-router';
-  import { computed } from 'vue';
+  import { computed, onBeforeMount, ref } from 'vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VButton from '@/components/VButton/VButton.vue';
   import getNotionTitle from '@/utils/getNotionTitle';
@@ -9,6 +9,7 @@
   import { useMaterialQuery } from '@/query';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
   import { SUPPORT_EMAIL, SUPPORT_CHAT_URL } from '@/constants';
+  import { useRouteQuery } from '@vueuse/router';
 
   // @ts-expect-error no types for vue-notion
   import { NotionRenderer } from 'vue-notion';
@@ -87,6 +88,8 @@
     return result;
   });
 
+  const bookmark = useRouteQuery<string | undefined>('bookmark');
+
   const handleBookmark = (blockId: string) => {
     router.replace({
       ...router.currentRoute.value,
@@ -98,6 +101,20 @@
   };
 
   useNotionCheckboxHack(props.materialId);
+
+  const originalBookmark = ref<string | undefined>(undefined);
+
+  const restoreBookmark = async () => {
+    if (material.value && originalBookmark.value) {
+      document
+        .querySelector(`#${CSS.escape(originalBookmark.value)}`)
+        ?.scrollIntoView({ behavior: 'instant' });
+    }
+  };
+
+  onBeforeMount(() => {
+    originalBookmark.value = bookmark.value;
+  });
 </script>
 
 <template>
@@ -119,6 +136,7 @@
               href: 'to',
             }"
             :full-page="true"
+            @mounted="restoreBookmark"
             @bookmark="handleBookmark"
           />
         </VCard>
