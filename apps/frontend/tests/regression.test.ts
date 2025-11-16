@@ -82,11 +82,11 @@ describe('visual regression test for', () => {
     },
     {
       name: 'Materials',
-      path: '/iframe?id=app-vnotionview--default&viewMode=story',
+      path: '/iframe?id=app-vmaterialview--default&viewMode=story',
     },
     {
       name: 'Materials Missing',
-      path: '/iframe?id=app-vnotionview--empty&viewMode=story',
+      path: '/iframe?id=app-vmaterialview--empty&viewMode=story',
     },
     {
       name: 'Course',
