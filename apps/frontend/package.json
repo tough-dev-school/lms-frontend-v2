@@ -16,8 +16,6 @@
     "test": "run-p fix:*",
     "fix": "run-p fix:*",
     "storybook": "storybook dev -p 3001",
-    "storybook:build": "storybook build",
-    "storybook:preview": "serve storybook-static/",
     "generate-api": "node --experimental-strip-types generate-sdk.ts; prettier --write src/api/generated/*.ts; tsx patch-api.ts"
   },
   "dependencies": {
@@ -73,7 +71,6 @@
     "playwright": "^1.53.1",
     "postcss": "^8.5.6",
     "prettier": "^3.6.2",
-    "serve": "^14.2.5",
     "storybook": "^10.0.7",
     "swagger-typescript-api": "^13.2.7",
     "tailwindcss": "^3.4.17",

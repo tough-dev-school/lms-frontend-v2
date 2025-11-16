@@ -170,7 +170,7 @@ describe('visual regression test for', () => {
       console.log(`Running test ${++testIndex} of ${tests.length}: ${name}`);
       await page.setViewportSize({ width, height });
 
-      await page.goto(`http://localhost:3000${route}`, {
+      await page.goto(`http://localhost:3001${route}`, {
         waitUntil: 'networkidle',
       });
 
