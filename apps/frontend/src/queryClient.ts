@@ -4,9 +4,8 @@ export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       refetchOnWindowFocus: false,
-      refetchOnMount: true,
+      staleTime: Infinity,
       retry: false,
-      staleTime: 300, // consider this as deduplication interval
     },
   },
 });

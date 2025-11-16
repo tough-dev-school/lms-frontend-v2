@@ -3,7 +3,7 @@ import type { RouteLocation, RouteLocationNormalized } from 'vue-router';
 import { useAuth } from '@/composables/useAuth';
 import { loginByToken } from '@/router/loginByToken';
 import { loginById } from '@/router/loginById';
-import { fetchHomeworkAnswer } from '@/query';
+import { baseQueryKey, fetchHomeworkAnswer } from '@/query';
 import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
 import { AllowMeta } from '@/types';
 import { queryClient } from '@/queryClient';
@@ -238,6 +238,8 @@ router.beforeEach(
     }
 
     const { token } = useAuth();
+
+    queryClient.invalidateQueries({ queryKey: baseQueryKey() });
 
     // Redirect to existing route if route does not exist
     if (!to.name) {
