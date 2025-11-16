@@ -23,12 +23,8 @@ jobs:
         run: pnpm playwright install chromium
         working-directory: apps/frontend
 
-      - name: Build storybook
-        run: pnpm run storybook:build
-        working-directory: apps/frontend
-
       - name: Run storybook
-        run: pnpm run storybook:preview &
+        run: pnpm run storybook &
         working-directory: apps/frontend
 
       - name: Run light mode visual regression tests
