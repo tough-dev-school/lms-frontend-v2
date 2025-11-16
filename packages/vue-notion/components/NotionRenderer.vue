@@ -49,6 +49,7 @@
         observer: null,
         mutationObserver: null,
         currentBlockId: null,
+        intersectingBlocks: new Map(),
       };
     },
     mounted() {
@@ -66,6 +67,7 @@
         this.mutationObserver.disconnect();
         this.mutationObserver = null;
       }
+      this.intersectingBlocks.clear();
     },
     methods: {
       uuidToId(uuid) {
@@ -78,26 +80,38 @@
 
         const options = {
           root: null,
-          rootMargin: '-20% 0px -60% 0px',
           threshold: [0, 0.25, 0.5, 0.75, 1],
         };
 
         this.observer = new IntersectionObserver((entries) => {
-          let mostVisibleEntry = null;
-          let maxRatio = 0;
-
           entries.forEach((entry) => {
-            if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
-              maxRatio = entry.intersectionRatio;
-              mostVisibleEntry = entry;
+            if (entry.isIntersecting) {
+              this.intersectingBlocks.set(
+                entry.target,
+                entry.boundingClientRect.top,
+              );
+            } else {
+              this.intersectingBlocks.delete(entry.target);
             }
           });
 
-          if (mostVisibleEntry && mostVisibleEntry.target.id) {
-            const blockId = mostVisibleEntry.target.id;
-            if (this.currentBlockId !== blockId) {
-              this.currentBlockId = blockId;
-              this.updateUrlHash(blockId);
+          if (this.intersectingBlocks.size > 0) {
+            let topEntry = null;
+            let minTop = Infinity;
+
+            this.intersectingBlocks.forEach((top, target) => {
+              if (top < minTop) {
+                minTop = top;
+                topEntry = target;
+              }
+            });
+
+            if (topEntry && topEntry.id) {
+              const blockId = topEntry.id;
+              if (this.currentBlockId !== blockId) {
+                this.currentBlockId = blockId;
+                this.updateUrlHash(blockId);
+              }
             }
           }
         }, options);
