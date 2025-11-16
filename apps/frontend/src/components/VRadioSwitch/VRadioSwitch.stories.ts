@@ -21,6 +21,7 @@ export const Default = {
       { value: 'option1', label: 'Option 1', icon: 'IconComponent1' },
       { value: 'option2', label: 'Option 2', icon: 'IconComponent2' },
     ],
+    name: 'radio-switch',
     modelValue: 'option1',
   },
 };

@@ -1,38 +1,30 @@
-<script lang="ts">
-  import type { Icon } from '@tabler/icons-vue';
-
-  export interface RadioOption {
-    value: string;
-    label: string;
-    icon: Icon;
-  }
-</script>
-
 <script lang="ts" setup>
-  /* eslint-disable import-x/first */
-  import { v4 as uuidv4 } from 'uuid';
+  import type { RadioOption } from './VRadioSwitch.ts';
 
   defineProps<{
     modelValue: string;
     options: RadioOption[];
+    name: string;
   }>();
+
   const emit = defineEmits<{ 'update:modelValue': [string] }>();
-  const radiogroup = uuidv4();
 </script>
 
 <template>
-  <div class="flex flex-wrap phone:w-auto w-full text-black phone:gap-0 gap-4">
+  <div class="flex w-full flex-wrap gap-4 text-black phone:w-auto phone:gap-0">
     <label
       v-for="(option, index) in options"
       :key="index"
       class="RadioSwitch__Button"
-      :class="{ RadioSwitch__Button_Active: option.value === modelValue }">
+      :class="{ RadioSwitch__Button_Active: option.value === modelValue }"
+    >
       <input
         type="radio"
-        :name="radiogroup"
+        :name="name"
         class="visually-hidden"
         :value="option.value"
-        @click="emit('update:modelValue', option.value)" />
+        @click="emit('update:modelValue', option.value)"
+      />
       <component :is="option.icon" />
       {{ option.label }}
     </label>
@@ -41,7 +33,7 @@
 
 <style scoped>
   .RadioSwitch__Button {
-    @apply p-8 gap-4 flex border-gray cursor-pointer transition-colors whitespace-nowrap bg-white dark:border-darkmode-border phone:first:rounded-l-4 phone:last:rounded-r-4 phone:first:w-auto first:w-full flex-grow phone:rounded-0 rounded-4;
+    @apply flex flex-grow cursor-pointer gap-4 whitespace-nowrap rounded-4 border-gray bg-white p-8 transition-colors first:w-full dark:border-darkmode-border phone:rounded-0 phone:first:w-auto phone:first:rounded-l-4 phone:last:rounded-r-4;
   }
   .RadioSwitch__Button_Active {
     @apply bg-yellow dark:bg-yellow;

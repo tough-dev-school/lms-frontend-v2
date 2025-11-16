@@ -39,7 +39,11 @@
 <template>
   <VCard title="Настройки темы">
     <div class="flex flex-wrap gap-16">
-      <VRadioSwitch v-model="store" :options="darkModeOptions" />
+      <VRadioSwitch
+        v-model="store"
+        :options="darkModeOptions"
+        name="dark-mode"
+      />
     </div>
   </VCard>
 </template>

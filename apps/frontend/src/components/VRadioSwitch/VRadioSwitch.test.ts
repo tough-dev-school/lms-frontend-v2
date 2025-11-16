@@ -14,6 +14,7 @@ describe('VRadioSwitch', () => {
       props: {
         options,
         modelValue: 'option1',
+        name: 'radio-switch',
       },
       global: {
         components: {
@@ -34,6 +35,7 @@ describe('VRadioSwitch', () => {
       props: {
         options,
         modelValue: 'option2',
+        name: 'radio-switch',
       },
       global: {
         components: {
@@ -53,6 +55,7 @@ describe('VRadioSwitch', () => {
       props: {
         options,
         modelValue: 'option1',
+        name: 'radio-switch',
       },
       global: {
         components: {
