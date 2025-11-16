@@ -16,7 +16,7 @@ const preview: Preview = {
       },
     },
     viewport: {
-      viewports: [
+      options: [
         {
           name: 'fluid',
           styles: { width: '100%', height: '100%' },
@@ -38,7 +38,13 @@ const preview: Preview = {
           type: 'mobile',
         },
       ],
-      defaultViewport: 'fluid',
+    },
+  },
+
+  initialGlobals: {
+    viewport: {
+      value: 'fluid',
+      isRotated: false,
     },
   },
 };
