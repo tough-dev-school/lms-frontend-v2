@@ -42,7 +42,7 @@
     }
   };
 
-  const content = ref<string>(props.answer.content ?? props.answer.legacy_text);
+  const content = ref<Record<string, unknown>>(props.answer.content);
 
   const handleUpdate = async () => {
     try {
@@ -81,6 +81,7 @@
   <VCreateAnswer
     v-else-if="isEdit"
     v-model="content"
+    :legacy-text="answer.legacy_text"
     :is-pending="isUpdatePending"
     @send="handleUpdate"
   />
