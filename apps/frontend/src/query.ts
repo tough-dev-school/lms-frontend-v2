@@ -366,6 +366,8 @@ export const getHomeworkCrosschecksQueryOptions = (questionId: string) => {
   return queryOptions({
     queryKey: homeworkKeys.crosschecks(questionId),
     queryFn: async () =>
+      // #FIXME
+      // @ts-expect-error must be fixed ASAP
       await api.homeworkCrosschecksList({ question: [questionId] }),
   });
 };
