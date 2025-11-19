@@ -58,7 +58,7 @@ export interface Answer {
   /** @format uuid */
   parent?: string;
   legacy_text?: string;
-  content: any;
+  content?: any;
   has_descendants: boolean;
   is_editable: boolean;
   reactions: ReactionDetailed[];
@@ -69,7 +69,6 @@ export interface AnswerCreate {
   question: string;
   /** @format uuid */
   parent?: string | null;
-  text: string;
   content?: any;
 }
 
@@ -98,10 +97,8 @@ export interface AnswerTree {
   author: UserSafe;
   /** @format uuid */
   parent?: string;
-  text?: string;
   legacy_text?: string;
   content?: any;
-  src: string;
   has_descendants: boolean;
   is_editable: boolean;
   reactions: ReactionDetailed[];

@@ -148,26 +148,6 @@ const fixOptionalProperties: ApplyPatch = (ast) => {
         return;
       }
 
-      // content in Answer interface can't be undefined
-      if (name === 'content') {
-        let currentParent = node.parent();
-        while (currentParent) {
-          if (currentParent.kind() === 'interface_declaration') {
-            const interfaceName = currentParent.child(1);
-            if (interfaceName?.text() === 'Answer') {
-              const newText = text.replace('?:', ':');
-              edits.push({
-                start: node.range().start.index,
-                end: node.range().end.index,
-                replacement: newText,
-              });
-              return;
-            }
-          }
-          currentParent = currentParent.parent();
-        }
-      }
-
       // booleans can't be undefined
       if (typeText === 'boolean') {
         const newText = text.replace('?:', ':');
@@ -208,13 +188,17 @@ const omitAnswerFields: ApplyPatch = (ast) => {
   const edits: Edit[] = [];
   const fullText = ast.text();
 
-  const answerInterfaces = ast.findAll({
+  const interfaces = ast.findAll({
     rule: { kind: 'interface_declaration' },
   });
 
-  for (const interfaceNode of answerInterfaces) {
+  const targetInterfaces = new Set(['Answer', 'AnswerTree', 'AnswerCreate']);
+
+  for (const interfaceNode of interfaces) {
     const nameNode = interfaceNode.child(1);
-    if (nameNode?.text() !== 'Answer') continue;
+    const interfaceName = nameNode?.text();
+
+    if (!interfaceName || !targetInterfaces.has(interfaceName)) continue;
 
     const bodyNode = interfaceNode.child(2);
     if (!bodyNode) continue;
@@ -252,8 +236,6 @@ const omitAnswerFields: ApplyPatch = (ast) => {
         replacement: '',
       });
     });
-
-    break;
   }
 
   return edits;
