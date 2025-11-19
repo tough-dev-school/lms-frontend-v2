@@ -367,8 +367,8 @@ export const getHomeworkCrosschecksQueryOptions = (questionId: string) => {
     queryKey: homeworkKeys.crosschecks(questionId),
     queryFn: async () =>
       // #FIXME
-      // @ts-expect-error must be fixed ASAP
-      await api.homeworkCrosschecksList({ question: [questionId] }),
+      // @ts-expect-error question is required, but not defines in open api
+      await api.homeworkCrosschecksList({ query: { question: [questionId] } }),
   });
 };
 

@@ -10,7 +10,11 @@
   }>();
 
   const html = computed(() => {
-    if ('content' in props.answer && props.answer.content) {
+    if (
+      'content' in props.answer &&
+      props.answer.content &&
+      Object.keys(props.answer.content).length > 0
+    ) {
       return generateHTML(
         props.answer.content,
         getExtensions({ placeholder: '' }),
