@@ -62,7 +62,7 @@ export const homeworkKeys = {
     questionId?: string;
     authorId?: string;
   }) => [...homeworkKeys.all(), 'answers', [questionId, authorId]],
-  answer: (answerId: string) => [...homeworkKeys.all(), 'answers', answerId],
+  answer: (answerId?: string) => [...homeworkKeys.all(), 'answers', answerId],
   crosschecks: (questionId: string) => [
     ...homeworkKeys.question(questionId),
     'crosschecks',
@@ -444,7 +444,7 @@ export const useHomeworkAnswerDeleteMutation = (queryClient: QueryClient) => {
       parentId,
     }: {
       answerId: string;
-      parentId: string;
+      parentId: string | undefined;
     }) => await api.homeworkAnswersDestroy(answerId),
     onSuccess: (_, { parentId }) => {
       queryClient.invalidateQueries({
