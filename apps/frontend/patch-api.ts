@@ -148,6 +148,26 @@ const fixOptionalProperties: ApplyPatch = (ast) => {
         return;
       }
 
+      // content in Answer interface can't be undefined
+      if (name === 'content') {
+        let currentParent = node.parent();
+        while (currentParent) {
+          if (currentParent.kind() === 'interface_declaration') {
+            const interfaceName = currentParent.child(1);
+            if (interfaceName?.text() === 'Answer') {
+              const newText = text.replace('?:', ':');
+              edits.push({
+                start: node.range().start.index,
+                end: node.range().end.index,
+                replacement: newText,
+              });
+              return;
+            }
+          }
+          currentParent = currentParent.parent();
+        }
+      }
+
       // booleans can't be undefined
       if (typeText === 'boolean') {
         const newText = text.replace('?:', ':');
@@ -184,12 +204,68 @@ const fixOptionalProperties: ApplyPatch = (ast) => {
   return edits;
 };
 
+const omitAnswerFields: ApplyPatch = (ast) => {
+  const edits: Edit[] = [];
+  const fullText = ast.text();
+
+  const answerInterfaces = ast.findAll({
+    rule: { kind: 'interface_declaration' },
+  });
+
+  for (const interfaceNode of answerInterfaces) {
+    const nameNode = interfaceNode.child(1);
+    if (nameNode?.text() !== 'Answer') continue;
+
+    const bodyNode = interfaceNode.child(2);
+    if (!bodyNode) continue;
+
+    bodyNode.children().forEach((child: SgNode) => {
+      if (child.kind() !== 'property_signature') return;
+
+      const propertyName = child.child(0);
+      if (!propertyName) return;
+
+      const name = propertyName.text().replace('?', '');
+      if (name !== 'text' && name !== 'src') return;
+
+      const nodeStart = child.range().start.index;
+      const nodeEnd = child.range().end.index;
+
+      // Find the start of the line
+      let lineStart = nodeStart;
+      while (lineStart > 0 && fullText[lineStart - 1] !== '\n') {
+        lineStart -= 1;
+      }
+
+      // Find the end of the line (including newline)
+      let lineEnd = nodeEnd;
+      while (lineEnd < fullText.length && fullText[lineEnd] !== '\n') {
+        lineEnd += 1;
+      }
+      if (lineEnd < fullText.length && fullText[lineEnd] === '\n') {
+        lineEnd += 1;
+      }
+
+      edits.push({
+        start: lineStart,
+        end: lineEnd,
+        replacement: '',
+      });
+    });
+
+    break;
+  }
+
+  return edits;
+};
+
 for (const file of files) {
   const filePath = path.join(typesDirectory, file);
   let fileContent = fs.readFileSync(filePath, 'utf8');
   const patches: ApplyPatch[] = [
     removeReadonlyModifiers,
     fixOptionalProperties,
+    omitAnswerFields,
   ];
 
   for (const patch of patches) {

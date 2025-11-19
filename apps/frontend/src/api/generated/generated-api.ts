@@ -57,10 +57,8 @@ export interface Answer {
   author: UserSafe;
   /** @format uuid */
   parent?: string;
-  text?: string;
   legacy_text?: string;
-  content?: any;
-  src: string;
+  content: any;
   has_descendants: boolean;
   is_editable: boolean;
   reactions: ReactionDetailed[];
