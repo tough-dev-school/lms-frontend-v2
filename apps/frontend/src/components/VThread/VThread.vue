@@ -13,11 +13,16 @@
   import { ref, useTemplateRef } from 'vue';
   import { onClickOutside } from '@vueuse/core';
   import { useRoute, useRouter } from 'vue-router';
-  import { useHomeworkAnswerCreateMutation } from '@/query';
+  import {
+    useHomeworkAnswersCreate,
+    homeworkAnswersRetrieveQueryKey,
+    homeworkCrosschecksListQueryKey,
+    lmsLessonsListQueryKey,
+  } from '@/api/generated/hooks';
   import { useQueryClient } from '@tanstack/vue-query';
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
   import VExistingAnswer from '@/components/VExistingAnswer';
-  import type { AnswerTree, User } from '@/api/generated/generated-api';
+  import type { AnswerTree, User } from '@/api/generated/types';
   import { useEditorAutosave } from '@/composables/useEditorAutosave';
   import { getEmptyContent } from '@/utils/tiptap';
   import VThreadProvider from '.';
@@ -51,7 +56,23 @@
   });
 
   const { mutateAsync: createComment, isPending: isCreateCommentPending } =
-    useHomeworkAnswerCreateMutation(queryClient);
+    useHomeworkAnswersCreate({
+      mutation: {
+        onSuccess: (data) => {
+          queryClient.invalidateQueries({
+            queryKey: homeworkAnswersRetrieveQueryKey(data.parent),
+          });
+          queryClient.invalidateQueries({
+            queryKey: homeworkCrosschecksListQueryKey({
+              question: [props.answer.question],
+            }),
+          });
+          queryClient.invalidateQueries({
+            queryKey: lmsLessonsListQueryKey(),
+          });
+        },
+      },
+    });
 
   const { content } = useEditorAutosave([
     'commentText',
@@ -65,9 +86,11 @@
 
     try {
       const newComment = await createComment({
-        questionId: props.answer.question,
-        parentId: props.answer.slug,
-        content: content.value,
+        data: {
+          question: props.answer.question,
+          parent: props.answer.slug,
+          content: content.value,
+        },
       });
 
       content.value = getEmptyContent();

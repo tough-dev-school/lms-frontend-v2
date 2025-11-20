@@ -5,19 +5,27 @@
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
   import { useQueryClient } from '@tanstack/vue-query';
-  import { useLoginWithLinkMutation } from '@/query';
+  import { authPasswordlessTokenRequestRetrieve } from '@/api/generated';
 
   const router = useRouter();
   const queryClient = useQueryClient();
   const email = ref('');
   const isPending = ref(false);
 
-  const { mutateAsync: loginWithLink } = useLoginWithLinkMutation(queryClient);
+  const loginWithLink = async (userEmail: string) => {
+    try {
+      const response = await authPasswordlessTokenRequestRetrieve(userEmail);
+      queryClient.invalidateQueries();
+      return response;
+    } catch {
+      throw new Error('Failed to login');
+    }
+  };
 
   const handleLogin = async () => {
     try {
       isPending.value = true;
-      await loginWithLink({ email: email.value });
+      await loginWithLink(email.value);
 
       router.push({ name: 'mail-sent', query: { email: email.value } });
     } catch {
@@ -30,26 +38,33 @@
 </script>
 
 <template>
-  <VCard tag="form" title="Вход" @submit.prevent="handleLogin">
+  <VCard
+    tag="form"
+    title="Вход"
+    @submit.prevent="handleLogin"
+  >
     <VTextInput
       v-model="email"
       label="Почта, на которую купили курс"
       tip="Мы отправим ссылку для входа по этому адресу"
       type="email"
-      autocomplete="username" />
+      autocomplete="username"
+    />
     <template #footer>
       <VButton
         type="submit"
         :disabled="!email"
         class="flex-grow"
-        :loading="isPending">
+        :loading="isPending"
+      >
         {{ isPending ? 'Отправляем письмо...' : 'Получить доступ' }}
       </VButton>
       <VButton
         appearance="link"
         data-testid="to-password-mode"
         class="flex-grow"
-        @click="emit('change')">
+        @click="emit('change')"
+      >
         Войти через пароль
       </VButton>
     </template>

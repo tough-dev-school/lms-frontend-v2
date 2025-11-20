@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import VHeading from '@/components/VHeading/VHeading.vue';
-  import type { Module } from '@/api/generated/generated-api';
+  import type { Module } from '@/api/generated/types';
   import VTag from '../VTag/VTag.vue';
   import { formatDate } from '@/utils/date';
 

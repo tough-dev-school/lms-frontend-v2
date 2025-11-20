@@ -1,15 +1,22 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VModuleView from './VModuleView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
-import { mockCourse } from '@/mocks/mockCourse';
-import { mockModule } from '@/mocks/mockModule';
-import { mockQuestion } from '@/mocks/mockQuestion';
-import { studiesKeys, lmsKeys } from '@/query';
+import {
+  createCourse,
+  createModule,
+  createQuestion,
+  createTemporarySoonToBeDepricatedQuestion,
+} from '@/api/generated/mocks';
+import {
+  purchasedCoursesListQueryKey,
+  lmsModulesRetrieveQueryKey,
+  lmsLessonsListQueryKey,
+} from '@/api/generated/hooks';
 import { useQueryClient } from '@tanstack/vue-query';
 import type {
   Lesson,
   RecommendedVideoProviderEnum,
-} from '@/api/generated/generated-api';
+} from '@/api/generated/types';
 
 export default {
   title: 'App/VModuleView',
@@ -22,12 +29,12 @@ export default {
   },
 } as Meta;
 
-const STATIC_COURSE = mockCourse({
+const STATIC_COURSE = createCourse({
   id: 1,
   name: 'Асинхронная архитектура',
 });
 
-const STATIC_MODULE = mockModule({
+const STATIC_MODULE = createModule({
   id: 1,
   name: 'Введение в асинхронную архитектуру',
   text: '<p>Добро пожаловать в модуль по асинхронной архитектуре. В этом модуле мы изучим основные принципы и паттерны асинхронного программирования.</p>',
@@ -40,7 +47,7 @@ const STATIC_LESSONS: Lesson[] = [
   {
     ...baseLesson,
     id: 1,
-    question: mockQuestion(),
+    question: createQuestion(),
     call: {
       name: 'Введение в асинхронную архитектуру',
       description: 'Обзор основных принципов и подходов',
@@ -54,13 +61,13 @@ const STATIC_LESSONS: Lesson[] = [
         },
       ],
       recommended_video_provider:
-        'youtube' as RecommendedVideoProviderEnum.Youtube,
+        'youtube' as RecommendedVideoProviderEnum.youtube,
     },
   },
   {
     ...baseLesson,
     id: 2,
-    question: mockQuestion(),
+    question: createQuestion(),
     homework: {
       is_sent: true,
       crosschecks: {
@@ -68,6 +75,7 @@ const STATIC_LESSONS: Lesson[] = [
         checked: 3,
       },
       question: {
+        ...createTemporarySoonToBeDepricatedQuestion(),
         slug: 'async-fundamentals',
         name: 'Основы асинхронности',
         deadline: '2024-01-25T23:59:00Z',
@@ -77,7 +85,7 @@ const STATIC_LESSONS: Lesson[] = [
   {
     ...baseLesson,
     id: 3,
-    question: mockQuestion(),
+    question: createQuestion(),
     material: {
       id: 'material-async-patterns',
       title: 'Паттерны асинхронного программирования',
@@ -86,10 +94,11 @@ const STATIC_LESSONS: Lesson[] = [
   {
     ...baseLesson,
     id: 4,
-    question: mockQuestion(),
+    question: createQuestion(),
     homework: {
       is_sent: false,
       question: {
+        ...createTemporarySoonToBeDepricatedQuestion(),
         slug: 'event-sourcing',
         name: 'Event Sourcing',
         deadline: '2024-02-01T23:59:00Z',
@@ -104,15 +113,21 @@ const Template: StoryFn = (args) => ({
     const queryClient = useQueryClient();
 
     if (args.studies) {
-      queryClient.setQueryData(studiesKeys.lists(), args.studies);
+      queryClient.setQueryData(
+        purchasedCoursesListQueryKey({ page_size: 100 }),
+        { results: args.studies },
+      );
     }
     if (args.module) {
-      queryClient.setQueryData(lmsKeys.module(args.moduleId), args.module);
+      queryClient.setQueryData(
+        lmsModulesRetrieveQueryKey(args.moduleId),
+        args.module,
+      );
     }
     if (args.lessons !== undefined) {
       queryClient.setQueryData(
-        lmsKeys.moduleLessons(args.moduleId),
-        args.lessons,
+        lmsLessonsListQueryKey({ module: args.moduleId, page_size: 1000 }),
+        { results: args.lessons },
       );
     }
 
@@ -143,7 +158,7 @@ export const WithoutModuleText = {
   render: Template,
   args: {
     studies: [STATIC_COURSE],
-    module: mockModule({
+    module: createModule({
       id: 1,
       name: 'Модуль без описания',
       text: null,

@@ -3,10 +3,10 @@ import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import VCertificate from './VCertificate.vue';
 import { merge } from 'lodash-es';
-import { mockDiplomaData } from '@/mocks/mockDiploma';
+import { createDiploma } from '@/api/generated/mocks';
 
 const defaultProps = {
-  certificate: mockDiplomaData(),
+  certificate: createDiploma(),
 };
 
 describe('VCertificate', () => {

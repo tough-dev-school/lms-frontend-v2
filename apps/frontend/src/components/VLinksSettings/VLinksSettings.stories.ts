@@ -1,8 +1,8 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VLinksSettings from '@/components/VLinksSettings/VLinksSettings.vue';
 import { useQueryClient } from '@tanstack/vue-query';
-import { userKeys } from '@/query';
-import { mockUserSafe } from '@/mocks/mockUserSafe';
+import { usersMeRetrieveQueryKey } from '@/api/generated/hooks';
+import { createUserSafe } from '@/api/generated/mocks';
 
 export default {
   title: 'Settings/VLinksSettings',
@@ -14,7 +14,7 @@ const Template: StoryFn = (args) => ({
   setup() {
     const queryClient = useQueryClient();
 
-    queryClient.setQueryData(userKeys.me(), mockUserSafe());
+    queryClient.setQueryData(usersMeRetrieveQueryKey(), createUserSafe());
 
     return { args };
   },

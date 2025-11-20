@@ -1,12 +1,13 @@
 <script lang="ts" setup>
   import {
-    useUserQuery,
-    useHomeworkAnswerQuery,
-    populateAnswersCacheFromDescendants,
-  } from '@/query';
-  import { watch } from 'vue';
+    useUsersMeRetrieve,
+    useHomeworkAnswersRetrieve,
+    homeworkAnswersRetrieveQueryKey,
+  } from '@/api/generated/hooks';
+  import { computed, watch } from 'vue';
   import { useQueryClient } from '@tanstack/vue-query';
   import VThread from './VThread.vue';
+  import type { Answer, AnswerTree } from '@/api/generated/types';
 
   const queryClient = useQueryClient();
   const props = defineProps<{
@@ -17,13 +18,34 @@
     update: [answerId: string];
   }>();
 
-  const { data: user } = useUserQuery();
-  const { data: answer } = useHomeworkAnswerQuery(() => props.answerId);
+  const { data: user } = useUsersMeRetrieve();
+  const { data: answer } = useHomeworkAnswersRetrieve(
+    computed(() => props.answerId),
+  );
+
+  const populateAnswersCacheFromDescendants = (rootAnswer: AnswerTree) => {
+    const flatAnswers: Answer[] = [];
+
+    const populate = (a: Answer | AnswerTree) => {
+      flatAnswers.push(a);
+
+      if ('descendants' in a && a.descendants.length) {
+        a.descendants.forEach((v) => populate(v));
+      }
+    };
+
+    populate(rootAnswer);
+
+    flatAnswers.forEach((a) => {
+      queryClient.setQueryData(homeworkAnswersRetrieveQueryKey(a.slug), answer);
+    });
+  };
+
   watch(
     () => answer.value,
     () => {
       if (answer.value) {
-        populateAnswersCacheFromDescendants(queryClient, answer.value);
+        populateAnswersCacheFromDescendants(answer.value);
       }
     },
   );
@@ -34,6 +56,7 @@
     v-if="answer && user"
     :answer="answer"
     :user="user"
-    @update="(slug: string) => emit('update', slug)" />
+    @update="(slug: string) => emit('update', slug)"
+  />
   <div v-else>Loading...</div>
 </template>

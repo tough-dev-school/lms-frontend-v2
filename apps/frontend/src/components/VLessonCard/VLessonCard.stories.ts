@@ -3,8 +3,11 @@ import VLessonCard from '@/components/VLessonCard/VLessonCard.vue';
 import type {
   Lesson,
   RecommendedVideoProviderEnum,
-} from '@/api/generated/generated-api';
-import { mockQuestion } from '@/mocks/mockQuestion';
+} from '@/api/generated/types';
+import {
+  createQuestion,
+  createTemporarySoonToBeDepricatedQuestion,
+} from '@/api/generated/mocks';
 
 export default {
   title: 'UI/VLessonCard',
@@ -29,7 +32,7 @@ const baseLesson = {
 
 const callWithVideo: Lesson = {
   ...baseLesson,
-  question: mockQuestion(),
+  question: createQuestion(),
   call: {
     name: 'Введение в React',
     description: 'Изучаем основы React и создаем первое приложение',
@@ -48,13 +51,13 @@ const callWithVideo: Lesson = {
       },
     ],
     recommended_video_provider:
-      'youtube' as RecommendedVideoProviderEnum.Youtube,
+      'youtube' as RecommendedVideoProviderEnum.youtube,
   },
 };
 
 const callWithoutVideo: Lesson = {
   ...baseLesson,
-  question: mockQuestion(),
+  question: createQuestion(),
   call: {
     name: 'Дизайн систем',
     description: 'Обсуждаем принципы создания дизайн систем',
@@ -67,7 +70,7 @@ const callWithoutVideo: Lesson = {
 
 const homeworkWithCrosschecks: Lesson = {
   ...baseLesson,
-  question: mockQuestion(),
+  question: createQuestion(),
   homework: {
     comments: {
       comments: 10,
@@ -79,16 +82,16 @@ const homeworkWithCrosschecks: Lesson = {
       checked: 3,
     },
     question: {
+      ...createTemporarySoonToBeDepricatedQuestion(),
       slug: 'javascript-fundamentals',
       name: 'Основы JavaScript',
-      deadline: '2024-01-25T23:59:00Z',
     },
   },
 };
 
 const homeworkWithoutCrosschecks: Lesson = {
   ...baseLesson,
-  question: mockQuestion(),
+  question: createQuestion(),
   homework: {
     comments: {
       comments: 0,
@@ -96,16 +99,16 @@ const homeworkWithoutCrosschecks: Lesson = {
     },
     is_sent: false,
     question: {
+      ...createTemporarySoonToBeDepricatedQuestion(),
       slug: 'css-layouts',
       name: 'CSS Layouts',
-      deadline: '2024-01-30T23:59:00Z',
     },
   },
 };
 
 const materialLesson: Lesson = {
   ...baseLesson,
-  question: mockQuestion(),
+  question: createQuestion(),
   material: {
     id: 'material-123',
     title: 'Углубленное изучение Vue.js',
@@ -180,7 +183,13 @@ export const ComplexLesson = {
           deadline: '2024-02-10T23:59:00Z',
         },
       },
-      question: mockQuestion(),
+      question: {
+        ...createQuestion(),
+        slug: 'typescript-advanced',
+        name: 'Продвинутый TypeScript',
+        text: 'Реализуйте типизированную архитектуру',
+        deadline: '2024-02-10T23:59:00Z',
+      },
       material: {
         id: 'material-456',
         title: 'Дополнительные материалы по TypeScript',
