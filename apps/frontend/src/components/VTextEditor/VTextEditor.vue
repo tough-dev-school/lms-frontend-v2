@@ -32,6 +32,7 @@
   const props = withDefaults(
     defineProps<{
       placeholder?: string;
+      legacyText?: string;
     }>(),
     {
       placeholder: '',
@@ -54,7 +55,20 @@
    *   - Markdown produced by tiptap is used to be sent to LMS
    */
 
-  const content = defineModel<string | object>({ required: true });
+  const content = defineModel<Record<string, unknown>>({ required: true });
+
+  const contentOrLegacyText = computed({
+    get() {
+      if (Object.keys(content.value).length === 0 && props.legacyText) {
+        return props.legacyText;
+      }
+
+      return content.value;
+    },
+    set(value) {
+      content.value = value as Record<string, unknown>;
+    },
+  });
 
   const currentEditor = useTemplateRef('currentEditor');
   const isImageLoading = ref(false);
@@ -75,7 +89,7 @@
 
   const editLink = () => {
     const previousUrl = (editor.getAttributes('link')?.href as string) || '';
-    // eslint-disable-next-line no-alert
+
     const url = window.prompt('Enter URL', previousUrl);
     if (url === null) return;
     if (url === '') {
@@ -97,7 +111,7 @@
   const extensions = getExtensions({ placeholder: props.placeholder });
 
   const editor = new Editor({
-    content: content.value,
+    content: contentOrLegacyText.value,
     extensions,
     editorProps: {
       handlePaste: (_view, event) => {

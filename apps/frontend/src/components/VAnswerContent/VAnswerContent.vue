@@ -3,20 +3,27 @@
   import { computed } from 'vue';
   import { generateHTML } from '@tiptap/vue-3';
   import { getExtensions } from '@/utils/tiptap';
-  import type { Answer } from '@/api/generated/types';
+  import type { Answer, AnswerTree } from '@/api/generated/generated-api';
 
   const props = defineProps<{
-    answer: Answer;
+    answer: Answer | AnswerTree;
   }>();
 
   const html = computed(() => {
-    if (!props.answer.content || Object.keys(props.answer.content).length === 0)
+    if (
+      'content' in props.answer &&
+      props.answer.content &&
+      Object.keys(props.answer.content).length > 0
+    ) {
+      return generateHTML(
+        props.answer.content,
+        getExtensions({ placeholder: '' }),
+      );
+    } else if ('legacy_text' in props.answer && props.answer.legacy_text) {
       return props.answer.legacy_text;
+    }
 
-    return generateHTML(
-      props.answer.content,
-      getExtensions({ placeholder: '' }),
-    );
+    throw new Error('Answer content not found');
   });
 </script>
 

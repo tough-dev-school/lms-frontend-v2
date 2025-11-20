@@ -55,6 +55,7 @@
   });
 
   const handleDelete = async () => {
+    if (!confirm('Вы уверены, что хотите удалить этот ответ?')) return;
     try {
       await deleteAnswerMutation({
         slug: props.answer.slug,
@@ -65,7 +66,7 @@
     }
   };
 
-  const content = ref<string>(props.answer.content ?? props.answer.legacy_text);
+  const content = ref<Record<string, unknown>>(props.answer.content);
 
   const handleUpdate = async () => {
     try {
@@ -106,6 +107,7 @@
   <VCreateAnswer
     v-else-if="isEdit"
     v-model="content"
+    :legacy-text="answer.legacy_text"
     :is-pending="isUpdatePending"
     @send="handleUpdate"
   />
