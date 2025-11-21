@@ -20,7 +20,7 @@ vi.mock('@tanstack/vue-query', () => ({
 }));
 
 const defaultProps = {
-  module: getMockModuleDetail(),
+  module: getMockModuleDetail({ lesson_count: 5 }),
   courseId: faker.number.int(),
   index: 0,
 };

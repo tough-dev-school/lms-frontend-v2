@@ -13,8 +13,8 @@ export const getMockLesson = (payload: Partial<Lesson> = {}): Lesson => {
       : undefined,
     homework: faker.datatype.boolean()
       ? {
-          answered: faker.number.int({ min: 0, max: 100 }),
-          should_be_answered: faker.number.int({ min: 0, max: 100 }),
+          is_sent: faker.datatype.boolean(),
+          question: mockQuestion(),
         }
       : undefined,
     question: mockQuestion(),
