@@ -23,6 +23,7 @@
 <script>
   import { Blockable } from '../lib/blockable';
   import NotionBlock from './NotionBlock.vue';
+  import debounce from 'lodash/debounce';
 
   import { defaultMapPageUrl } from '../lib/utils';
 
@@ -50,7 +51,13 @@
         mutationObserver: null,
         currentBlockId: null,
         intersectingBlocks: new Map(),
+        debouncedEmitBookmark: null,
       };
+    },
+    created() {
+      this.debouncedEmitBookmark = debounce((blockId) => {
+        this.$emit('bookmark', blockId);
+      }, 300);
     },
     mounted() {
       if (this.level === 0) {
@@ -157,7 +164,7 @@
       updateUrlHash(blockId) {
         if (!blockId) return;
 
-        this.$emit('bookmark', blockId);
+        this.debouncedEmitBookmark(blockId);
       },
     },
   };
