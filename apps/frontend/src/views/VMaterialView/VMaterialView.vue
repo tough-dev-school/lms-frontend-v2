@@ -97,7 +97,7 @@
   );
 
   const setBookmark = (blockId: string) => {
-    window.location.hash = blockId;
+    history.replaceState(null, '', `#${blockId}`);
     bookmarkInLocalStorage.value = blockId;
   };
 
