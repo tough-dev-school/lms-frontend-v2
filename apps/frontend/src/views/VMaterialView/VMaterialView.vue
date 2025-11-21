@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import { useRouter } from 'vue-router';
-  import { computed, onBeforeMount } from 'vue';
+  import { computed } from 'vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VButton from '@/components/VButton/VButton.vue';
   import getNotionTitle from '@/utils/getNotionTitle';
@@ -101,19 +101,18 @@
     bookmarkInLocalStorage.value = blockId;
   };
 
-  const restoreBookmark = (blockId: string) => {
+  const bookmarkToRestore = computed(() => {
+    return bookmarkInUrl.value || bookmarkInLocalStorage.value;
+  });
+
+  const restoreBookmark = () => {
     if (!material.value) return;
+    if (!bookmarkToRestore.value) return;
 
     document
-      .querySelector(`#${CSS.escape(blockId)}`)
+      .querySelector(`#${CSS.escape(bookmarkToRestore.value)}`)
       ?.scrollIntoView({ behavior: 'instant' });
   };
-
-  onBeforeMount(() => {
-    const blockId = bookmarkInUrl.value ?? bookmarkInLocalStorage.value;
-
-    if (blockId) restoreBookmark(blockId);
-  });
 
   useNotionCheckboxHack(props.materialId);
 </script>
