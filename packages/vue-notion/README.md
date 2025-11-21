@@ -16,7 +16,7 @@ You can install it via
 pnpm i https://github.com/tough-dev-school/vue-notion.git
 ```
 
-And used via passing `blockMap` to `NotionRenderer` component. [See example in our LMS repo](https://github.com/tough-dev-school/lms-frontend-v2/blob/10e9e26a8401cb25989419ba042986f8ff785b24/src/views/VNotionView/VNotionView.vue).
+And used via passing `blockMap` to `NotionRenderer` component. [See example in our LMS repo](https://github.com/tough-dev-school/lms-frontend-v2/blob/10e9e26a8401cb25989419ba042986f8ff785b24/src/views/VMaterialView/VMaterialView.vue).
 
 Docs can be found [here](https://github.com/tough-dev-school/vue-notion/tree/main/docs).
 
