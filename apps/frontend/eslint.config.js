@@ -25,6 +25,7 @@ export default defineConfig(
   },
   {
     rules: {
+      'no-alert': 'off',
       // Disabled due to legacy code patterns
       'unicorn/filename-case': 'off',
       'unicorn/prefer-string-replace-all': 'off',

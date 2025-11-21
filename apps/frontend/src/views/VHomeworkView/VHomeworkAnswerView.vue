@@ -140,7 +140,7 @@
     );
 
     if (completedCrosschecks.length === 0) {
-      return 'Вы увидите ответ преподавателя и ваших однокурсников после того как отправите свою работу и прокомментируете 3 чужих домашки.';
+      return 'Вы увидите комментарии ваших однокурсников после того, как прокомментируете три домашки. Одна проверка — один открытый комментарий.';
     }
 
     if (completedCrosschecks.length < 3) {
@@ -166,16 +166,26 @@
       lesson
     "
     :breadcrumbs="breadcrumbs"
-    :title="question.name">
+    :title="question.name"
+  >
     <template #pill>
-      <VPillHomework v-if="lesson.homework" :stats="lesson.homework" />
+      <VPillHomework
+        v-if="lesson.homework"
+        :stats="lesson.homework"
+      />
     </template>
     <section class="VHomeworkAnswerView__Section -mt-16">
-      <div v-if="isOwnAnswer" class="card mb-16 bg-accent-green">
-        <VHeading tag="h3" class="mb-8">
+      <div
+        v-if="isOwnAnswer"
+        class="card mb-16 bg-accent-green"
+      >
+        <VHeading
+          tag="h3"
+          class="mb-8"
+        >
           Поделитесь ссылкой на сделанную домашку
         </VHeading>
-        <div class="block select-all">
+        <div class="block select-all break-all">
           {{ answerLink }}
         </div>
       </div>
@@ -188,12 +198,14 @@
       <VHeading tag="h2"> Отправленная работа</VHeading>
       <VExistingAnswer
         :answer-id="answer.slug"
-        @after-delete="handleDeleteAnswer" />
+        @after-delete="handleDeleteAnswer"
+      />
     </section>
     <section>
       <VCrossChecks
         v-if="isOwnAnswer && crosschecks?.length"
-        :crosschecks="crosschecks" />
+        :crosschecks="crosschecks"
+      />
     </section>
     <section class="VHomeworkAnswerView__Section">
       <VHeading tag="h2">
@@ -206,19 +218,29 @@
         <VThread
           v-for="comment in answer.descendants"
           :key="comment.slug"
-          :answer-id="comment.slug" />
+          :answer-id="comment.slug"
+        />
       </template>
       <VFeedbackGuide
         v-if="question.course?.homework_check_recommendations"
-        :guide="question.course.homework_check_recommendations" />
+        :guide="question.course.homework_check_recommendations"
+      />
 
       <VCreateAnswer
         v-model="content"
         :is-pending="isCreateAnswerPending"
-        @send="handleCreateComment" />
-      <div v-if="isSent" class="card">
+        @send="handleCreateComment"
+      />
+      <div
+        v-if="isSent"
+        class="card"
+      >
         Ответ отправлен!
-        <a class="link" :href="ownAnswerHref">Вернуться к своему ответу</a>
+        <a
+          class="link"
+          :href="ownAnswerHref"
+          >Вернуться к своему ответу</a
+        >
       </div>
     </section>
   </VLoggedLayout>

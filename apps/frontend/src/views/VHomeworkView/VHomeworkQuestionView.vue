@@ -61,16 +61,21 @@
   <VLoggedLayout
     v-if="!(isQuestionLoading && isLessonLoading) && question && lesson"
     :breadcrumbs="breadcrumbs"
-    :title="question.name">
+    :title="question.name"
+  >
     <template #pill>
-      <VPillHomework v-if="lesson?.homework" :stats="lesson?.homework" />
+      <VPillHomework
+        v-if="lesson?.homework"
+        :stats="lesson?.homework"
+      />
     </template>
     <section class="flex flex-col gap-24">
       <VMakrdownContent :markdown="question.markdown_text" />
       <VCreateAnswer
         v-model="content"
         :is-pending="isCreateAnswerPending"
-        @send="handleCreateAnswer" />
+        @send="handleCreateAnswer"
+      />
     </section>
   </VLoggedLayout>
   <VLoadingView v-else />

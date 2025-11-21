@@ -4,6 +4,7 @@
   import { computed, useTemplateRef } from 'vue';
 
   const props = defineProps<{
+    legacyText?: string;
     isPending: boolean;
   }>();
 
@@ -11,7 +12,7 @@
     send: [];
   }>();
 
-  const content = defineModel<string | object>({ required: true });
+  const content = defineModel<Record<string, unknown>>({ required: true });
 
   const editor = useTemplateRef<InstanceType<typeof VTextEditor>>('editor');
 
@@ -25,14 +26,17 @@
     <VTextEditor
       ref="editor"
       v-model="content"
+      :legacy-text="legacyText"
       class="SendOwnAnswer__Editor"
-      @send="emit('send')" />
+      @send="emit('send')"
+    />
     <div class="SendOwnAnswer__Footer">
       <VButton
         :disabled="isDisabled"
         :loading="isPending"
         class="h-32"
-        @click="emit('send')">
+        @click="emit('send')"
+      >
         {{ isPending ? 'Отправляется...' : 'Отправить' }}
       </VButton>
     </div>
