@@ -35,9 +35,7 @@
     if (props.module.lesson_count === 1) {
       if (!onlyLesson.value) return undefined;
 
-      if (onlyLesson.value.call?.url) {
-        return onlyLesson.value.call.url;
-      } else if (onlyLesson.value.material) {
+      if (onlyLesson.value.material) {
         return {
           name: 'materials',
           params: {
@@ -49,6 +47,8 @@
           name: 'homework',
           params: { questionId: onlyLesson.value.question.slug },
         };
+      } else if (onlyLesson.value.call) {
+        // Do nothing, as users may want to see the call details
       }
     }
 
