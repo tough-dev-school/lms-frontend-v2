@@ -350,15 +350,14 @@ describe('VModuleCard', () => {
       });
     });
 
-    test('uses external link when single lesson has call with URL', async () => {
-      const callUrl = faker.internet.url();
+    test('uses default module navigation when single lesson has call', async () => {
       const lesson = getMockLesson({
         material: undefined,
-        question: mockQuestion(),
+        question: undefined,
         call: {
           name: faker.lorem.words(3),
           description: faker.lorem.sentence(),
-          url: callUrl,
+          url: faker.internet.url(),
           video: [],
           datetime: faker.date.future().toISOString(),
           recommended_video_provider: null,
@@ -377,12 +376,20 @@ describe('VModuleCard', () => {
       wrapper = mount(VModuleCard, {
         shallow: false,
         props: { module, courseId, index: 0 },
+        global: {
+          stubs: {
+            RouterLink: RouterLinkStub,
+          },
+        },
       });
 
       await nextTick();
 
-      expect(wrapper.find('a.VModuleCard').exists()).toBe(true);
-      expect(wrapper.find('a.VModuleCard').attributes('href')).toBe(callUrl);
+      const routerLink = wrapper.findComponent(RouterLinkStub);
+      expect(routerLink.props('to')).toEqual({
+        name: 'module',
+        params: { courseId, moduleId: module.id },
+      });
     });
   });
 
