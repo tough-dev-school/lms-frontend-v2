@@ -68,27 +68,6 @@
 </script>
 
 <style scoped>
-  .notion-simple-table-container {
-    position: relative;
-  }
-
-  .notion-simple-table-container::after {
-    content: '';
-    display: block;
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 64px;
-    background: linear-gradient(to right, transparent, #fff);
-    pointer-events: none;
-    transition: opacity 0.3s ease-in-out;
-  }
-
-  .notion-simple-table-container.is-at-end::after {
-    opacity: 0;
-  }
-
   .scroll-tip {
     text-align: right;
     font-size: 0.875rem;
