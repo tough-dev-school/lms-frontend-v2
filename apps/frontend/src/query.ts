@@ -63,7 +63,7 @@ export const homeworkKeys = {
     questionId?: string;
     authorId?: string;
   }) => [...homeworkKeys.all(), 'answers', [questionId, authorId]],
-  answer: (answerId: string) => [...homeworkKeys.all(), 'answers', answerId],
+  answer: (answerId?: string) => [...homeworkKeys.all(), 'answers', answerId],
   crosschecks: (questionId: string) => [
     ...homeworkKeys.question(questionId),
     'crosschecks',
@@ -369,7 +369,9 @@ export const getHomeworkCrosschecksQueryOptions = (questionId: string) => {
   return queryOptions({
     queryKey: homeworkKeys.crosschecks(questionId),
     queryFn: async () =>
-      await api.homeworkCrosschecksList({ question: [questionId] }),
+      // #FIXME
+      // @ts-expect-error question is required, but not defines in open api
+      await api.homeworkCrosschecksList({ query: { question: [questionId] } }),
   });
 };
 
@@ -445,7 +447,7 @@ export const useHomeworkAnswerDeleteMutation = (queryClient: QueryClient) => {
       parentId,
     }: {
       answerId: string;
-      parentId: string;
+      parentId: string | undefined;
     }) => await api.homeworkAnswersDestroy(answerId),
     onSuccess: (_, { parentId }) => {
       queryClient.invalidateQueries({
