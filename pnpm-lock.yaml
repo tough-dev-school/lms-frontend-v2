@@ -204,6 +204,9 @@ importers:
 
   packages/vue-notion:
     dependencies:
+      '@vueuse/router':
+        specifier: ^14.0.0
+        version: 14.0.0(vue-router@4.6.3(vue@3.5.15(typescript@5.8.3)))(vue@3.5.15(typescript@5.8.3))
       defu:
         specifier: ^6.1.2
         version: 6.1.4
@@ -6767,6 +6770,12 @@ snapshots:
 
   '@vueuse/metadata@13.7.0': {}
 
+  '@vueuse/router@14.0.0(vue-router@4.6.3(vue@3.5.15(typescript@5.8.3)))(vue@3.5.15(typescript@5.8.3))':
+    dependencies:
+      '@vueuse/shared': 14.0.0(vue@3.5.15(typescript@5.8.3))
+      vue: 3.5.15(typescript@5.8.3)
+      vue-router: 4.6.3(vue@3.5.15(typescript@5.8.3))
+
   '@vueuse/router@14.0.0(vue-router@4.6.3(vue@3.5.24(typescript@5.8.3)))(vue@3.5.24(typescript@5.8.3))':
     dependencies:
       '@vueuse/shared': 14.0.0(vue@3.5.24(typescript@5.8.3))
@@ -6776,6 +6785,10 @@ snapshots:
   '@vueuse/shared@13.7.0(vue@3.5.24(typescript@5.8.3))':
     dependencies:
       vue: 3.5.24(typescript@5.8.3)
+
+  '@vueuse/shared@14.0.0(vue@3.5.15(typescript@5.8.3))':
+    dependencies:
+      vue: 3.5.15(typescript@5.8.3)
 
   '@vueuse/shared@14.0.0(vue@3.5.24(typescript@5.8.3))':
     dependencies:
@@ -10128,6 +10141,11 @@ snapshots:
       webpack: 5.95.0(esbuild@0.25.5)
     optionalDependencies:
       vue: 3.5.24(typescript@5.8.3)
+
+  vue-router@4.6.3(vue@3.5.15(typescript@5.8.3)):
+    dependencies:
+      '@vue/devtools-api': 6.6.4
+      vue: 3.5.15(typescript@5.8.3)
 
   vue-router@4.6.3(vue@3.5.24(typescript@5.8.3)):
     dependencies:

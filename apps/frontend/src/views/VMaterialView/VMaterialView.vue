@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import { useRouter } from 'vue-router';
-  import { computed, onBeforeMount, ref } from 'vue';
+  import { computed, onBeforeMount } from 'vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VButton from '@/components/VButton/VButton.vue';
   import getNotionTitle from '@/utils/getNotionTitle';
@@ -14,6 +14,7 @@
   // @ts-expect-error no types for vue-notion
   import { NotionRenderer } from 'vue-notion';
   import { useNotionCheckboxHack } from './useNotionCheckboxHack';
+  import { useStorage } from '@vueuse/core';
 
   const props = defineProps<{
     materialId: string;
@@ -88,33 +89,33 @@
     return result;
   });
 
-  const bookmark = useRouteQuery<string | undefined>('bookmark');
+  const bookmarkInUrl = useRouteQuery<string | undefined>('bookmark');
+  const bookmarkInLocalStorage = useStorage<string | undefined>(
+    `bookmark-${props.materialId}`,
+    undefined,
+    localStorage,
+  );
 
-  const handleBookmark = (blockId: string) => {
-    router.replace({
-      ...router.currentRoute.value,
-      query: {
-        ...router.currentRoute.value.query,
-        bookmark: blockId,
-      },
-    });
+  const setBookmark = (blockId: string) => {
+    window.location.hash = blockId;
+    bookmarkInLocalStorage.value = blockId;
   };
 
-  useNotionCheckboxHack(props.materialId);
+  const restoreBookmark = (blockId: string) => {
+    if (!material.value) return;
 
-  const originalBookmark = ref<string | undefined>(undefined);
-
-  const restoreBookmark = async () => {
-    if (material.value && originalBookmark.value) {
-      document
-        .querySelector(`#${CSS.escape(originalBookmark.value)}`)
-        ?.scrollIntoView({ behavior: 'instant' });
-    }
+    document
+      .querySelector(`#${CSS.escape(blockId)}`)
+      ?.scrollIntoView({ behavior: 'instant' });
   };
 
   onBeforeMount(() => {
-    originalBookmark.value = bookmark.value;
+    const blockId = bookmarkInUrl.value ?? bookmarkInLocalStorage.value;
+
+    if (blockId) restoreBookmark(blockId);
   });
+
+  useNotionCheckboxHack(props.materialId);
 </script>
 
 <template>
@@ -137,7 +138,7 @@
             }"
             :full-page="true"
             @mounted="restoreBookmark"
-            @bookmark="handleBookmark"
+            @bookmark="setBookmark"
           />
         </VCard>
       </template>
