@@ -1109,4 +1109,37 @@
   .notion-page-icon-offset img {
     margin-top: -50%;
   }
+
+  .notion-simple-table-container {
+    position: relative;
+  }
+
+  .notion-simple-table-container::after {
+    content: '';
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 64px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      theme('colors.white.DEFAULT')
+    );
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .dark .notion-simple-table-container::after {
+    background: linear-gradient(
+      to right,
+      transparent,
+      theme('colors.dark-black.DEFAULT')
+    );
+  }
+
+  .notion-simple-table-container.is-at-end::after {
+    opacity: 0;
+  }
 </style>
