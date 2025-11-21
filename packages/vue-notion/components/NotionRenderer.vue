@@ -23,7 +23,7 @@
 <script>
   import { Blockable } from '../lib/blockable';
   import NotionBlock from './NotionBlock.vue';
-  import debounce from 'lodash/debounce';
+  import { debounce } from 'lodash-es';
 
   import { defaultMapPageUrl } from '../lib/utils';
 
