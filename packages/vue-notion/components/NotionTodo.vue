@@ -16,11 +16,8 @@
         />
       </div>
     </label>
-    <div
-      v-if="imageBlock && imageUrl"
-      class="notion-todo-image"
-    >
-      <NotionImage
+    <div v-if="imageBlock && imageUrl">
+      <NotionFigure
         v-bind="pass"
         :block="imageBlock"
         :content-id="block.value.content[0]"
@@ -42,14 +39,14 @@
 <script>
   import { Blockable } from '../lib/blockable';
   import NotionTextRenderer from './NotionTextRenderer.vue';
-  import NotionImage from './NotionImage.vue';
+  import NotionFigure from './NotionFigure.vue';
   import { defineAsyncComponent } from 'vue';
 
   export default {
     name: 'NotionTodo',
     components: {
       NotionTextRenderer,
-      NotionImage,
+      NotionFigure,
       NotionRenderer: defineAsyncComponent(
         () => import('./NotionRenderer.vue'),
       ),
