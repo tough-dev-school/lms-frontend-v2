@@ -17,13 +17,13 @@
       </div>
     </label>
     <div
-      v-if="imageUrl"
+      v-if="imageBlock && imageUrl"
       class="notion-todo-image"
     >
-      <img
-        :src="imageUrl"
-        :alt="imageAlt"
-        @error="handleImageError"
+      <NotionImage
+        v-bind="pass"
+        :block="imageBlock"
+        :content-id="block.value.content[0]"
       />
     </div>
     <div v-if="block.value.content">
@@ -42,12 +42,14 @@
 <script>
   import { Blockable } from '../lib/blockable';
   import NotionTextRenderer from './NotionTextRenderer.vue';
+  import NotionImage from './NotionImage.vue';
   import { defineAsyncComponent } from 'vue';
 
   export default {
     name: 'NotionTodo',
     components: {
       NotionTextRenderer,
+      NotionImage,
       NotionRenderer: defineAsyncComponent(
         () => import('./NotionRenderer.vue'),
       ),
@@ -62,16 +64,8 @@
         if (!this.imageBlock) return null;
         return this.imageBlock.value.properties?.source?.[0]?.[0] || null;
       },
-      imageAlt() {
-        if (!this.imageBlock) return '';
-        return (
-          this.imageBlock.value.properties?.caption?.[0]?.[0] ||
-          'Todo item image'
-        );
-      },
       filteredContent() {
         if (!this.block.value.content) return [];
-        // If first child is an image block that we're displaying separately, exclude it from children
         const firstChildId = this.block.value.content[0];
         const firstChild = firstChildId
           ? this.pass.blockMap[firstChildId]
@@ -80,11 +74,6 @@
           return this.block.value.content.slice(1);
         }
         return this.block.value.content;
-      },
-    },
-    methods: {
-      handleImageError(e) {
-        console.error('Ошибка загрузки изображения:', e.target.src);
       },
     },
   };
