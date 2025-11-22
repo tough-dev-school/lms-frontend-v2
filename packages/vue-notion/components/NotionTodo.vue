@@ -6,23 +6,35 @@
           type="checkbox"
           :value="properties.checked"
           :checked="properties.checked"
-          disabled="true" />
+          disabled="true"
+        />
       </span>
       <div :class="{ 'notion-to-do-checked': properties.checked }">
-        <NotionTextRenderer :text="title" v-bind="pass" />
+        <NotionTextRenderer
+          :text="title"
+          v-bind="pass"
+        />
       </div>
     </label>
-    <div v-if="imageUrl" class="notion-todo-image">
-      <img :src="imageUrl" :alt="imageAlt" @error="handleImageError" />
+    <div
+      v-if="imageUrl"
+      class="notion-todo-image"
+    >
+      <img
+        :src="imageUrl"
+        :alt="imageAlt"
+        @error="handleImageError"
+      />
     </div>
     <div v-if="block.value.content">
       <NotionRenderer
-        v-for="(contentId, contentIndex) in block.value.content"
+        v-for="(contentId, contentIndex) in filteredContent"
         v-bind="pass"
         :key="contentId"
         :level="pass.level + 1"
         :content-id="contentId"
-        :content-index="contentIndex" />
+        :content-index="contentIndex"
+      />
     </div>
   </div>
 </template>
@@ -56,6 +68,18 @@
           this.imageBlock.value.properties?.caption?.[0]?.[0] ||
           'Todo item image'
         );
+      },
+      filteredContent() {
+        if (!this.block.value.content) return [];
+        // If first child is an image block that we're displaying separately, exclude it from children
+        const firstChildId = this.block.value.content[0];
+        const firstChild = firstChildId
+          ? this.pass.blockMap[firstChildId]
+          : null;
+        if (firstChild?.value.type === 'image' && this.imageUrl) {
+          return this.block.value.content.slice(1);
+        }
+        return this.block.value.content;
       },
     },
     methods: {
