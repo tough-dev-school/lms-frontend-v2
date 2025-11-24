@@ -9,12 +9,12 @@ export const relativeDate = (date: dayjs.ConfigType) => {
   return dayjs().to(date);
 };
 
+export const DATE_FORMAT = 'DD.MM.YYYY';
+export const DATE_TIME_FORMAT = `${DATE_FORMAT} HH:mm`;
+export const DATE_TIME_SECONDS_FORMAT = `${DATE_TIME_FORMAT}:ss`;
+
 export const formatDate = (date: dayjs.ConfigType, format = 'DD.MM.YYYY') => {
   return dayjs(date).format(format);
-};
-
-export const formatDateTime = (date: string) => {
-  return dayjs(date).format('DD.MM.YYYY HH:mm');
 };
 
 export const isBefore = (a: dayjs.ConfigType, b: dayjs.ConfigType) => {
