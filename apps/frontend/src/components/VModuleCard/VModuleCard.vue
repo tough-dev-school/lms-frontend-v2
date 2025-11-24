@@ -59,7 +59,7 @@
   });
 
   onBeforeMount(async () => {
-    if (props.module.lesson_count === 1) {
+    if (props.module.lesson_count === 1 && props.module.has_started) {
       onlyLesson.value = await fetchLesson(queryClient, {
         lessonId: props.module.single_lesson_id,
       });
