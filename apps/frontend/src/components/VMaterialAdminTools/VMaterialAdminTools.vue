@@ -27,7 +27,6 @@
   );
 
   const inProgress = computed(() => {
-    if (materialStatus.value?.fetch_complete === null) return true;
     return isBefore(
       materialStatus.value?.fetch_started,
       materialStatus.value?.fetch_complete,
