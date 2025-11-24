@@ -20,7 +20,7 @@ export const formatDate = (
   format = 'DD.MM.YYYY',
   localTime = true,
 ) => {
-  return dayjs(date).utc(!localTime).format(format) + (localTime ? ' UTC' : '');
+  return dayjs(date).utc(!localTime).format(format) + (localTime ? '' : ' UTC');
 };
 
 export const isBefore = (a: dayjs.ConfigType, b: dayjs.ConfigType) => {
