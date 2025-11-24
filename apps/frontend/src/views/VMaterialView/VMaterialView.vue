@@ -6,28 +6,21 @@
   import getNotionTitle from '@/utils/getNotionTitle';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
-  import {
-    useMaterialQuery,
-    useUserQuery,
-    useUpdateMaterialMutation,
-    useMaterialStatusQuery,
-    materialsKeys,
-  } from '@/query';
+  import { useMaterialQuery, useUserQuery } from '@/query';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
   import { SUPPORT_EMAIL, SUPPORT_CHAT_URL } from '@/constants';
   import { useRouteQuery } from '@vueuse/router';
   // @ts-expect-error no types for vue-notion
   import { NotionRenderer } from 'vue-notion';
   import { useNotionCheckboxHack } from './useNotionCheckboxHack';
-  import { useIntervalFn, useStorage } from '@vueuse/core';
-  import { useQueryClient } from '@tanstack/vue-query';
+  import VMaterialAdminTools from '@/components/VMaterialAdminTools/VMaterialAdminTools.vue';
+  import { useStorage } from '@vueuse/core';
 
   const props = defineProps<{
     materialId: string;
   }>();
 
   const router = useRouter();
-  const queryClient = useQueryClient();
   const { data: user } = useUserQuery();
 
   const { data: materialData, isLoading } = useMaterialQuery(
@@ -122,19 +115,6 @@
       ?.scrollIntoView({ behavior: 'instant' });
   };
 
-  const { mutateAsync: updateMaterial } =
-    useUpdateMaterialMutation(queryClient);
-
-  const { data: materialStatus } = useMaterialStatusQuery(
-    () => props.materialId,
-  );
-
-  useIntervalFn(() => {
-    queryClient.invalidateQueries({
-      queryKey: materialsKeys.status(props.materialId),
-    });
-  }, 1000);
-
   useNotionCheckboxHack(props.materialId);
 </script>
 
@@ -146,20 +126,10 @@
       :breadcrumbs="breadcrumbs"
     >
       <template v-if="material">
-        <VCard
-          v-if="user?.is_staff"
-          class="flex flex-col gap-8 rounded-16 bg-white p-8 dark:bg-dark-black phone:p-24"
-        >
-          <p>
-            Последнее обновление запущено {{ materialStatus?.fetch_started }}
-          </p>
-          <p>Материал актуален на {{ materialStatus?.fetch_complete }}</p>
-          <template #footer>
-            <VButton @click="() => updateMaterial(props.materialId)">
-              Запросить обновление
-            </VButton>
-          </template>
-        </VCard>
+        <VMaterialAdminTools
+          :user="user"
+          :material-id="props.materialId"
+        />
         <VCard
           class="rounded-16 bg-white p-8 pt-32 shadow dark:bg-dark-black phone:p-24"
         >

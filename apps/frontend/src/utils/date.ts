@@ -16,3 +16,7 @@ export const formatDate = (date: dayjs.ConfigType, format = 'DD.MM.YYYY') => {
 export const formatDateTime = (date: string) => {
   return dayjs(date).format('DD.MM.YYYY HH:mm');
 };
+
+export const isBefore = (a: dayjs.ConfigType, b: dayjs.ConfigType) => {
+  return dayjs(a).isBefore(b);
+};
