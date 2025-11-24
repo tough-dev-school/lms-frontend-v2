@@ -8,7 +8,7 @@
     VideoProvider,
   } from '@/api/generated/generated-api';
   import { computed } from 'vue';
-  import { formatDateTime } from '@/utils/date';
+  import { DATE_TIME_FORMAT, formatDate } from '@/utils/date';
 
   const props = defineProps<{
     lesson: Lesson;
@@ -48,10 +48,11 @@
     <div class="flex flex-col gap-16">
       <div class="flex flex-wrap gap-8 empty:hidden">
         <VTag v-if="lesson.call?.datetime">
-          {{ formatDateTime(lesson.call.datetime) }}
+          {{ formatDate(lesson.call.datetime, DATE_TIME_FORMAT) }}
         </VTag>
         <VTag v-else-if="lesson.homework?.question.deadline">
-          Дедлайн {{ formatDateTime(lesson.homework.question.deadline) }}
+          Дедлайн
+          {{ formatDate(lesson.homework.question.deadline, DATE_TIME_FORMAT) }}
         </VTag>
       </div>
       <VHeading
