@@ -13,7 +13,7 @@
   import { computed } from 'vue';
 
   const props = defineProps<{
-    user?: User;
+    user: User;
     materialId: string;
   }>();
 
@@ -64,7 +64,6 @@
 
 <template>
   <VCard
-    v-if="user?.is_staff"
     class="flex flex-col gap-8 rounded-16 bg-white p-8 dark:bg-dark-black phone:p-24"
   >
     <p>Последнее обновление: {{ fetchStarted }}</p>
