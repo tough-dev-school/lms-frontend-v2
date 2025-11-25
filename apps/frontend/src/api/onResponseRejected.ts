@@ -1,23 +1,11 @@
 import { useAuth } from '@/composables/useAuth';
 import type { AxiosError } from 'axios';
-import handleError from '@/utils/handleError';
 
 const onResponseRejected = (error: AxiosError) => {
   const { token } = useAuth();
 
-  if (error.response) {
-    if (error.response.status === 401) {
-      token.value = undefined;
-    }
-
-    if (error.response.status !== 401) {
-      // Handle error with default or custom message
-      const isJson =
-        error.response.headers['content-type'] ===
-        'application/json; charset=utf-8';
-
-      isJson ? handleError(error) : handleError();
-    }
+  if (error.response?.status === 401) {
+    token.value = undefined;
   }
 
   return Promise.reject(error);
