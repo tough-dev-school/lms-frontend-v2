@@ -127,6 +127,7 @@
     >
       <template v-if="material">
         <VMaterialAdminTools
+          v-if="user?.is_staff"
           :user="user"
           :material-id="props.materialId"
         />
