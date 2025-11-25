@@ -13,7 +13,7 @@
   import { computed } from 'vue';
 
   const props = defineProps<{
-    user: User;
+    user?: User;
     materialId: string;
   }>();
 
