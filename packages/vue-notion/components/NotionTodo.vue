@@ -6,23 +6,32 @@
           type="checkbox"
           :value="properties.checked"
           :checked="properties.checked"
-          disabled="true" />
+          disabled="true"
+        />
       </span>
       <div :class="{ 'notion-to-do-checked': properties.checked }">
-        <NotionTextRenderer :text="title" v-bind="pass" />
+        <NotionTextRenderer
+          :text="title"
+          v-bind="pass"
+        />
       </div>
     </label>
-    <div v-if="imageUrl" class="notion-todo-image">
-      <img :src="imageUrl" :alt="imageAlt" @error="handleImageError" />
+    <div v-if="imageBlock && imageUrl">
+      <NotionFigure
+        v-bind="pass"
+        :block="imageBlock"
+        :content-id="block.value.content[0]"
+      />
     </div>
     <div v-if="block.value.content">
       <NotionRenderer
-        v-for="(contentId, contentIndex) in block.value.content"
+        v-for="(contentId, contentIndex) in filteredContent"
         v-bind="pass"
         :key="contentId"
         :level="pass.level + 1"
         :content-id="contentId"
-        :content-index="contentIndex" />
+        :content-index="contentIndex"
+      />
     </div>
   </div>
 </template>
@@ -30,12 +39,14 @@
 <script>
   import { Blockable } from '../lib/blockable';
   import NotionTextRenderer from './NotionTextRenderer.vue';
+  import NotionFigure from './NotionFigure.vue';
   import { defineAsyncComponent } from 'vue';
 
   export default {
     name: 'NotionTodo',
     components: {
       NotionTextRenderer,
+      NotionFigure,
       NotionRenderer: defineAsyncComponent(
         () => import('./NotionRenderer.vue'),
       ),
@@ -50,17 +61,16 @@
         if (!this.imageBlock) return null;
         return this.imageBlock.value.properties?.source?.[0]?.[0] || null;
       },
-      imageAlt() {
-        if (!this.imageBlock) return '';
-        return (
-          this.imageBlock.value.properties?.caption?.[0]?.[0] ||
-          'Todo item image'
-        );
-      },
-    },
-    methods: {
-      handleImageError(e) {
-        console.error('Ошибка загрузки изображения:', e.target.src);
+      filteredContent() {
+        if (!this.block.value.content) return [];
+        const firstChildId = this.block.value.content[0];
+        const firstChild = firstChildId
+          ? this.pass.blockMap[firstChildId]
+          : null;
+        if (firstChild?.value.type === 'image' && this.imageUrl) {
+          return this.block.value.content.slice(1);
+        }
+        return this.block.value.content;
       },
     },
   };

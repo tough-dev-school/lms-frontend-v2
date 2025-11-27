@@ -51,20 +51,27 @@
       <avatar-cropper
         v-model="showCropper"
         :labels="{ cancel: 'Отменить', submit: 'Сохранить' }"
-        :upload-handler="showPreview" />
+        :upload-handler="showPreview"
+      />
       <div class="flex gap-16">
-        <VAvatar :user-id="user.uuid" :image="avatar" size="md" />
+        <VAvatar
+          :user-id="user.uuid"
+          :image="avatar"
+          size="md"
+        />
         <button
           data-testid="upload"
           class="link p-6"
-          @click="showCropper = true">
+          @click="showCropper = true"
+        >
           Загрузить
         </button>
         <button
           v-if="avatar"
           data-testid="delete"
           class="p-6 hover:text-red"
-          @click="deleteAvatar">
+          @click="deleteAvatar"
+        >
           Удалить
         </button>
       </div>
@@ -74,9 +81,20 @@
         data-testid="save"
         :disabled="isSaveButtonDisabled"
         :loading="isUpdatePending"
-        @click="saveProfile">
+        @click="saveProfile"
+      >
         {{ isUpdatePending ? 'Сохраняется...' : 'Сохранить' }}
       </VButton>
     </template>
   </VCard>
 </template>
+
+<style>
+  .avatar-cropper {
+    color: black;
+  }
+
+  .avatar-cropper-btn:hover {
+    @apply !bg-yellow !text-black;
+  }
+</style>

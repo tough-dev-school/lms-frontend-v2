@@ -3,6 +3,7 @@ import {
   useMutation,
   useQuery,
   queryOptions,
+  skipToken,
 } from '@tanstack/vue-query';
 import type { MaybeRefOrGetter } from 'vue';
 import { computed, toValue } from 'vue';
@@ -45,6 +46,10 @@ export const materialsKeys = {
     ...materialsKeys.all(),
     'materials',
     materialId,
+  ],
+  status: (materialId: string) => [
+    ...materialsKeys.materials(materialId),
+    'status',
   ],
 };
 
@@ -114,11 +119,13 @@ export const useLessonsQuery = (
 };
 
 const lessonOptions = (lessonId?: number) => {
-  return {
+  return queryOptions({
     queryKey: lmsKeys.lesson(lessonId),
-    queryFn: async () => lessonId && (await api.lmsLessonsRetrieve(lessonId)),
-    enabled: lessonId !== undefined,
-  };
+    queryFn:
+      lessonId === undefined
+        ? skipToken
+        : async () => await api.lmsLessonsRetrieve(lessonId),
+  });
 };
 
 export const useLessonQuery = (
@@ -196,6 +203,46 @@ export const useMaterialQuery = (materialId: MaybeRefOrGetter<string>) => {
 
   return useQuery(options);
 };
+
+// export const getMaterialUpdateQueryOptions = (materialId: string) => {
+//   return queryOptions({
+//     queryKey: materialsKeys.materials(materialId),
+//     queryFn: async () => await api.materialsUpdateUpdate(materialId),
+//   });
+// };
+
+export const useUpdateMaterialMutation = (queryClient: QueryClient) => {
+  return useMutation({
+    mutationFn: async (materialId: string) =>
+      await api.materialsUpdateUpdate(materialId),
+    onSuccess: (_, materialId) => {
+      queryClient.invalidateQueries({
+        queryKey: materialsKeys.materials(materialId),
+      });
+    },
+  });
+};
+
+export const getMaterialStatusQueryOptions = (materialId: string) => {
+  return queryOptions({
+    queryKey: materialsKeys.status(materialId),
+    queryFn: async () => await api.materialsStatusRetrieve(materialId),
+  });
+};
+
+export const useMaterialStatusQuery = (
+  materialId: MaybeRefOrGetter<string>,
+) => {
+  const options = computed(() =>
+    getMaterialStatusQueryOptions(toValue(materialId)),
+  );
+  return useQuery(options);
+};
+
+export const fetchMaterialStatus = async (
+  queryClient: QueryClient,
+  { materialId }: { materialId: string },
+) => queryClient.fetchQuery(getMaterialStatusQueryOptions(materialId));
 
 export const diplomasKeys = {
   all: () => ['diplomas'],

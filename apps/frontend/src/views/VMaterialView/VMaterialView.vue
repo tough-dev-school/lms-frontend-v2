@@ -6,14 +6,14 @@
   import getNotionTitle from '@/utils/getNotionTitle';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
-  import { useMaterialQuery } from '@/query';
+  import { useMaterialQuery, useUserQuery } from '@/query';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
   import { SUPPORT_EMAIL, SUPPORT_CHAT_URL } from '@/constants';
   import { useRouteQuery } from '@vueuse/router';
-
   // @ts-expect-error no types for vue-notion
   import { NotionRenderer } from 'vue-notion';
   import { useNotionCheckboxHack } from './useNotionCheckboxHack';
+  import VMaterialAdminTools from '@/components/VMaterialAdminTools/VMaterialAdminTools.vue';
   import { useStorage } from '@vueuse/core';
 
   const props = defineProps<{
@@ -21,6 +21,7 @@
   }>();
 
   const router = useRouter();
+  const { data: user } = useUserQuery();
 
   const { data: materialData, isLoading } = useMaterialQuery(
     () => props.materialId,
@@ -125,6 +126,11 @@
       :breadcrumbs="breadcrumbs"
     >
       <template v-if="material">
+        <VMaterialAdminTools
+          v-if="user?.is_staff"
+          :user="user"
+          :material-id="props.materialId"
+        />
         <VCard
           class="rounded-16 bg-white p-8 pt-32 shadow dark:bg-dark-black phone:p-24"
         >

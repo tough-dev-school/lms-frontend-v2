@@ -3,7 +3,7 @@
   import VPillItem from '@/components/VPill/VPillItem.vue';
   import type { HomeworkStats } from '@/api/generated/generated-api';
   import { computed } from 'vue';
-  import { formatDate, formatDateTime } from '@/utils/date';
+  import { DATE_TIME_FORMAT, formatDate } from '@/utils/date';
   import dayjs from 'dayjs';
 
   const props = defineProps<{
@@ -51,7 +51,7 @@
         </div>
         <div v-if="crossCheckDate && !isOverCrossCheckDate">
           отправим
-          {{ formatDate(crossCheckDate) }}
+          {{ formatDate(crossCheckDate, DATE_TIME_FORMAT) }}
         </div>
       </div>
     </VPillItem>
@@ -60,7 +60,9 @@
       :class="{ 'text-red': isOverdue }"
     >
       <div>
-        <div>Дедлайн: {{ formatDateTime(stats.question?.deadline) }}</div>
+        <div>
+          Дедлайн: {{ formatDate(stats.question?.deadline, DATE_TIME_FORMAT) }}
+        </div>
         <div v-if="isOverdue">Просрочен</div>
       </div>
     </VPillItem>
