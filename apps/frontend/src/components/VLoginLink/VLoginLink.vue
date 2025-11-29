@@ -43,8 +43,13 @@
       tip="Мы отправим ссылку для входа по этому адресу"
       type="email"
       autocomplete="username"
+      name="email"
+      :error="error"
     />
-    <VError :error="error" />
+    <VError
+      :error="error"
+      :whitelist="['non_field_errors']"
+    />
     <template #footer>
       <VButton
         type="submit"

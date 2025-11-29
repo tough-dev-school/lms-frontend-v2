@@ -43,8 +43,13 @@
         type="email"
         autocomplete="username"
         data-testid="email"
+        name="email"
+        :error="error"
       />
-      <VError :error="error" />
+      <VError
+        :error="error"
+        :whitelist="['non_field_errors']"
+      />
       <template #footer>
         <VButton
           :disabled="!email"

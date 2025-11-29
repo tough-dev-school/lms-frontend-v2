@@ -62,6 +62,7 @@
     <div class="flex flex-col items-start gap-16 tablet:gap-24">
       <VTextInput
         v-model="data.firstName"
+        name="first_mame"
         data-testid="firstName"
         label="Имя"
       />
@@ -69,16 +70,19 @@
         v-model="data.lastName"
         data-testid="lastName"
         label="Фамилия"
+        name="last_name"
       />
       <VTextInput
         v-model="data.firstNameEn"
         data-testid="firstNameEn"
         label="Имя (на английском)"
+        name="first_name_en"
       />
       <VTextInput
         v-model="data.lastNameEn"
         data-testid="lastNameEn"
         label="Фамилия (на английском)"
+        name="last_name_en"
       />
       <fieldset class="flex flex-wrap gap-16">
         <legend class="Label">Пол</legend>
@@ -103,7 +107,14 @@
           Женский</label
         >
       </fieldset>
-      <VError :error="error" />
+      <VError
+        :error="error"
+        :whitelist="['gender']"
+      />
+      <VError
+        :error="error"
+        :whitelist="['non_field_errors']"
+      />
     </div>
     <template #footer>
       <VButton

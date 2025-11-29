@@ -46,19 +46,28 @@
         v-model="data.githubUsername"
         label="Ссылка на GitHub"
         data-testid="github"
+        name="github_username"
+        :error="error"
       />
       <VTextInput
         v-model="data.linkedinUsername"
         label="Ссылка на LinkedIn"
         data-testid="linkedin"
+        name="linkedin_username"
+        :error="error"
       />
       <VTextInput
         v-model="data.telegramUsername"
         label="Ссылка на Telegram"
         data-testid="telegram"
+        name="telegram_username"
+        :error="error"
       />
     </div>
-    <VError :error="error" />
+    <VError
+      :error="error"
+      :whitelist="['non_field_errors']"
+    />
     <template #footer>
       <VButton
         data-testid="save"
