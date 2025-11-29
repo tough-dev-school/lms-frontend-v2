@@ -3,18 +3,24 @@
   import { pick } from 'lodash-es';
 
   const props = defineProps<{
-    error: { response: { data: Record<string, string[]> } } | null;
+    error: Error | null;
     whitelist?: string[];
   }>();
 
+  interface BackendError {
+    response: { data: Record<string, string[]> };
+  }
+
   const errors = computed(() => {
-    if (!props.error?.response?.data) return {};
+    if (!props.error) return {};
+    if ('response' in props.error) {
+      const data = (props.error as BackendError).response.data;
 
-    const data = props.error.response.data;
-
-    return props.whitelist
-      ? (pick(data, props.whitelist) as Record<string, unknown>)
-      : data;
+      return props.whitelist
+        ? (pick(data, props.whitelist) as Record<string, unknown>)
+        : data;
+    }
+    return {};
   });
 </script>
 

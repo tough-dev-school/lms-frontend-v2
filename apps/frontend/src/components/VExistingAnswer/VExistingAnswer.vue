@@ -86,7 +86,7 @@
     v-model="content"
     :legacy-text="answer.legacy_text"
     :is-pending="isUpdatePending"
-    :error="() => [...updateError, ...deleteError]"
+    :error="updateError || deleteError"
     @send="handleUpdate"
   />
 </template>

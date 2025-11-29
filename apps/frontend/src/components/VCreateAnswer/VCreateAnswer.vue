@@ -7,7 +7,7 @@
   const props = defineProps<{
     legacyText?: string;
     isPending: boolean;
-    error: unknown;
+    error: Error | null;
   }>();
 
   const emit = defineEmits<{
