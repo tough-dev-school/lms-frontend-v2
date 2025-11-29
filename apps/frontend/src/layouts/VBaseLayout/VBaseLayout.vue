@@ -1,6 +1,5 @@
 <script lang="ts" setup>
   import VSupportChat from '@/components/VSupportChat/VSupportChat.vue';
-  import VToastFeed from '@/components/VToastFeed/VToastFeed.vue';
 </script>
 
 <template>
@@ -8,5 +7,4 @@
     <slot />
   </main>
   <VSupportChat />
-  <VToastFeed />
 </template>

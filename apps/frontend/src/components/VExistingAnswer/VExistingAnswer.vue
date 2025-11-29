@@ -24,9 +24,12 @@
 
   const isEdit = ref(false);
 
-  const { mutateAsync: updateAnswerMutation, isPending: isUpdatePending } =
-    useHomeworkAnswerUpdateMutation(queryClient);
-  const { mutateAsync: deleteAnswerMutation } =
+  const {
+    mutateAsync: updateAnswerMutation,
+    error: updateError,
+    isPending: isUpdatePending,
+  } = useHomeworkAnswerUpdateMutation(queryClient);
+  const { mutateAsync: deleteAnswerMutation, error: deleteError } =
     useHomeworkAnswerDeleteMutation(queryClient);
 
   const handleDelete = async () => {
@@ -83,6 +86,7 @@
     v-model="content"
     :legacy-text="answer.legacy_text"
     :is-pending="isUpdatePending"
+    :error="updateError || deleteError"
     @send="handleUpdate"
   />
 </template>

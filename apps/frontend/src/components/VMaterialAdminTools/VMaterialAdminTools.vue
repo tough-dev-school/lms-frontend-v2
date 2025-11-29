@@ -11,6 +11,7 @@
   import { useIntervalFn } from '@vueuse/core';
   import { DATE_TIME_SECONDS_FORMAT, formatDate, isBefore } from '@/utils/date';
   import { computed } from 'vue';
+  import VError from '@/components/VError/VError.vue';
 
   const props = defineProps<{
     user?: User;
@@ -19,7 +20,7 @@
 
   const queryClient = useQueryClient();
 
-  const { mutateAsync: updateMaterial } =
+  const { mutateAsync: updateMaterial, error } =
     useUpdateMaterialMutation(queryClient);
 
   const { data: materialStatus } = useMaterialStatusQuery(
@@ -68,6 +69,7 @@
   >
     <p>Последнее обновление: {{ fetchStarted }}</p>
     <p>Материал актуален: {{ fetchComplete }}</p>
+    <VError :error="error" />
     <template #footer>
       <VButton @click="() => updateMaterial(props.materialId)">
         <template v-if="inProgress">Обновление в процессе</template>

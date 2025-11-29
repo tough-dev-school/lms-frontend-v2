@@ -13,8 +13,11 @@
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const { mutateAsync: changePassword, isPending } =
-    useConfirmPasswordResetMutation(queryClient);
+  const {
+    mutateAsync: changePassword,
+    error,
+    isPending,
+  } = useConfirmPasswordResetMutation(queryClient);
 
   const handleSave = async (password: string) => {
     try {
@@ -25,8 +28,9 @@
         token: props.token,
       });
       router.push({ name: 'login' });
-    } catch (error) {
-      console.error(error);
+    } catch (error_) {
+      console.error('Failed to change password', error_);
+      // handled in the mutation
     }
   };
 </script>
@@ -36,6 +40,8 @@
     <VPasswordResetForm
       title="Сброс пароля"
       :is-pending="isPending"
-      @save="handleSave" />
+      :error="error"
+      @save="handleSave"
+    />
   </VPublicLayout>
 </template>

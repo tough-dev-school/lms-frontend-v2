@@ -5,11 +5,15 @@
   import VButton from '@/components/VButton/VButton.vue';
   import { useUserQuery, useUpdateUserAvatarMutation } from '@/query';
   import { useQueryClient } from '@tanstack/vue-query';
+  import VError from '@/components/VError/VError.vue';
 
   const queryClient = useQueryClient();
   const { data: user } = useUserQuery();
-  const { mutateAsync: updateAvatar, isPending: isUpdatePending } =
-    useUpdateUserAvatarMutation(queryClient);
+  const {
+    mutateAsync: updateAvatar,
+    error,
+    isPending,
+  } = useUpdateUserAvatarMutation(queryClient);
 
   const avatar = ref();
   const file = ref();
@@ -75,15 +79,16 @@
           Удалить
         </button>
       </div>
+      <VError :error="error" />
     </template>
     <template #footer>
       <VButton
         data-testid="save"
         :disabled="isSaveButtonDisabled"
-        :loading="isUpdatePending"
+        :loading="isPending"
         @click="saveProfile"
       >
-        {{ isUpdatePending ? 'Сохраняется...' : 'Сохранить' }}
+        {{ isPending ? 'Сохраняется...' : 'Сохранить' }}
       </VButton>
     </template>
   </VCard>

@@ -5,10 +5,14 @@
   import VCard from '@/components/VCard/VCard.vue';
   import { useUpdateUserMutation, fetchUser } from '@/query';
   import { useQueryClient } from '@tanstack/vue-query';
+  import VError from '@/components/VError/VError.vue';
 
   const queryClient = useQueryClient();
-  const { mutateAsync: updateUser, isPending: isUpdateUserPending } =
-    useUpdateUserMutation(queryClient);
+  const {
+    mutateAsync: updateUser,
+    error,
+    isPending,
+  } = useUpdateUserMutation(queryClient);
 
   const data = ref({
     linkedinUsername: '',
@@ -41,22 +45,36 @@
       <VTextInput
         v-model="data.githubUsername"
         label="Ссылка на GitHub"
-        data-testid="github" />
+        data-testid="github"
+        name="github_username"
+        :error="error"
+      />
       <VTextInput
         v-model="data.linkedinUsername"
         label="Ссылка на LinkedIn"
-        data-testid="linkedin" />
+        data-testid="linkedin"
+        name="linkedin_username"
+        :error="error"
+      />
       <VTextInput
         v-model="data.telegramUsername"
         label="Ссылка на Telegram"
-        data-testid="telegram" />
+        data-testid="telegram"
+        name="telegram_username"
+        :error="error"
+      />
     </div>
+    <VError
+      :error="error"
+      :whitelist="['non_field_errors']"
+    />
     <template #footer>
       <VButton
         data-testid="save"
-        :loading="isUpdateUserPending"
-        @click="saveProfile">
-        {{ isUpdateUserPending ? 'Сохраняется...' : 'Сохранить' }}
+        :loading="isPending"
+        @click="saveProfile"
+      >
+        {{ isPending ? 'Сохраняется...' : 'Сохранить' }}
       </VButton>
     </template>
   </VCard>
