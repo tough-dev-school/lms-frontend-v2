@@ -7,52 +7,60 @@
   import VPublicLayout from '@/layouts/VPublicLayout/VPublicLayout.vue';
   import { useRequestPasswordResetMutation } from '@/query';
   import { useQueryClient } from '@tanstack/vue-query';
+  import VError from '@/components/VError/VError.vue';
 
   const router = useRouter();
   const queryClient = useQueryClient();
   const email = ref('');
 
-  const { mutateAsync: requestReset } =
-    useRequestPasswordResetMutation(queryClient);
-
-  const isPending = ref(false);
+  const {
+    mutateAsync: requestReset,
+    error,
+    isPending,
+  } = useRequestPasswordResetMutation(queryClient);
 
   const handleResetRequest = async () => {
-    isPending.value = true;
     try {
       await requestReset({ email: email.value });
       router.push({ name: 'mail-sent', query: { email: email.value } });
     } catch {
       console.error('Failed to request reset');
     }
-    isPending.value = false;
   };
 </script>
 
 <template>
   <VPublicLayout>
-    <VCard tag="form" title="Сброс пароля" @submit.prevent="handleResetRequest">
+    <VCard
+      tag="form"
+      title="Сброс пароля"
+      @submit.prevent="handleResetRequest"
+    >
       <VTextInput
         v-model="email"
         label="Почта, на которую купили курс"
         tip="Мы отправим ссылку для сброса пароля по этому адресу"
         type="email"
         autocomplete="username"
-        data-testid="email" />
+        data-testid="email"
+      />
+      <VError :error="error" />
       <template #footer>
         <VButton
           :disabled="!email"
           class="flex-grow"
           type="submit"
           data-testid="send"
-          :loading="isPending">
+          :loading="isPending"
+        >
           {{ isPending ? 'Отправляем письмо...' : 'Отправить письмо' }}
         </VButton>
         <VButton
           appearance="link"
           class="flex-grow"
           data-testid="password"
-          @click="router.push({ name: 'login' })">
+          @click="router.push({ name: 'login' })"
+        >
           Войти по паролю
         </VButton>
       </template>

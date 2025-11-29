@@ -50,8 +50,11 @@
     replyMode.value = false;
   });
 
-  const { mutateAsync: createComment, isPending: isCreateCommentPending } =
-    useHomeworkAnswerCreateMutation(queryClient);
+  const {
+    mutateAsync: createComment,
+    error,
+    isPending,
+  } = useHomeworkAnswerCreateMutation(queryClient);
 
   const { content } = useEditorAutosave([
     'commentText',
@@ -117,7 +120,8 @@
       <VCreateAnswer
         v-show="replyMode"
         v-model="content"
-        :is-pending="isCreateCommentPending"
+        :is-pending="isPending"
+        :error="error"
         @send="handleCreateComment"
       />
     </div>

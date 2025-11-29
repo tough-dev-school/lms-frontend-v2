@@ -7,10 +7,14 @@
   import { useUpdateUserMutation, fetchUser } from '@/query';
   import { GenderEnum, BlankEnum } from '@/api/generated/generated-api';
   import type { PatchedUser } from '@/api/generated/generated-api';
+  import VError from '@/components/VError/VError.vue';
 
   const queryClient = useQueryClient();
-  const { mutateAsync: updateUser, isPending } =
-    useUpdateUserMutation(queryClient);
+  const {
+    mutateAsync: updateUser,
+    error,
+    isPending,
+  } = useUpdateUserMutation(queryClient);
 
   const data = ref<{
     firstName: Required<PatchedUser>['first_name'];
@@ -99,6 +103,7 @@
           Женский</label
         >
       </fieldset>
+      <VError :error="error" />
     </div>
     <template #footer>
       <VButton

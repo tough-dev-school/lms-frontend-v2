@@ -2,10 +2,12 @@
   import VTextEditor from '@/components/VTextEditor/VTextEditor.vue';
   import VButton from '@/components/VButton/VButton.vue';
   import { computed, useTemplateRef } from 'vue';
+  import VError from '@/components/VError/VError.vue';
 
   const props = defineProps<{
     legacyText?: string;
     isPending: boolean;
+    error: unknown;
   }>();
 
   const emit = defineEmits<{
@@ -31,6 +33,7 @@
       @send="emit('send')"
     />
     <div class="SendOwnAnswer__Footer">
+      <VError :error="error" />
       <VButton
         :disabled="isDisabled"
         :loading="isPending"

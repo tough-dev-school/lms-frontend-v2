@@ -7,13 +7,17 @@
   import { useRouter } from 'vue-router';
   import { useLoginWithCredentialsMutation } from '@/query';
   import { useQueryClient } from '@tanstack/vue-query';
+  import VError from '@/components/VError/VError.vue';
 
   const queryClient = useQueryClient();
 
   const { token } = useAuth();
 
-  const { mutateAsync: loginWithCredentials, isPending } =
-    useLoginWithCredentialsMutation(queryClient);
+  const {
+    mutateAsync: loginWithCredentials,
+    error,
+    isPending,
+  } = useLoginWithCredentialsMutation(queryClient);
 
   const router = useRouter();
 
@@ -88,6 +92,7 @@
           </span>
         </template>
       </VTextInput>
+      <VError :error="error" />
     </div>
     <template #footer>
       <VButton
