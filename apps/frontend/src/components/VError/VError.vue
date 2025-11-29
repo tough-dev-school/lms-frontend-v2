@@ -34,7 +34,8 @@
       :key="key"
       class="text-red"
     >
-      {{ key }}: {{ Array.isArray(error) ? error.join(', ') : error }}
+      <template v-if="!!whitelist?.length === false">{{ key }}:</template>
+      {{ Array.isArray(error) ? error.join(', ') : error }}
     </li>
   </ul>
 </template>

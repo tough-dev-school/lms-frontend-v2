@@ -72,11 +72,15 @@
         autocomplete="username"
         label="Логин"
         :type="isEmail ? 'email' : 'text'"
+        name="username"
+        :error="error"
       />
       <VTextInput
         v-model="password"
         autocomplete="current-password"
         type="password"
+        name="password"
+        :error="error"
       >
         <template #label>
           Пароль
@@ -92,7 +96,10 @@
           </span>
         </template>
       </VTextInput>
-      <VError :error="error" />
+      <VError
+        :error="error"
+        :whitelist="['non_field_errors']"
+      />
     </div>
     <template #footer>
       <VButton
