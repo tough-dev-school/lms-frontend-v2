@@ -1,26 +1,36 @@
 <script setup lang="ts">
   import { computed } from 'vue';
   import { pick } from 'lodash-es';
+  import type { FormError } from '@/types/error';
+  import { getErrorData } from '@/types/error';
 
   const props = defineProps<{
-    error: Error | null;
+    error: FormError;
     whitelist?: string[];
   }>();
 
-  interface BackendError {
-    response: { data: Record<string, string[]> };
-  }
-
   const errors = computed(() => {
-    if (!props.error) return {};
-    if ('response' in props.error) {
-      const data = (props.error as BackendError).response.data;
+    try {
+      const errorData = getErrorData(props.error);
 
-      return props.whitelist
-        ? (pick(data, props.whitelist) as Record<string, unknown>)
-        : data;
+      if (Object.keys(errorData).length === 0) {
+        return {};
+      }
+
+      return props.whitelist && props.whitelist.length > 0
+        ? (pick(errorData, props.whitelist) as Record<
+            string,
+            string | string[]
+          >)
+        : errorData;
+    } catch (error) {
+      console.error('Error parsing error data:', error);
+      return {};
     }
-    return {};
+  });
+
+  const showKey = computed(() => {
+    return !props.whitelist || props.whitelist.length === 0;
   });
 </script>
 
@@ -34,7 +44,7 @@
       :key="key"
       class="text-red"
     >
-      <template v-if="!!whitelist?.length === false">{{ key }}:</template>
+      <template v-if="showKey">{{ key }}:</template>
       {{ Array.isArray(error) ? error.join(', ') : error }}
     </li>
   </ul>

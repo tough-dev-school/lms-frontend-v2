@@ -204,13 +204,6 @@ export const useMaterialQuery = (materialId: MaybeRefOrGetter<string>) => {
   return useQuery(options);
 };
 
-// export const getMaterialUpdateQueryOptions = (materialId: string) => {
-//   return queryOptions({
-//     queryKey: materialsKeys.materials(materialId),
-//     queryFn: async () => await api.materialsUpdateUpdate(materialId),
-//   });
-// };
-
 export const useUpdateMaterialMutation = (queryClient: QueryClient) => {
   return useMutation({
     mutationFn: async (materialId: string) =>

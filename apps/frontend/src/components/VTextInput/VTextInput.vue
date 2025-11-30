@@ -1,5 +1,6 @@
 <script lang="ts" setup>
   import VError from '@/components/VError/VError.vue';
+  import type { FormError } from '@/types/error';
 
   export type AllowedTags =
     | 'text'
@@ -17,7 +18,7 @@
   export interface Props {
     label?: string;
     tip?: string;
-    error?: Error | null;
+    error?: FormError;
     modelValue?: string;
     type?: AllowedTags;
     name: string;

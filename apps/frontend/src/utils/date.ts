@@ -17,10 +17,12 @@ export const DATE_TIME_SECONDS_FORMAT = `${DATE_TIME_FORMAT}:ss`;
 
 export const formatDate = (
   date: dayjs.ConfigType,
-  format = 'DD.MM.YYYY',
+  format: string = DATE_FORMAT,
   localTime = true,
 ) => {
-  return dayjs(date).utc(!localTime).format(format) + (localTime ? '' : ' UTC');
+  const dayjsDate = localTime ? dayjs(date) : dayjs(date).utc();
+  const formatted = dayjsDate.format(format);
+  return localTime ? formatted : `${formatted} UTC`;
 };
 
 export const isBefore = (a: dayjs.ConfigType, b: dayjs.ConfigType) => {

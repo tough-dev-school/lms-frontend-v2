@@ -3,11 +3,12 @@
   import VButton from '@/components/VButton/VButton.vue';
   import { computed, useTemplateRef } from 'vue';
   import VError from '@/components/VError/VError.vue';
+  import type { FormError } from '@/types/error';
 
   const props = defineProps<{
     legacyText?: string;
     isPending: boolean;
-    error: Error | null;
+    error: FormError;
   }>();
 
   const emit = defineEmits<{

@@ -62,7 +62,7 @@
     <div class="flex flex-col items-start gap-16 tablet:gap-24">
       <VTextInput
         v-model="data.firstName"
-        name="first_mame"
+        name="first_name"
         data-testid="firstName"
         label="Имя"
       />

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-  import type { User } from '@/api/generated/generated-api';
   import VCard from '../VCard/VCard.vue';
   import VButton from '../VButton/VButton.vue';
   import {
@@ -14,7 +13,6 @@
   import VError from '@/components/VError/VError.vue';
 
   const props = defineProps<{
-    user?: User;
     materialId: string;
   }>();
 
@@ -28,9 +26,17 @@
   );
 
   const inProgress = computed(() => {
+    if (!materialStatus.value?.fetch_started) {
+      return false;
+    }
+
+    if (!materialStatus.value?.fetch_complete) {
+      return true;
+    }
+
     return isBefore(
-      materialStatus.value?.fetch_started,
-      materialStatus.value?.fetch_complete,
+      materialStatus.value.fetch_started,
+      materialStatus.value.fetch_complete,
     );
   });
 
