@@ -7,6 +7,11 @@ import { useQueryClient } from '@tanstack/vue-query';
 export default {
   title: 'UI/VProfileMenu',
   component: VProfileMenu,
+  decorators: [
+    () => ({
+      template: '<div class="flex justify-end"><story /></div>',
+    }),
+  ],
 } as Meta;
 
 const Template: StoryFn = (args) => ({

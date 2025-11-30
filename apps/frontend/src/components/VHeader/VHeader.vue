@@ -4,8 +4,12 @@
 
 <template>
   <header
-    class="flex flex-wrap justify-between items-center pt-16 tablet:pt-32 pb-24 tablet:pb-32 gap-8">
-    <RouterLink to="/" data-testid="logo" class="se:block hidden">
+    class="flex items-center justify-between gap-8 pb-24 pt-16 tablet:pb-32 tablet:pt-32"
+  >
+    <RouterLink
+      to="/"
+      data-testid="logo"
+    >
       <VLogo />
     </RouterLink>
     <slot />

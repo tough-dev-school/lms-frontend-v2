@@ -54,7 +54,7 @@
   }
 
   body {
-    @apply bg-offwhite font-body text-black dark:bg-darkmode-layer1 dark:text-white min-h-screen;
+    @apply min-h-screen bg-offwhite font-body text-black dark:bg-darkmode-layer1 dark:text-white;
   }
 }
 
@@ -107,15 +107,15 @@
 
   .float-card,
   .v-popper--theme-dropdown .v-popper__inner.v-popper__inner {
-    @apply overflow-hidden rounded-8 bg-white dark:bg-darkmode-layer2 shadow;
+    @apply overflow-hidden rounded-8 bg-white shadow dark:bg-darkmode-layer2;
   }
 
   .container-fluid {
-    @apply px-16 max-w-[720px] mx-auto;
+    @apply mx-auto max-w-[720px] px-16;
   }
 
   .card {
-    @apply bg-yellow rounded-16 p-16 text-black;
+    @apply rounded-16 bg-yellow p-16 text-black;
   }
 }
 
