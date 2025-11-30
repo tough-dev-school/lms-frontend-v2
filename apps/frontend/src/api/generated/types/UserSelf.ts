@@ -8,7 +8,7 @@
 import type { BlankEnum } from "./BlankEnum";
 import type { GenderEnum } from "./GenderEnum";
 
-export type User = {
+export type UserSelf = {
     /**
      * @type integer
     */
@@ -69,4 +69,9 @@ export type User = {
      * @type string, uri
     */
     avatar: string | null;
+    /**
+     * @description Отметьте, если пользователь может входить в административную часть сайта.
+     * @type boolean | undefined
+    */
+    is_staff: boolean;
 };

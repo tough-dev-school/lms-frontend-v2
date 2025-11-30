@@ -15,9 +15,9 @@ export type JSONWebToken = {
     */
     password: string;
     /**
-     * @type string | undefined
+     * @type string
     */
-    token?: string;
+    token: string;
     /**
      * @type string
     */

@@ -112,11 +112,14 @@
           @close="closePalette"
           @add="
             (emoji) =>
-              sendAddReaction({ answerId: answer.slug, reaction: emoji })
+              sendAddReaction({
+                answer_slug: answer.slug,
+                data: { emoji },
+              })
           "
           @remove="
             (reactionId) =>
-              sendRemoveReaction({ answerId: answer.slug, reactionId })
+              sendRemoveReaction({ answer_slug: answer.slug, slug: reactionId })
           "
         />
       </div>

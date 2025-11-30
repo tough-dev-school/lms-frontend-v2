@@ -130,7 +130,8 @@
 
   const {
     mutateAsync: createAnswerMutation,
-    isPending: isCreateAnswerPending,
+    isPending,
+    error,
   } = useHomeworkAnswersCreate({
     mutation: {
       onSuccess: (data) => {

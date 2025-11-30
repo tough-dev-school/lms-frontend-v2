@@ -6,18 +6,18 @@
 */
 
 import type { UsersMePartialUpdateMutationResponse } from "../types/UsersMePartialUpdate";
-import { createPatchedUser } from "./createPatchedUser";
-import { createUser } from "./createUser";
+import { createPatchedUserSelfUpdate } from "./createPatchedUserSelfUpdate";
+import { createUserSelf } from "./createUserSelf";
 import { faker } from "@faker-js/faker";
 
 export function createUsersMePartialUpdate200() {
   faker.seed(1337)  
-  return createUser()
+  return createUserSelf()
 }
 
 export function createUsersMePartialUpdateMutationRequest() {
   faker.seed(1337)  
-  return createPatchedUser()
+  return createPatchedUserSelfUpdate()
 }
 
 export function createUsersMePartialUpdateMutationResponse(data?: Partial<UsersMePartialUpdateMutationResponse>): UsersMePartialUpdateMutationResponse {

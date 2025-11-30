@@ -13,7 +13,7 @@
   const queryClient = useQueryClient();
   const email = ref('');
 
-  const { mutateAsync: requestReset } = useAuthPasswordResetCreate({
+  const { mutateAsync: requestReset, error } = useAuthPasswordResetCreate({
     mutation: {
       onSuccess: () => {
         queryClient.invalidateQueries();

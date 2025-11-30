@@ -38,5 +38,6 @@ export { ordersConfirmRetrieveHandler } from "./ordersConfirmRetrieveHandler";
 export { ordersDraftCreateHandlerResponse200, ordersDraftCreateHandler } from "./ordersDraftCreateHandler";
 export { purchasedCoursesListHandlerResponse200, purchasedCoursesListHandler } from "./purchasedCoursesListHandler";
 export { studiesPurchasedListHandlerResponse200, studiesPurchasedListHandler } from "./studiesPurchasedListHandler";
+export { usersListHandlerResponse200, usersListHandler } from "./usersListHandler";
 export { usersMePartialUpdateHandlerResponse200, usersMePartialUpdateHandler } from "./usersMePartialUpdateHandler";
 export { usersMeRetrieveHandlerResponse200, usersMeRetrieveHandler } from "./usersMeRetrieveHandler";

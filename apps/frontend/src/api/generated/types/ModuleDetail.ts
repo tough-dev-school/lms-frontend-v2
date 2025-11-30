@@ -8,7 +8,7 @@
 
 export type ModuleDetail = {
     /**
-     * @type integer | undefined
+     * @type integer
     */
     id: number;
     /**
@@ -21,7 +21,7 @@ export type ModuleDetail = {
     */
     start_date: string | null;
     /**
-     * @type boolean | undefined
+     * @type boolean
     */
     has_started: boolean;
     /**

@@ -5,6 +5,7 @@ import {
   createMaterialSerilizer,
   createLMSCourse,
   createModule,
+  createLessonPlain,
 } from '@/api/generated/mocks';
 import { materialsRetrieveQueryKey } from '@/api/generated/hooks';
 import { useQueryClient } from '@tanstack/vue-query';
@@ -36,7 +37,7 @@ const STATIC_MATERIAL_DATA: MaterialSerilizer = {
   breadcrumbs: {
     course: STATIC_COURSE,
     module: STATIC_MODULE,
-    lesson: undefined,
+    lesson: createLessonPlain(),
   },
 };
 

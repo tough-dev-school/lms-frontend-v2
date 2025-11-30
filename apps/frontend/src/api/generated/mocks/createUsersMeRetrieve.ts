@@ -6,12 +6,12 @@
 */
 
 import type { UsersMeRetrieveQueryResponse } from "../types/UsersMeRetrieve";
-import { createUser } from "./createUser";
+import { createUserSelf } from "./createUserSelf";
 import { faker } from "@faker-js/faker";
 
 export function createUsersMeRetrieve200() {
   faker.seed(1337)  
-  return createUser()
+  return createUserSelf()
 }
 
 export function createUsersMeRetrieveQueryResponse(data?: Partial<UsersMeRetrieveQueryResponse>): UsersMeRetrieveQueryResponse {

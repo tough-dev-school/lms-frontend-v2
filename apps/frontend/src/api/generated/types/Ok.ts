@@ -8,7 +8,7 @@
 
 export type Ok = {
     /**
-     * @type boolean | undefined
+     * @type boolean
     */
     ok: boolean;
 };

@@ -4,6 +4,7 @@ import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import {
   createCourse,
   createModule,
+  createLesson,
   createQuestion,
   createTemporarySoonToBeDepricatedQuestion,
 } from '@/api/generated/mocks';
@@ -46,6 +47,7 @@ const baseLesson = { id: 1 };
 const STATIC_LESSONS: Lesson[] = [
   {
     ...baseLesson,
+    ...createLesson(),
     id: 1,
     question: createQuestion(),
     call: {
@@ -84,6 +86,7 @@ const STATIC_LESSONS: Lesson[] = [
   },
   {
     ...baseLesson,
+    ...createLesson(),
     id: 3,
     question: createQuestion(),
     material: {

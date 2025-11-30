@@ -33,5 +33,5 @@ export type QuestionDetail = {
      * @type object
     */
     homework: HomeworkStats;
-    course?: QuestionCourse;
+    course: QuestionCourse;
 };

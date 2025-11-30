@@ -15,6 +15,7 @@ function getUsersMePartialUpdateUrl() {
 }
 
 /**
+ * @description Update user data
  * {@link /api/v2/users/me/}
  */
 export async function usersMePartialUpdate(data?: UsersMePartialUpdateMutationRequest, config: Partial<RequestConfig<UsersMePartialUpdateMutationRequest>> & { client?: typeof fetch } = {}) {

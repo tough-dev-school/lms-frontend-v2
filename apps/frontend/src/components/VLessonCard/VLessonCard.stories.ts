@@ -5,6 +5,7 @@ import type {
   RecommendedVideoProviderEnum,
 } from '@/api/generated/types';
 import {
+  createLesson,
   createQuestion,
   createTemporarySoonToBeDepricatedQuestion,
 } from '@/api/generated/mocks';
@@ -32,6 +33,7 @@ const baseLesson = {
 
 const callWithVideo: Lesson = {
   ...baseLesson,
+  ...createLesson(),
   question: createQuestion(),
   call: {
     name: 'Введение в React',
@@ -57,6 +59,7 @@ const callWithVideo: Lesson = {
 
 const callWithoutVideo: Lesson = {
   ...baseLesson,
+  ...createLesson(),
   question: createQuestion(),
   call: {
     name: 'Дизайн систем',
@@ -70,6 +73,7 @@ const callWithoutVideo: Lesson = {
 
 const homeworkWithCrosschecks: Lesson = {
   ...baseLesson,
+  ...createLesson(),
   question: createQuestion(),
   homework: {
     comments: {
@@ -108,6 +112,7 @@ const homeworkWithoutCrosschecks: Lesson = {
 
 const materialLesson: Lesson = {
   ...baseLesson,
+  ...createLesson(),
   question: createQuestion(),
   material: {
     id: 'material-123',

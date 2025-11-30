@@ -25,7 +25,7 @@ export type Call = {
     */
     url: string | null;
     /**
-     * @type array | undefined
+     * @type array
     */
     video: VideoProvider[];
     /**

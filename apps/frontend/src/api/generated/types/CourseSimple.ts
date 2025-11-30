@@ -8,7 +8,7 @@
 
 export type CourseSimple = {
     /**
-     * @type string | undefined
+     * @type string
     */
     name: string;
     /**

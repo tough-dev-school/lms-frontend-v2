@@ -1,7 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VExistingAnswer from '@/components/VExistingAnswer/VExistingAnswer.vue';
-import { mockAnswer } from '@/mocks/mockAnswer';
-import { mockUserSafe } from '@/mocks/mockUserSafe';
+import { createAnswer, createUserSafe } from '@/api/generated/mocks';
 
 export default {
   title: 'Answer/VExistingAnswer',
@@ -20,8 +19,8 @@ export const Default = {
   render: Template,
 
   args: {
-    user: mockUserSafe(),
-    answer: mockAnswer({
+    user: createUserSafe(),
+    answer: createAnswer({
       content: {
         type: 'doc',
         content: [
@@ -155,8 +154,8 @@ export const LegacyText = {
   render: Template,
   template: '<VExistingAnswer v-bind="args" />',
   args: {
-    user: mockUserSafe(),
-    answer: mockAnswer({
+    user: createUserSafe(),
+    answer: createAnswer({
       content: {},
       legacy_text: `<p><strong>Первая домашка</strong></p><ol>
 <li>Нет проблем с общением не равно нет проблем с эмпатией) То что ты понимаешь эмоции другого человека это твоя большая сила, я согласна (хоть и повод, через который ты его получил грустный).</li>

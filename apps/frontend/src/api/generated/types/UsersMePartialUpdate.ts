@@ -5,12 +5,12 @@
 * Do not edit manually.
 */
 
-import type { PatchedUser } from "./PatchedUser";
-import type { User } from "./User";
+import type { PatchedUserSelfUpdate } from "./PatchedUserSelfUpdate";
+import type { UserSelf } from "./UserSelf";
 
-export type UsersMePartialUpdate200 = User;
+export type UsersMePartialUpdate200 = UserSelf;
 
-export type UsersMePartialUpdateMutationRequest = Omit<NonNullable<PatchedUser>, "id">;
+export type UsersMePartialUpdateMutationRequest = PatchedUserSelfUpdate;
 
 export type UsersMePartialUpdateMutationResponse = UsersMePartialUpdate200;
 

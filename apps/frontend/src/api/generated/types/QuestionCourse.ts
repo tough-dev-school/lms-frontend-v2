@@ -8,7 +8,7 @@
 
 export type QuestionCourse = {
     /**
-     * @type integer | undefined
+     * @type integer
     */
     id: number;
     /**
@@ -18,7 +18,7 @@ export type QuestionCourse = {
     */
     slug: string;
     /**
-     * @type string | undefined
+     * @type string
     */
     name: string;
     /**
@@ -42,7 +42,7 @@ export type QuestionCourse = {
     */
     calendar_google: string | null;
     /**
-     * @type string | undefined
+     * @type string
     */
-    homework_check_recommendations?: string;
+    homework_check_recommendations: string;
 };

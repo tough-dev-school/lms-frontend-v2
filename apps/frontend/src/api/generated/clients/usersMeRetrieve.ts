@@ -15,6 +15,7 @@ function getUsersMeRetrieveUrl() {
 }
 
 /**
+ * @description Fetch user data
  * {@link /api/v2/users/me/}
  */
 export async function usersMeRetrieve(config: Partial<RequestConfig> & { client?: typeof fetch } = {}) {

@@ -9,6 +9,8 @@
   } from '@/api/generated/hooks';
   import { useQueryClient } from '@tanstack/vue-query';
   import { createHttpClient } from '@/api/client';
+  import VError from '@/components/VError/VError.vue';
+  import type { FormError } from '@/types/error';
 
   const queryClient = useQueryClient();
   const { data: user } = useUsersMeRetrieve();
@@ -26,7 +28,9 @@
     file.value = undefined;
   };
 
-  const isUpdatePending = ref(false);
+  const isPending = ref(false);
+
+  const error = ref<FormError | null>(null);
 
   const saveProfile = async () => {
     const avatarFile = file.value || null;
@@ -37,7 +41,7 @@
       formData.append('avatar', '');
     }
 
-    isUpdatePending.value = true;
+    isPending.value = true;
 
     const httpClient = createHttpClient();
 
@@ -51,10 +55,10 @@
       queryClient.invalidateQueries({
         queryKey: usersMeRetrieveQueryKey(),
       });
-    } catch (error) {
-      console.error(error);
+    } catch (caughtError) {
+      error.value = caughtError as unknown as FormError;
     } finally {
-      isUpdatePending.value = false;
+      isPending.value = false;
     }
   };
 

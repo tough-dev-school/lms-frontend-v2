@@ -6,7 +6,10 @@
   import getNotionTitle from '@/utils/getNotionTitle';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
-  import { useMaterialQuery, useUserQuery } from '@/query';
+  import {
+    useMaterialsRetrieve,
+    useUsersMeRetrieve,
+  } from '@/api/generated/hooks';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
   import { SUPPORT_EMAIL, SUPPORT_CHAT_URL } from '@/constants';
   import { useRouteQuery } from '@vueuse/router';
@@ -21,9 +24,9 @@
   }>();
 
   const router = useRouter();
-  const { data: user } = useUserQuery();
+  const { data: user } = useUsersMeRetrieve();
 
-  const { data: materialData, isLoading } = useMaterialQuery(
+  const { data: materialData, isLoading } = useMaterialsRetrieve(
     () => props.materialId,
   );
 

@@ -9,7 +9,7 @@ import type { CourseLink } from "./CourseLink";
 
 export type Course = {
     /**
-     * @type integer | undefined
+     * @type integer
     */
     id: number;
     /**
@@ -19,7 +19,7 @@ export type Course = {
     */
     slug: string;
     /**
-     * @type string | undefined
+     * @type string
     */
     name: string;
     /**
@@ -57,7 +57,7 @@ export type Course = {
     */
     calendar_google: string | null;
     /**
-     * @type array | undefined
+     * @type array
     */
     links: CourseLink[];
 };

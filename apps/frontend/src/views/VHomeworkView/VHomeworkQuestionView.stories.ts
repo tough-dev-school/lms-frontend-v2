@@ -6,6 +6,7 @@ import {
   createModule,
   createTemporarySoonToBeDepricatedQuestion,
   createQuestionCourse,
+  createBreadcrumbs,
 } from '@/api/generated/mocks';
 import {
   homeworkQuestionsRetrieveQueryKey,
@@ -26,6 +27,7 @@ export default {
 
 // Mock data using existing patterns
 const STATIC_QUESTION: QuestionDetail = {
+  ...createQuestion(),
   slug: 'react-components',
   name: 'Создание React компонентов',
   markdown_text: `# Задание: Создание React компонентов
@@ -54,6 +56,7 @@ const STATIC_QUESTION: QuestionDetail = {
       id: 2,
     },
     course: {
+      ...createBreadcrumbs().course,
       id: 1,
       name: 'Курс веб-разработки',
       slug: 'web-development',

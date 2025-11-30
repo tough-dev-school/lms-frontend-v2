@@ -29,9 +29,9 @@ export type DiplomaRetrieve = {
     */
     student: UserSafe;
     /**
-     * @type object | undefined
+     * @type object
     */
-    other_languages?: {
+    other_languages: {
         [key: string]: any;
     };
 };

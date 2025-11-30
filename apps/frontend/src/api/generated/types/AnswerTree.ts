@@ -11,7 +11,7 @@ import type { UserSafe } from "./UserSafe";
 
 export type AnswerTree = {
     /**
-     * @type string | undefined, date-time
+     * @type string, date-time
     */
     created: string;
     /**
@@ -31,28 +31,28 @@ export type AnswerTree = {
     */
     author: UserSafe;
     /**
-     * @type string | undefined, uuid
+     * @type string, uuid
     */
-    parent?: string;
+    parent: string;
     /**
-     * @type string | undefined
+     * @type string
     */
-    text?: string;
+    text: string;
     /**
-     * @type string | undefined
+     * @type string
     */
-    legacy_text?: string;
+    legacy_text: string;
     content?: any;
     /**
      * @type string
     */
     src: string;
     /**
-     * @type boolean | undefined
+     * @type boolean
     */
     has_descendants: boolean;
     /**
-     * @type boolean | undefined
+     * @type boolean
     */
     is_editable: boolean;
     /**
@@ -60,7 +60,7 @@ export type AnswerTree = {
     */
     reactions: ReactionDetailed[];
     /**
-     * @type array | undefined
+     * @type array
     */
     descendants: Answer[];
 };

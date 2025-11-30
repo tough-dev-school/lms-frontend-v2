@@ -9,7 +9,7 @@ import type { AnswerSimple } from "./AnswerSimple";
 
 export type CrossCheck = {
     /**
-     * @type integer | undefined
+     * @type integer
     */
     id: number;
     /**
@@ -17,7 +17,7 @@ export type CrossCheck = {
     */
     answer: AnswerSimple;
     /**
-     * @type boolean | undefined
+     * @type boolean
     */
     is_checked: boolean;
 };

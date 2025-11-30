@@ -18,6 +18,7 @@ export const usersMePartialUpdateMutationKey = () => [{ url: '/api/v2/users/me/'
 export type UsersMePartialUpdateMutationKey = ReturnType<typeof usersMePartialUpdateMutationKey>
 
 /**
+ * @description Update user data
  * {@link /api/v2/users/me/}
  */
 export function useUsersMePartialUpdate<TContext>(options: 

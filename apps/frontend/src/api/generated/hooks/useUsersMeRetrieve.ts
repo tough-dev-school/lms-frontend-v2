@@ -30,6 +30,7 @@ export function usersMeRetrieveQueryOptions(config: Partial<RequestConfig> & { c
 }
 
 /**
+ * @description Fetch user data
  * {@link /api/v2/users/me/}
  */
 export function useUsersMeRetrieve<TData = UsersMeRetrieveQueryResponse, TQueryData = UsersMeRetrieveQueryResponse, TQueryKey extends QueryKey = UsersMeRetrieveQueryKey>(options: 

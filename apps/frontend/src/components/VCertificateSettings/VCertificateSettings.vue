@@ -9,11 +9,16 @@
     usersMeRetrieveQueryKey,
     usersMeRetrieveQueryOptions,
   } from '@/api/generated/hooks';
-  import { GenderEnum, BlankEnum } from '@/api/generated/types';
-  import type { PatchedUser } from '@/api/generated/types';
+  import { GenderEnum, BlankEnum } from '@/api/generated';
+  import type { UsersMePartialUpdateMutationRequest } from '@/api/generated';
+  import VError from '@/components/VError/VError.vue';
 
   const queryClient = useQueryClient();
-  const { mutateAsync: updateUser, isPending } = useUsersMePartialUpdate({
+  const {
+    mutateAsync: updateUser,
+    isPending,
+    error,
+  } = useUsersMePartialUpdate({
     mutation: {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: usersMeRetrieveQueryKey() });
@@ -22,11 +27,11 @@
   });
 
   const data = ref<{
-    firstName: Required<PatchedUser>['first_name'];
-    lastName: Required<PatchedUser>['last_name'];
-    firstNameEn: Required<PatchedUser>['first_name_en'];
-    lastNameEn: Required<PatchedUser>['last_name_en'];
-    gender: Required<PatchedUser>['gender'];
+    firstName: Required<UsersMePartialUpdateMutationRequest>['first_name'];
+    lastName: Required<UsersMePartialUpdateMutationRequest>['last_name'];
+    firstNameEn: Required<UsersMePartialUpdateMutationRequest>['first_name_en'];
+    lastNameEn: Required<UsersMePartialUpdateMutationRequest>['last_name_en'];
+    gender: Required<UsersMePartialUpdateMutationRequest>['gender'];
   }>({
     firstName: '',
     lastName: '',

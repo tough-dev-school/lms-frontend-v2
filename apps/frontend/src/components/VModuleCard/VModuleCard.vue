@@ -1,15 +1,15 @@
 <script lang="ts" setup>
   import VHeading from '@/components/VHeading/VHeading.vue';
-  import type { Module } from '@/api/generated/types';
+  import type { Lesson, ModuleDetail } from '@/api/generated/types';
   import VTag from '../VTag/VTag.vue';
   import { formatDate } from '@/utils/date';
   import { RouterLink } from 'vue-router';
   import { computed, onBeforeMount, ref } from 'vue';
-  import { fetchLesson } from '@/query';
+  import { lmsLessonsRetrieveQueryOptions } from '@/api/generated/hooks';
   import { useQueryClient } from '@tanstack/vue-query';
 
   const props = defineProps<{
-    module: Module;
+    module: ModuleDetail;
     courseId: number;
     index: number;
   }>();
@@ -60,9 +60,9 @@
 
   onBeforeMount(async () => {
     if (props.module.lesson_count === 1 && props.module.has_started) {
-      onlyLesson.value = await fetchLesson(queryClient, {
-        lessonId: props.module.single_lesson_id,
-      });
+      onlyLesson.value = await queryClient.fetchQuery(
+        lmsLessonsRetrieveQueryOptions(props.module.single_lesson_id),
+      );
     }
   });
 

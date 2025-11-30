@@ -8,7 +8,7 @@
 
 export type Token = {
     /**
-     * @type string | undefined
+     * @type string
     */
-    token?: string;
+    token: string;
 };

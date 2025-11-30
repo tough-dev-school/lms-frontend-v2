@@ -8,7 +8,7 @@
 
 export type RestAuthDetail = {
     /**
-     * @type string | undefined
+     * @type string
     */
-    detail?: string;
+    detail: string;
 };

@@ -15,14 +15,14 @@ import type { Question } from "./Question";
 */
 export type Lesson = {
     /**
-     * @type integer | undefined
+     * @type integer
     */
     id: number;
     /**
      * @type object | undefined
     */
     material?: NotionMaterial;
-    homework?: HomeworkStats;
+    homework: HomeworkStats;
     /**
      * @type object
     */

@@ -38,5 +38,6 @@ export { ordersConfirmRetrieve } from "./ordersConfirmRetrieve";
 export { ordersDraftCreate } from "./ordersDraftCreate";
 export { purchasedCoursesList } from "./purchasedCoursesList";
 export { studiesPurchasedList } from "./studiesPurchasedList";
+export { usersList } from "./usersList";
 export { usersMePartialUpdate } from "./usersMePartialUpdate";
 export { usersMeRetrieve } from "./usersMeRetrieve";

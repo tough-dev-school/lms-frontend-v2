@@ -8,27 +8,7 @@
 import type { BlankEnum } from "./BlankEnum";
 import type { GenderEnum } from "./GenderEnum";
 
-export type PatchedUser = {
-    /**
-     * @type integer | undefined
-    */
-    id?: number;
-    /**
-     * @type string | undefined, uuid
-    */
-    uuid?: string;
-    /**
-     * @description Отметьте, если пользователь может входить в административную часть сайта.
-     * @type boolean | undefined
-    */
-    is_staff?: boolean;
-    /**
-     * @description Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
-     * @maxLength 150
-     * @pattern ^[\w.@+-]+$
-     * @type string | undefined
-    */
-    username?: string;
+export type PatchedUserSelfUpdate = {
     /**
      * @maxLength 150
      * @type string | undefined
@@ -49,11 +29,6 @@ export type PatchedUser = {
      * @type string | undefined
     */
     last_name_en?: string;
-    /**
-     * @maxLength 254
-     * @type string | undefined, email
-    */
-    email?: string;
     gender?: (GenderEnum | BlankEnum);
     /**
      * @maxLength 256

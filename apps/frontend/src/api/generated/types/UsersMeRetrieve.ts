@@ -5,9 +5,9 @@
 * Do not edit manually.
 */
 
-import type { User } from "./User";
+import type { UserSelf } from "./UserSelf";
 
-export type UsersMeRetrieve200 = User;
+export type UsersMeRetrieve200 = UserSelf;
 
 export type UsersMeRetrieveQueryResponse = UsersMeRetrieve200;
 

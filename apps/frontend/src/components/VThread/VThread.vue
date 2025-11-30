@@ -55,24 +55,27 @@
     replyMode.value = false;
   });
 
-  const { mutateAsync: createComment, isPending: isCreateCommentPending } =
-    useHomeworkAnswersCreate({
-      mutation: {
-        onSuccess: (data) => {
-          queryClient.invalidateQueries({
-            queryKey: homeworkAnswersRetrieveQueryKey(data.parent),
-          });
-          queryClient.invalidateQueries({
-            queryKey: homeworkCrosschecksListQueryKey({
-              question: [props.answer.question],
-            }),
-          });
-          queryClient.invalidateQueries({
-            queryKey: lmsLessonsListQueryKey(),
-          });
-        },
+  const {
+    mutateAsync: createComment,
+    isPending,
+    error,
+  } = useHomeworkAnswersCreate({
+    mutation: {
+      onSuccess: (data) => {
+        queryClient.invalidateQueries({
+          queryKey: homeworkAnswersRetrieveQueryKey(data.parent),
+        });
+        queryClient.invalidateQueries({
+          queryKey: homeworkCrosschecksListQueryKey({
+            question: [props.answer.question],
+          }),
+        });
+        queryClient.invalidateQueries({
+          queryKey: lmsLessonsListQueryKey(),
+        });
       },
-    });
+    },
+  });
 
   const { content } = useEditorAutosave([
     'commentText',

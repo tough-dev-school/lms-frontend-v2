@@ -18,7 +18,7 @@ export type CourseWithPrice = {
     */
     slug: string;
     /**
-     * @type string | undefined
+     * @type string
     */
     name: string;
     /**
@@ -36,5 +36,5 @@ export type CourseWithPrice = {
      * @type string
     */
     tariff_name: string | null;
-    price?: Price;
+    price: Price;
 };
