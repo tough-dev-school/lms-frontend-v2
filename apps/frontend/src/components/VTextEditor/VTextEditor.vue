@@ -26,7 +26,7 @@
   import { onBeforeUnmount, ref, useTemplateRef, watch, computed } from 'vue';
   import { onKeyDown, useKeyModifier, useFocusWithin } from '@vueuse/core';
   import VLoader from '@/components/VLoader/VLoader.vue';
-  import { useHomeworkAnswersImageCreate } from '@/api/generated/hooks';
+  import { homeworkAnswersImageCreate } from '@/api/generated';
   import { isEqual } from 'lodash-es';
 
   const props = withDefaults(
@@ -106,8 +106,6 @@
     }
   });
 
-  const { mutateAsync: sendImage } = useHomeworkAnswersImageCreate();
-
   const extensions = getExtensions({ placeholder: props.placeholder });
 
   const editor = new Editor({
@@ -126,7 +124,7 @@
           const file = imageItem.getAsFile();
           if (file) {
             // Handle image upload in the background
-            void sendImage({ data: { image: file } })
+            void homeworkAnswersImageCreate({ image: file })
               .then(({ image }) => {
                 editor.commands.setImage({ src: image });
               })
@@ -177,7 +175,7 @@
           const file = event.dataTransfer.files[0];
 
           // eslint-disable-next-line promise/catch-or-return
-          sendImage({ data: { image: file } }).then(({ image }) => {
+          homeworkAnswersImageCreate({ image: file }).then(({ image }) => {
             const { schema } = view.state;
             const coordinates = view.posAtCoords({
               left: event.clientX,
@@ -290,7 +288,7 @@
     if (event.target) {
       const file = (event.target as HTMLInputElement).files?.[0];
       if (file) {
-        const { image } = await sendImage({ data: { image: file } });
+        const { image } = await homeworkAnswersImageCreate({ image: file });
         editor.commands.setImage({ src: image });
       }
     }
