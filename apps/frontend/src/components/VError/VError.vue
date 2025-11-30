@@ -5,13 +5,13 @@
   import { getErrorData } from '@/types/error';
 
   const props = defineProps<{
-    error: FormError;
+    error?: FormError;
     whitelist?: string[];
   }>();
 
   const errors = computed(() => {
     try {
-      const errorData = getErrorData(props.error);
+      const errorData = getErrorData(props.error ?? null);
 
       if (Object.keys(errorData).length === 0) {
         return {};
