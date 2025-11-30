@@ -53,7 +53,6 @@
     <template #footer>
       <VButton
         type="submit"
-        :disabled="!email"
         class="flex-grow"
         :loading="isPending"
       >

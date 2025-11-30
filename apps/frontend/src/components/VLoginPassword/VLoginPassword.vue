@@ -24,10 +24,6 @@
   const username = ref('');
   const password = ref('');
 
-  const isCredentialsInvalid = computed(
-    () => !username.value || !password.value,
-  );
-
   const handleSubmit = async () => {
     try {
       const { token: newToken } = await loginWithCredentials({
@@ -103,7 +99,6 @@
     </div>
     <template #footer>
       <VButton
-        :disabled="isCredentialsInvalid"
         :loading="isPending"
         class="flex-grow"
         type="submit"

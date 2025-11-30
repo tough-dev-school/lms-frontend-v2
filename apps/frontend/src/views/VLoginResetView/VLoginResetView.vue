@@ -52,7 +52,6 @@
       />
       <template #footer>
         <VButton
-          :disabled="!email"
           class="flex-grow"
           type="submit"
           data-testid="send"

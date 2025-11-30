@@ -25,13 +25,6 @@
     return mergeErrors(props.error ?? null, validationError.value);
   });
 
-  const isValid = computed(() => {
-    if (!newPassword1.value || !newPassword2.value) {
-      return false;
-    }
-    return newPassword1.value === newPassword2.value;
-  });
-
   const handleSubmit = async () => {
     validationError.value = null;
 
@@ -85,13 +78,12 @@
       />
       <VError
         :error="displayError"
-        :whitelist="['new_password1', 'new_password2', 'non_field_errors']"
+        :whitelist="['non_field_errors']"
       />
     </div>
     <template #footer>
       <VButton
         :loading="isPending"
-        :disabled="!isValid"
         data-testid="save"
         type="submit"
       >
