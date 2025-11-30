@@ -1,6 +1,7 @@
 import StarterKit from '@tiptap/starter-kit';
 import { Placeholder } from '@tiptap/extensions';
 import Image from '@tiptap/extension-image';
+import Link from '@tiptap/extension-link';
 import {
   Table,
   TableCell,
@@ -9,12 +10,14 @@ import {
 } from '@tiptap/extension-table';
 
 export const getExtensions = ({ placeholder }: { placeholder: string }) => [
-  StarterKit.configure({
-    link: {
-      openOnClick: false,
-      autolink: true,
-      linkOnPaste: true,
-      defaultProtocol: 'https',
+  StarterKit,
+  Link.configure({
+    openOnClick: false,
+    autolink: true,
+    linkOnPaste: true,
+    defaultProtocol: 'https',
+    HTMLAttributes: {
+      target: '_blank',
     },
   }),
   Placeholder.configure({
