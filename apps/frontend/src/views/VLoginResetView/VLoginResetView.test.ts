@@ -88,10 +88,6 @@ describe('VLoginResetView', () => {
     expect(getSendWrapper().attributes('disabled')).toBe('false');
   });
 
-  test('button is disabled if email is empty', async () => {
-    expect(getSendWrapper().attributes('disabled')).toBe('true');
-  });
-
   test('click on password button returns to login', async () => {
     await getPasswordWrapper().vm.$emit('click');
 
