@@ -12,8 +12,12 @@ import dayjs from 'dayjs';
 import { nextTick } from 'vue';
 import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
 
+const mockFetchQuery = vi.fn();
+
 vi.mock('@tanstack/vue-query', () => ({
-  useQueryClient: () => ({}),
+  useQueryClient: () => ({
+    fetchQuery: mockFetchQuery,
+  }),
 }));
 
 const defaultProps = {
@@ -46,6 +50,7 @@ describe('VModuleCard', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+    mockFetchQuery.mockReset();
     wrapper = mount(VModuleCard, defaultMountOptions);
   });
 
@@ -291,7 +296,7 @@ describe('VModuleCard', () => {
       });
       const courseId = faker.number.int();
 
-      vi.mocked(query.fetchLesson).mockResolvedValue(lesson);
+      mockFetchQuery.mockResolvedValue(lesson);
 
       wrapper = mount(VModuleCard, {
         shallow: false,
@@ -326,7 +331,7 @@ describe('VModuleCard', () => {
       });
       const courseId = faker.number.int();
 
-      vi.mocked(query.fetchLesson).mockResolvedValue(lesson);
+      mockFetchQuery.mockResolvedValue(lesson);
 
       wrapper = mount(VModuleCard, {
         shallow: false,
@@ -368,7 +373,7 @@ describe('VModuleCard', () => {
       });
       const courseId = faker.number.int();
 
-      vi.mocked(query.fetchLesson).mockResolvedValue(lesson);
+      mockFetchQuery.mockResolvedValue(lesson);
 
       wrapper = mount(VModuleCard, {
         shallow: false,
@@ -400,7 +405,7 @@ describe('VModuleCard', () => {
       const courseId = faker.number.int();
       const lesson = createLesson();
 
-      vi.mocked(query.fetchLesson).mockResolvedValue(lesson);
+      mockFetchQuery.mockResolvedValue(lesson);
 
       wrapper = mount(VModuleCard, {
         ...defaultMountOptions,
@@ -409,9 +414,16 @@ describe('VModuleCard', () => {
 
       await nextTick();
 
-      expect(query.fetchLesson).toHaveBeenCalledWith(expect.anything(), {
-        lessonId: module.single_lesson_id,
-      });
+      expect(mockFetchQuery).toHaveBeenCalledWith(
+        expect.objectContaining({
+          queryKey: [
+            {
+              url: '/api/v2/lms/lessons/:id/',
+              params: { id: module.single_lesson_id },
+            },
+          ],
+        }),
+      );
     });
 
     test('does not fetch lesson data when lesson count is not 1', async () => {
@@ -428,7 +440,7 @@ describe('VModuleCard', () => {
 
       await nextTick();
 
-      expect(query.fetchLesson).not.toHaveBeenCalled();
+      expect(mockFetchQuery).not.toHaveBeenCalled();
     });
   });
 });
