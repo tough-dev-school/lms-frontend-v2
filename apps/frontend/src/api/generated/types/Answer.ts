@@ -36,7 +36,6 @@ export type Answer = {
     /**
      * @type string
     */
-    text: string;
     /**
      * @type string
     */
@@ -45,7 +44,6 @@ export type Answer = {
     /**
      * @type string
     */
-    src: string;
     /**
      * @type boolean
     */

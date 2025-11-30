@@ -18,6 +18,5 @@ export type AnswerCreate = {
     /**
      * @type string
     */
-    text: string;
     content?: any;
 };

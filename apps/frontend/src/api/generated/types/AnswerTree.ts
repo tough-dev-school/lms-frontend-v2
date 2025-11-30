@@ -37,7 +37,6 @@ export type AnswerTree = {
     /**
      * @type string
     */
-    text: string;
     /**
      * @type string
     */
@@ -46,7 +45,6 @@ export type AnswerTree = {
     /**
      * @type string
     */
-    src: string;
     /**
      * @type boolean
     */
