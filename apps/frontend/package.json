@@ -34,6 +34,7 @@
     "@tiptap/static-renderer": "^3.3.0",
     "@tiptap/vue-3": "^3.3.0",
     "@vueuse/core": "^13.7.0",
+    "@vueuse/router": "^14.0.0",
     "axios": "^1.10.0",
     "dayjs": "^1.11.13",
     "lodash-es": "^4.17.21",

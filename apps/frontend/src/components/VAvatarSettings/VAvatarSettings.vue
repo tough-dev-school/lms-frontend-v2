@@ -105,16 +105,27 @@
           Удалить
         </button>
       </div>
+      <VError :error="error" />
     </template>
     <template #footer>
       <VButton
         data-testid="save"
         :disabled="isSaveButtonDisabled"
-        :loading="isUpdatePending"
+        :loading="isPending"
         @click="saveProfile"
       >
-        {{ isUpdatePending ? 'Сохраняется...' : 'Сохранить' }}
+        {{ isPending ? 'Сохраняется...' : 'Сохранить' }}
       </VButton>
     </template>
   </VCard>
 </template>
+
+<style>
+  .avatar-cropper {
+    color: black;
+  }
+
+  .avatar-cropper-btn:hover {
+    @apply !bg-yellow !text-black;
+  }
+</style>

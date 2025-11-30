@@ -266,7 +266,8 @@
 
       <VCreateAnswer
         v-model="content"
-        :is-pending="isCreateAnswerPending"
+        :error="error"
+        :is-pending="isPending"
         @send="handleCreateComment"
       />
       <div

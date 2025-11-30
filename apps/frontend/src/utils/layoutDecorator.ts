@@ -1,5 +1,4 @@
 import { mockUserId, USER_1 } from '@/mocks/mockUserId';
-import useToasts from '@/stores/toasts';
 import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
 import { useQueryClient } from '@tanstack/vue-query';
 import { usersMeRetrieveQueryKey } from '@/api/generated/hooks';
@@ -10,9 +9,6 @@ const layoutDecorator = (story: Component, layout: Component) => ({
   components: { layout, story },
   template: '<layout><story /></layout>',
   setup() {
-    const { disable } = useToasts();
-    disable();
-
     const queryClient = useQueryClient();
     queryClient.setQueryData(
       usersMeRetrieveQueryKey(),

@@ -5,22 +5,16 @@
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
   import { useQueryClient } from '@tanstack/vue-query';
-  import { authPasswordlessTokenRequestRetrieve } from '@/api/generated';
+  import { useLoginWithLinkMutation } from '@/query';
+  import VError from '@/components/VError/VError.vue';
 
   const router = useRouter();
   const queryClient = useQueryClient();
   const email = ref('');
   const isPending = ref(false);
 
-  const loginWithLink = async (userEmail: string) => {
-    try {
-      const response = await authPasswordlessTokenRequestRetrieve(userEmail);
-      queryClient.invalidateQueries();
-      return response;
-    } catch {
-      throw new Error('Failed to login');
-    }
-  };
+  const { mutateAsync: loginWithLink, error } =
+    useLoginWithLinkMutation(queryClient);
 
   const handleLogin = async () => {
     try {
@@ -49,11 +43,16 @@
       tip="Мы отправим ссылку для входа по этому адресу"
       type="email"
       autocomplete="username"
+      name="email"
+      :error="error"
+    />
+    <VError
+      :error="error"
+      :whitelist="['non_field_errors']"
     />
     <template #footer>
       <VButton
         type="submit"
-        :disabled="!email"
         class="flex-grow"
         :loading="isPending"
       >

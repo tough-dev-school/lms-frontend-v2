@@ -26,7 +26,7 @@
 
   const isEdit = ref(false);
 
-  const { mutateAsync: updateAnswerMutation, isPending: isUpdatePending } =
+  const { mutateAsync: updateAnswerMutation, error: updateError, isPending: isUpdatePending } =
     useHomeworkAnswersPartialUpdate({
       mutation: {
         onSuccess: (_, variables) => {
@@ -39,7 +39,7 @@
         },
       },
     });
-  const { mutateAsync: deleteAnswerMutation } = useHomeworkAnswersDestroy({
+  const { mutateAsync: deleteAnswerMutation, error: deleteError } = useHomeworkAnswersDestroy({
     mutation: {
       onSuccess: () => {
         if (props.answer.parent) {
@@ -109,6 +109,7 @@
     v-model="content"
     :legacy-text="answer.legacy_text"
     :is-pending="isUpdatePending"
+    :error="updateError || deleteError"
     @send="handleUpdate"
   />
 </template>

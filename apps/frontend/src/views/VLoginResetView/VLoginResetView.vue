@@ -7,6 +7,7 @@
   import VPublicLayout from '@/layouts/VPublicLayout/VPublicLayout.vue';
   import { useAuthPasswordResetCreate } from '@/api/generated/hooks';
   import { useQueryClient } from '@tanstack/vue-query';
+  import VError from '@/components/VError/VError.vue';
 
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -23,14 +24,12 @@
   const isPending = ref(false);
 
   const handleResetRequest = async () => {
-    isPending.value = true;
     try {
       await requestReset({ data: { email: email.value } });
       router.push({ name: 'mail-sent', query: { email: email.value } });
     } catch {
       console.error('Failed to request reset');
     }
-    isPending.value = false;
   };
 </script>
 
@@ -48,10 +47,15 @@
         type="email"
         autocomplete="username"
         data-testid="email"
+        name="email"
+        :error="error"
+      />
+      <VError
+        :error="error"
+        :whitelist="['non_field_errors']"
       />
       <template #footer>
         <VButton
-          :disabled="!email"
           class="flex-grow"
           type="submit"
           data-testid="send"

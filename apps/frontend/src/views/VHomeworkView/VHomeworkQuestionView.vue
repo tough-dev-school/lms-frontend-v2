@@ -95,7 +95,8 @@
       <VMakrdownContent :markdown="question.markdown_text" />
       <VCreateAnswer
         v-model="content"
-        :is-pending="isCreateAnswerPending"
+        :is-pending="isPending"
+        :error="error"
         @send="handleCreateAnswer"
       />
     </section>

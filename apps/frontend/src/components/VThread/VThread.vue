@@ -140,7 +140,8 @@
       <VCreateAnswer
         v-show="replyMode"
         v-model="content"
-        :is-pending="isCreateCommentPending"
+        :is-pending="isPending"
+        :error="error"
         @send="handleCreateComment"
       />
     </div>

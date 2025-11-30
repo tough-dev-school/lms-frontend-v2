@@ -11,7 +11,7 @@
 
   const queryClient = useQueryClient();
 
-  const { mutateAsync: changePassword, isPending: isPasswordChangePending } =
+  const { mutateAsync: changePassword, error, isPending: isPasswordChangePending } =
     useAuthPasswordChangeCreate({
       mutation: {
         onSuccess: () => {
@@ -90,6 +90,7 @@
       title="Пароль"
       data-testid="password-settings"
       :is-pending="isPasswordChangePending"
+      :error="error"
       @save="handleSave"
     />
     <VCertificateSettings

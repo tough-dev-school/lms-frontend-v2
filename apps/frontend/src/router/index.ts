@@ -7,6 +7,7 @@ import { homeworkAnswersRetrieveQueryOptions } from '@/api/generated/hooks';
 import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
 import { AllowMeta } from '@/types';
 import { queryClient } from '@/queryClient';
+import { isMaterialBookmarkUpdate } from '@/views/VMaterialView/VMaterialView';
 
 export const routes = [
   {
@@ -116,7 +117,7 @@ export const routes = [
   {
     path: '/materials/:materialId',
     name: 'materials',
-    component: () => import('@/views/VNotionView/VNotionView.vue'),
+    component: () => import('@/views/VMaterialView/VMaterialView.vue'),
     props: (route: RouteLocationNormalized) => ({
       materialId: route.params.materialId as string,
     }),
@@ -241,7 +242,11 @@ router.beforeEach(
 
     const { token } = useAuth();
 
-    queryClient.invalidateQueries();
+    const isHashChange = from.path === to.path && from.hash !== to.hash;
+
+    if ([!isMaterialBookmarkUpdate(from, to), isHashChange].some(Boolean)) {
+      queryClient.invalidateQueries({ queryKey: baseQueryKey() });
+    }
 
     // Redirect to existing route if route does not exist
     if (!to.name) {

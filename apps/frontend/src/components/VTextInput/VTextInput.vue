@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+  import VError from '@/components/VError/VError.vue';
+  import type { FormError } from '@/types/error';
+
   export type AllowedTags =
     | 'text'
     | 'date'
@@ -15,9 +18,10 @@
   export interface Props {
     label?: string;
     tip?: string;
-    error?: boolean | string;
+    error?: FormError;
     modelValue?: string;
     type?: AllowedTags;
+    name: string;
   }
 
   withDefaults(defineProps<Props>(), {
@@ -43,8 +47,8 @@
     <div
       v-if="$slots.label || label"
       class="mb-8"
-      :class="{ 'text-red': error }"
-      data-testid="label">
+      data-testid="label"
+    >
       <slot name="label">
         {{ label }}
       </slot>
@@ -52,21 +56,29 @@
     <input
       :type="type"
       v-bind="$attrs"
-      class="leading-1.5 block h-module w-full rounded-8 border bg-white p-module text-black placeholder:text-gray focus:border-blue focus:outline-none border-white"
+      class="leading-1.5 block h-module w-full rounded-8 border border-white bg-white p-module text-black placeholder:text-gray focus:border-blue focus:outline-none"
       :class="{
         'border-red': error,
       }"
       data-testid="input"
       :value="modelValue"
-      @input="handleInput" />
-    <div v-if="tip || error" class="mt-4">
-      <p v-if="tip" data-testid="tip" class="text-sub text-gray">{{ tip }}</p>
+      @input="handleInput"
+    />
+    <div
+      v-if="tip || error"
+      class="mt-4"
+    >
       <p
-        v-if="error && error !== true"
-        data-testid="error"
-        class="text-sub text-red">
-        {{ error }}
+        v-if="tip"
+        data-testid="tip"
+        class="text-sub text-gray"
+      >
+        {{ tip }}
       </p>
+      <VError
+        :error="error"
+        :whitelist="[name]"
+      />
     </div>
   </label>
 </template>
