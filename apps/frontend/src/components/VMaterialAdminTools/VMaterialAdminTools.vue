@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-  import type { User } from '@/api/generated/generated-api';
   import VCard from '../VCard/VCard.vue';
   import VButton from '../VButton/VButton.vue';
   import {
@@ -11,15 +10,15 @@
   import { useIntervalFn } from '@vueuse/core';
   import { DATE_TIME_SECONDS_FORMAT, formatDate, isBefore } from '@/utils/date';
   import { computed } from 'vue';
+  import VError from '@/components/VError/VError.vue';
 
   const props = defineProps<{
-    user?: User;
     materialId: string;
   }>();
 
   const queryClient = useQueryClient();
 
-  const { mutateAsync: updateMaterial } =
+  const { mutateAsync: updateMaterial, error } =
     useUpdateMaterialMutation(queryClient);
 
   const { data: materialStatus } = useMaterialStatusQuery(
@@ -27,9 +26,17 @@
   );
 
   const inProgress = computed(() => {
+    if (!materialStatus.value?.fetch_started) {
+      return false;
+    }
+
+    if (!materialStatus.value?.fetch_complete) {
+      return true;
+    }
+
     return isBefore(
-      materialStatus.value?.fetch_started,
-      materialStatus.value?.fetch_complete,
+      materialStatus.value.fetch_started,
+      materialStatus.value.fetch_complete,
     );
   });
 
@@ -68,6 +75,7 @@
   >
     <p>Последнее обновление: {{ fetchStarted }}</p>
     <p>Материал актуален: {{ fetchComplete }}</p>
+    <VError :error="error" />
     <template #footer>
       <VButton @click="() => updateMaterial(props.materialId)">
         <template v-if="inProgress">Обновление в процессе</template>

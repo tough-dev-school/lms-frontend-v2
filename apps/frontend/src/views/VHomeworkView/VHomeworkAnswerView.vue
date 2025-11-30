@@ -108,7 +108,8 @@
 
   const {
     mutateAsync: createAnswerMutation,
-    isPending: isCreateAnswerPending,
+    error,
+    isPending,
   } = useHomeworkAnswerCreateMutation(queryClient);
 
   const handleDeleteAnswer = () => {
@@ -228,7 +229,8 @@
 
       <VCreateAnswer
         v-model="content"
-        :is-pending="isCreateAnswerPending"
+        :error="error"
+        :is-pending="isPending"
         @send="handleCreateComment"
       />
       <div

@@ -35,7 +35,8 @@
   const queryClient = useQueryClient();
   const {
     mutateAsync: createAnswerMutation,
-    isPending: isCreateAnswerPending,
+    error,
+    isPending,
   } = useHomeworkAnswerCreateMutation(queryClient);
 
   const handleCreateAnswer = async () => {
@@ -73,7 +74,8 @@
       <VMakrdownContent :markdown="question.markdown_text" />
       <VCreateAnswer
         v-model="content"
-        :is-pending="isCreateAnswerPending"
+        :is-pending="isPending"
+        :error="error"
         @send="handleCreateAnswer"
       />
     </section>

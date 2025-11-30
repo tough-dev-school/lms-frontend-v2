@@ -7,22 +7,22 @@
   import { useRouter } from 'vue-router';
   import { useLoginWithCredentialsMutation } from '@/query';
   import { useQueryClient } from '@tanstack/vue-query';
+  import VError from '@/components/VError/VError.vue';
 
   const queryClient = useQueryClient();
 
   const { token } = useAuth();
 
-  const { mutateAsync: loginWithCredentials, isPending } =
-    useLoginWithCredentialsMutation(queryClient);
+  const {
+    mutateAsync: loginWithCredentials,
+    error,
+    isPending,
+  } = useLoginWithCredentialsMutation(queryClient);
 
   const router = useRouter();
 
   const username = ref('');
   const password = ref('');
-
-  const isCredentialsInvalid = computed(
-    () => !username.value || !password.value,
-  );
 
   const handleSubmit = async () => {
     try {
@@ -68,11 +68,15 @@
         autocomplete="username"
         label="Логин"
         :type="isEmail ? 'email' : 'text'"
+        name="username"
+        :error="error"
       />
       <VTextInput
         v-model="password"
         autocomplete="current-password"
         type="password"
+        name="password"
+        :error="error"
       >
         <template #label>
           Пароль
@@ -88,10 +92,13 @@
           </span>
         </template>
       </VTextInput>
+      <VError
+        :error="error"
+        :whitelist="['non_field_errors']"
+      />
     </div>
     <template #footer>
       <VButton
-        :disabled="isCredentialsInvalid"
         :loading="isPending"
         class="flex-grow"
         type="submit"
