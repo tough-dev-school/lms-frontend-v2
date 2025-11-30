@@ -1,4 +1,4 @@
-import { fetchHomeworkQuestion } from '@/query';
+import { homeworkQuestionsRetrieveQueryOptions } from '@/api/generated/hooks';
 import { onMounted, ref, toValue } from 'vue';
 import type { MaybeRefOrGetter } from 'vue';
 import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
@@ -16,9 +16,9 @@ export const useHomeworkBreadcrumbs = (
       { name: 'Мои курсы', to: { name: 'courses' } },
     ];
 
-    const question = await fetchHomeworkQuestion(queryClient, {
-      questionId: toValue(questionId),
-    });
+    const question = await queryClient.fetchQuery(
+      homeworkQuestionsRetrieveQueryOptions(toValue(questionId)),
+    );
 
     if (!question) return undefined;
 

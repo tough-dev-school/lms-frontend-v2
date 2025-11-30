@@ -5,10 +5,12 @@
   import { ref, onMounted } from 'vue';
   import { useQueryClient } from '@tanstack/vue-query';
   import {
-    useHomeworkAnswerUpdateMutation,
-    useHomeworkAnswerDeleteMutation,
-  } from '@/query';
-  import type { AnswerTree, UserSafe } from '@/api/generated/generated-api';
+    useHomeworkAnswersPartialUpdate,
+    useHomeworkAnswersDestroy,
+    homeworkAnswersRetrieveQueryKey,
+    lmsLessonsListQueryKey,
+  } from '@/api/generated/hooks';
+  import type { AnswerTree, UserSafe } from '@/api/generated/types';
 
   const props = defineProps<{
     answer: AnswerTree;
@@ -24,20 +26,39 @@
 
   const isEdit = ref(false);
 
-  const {
-    mutateAsync: updateAnswerMutation,
-    error: updateError,
-    isPending: isUpdatePending,
-  } = useHomeworkAnswerUpdateMutation(queryClient);
-  const { mutateAsync: deleteAnswerMutation, error: deleteError } =
-    useHomeworkAnswerDeleteMutation(queryClient);
+  const { mutateAsync: updateAnswerMutation, error: updateError, isPending: isUpdatePending } =
+    useHomeworkAnswersPartialUpdate({
+      mutation: {
+        onSuccess: (_, variables) => {
+          queryClient.invalidateQueries({
+            queryKey: homeworkAnswersRetrieveQueryKey(variables.slug),
+          });
+          queryClient.invalidateQueries({
+            queryKey: lmsLessonsListQueryKey(),
+          });
+        },
+      },
+    });
+  const { mutateAsync: deleteAnswerMutation, error: deleteError } = useHomeworkAnswersDestroy({
+    mutation: {
+      onSuccess: () => {
+        if (props.answer.parent) {
+          queryClient.invalidateQueries({
+            queryKey: homeworkAnswersRetrieveQueryKey(props.answer.parent),
+          });
+        }
+        queryClient.invalidateQueries({
+          queryKey: lmsLessonsListQueryKey(),
+        });
+      },
+    },
+  });
 
   const handleDelete = async () => {
     if (!confirm('Вы уверены, что хотите удалить этот ответ?')) return;
     try {
       await deleteAnswerMutation({
-        answerId: props.answer.slug,
-        parentId: props.answer.parent,
+        slug: props.answer.slug,
       });
       emit('after-delete');
     } catch (error) {
@@ -50,8 +71,10 @@
   const handleUpdate = async () => {
     try {
       await updateAnswerMutation({
-        answerId: props.answer.slug,
-        content: content.value,
+        slug: props.answer.slug,
+        data: {
+          content: content.value,
+        },
       });
       isEdit.value = false;
     } catch (error) {

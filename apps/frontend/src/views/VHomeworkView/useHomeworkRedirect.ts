@@ -2,7 +2,11 @@ import { ref, watch, onBeforeMount } from 'vue';
 import type { Ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useQueryClient } from '@tanstack/vue-query';
-import { fetchUser, fetchHomeworkAnswer, fetchHomeworkAnswers } from '@/query';
+import {
+  usersMeRetrieveQueryOptions,
+  homeworkAnswersRetrieveQueryOptions,
+  homeworkAnswersListQueryOptions,
+} from '@/api/generated/hooks';
 
 export function useHomeworkRedirect(
   questionId: Ref<string>,
@@ -17,13 +21,13 @@ export function useHomeworkRedirect(
     isRedirecting.value = true;
 
     try {
-      const user = await fetchUser(queryClient);
+      const user = await queryClient.fetchQuery(usersMeRetrieveQueryOptions());
 
       if (answerId.value) {
         try {
-          await fetchHomeworkAnswer(queryClient, {
-            answerId: answerId.value,
-          });
+          await queryClient.fetchQuery(
+            homeworkAnswersRetrieveQueryOptions(answerId.value),
+          );
         } catch {
           await router.replace({
             ...route,
@@ -31,17 +35,19 @@ export function useHomeworkRedirect(
           });
         }
       } else {
-        const answers = await fetchHomeworkAnswers(queryClient, {
-          questionId: questionId.value,
-          authorId: user.uuid,
-        });
+        const answersData = await queryClient.fetchQuery(
+          homeworkAnswersListQueryOptions({
+            question: questionId.value,
+            author: user.uuid,
+          }),
+        );
 
-        if (answers && answers.length > 0) {
+        if (answersData && answersData.results.length > 0) {
           await router.replace({
             ...route,
             query: {
               ...route.query,
-              answerId: answers[0]?.slug,
+              answerId: answersData.results[0]?.slug,
             },
           });
         }

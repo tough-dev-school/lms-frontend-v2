@@ -6,7 +6,7 @@
     Lesson,
     RecommendedVideoProviderEnum,
     VideoProvider,
-  } from '@/api/generated/generated-api';
+  } from '@/api/generated/types';
   import { computed } from 'vue';
   import { DATE_TIME_FORMAT, formatDate } from '@/utils/date';
 

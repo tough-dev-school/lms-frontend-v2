@@ -4,14 +4,14 @@ import VCoursesView from './VCoursesView.vue';
 import type { RouterLink } from 'vue-router';
 import { nextTick, ref } from 'vue';
 import { faker } from '@faker-js/faker';
-import { mockCourse } from '@/mocks/mockCourse';
-import { useStudiesQuery } from '@/query';
+import { usePurchasedCoursesList } from '@/api/generated/hooks';
 import { VueQueryPlugin, QueryClient } from '@tanstack/vue-query';
 import type { VueQueryPluginOptions } from '@tanstack/vue-query';
+import { createCourse } from '@/api/generated';
 
-const defaultStudies = faker.helpers.multiple(mockCourse, { count: 3 });
+const defaultStudies = faker.helpers.multiple(createCourse, { count: 3 });
 
-vi.mock('@/query');
+vi.mock('@/api/generated/hooks');
 
 const createWrapper = (studies = defaultStudies) => {
   const queryClient = new QueryClient({
@@ -23,8 +23,8 @@ const createWrapper = (studies = defaultStudies) => {
     },
   });
 
-  vi.mocked(useStudiesQuery).mockReturnValue({
-    data: ref(studies),
+  vi.mocked(usePurchasedCoursesList).mockReturnValue({
+    data: ref({ results: studies }),
     isLoading: ref(false),
   } as any);
 
