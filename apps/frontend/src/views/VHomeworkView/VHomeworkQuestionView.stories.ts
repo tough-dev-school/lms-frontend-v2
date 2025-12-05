@@ -6,6 +6,7 @@ import { mockModule } from '@/mocks/mockModule';
 import { homeworkKeys, lmsKeys } from '@/query';
 import { useQueryClient } from '@tanstack/vue-query';
 import type { QuestionDetail, Lesson } from '@/api/generated/generated-api';
+import { mockLMSCourse } from '@/mocks/mockLMSCourse';
 
 export default {
   title: 'App/VHomeworkQuestionView',
@@ -46,6 +47,7 @@ const STATIC_QUESTION: QuestionDetail = {
       id: 2,
     },
     course: {
+      ...mockLMSCourse(),
       id: 1,
       name: 'Курс веб-разработки',
       slug: 'web-development',

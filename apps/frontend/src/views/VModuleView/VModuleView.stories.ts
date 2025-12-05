@@ -10,6 +10,7 @@ import type {
   Lesson,
   RecommendedVideoProviderEnum,
 } from '@/api/generated/generated-api';
+import { getMockLesson } from '@/mocks/mockLesson';
 
 export default {
   title: 'App/VModuleView',
@@ -34,7 +35,7 @@ const STATIC_MODULE = mockModule({
 });
 
 // Using existing mock patterns from VLessonCard.stories.ts
-const baseLesson = { id: 1 };
+const baseLesson = { ...getMockLesson(), id: 1 };
 
 const STATIC_LESSONS: Lesson[] = [
   {

@@ -7,8 +7,9 @@ import { VueQueryPlugin, QueryClient } from '@tanstack/vue-query';
 import type { VueQueryPluginOptions } from '@tanstack/vue-query';
 import { ref } from 'vue';
 import { useUserQuery } from '@/query';
-import type { User } from '@/api/generated/generated-api';
+import type { UserSelf } from '@/api/generated/generated-api';
 import { useRouter } from 'vue-router';
+import { mockUserSafe } from '@/mocks/mockUserSafe';
 
 const routerPushMock = vi.fn();
 
@@ -16,9 +17,10 @@ vi.mock('vue-router');
 
 vi.mock('@/query');
 
-const getDefaultData = (): User => {
+const getDefaultData = (): UserSelf => {
   faker.seed(1);
   return {
+    ...mockUserSafe(),
     id: 1,
     uuid: faker.string.uuid(),
     username: faker.internet.email(),

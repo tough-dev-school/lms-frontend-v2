@@ -5,6 +5,7 @@ import type {
   RecommendedVideoProviderEnum,
 } from '@/api/generated/generated-api';
 import { mockQuestion } from '@/mocks/mockQuestion';
+import { getMockLesson } from '@/mocks/mockLesson';
 
 export default {
   title: 'UI/VLessonCard',
@@ -24,6 +25,7 @@ const Template: StoryFn = (args) => ({
 
 // Mock data for different lesson types
 const baseLesson = {
+  ...getMockLesson(),
   id: 1,
 };
 

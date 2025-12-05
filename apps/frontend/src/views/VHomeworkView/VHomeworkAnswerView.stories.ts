@@ -13,6 +13,7 @@ import type {
   CrossCheck,
   AnswerTree,
 } from '@/api/generated/generated-api';
+import { mockLMSCourse } from '@/mocks/mockLMSCourse';
 
 export default {
   title: 'App/VHomeworkAnswerView',
@@ -54,6 +55,7 @@ const STATIC_QUESTION: QuestionDetail = {
       id: 1,
     },
     course: {
+      ...mockLMSCourse(),
       id: 1,
       name: 'Курс веб-разработки',
       slug: 'web-development',

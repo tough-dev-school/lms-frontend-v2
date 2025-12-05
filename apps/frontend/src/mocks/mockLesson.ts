@@ -11,12 +11,10 @@ export const getMockLesson = (payload: Partial<Lesson> = {}): Lesson => {
           title: faker.lorem.words(3),
         }
       : undefined,
-    homework: faker.datatype.boolean()
-      ? {
-          is_sent: faker.datatype.boolean(),
-          question: mockQuestion(),
-        }
-      : undefined,
+    homework: {
+      is_sent: faker.datatype.boolean(),
+      question: mockQuestion(),
+    },
     question: mockQuestion(),
     call: faker.datatype.boolean()
       ? {
