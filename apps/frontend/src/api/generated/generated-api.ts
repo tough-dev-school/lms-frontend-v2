@@ -107,7 +107,7 @@ export interface AnswerTree {
   has_descendants: boolean;
   is_editable: boolean;
   reactions: ReactionDetailed[];
-  descendants: Answer[];
+  descendants: AnswerTree[];
 }
 
 export interface AnswerUpdate {

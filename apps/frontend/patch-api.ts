@@ -177,6 +177,53 @@ const omitAnswerFields: ApplyPatch = (ast) => {
   return edits;
 };
 
+const fixAnswerTreeDescendants: ApplyPatch = (ast) => {
+  const edits: Edit[] = [];
+
+  const interfaces = ast.findAll({
+    rule: { kind: 'interface_declaration' },
+  });
+
+  for (const interfaceNode of interfaces) {
+    const nameNode = interfaceNode.child(1);
+    const interfaceName = nameNode?.text();
+
+    if (interfaceName !== 'AnswerTree') continue;
+
+    const bodyNode = interfaceNode.child(2);
+    if (!bodyNode) continue;
+
+    bodyNode.children().forEach((child: SgNode) => {
+      if (child.kind() !== 'property_signature') return;
+
+      const propertyName = child.child(0);
+      if (!propertyName) return;
+
+      const name = propertyName.text().replace('?', '');
+      if (name !== 'descendants') return;
+
+      // Find the type annotation
+      const children = child.children();
+      const typeNode = children.at(-1);
+      if (!typeNode) return;
+
+      const typeText = typeNode.text();
+
+      // Replace Answer[] with AnswerTree[]
+      if (typeText.includes('Answer[]')) {
+        const newTypeText = typeText.replace('Answer[]', 'AnswerTree[]');
+        edits.push({
+          start: typeNode.range().start.index,
+          end: typeNode.range().end.index,
+          replacement: newTypeText,
+        });
+      }
+    });
+  }
+
+  return edits;
+};
+
 for (const file of files) {
   const filePath = path.join(typesDirectory, file);
   let fileContent = fs.readFileSync(filePath, 'utf8');
@@ -184,6 +231,7 @@ for (const file of files) {
     removeReadonlyModifiers,
     fixOptionalProperties,
     omitAnswerFields,
+    fixAnswerTreeDescendants,
   ];
 
   for (const patch of patches) {
