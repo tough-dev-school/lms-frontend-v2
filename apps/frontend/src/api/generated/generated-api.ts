@@ -306,7 +306,6 @@ export interface HomeworkStats {
   is_sent: boolean;
   crosschecks?: CrossCheckStats;
   comments?: CommentStats;
-  question: TemporarySoonToBeDepricatedQuestion;
 }
 
 /**
