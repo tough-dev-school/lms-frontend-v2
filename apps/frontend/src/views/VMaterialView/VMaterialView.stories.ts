@@ -34,14 +34,13 @@ const STATIC_LESSON = mockLessonPlain({
   id: 1,
 });
 
-const STATIC_MATERIAL_DATA: MaterialSerilizer = {
-  content: mockMaterial().content,
+const STATIC_MATERIAL_DATA: MaterialSerilizer = mockMaterial({
   breadcrumbs: {
     course: STATIC_COURSE,
     module: STATIC_MODULE,
     lesson: STATIC_LESSON,
   },
-};
+});
 
 const Template: StoryFn = (args) => ({
   components: { VMaterialView },

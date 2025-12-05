@@ -13,7 +13,6 @@ import type {
   CrossCheck,
   AnswerTree,
 } from '@/api/generated/generated-api';
-import { mockLMSCourse } from '@/mocks/mockLMSCourse';
 
 export default {
   title: 'App/VHomeworkAnswerView',
@@ -50,13 +49,15 @@ const STATIC_QUESTION: QuestionDetail = {
       id: 1,
     },
     course: {
-      ...mockLMSCourse(),
       id: 1,
       name: 'Курс веб-разработки',
       slug: 'web-development',
+      cover: undefined,
       chat: 'https://t.me/test',
       calendar_ios: 'https://calendar.apple.com/test',
       calendar_google: 'https://calendar.google.com/test',
+      homework_check_recommendations:
+        'При проверке домашних заданий обратите внимание на чистоту кода, правильность реализации алгоритмов и соответствие требованиям.',
     },
   },
   course: {
@@ -73,7 +74,13 @@ const STATIC_QUESTION: QuestionDetail = {
 
 const STATIC_LESSON: Lesson = {
   id: 1,
-  question: mockQuestion(),
+  question: mockQuestion({
+    slug: 'javascript-fundamentals',
+    name: 'Основы JavaScript',
+    markdown_text:
+      '## Основы JavaScript\n\nВыполните задания по основам JavaScript.',
+    deadline: '2024-02-01T23:59:00Z',
+  }),
   homework: {
     is_sent: true,
     crosschecks: {
