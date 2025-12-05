@@ -16,8 +16,8 @@
 
   const name = computed(() => {
     if (props.lesson.call) return props.lesson.call.name;
-    if (props.lesson.homework) return props.lesson.homework.question.name;
     if (props.lesson.material) return props.lesson.material.title;
+    if (props.lesson.homework) return props.lesson.homework.question.name;
     return undefined;
   });
 
