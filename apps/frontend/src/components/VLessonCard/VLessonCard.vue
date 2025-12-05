@@ -1,21 +1,12 @@
 <script lang="ts" setup>
   import type { Lesson } from '@/api/generated/generated-api';
-  import { computed } from 'vue';
   import VLessonCardCall from './VLessonCardCall.vue';
   import VLessonCardMaterial from './VLessonCardMaterial.vue';
   import VLessonCardHomework from './VLessonCardHomework.vue';
 
-  const props = defineProps<{
+  defineProps<{
     lesson: Lesson;
   }>();
-
-  type LessonType = 'call' | 'material' | 'homework';
-
-  const lessonType = computed<LessonType>(() => {
-    if (props.lesson.call) return 'call';
-    if (props.lesson.material) return 'material';
-    return 'homework';
-  });
 </script>
 
 <template>
@@ -26,17 +17,22 @@
     ]"
   >
     <VLessonCardCall
-      v-if="lessonType === 'call'"
+      v-if="'call' in lesson && lesson.call"
       :call="lesson.call"
     />
     <VLessonCardMaterial
-      v-else-if="lessonType === 'material'"
+      v-else-if="'material' in lesson && lesson.material"
       :material="lesson.material"
     />
     <VLessonCardHomework
-      v-else-if="lessonType === 'homework'"
+      v-else-if="
+        'homework' in lesson &&
+        lesson.homework &&
+        'question' in lesson &&
+        lesson.question
+      "
       :homework="lesson.homework"
-      :question="lesson.homework.question"
+      :question="lesson.question"
     />
   </div>
 </template>
