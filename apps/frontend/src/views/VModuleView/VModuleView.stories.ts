@@ -41,7 +41,6 @@ const STATIC_LESSONS: Lesson[] = [
   {
     ...baseLesson,
     id: 1,
-    question: mockQuestion(),
     call: {
       name: 'Введение в асинхронную архитектуру',
       description: 'Обзор основных принципов и подходов',
@@ -62,23 +61,6 @@ const STATIC_LESSONS: Lesson[] = [
     ...baseLesson,
     id: 2,
     question: mockQuestion(),
-    homework: {
-      is_sent: true,
-      crosschecks: {
-        total: 5,
-        checked: 3,
-      },
-      question: {
-        slug: 'async-fundamentals',
-        name: 'Основы асинхронности',
-        deadline: '2024-01-25T23:59:00Z',
-      },
-    },
-  },
-  {
-    ...baseLesson,
-    id: 3,
-    question: mockQuestion(),
     material: {
       id: 'material-async-patterns',
       title: 'Паттерны асинхронного программирования',
@@ -86,7 +68,7 @@ const STATIC_LESSONS: Lesson[] = [
   },
   {
     ...baseLesson,
-    id: 4,
+    id: 3,
     question: mockQuestion({
       name: 'Event Sourcing',
     }),
