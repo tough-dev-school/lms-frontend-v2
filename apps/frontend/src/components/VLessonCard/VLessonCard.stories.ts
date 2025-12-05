@@ -85,6 +85,8 @@ const homeworkWithCrosschecks: Lesson = {
   question: {
     slug: 'javascript-fundamentals',
     name: 'Основы JavaScript',
+    markdown_text:
+      '## Основы JavaScript\n\nВведение в JavaScript и основные концепции языка.',
     deadline: '2024-01-25T23:59:00Z',
   },
 };
@@ -106,6 +108,8 @@ const homeworkWithoutCrosschecks: Lesson = {
   question: {
     slug: 'css-layouts',
     name: 'CSS Layouts',
+    markdown_text:
+      '## CSS Layouts\n\nИзучение современных методов создания макетов с помощью CSS.',
     deadline: '2024-01-30T23:59:00Z',
   },
 };
