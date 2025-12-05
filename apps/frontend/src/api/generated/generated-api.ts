@@ -318,7 +318,7 @@ export interface HomeworkStats {
  */
 export interface JSONWebToken {
   password: string;
-  token: string;
+  token?: string;
   username: string;
 }
 

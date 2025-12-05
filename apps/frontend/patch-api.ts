@@ -224,6 +224,48 @@ const fixAnswerTreeDescendants: ApplyPatch = (ast) => {
   return edits;
 };
 
+const makeJWTTokenOptional: ApplyPatch = (ast) => {
+  const edits: Edit[] = [];
+
+  const interfaces = ast.findAll({
+    rule: { kind: 'interface_declaration' },
+  });
+
+  for (const interfaceNode of interfaces) {
+    const nameNode = interfaceNode.child(1);
+    const interfaceName = nameNode?.text();
+
+    if (interfaceName !== 'JSONWebToken') continue;
+
+    const bodyNode = interfaceNode.child(2);
+    if (!bodyNode) continue;
+
+    bodyNode.children().forEach((child: SgNode) => {
+      if (child.kind() !== 'property_signature') return;
+
+      const propertyName = child.child(0);
+      if (!propertyName) return;
+
+      const name = propertyName.text().replace('?', '');
+      if (name !== 'token') return;
+
+      // Check if it's already optional
+      const text = child.text();
+      if (text.includes('?:')) return;
+
+      // Make it optional by replacing : with ?:
+      const newText = text.replace('token:', 'token?:');
+      edits.push({
+        start: child.range().start.index,
+        end: child.range().end.index,
+        replacement: newText,
+      });
+    });
+  }
+
+  return edits;
+};
+
 for (const file of files) {
   const filePath = path.join(typesDirectory, file);
   let fileContent = fs.readFileSync(filePath, 'utf8');
@@ -232,6 +274,7 @@ for (const file of files) {
     fixOptionalProperties,
     omitAnswerFields,
     fixAnswerTreeDescendants,
+    makeJWTTokenOptional,
   ];
 
   for (const patch of patches) {
