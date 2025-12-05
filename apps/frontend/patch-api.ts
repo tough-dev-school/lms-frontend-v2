@@ -76,7 +76,7 @@ const fixOptionalProperties: ApplyPatch = (ast) => {
       const nameNode = node.child(0);
       if (!nameNode) return;
 
-      const name = nameNode.text().replace('?', '');
+      // const name = nameNode.text().replace('?', '');
       const questionMark = text.includes('?:');
 
       if (!questionMark) return;
@@ -106,72 +106,8 @@ const fixOptionalProperties: ApplyPatch = (ast) => {
         typeText = typeText.slice(2);
       }
 
-      // Primary keys (slug, id, uuid) can't be undefined
-      if (['slug', 'id', 'uuid'].includes(name)) {
-        const newText = text.replace('?:', ':');
-        edits.push({
-          start: node.range().start.index,
-          end: node.range().end.index,
-          replacement: newText,
-        });
-        return;
-      }
-
-      // name can't be undefined
-      if (name === 'name') {
-        const newText = text.replace('?:', ':');
-        edits.push({
-          start: node.range().start.index,
-          end: node.range().end.index,
-          replacement: newText,
-        });
-        return;
-      }
-
-      if (name === 'created') {
-        const newText = text.replace('?:', ':');
-        edits.push({
-          start: node.range().start.index,
-          end: node.range().end.index,
-          replacement: newText,
-        });
-        return;
-      }
-
-      if (name === 'breadcrumbs') {
-        const newText = text.replace('?:', ':');
-        edits.push({
-          start: node.range().start.index,
-          end: node.range().end.index,
-          replacement: newText,
-        });
-        return;
-      }
-
-      // booleans can't be undefined
-      if (typeText === 'boolean') {
-        const newText = text.replace('?:', ':');
-        edits.push({
-          start: node.range().start.index,
-          end: node.range().end.index,
-          replacement: newText,
-        });
-        return;
-      }
-
       // nullable fields (string | null) can't be undefined
       if (/\w+ \| null/.test(typeText)) {
-        const newText = text.replace('?:', ':');
-        edits.push({
-          start: node.range().start.index,
-          end: node.range().end.index,
-          replacement: newText,
-        });
-        return;
-      }
-
-      // arrays can't be undefined, they can be empty
-      if (typeText.includes('[]')) {
         const newText = text.replace('?:', ':');
         edits.push({
           start: node.range().start.index,

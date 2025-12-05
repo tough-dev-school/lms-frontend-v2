@@ -56,8 +56,8 @@ export interface Answer {
   question: string;
   author: UserSafe;
   /** @format uuid */
-  parent?: string;
-  legacy_text?: string;
+  parent: string;
+  legacy_text: string;
   content?: any;
   has_descendants: boolean;
   is_editable: boolean;
@@ -75,6 +75,11 @@ export interface AnswerCreate {
 export interface AnswerImage {
   /** @format uri */
   image: string;
+}
+
+export interface AnswerImageRequest {
+  /** @format binary */
+  image: File;
 }
 
 export interface AnswerSimple {
@@ -96,13 +101,13 @@ export interface AnswerTree {
   question: string;
   author: UserSafe;
   /** @format uuid */
-  parent?: string;
-  legacy_text?: string;
+  parent: string;
+  legacy_text: string;
   content?: any;
   has_descendants: boolean;
   is_editable: boolean;
   reactions: ReactionDetailed[];
-  descendants: AnswerTree[];
+  descendants: Answer[];
 }
 
 export interface AnswerUpdate {
@@ -112,7 +117,7 @@ export interface AnswerUpdate {
 export interface Breadcrumbs {
   module: Module;
   course: LMSCourse;
-  lesson?: LessonPlain;
+  lesson: LessonPlain;
 }
 
 export interface Call {
@@ -159,18 +164,10 @@ export interface Course {
    * @maxLength 255
    */
   product_name: string;
-  /**
-   * Тариф
-   * @maxLength 64
-   */
   tariff_name: string | null;
   home_page_slug: string;
-  /**
-   * Обложка
-   * Обложка курса
-   * @format uri
-   */
-  cover?: string;
+  /** @format uri */
+  cover: string | null;
   /**
    * Чат
    * @format uri
@@ -247,7 +244,7 @@ export interface CourseWithPrice {
    * @maxLength 64
    */
   tariff_name: string | null;
-  price?: Price;
+  price: Price;
 }
 
 export interface CrossCheck {
@@ -301,7 +298,7 @@ export interface DiplomaRetrieve {
    */
   image: string;
   student: UserSafe;
-  other_languages?: Record<string, any>;
+  other_languages: Record<string, any>;
 }
 
 /** Requires *any* model annotaded with statistics. For annotation examples check homework.QuestionQuerySet */
@@ -321,7 +318,7 @@ export interface HomeworkStats {
  */
 export interface JSONWebToken {
   password: string;
-  token?: string;
+  token: string;
   username: string;
 }
 
@@ -358,14 +355,14 @@ export interface LMSCourse {
    */
   calendar_google: string | null;
   /** Рекомендации по проверке домашки */
-  homework_check_recommendations?: string;
+  homework_check_recommendations: string;
 }
 
 /** Serialize lesson for the user, lesson should be annotated with crosschecks stats */
 export interface Lesson {
   id: number;
   material?: NotionMaterial;
-  homework?: HomeworkStats;
+  homework: HomeworkStats;
   question: Question;
   call?: Call;
 }
@@ -539,6 +536,22 @@ export interface PaginatedModuleDetailList {
   results: ModuleDetail[];
 }
 
+export interface PaginatedUserList {
+  /** @example 123 */
+  count: number;
+  /**
+   * @format uri
+   * @example "http://api.example.org/accounts/?page=4"
+   */
+  next: string | null;
+  /**
+   * @format uri
+   * @example "http://api.example.org/accounts/?page=2"
+   */
+  previous: string | null;
+  results: User[];
+}
+
 export interface PasswordChange {
   /** @maxLength 128 */
   new_password1: string;
@@ -569,7 +582,7 @@ export interface PatchedAnswerUpdate {
 export interface PatchedDiploma {
   course?: CourseSimple;
   /** @maxLength 32 */
-  slug?: string;
+  slug: string;
   /** Язык */
   language?: LanguageEnum;
   /**
@@ -582,22 +595,7 @@ export interface PatchedDiploma {
   url?: string;
 }
 
-export interface PatchedUser {
-  id?: number;
-  /** @format uuid */
-  uuid?: string;
-  /**
-   * Статус персонала
-   * Отметьте, если пользователь может входить в административную часть сайта.
-   */
-  is_staff?: boolean;
-  /**
-   * Имя пользователя
-   * Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
-   * @maxLength 150
-   * @pattern ^[\w.@+-]+$
-   */
-  username?: string;
+export interface PatchedUserSelfUpdate {
   /**
    * Имя
    * @maxLength 150
@@ -618,12 +616,6 @@ export interface PatchedUser {
    * @maxLength 150
    */
   last_name_en?: string;
-  /**
-   * Адрес электронной почты
-   * @format email
-   * @maxLength 254
-   */
-  email?: string;
   /** Пол */
   gender?: GenderEnum | BlankEnum;
   /** @maxLength 256 */
@@ -728,7 +720,7 @@ export interface QuestionCourse {
    */
   calendar_google: string | null;
   /** Рекомендации по проверке домашки */
-  homework_check_recommendations?: string;
+  homework_check_recommendations: string;
 }
 
 export interface QuestionDetail {
@@ -748,14 +740,14 @@ export interface QuestionDetail {
   deadline: string | null;
   /** Requires *any* model annotaded with statistics. For annotation examples check homework.QuestionQuerySet */
   homework: HomeworkStats;
-  course?: QuestionCourse;
+  course: QuestionCourse;
 }
 
 export interface ReactionCreate {
   /** @maxLength 10 */
   emoji: string;
   /** @format uuid */
-  slug?: string;
+  slug: string;
 }
 
 export interface ReactionDetailed {
@@ -768,7 +760,7 @@ export interface ReactionDetailed {
 }
 
 export interface RestAuthDetail {
-  detail?: string;
+  detail: string;
 }
 
 export interface TemporarySoonToBeDepricatedQuestion {
@@ -787,18 +779,13 @@ export interface TemporarySoonToBeDepricatedQuestion {
 }
 
 export interface Token {
-  token?: string;
+  token: string;
 }
 
 export interface User {
   id: number;
   /** @format uuid */
   uuid: string;
-  /**
-   * Статус персонала
-   * Отметьте, если пользователь может входить в административную часть сайта.
-   */
-  is_staff: boolean;
   /**
    * Имя пользователя
    * Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
@@ -875,6 +862,63 @@ export interface UserSafe {
    * @format uri
    */
   avatar: string | null;
+}
+
+export interface UserSelf {
+  id: number;
+  /** @format uuid */
+  uuid: string;
+  /**
+   * Имя пользователя
+   * Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
+   * @maxLength 150
+   * @pattern ^[\w.@+-]+$
+   */
+  username: string;
+  /**
+   * Имя
+   * @maxLength 150
+   */
+  first_name?: string;
+  /**
+   * Фамилия
+   * @maxLength 150
+   */
+  last_name?: string;
+  /**
+   * Имя на английском
+   * @maxLength 150
+   */
+  first_name_en?: string;
+  /**
+   * Фамилия на английском
+   * @maxLength 150
+   */
+  last_name_en?: string;
+  /**
+   * Адрес электронной почты
+   * @format email
+   * @maxLength 254
+   */
+  email?: string;
+  /** Пол */
+  gender?: GenderEnum | BlankEnum;
+  /** @maxLength 256 */
+  github_username?: string;
+  /** @maxLength 256 */
+  linkedin_username?: string;
+  /** @maxLength 256 */
+  telegram_username?: string;
+  /**
+   * Аватар
+   * @format uri
+   */
+  avatar: string | null;
+  /**
+   * Статус персонала
+   * Отметьте, если пользователь может входить в административную часть сайта.
+   */
+  is_staff?: boolean;
 }
 
 export interface VideoProvider {
@@ -1143,6 +1187,14 @@ export interface HomeworkAnswersListParams {
   question?: string;
 }
 
+export interface HomeworkCrosschecksListParams {
+  /**
+   * Question id
+   * @format uuid
+   */
+  question: string;
+}
+
 export interface LmsLessonsListParams {
   module?: number;
   /** A page number within the paginated result set. */
@@ -1173,6 +1225,14 @@ export interface StudiesPurchasedListParams {
   page_size?: number;
 }
 
+export interface UsersListParams {
+  email?: string;
+  /** A page number within the paginated result set. */
+  page?: number;
+  /** Number of results to return per page. */
+  page_size?: number;
+}
+
 import type {
   AxiosInstance,
   AxiosRequestConfig,
@@ -1186,7 +1246,7 @@ export type QueryParamsType = Record<string | number, any>;
 export interface FullRequestParams
   extends Omit<AxiosRequestConfig, 'data' | 'params' | 'url' | 'responseType'> {
   /** set parameter to `true` for call `securityWorker` for this request */
-  secure: boolean;
+  secure?: boolean;
   /** request path */
   path: string;
   /** content type of request body */
@@ -1209,7 +1269,7 @@ export interface ApiConfig<SecurityDataType = unknown>
   securityWorker: (
     securityData: SecurityDataType | null,
   ) => Promise<AxiosRequestConfig | void> | AxiosRequestConfig | void;
-  secure: boolean;
+  secure?: boolean;
   format?: ResponseType;
 }
 
@@ -1871,7 +1931,7 @@ export class Api<SecurityDataType extends unknown> {
      * @secure
      */
     homeworkAnswersImageCreate: (
-      data: AnswerImage,
+      data: AnswerImageRequest,
       params: RequestParams = {},
     ) =>
       this.http.request<AnswerImage, any>({
@@ -1879,23 +1939,27 @@ export class Api<SecurityDataType extends unknown> {
         method: 'POST',
         body: data,
         secure: true,
-        type: ContentType.Json,
+        type: ContentType.FormData,
         format: 'json',
         ...params,
       }),
 
     /**
-     * @description Crosscheck status
+     * @description Crosscheck status by question
      *
      * @tags homework
      * @name HomeworkCrosschecksList
      * @request GET:/api/v2/homework/crosschecks/
      * @secure
      */
-    homeworkCrosschecksList: (params: RequestParams = {}) =>
+    homeworkCrosschecksList: (
+      query: HomeworkCrosschecksListParams,
+      params: RequestParams = {},
+    ) =>
       this.http.request<CrossCheck[], any>({
         path: `/api/v2/homework/crosschecks/`,
         method: 'GET',
+        query: query,
         secure: true,
         format: 'json',
         ...params,
@@ -2135,12 +2199,30 @@ export class Api<SecurityDataType extends unknown> {
      * No description
      *
      * @tags users
+     * @name UsersList
+     * @request GET:/api/v2/users/
+     * @secure
+     */
+    usersList: (query: UsersListParams, params: RequestParams = {}) =>
+      this.http.request<PaginatedUserList, any>({
+        path: `/api/v2/users/`,
+        method: 'GET',
+        query: query,
+        secure: true,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description Fetch user data
+     *
+     * @tags users
      * @name UsersMeRetrieve
      * @request GET:/api/v2/users/me/
      * @secure
      */
     usersMeRetrieve: (params: RequestParams = {}) =>
-      this.http.request<User, any>({
+      this.http.request<UserSelf, any>({
         path: `/api/v2/users/me/`,
         method: 'GET',
         secure: true,
@@ -2149,15 +2231,18 @@ export class Api<SecurityDataType extends unknown> {
       }),
 
     /**
-     * No description
+     * @description Update user data
      *
      * @tags users
      * @name UsersMePartialUpdate
      * @request PATCH:/api/v2/users/me/
      * @secure
      */
-    usersMePartialUpdate: (data: PatchedUser, params: RequestParams = {}) =>
-      this.http.request<User, any>({
+    usersMePartialUpdate: (
+      data: PatchedUserSelfUpdate,
+      params: RequestParams = {},
+    ) =>
+      this.http.request<UserSelf, any>({
         path: `/api/v2/users/me/`,
         method: 'PATCH',
         body: data,
