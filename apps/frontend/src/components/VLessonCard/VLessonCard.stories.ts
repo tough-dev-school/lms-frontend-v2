@@ -76,11 +76,6 @@ const homeworkWithCrosschecks: Lesson = {
       total: 5,
       checked: 3,
     },
-    question: {
-      slug: 'javascript-fundamentals',
-      name: 'Основы JavaScript',
-      deadline: '2024-01-25T23:59:00Z',
-    },
   },
   question: {
     slug: 'javascript-fundamentals',
@@ -99,11 +94,6 @@ const homeworkWithoutCrosschecks: Lesson = {
       hidden_before_crosscheck_completed: 0,
     },
     is_sent: false,
-    question: {
-      slug: 'css-layouts',
-      name: 'CSS Layouts',
-      deadline: '2024-01-30T23:59:00Z',
-    },
   },
   question: {
     slug: 'css-layouts',

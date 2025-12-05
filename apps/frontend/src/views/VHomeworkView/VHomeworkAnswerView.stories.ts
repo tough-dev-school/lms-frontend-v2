@@ -40,11 +40,6 @@ const STATIC_QUESTION: QuestionDetail = {
       total: 5,
       checked: 3,
     },
-    question: {
-      slug: 'javascript-fundamentals',
-      name: 'Основы JavaScript',
-      deadline: '2024-02-01T23:59:00Z',
-    },
   },
   breadcrumbs: {
     module: mockModule({
@@ -84,11 +79,6 @@ const STATIC_LESSON: Lesson = {
     crosschecks: {
       total: 5,
       checked: 3,
-    },
-    question: {
-      slug: 'javascript-fundamentals',
-      name: 'Основы JavaScript',
-      deadline: '2024-02-01T23:59:00Z',
     },
   },
 };

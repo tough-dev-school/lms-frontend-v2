@@ -32,11 +32,6 @@ const STATIC_QUESTION: QuestionDetail = {
   deadline: '2024-02-15T23:59:00Z',
   homework: {
     is_sent: false,
-    question: {
-      slug: 'react-components',
-      name: 'Создание React компонентов',
-      deadline: '2024-02-15T23:59:00Z',
-    },
   },
   breadcrumbs: {
     module: mockModule({
@@ -73,11 +68,6 @@ const STATIC_LESSON: Lesson = {
   question: mockQuestion(),
   homework: {
     is_sent: false,
-    question: {
-      slug: 'react-components',
-      name: 'Создание React компонентов',
-      deadline: '2024-02-15T23:59:00Z',
-    },
   },
 };
 

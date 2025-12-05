@@ -67,7 +67,7 @@
     <template #pill>
       <VPillHomework
         v-if="lesson?.homework"
-        :stats="lesson?.homework"
+        :lesson="lesson"
       />
     </template>
     <section class="flex flex-col gap-24">

@@ -13,7 +13,6 @@ export const getMockLesson = (payload: Partial<Lesson> = {}): Lesson => {
       : undefined,
     homework: {
       is_sent: faker.datatype.boolean(),
-      question: mockQuestion(),
     },
     question: mockQuestion(),
     call: faker.datatype.boolean()
