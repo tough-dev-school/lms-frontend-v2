@@ -747,7 +747,6 @@ export interface ReactionCreate {
   /** @maxLength 10 */
   emoji: string;
   /** @format uuid */
-  slug: string;
 }
 
 export interface ReactionDetailed {
