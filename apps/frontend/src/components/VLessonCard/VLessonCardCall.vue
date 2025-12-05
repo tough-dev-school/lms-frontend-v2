@@ -3,14 +3,14 @@
   import VTag from '@/components/VTag/VTag.vue';
   import VButton from '@/components/VButton/VButton.vue';
   import type {
-    Call,
+    Lesson,
     RecommendedVideoProviderEnum,
     VideoProvider,
   } from '@/api/generated/generated-api';
   import { DATE_TIME_FORMAT, formatDate } from '@/utils/date';
 
   defineProps<{
-    call: Call;
+    call: NonNullable<Lesson['call']>;
   }>();
 
   const getRecommendedVideo = (

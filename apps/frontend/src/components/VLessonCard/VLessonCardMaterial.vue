@@ -1,10 +1,10 @@
 <script lang="ts" setup>
   import VHeading from '@/components/VHeading/VHeading.vue';
   import VButton from '@/components/VButton/VButton.vue';
-  import type { Material } from '@/api/generated/generated-api';
+  import type { Lesson } from '@/api/generated/generated-api';
 
   defineProps<{
-    material: Material;
+    material: NonNullable<Lesson['material']>;
   }>();
 </script>
 

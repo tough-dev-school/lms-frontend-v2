@@ -2,12 +2,12 @@
   import VHeading from '@/components/VHeading/VHeading.vue';
   import VTag from '@/components/VTag/VTag.vue';
   import VButton from '@/components/VButton/VButton.vue';
-  import type { Homework, Question } from '@/api/generated/generated-api';
+  import type { Lesson } from '@/api/generated/generated-api';
   import { DATE_TIME_FORMAT, formatDate } from '@/utils/date';
 
   defineProps<{
-    homework: Homework;
-    question: Question;
+    homework: NonNullable<Lesson['homework']>;
+    question: NonNullable<Lesson['question']>;
   }>();
 </script>
 
