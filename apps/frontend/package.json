@@ -10,14 +10,14 @@
     "test:unit:coverage": "vitest --coverage --config ./tests/unit.config.ts",
     "test:regression": "vitest --config ./tests/regression.config.ts",
     "test:regression:update": "vitest --update --config ./tests/regression.config.ts",
-    "test:type": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
+    "test:types": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "test:lint": "eslint .",
     "fix:lint": "eslint . --fix",
     "test": "run-p fix:*",
     "fix": "run-p fix:*",
     "storybook": "storybook dev -p 3001",
     "storybook:build": "storybook build",
-    "generate-api": "node --experimental-strip-types generate-sdk.ts; prettier --write src/api/generated/*.ts; tsx patch-api.ts"
+    "api:generate": "node --experimental-strip-types generate-sdk.ts; prettier --write src/api/generated/*.ts; tsx patch-api.ts"
   },
   "dependencies": {
     "@brachkow/email-providers": "^1.2.0",

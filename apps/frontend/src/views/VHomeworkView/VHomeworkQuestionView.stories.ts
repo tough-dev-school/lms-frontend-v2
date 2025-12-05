@@ -31,11 +31,6 @@ const STATIC_QUESTION: QuestionDetail = {
   deadline: '2024-02-15T23:59:00Z',
   homework: {
     is_sent: false,
-    question: {
-      slug: 'react-components',
-      name: 'Создание React компонентов',
-      deadline: '2024-02-15T23:59:00Z',
-    },
   },
   breadcrumbs: {
     module: mockModule({
@@ -49,9 +44,12 @@ const STATIC_QUESTION: QuestionDetail = {
       id: 1,
       name: 'Курс веб-разработки',
       slug: 'web-development',
+      cover: undefined,
       chat: 'https://t.me/test',
       calendar_ios: 'https://calendar.apple.com/test',
       calendar_google: 'https://calendar.google.com/test',
+      homework_check_recommendations:
+        'При проверке обратите внимание на структуру компонентов, правильность использования props и читаемость кода.',
     },
   },
   course: {
@@ -68,14 +66,15 @@ const STATIC_QUESTION: QuestionDetail = {
 
 const STATIC_LESSON: Lesson = {
   id: 2,
-  question: mockQuestion(),
+  question: mockQuestion({
+    slug: 'react-components',
+    name: 'Создание React компонентов',
+    markdown_text:
+      '## Создание React компонентов\n\nВыполните задание по созданию React компонентов.',
+    deadline: '2024-02-15T23:59:00Z',
+  }),
   homework: {
     is_sent: false,
-    question: {
-      slug: 'react-components',
-      name: 'Создание React компонентов',
-      deadline: '2024-02-15T23:59:00Z',
-    },
   },
 };
 

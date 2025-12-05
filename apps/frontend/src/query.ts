@@ -14,7 +14,7 @@ import type {
   PasswordChange,
   PasswordReset,
   PasswordResetConfirm,
-  PatchedUser,
+  PatchedUserSelfUpdate,
 } from './api/generated/generated-api';
 import { ContentType } from './api/generated/generated-api';
 import { useAuth } from './composables/useAuth';
@@ -528,7 +528,7 @@ export const useUserQuery = () => {
 
 export const useUpdateUserMutation = (queryClient: QueryClient) => {
   return useMutation({
-    mutationFn: async (data: PatchedUser) => {
+    mutationFn: async (data: PatchedUserSelfUpdate) => {
       return await api.usersMePartialUpdate(data);
     },
     onSuccess: () => {

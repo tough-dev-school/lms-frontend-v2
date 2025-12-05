@@ -38,36 +38,45 @@ export const mockDiplomaSet = (payload: Diploma): Diploma[] => {
 };
 
 export const STATIC_DIPLOMA_1: Diploma = {
-  ...mockDiplomaData(),
   course: {
     product_name: 'Amazing Course',
     name: 'Amazing Course',
     name_international: 'Amazing Course',
     tariff_name: 'Amazing Course',
   },
+  slug: 'diploma-1',
+  language: LanguageEnum.RU,
+  image: '/diploma-mock.jpg',
   student: STATIC_AUTHOR_1,
+  url: 'https://example.com/diploma/1',
 };
 
 export const STATIC_DIPLOMA_2: Diploma = {
-  ...mockDiplomaData(),
   course: {
     product_name: 'Cool Course',
     name: 'Cool Course',
     name_international: 'Cool Course',
     tariff_name: 'Cool Course',
   },
+  slug: 'diploma-2',
+  language: LanguageEnum.RU,
+  image: '/diploma-mock.jpg',
   student: STATIC_AUTHOR_1,
+  url: 'https://example.com/diploma/2',
 };
 
 export const STATIC_DIPLOMA_3: Diploma = {
-  ...mockDiplomaData(),
   course: {
     product_name: 'Pro Course',
     name: 'Pro Course',
     name_international: 'Pro Course',
     tariff_name: 'Pro Course',
   },
+  slug: 'diploma-3',
+  language: LanguageEnum.RU,
+  image: '/diploma-mock.jpg',
   student: STATIC_AUTHOR_1,
+  url: 'https://example.com/diploma/3',
 };
 
 export const STATIC_DIPLOMAS = [
