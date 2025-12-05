@@ -10,7 +10,7 @@
     "test:unit:coverage": "vitest --coverage --config ./tests/unit.config.ts",
     "test:regression": "vitest --config ./tests/regression.config.ts",
     "test:regression:update": "vitest --update --config ./tests/regression.config.ts",
-    "test:type": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
+    "test:types": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "test:lint": "eslint .",
     "fix:lint": "eslint . --fix",
     "test": "run-p fix:*",

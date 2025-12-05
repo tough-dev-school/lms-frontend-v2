@@ -73,7 +73,7 @@ pnpm run test:unit:coverage
 
 ```bash
 # Type checking
-pnpm run test:type
+pnpm run test:types
 
 # Linting
 pnpm run test:lint
