@@ -87,7 +87,9 @@ const STATIC_LESSONS: Lesson[] = [
   {
     ...baseLesson,
     id: 4,
-    question: mockQuestion(),
+    question: mockQuestion({
+      name: 'Event Sourcing',
+    }),
     homework: {
       is_sent: false,
       question: {
