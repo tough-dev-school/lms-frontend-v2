@@ -71,15 +71,9 @@ const STATIC_LESSONS: Lesson[] = [
     id: 3,
     question: mockQuestion({
       name: 'Event Sourcing',
+      slug: 'event-sourcing',
+      deadline: '2024-02-01T23:59:00Z',
     }),
-    homework: {
-      is_sent: false,
-      question: {
-        slug: 'event-sourcing',
-        name: 'Event Sourcing',
-        deadline: '2024-02-01T23:59:00Z',
-      },
-    },
   },
 ];
 
