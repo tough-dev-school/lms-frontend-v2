@@ -4,7 +4,6 @@ import type {
   Lesson,
   RecommendedVideoProviderEnum,
 } from '@/api/generated/generated-api';
-import { mockQuestion } from '@/mocks/mockQuestion';
 import { getMockLesson } from '@/mocks/mockLesson';
 
 export default {
@@ -31,7 +30,6 @@ const baseLesson = {
 
 const callWithVideo: Lesson = {
   ...baseLesson,
-  question: mockQuestion(),
   call: {
     name: 'Введение в React',
     description: 'Изучаем основы React и создаем первое приложение',
@@ -56,7 +54,6 @@ const callWithVideo: Lesson = {
 
 const callWithoutVideo: Lesson = {
   ...baseLesson,
-  question: mockQuestion(),
   call: {
     name: 'Дизайн систем',
     description: 'Обсуждаем принципы создания дизайн систем',
@@ -69,7 +66,6 @@ const callWithoutVideo: Lesson = {
 
 const homeworkWithCrosschecks: Lesson = {
   ...baseLesson,
-  question: mockQuestion(),
   homework: {
     comments: {
       comments: 10,
@@ -86,11 +82,15 @@ const homeworkWithCrosschecks: Lesson = {
       deadline: '2024-01-25T23:59:00Z',
     },
   },
+  question: {
+    slug: 'javascript-fundamentals',
+    name: 'Основы JavaScript',
+    deadline: '2024-01-25T23:59:00Z',
+  },
 };
 
 const homeworkWithoutCrosschecks: Lesson = {
   ...baseLesson,
-  question: mockQuestion(),
   homework: {
     comments: {
       comments: 0,
@@ -103,11 +103,15 @@ const homeworkWithoutCrosschecks: Lesson = {
       deadline: '2024-01-30T23:59:00Z',
     },
   },
+  question: {
+    slug: 'css-layouts',
+    name: 'CSS Layouts',
+    deadline: '2024-01-30T23:59:00Z',
+  },
 };
 
 const materialLesson: Lesson = {
   ...baseLesson,
-  question: mockQuestion(),
   material: {
     id: 'material-123',
     title: 'Углубленное изучение Vue.js',
@@ -149,7 +153,7 @@ export const MaterialLesson = {
   },
 };
 
-export const ComplexLesson = {
+export const CallWithMultipleProviders = {
   render: Template,
   args: {
     lesson: {
@@ -166,26 +170,13 @@ export const ComplexLesson = {
             embed: 'https://www.youtube.com/embed/xyz789',
             src: 'https://www.youtube.com/watch?v=xyz789',
           },
+          {
+            provider: 'rutube',
+            embed: 'https://rutube.ru/play/embed/abc123',
+            src: 'https://rutube.ru/video/abc123',
+          },
         ],
-        recommended_video_provider: 'youtube' as RecommendedVideoProviderEnum,
-      },
-      homework: {
-        is_sent: true,
-        crosschecks: {
-          total: 8,
-          checked: 6,
-        },
-        question: {
-          slug: 'typescript-advanced',
-          name: 'Продвинутый TypeScript',
-          text: 'Реализуйте типизированную архитектуру',
-          deadline: '2024-02-10T23:59:00Z',
-        },
-      },
-      question: mockQuestion(),
-      material: {
-        id: 'material-456',
-        title: 'Дополнительные материалы по TypeScript',
+        recommended_video_provider: 'rutube' as RecommendedVideoProviderEnum,
       },
     } as Lesson,
   },
