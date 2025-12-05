@@ -17,7 +17,7 @@
     "fix": "run-p fix:*",
     "storybook": "storybook dev -p 3001",
     "storybook:build": "storybook build",
-    "generate-api": "node --experimental-strip-types generate-sdk.ts; prettier --write src/api/generated/*.ts; tsx patch-api.ts"
+    "api:generate": "node --experimental-strip-types generate-sdk.ts; prettier --write src/api/generated/*.ts; tsx patch-api.ts"
   },
   "dependencies": {
     "@brachkow/email-providers": "^1.2.0",
