@@ -43,7 +43,12 @@
     useHomeworkAnswersRetrieve(computed(() => props.answerId));
 
   const { data: lesson, isLoading: isLessonLoading } = useLmsLessonsRetrieve(
-    computed(() => question.value?.breadcrumbs.lesson?.id),
+    computed(() => question.value?.breadcrumbs.lesson?.id as number),
+    {
+      query: {
+        enabled: () => !!question.value?.breadcrumbs.lesson?.id,
+      },
+    },
   );
 
   const { data: user, isLoading: isUserLoading } = useUsersMeRetrieve();

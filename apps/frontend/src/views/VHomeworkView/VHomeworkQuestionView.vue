@@ -31,7 +31,12 @@
     useHomeworkQuestionsRetrieve(computed(() => props.questionId));
 
   const { data: lesson, isLoading: isLessonLoading } = useLmsLessonsRetrieve(
-    computed(() => question.value?.breadcrumbs.lesson?.id),
+    computed(() => question.value?.breadcrumbs.lesson?.id as number),
+    {
+      query: {
+        enabled: () => !!question.value?.breadcrumbs.lesson?.id,
+      },
+    },
   );
 
   const { content } = useEditorAutosave(['draft', props.questionId]);
