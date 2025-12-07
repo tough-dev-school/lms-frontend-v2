@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import VPillHomework from './VPillHomework.vue';
 import dayjs from 'dayjs';
-import { createTemporarySoonToBeDepricatedQuestion } from '@/api/generated';
+import { createQuestion } from '@/api/generated';
 
 const meta = {
   component: VPillHomework,
@@ -27,7 +27,7 @@ export const NotSent: Story = {
         },
       },
       question: {
-        ...createTemporarySoonToBeDepricatedQuestion(),
+        ...createQuestion(),
         name: 'Homework 1',
         slug: 'homework-1',
         deadline: tomorrow.toISOString(),
@@ -47,7 +47,7 @@ export const NotSentOverdue: Story = {
         },
       },
       question: {
-        ...createTemporarySoonToBeDepricatedQuestion(),
+        ...createQuestion(),
         name: 'Homework 1',
         slug: 'homework-1',
         deadline: yesterday.toISOString(),
@@ -71,7 +71,7 @@ export const Sent: Story = {
         },
       },
       question: {
-        ...createTemporarySoonToBeDepricatedQuestion(),
+        ...createQuestion(),
         name: 'Homework 1',
         slug: 'homework-1',
         deadline: tomorrow.toISOString(),
@@ -95,7 +95,7 @@ export const SentWithPendingCrosscheck: Story = {
         },
       },
       question: {
-        ...createTemporarySoonToBeDepricatedQuestion(),
+        ...createQuestion(),
         name: 'Homework 1',
         slug: 'homework-1',
         deadline: today.toISOString(),
@@ -119,7 +119,7 @@ export const SentWithFutureCrosscheck: Story = {
         },
       },
       question: {
-        ...createTemporarySoonToBeDepricatedQuestion(),
+        ...createQuestion(),
         name: 'Homework 1',
         slug: 'homework-1',
         deadline: twoDaysAgo.toISOString(),

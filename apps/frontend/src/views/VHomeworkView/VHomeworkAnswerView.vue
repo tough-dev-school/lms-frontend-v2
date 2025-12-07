@@ -115,11 +115,9 @@
     }
   };
 
-  const { data: crosschecksData } = useHomeworkCrosschecksList(
-    computed(() => ({ question: [props.questionId] })),
+  const { data: crosschecks } = useHomeworkCrosschecksList(
+    computed(() => ({ question: props.questionId })),
   );
-
-  const crosschecks = computed(() => crosschecksData.value?.results);
 
   const isSent = computed(() => {
     return crosschecks.value?.some(
@@ -140,7 +138,7 @@
         });
         queryClient.invalidateQueries({
           queryKey: homeworkCrosschecksListQueryKey({
-            question: [props.questionId],
+            question: props.questionId,
           }),
         });
         queryClient.invalidateQueries({

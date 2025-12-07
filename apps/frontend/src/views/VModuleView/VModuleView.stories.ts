@@ -5,7 +5,6 @@ import {
   createCourse,
   createModule,
   createQuestion,
-  createTemporarySoonToBeDepricatedQuestion,
 } from '@/api/generated/mocks';
 import {
   purchasedCoursesListQueryKey,
@@ -73,7 +72,7 @@ const STATIC_LESSONS: Lesson[] = [
     homework: {
       is_sent: false,
     },
-    question: createTemporarySoonToBeDepricatedQuestion({
+    question: createQuestion({
       slug: 'async-patterns',
       name: 'Паттерны асинхронного программирования',
       markdown_text:
@@ -90,7 +89,7 @@ const STATIC_LESSONS: Lesson[] = [
     homework: {
       is_sent: false,
     },
-    question: mockQuestion({
+    question: createQuestion({
       name: 'Event Sourcing',
       slug: 'event-sourcing',
       markdown_text: '## Event Sourcing\n\nРеализуйте паттерн Event Sourcing.',

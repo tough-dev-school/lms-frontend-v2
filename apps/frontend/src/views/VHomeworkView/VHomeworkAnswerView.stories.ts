@@ -7,7 +7,6 @@ import {
   createQuestion,
   createModule,
   createCourse,
-  createTemporarySoonToBeDepricatedQuestion,
 } from '@/api/generated/mocks';
 import {
   homeworkQuestionsRetrieveQueryKey,
@@ -51,12 +50,6 @@ const STATIC_QUESTION: QuestionDetail = {
       total: 5,
       checked: 3,
     },
-    question: {
-      ...createTemporarySoonToBeDepricatedQuestion(),
-      slug: 'javascript-fundamentals',
-      name: 'Основы JavaScript',
-      deadline: '2024-02-01T23:59:00Z',
-    },
   },
   breadcrumbs: {
     module: createModule({
@@ -84,6 +77,7 @@ const STATIC_QUESTION: QuestionDetail = {
     id: 1,
     name: 'Курс веб-разработки',
     slug: 'web-development',
+    cover: undefined,
     homework_check_recommendations:
       'При проверке домашних заданий обратите внимание на чистоту кода, правильность реализации алгоритмов и соответствие требованиям.',
     chat: 'https://t.me/test',
@@ -100,12 +94,6 @@ const STATIC_LESSON: Lesson = {
     crosschecks: {
       total: 5,
       checked: 3,
-    },
-    question: {
-      ...createTemporarySoonToBeDepricatedQuestion(),
-      slug: 'javascript-fundamentals',
-      name: 'Основы JavaScript',
-      deadline: '2024-02-01T23:59:00Z',
     },
   },
 };

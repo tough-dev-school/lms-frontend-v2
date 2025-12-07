@@ -67,7 +67,7 @@
         });
         queryClient.invalidateQueries({
           queryKey: homeworkCrosschecksListQueryKey({
-            question: [props.answer.question],
+            question: props.answer.question,
           }),
         });
         queryClient.invalidateQueries({
