@@ -18,14 +18,18 @@ const twoDaysAgo = today.subtract(2, 'days');
 
 export const NotSent: Story = {
   args: {
-    stats: {
-      is_sent: false,
-      comments: {
-        comments: 0,
-        hidden_before_crosscheck_completed: 0,
+    lesson: {
+      homework: {
+        is_sent: false,
+        comments: {
+          comments: 0,
+          hidden_before_crosscheck_completed: 0,
+        },
       },
       question: {
         ...createTemporarySoonToBeDepricatedQuestion(),
+        name: 'Homework 1',
+        slug: 'homework-1',
         deadline: tomorrow.toISOString(),
       },
     },
@@ -34,14 +38,18 @@ export const NotSent: Story = {
 
 export const NotSentOverdue: Story = {
   args: {
-    stats: {
-      is_sent: false,
-      comments: {
-        comments: 0,
-        hidden_before_crosscheck_completed: 0,
+    lesson: {
+      homework: {
+        is_sent: false,
+        comments: {
+          comments: 0,
+          hidden_before_crosscheck_completed: 0,
+        },
       },
       question: {
         ...createTemporarySoonToBeDepricatedQuestion(),
+        name: 'Homework 1',
+        slug: 'homework-1',
         deadline: yesterday.toISOString(),
       },
     },
@@ -50,19 +58,23 @@ export const NotSentOverdue: Story = {
 
 export const Sent: Story = {
   args: {
-    stats: {
-      is_sent: true,
-      comments: {
-        comments: 2,
-        hidden_before_crosscheck_completed: 0,
+    lesson: {
+      homework: {
+        is_sent: true,
+        comments: {
+          comments: 2,
+          hidden_before_crosscheck_completed: 0,
+        },
+        crosschecks: {
+          checked: 2,
+          total: 3,
+        },
       },
       question: {
         ...createTemporarySoonToBeDepricatedQuestion(),
+        name: 'Homework 1',
+        slug: 'homework-1',
         deadline: tomorrow.toISOString(),
-      },
-      crosschecks: {
-        checked: 2,
-        total: 3,
       },
     },
   },
@@ -70,19 +82,23 @@ export const Sent: Story = {
 
 export const SentWithPendingCrosscheck: Story = {
   args: {
-    stats: {
-      is_sent: true,
-      comments: {
-        comments: 0,
-        hidden_before_crosscheck_completed: 2,
+    lesson: {
+      homework: {
+        is_sent: true,
+        comments: {
+          comments: 0,
+          hidden_before_crosscheck_completed: 2,
+        },
+        crosschecks: {
+          checked: 0,
+          total: 3,
+        },
       },
       question: {
         ...createTemporarySoonToBeDepricatedQuestion(),
+        name: 'Homework 1',
+        slug: 'homework-1',
         deadline: today.toISOString(),
-      },
-      crosschecks: {
-        checked: 0,
-        total: 3,
       },
     },
   },
@@ -90,19 +106,23 @@ export const SentWithPendingCrosscheck: Story = {
 
 export const SentWithFutureCrosscheck: Story = {
   args: {
-    stats: {
-      is_sent: true,
-      comments: {
-        comments: 0,
-        hidden_before_crosscheck_completed: 0,
+    lesson: {
+      homework: {
+        is_sent: true,
+        comments: {
+          comments: 0,
+          hidden_before_crosscheck_completed: 0,
+        },
+        crosschecks: {
+          checked: 0,
+          total: 3,
+        },
       },
       question: {
         ...createTemporarySoonToBeDepricatedQuestion(),
+        name: 'Homework 1',
+        slug: 'homework-1',
         deadline: twoDaysAgo.toISOString(),
-      },
-      crosschecks: {
-        checked: 0,
-        total: 3,
       },
     },
   },

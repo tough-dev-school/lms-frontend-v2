@@ -32,14 +32,17 @@ const STATIC_MODULE = createModule({
   name: 'Введение в асинхронную архитектуру',
 });
 
-const STATIC_MATERIAL_DATA: MaterialSerilizer = {
-  content: createMaterialSerilizer().content,
+const STATIC_LESSON = createLessonPlain({
+  id: 1,
+});
+
+const STATIC_MATERIAL_DATA: MaterialSerilizer = createMaterialSerilizer({
   breadcrumbs: {
     course: STATIC_COURSE,
     module: STATIC_MODULE,
-    lesson: createLessonPlain(),
+    lesson: STATIC_LESSON,
   },
-};
+});
 
 const Template: StoryFn = (args) => ({
   components: { VMaterialView },

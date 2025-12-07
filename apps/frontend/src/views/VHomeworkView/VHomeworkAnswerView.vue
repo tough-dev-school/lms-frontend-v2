@@ -209,8 +209,8 @@
   >
     <template #pill>
       <VPillHomework
-        v-if="lesson.homework"
-        :stats="lesson.homework"
+        v-if="lesson.homework && lesson.question"
+        :lesson="lesson"
       />
     </template>
     <section class="VHomeworkAnswerView__Section -mt-16">

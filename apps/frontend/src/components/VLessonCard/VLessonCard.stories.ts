@@ -4,11 +4,7 @@ import type {
   Lesson,
   RecommendedVideoProviderEnum,
 } from '@/api/generated/types';
-import {
-  createLesson,
-  createQuestion,
-  createTemporarySoonToBeDepricatedQuestion,
-} from '@/api/generated/mocks';
+import { createLesson } from '@/api/generated/mocks';
 
 export default {
   title: 'UI/VLessonCard',
@@ -28,13 +24,12 @@ const Template: StoryFn = (args) => ({
 
 // Mock data for different lesson types
 const baseLesson = {
+  ...createLesson(),
   id: 1,
 };
 
 const callWithVideo: Lesson = {
   ...baseLesson,
-  ...createLesson(),
-  question: createQuestion(),
   call: {
     name: 'Введение в React',
     description: 'Изучаем основы React и создаем первое приложение',
@@ -59,8 +54,6 @@ const callWithVideo: Lesson = {
 
 const callWithoutVideo: Lesson = {
   ...baseLesson,
-  ...createLesson(),
-  question: createQuestion(),
   call: {
     name: 'Дизайн систем',
     description: 'Обсуждаем принципы создания дизайн систем',
@@ -73,8 +66,6 @@ const callWithoutVideo: Lesson = {
 
 const homeworkWithCrosschecks: Lesson = {
   ...baseLesson,
-  ...createLesson(),
-  question: createQuestion(),
   homework: {
     comments: {
       comments: 10,
@@ -85,35 +76,36 @@ const homeworkWithCrosschecks: Lesson = {
       total: 5,
       checked: 3,
     },
-    question: {
-      ...createTemporarySoonToBeDepricatedQuestion(),
-      slug: 'javascript-fundamentals',
-      name: 'Основы JavaScript',
-    },
+  },
+  question: {
+    slug: 'javascript-fundamentals',
+    name: 'Основы JavaScript',
+    markdown_text:
+      '## Основы JavaScript\n\nВведение в JavaScript и основные концепции языка.',
+    deadline: '2024-01-25T23:59:00Z',
   },
 };
 
 const homeworkWithoutCrosschecks: Lesson = {
   ...baseLesson,
-  question: createQuestion(),
   homework: {
     comments: {
       comments: 0,
       hidden_before_crosscheck_completed: 0,
     },
     is_sent: false,
-    question: {
-      ...createTemporarySoonToBeDepricatedQuestion(),
-      slug: 'css-layouts',
-      name: 'CSS Layouts',
-    },
+  },
+  question: {
+    slug: 'css-layouts',
+    name: 'CSS Layouts',
+    markdown_text:
+      '## CSS Layouts\n\nИзучение современных методов создания макетов с помощью CSS.',
+    deadline: '2024-01-30T23:59:00Z',
   },
 };
 
 const materialLesson: Lesson = {
   ...baseLesson,
-  ...createLesson(),
-  question: createQuestion(),
   material: {
     id: 'material-123',
     title: 'Углубленное изучение Vue.js',
@@ -155,7 +147,7 @@ export const MaterialLesson = {
   },
 };
 
-export const ComplexLesson = {
+export const CallWithMultipleProviders = {
   render: Template,
   args: {
     lesson: {
@@ -172,32 +164,13 @@ export const ComplexLesson = {
             embed: 'https://www.youtube.com/embed/xyz789',
             src: 'https://www.youtube.com/watch?v=xyz789',
           },
+          {
+            provider: 'rutube',
+            embed: 'https://rutube.ru/play/embed/abc123',
+            src: 'https://rutube.ru/video/abc123',
+          },
         ],
-        recommended_video_provider: 'youtube' as RecommendedVideoProviderEnum,
-      },
-      homework: {
-        is_sent: true,
-        crosschecks: {
-          total: 8,
-          checked: 6,
-        },
-        question: {
-          slug: 'typescript-advanced',
-          name: 'Продвинутый TypeScript',
-          text: 'Реализуйте типизированную архитектуру',
-          deadline: '2024-02-10T23:59:00Z',
-        },
-      },
-      question: {
-        ...createQuestion(),
-        slug: 'typescript-advanced',
-        name: 'Продвинутый TypeScript',
-        text: 'Реализуйте типизированную архитектуру',
-        deadline: '2024-02-10T23:59:00Z',
-      },
-      material: {
-        id: 'material-456',
-        title: 'Дополнительные материалы по TypeScript',
+        recommended_video_provider: 'rutube' as RecommendedVideoProviderEnum,
       },
     } as Lesson,
   },

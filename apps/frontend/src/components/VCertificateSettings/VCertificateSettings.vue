@@ -8,9 +8,10 @@
     useUsersMePartialUpdate,
     usersMeRetrieveQueryKey,
     usersMeRetrieveQueryOptions,
-  } from '@/api/generated/hooks';
-  import { GenderEnum, BlankEnum } from '@/api/generated';
-  import type { UsersMePartialUpdateMutationRequest } from '@/api/generated';
+    GenderEnum,
+    BlankEnum,
+  } from '@/api/generated';
+  import type { PatchedUserSelfUpdate } from '@/api/generated';
   import VError from '@/components/VError/VError.vue';
 
   const queryClient = useQueryClient();
@@ -27,11 +28,11 @@
   });
 
   const data = ref<{
-    firstName: Required<UsersMePartialUpdateMutationRequest>['first_name'];
-    lastName: Required<UsersMePartialUpdateMutationRequest>['last_name'];
-    firstNameEn: Required<UsersMePartialUpdateMutationRequest>['first_name_en'];
-    lastNameEn: Required<UsersMePartialUpdateMutationRequest>['last_name_en'];
-    gender: Required<UsersMePartialUpdateMutationRequest>['gender'];
+    firstName: Required<PatchedUserSelfUpdate>['first_name'];
+    lastName: Required<PatchedUserSelfUpdate>['last_name'];
+    firstNameEn: Required<PatchedUserSelfUpdate>['first_name_en'];
+    lastNameEn: Required<PatchedUserSelfUpdate>['last_name_en'];
+    gender: Required<PatchedUserSelfUpdate>['gender'];
   }>({
     firstName: '',
     lastName: '',

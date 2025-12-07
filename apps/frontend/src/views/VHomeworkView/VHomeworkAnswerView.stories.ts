@@ -71,9 +71,12 @@ const STATIC_QUESTION: QuestionDetail = {
       id: 1,
       name: 'Курс веб-разработки',
       slug: 'web-development',
+      cover: undefined,
       chat: 'https://t.me/test',
       calendar_ios: 'https://calendar.apple.com/test',
       calendar_google: 'https://calendar.google.com/test',
+      homework_check_recommendations:
+        'При проверке домашних заданий обратите внимание на чистоту кода, правильность реализации алгоритмов и соответствие требованиям.',
     },
   },
   course: {

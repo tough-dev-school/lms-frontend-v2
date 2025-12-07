@@ -33,7 +33,7 @@
         >
           <VCover
             :name="study.name"
-            :image="study.cover"
+            :image="study.cover ?? undefined"
             class="overflow-hidden rounded-16"
           />
         </RouterLink>
