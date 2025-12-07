@@ -223,7 +223,7 @@ const Template: StoryFn = (args) => ({
     }
     if (args.crosschecks !== undefined) {
       queryClient.setQueryData(
-        homeworkCrosschecksListQueryKey({ question: [args.questionId] }),
+        homeworkCrosschecksListQueryKey({ question: args.questionId }),
         { results: args.crosschecks },
       );
     }
