@@ -156,13 +156,19 @@
           /^(\s{0,3}#{1,6}\s|\*\s|-\s|\d+\.\s|>\s|`{1,3}|!\[|\[.*?]\(.*?\))/m.test(
             candidate,
           );
-        if (!looksLikeMarkdown) return false;
 
-        event.preventDefault();
-        const htmlFromMarkdown = marked.parse(candidate);
-        // Insert converted HTML at current selection
-        editor.chain().focus().insertContent(String(htmlFromMarkdown)).run();
-        return true;
+        // Only convert markdown if it actually looks like markdown
+        // Otherwise, let TipTap handle HTML paste natively to preserve styles
+        if (looksLikeMarkdown) {
+          event.preventDefault();
+          const htmlFromMarkdown = marked.parse(candidate);
+          // Insert converted HTML at current selection
+          editor.chain().focus().insertContent(String(htmlFromMarkdown)).run();
+          return true;
+        }
+
+        // Let TipTap handle styled HTML paste natively
+        return false;
       },
       handleDrop: (view, event, slice, moved) => {
         if (
