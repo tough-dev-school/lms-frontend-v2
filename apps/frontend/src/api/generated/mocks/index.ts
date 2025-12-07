@@ -1,6 +1,7 @@
 export { createAnswer } from "./createAnswer";
 export { createAnswerCreate } from "./createAnswerCreate";
 export { createAnswerImage } from "./createAnswerImage";
+export { createAnswerImageRequest } from "./createAnswerImageRequest";
 export { createAnswerSimple } from "./createAnswerSimple";
 export { createAnswerTree } from "./createAnswerTree";
 export { createAnswerUpdate } from "./createAnswerUpdate";
@@ -45,7 +46,7 @@ export { createHomeworkAnswersReactionsCreatePathParams, createHomeworkAnswersRe
 export { createHomeworkAnswersReactionsDestroyPathParams, createHomeworkAnswersReactionsDestroy204, createHomeworkAnswersReactionsDestroyMutationResponse } from "./createHomeworkAnswersReactionsDestroy";
 export { createHomeworkAnswersRetrievePathParams, createHomeworkAnswersRetrieve200, createHomeworkAnswersRetrieveQueryResponse } from "./createHomeworkAnswersRetrieve";
 export { createHomeworkAnswersUpdatePathParams, createHomeworkAnswersUpdate200, createHomeworkAnswersUpdateMutationRequest, createHomeworkAnswersUpdateMutationResponse } from "./createHomeworkAnswersUpdate";
-export { createHomeworkCrosschecksList200, createHomeworkCrosschecksListQueryResponse } from "./createHomeworkCrosschecksList";
+export { createHomeworkCrosschecksListQueryParams, createHomeworkCrosschecksList200, createHomeworkCrosschecksListQueryResponse } from "./createHomeworkCrosschecksList";
 export { createHomeworkQuestionsRetrievePathParams, createHomeworkQuestionsRetrieve200, createHomeworkQuestionsRetrieveQueryResponse } from "./createHomeworkQuestionsRetrieve";
 export { createHomeworkStats } from "./createHomeworkStats";
 export { createJSONWebToken } from "./createJSONWebToken";

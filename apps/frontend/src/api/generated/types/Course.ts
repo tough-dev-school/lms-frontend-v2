@@ -28,7 +28,6 @@ export type Course = {
     */
     product_name: string;
     /**
-     * @maxLength 64
      * @type string
     */
     tariff_name: string | null;
@@ -37,10 +36,9 @@ export type Course = {
     */
     home_page_slug: string;
     /**
-     * @description Обложка курса
-     * @type string | undefined, uri
+     * @type string, uri
     */
-    cover?: string;
+    cover: string | null;
     /**
      * @maxLength 200
      * @type string, uri

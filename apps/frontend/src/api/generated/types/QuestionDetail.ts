@@ -12,7 +12,7 @@ import type { QuestionCourse } from "./QuestionCourse";
 export type QuestionDetail = {
     breadcrumbs: Breadcrumbs;
     /**
-     * @type string | undefined, uuid
+     * @type string, uuid
     */
     slug: string;
     /**

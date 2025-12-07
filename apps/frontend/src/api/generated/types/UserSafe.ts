@@ -8,7 +8,7 @@
 
 export type UserSafe = {
     /**
-     * @type string | undefined, uuid
+     * @type string, uuid
     */
     uuid: string;
     /**

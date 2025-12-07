@@ -7,6 +7,7 @@
 
 import type { HomeworkAnswersImageCreateMutationResponse } from "../types/HomeworkAnswersImageCreate";
 import { createAnswerImage } from "./createAnswerImage";
+import { createAnswerImageRequest } from "./createAnswerImageRequest";
 import { faker } from "@faker-js/faker";
 
 export function createHomeworkAnswersImageCreate201() {
@@ -16,7 +17,7 @@ export function createHomeworkAnswersImageCreate201() {
 
 export function createHomeworkAnswersImageCreateMutationRequest() {
   faker.seed(1337)  
-  return createAnswerImage()
+  return createAnswerImageRequest()
 }
 
 export function createHomeworkAnswersImageCreateMutationResponse(data?: Partial<HomeworkAnswersImageCreateMutationResponse>): HomeworkAnswersImageCreateMutationResponse {

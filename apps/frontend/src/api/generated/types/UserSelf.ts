@@ -14,7 +14,7 @@ export type UserSelf = {
     */
     id: number;
     /**
-     * @type string | undefined, uuid
+     * @type string, uuid
     */
     uuid: string;
     /**
@@ -73,5 +73,5 @@ export type UserSelf = {
      * @description Отметьте, если пользователь может входить в административную часть сайта.
      * @type boolean | undefined
     */
-    is_staff: boolean;
+    is_staff?: boolean;
 };

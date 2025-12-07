@@ -5,9 +5,17 @@
 * Do not edit manually.
 */
 
-import type { HomeworkCrosschecksList200, HomeworkCrosschecksListQueryResponse } from "../types/HomeworkCrosschecksList";
+import type { HomeworkCrosschecksListQueryParams, HomeworkCrosschecksList200, HomeworkCrosschecksListQueryResponse } from "../types/HomeworkCrosschecksList";
 import { createCrossCheck } from "./createCrossCheck";
 import { faker } from "@faker-js/faker";
+
+export function createHomeworkCrosschecksListQueryParams(data?: Partial<HomeworkCrosschecksListQueryParams>): HomeworkCrosschecksListQueryParams {
+  faker.seed(1337)  
+  return {
+  ...{"question": faker.string.uuid()},
+  ...data || {}
+  }
+}
 
 export function createHomeworkCrosschecksList200(data?: HomeworkCrosschecksList200): HomeworkCrosschecksList200 {
   faker.seed(1337)  

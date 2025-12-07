@@ -23,7 +23,7 @@ export type DiplomasPartialUpdateMutationKey = ReturnType<typeof diplomasPartial
  */
 export function useDiplomasPartialUpdate<TContext>(options: 
 {
-  mutation?: MutationObserverOptions<DiplomasPartialUpdateMutationResponse, ResponseErrorConfig<Error>, {slug: MaybeRefOrGetter<DiplomasPartialUpdatePathParams["slug"]>, data?: MaybeRefOrGetter<DiplomasPartialUpdateMutationRequest>}, TContext> & { client?: QueryClient },
+  mutation?: MutationObserverOptions<DiplomasPartialUpdateMutationResponse, ResponseErrorConfig<Error>, {slug: MaybeRefOrGetter<DiplomasPartialUpdatePathParams["slug"]>, data: MaybeRefOrGetter<DiplomasPartialUpdateMutationRequest>}, TContext> & { client?: QueryClient },
   client?: Partial<RequestConfig<DiplomasPartialUpdateMutationRequest>> & { client?: typeof fetch },
 }
  = {}) {
@@ -31,7 +31,7 @@ export function useDiplomasPartialUpdate<TContext>(options:
   const { client: queryClient, ...mutationOptions } = mutation;
   const mutationKey = mutationOptions?.mutationKey ?? diplomasPartialUpdateMutationKey()
 
-  return useMutation<DiplomasPartialUpdateMutationResponse, ResponseErrorConfig<Error>, {slug: DiplomasPartialUpdatePathParams["slug"], data?: DiplomasPartialUpdateMutationRequest}, TContext>({
+  return useMutation<DiplomasPartialUpdateMutationResponse, ResponseErrorConfig<Error>, {slug: DiplomasPartialUpdatePathParams["slug"], data: DiplomasPartialUpdateMutationRequest}, TContext>({
     mutationFn: async({ slug, data }) => {
       return diplomasPartialUpdate(slug, data, config)
     },

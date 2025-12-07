@@ -12,7 +12,7 @@ import { faker } from "@faker-js/faker";
 export function createCourse(data?: Partial<Course>): Course {
   faker.seed(1337)  
   return {
-  ...{"id": faker.number.int(),"slug": faker.helpers.fromRegExp("^[-a-zA-Z0-9_]+$"),"name": faker.string.alpha(),"product_name": faker.string.alpha({ length: 255 }),"tariff_name": faker.string.alpha({ length: 64 }),"home_page_slug": faker.string.alpha(),"cover": faker.internet.url(),"chat": faker.internet.url(),"calendar_ios": faker.internet.url(),"calendar_google": faker.internet.url(),"links": faker.helpers.multiple(() => (createCourseLink()))},
+  ...{"id": faker.number.int(),"slug": faker.helpers.fromRegExp("^[-a-zA-Z0-9_]+$"),"name": faker.string.alpha(),"product_name": faker.string.alpha({ length: 255 }),"tariff_name": faker.string.alpha(),"home_page_slug": faker.string.alpha(),"cover": faker.internet.url(),"chat": faker.internet.url(),"calendar_ios": faker.internet.url(),"calendar_google": faker.internet.url(),"links": faker.helpers.multiple(() => (createCourseLink()))},
   ...data || {}
   }
 }

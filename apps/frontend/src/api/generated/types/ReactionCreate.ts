@@ -13,7 +13,7 @@ export type ReactionCreate = {
     */
     emoji: string;
     /**
-     * @type string | undefined, uuid
+     * @type string, uuid
     */
-    slug?: string;
+    slug: string;
 };

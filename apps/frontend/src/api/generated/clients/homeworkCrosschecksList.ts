@@ -7,7 +7,7 @@
 
 import fetch from "../../client";
 import type { RequestConfig, ResponseErrorConfig } from "../../client";
-import type { HomeworkCrosschecksListQueryResponse } from "../types/HomeworkCrosschecksList";
+import type { HomeworkCrosschecksListQueryResponse, HomeworkCrosschecksListQueryParams } from "../types/HomeworkCrosschecksList";
 
 function getHomeworkCrosschecksListUrl() {
   const res = { method: 'GET', url: `/api/v2/homework/crosschecks/` as const }  
@@ -15,12 +15,12 @@ function getHomeworkCrosschecksListUrl() {
 }
 
 /**
- * @description Crosscheck status
+ * @description Crosscheck status by question
  * {@link /api/v2/homework/crosschecks/}
  */
-export async function homeworkCrosschecksList(config: Partial<RequestConfig> & { client?: typeof fetch } = {}) {
+export async function homeworkCrosschecksList(params: HomeworkCrosschecksListQueryParams, config: Partial<RequestConfig> & { client?: typeof fetch } = {}) {
   const { client: request = fetch, ...requestConfig } = config  
   
-  const res = await request<HomeworkCrosschecksListQueryResponse, ResponseErrorConfig<Error>, unknown>({ method : "GET", url : getHomeworkCrosschecksListUrl().url.toString(), ... requestConfig })  
+  const res = await request<HomeworkCrosschecksListQueryResponse, ResponseErrorConfig<Error>, unknown>({ method : "GET", url : getHomeworkCrosschecksListUrl().url.toString(), params, ... requestConfig })  
   return res.data
 }

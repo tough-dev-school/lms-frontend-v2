@@ -10,7 +10,7 @@ import type { UserSafe } from "./UserSafe";
 
 export type AnswerSimple = {
     /**
-     * @type string | undefined, uuid
+     * @type string, uuid
     */
     slug: string;
     /**

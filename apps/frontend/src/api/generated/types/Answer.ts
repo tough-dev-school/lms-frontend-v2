@@ -18,7 +18,7 @@ export type Answer = {
     */
     modified: string | null;
     /**
-     * @type string | undefined, uuid
+     * @type string, uuid
     */
     slug: string;
     /**

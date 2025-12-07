@@ -16,7 +16,7 @@ export type DiplomaRetrieve = {
     course: CourseSimple;
     /**
      * @maxLength 32
-     * @type string | undefined
+     * @type string
     */
     slug: string;
     language: LanguageEnum;

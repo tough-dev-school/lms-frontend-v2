@@ -22,7 +22,17 @@ export async function homeworkAnswersImageCreate(data: HomeworkAnswersImageCreat
   const { client: request = fetch, ...requestConfig } = config  
   
   const requestData = data  
-  
-  const res = await request<HomeworkAnswersImageCreateMutationResponse, ResponseErrorConfig<Error>, HomeworkAnswersImageCreateMutationRequest>({ method : "POST", url : getHomeworkAnswersImageCreateUrl().url.toString(), data : requestData, ... requestConfig })  
+  const formData = new FormData()
+  if (requestData) {
+   Object.keys(requestData).forEach((key) => {
+     const value = requestData[key as keyof typeof requestData];
+     if (typeof value === 'string' || (value as unknown) instanceof Blob) {
+       formData.append(key, value as unknown as string | Blob);
+     } else {
+       formData.append(key, JSON.stringify(value));
+     }
+   })
+  }  
+  const res = await request<HomeworkAnswersImageCreateMutationResponse, ResponseErrorConfig<Error>, HomeworkAnswersImageCreateMutationRequest>({ method : "POST", url : getHomeworkAnswersImageCreateUrl().url.toString(), data : formData, ... requestConfig })  
   return res.data
 }

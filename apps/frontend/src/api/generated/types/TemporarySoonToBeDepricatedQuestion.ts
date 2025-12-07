@@ -8,7 +8,7 @@
 
 export type TemporarySoonToBeDepricatedQuestion = {
     /**
-     * @type string | undefined, uuid
+     * @type string, uuid
     */
     slug: string;
     /**

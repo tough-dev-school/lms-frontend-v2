@@ -16,9 +16,9 @@ export type PatchedDiploma = {
     course?: CourseSimple;
     /**
      * @maxLength 32
-     * @type string | undefined
+     * @type string
     */
-    slug?: string;
+    slug: string;
     language?: LanguageEnum;
     /**
      * @type string | undefined, uri

@@ -18,7 +18,7 @@ function getDiplomasPartialUpdateUrl(slug: DiplomasPartialUpdatePathParams["slug
  * @description Add ability to disable response pagination with `disable_pagination=True` query param.
  * {@link /api/v2/diplomas/:slug/}
  */
-export async function diplomasPartialUpdate(slug: DiplomasPartialUpdatePathParams["slug"], data?: DiplomasPartialUpdateMutationRequest, config: Partial<RequestConfig<DiplomasPartialUpdateMutationRequest>> & { client?: typeof fetch } = {}) {
+export async function diplomasPartialUpdate(slug: DiplomasPartialUpdatePathParams["slug"], data: DiplomasPartialUpdateMutationRequest, config: Partial<RequestConfig<DiplomasPartialUpdateMutationRequest>> & { client?: typeof fetch } = {}) {
   const { client: request = fetch, ...requestConfig } = config  
   
   const requestData = data  

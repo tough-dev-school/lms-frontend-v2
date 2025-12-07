@@ -1,6 +1,7 @@
 export type { Answer } from "./Answer";
 export type { AnswerCreate } from "./AnswerCreate";
 export type { AnswerImage } from "./AnswerImage";
+export type { AnswerImageRequest } from "./AnswerImageRequest";
 export type { AnswerSimple } from "./AnswerSimple";
 export type { AnswerTree } from "./AnswerTree";
 export type { AnswerUpdate } from "./AnswerUpdate";
@@ -42,7 +43,7 @@ export type { HomeworkAnswersReactionsCreatePathParams, HomeworkAnswersReactions
 export type { HomeworkAnswersReactionsDestroyPathParams, HomeworkAnswersReactionsDestroy204, HomeworkAnswersReactionsDestroyMutationResponse, HomeworkAnswersReactionsDestroyMutation } from "./HomeworkAnswersReactionsDestroy";
 export type { HomeworkAnswersRetrievePathParams, HomeworkAnswersRetrieve200, HomeworkAnswersRetrieveQueryResponse, HomeworkAnswersRetrieveQuery } from "./HomeworkAnswersRetrieve";
 export type { HomeworkAnswersUpdatePathParams, HomeworkAnswersUpdate200, HomeworkAnswersUpdateMutationRequest, HomeworkAnswersUpdateMutationResponse, HomeworkAnswersUpdateMutation } from "./HomeworkAnswersUpdate";
-export type { HomeworkCrosschecksList200, HomeworkCrosschecksListQueryResponse, HomeworkCrosschecksListQuery } from "./HomeworkCrosschecksList";
+export type { HomeworkCrosschecksListQueryParams, HomeworkCrosschecksList200, HomeworkCrosschecksListQueryResponse, HomeworkCrosschecksListQuery } from "./HomeworkCrosschecksList";
 export type { HomeworkQuestionsRetrievePathParams, HomeworkQuestionsRetrieve200, HomeworkQuestionsRetrieveQueryResponse, HomeworkQuestionsRetrieveQuery } from "./HomeworkQuestionsRetrieve";
 export type { HomeworkStats } from "./HomeworkStats";
 export type { JSONWebToken } from "./JSONWebToken";

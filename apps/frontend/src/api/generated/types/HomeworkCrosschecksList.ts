@@ -7,11 +7,20 @@
 
 import type { CrossCheck } from "./CrossCheck";
 
+export type HomeworkCrosschecksListQueryParams = {
+    /**
+     * @description Question id
+     * @type string, uuid
+    */
+    question: string;
+};
+
 export type HomeworkCrosschecksList200 = CrossCheck[];
 
 export type HomeworkCrosschecksListQueryResponse = HomeworkCrosschecksList200;
 
 export type HomeworkCrosschecksListQuery = {
     Response: HomeworkCrosschecksList200;
+    QueryParams: HomeworkCrosschecksListQueryParams;
     Errors: any;
 };

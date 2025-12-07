@@ -7,33 +7,34 @@
 
 import fetch from "../../client";
 import type { RequestConfig, ResponseErrorConfig } from "../../client";
-import type { HomeworkCrosschecksListQueryResponse } from "../types/HomeworkCrosschecksList";
+import type { HomeworkCrosschecksListQueryResponse, HomeworkCrosschecksListQueryParams } from "../types/HomeworkCrosschecksList";
 import type { QueryKey, QueryClient, QueryObserverOptions, UseQueryReturnType } from "@tanstack/vue-query";
+import type { MaybeRefOrGetter } from "vue";
 import { homeworkCrosschecksList } from "../clients/homeworkCrosschecksList";
 import { queryOptions, useQuery } from "@tanstack/vue-query";
 import { toValue } from "vue";
 
-export const homeworkCrosschecksListQueryKey = () => [{ url: '/api/v2/homework/crosschecks/' }] as const
+export const homeworkCrosschecksListQueryKey = (params: MaybeRefOrGetter<HomeworkCrosschecksListQueryParams>) => [{ url: '/api/v2/homework/crosschecks/' }, ...(params ? [params] : [])] as const
 
 export type HomeworkCrosschecksListQueryKey = ReturnType<typeof homeworkCrosschecksListQueryKey>
 
-export function homeworkCrosschecksListQueryOptions(config: Partial<RequestConfig> & { client?: typeof fetch } = {}) {
-  const queryKey = homeworkCrosschecksListQueryKey()
+export function homeworkCrosschecksListQueryOptions(params: MaybeRefOrGetter<HomeworkCrosschecksListQueryParams>, config: Partial<RequestConfig> & { client?: typeof fetch } = {}) {
+  const queryKey = homeworkCrosschecksListQueryKey(params)
   return queryOptions<HomeworkCrosschecksListQueryResponse, ResponseErrorConfig<Error>, HomeworkCrosschecksListQueryResponse, typeof queryKey>({
-
+  enabled: !!(params),
    queryKey,
    queryFn: async ({ signal }) => {
       config.signal = signal
-      return homeworkCrosschecksList(toValue(config))
+      return homeworkCrosschecksList(toValue(params), toValue(config))
    },
   })
 }
 
 /**
- * @description Crosscheck status
+ * @description Crosscheck status by question
  * {@link /api/v2/homework/crosschecks/}
  */
-export function useHomeworkCrosschecksList<TData = HomeworkCrosschecksListQueryResponse, TQueryData = HomeworkCrosschecksListQueryResponse, TQueryKey extends QueryKey = HomeworkCrosschecksListQueryKey>(options: 
+export function useHomeworkCrosschecksList<TData = HomeworkCrosschecksListQueryResponse, TQueryData = HomeworkCrosschecksListQueryResponse, TQueryKey extends QueryKey = HomeworkCrosschecksListQueryKey>(params: MaybeRefOrGetter<HomeworkCrosschecksListQueryParams>, options: 
 {
   query?: Partial<QueryObserverOptions<HomeworkCrosschecksListQueryResponse, ResponseErrorConfig<Error>, TData, TQueryData, TQueryKey>> & { client?: QueryClient },
   client?: Partial<RequestConfig> & { client?: typeof fetch }
@@ -41,10 +42,10 @@ export function useHomeworkCrosschecksList<TData = HomeworkCrosschecksListQueryR
  = {}) {
   const { query: queryConfig = {}, client: config = {} } = options ?? {}
   const { client: queryClient, ...queryOptions } = queryConfig
-  const queryKey = queryOptions?.queryKey ?? homeworkCrosschecksListQueryKey()
+  const queryKey = queryOptions?.queryKey ?? homeworkCrosschecksListQueryKey(params)
 
   const query = useQuery({
-   ...homeworkCrosschecksListQueryOptions(config),
+   ...homeworkCrosschecksListQueryOptions(params, config),
    queryKey,
    ...queryOptions
   } as unknown as QueryObserverOptions, queryClient) as UseQueryReturnType<TData, ResponseErrorConfig<Error>> & { queryKey: TQueryKey }

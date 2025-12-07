@@ -6,10 +6,11 @@
 */
 
 import type { AnswerImage } from "./AnswerImage";
+import type { AnswerImageRequest } from "./AnswerImageRequest";
 
 export type HomeworkAnswersImageCreate201 = AnswerImage;
 
-export type HomeworkAnswersImageCreateMutationRequest = AnswerImage;
+export type HomeworkAnswersImageCreateMutationRequest = AnswerImageRequest;
 
 export type HomeworkAnswersImageCreateMutationResponse = HomeworkAnswersImageCreate201;
 

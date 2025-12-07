@@ -9,7 +9,7 @@ import type { UserSafe } from "./UserSafe";
 
 export type ReactionDetailed = {
     /**
-     * @type string | undefined, uuid
+     * @type string, uuid
     */
     slug: string;
     /**

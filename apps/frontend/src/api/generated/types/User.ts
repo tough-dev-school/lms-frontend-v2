@@ -14,7 +14,7 @@ export type User = {
     */
     id: number;
     /**
-     * @type string | undefined, uuid
+     * @type string, uuid
     */
     uuid: string;
     /**
