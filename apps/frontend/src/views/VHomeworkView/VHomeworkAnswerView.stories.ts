@@ -1,18 +1,27 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VHomeworkAnswerView from './VHomeworkAnswerView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
-import { mockAnswer } from '@/mocks/mockAnswer';
-import { mockUserSafe, STATIC_AUTHOR_1 } from '@/mocks/mockUserSafe';
-import { mockQuestion } from '@/mocks/mockQuestion';
-import { mockModule } from '@/mocks/mockModule';
-import { homeworkKeys, userKeys, lmsKeys } from '@/query';
+import {
+  createAnswerTree,
+  createUserSafe,
+  createQuestion,
+  createModule,
+  createCourse,
+} from '@/api/generated/mocks';
+import {
+  homeworkQuestionsRetrieveQueryKey,
+  homeworkAnswersRetrieveQueryKey,
+  usersMeRetrieveQueryKey,
+  lmsLessonsRetrieveQueryKey,
+  homeworkCrosschecksListQueryKey,
+} from '@/api/generated/hooks';
 import { useQueryClient } from '@tanstack/vue-query';
 import type {
   QuestionDetail,
   Lesson,
   CrossCheck,
   AnswerTree,
-} from '@/api/generated/generated-api';
+} from '@/api/generated/types';
 
 export default {
   title: 'App/VHomeworkAnswerView',
@@ -25,9 +34,11 @@ export default {
   },
 } as Meta;
 
+const STATIC_AUTHOR_1 = createUserSafe();
+
 // Mock data using existing patterns
 const STATIC_QUESTION: QuestionDetail = {
-  ...mockQuestion({
+  ...createQuestion({
     slug: 'javascript-fundamentals',
     name: 'Основы JavaScript',
     markdown_text: `Выполните задания по основам JavaScript. Создайте простое приложение, которое демонстрирует работу с переменными, функциями и объектами.`,
@@ -41,7 +52,7 @@ const STATIC_QUESTION: QuestionDetail = {
     },
   },
   breadcrumbs: {
-    module: mockModule({
+    module: createModule({
       id: 1,
       name: 'Основы программирования',
     }),
@@ -49,6 +60,7 @@ const STATIC_QUESTION: QuestionDetail = {
       id: 1,
     },
     course: {
+      ...createCourse(),
       id: 1,
       name: 'Курс веб-разработки',
       slug: 'web-development',
@@ -61,9 +73,11 @@ const STATIC_QUESTION: QuestionDetail = {
     },
   },
   course: {
+    ...createCourse(),
     id: 1,
     name: 'Курс веб-разработки',
     slug: 'web-development',
+    cover: undefined,
     homework_check_recommendations:
       'При проверке домашних заданий обратите внимание на чистоту кода, правильность реализации алгоритмов и соответствие требованиям.',
     chat: 'https://t.me/test',
@@ -74,13 +88,7 @@ const STATIC_QUESTION: QuestionDetail = {
 
 const STATIC_LESSON: Lesson = {
   id: 1,
-  question: mockQuestion({
-    slug: 'javascript-fundamentals',
-    name: 'Основы JavaScript',
-    markdown_text:
-      '## Основы JavaScript\n\nВыполните задания по основам JavaScript.',
-    deadline: '2024-02-01T23:59:00Z',
-  }),
+  question: createQuestion(),
   homework: {
     is_sent: true,
     crosschecks: {
@@ -90,7 +98,7 @@ const STATIC_LESSON: Lesson = {
   },
 };
 
-const STATIC_ANSWER = mockAnswer({
+const STATIC_ANSWER = createAnswerTree({
   slug: 'answer-123',
   question: 'javascript-fundamentals',
   author: STATIC_AUTHOR_1,
@@ -109,11 +117,11 @@ const STATIC_ANSWER = mockAnswer({
     ],
   },
   descendants: [
-    mockAnswer({
+    createAnswerTree({
       slug: 'comment-1',
       question: 'javascript-fundamentals',
       parent: 'answer-123',
-      author: mockUserSafe({ seed: 2 }),
+      author: createUserSafe(),
       content: {
         type: 'doc',
         content: [
@@ -139,8 +147,8 @@ const STATIC_CROSSCHECKS: CrossCheck[] = [
     answer: {
       slug: 'other-answer-1',
       url: '/homework/javascript-fundamentals?answerId=other-answer-1',
-      question: mockQuestion({ slug: 'javascript-fundamentals' }),
-      author: mockUserSafe({ seed: 3 }),
+      question: createQuestion({ slug: 'javascript-fundamentals' }),
+      author: createUserSafe(),
     },
   },
   {
@@ -149,8 +157,8 @@ const STATIC_CROSSCHECKS: CrossCheck[] = [
     answer: {
       slug: 'other-answer-2',
       url: '/homework/javascript-fundamentals?answerId=other-answer-2',
-      question: mockQuestion({ slug: 'javascript-fundamentals' }),
-      author: mockUserSafe({ seed: 4 }),
+      question: createQuestion({ slug: 'javascript-fundamentals' }),
+      author: createUserSafe(),
     },
   },
   {
@@ -159,8 +167,8 @@ const STATIC_CROSSCHECKS: CrossCheck[] = [
     answer: {
       slug: 'other-answer-3',
       url: '/homework/javascript-fundamentals?answerId=other-answer-3',
-      question: mockQuestion({ slug: 'javascript-fundamentals' }),
-      author: mockUserSafe({ seed: 5 }),
+      question: createQuestion({ slug: 'javascript-fundamentals' }),
+      author: createUserSafe(),
     },
   },
 ];
@@ -172,33 +180,39 @@ const Template: StoryFn = (args) => ({
 
     if (args.question) {
       queryClient.setQueryData(
-        homeworkKeys.question(args.questionId),
+        homeworkQuestionsRetrieveQueryKey(args.questionId),
         args.question,
       );
     }
     if (args.answer) {
-      queryClient.setQueryData(homeworkKeys.answer(args.answerId), args.answer);
+      queryClient.setQueryData(
+        homeworkAnswersRetrieveQueryKey(args.answerId),
+        args.answer,
+      );
 
       // Set up query data for each descendant comment
       if (args.answer.descendants) {
         args.answer.descendants.forEach((descendant: AnswerTree) => {
           queryClient.setQueryData(
-            homeworkKeys.answer(descendant.slug),
+            homeworkAnswersRetrieveQueryKey(descendant.slug),
             descendant,
           );
         });
       }
     }
     if (args.lesson) {
-      queryClient.setQueryData(lmsKeys.lesson(args.lesson.id), args.lesson);
+      queryClient.setQueryData(
+        lmsLessonsRetrieveQueryKey(args.lesson.id),
+        args.lesson,
+      );
     }
     if (args.user) {
-      queryClient.setQueryData(userKeys.me(), args.user);
+      queryClient.setQueryData(usersMeRetrieveQueryKey(), args.user);
     }
     if (args.crosschecks !== undefined) {
       queryClient.setQueryData(
-        homeworkKeys.crosschecks(args.questionId),
-        args.crosschecks,
+        homeworkCrosschecksListQueryKey({ question: args.questionId }),
+        { results: args.crosschecks },
       );
     }
 
@@ -223,11 +237,11 @@ export const OtherUserAnswer = {
   args: {
     answerId: 'answer-456',
     question: STATIC_QUESTION,
-    answer: mockAnswer({
+    answer: createAnswerTree({
       ...STATIC_ANSWER,
       slug: 'answer-456',
       question: 'javascript-fundamentals',
-      author: mockUserSafe({ seed: 2 }),
+      author: createUserSafe(),
     }),
     lesson: STATIC_LESSON,
     user: STATIC_AUTHOR_1,

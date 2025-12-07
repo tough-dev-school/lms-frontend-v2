@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { parse, SgNode, Lang } from '@ast-grep/napi';
 
-const typesDirectory = 'src/api/generated/';
+const typesDirectory = 'src/api/generated/types';
 const files = fs.readdirSync(typesDirectory);
 
 interface Edit {
@@ -125,7 +125,12 @@ const omitAnswerFields: ApplyPatch = (ast) => {
   const fullText = ast.text();
 
   const interfaces = ast.findAll({
-    rule: { kind: 'interface_declaration' },
+    rule: {
+      any: [
+        { kind: 'interface_declaration' },
+        { kind: 'type_alias_declaration' },
+      ],
+    },
   });
 
   const targetInterfaces = new Set(['Answer', 'AnswerTree', 'AnswerCreate']);
@@ -136,7 +141,12 @@ const omitAnswerFields: ApplyPatch = (ast) => {
 
     if (!interfaceName || !targetInterfaces.has(interfaceName)) continue;
 
-    const bodyNode = interfaceNode.child(2);
+    // For type_alias_declaration, we need to find the object_type node
+    // For interface_declaration, body is at child(2)
+    let bodyNode = interfaceNode.find({ rule: { kind: 'object_type' } });
+    if (!bodyNode) {
+      bodyNode = interfaceNode.child(2);
+    }
     if (!bodyNode) continue;
 
     bodyNode.children().forEach((child: SgNode) => {
@@ -181,7 +191,12 @@ const fixAnswerTreeDescendants: ApplyPatch = (ast) => {
   const edits: Edit[] = [];
 
   const interfaces = ast.findAll({
-    rule: { kind: 'interface_declaration' },
+    rule: {
+      any: [
+        { kind: 'interface_declaration' },
+        { kind: 'type_alias_declaration' },
+      ],
+    },
   });
 
   for (const interfaceNode of interfaces) {
@@ -190,7 +205,12 @@ const fixAnswerTreeDescendants: ApplyPatch = (ast) => {
 
     if (interfaceName !== 'AnswerTree') continue;
 
-    const bodyNode = interfaceNode.child(2);
+    // For type_alias_declaration, we need to find the object_type node
+    // For interface_declaration, body is at child(2)
+    let bodyNode = interfaceNode.find({ rule: { kind: 'object_type' } });
+    if (!bodyNode) {
+      bodyNode = interfaceNode.child(2);
+    }
     if (!bodyNode) continue;
 
     bodyNode.children().forEach((child: SgNode) => {
@@ -228,7 +248,12 @@ const makeJWTTokenOptional: ApplyPatch = (ast) => {
   const edits: Edit[] = [];
 
   const interfaces = ast.findAll({
-    rule: { kind: 'interface_declaration' },
+    rule: {
+      any: [
+        { kind: 'interface_declaration' },
+        { kind: 'type_alias_declaration' },
+      ],
+    },
   });
 
   for (const interfaceNode of interfaces) {
@@ -237,7 +262,12 @@ const makeJWTTokenOptional: ApplyPatch = (ast) => {
 
     if (interfaceName !== 'JSONWebToken') continue;
 
-    const bodyNode = interfaceNode.child(2);
+    // For type_alias_declaration, we need to find the object_type node
+    // For interface_declaration, body is at child(2)
+    let bodyNode = interfaceNode.find({ rule: { kind: 'object_type' } });
+    if (!bodyNode) {
+      bodyNode = interfaceNode.child(2);
+    }
     if (!bodyNode) continue;
 
     bodyNode.children().forEach((child: SgNode) => {
@@ -271,7 +301,12 @@ const removeSlugFromReactionCreate: ApplyPatch = (ast) => {
   const fullText = ast.text();
 
   const interfaces = ast.findAll({
-    rule: { kind: 'interface_declaration' },
+    rule: {
+      any: [
+        { kind: 'interface_declaration' },
+        { kind: 'type_alias_declaration' },
+      ],
+    },
   });
 
   for (const interfaceNode of interfaces) {
@@ -280,7 +315,12 @@ const removeSlugFromReactionCreate: ApplyPatch = (ast) => {
 
     if (interfaceName !== 'ReactionCreate') continue;
 
-    const bodyNode = interfaceNode.child(2);
+    // For type_alias_declaration, we need to find the object_type node
+    // For interface_declaration, body is at child(2)
+    let bodyNode = interfaceNode.find({ rule: { kind: 'object_type' } });
+    if (!bodyNode) {
+      bodyNode = interfaceNode.child(2);
+    }
     if (!bodyNode) continue;
 
     bodyNode.children().forEach((child: SgNode) => {
@@ -326,7 +366,12 @@ const removeQuestionFromHomeworkStats: ApplyPatch = (ast) => {
   const fullText = ast.text();
 
   const interfaces = ast.findAll({
-    rule: { kind: 'interface_declaration' },
+    rule: {
+      any: [
+        { kind: 'interface_declaration' },
+        { kind: 'type_alias_declaration' },
+      ],
+    },
   });
 
   for (const interfaceNode of interfaces) {
@@ -335,7 +380,12 @@ const removeQuestionFromHomeworkStats: ApplyPatch = (ast) => {
 
     if (interfaceName !== 'HomeworkStats') continue;
 
-    const bodyNode = interfaceNode.child(2);
+    // For type_alias_declaration, we need to find the object_type node
+    // For interface_declaration, body is at child(2)
+    let bodyNode = interfaceNode.find({ rule: { kind: 'object_type' } });
+    if (!bodyNode) {
+      bodyNode = interfaceNode.child(2);
+    }
     if (!bodyNode) continue;
 
     bodyNode.children().forEach((child: SgNode) => {

@@ -6,7 +6,7 @@ import VPasswordSettings from '@/components/VPasswordResetForm/VPasswordResetFor
 import { faker } from '@faker-js/faker';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
-import { useConfirmPasswordResetMutation } from '@/query';
+import { useAuthPasswordResetConfirmCreate } from '@/api/generated/hooks';
 
 const uid = faker.string.uuid();
 const token = faker.string.uuid();
@@ -19,7 +19,7 @@ const defaultProps = {
 const routerPushMock = vi.fn();
 
 vi.mock('vue-router');
-vi.mock('@/query');
+vi.mock('@/api/generated/hooks');
 vi.mock('@tanstack/vue-query');
 
 describe('VLoginChangeView', () => {
@@ -33,7 +33,7 @@ describe('VLoginChangeView', () => {
       push: routerPushMock,
     } as any);
 
-    vi.mocked(useConfirmPasswordResetMutation).mockReturnValue({
+    vi.mocked(useAuthPasswordResetConfirmCreate).mockReturnValue({
       mutateAsync: confirmPasswordReset,
       isPending: ref(false),
     } as any);

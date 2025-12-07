@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import VPill from '@/components/VPill/VPill.vue';
   import VPillItem from '@/components/VPill/VPillItem.vue';
-  import type { Lesson } from '@/api/generated/generated-api';
+  import type { Lesson } from '@/api/generated';
   import { computed } from 'vue';
   import { DATE_TIME_FORMAT, formatDate } from '@/utils/date';
   import dayjs from 'dayjs';

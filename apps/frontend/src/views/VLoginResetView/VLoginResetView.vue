@@ -5,7 +5,7 @@
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
   import VPublicLayout from '@/layouts/VPublicLayout/VPublicLayout.vue';
-  import { useRequestPasswordResetMutation } from '@/query';
+  import { useAuthPasswordResetCreate } from '@/api/generated/hooks';
   import { useQueryClient } from '@tanstack/vue-query';
   import VError from '@/components/VError/VError.vue';
 
@@ -13,15 +13,19 @@
   const queryClient = useQueryClient();
   const email = ref('');
 
-  const {
-    mutateAsync: requestReset,
-    error,
-    isPending,
-  } = useRequestPasswordResetMutation(queryClient);
+  const { mutateAsync: requestReset, error } = useAuthPasswordResetCreate({
+    mutation: {
+      onSuccess: () => {
+        queryClient.invalidateQueries();
+      },
+    },
+  });
+
+  const isPending = ref(false);
 
   const handleResetRequest = async () => {
     try {
-      await requestReset({ email: email.value });
+      await requestReset({ data: { email: email.value } });
       router.push({ name: 'mail-sent', query: { email: email.value } });
     } catch {
       console.error('Failed to request reset');

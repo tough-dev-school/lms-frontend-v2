@@ -7,21 +7,18 @@ import type VAnswerContent from '@/components/VAnswerContent/VAnswerContent.vue'
 import dayjs from 'dayjs';
 import { cloneDeep } from 'lodash-es';
 import { faker } from '@faker-js/faker';
-import { mockAnswer } from '@/mocks/mockAnswer';
-import { mockUserSafe } from '@/mocks/mockUserSafe';
+import { createAnswerTree, createUserSafe } from '@/api/generated/mocks';
 import {
-  useRemoveHomeworkReactionMutation,
-  useAddHomeworkReactionMutation,
-} from '@/query';
+  useHomeworkAnswersReactionsDestroy,
+  useHomeworkAnswersReactionsCreate,
+} from '@/api/generated/hooks';
 
 const uuid = faker.string.uuid();
 
 const defaultProps = {
-  answer: mockAnswer(),
-  user: mockUserSafe({
-    payload: {
-      uuid,
-    },
+  answer: createAnswerTree(),
+  user: createUserSafe({
+    uuid,
   }),
 };
 
@@ -29,7 +26,7 @@ vi.mock('@formkit/auto-animate/vue', () => ({
   useAutoAnimate: () => [null],
 }));
 
-vi.mock('@/query');
+vi.mock('@/api/generated/hooks');
 vi.mock('@tanstack/vue-query');
 
 const defaultMountOptions = {
@@ -48,12 +45,12 @@ describe('VAnswer', () => {
 
   beforeEach(() => {
     (
-      useRemoveHomeworkReactionMutation as ReturnType<typeof vi.fn>
+      useHomeworkAnswersReactionsDestroy as ReturnType<typeof vi.fn>
     ).mockReturnValue({
       mutateAsync: vi.fn(),
     });
     (
-      useAddHomeworkReactionMutation as ReturnType<typeof vi.fn>
+      useHomeworkAnswersReactionsCreate as ReturnType<typeof vi.fn>
     ).mockReturnValue({
       mutateAsync: vi.fn(),
     });

@@ -3,8 +3,8 @@ import VLessonCard from '@/components/VLessonCard/VLessonCard.vue';
 import type {
   Lesson,
   RecommendedVideoProviderEnum,
-} from '@/api/generated/generated-api';
-import { getMockLesson } from '@/mocks/mockLesson';
+} from '@/api/generated/types';
+import { createLesson } from '@/api/generated/mocks';
 
 export default {
   title: 'UI/VLessonCard',
@@ -24,7 +24,7 @@ const Template: StoryFn = (args) => ({
 
 // Mock data for different lesson types
 const baseLesson = {
-  ...getMockLesson(),
+  ...createLesson(),
   id: 1,
 };
 
@@ -48,7 +48,7 @@ const callWithVideo: Lesson = {
       },
     ],
     recommended_video_provider:
-      'youtube' as RecommendedVideoProviderEnum.Youtube,
+      'youtube' as RecommendedVideoProviderEnum.youtube,
   },
 };
 

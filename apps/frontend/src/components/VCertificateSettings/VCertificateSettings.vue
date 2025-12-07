@@ -4,17 +4,28 @@
   import VCard from '@/components/VCard/VCard.vue';
   import { ref, onMounted } from 'vue';
   import { useQueryClient } from '@tanstack/vue-query';
-  import { useUpdateUserMutation, fetchUser } from '@/query';
-  import { GenderEnum, BlankEnum } from '@/api/generated/generated-api';
-  import type { PatchedUserSelfUpdate } from '@/api/generated/generated-api';
+  import {
+    useUsersMePartialUpdate,
+    usersMeRetrieveQueryKey,
+    usersMeRetrieveQueryOptions,
+    GenderEnum,
+    BlankEnum,
+  } from '@/api/generated';
+  import type { PatchedUserSelfUpdate } from '@/api/generated';
   import VError from '@/components/VError/VError.vue';
 
   const queryClient = useQueryClient();
   const {
     mutateAsync: updateUser,
-    error,
     isPending,
-  } = useUpdateUserMutation(queryClient);
+    error,
+  } = useUsersMePartialUpdate({
+    mutation: {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: usersMeRetrieveQueryKey() });
+      },
+    },
+  });
 
   const data = ref<{
     firstName: Required<PatchedUserSelfUpdate>['first_name'];
@@ -27,28 +38,30 @@
     lastName: '',
     firstNameEn: '',
     lastNameEn: '',
-    gender: BlankEnum.Value,
+    gender: '' as unknown as BlankEnum,
   });
 
   const saveCertificate = async () => {
     await updateUser({
-      first_name: data.value.firstName,
-      last_name: data.value.lastName,
-      first_name_en: data.value.firstNameEn,
-      last_name_en: data.value.lastNameEn,
-      gender: data.value.gender,
+      data: {
+        first_name: data.value.firstName,
+        last_name: data.value.lastName,
+        first_name_en: data.value.firstNameEn,
+        last_name_en: data.value.lastNameEn,
+        gender: data.value.gender,
+      },
     });
   };
 
   onMounted(async () => {
-    const user = await fetchUser(queryClient);
+    const user = await queryClient.fetchQuery(usersMeRetrieveQueryOptions());
 
     data.value = {
       firstName: user.first_name ?? '',
       lastName: user.last_name ?? '',
       firstNameEn: user.first_name_en ?? '',
       lastNameEn: user.last_name_en ?? '',
-      gender: user.gender ?? GenderEnum.Male,
+      gender: user.gender ?? GenderEnum.male,
     };
   });
 </script>
@@ -91,8 +104,8 @@
             type="radio"
             name="gender"
             data-testid="gender-male"
-            :checked="data.gender === GenderEnum.Male"
-            @click="data.gender = GenderEnum.Male"
+            :checked="data.gender === GenderEnum.male"
+            @click="data.gender = GenderEnum.male"
           />
           Мужской</label
         >
@@ -101,8 +114,8 @@
             type="radio"
             name="gender"
             data-testid="gender-female"
-            :checked="data.gender === GenderEnum.Female"
-            @click="data.gender = GenderEnum.Female"
+            :checked="data.gender === GenderEnum.female"
+            @click="data.gender = GenderEnum.female"
           />
           Женский</label
         >

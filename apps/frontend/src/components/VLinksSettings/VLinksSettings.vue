@@ -3,16 +3,25 @@
   import VTextInput from '@/components/VTextInput/VTextInput.vue';
   import VButton from '@/components/VButton/VButton.vue';
   import VCard from '@/components/VCard/VCard.vue';
-  import { useUpdateUserMutation, fetchUser } from '@/query';
+  import {
+    useUsersMePartialUpdate,
+    usersMeRetrieveQueryKey,
+    usersMeRetrieveQueryOptions,
+  } from '@/api/generated/hooks';
   import { useQueryClient } from '@tanstack/vue-query';
   import VError from '@/components/VError/VError.vue';
 
   const queryClient = useQueryClient();
-  const {
-    mutateAsync: updateUser,
-    error,
-    isPending,
-  } = useUpdateUserMutation(queryClient);
+  const { mutateAsync: updateUser, isPending, error } =
+    useUsersMePartialUpdate({
+      mutation: {
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: usersMeRetrieveQueryKey(),
+          });
+        },
+      },
+    });
 
   const data = ref({
     linkedinUsername: '',
@@ -22,14 +31,16 @@
 
   const saveProfile = async () => {
     await updateUser({
-      linkedin_username: data.value.linkedinUsername,
-      github_username: data.value.githubUsername,
-      telegram_username: data.value.telegramUsername,
+      data: {
+        linkedin_username: data.value.linkedinUsername,
+        github_username: data.value.githubUsername,
+        telegram_username: data.value.telegramUsername,
+      },
     });
   };
 
   onBeforeMount(async () => {
-    const user = await fetchUser(queryClient);
+    const user = await queryClient.fetchQuery(usersMeRetrieveQueryOptions());
 
     data.value = {
       linkedinUsername: user.linkedin_username ?? '',

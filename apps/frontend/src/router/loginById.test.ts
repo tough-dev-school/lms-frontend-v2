@@ -3,12 +3,12 @@ import { loginById } from './loginById';
 import type { RouteLocationNormalized } from 'vue-router';
 import { faker } from '@faker-js/faker';
 import { useAuth } from '@/composables/useAuth';
-import { useLoginWithUserIdMutation } from '@/query';
+import { useAuthAsRetrieve } from '@/api/generated/hooks';
 import { useQueryClient } from '@tanstack/vue-query';
 import { ref } from 'vue';
 
 vi.mock('@/composables/useAuth');
-vi.mock('@/query');
+vi.mock('@/api/generated/hooks');
 vi.mock('@tanstack/vue-query');
 vi.mock('@/utils/useAuth');
 
@@ -20,7 +20,7 @@ describe('loginById', () => {
       token: ref(undefined),
     } as any);
 
-    vi.mocked(useLoginWithUserIdMutation).mockReturnValue({
+    vi.mocked(useAuthAsRetrieve).mockReturnValue({
       mutateAsync: mockMutateAsync,
       isPending: ref(false),
     } as any);
