@@ -15,5 +15,4 @@ export type ReactionCreate = {
     /**
      * @type string, uuid
     */
-    slug: string;
 };

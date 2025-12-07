@@ -28,5 +28,4 @@ export type HomeworkStats = {
     /**
      * @type object
     */
-    question: TemporarySoonToBeDepricatedQuestion;
 };

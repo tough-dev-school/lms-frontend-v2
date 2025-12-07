@@ -60,5 +60,5 @@ export type AnswerTree = {
     /**
      * @type array
     */
-    descendants: Answer[];
+    descendants: AnswerTree[];
 };
