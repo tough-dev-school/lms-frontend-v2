@@ -152,10 +152,7 @@
         if (!candidate) return false;
 
         const looksLikeMarkdown =
-          !!markdownFromClipboard ||
-          /^(\s{0,3}#{1,6}\s|\*\s|-\s|\d+\.\s|>\s|`{1,3}|!\[|\[.*?]\(.*?\))/m.test(
-            candidate,
-          );
+          !!markdownFromClipboard || /^\s{0,3}#{1,6}\s/m.test(candidate);
 
         // Only convert markdown if it actually looks like markdown
         // Otherwise, let TipTap handle HTML paste natively to preserve styles
