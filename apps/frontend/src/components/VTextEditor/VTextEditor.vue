@@ -500,7 +500,7 @@
   }
 
   .ProseMirror {
-    @apply prose max-w-none outline-none dark:prose-invert;
+    @apply max-w-none outline-none dark:prose-invert;
   }
 
   .ProseMirror-focused {
