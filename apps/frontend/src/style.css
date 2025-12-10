@@ -125,6 +125,10 @@
     margin-bottom: 0;
   }
 
+  .prose hr {
+    margin: 1.5em 0;
+  }
+
   /* Table styles to match VTextEditor */
   .prose table {
     @apply w-full table-auto border-collapse border border-gray bg-transparent dark:border-darkmode-border;
