@@ -114,8 +114,6 @@
     --tw-prose-invert-pre-bg: inherit;
     --tw-prose-invert-th-borders: inherit;
     --tw-prose-invert-td-borders: inherit;
-
-    @apply flex flex-col;
   }
 
   .prose > *:first-child {
