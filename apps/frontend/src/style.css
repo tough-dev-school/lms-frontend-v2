@@ -119,12 +119,23 @@
   .prose > *:first-child {
     margin-top: 0;
   }
+
   .prose > *:last-child {
     margin-bottom: 0;
   }
 
   .prose hr {
     margin: 1.5em 0;
+  }
+
+  .prose blockquote *::after,
+  .prose blockquote *::before {
+    content: none;
+  }
+
+  .prose blockquote * {
+    font-style: normal;
+    font-weight: 400;
   }
 
   /* Table styles to match VTextEditor */
