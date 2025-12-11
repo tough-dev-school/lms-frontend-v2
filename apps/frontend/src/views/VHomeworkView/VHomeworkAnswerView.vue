@@ -175,6 +175,19 @@
         :lesson="lesson"
       />
     </template>
+    <section>
+      <VCrossChecks
+        v-if="isOwnAnswer && crosschecks?.length"
+        :crosschecks="crosschecks"
+      />
+    </section>
+    <section class="VHomeworkAnswerView__Section">
+      <VHeading tag="h2"> Отправленная работа</VHeading>
+      <VExistingAnswer
+        :answer-id="answer.slug"
+        @after-delete="handleDeleteAnswer"
+      />
+    </section>    
     <section class="VHomeworkAnswerView__Section -mt-16">
       <div
         v-if="isOwnAnswer"
@@ -184,7 +197,7 @@
           tag="h3"
           class="mb-8"
         >
-          Поделитесь ссылкой на сделанную домашку
+          Поделитесь ссылкой на свою домашку в чатике учеников
         </VHeading>
         <div class="block select-all break-all">
           {{ answerLink }}
@@ -194,19 +207,6 @@
         <template #summary> Текст задания </template>
         <VMakrdownContent :markdown="question.markdown_text" />
       </VDetails>
-    </section>
-    <section class="VHomeworkAnswerView__Section">
-      <VHeading tag="h2"> Отправленная работа</VHeading>
-      <VExistingAnswer
-        :answer-id="answer.slug"
-        @after-delete="handleDeleteAnswer"
-      />
-    </section>
-    <section>
-      <VCrossChecks
-        v-if="isOwnAnswer && crosschecks?.length"
-        :crosschecks="crosschecks"
-      />
     </section>
     <section class="VHomeworkAnswerView__Section">
       <VHeading tag="h2">
