@@ -22,6 +22,7 @@
     IconRowRemove,
     IconColumnRemove,
     IconTableOff,
+    IconSeparator,
   } from '@tabler/icons-vue';
   import { onBeforeUnmount, ref, useTemplateRef, watch, computed } from 'vue';
   import { onKeyDown, useKeyModifier, useFocusWithin } from '@vueuse/core';
@@ -369,6 +370,13 @@
           @click="toggleItalic"
         >
           <IconItalic />
+        </button>
+        <button
+          class="TextEditor__Button"
+          :class="{ TextEditor__Button_Active: editor.isActive('underline') }"
+          @click="editor.chain().focus().setHorizontalRule().run()"
+        >
+          <IconSeparator />
         </button>
         <button
           class="TextEditor__Button"
