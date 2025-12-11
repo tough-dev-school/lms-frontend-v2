@@ -22,6 +22,7 @@
     IconRowRemove,
     IconColumnRemove,
     IconTableOff,
+    IconSeparator,
   } from '@tabler/icons-vue';
   import { onBeforeUnmount, ref, useTemplateRef, watch, computed } from 'vue';
   import { onKeyDown, useKeyModifier, useFocusWithin } from '@vueuse/core';
@@ -372,6 +373,13 @@
         </button>
         <button
           class="TextEditor__Button"
+          :class="{ TextEditor__Button_Active: editor.isActive('underline') }"
+          @click="editor.chain().focus().setHorizontalRule().run()"
+        >
+          <IconSeparator />
+        </button>
+        <button
+          class="TextEditor__Button"
           :class="{ TextEditor__Button_Active: editor.isActive('link') }"
           @click="editLink"
         >
@@ -500,7 +508,7 @@
   }
 
   .ProseMirror {
-    @apply prose max-w-none outline-none dark:prose-invert;
+    @apply max-w-none outline-none dark:prose-invert;
   }
 
   .ProseMirror-focused {
