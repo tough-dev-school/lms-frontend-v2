@@ -44,7 +44,7 @@
     // eslint-disable-next-line new-cap
     lightbox = GLightbox({
       selector: `[data-lightbox="${props.group}"]`,
-      openEffect: 'zoom',
+      openEffect: 'none',
       closeEffect: 'none',
     });
   };
