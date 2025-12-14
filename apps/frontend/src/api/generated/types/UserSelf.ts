@@ -45,6 +45,11 @@ export type UserSelf = {
     */
     last_name_en?: string;
     /**
+     * @maxLength 128
+     * @type string
+    */
+    random_name: string | null;
+    /**
      * @maxLength 254
      * @type string | undefined, email
     */
@@ -74,4 +79,14 @@ export type UserSelf = {
      * @type boolean | undefined
     */
     is_staff?: boolean;
+    /**
+     * @maxLength 32
+     * @type string
+    */
+    rank: string | null;
+    /**
+     * @maxLength 7
+     * @type string
+    */
+    rank_label_color: string | null;
 };

@@ -45,6 +45,11 @@ export type User = {
     */
     last_name_en?: string;
     /**
+     * @maxLength 128
+     * @type string
+    */
+    random_name: string | null;
+    /**
      * @maxLength 254
      * @type string | undefined, email
     */

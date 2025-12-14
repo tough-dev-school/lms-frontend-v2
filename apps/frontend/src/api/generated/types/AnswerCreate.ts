@@ -15,8 +15,5 @@ export type AnswerCreate = {
      * @type string, uuid
     */
     parent?: string | null;
-    /**
-     * @type string
-    */
     content?: any;
 };

@@ -32,7 +32,22 @@ export type UserSafe = {
     */
     last_name_en?: string;
     /**
+     * @maxLength 128
+     * @type string
+    */
+    random_name: string | null;
+    /**
      * @type string, uri
     */
     avatar: string | null;
+    /**
+     * @maxLength 32
+     * @type string
+    */
+    rank: string | null;
+    /**
+     * @maxLength 7
+     * @type string
+    */
+    rank_label_color: string | null;
 };

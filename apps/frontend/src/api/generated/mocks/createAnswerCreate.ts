@@ -11,7 +11,7 @@ import { faker } from "@faker-js/faker";
 export function createAnswerCreate(data?: Partial<AnswerCreate>): AnswerCreate {
   faker.seed(1337)  
   return {
-  ...{"question": faker.string.uuid(),"parent": faker.string.uuid(),"text": faker.string.alpha(),"content": undefined},
+  ...{"question": faker.string.uuid(),"parent": faker.string.uuid(),"content": undefined},
   ...data || {}
   }
 }

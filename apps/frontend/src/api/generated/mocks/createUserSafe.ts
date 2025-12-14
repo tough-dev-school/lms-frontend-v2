@@ -11,7 +11,7 @@ import { faker } from "@faker-js/faker";
 export function createUserSafe(data?: Partial<UserSafe>): UserSafe {
   faker.seed(1337)  
   return {
-  ...{"uuid": faker.string.uuid(),"first_name": faker.string.alpha({ length: 150 }),"last_name": faker.string.alpha({ length: 150 }),"first_name_en": faker.string.alpha({ length: 150 }),"last_name_en": faker.string.alpha({ length: 150 }),"avatar": faker.internet.url()},
+  ...{"uuid": faker.string.uuid(),"first_name": faker.string.alpha({ length: 150 }),"last_name": faker.string.alpha({ length: 150 }),"first_name_en": faker.string.alpha({ length: 150 }),"last_name_en": faker.string.alpha({ length: 150 }),"random_name": faker.string.alpha({ length: 128 }),"avatar": faker.internet.url(),"rank": faker.string.alpha({ length: 32 }),"rank_label_color": faker.string.alpha({ length: 7 })},
   ...data || {}
   }
 }

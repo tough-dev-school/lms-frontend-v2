@@ -37,14 +37,13 @@ export type AnswerTree = {
     /**
      * @type string
     */
-    /**
-     * @type string
-    */
     legacy_text: string;
-    content?: any;
     /**
-     * @type string
+     * @type object
     */
+    content: {
+        [key: string]: any;
+    };
     /**
      * @type boolean
     */

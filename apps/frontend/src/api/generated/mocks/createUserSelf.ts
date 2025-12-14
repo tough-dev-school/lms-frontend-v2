@@ -13,7 +13,7 @@ import { faker } from "@faker-js/faker";
 export function createUserSelf(data?: Partial<UserSelf>): UserSelf {
   faker.seed(1337)  
   return {
-  ...{"id": faker.number.int(),"uuid": faker.string.uuid(),"username": faker.helpers.fromRegExp("^[\w.@+-]+$"),"first_name": faker.string.alpha({ length: 150 }),"last_name": faker.string.alpha({ length: 150 }),"first_name_en": faker.string.alpha({ length: 150 }),"last_name_en": faker.string.alpha({ length: 150 }),"email": faker.internet.email(),"gender": faker.helpers.arrayElement<any>([createGenderEnum(), createBlankEnum()]),"github_username": faker.string.alpha({ length: 256 }),"linkedin_username": faker.string.alpha({ length: 256 }),"telegram_username": faker.string.alpha({ length: 256 }),"avatar": faker.internet.url(),"is_staff": faker.datatype.boolean()},
+  ...{"id": faker.number.int(),"uuid": faker.string.uuid(),"username": faker.helpers.fromRegExp("^[\w.@+-]+$"),"first_name": faker.string.alpha({ length: 150 }),"last_name": faker.string.alpha({ length: 150 }),"first_name_en": faker.string.alpha({ length: 150 }),"last_name_en": faker.string.alpha({ length: 150 }),"random_name": faker.string.alpha({ length: 128 }),"email": faker.internet.email(),"gender": faker.helpers.arrayElement<any>([createGenderEnum(), createBlankEnum()]),"github_username": faker.string.alpha({ length: 256 }),"linkedin_username": faker.string.alpha({ length: 256 }),"telegram_username": faker.string.alpha({ length: 256 }),"avatar": faker.internet.url(),"is_staff": faker.datatype.boolean(),"rank": faker.string.alpha({ length: 32 }),"rank_label_color": faker.string.alpha({ length: 7 })},
   ...data || {}
   }
 }
