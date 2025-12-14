@@ -74,7 +74,9 @@
       :answer="answer"
       data-testid="content"
     />
-    <div class="mt-8 flex flex-wrap items-center justify-start gap-8">
+    <div
+      class="mt-8 flex flex-wrap items-center justify-start gap-8 px-8 tablet:px-16"
+    >
       <slot name="footer" />
       <div
         class="text-sub leading-tight opacity-70"
