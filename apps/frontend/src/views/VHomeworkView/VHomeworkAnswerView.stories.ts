@@ -133,6 +133,26 @@ const STATIC_ANSWER = mockAnswer({
         ],
       },
     }),
+    mockAnswer({
+      slug: 'comment-2',
+      question: 'javascript-fundamentals',
+      parent: 'answer-123',
+      author: mockUserSafe({ seed: 3 }),
+      content: {
+        type: 'doc',
+        content: [
+          {
+            type: 'paragraph',
+            content: [
+              {
+                type: 'text',
+                text: 'Согласен! Особенно понравился подход к организации кода.',
+              },
+            ],
+          },
+        ],
+      },
+    }),
   ],
 });
 
