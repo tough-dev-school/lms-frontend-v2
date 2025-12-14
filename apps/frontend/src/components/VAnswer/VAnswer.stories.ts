@@ -45,7 +45,7 @@ export const RankedAuthor = {
       ...answer,
       author: {
         ...answer.author,
-        rank: 1,
+        rank: '1',
         rank_label_color: '#F7CA45',
       },
     },
@@ -61,7 +61,7 @@ export const RankedAuthorOwn = {
       ...ownAnswer,
       author: {
         ...STATIC_AUTHOR_1,
-        rank: 1,
+        rank: '1',
         rank_label_color: '#F7CA45',
       },
     },

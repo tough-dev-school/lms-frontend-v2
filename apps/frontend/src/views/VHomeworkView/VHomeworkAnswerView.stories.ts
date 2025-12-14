@@ -115,7 +115,7 @@ const STATIC_ANSWER = mockAnswer({
       parent: 'answer-123',
       author: {
         ...mockUserSafe({ seed: 2 }),
-        rank: 1,
+        rank: '1',
         rank_label_color: '#F7CA45',
       },
       content: {
