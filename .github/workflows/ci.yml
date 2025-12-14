@@ -26,7 +26,7 @@ jobs:
         run: pnpm run test:format
 
       - name: Run typecheck ✅
-        run: pnpm run test:type
+        run: pnpm run test:types
 
       - name: Run unit tests 🧪
         run: pnpm run test:unit

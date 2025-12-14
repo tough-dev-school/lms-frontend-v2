@@ -3,6 +3,7 @@ import VMaterialView from './VMaterialView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import { mockMaterial } from '@/mocks/mockMaterialSerializer';
 import { mockLMSCourse } from '@/mocks/mockLMSCourse';
+import { mockLessonPlain } from '@/mocks/mockLessonPlain';
 import { mockModule } from '@/mocks/mockModule';
 import { materialsKeys } from '@/query';
 import { useQueryClient } from '@tanstack/vue-query';
@@ -29,14 +30,17 @@ const STATIC_MODULE = mockModule({
   name: 'Введение в асинхронную архитектуру',
 });
 
-const STATIC_MATERIAL_DATA: MaterialSerilizer = {
-  content: mockMaterial().content,
+const STATIC_LESSON = mockLessonPlain({
+  id: 1,
+});
+
+const STATIC_MATERIAL_DATA: MaterialSerilizer = mockMaterial({
   breadcrumbs: {
     course: STATIC_COURSE,
     module: STATIC_MODULE,
-    lesson: undefined,
+    lesson: STATIC_LESSON,
   },
-};
+});
 
 const Template: StoryFn = (args) => ({
   components: { VMaterialView },

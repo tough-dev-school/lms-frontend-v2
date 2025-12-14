@@ -14,7 +14,7 @@ import type {
   PasswordChange,
   PasswordReset,
   PasswordResetConfirm,
-  PatchedUser,
+  PatchedUserSelfUpdate,
 } from './api/generated/generated-api';
 import { ContentType } from './api/generated/generated-api';
 import { useAuth } from './composables/useAuth';
@@ -406,9 +406,7 @@ export const getHomeworkCrosschecksQueryOptions = (questionId: string) => {
   return queryOptions({
     queryKey: homeworkKeys.crosschecks(questionId),
     queryFn: async () =>
-      // #FIXME
-      // @ts-expect-error question is required, but not defines in open api
-      await api.homeworkCrosschecksList({ query: { question: [questionId] } }),
+      await api.homeworkCrosschecksList({ question: questionId }),
   });
 };
 
@@ -528,7 +526,7 @@ export const useUserQuery = () => {
 
 export const useUpdateUserMutation = (queryClient: QueryClient) => {
   return useMutation({
-    mutationFn: async (data: PatchedUser) => {
+    mutationFn: async (data: PatchedUserSelfUpdate) => {
       return await api.usersMePartialUpdate(data);
     },
     onSuccess: () => {

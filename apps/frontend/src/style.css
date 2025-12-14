@@ -81,6 +81,80 @@
     margin-bottom: 0;
   }
 
+  .prose {
+    --tw-prose-body: inherit;
+    --tw-prose-headings: inherit;
+    --tw-prose-lead: inherit;
+    --tw-prose-links: inherit;
+    --tw-prose-bold: inherit;
+    --tw-prose-counters: inherit;
+    --tw-prose-bullets: inherit;
+    --tw-prose-hr: inherit;
+    --tw-prose-quotes: inherit;
+    --tw-prose-quote-borders: inherit;
+    --tw-prose-captions: inherit;
+    --tw-prose-code: inherit;
+    --tw-prose-pre-code: inherit;
+    --tw-prose-pre-bg: inherit;
+    --tw-prose-th-borders: inherit;
+    --tw-prose-td-borders: inherit;
+    --tw-prose-invert-body: inherit;
+    --tw-prose-invert-heading: inherit;
+    --tw-prose-invert-lead: inherit;
+    --tw-prose-invert-link: inherit;
+    --tw-prose-invert-bold: inherit;
+    --tw-prose-invert-counters: inherit;
+    --tw-prose-invert-bullets: inherit;
+    --tw-prose-invert-hr: inherit;
+    --tw-prose-invert-quotes: inherit;
+    --tw-prose-invert-quote-borders: inherit;
+    --tw-prose-invert-captions: inherit;
+    --tw-prose-invert-code: inherit;
+    --tw-prose-invert-pre-code: inherit;
+    --tw-prose-invert-pre-bg: inherit;
+    --tw-prose-invert-th-borders: inherit;
+    --tw-prose-invert-td-borders: inherit;
+  }
+
+  .prose > *:first-child {
+    margin-top: 0;
+  }
+
+  .prose > *:last-child {
+    margin-bottom: 0;
+  }
+
+  .prose hr {
+    margin: 1.5em 0;
+  }
+
+  .prose blockquote *::after,
+  .prose blockquote *::before {
+    content: none;
+  }
+
+  .prose blockquote * {
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  /* Table styles to match VTextEditor */
+  .prose table {
+    @apply w-full table-auto border-collapse border border-gray bg-transparent dark:border-darkmode-border;
+  }
+
+  .prose th {
+    @apply bg-transparent p-8 font-bold;
+  }
+
+  .prose td {
+    @apply border border-gray p-8 dark:border-darkmode-border;
+  }
+
+  .prose .tableWrapper {
+    @apply overflow-x-auto;
+  }
+
   .label {
     @apply mb-8 w-full text-gray;
   }

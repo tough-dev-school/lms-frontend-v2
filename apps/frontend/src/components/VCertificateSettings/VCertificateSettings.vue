@@ -6,7 +6,7 @@
   import { useQueryClient } from '@tanstack/vue-query';
   import { useUpdateUserMutation, fetchUser } from '@/query';
   import { GenderEnum, BlankEnum } from '@/api/generated/generated-api';
-  import type { PatchedUser } from '@/api/generated/generated-api';
+  import type { PatchedUserSelfUpdate } from '@/api/generated/generated-api';
   import VError from '@/components/VError/VError.vue';
 
   const queryClient = useQueryClient();
@@ -17,11 +17,11 @@
   } = useUpdateUserMutation(queryClient);
 
   const data = ref<{
-    firstName: Required<PatchedUser>['first_name'];
-    lastName: Required<PatchedUser>['last_name'];
-    firstNameEn: Required<PatchedUser>['first_name_en'];
-    lastNameEn: Required<PatchedUser>['last_name_en'];
-    gender: Required<PatchedUser>['gender'];
+    firstName: Required<PatchedUserSelfUpdate>['first_name'];
+    lastName: Required<PatchedUserSelfUpdate>['last_name'];
+    firstNameEn: Required<PatchedUserSelfUpdate>['first_name_en'];
+    lastNameEn: Required<PatchedUserSelfUpdate>['last_name_en'];
+    gender: Required<PatchedUserSelfUpdate>['gender'];
   }>({
     firstName: '',
     lastName: '',

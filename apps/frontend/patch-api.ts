@@ -76,7 +76,7 @@ const fixOptionalProperties: ApplyPatch = (ast) => {
       const nameNode = node.child(0);
       if (!nameNode) return;
 
-      const name = nameNode.text().replace('?', '');
+      // const name = nameNode.text().replace('?', '');
       const questionMark = text.includes('?:');
 
       if (!questionMark) return;
@@ -106,72 +106,8 @@ const fixOptionalProperties: ApplyPatch = (ast) => {
         typeText = typeText.slice(2);
       }
 
-      // Primary keys (slug, id, uuid) can't be undefined
-      if (['slug', 'id', 'uuid'].includes(name)) {
-        const newText = text.replace('?:', ':');
-        edits.push({
-          start: node.range().start.index,
-          end: node.range().end.index,
-          replacement: newText,
-        });
-        return;
-      }
-
-      // name can't be undefined
-      if (name === 'name') {
-        const newText = text.replace('?:', ':');
-        edits.push({
-          start: node.range().start.index,
-          end: node.range().end.index,
-          replacement: newText,
-        });
-        return;
-      }
-
-      if (name === 'created') {
-        const newText = text.replace('?:', ':');
-        edits.push({
-          start: node.range().start.index,
-          end: node.range().end.index,
-          replacement: newText,
-        });
-        return;
-      }
-
-      if (name === 'breadcrumbs') {
-        const newText = text.replace('?:', ':');
-        edits.push({
-          start: node.range().start.index,
-          end: node.range().end.index,
-          replacement: newText,
-        });
-        return;
-      }
-
-      // booleans can't be undefined
-      if (typeText === 'boolean') {
-        const newText = text.replace('?:', ':');
-        edits.push({
-          start: node.range().start.index,
-          end: node.range().end.index,
-          replacement: newText,
-        });
-        return;
-      }
-
       // nullable fields (string | null) can't be undefined
       if (/\w+ \| null/.test(typeText)) {
-        const newText = text.replace('?:', ':');
-        edits.push({
-          start: node.range().start.index,
-          end: node.range().end.index,
-          replacement: newText,
-        });
-        return;
-      }
-
-      // arrays can't be undefined, they can be empty
-      if (typeText.includes('[]')) {
         const newText = text.replace('?:', ':');
         edits.push({
           start: node.range().start.index,
@@ -241,6 +177,205 @@ const omitAnswerFields: ApplyPatch = (ast) => {
   return edits;
 };
 
+const fixAnswerTreeDescendants: ApplyPatch = (ast) => {
+  const edits: Edit[] = [];
+
+  const interfaces = ast.findAll({
+    rule: { kind: 'interface_declaration' },
+  });
+
+  for (const interfaceNode of interfaces) {
+    const nameNode = interfaceNode.child(1);
+    const interfaceName = nameNode?.text();
+
+    if (interfaceName !== 'AnswerTree') continue;
+
+    const bodyNode = interfaceNode.child(2);
+    if (!bodyNode) continue;
+
+    bodyNode.children().forEach((child: SgNode) => {
+      if (child.kind() !== 'property_signature') return;
+
+      const propertyName = child.child(0);
+      if (!propertyName) return;
+
+      const name = propertyName.text().replace('?', '');
+      if (name !== 'descendants') return;
+
+      // Find the type annotation
+      const children = child.children();
+      const typeNode = children.at(-1);
+      if (!typeNode) return;
+
+      const typeText = typeNode.text();
+
+      // Replace Answer[] with AnswerTree[]
+      if (typeText.includes('Answer[]')) {
+        const newTypeText = typeText.replace('Answer[]', 'AnswerTree[]');
+        edits.push({
+          start: typeNode.range().start.index,
+          end: typeNode.range().end.index,
+          replacement: newTypeText,
+        });
+      }
+    });
+  }
+
+  return edits;
+};
+
+const makeJWTTokenOptional: ApplyPatch = (ast) => {
+  const edits: Edit[] = [];
+
+  const interfaces = ast.findAll({
+    rule: { kind: 'interface_declaration' },
+  });
+
+  for (const interfaceNode of interfaces) {
+    const nameNode = interfaceNode.child(1);
+    const interfaceName = nameNode?.text();
+
+    if (interfaceName !== 'JSONWebToken') continue;
+
+    const bodyNode = interfaceNode.child(2);
+    if (!bodyNode) continue;
+
+    bodyNode.children().forEach((child: SgNode) => {
+      if (child.kind() !== 'property_signature') return;
+
+      const propertyName = child.child(0);
+      if (!propertyName) return;
+
+      const name = propertyName.text().replace('?', '');
+      if (name !== 'token') return;
+
+      // Check if it's already optional
+      const text = child.text();
+      if (text.includes('?:')) return;
+
+      // Make it optional by replacing : with ?:
+      const newText = text.replace('token:', 'token?:');
+      edits.push({
+        start: child.range().start.index,
+        end: child.range().end.index,
+        replacement: newText,
+      });
+    });
+  }
+
+  return edits;
+};
+
+const removeSlugFromReactionCreate: ApplyPatch = (ast) => {
+  const edits: Edit[] = [];
+  const fullText = ast.text();
+
+  const interfaces = ast.findAll({
+    rule: { kind: 'interface_declaration' },
+  });
+
+  for (const interfaceNode of interfaces) {
+    const nameNode = interfaceNode.child(1);
+    const interfaceName = nameNode?.text();
+
+    if (interfaceName !== 'ReactionCreate') continue;
+
+    const bodyNode = interfaceNode.child(2);
+    if (!bodyNode) continue;
+
+    bodyNode.children().forEach((child: SgNode) => {
+      if (child.kind() !== 'property_signature') return;
+
+      const propertyName = child.child(0);
+      if (!propertyName) return;
+
+      const name = propertyName.text().replace('?', '');
+      if (name !== 'slug') return;
+
+      const nodeStart = child.range().start.index;
+      const nodeEnd = child.range().end.index;
+
+      // Find the start of the line
+      let lineStart = nodeStart;
+      while (lineStart > 0 && fullText[lineStart - 1] !== '\n') {
+        lineStart -= 1;
+      }
+
+      // Find the end of the line (including newline)
+      let lineEnd = nodeEnd;
+      while (lineEnd < fullText.length && fullText[lineEnd] !== '\n') {
+        lineEnd += 1;
+      }
+      if (lineEnd < fullText.length && fullText[lineEnd] === '\n') {
+        lineEnd += 1;
+      }
+
+      edits.push({
+        start: lineStart,
+        end: lineEnd,
+        replacement: '',
+      });
+    });
+  }
+
+  return edits;
+};
+
+const removeQuestionFromHomeworkStats: ApplyPatch = (ast) => {
+  const edits: Edit[] = [];
+  const fullText = ast.text();
+
+  const interfaces = ast.findAll({
+    rule: { kind: 'interface_declaration' },
+  });
+
+  for (const interfaceNode of interfaces) {
+    const nameNode = interfaceNode.child(1);
+    const interfaceName = nameNode?.text();
+
+    if (interfaceName !== 'HomeworkStats') continue;
+
+    const bodyNode = interfaceNode.child(2);
+    if (!bodyNode) continue;
+
+    bodyNode.children().forEach((child: SgNode) => {
+      if (child.kind() !== 'property_signature') return;
+
+      const propertyName = child.child(0);
+      if (!propertyName) return;
+
+      const name = propertyName.text().replace('?', '');
+      if (name !== 'question') return;
+
+      const nodeStart = child.range().start.index;
+      const nodeEnd = child.range().end.index;
+
+      // Find the start of the line
+      let lineStart = nodeStart;
+      while (lineStart > 0 && fullText[lineStart - 1] !== '\n') {
+        lineStart -= 1;
+      }
+
+      // Find the end of the line (including newline)
+      let lineEnd = nodeEnd;
+      while (lineEnd < fullText.length && fullText[lineEnd] !== '\n') {
+        lineEnd += 1;
+      }
+      if (lineEnd < fullText.length && fullText[lineEnd] === '\n') {
+        lineEnd += 1;
+      }
+
+      edits.push({
+        start: lineStart,
+        end: lineEnd,
+        replacement: '',
+      });
+    });
+  }
+
+  return edits;
+};
+
 for (const file of files) {
   const filePath = path.join(typesDirectory, file);
   let fileContent = fs.readFileSync(filePath, 'utf8');
@@ -248,6 +383,10 @@ for (const file of files) {
     removeReadonlyModifiers,
     fixOptionalProperties,
     omitAnswerFields,
+    fixAnswerTreeDescendants,
+    makeJWTTokenOptional,
+    removeSlugFromReactionCreate,
+    removeQuestionFromHomeworkStats,
   ];
 
   for (const patch of patches) {

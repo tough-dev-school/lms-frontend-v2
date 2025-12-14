@@ -16,7 +16,10 @@ export const mockUserSafe = ({
     last_name: faker.person.lastName(),
     first_name_en: faker.person.firstName(),
     last_name_en: faker.person.lastName(),
+    random_name: null,
     avatar: null,
+    rank: null,
+    rank_label_color: null,
     ...payload,
   };
 };

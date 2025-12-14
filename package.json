@@ -4,7 +4,7 @@
   "scripts": {
     "test:lint": "pnpm -r run test:lint",
     "test:format": "pnpm -r run test:format",
-    "test:type": "pnpm -r run test:type",
+    "test:types": "pnpm -r run test:types",
     "test:unit": "pnpm -r run test:unit",
     "prepare": "husky",
     "lint-staged": "lint-staged --concurrent false"
