@@ -5,6 +5,7 @@
   import { useRouter } from 'vue-router';
   import { useUserQuery } from '@/query';
   import { getName } from '@/utils/getName';
+  import { LANDING_URL } from '@/constants';
 
   export interface ProfileMenuItem {
     label: string;
@@ -40,6 +41,13 @@
         router.push({ name: 'courses' });
       },
       id: 'home',
+    },
+    {
+      label: 'На сайт',
+      action: () => {
+        window.open(LANDING_URL, '_blank');
+      },
+      id: 'website',
     },
     {
       label: 'Сертификаты',
