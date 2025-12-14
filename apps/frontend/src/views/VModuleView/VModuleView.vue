@@ -66,6 +66,7 @@
     <VHtmlContent
       v-if="moduleText"
       :html="moduleText"
+      :enable-lightbox="false"
     />
     <div class="VLessonsView flex flex-col gap-32">
       <div

@@ -28,5 +28,9 @@
 </script>
 
 <template>
-  <VHtmlContent :html="html" />
+  <VHtmlContent
+    :html="html"
+    :enable-lightbox="true"
+    :group="answer.slug"
+  />
 </template>

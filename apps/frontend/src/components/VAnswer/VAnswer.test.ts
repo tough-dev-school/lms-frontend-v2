@@ -71,8 +71,9 @@ describe('VAnswer', () => {
       '[data-testid="content"]',
     );
   };
-  const getOwnerBadgeWrapper = () => {
-    return wrapper.find('.VAnswer__Name_Own');
+
+  const getAnswerContainerWrapper = () => {
+    return wrapper.find('[data-testid="answer-container"]');
   };
 
   test('props to display avatar passed to VAvatar', () => {
@@ -104,15 +105,28 @@ describe('VAnswer', () => {
     );
   });
 
-  test('answer has own badge if user is not matching author', () => {
-    expect(getOwnerBadgeWrapper().exists()).toBe(false);
+  test('all answers have rounded corners and padding', () => {
+    const answerContainer = getAnswerContainerWrapper();
+
+    expect(answerContainer.classes()).toContain('rounded-8');
+    expect(answerContainer.classes()).toContain('p-8');
   });
 
-  test('answer has own badge if user matches author', () => {
+  test('answer without rank_label_color has transparent background', () => {
+    const answerContainer = getAnswerContainerWrapper();
+    const element = answerContainer.element as HTMLElement;
+
+    expect(element.style.backgroundColor).toBe('transparent');
+  });
+
+  test('answer with rank_label_color has that background color', () => {
     const props = cloneDeep(defaultProps);
-    props.answer.author.uuid = uuid;
+    props.answer.author.rank_label_color = '#F7CA45';
     wrapper = mount(VAnswer, { ...defaultMountOptions, props });
 
-    expect(getOwnerBadgeWrapper().exists()).toBe(true);
+    const answerContainer = getAnswerContainerWrapper();
+    const element = answerContainer.element as HTMLElement;
+
+    expect(element.style.backgroundColor).toBe('rgb(247, 202, 69)');
   });
 });

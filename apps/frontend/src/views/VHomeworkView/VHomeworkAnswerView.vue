@@ -253,7 +253,11 @@
       </div>
       <VDetails>
         <template #summary> Текст задания </template>
-        <VMakrdownContent :markdown="question.markdown_text" />
+        <VMakrdownContent
+          :markdown="question.markdown_text"
+          :enable-lightbox="true"
+          :group="question.slug"
+        />
       </VDetails>
     </section>
     <section class="VHomeworkAnswerView__Section">

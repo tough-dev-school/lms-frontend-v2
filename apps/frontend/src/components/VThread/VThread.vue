@@ -130,12 +130,14 @@
       :answer-id="answer.slug"
       @after-create="handleMounted"
     />
-    <button
-      class="text-sm link"
-      @click="replyMode = !replyMode"
-    >
-      {{ replyMode ? 'Отменить' : 'Ответить' }}
-    </button>
+    <div class="mt-4 px-8 tablet:px-16">
+      <button
+        class="text-sm link"
+        @click="replyMode = !replyMode"
+      >
+        {{ replyMode ? 'Отменить' : 'Ответить' }}
+      </button>
+    </div>
     <div
       class="thread-ruler"
       :class="{ 'mt-16': replyMode }"

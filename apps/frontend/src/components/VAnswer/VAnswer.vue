@@ -57,7 +57,18 @@
 </script>
 
 <template>
-  <div class="flex flex-col gap-8">
+  <div
+    data-testid="answer-container"
+    class="flex flex-col gap-8 rounded-8 p-8 tablet:p-16"
+    :class="
+      answer.author.rank_label_color
+        ? 'text-black dark:text-black'
+        : 'text-black dark:text-white'
+    "
+    :style="{
+      backgroundColor: answer.author.rank_label_color ?? 'transparent',
+    }"
+  >
     <div class="flex items-center gap-8">
       <VAvatar
         data-testid="avatar"
@@ -66,8 +77,7 @@
       />
       <div>
         <div
-          class="font-bold text-black dark:text-white"
-          :class="{ VAnswer__Name_Own: isOwn }"
+          class="font-bold"
           data-testid="name"
         >
           {{ getName(answer.author.first_name, answer.author.last_name) }}
@@ -83,7 +93,7 @@
     <div class="mt-8 flex flex-wrap items-center justify-start gap-8">
       <slot name="footer" />
       <div
-        class="text-sub leading-tight text-gray"
+        class="text-sub leading-tight opacity-70"
         data-testid="date"
       >
         {{ relativeDate(answer.created) }}
@@ -126,9 +136,3 @@
     </div>
   </div>
 </template>
-
-<style scoped>
-  .VAnswer__Name_Own {
-    @apply text-accent-orange;
-  }
-</style>
