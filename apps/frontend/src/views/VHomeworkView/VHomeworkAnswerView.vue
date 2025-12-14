@@ -27,7 +27,7 @@
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
   import { getEmptyContent } from '@/utils/tiptap';
   import VMakrdownContent from '@/components/VMakrdownContent/VMakrdownContent.vue';
-  import type { AnswerTree } from '@/api/generated/types';
+  import { usePopulateAnswersCache } from '@/composables/usePopulateAnswersCache';
 
   const props = defineProps<{
     questionId: string;
@@ -53,27 +53,13 @@
 
   const { data: user, isLoading: isUserLoading } = useUsersMeRetrieve();
 
-  const populateAnswersCacheFromDescendants = (rootAnswer: AnswerTree) => {
-    const flatAnswers: AnswerTree[] = [];
-
-    const populate = (a: AnswerTree) => {
-      flatAnswers.push(a);
-
-      if (a.descendants.length) a.descendants.forEach(populate);
-    };
-
-    populate(rootAnswer);
-
-    flatAnswers.forEach((a) => {
-      queryClient.setQueryData(homeworkAnswersRetrieveQueryKey(a.slug), a);
-    });
-  };
+  const populateAnswersCache = usePopulateAnswersCache();
 
   watch(
     () => answer.value,
     () => {
       if (answer.value) {
-        populateAnswersCacheFromDescendants(answer.value);
+        populateAnswersCache(answer.value);
       }
     },
   );

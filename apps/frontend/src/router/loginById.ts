@@ -12,7 +12,8 @@ export const loginById = async (to: RouteLocationNormalized) => {
       const response = await authAsRetrieve(userId);
       queryClient.invalidateQueries();
       return response;
-    } catch {
+    } catch (error) {
+      console.error(error);
       throw new Error('Failed to login');
     }
   };

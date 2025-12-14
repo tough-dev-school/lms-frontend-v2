@@ -12,7 +12,8 @@ export const loginByToken = async (to: RouteLocationNormalized) => {
       const response = await authPasswordlessTokenRetrieve(passwordlessToken);
       queryClient.invalidateQueries();
       return response;
-    } catch {
+    } catch (error) {
+      console.error(error);
       throw new Error('Failed to login');
     }
   };

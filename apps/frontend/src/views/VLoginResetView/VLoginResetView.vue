@@ -13,15 +13,17 @@
   const queryClient = useQueryClient();
   const email = ref('');
 
-  const { mutateAsync: requestReset, error } = useAuthPasswordResetCreate({
+  const {
+    mutateAsync: requestReset,
+    error,
+    isPending,
+  } = useAuthPasswordResetCreate({
     mutation: {
       onSuccess: () => {
         queryClient.invalidateQueries();
       },
     },
   });
-
-  const isPending = ref(false);
 
   const handleResetRequest = async () => {
     try {

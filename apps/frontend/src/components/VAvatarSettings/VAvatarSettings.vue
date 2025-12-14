@@ -44,6 +44,7 @@
 
     isPending.value = true;
 
+    // #FIXME this should be done with kubb when avatar will be marked as multipart/form-data
     const httpClient = createHttpClient();
 
     try {

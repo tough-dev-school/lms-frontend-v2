@@ -2,14 +2,11 @@
   import {
     useUsersMeRetrieve,
     useHomeworkAnswersRetrieve,
-    homeworkAnswersRetrieveQueryKey,
   } from '@/api/generated/hooks';
   import { computed, watch } from 'vue';
-  import { useQueryClient } from '@tanstack/vue-query';
   import VThread from './VThread.vue';
-  import type { Answer, AnswerTree } from '@/api/generated/types';
+  import { usePopulateAnswersCache } from '@/composables/usePopulateAnswersCache';
 
-  const queryClient = useQueryClient();
   const props = defineProps<{
     answerId: string;
   }>();
@@ -23,29 +20,13 @@
     computed(() => props.answerId),
   );
 
-  const populateAnswersCacheFromDescendants = (rootAnswer: AnswerTree) => {
-    const flatAnswers: Answer[] = [];
-
-    const populate = (a: Answer | AnswerTree) => {
-      flatAnswers.push(a);
-
-      if ('descendants' in a && a.descendants.length) {
-        a.descendants.forEach((v) => populate(v));
-      }
-    };
-
-    populate(rootAnswer);
-
-    flatAnswers.forEach((a) => {
-      queryClient.setQueryData(homeworkAnswersRetrieveQueryKey(a.slug), answer);
-    });
-  };
+  const populateAnswersCache = usePopulateAnswersCache();
 
   watch(
     () => answer.value,
     () => {
       if (answer.value) {
-        populateAnswersCacheFromDescendants(answer.value);
+        populateAnswersCache(answer.value);
       }
     },
   );
