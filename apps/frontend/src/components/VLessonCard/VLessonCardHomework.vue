@@ -29,19 +29,21 @@
 
   <div>
     <table class="w-full">
-      <tr>
-        <td class="font-bold">Статус</td>
-        <td class="whitespace-nowrap text-right">
-          {{ homework.is_sent ? 'Отправлена' : 'Не отправлена' }}
-        </td>
-      </tr>
-      <tr v-if="homework.crosschecks">
-        <td class="font-bold">Проверенные домашки коллег</td>
-        <td class="text-right">
-          {{ homework.crosschecks.checked }} из
-          {{ homework.crosschecks.total }}
-        </td>
-      </tr>
+      <tbody>
+        <tr>
+          <td class="font-bold">Статус</td>
+          <td class="whitespace-nowrap text-right">
+            {{ homework.is_sent ? 'Отправлена' : 'Не отправлена' }}
+          </td>
+        </tr>
+        <tr v-if="homework.crosschecks">
+          <td class="font-bold">Проверенные домашки коллег</td>
+          <td class="text-right">
+            {{ homework.crosschecks.checked }} из
+            {{ homework.crosschecks.total }}
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>
 
