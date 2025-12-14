@@ -113,7 +113,11 @@ const STATIC_ANSWER = mockAnswer({
       slug: 'comment-1',
       question: 'javascript-fundamentals',
       parent: 'answer-123',
-      author: mockUserSafe({ seed: 2 }),
+      author: {
+        ...mockUserSafe({ seed: 2 }),
+        rank: '1',
+        rank_label_color: '#F7CA45',
+      },
       content: {
         type: 'doc',
         content: [
@@ -123,6 +127,26 @@ const STATIC_ANSWER = mockAnswer({
               {
                 type: 'text',
                 text: 'Отличная работа! Код написан чисто и понятно.',
+              },
+            ],
+          },
+        ],
+      },
+    }),
+    mockAnswer({
+      slug: 'comment-2',
+      question: 'javascript-fundamentals',
+      parent: 'answer-123',
+      author: mockUserSafe({ seed: 3 }),
+      content: {
+        type: 'doc',
+        content: [
+          {
+            type: 'paragraph',
+            content: [
+              {
+                type: 'text',
+                text: 'Согласен! Особенно понравился подход к организации кода.',
               },
             ],
           },
