@@ -120,9 +120,6 @@ importers:
       '@kubb/plugin-faker':
         specifier: ^4.5.9
         version: 4.5.9(ajv@8.17.1)
-      '@kubb/plugin-msw':
-        specifier: ^4.5.9
-        version: 4.5.9(ajv@8.17.1)
       '@kubb/plugin-oas':
         specifier: ^4.5.9
         version: 4.5.9(@kubb/react-fabric@0.3.1)(ajv@8.17.1)
@@ -833,10 +830,6 @@ packages:
 
   '@kubb/plugin-faker@4.5.9':
     resolution: {integrity: sha512-YkMa06o1GyTMXCWeZsqPmqXx3/IP6bcLq5SX6FMVqV+PR0xh7DP7OIM+KWbBxZ5Y+p9vLk/YcE7TR90n34my5w==}
-    engines: {node: '>=20'}
-
-  '@kubb/plugin-msw@4.5.9':
-    resolution: {integrity: sha512-k+73/HXn2Tx5S9XP5FrvxN20yFAS6RnRcxC+VvtgdAcAqJxcU6DzlFpSrS14cw5kMyyuGAkqkUL1zfxmkGAldQ==}
     engines: {node: '>=20'}
 
   '@kubb/plugin-oas@4.5.9':
@@ -5327,8 +5320,8 @@ packages:
   vue-component-type-helpers@2.2.8:
     resolution: {integrity: sha512-4bjIsC284coDO9om4HPA62M7wfsTvcmZyzdfR0aUlFXqq4tXxM1APyXpNVxPC8QazKw9OhmZNHBVDA6ODaZsrA==}
 
-  vue-component-type-helpers@3.1.5:
-    resolution: {integrity: sha512-7V3yJuNWW7/1jxCcI1CswnpDsvs02Qcx/N43LkV+ZqhLj2PKj50slUflHAroNkN4UWiYfzMUUUXiNuv9khmSpQ==}
+  vue-component-type-helpers@3.1.8:
+    resolution: {integrity: sha512-oaowlmEM6BaYY+8o+9D9cuzxpWQWHqHTMKakMxXu0E+UCIOMTljyIPO15jcnaCwJtZu/zWDotK7mOIHvWD9mcw==}
 
   vue-demi@0.14.10:
     resolution: {integrity: sha512-nMZBOwuzabUO0nLgIcc6rycZEebF6eeUfaiQx9+WSk8e29IbLvPU9feI6tqW4kTo3hvoYAJkMh8n8D0fuISphg==}
@@ -6170,21 +6163,6 @@ snapshots:
       - encoding
       - utf-8-validate
 
-  '@kubb/plugin-msw@4.5.9(ajv@8.17.1)':
-    dependencies:
-      '@kubb/core': 4.5.9(@kubb/react-fabric@0.3.1)
-      '@kubb/oas': 4.5.9(ajv@8.17.1)
-      '@kubb/plugin-faker': 4.5.9(ajv@8.17.1)
-      '@kubb/plugin-oas': 4.5.9(@kubb/react-fabric@0.3.1)(ajv@8.17.1)
-      '@kubb/plugin-ts': 4.5.9(@kubb/react-fabric@0.3.1)(ajv@8.17.1)
-      '@kubb/react-fabric': 0.3.1
-    transitivePeerDependencies:
-      - ajv
-      - babel-plugin-macros
-      - bufferutil
-      - encoding
-      - utf-8-validate
-
   '@kubb/plugin-oas@4.5.9(@kubb/react-fabric@0.3.1)(ajv@8.17.1)':
     dependencies:
       '@kubb/core': 4.5.9(@kubb/react-fabric@0.3.1)
@@ -6619,7 +6597,7 @@ snapshots:
       storybook: 10.0.7(@testing-library/dom@10.4.0)(prettier@3.6.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(vite@7.2.2(@types/node@20.19.2)(jiti@2.6.1)(terser@5.44.1)(yaml@2.8.1))
       type-fest: 2.19.0
       vue: 3.5.24(typescript@5.8.3)
-      vue-component-type-helpers: 3.1.5
+      vue-component-type-helpers: 3.1.8
 
   '@stylistic/eslint-plugin@5.2.1(eslint@9.31.0(jiti@2.6.1))':
     dependencies:
@@ -11174,7 +11152,7 @@ snapshots:
 
   vue-component-type-helpers@2.2.8: {}
 
-  vue-component-type-helpers@3.1.5: {}
+  vue-component-type-helpers@3.1.8: {}
 
   vue-demi@0.14.10(vue@3.5.24(typescript@5.8.3)):
     dependencies:

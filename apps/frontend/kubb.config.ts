@@ -1,6 +1,5 @@
 import { defineConfig } from '@kubb/core';
 import { pluginOas } from '@kubb/plugin-oas';
-import { pluginMsw } from '@kubb/plugin-msw';
 import { pluginTs } from '@kubb/plugin-ts';
 import { pluginClient } from '@kubb/plugin-client';
 import { pluginVueQuery } from '@kubb/plugin-vue-query';
@@ -36,12 +35,6 @@ export default defineConfig({
       importPath: '../../client',
       output: {
         path: './clients',
-        banner,
-      },
-    }),
-    pluginMsw({
-      output: {
-        path: './handlers',
         banner,
       },
     }),
