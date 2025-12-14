@@ -49,7 +49,7 @@ export const RankedAuthor = {
         rank_label_color: '#F7CA45',
       },
     },
-    user: mockUserSafe(),
+    user: createUserSafe(),
   },
 };
 

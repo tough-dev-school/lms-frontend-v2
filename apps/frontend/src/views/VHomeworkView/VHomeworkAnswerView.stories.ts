@@ -141,7 +141,7 @@ const STATIC_ANSWER = createAnswerTree({
         ],
       },
     }),
-    mockAnswer({
+    createAnswerTree({
       slug: 'comment-2',
       question: 'javascript-fundamentals',
       parent: 'answer-123',
