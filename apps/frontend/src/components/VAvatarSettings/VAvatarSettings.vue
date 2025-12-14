@@ -35,6 +35,7 @@
   const saveProfile = async () => {
     const avatarFile = file.value || null;
     const formData = new FormData();
+
     if (avatarFile) {
       formData.append('avatar', avatarFile);
     } else {
@@ -46,8 +47,7 @@
     const httpClient = createHttpClient();
 
     try {
-      await httpClient.post('/api/v2/users/me/', {
-        data: formData,
+      await httpClient.patch('/api/v2/users/me/', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
