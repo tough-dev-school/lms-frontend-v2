@@ -23,9 +23,8 @@ services:
       - EMAIL_FROM=dev@localhost
       - EMAIL_ENABLED=On
       - FRONTEND_URL=http://localhost:3000/
-      - DEFAULT_FILE_STORAGE=storages.backends.s3boto3.S3Boto3Storage
-      - AWS_S3_ENDPOINT_URL=http://s3:9000
-      - AWS_S3_CUSTOM_DOMAIN=127.0.0.1:9000/dev
+      - DEFAULT_FILE_STORAGE=core.storages.ProdReadOnlyStorage
+      - AWS_S3_CUSTOM_DOMAIN=cdn.tough-dev.school
       - AWS_ACCESS_KEY_ID=root
       - AWS_SECRET_ACCESS_KEY=ibcxJ8Du
       - AWS_STORAGE_BUCKET_NAME=dev
@@ -47,18 +46,5 @@ services:
   redis:
     image: redis:6-alpine
 
-  s3:
-    image: bitnamilegacy/minio
-    environment:
-      - MINIO_ROOT_USER=root
-      - MINIO_ROOT_PASSWORD=ibcxJ8Du
-      - MINIO_DEFAULT_BUCKETS=dev:public
-    volumes:
-      - s3-data:/data
-    ports:
-      - 9000:9000
-      - 9001:9001
-
 volumes:
   db-data:
-  s3-data:
