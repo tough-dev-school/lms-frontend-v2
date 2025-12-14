@@ -41,7 +41,13 @@
 </script>
 
 <template>
-  <div class="flex flex-col gap-8">
+  <div
+    data-testid="answer-container"
+    class="flex flex-col gap-8 rounded-8 p-8 tablet:p-16"
+    :style="{
+      backgroundColor: answer.author.rank_label_color ?? 'transparent',
+    }"
+  >
     <div class="flex items-center gap-8">
       <VAvatar
         data-testid="avatar"
