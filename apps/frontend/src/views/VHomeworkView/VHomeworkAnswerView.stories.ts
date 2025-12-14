@@ -113,7 +113,11 @@ const STATIC_ANSWER = mockAnswer({
       slug: 'comment-1',
       question: 'javascript-fundamentals',
       parent: 'answer-123',
-      author: mockUserSafe({ seed: 2 }),
+      author: {
+        ...mockUserSafe({ seed: 2 }),
+        rank: 1,
+        rank_label_color: '#F7CA45',
+      },
       content: {
         type: 'doc',
         content: [

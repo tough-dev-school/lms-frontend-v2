@@ -46,7 +46,7 @@ export const RankedAuthor = {
       author: {
         ...answer.author,
         rank: 1,
-        rank_label_color: '#FFE5CC',
+        rank_label_color: '#F7CA45',
       },
     },
     user: mockUserSafe(),
@@ -62,7 +62,7 @@ export const RankedAuthorOwn = {
       author: {
         ...STATIC_AUTHOR_1,
         rank: 1,
-        rank_label_color: '#FFE5CC',
+        rank_label_color: '#F7CA45',
       },
     },
     user: STATIC_AUTHOR_1,

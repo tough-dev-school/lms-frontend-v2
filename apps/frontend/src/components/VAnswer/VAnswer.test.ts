@@ -138,12 +138,12 @@ describe('VAnswer', () => {
 
   test('answer with rank_label_color has that background color', () => {
     const props = cloneDeep(defaultProps);
-    props.answer.author.rank_label_color = '#FFE5CC';
+    props.answer.author.rank_label_color = '#F7CA45';
     wrapper = mount(VAnswer, { ...defaultMountOptions, props });
 
     const answerContainer = getAnswerContainerWrapper();
     const element = answerContainer.element as HTMLElement;
 
-    expect(element.style.backgroundColor).toBe('rgb(255, 229, 204)');
+    expect(element.style.backgroundColor).toBe('rgb(247, 202, 69)');
   });
 });
