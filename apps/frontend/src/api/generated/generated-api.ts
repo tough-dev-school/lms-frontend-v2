@@ -58,7 +58,7 @@ export interface Answer {
   /** @format uuid */
   parent: string;
   legacy_text: string;
-  content?: any;
+  content: Record<string, any>;
   has_descendants: boolean;
   is_editable: boolean;
   reactions: ReactionDetailed[];
@@ -103,7 +103,7 @@ export interface AnswerTree {
   /** @format uuid */
   parent: string;
   legacy_text: string;
-  content?: any;
+  content: Record<string, any>;
   has_descendants: boolean;
   is_editable: boolean;
   reactions: ReactionDetailed[];
@@ -812,6 +812,11 @@ export interface User {
    */
   last_name_en?: string;
   /**
+   * Randomly generated name
+   * @maxLength 128
+   */
+  random_name: string | null;
+  /**
    * Адрес электронной почты
    * @format email
    * @maxLength 254
@@ -856,10 +861,25 @@ export interface UserSafe {
    */
   last_name_en?: string;
   /**
+   * Randomly generated name
+   * @maxLength 128
+   */
+  random_name: string | null;
+  /**
    * Аватар
    * @format uri
    */
   avatar: string | null;
+  /**
+   * Звание
+   * @maxLength 32
+   */
+  rank: string | null;
+  /**
+   * Цвет плашки со званием
+   * @maxLength 7
+   */
+  rank_label_color: string | null;
 }
 
 export interface UserSelf {
@@ -894,6 +914,11 @@ export interface UserSelf {
    */
   last_name_en?: string;
   /**
+   * Randomly generated name
+   * @maxLength 128
+   */
+  random_name: string | null;
+  /**
    * Адрес электронной почты
    * @format email
    * @maxLength 254
@@ -917,6 +942,16 @@ export interface UserSelf {
    * Отметьте, если пользователь может входить в административную часть сайта.
    */
   is_staff?: boolean;
+  /**
+   * Звание
+   * @maxLength 32
+   */
+  rank: string | null;
+  /**
+   * Цвет плашки со званием
+   * @maxLength 7
+   */
+  rank_label_color: string | null;
 }
 
 export interface VideoProvider {
