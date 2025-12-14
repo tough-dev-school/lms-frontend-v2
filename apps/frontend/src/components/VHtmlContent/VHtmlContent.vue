@@ -7,8 +7,10 @@
     defineProps<{
       html: string;
       enableLightbox?: boolean;
+      group?: string;
     }>(),
     {
+      group: 'lightbox',
       enableLightbox: true,
     },
   );

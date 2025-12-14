@@ -71,7 +71,11 @@
       />
     </template>
     <section class="flex flex-col gap-24">
-      <VMakrdownContent :markdown="question.markdown_text" />
+      <VMakrdownContent
+        :markdown="question.markdown_text"
+        :group="question.slug"
+        :enable-lightbox="true"
+      />
       <VCreateAnswer
         v-model="content"
         :is-pending="isPending"
