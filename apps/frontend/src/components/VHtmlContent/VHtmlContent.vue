@@ -29,13 +29,12 @@
     if (!articleRef.value) return;
 
     const images = articleRef.value.querySelectorAll('img');
-    images.forEach((img, index) => {
+    images.forEach((img) => {
       const parent = img.parentElement;
       if (parent && parent.tagName !== 'A') {
         const link = document.createElement('a');
         link.href = img.src;
-        link.dataset.lightbox = 'answer-images';
-        link.dataset.glightbox = `title:Image ${index + 1}`;
+        link.dataset.lightbox = props.group;
 
         img.before(link);
         link.append(img);
@@ -44,7 +43,7 @@
 
     // eslint-disable-next-line new-cap
     lightbox = GLightbox({
-      selector: '[data-lightbox="answer-images"]',
+      selector: `[data-lightbox="${props.group}"]`,
       openEffect: 'zoom',
       closeEffect: 'none',
     });
