@@ -80,7 +80,7 @@
       :answer="answer"
       data-testid="content"
     />
-    <div class="flex flex-wrap items-center justify-start gap-8">
+    <div class="mt-8 flex flex-wrap items-center justify-start gap-8">
       <slot name="footer" />
       <div
         class="text-sub leading-tight text-gray"

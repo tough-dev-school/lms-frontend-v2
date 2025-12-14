@@ -216,25 +216,11 @@
         :lesson="lesson"
       />
     </template>
-    <section class="VHomeworkAnswerView__Section -mt-16">
-      <div
-        v-if="isOwnAnswer"
-        class="card mb-16 bg-accent-green"
-      >
-        <VHeading
-          tag="h3"
-          class="mb-8"
-        >
-          Поделитесь ссылкой на сделанную домашку
-        </VHeading>
-        <div class="block select-all break-all">
-          {{ answerLink }}
-        </div>
-      </div>
-      <VDetails>
-        <template #summary> Текст задания </template>
-        <VMakrdownContent :markdown="question.markdown_text" />
-      </VDetails>
+    <section>
+      <VCrossChecks
+        v-if="isOwnAnswer && crosschecks?.length"
+        :crosschecks="crosschecks"
+      />
     </section>
     <section class="VHomeworkAnswerView__Section">
       <VHeading tag="h2"> Отправленная работа</VHeading>
@@ -243,11 +229,32 @@
         @after-delete="handleDeleteAnswer"
       />
     </section>
-    <section>
-      <VCrossChecks
-        v-if="isOwnAnswer && crosschecks?.length"
-        :crosschecks="crosschecks"
-      />
+    <section class="VHomeworkAnswerView__Section -mt-16">
+      <div
+        v-if="isOwnAnswer"
+        class="card mb-16 flex flex-col gap-8 bg-accent-green"
+      >
+        <VHeading tag="h3">
+          Поделитесь ссылкой на свою домашку в чате учеников
+        </VHeading>
+        <p class="text-sub">
+          В течении курса коллеги по курсу будут присылать вам обратную связь на
+          вашу домашку, но если ее недостаточно или хочется больше фидбэка —
+          поделитесь ссылкой в чатике курса.
+        </p>
+        <p class="text-sub">Так повысите вероятность, что это случится.</p>
+        <div
+          v-if="answerLink"
+          class="select-all break-all rounded-8 bg-white/50 px-8 py-8 text-sub"
+          style="font-family: monospace"
+        >
+          {{ answerLink }}
+        </div>
+      </div>
+      <VDetails>
+        <template #summary> Текст задания </template>
+        <VMakrdownContent :markdown="question.markdown_text" />
+      </VDetails>
     </section>
     <section class="VHomeworkAnswerView__Section">
       <VHeading tag="h2">

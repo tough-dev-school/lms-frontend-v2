@@ -22,6 +22,7 @@
     IconRowRemove,
     IconColumnRemove,
     IconTableOff,
+    IconSeparator,
   } from '@tabler/icons-vue';
   import { onBeforeUnmount, ref, useTemplateRef, watch, computed } from 'vue';
   import { onKeyDown, useKeyModifier, useFocusWithin } from '@vueuse/core';
@@ -150,17 +151,20 @@
         if (!candidate) return false;
 
         const looksLikeMarkdown =
-          !!markdownFromClipboard ||
-          /^(\s{0,3}#{1,6}\s|\*\s|-\s|\d+\.\s|>\s|`{1,3}|!\[|\[.*?]\(.*?\))/m.test(
-            candidate,
-          );
-        if (!looksLikeMarkdown) return false;
+          !!markdownFromClipboard || /^\s{0,3}#{1,6}\s/m.test(candidate);
 
-        event.preventDefault();
-        const htmlFromMarkdown = marked.parse(candidate);
-        // Insert converted HTML at current selection
-        editor.chain().focus().insertContent(String(htmlFromMarkdown)).run();
-        return true;
+        // Only convert markdown if it actually looks like markdown
+        // Otherwise, let TipTap handle HTML paste natively to preserve styles
+        if (looksLikeMarkdown) {
+          event.preventDefault();
+          const htmlFromMarkdown = marked.parse(candidate);
+          // Insert converted HTML at current selection
+          editor.chain().focus().insertContent(String(htmlFromMarkdown)).run();
+          return true;
+        }
+
+        // Let TipTap handle styled HTML paste natively
+        return false;
       },
       handleDrop: (view, event, slice, moved) => {
         if (
@@ -367,6 +371,13 @@
         </button>
         <button
           class="TextEditor__Button"
+          :class="{ TextEditor__Button_Active: editor.isActive('underline') }"
+          @click="editor.chain().focus().setHorizontalRule().run()"
+        >
+          <IconSeparator />
+        </button>
+        <button
+          class="TextEditor__Button"
           :class="{ TextEditor__Button_Active: editor.isActive('link') }"
           @click="editLink"
         >
@@ -495,7 +506,7 @@
   }
 
   .ProseMirror {
-    @apply prose max-w-none outline-none dark:prose-invert;
+    @apply max-w-none outline-none dark:prose-invert;
   }
 
   .ProseMirror-focused {
