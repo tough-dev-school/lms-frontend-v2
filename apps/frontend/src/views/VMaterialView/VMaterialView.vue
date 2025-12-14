@@ -145,6 +145,14 @@
             @bookmark="setBookmark"
           />
         </VCard>
+        <footer class="flex justify-center">
+          <RouterLink
+            v-if="breadcrumbs && breadcrumbs[2]"
+            :to="breadcrumbs[2].to"
+          >
+            <VButton>Вернуться к содержанию урока</VButton>
+          </RouterLink>
+        </footer>
       </template>
       <div
         v-else-if="!material"
