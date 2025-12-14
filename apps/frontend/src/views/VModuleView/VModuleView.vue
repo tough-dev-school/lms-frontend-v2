@@ -53,17 +53,30 @@
   <VLoggedLayout
     v-if="!(isStudiesLoading || isModuleLoading || isLessonsLoading)"
     :title="moduleName"
-    :breadcrumbs="breadcrumbs">
-    <VHtmlContent v-if="moduleText" :html="moduleText" />
-    <div class="VLessonsView gap-32 flex flex-col">
-      <div v-if="lessons && lessons.length > 0" class="VLessonsView__Layout">
+    :breadcrumbs="breadcrumbs"
+  >
+    <VHtmlContent
+      v-if="moduleText"
+      :html="moduleText"
+      :enable-lightbox="false"
+    />
+    <div class="VLessonsView flex flex-col gap-32">
+      <div
+        v-if="lessons && lessons.length > 0"
+        class="VLessonsView__Layout"
+      >
         <VLessonCard
           v-for="lesson in lessons"
           :key="lesson.id"
           class="VLessonsView__Item"
-          :lesson="lesson" />
+          :lesson="lesson"
+        />
       </div>
-      <p v-else data-testid="empty" class="mb-16 text-center">
+      <p
+        v-else
+        data-testid="empty"
+        class="mb-16 text-center"
+      >
         Нет доступных уроков.
       </p>
     </div>
