@@ -74,9 +74,7 @@ describe('VAnswer', () => {
       '[data-testid="content"]',
     );
   };
-  const getOwnerBadgeWrapper = () => {
-    return wrapper.find('.VAnswer__Name_Own');
-  };
+
   const getAnswerContainerWrapper = () => {
     return wrapper.find('[data-testid="answer-container"]');
   };
@@ -108,18 +106,6 @@ describe('VAnswer', () => {
     expect(getContentWrapper().props().answer).toStrictEqual(
       defaultProps.answer,
     );
-  });
-
-  test('answer has own badge if user is not matching author', () => {
-    expect(getOwnerBadgeWrapper().exists()).toBe(false);
-  });
-
-  test('answer has own badge if user matches author', () => {
-    const props = cloneDeep(defaultProps);
-    props.answer.author.uuid = uuid;
-    wrapper = mount(VAnswer, { ...defaultMountOptions, props });
-
-    expect(getOwnerBadgeWrapper().exists()).toBe(true);
   });
 
   test('all answers have rounded corners and padding', () => {
