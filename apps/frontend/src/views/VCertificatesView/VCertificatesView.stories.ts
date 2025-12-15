@@ -23,7 +23,6 @@ const createDiplomaSet = (payload: Diploma): Diploma[] => {
         name_international: payload.course.name_international,
         product_name: payload.course.product_name,
         tariff_name: payload.course.tariff_name,
-        image: '/diploma-mock.jpg',
       },
     };
   });
@@ -37,6 +36,7 @@ const STATIC_DIPLOMAS = [
       product_name: 'Amazing Course',
       tariff_name: 'Amazing Course',
     },
+    image: '/diploma-mock.jpg',
     student: STATIC_AUTHOR_1,
   }),
   createDiploma({
@@ -46,6 +46,7 @@ const STATIC_DIPLOMAS = [
       product_name: 'Cool Course',
       tariff_name: 'Cool Course',
     },
+    image: '/diploma-mock.jpg',
     student: STATIC_AUTHOR_1,
   }),
   createDiploma({
@@ -55,6 +56,7 @@ const STATIC_DIPLOMAS = [
       product_name: 'Pro Course',
       tariff_name: 'Pro Course',
     },
+    image: '/diploma-mock.jpg',
     student: STATIC_AUTHOR_1,
   }),
 ];
