@@ -2,8 +2,8 @@ import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VHomeworkAnswerView from './VHomeworkAnswerView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import {
-  createAnswerTree,
   createUserSafe,
+  createAnswerTree,
   createQuestion,
   createModule,
   createCourse,
@@ -34,15 +34,63 @@ export default {
   },
 } as Meta;
 
-const STATIC_AUTHOR_1 = createUserSafe();
+const STATIC_AUTHOR_1 = createUserSafe({
+  uuid: 'user-uuid-001',
+  first_name: 'Иван',
+  last_name: 'Иванов',
+  first_name_en: 'Ivan',
+  last_name_en: 'Ivanov',
+  random_name: 'ivan_ivanov',
+  avatar: '',
+  rank: '1',
+  rank_label_color: '#F7CA45',
+});
 
-// Mock data using existing patterns
+const STATIC_AUTHOR_2 = createUserSafe({
+  uuid: 'user-uuid-002',
+  first_name: 'Петр',
+  last_name: 'Петров',
+  first_name_en: 'Petr',
+  last_name_en: 'Petrov',
+  random_name: 'petr_petrov',
+  avatar: '',
+  rank: '2',
+  rank_label_color: '#9B59B6',
+});
+
+const STATIC_AUTHOR_3 = createUserSafe({
+  uuid: 'user-uuid-003',
+  first_name: 'Мария',
+  last_name: 'Сидорова',
+  first_name_en: 'Maria',
+  last_name_en: 'Sidorova',
+  random_name: 'maria_sidorova',
+  avatar: '',
+  rank: '3',
+  rank_label_color: '#3498DB',
+});
+
+const STATIC_AUTHOR_4 = createUserSafe({
+  uuid: 'user-uuid-004',
+  first_name: 'Алексей',
+  last_name: 'Смирнов',
+  first_name_en: 'Alexey',
+  last_name_en: 'Smirnov',
+  random_name: 'alexey_smirnov',
+  avatar: '',
+  rank: '1',
+  rank_label_color: '#F7CA45',
+});
+
 const STATIC_QUESTION: QuestionDetail = {
   ...createQuestion({
+    created: '2024-01-01T10:00:00Z',
+    modified: '2024-01-15T10:00:00Z',
     slug: 'javascript-fundamentals',
     name: 'Основы JavaScript',
     markdown_text: `Выполните задания по основам JavaScript. Создайте простое приложение, которое демонстрирует работу с переменными, функциями и объектами.`,
     deadline: '2024-02-01T23:59:00Z',
+    is_crosscheck: true,
   }),
   homework: {
     is_sent: true,
@@ -55,12 +103,13 @@ const STATIC_QUESTION: QuestionDetail = {
     module: createModule({
       id: 1,
       name: 'Основы программирования',
+      slug: 'basics',
+      order: 1,
     }),
     lesson: {
       id: 1,
     },
-    course: {
-      ...createCourse(),
+    course: createCourse({
       id: 1,
       name: 'Курс веб-разработки',
       slug: 'web-development',
@@ -70,10 +119,9 @@ const STATIC_QUESTION: QuestionDetail = {
       calendar_google: 'https://calendar.google.com/test',
       homework_check_recommendations:
         'При проверке домашних заданий обратите внимание на чистоту кода, правильность реализации алгоритмов и соответствие требованиям.',
-    },
+    }),
   },
-  course: {
-    ...createCourse(),
+  course: createCourse({
     id: 1,
     name: 'Курс веб-разработки',
     slug: 'web-development',
@@ -83,12 +131,20 @@ const STATIC_QUESTION: QuestionDetail = {
     chat: 'https://t.me/test',
     calendar_ios: 'https://calendar.apple.com/test',
     calendar_google: 'https://calendar.google.com/test',
-  },
+  }),
 };
 
 const STATIC_LESSON: Lesson = {
   id: 1,
-  question: createQuestion(),
+  question: createQuestion({
+    created: '2024-01-01T10:00:00Z',
+    modified: '2024-01-15T10:00:00Z',
+    slug: 'javascript-fundamentals',
+    name: 'Основы JavaScript',
+    markdown_text: 'Выполните задания по основам JavaScript.',
+    deadline: '2024-02-01T23:59:00Z',
+    is_crosscheck: true,
+  }),
   homework: {
     is_sent: true,
     crosschecks: {
@@ -99,9 +155,13 @@ const STATIC_LESSON: Lesson = {
 };
 
 const STATIC_ANSWER = createAnswerTree({
+  created: '2024-01-20T14:30:00Z',
+  modified: '2024-01-20T14:30:00Z',
   slug: 'answer-123',
   question: 'javascript-fundamentals',
   author: STATIC_AUTHOR_1,
+  parent: null,
+  legacy_text: '',
   content: {
     type: 'doc',
     content: [
@@ -116,16 +176,18 @@ const STATIC_ANSWER = createAnswerTree({
       },
     ],
   },
+  has_descendants: true,
+  is_editable: true,
+  reactions: [],
   descendants: [
     createAnswerTree({
+      created: '2024-01-21T10:00:00Z',
+      modified: '2024-01-21T10:00:00Z',
       slug: 'comment-1',
       question: 'javascript-fundamentals',
+      author: STATIC_AUTHOR_2,
       parent: 'answer-123',
-      author: {
-        ...createUserSafe(),
-        rank: '1',
-        rank_label_color: '#F7CA45',
-      },
+      legacy_text: '',
       content: {
         type: 'doc',
         content: [
@@ -140,12 +202,19 @@ const STATIC_ANSWER = createAnswerTree({
           },
         ],
       },
+      has_descendants: false,
+      is_editable: false,
+      reactions: [],
+      descendants: [],
     }),
     createAnswerTree({
+      created: '2024-01-21T11:00:00Z',
+      modified: '2024-01-21T11:00:00Z',
       slug: 'comment-2',
       question: 'javascript-fundamentals',
+      author: STATIC_AUTHOR_3,
       parent: 'answer-123',
-      author: createUserSafe(),
+      legacy_text: '',
       content: {
         type: 'doc',
         content: [
@@ -160,6 +229,10 @@ const STATIC_ANSWER = createAnswerTree({
           },
         ],
       },
+      has_descendants: false,
+      is_editable: false,
+      reactions: [],
+      descendants: [],
     }),
   ],
 });
@@ -171,8 +244,16 @@ const STATIC_CROSSCHECKS: CrossCheck[] = [
     answer: {
       slug: 'other-answer-1',
       url: '/homework/javascript-fundamentals?answerId=other-answer-1',
-      question: createQuestion({ slug: 'javascript-fundamentals' }),
-      author: createUserSafe(),
+      question: createQuestion({
+        created: '2024-01-01T10:00:00Z',
+        modified: '2024-01-15T10:00:00Z',
+        slug: 'javascript-fundamentals',
+        name: 'Основы JavaScript',
+        markdown_text: 'Выполните задания по основам JavaScript.',
+        deadline: '2024-02-01T23:59:00Z',
+        is_crosscheck: true,
+      }),
+      author: STATIC_AUTHOR_2,
     },
   },
   {
@@ -181,8 +262,16 @@ const STATIC_CROSSCHECKS: CrossCheck[] = [
     answer: {
       slug: 'other-answer-2',
       url: '/homework/javascript-fundamentals?answerId=other-answer-2',
-      question: createQuestion({ slug: 'javascript-fundamentals' }),
-      author: createUserSafe(),
+      question: createQuestion({
+        created: '2024-01-01T10:00:00Z',
+        modified: '2024-01-15T10:00:00Z',
+        slug: 'javascript-fundamentals',
+        name: 'Основы JavaScript',
+        markdown_text: 'Выполните задания по основам JavaScript.',
+        deadline: '2024-02-01T23:59:00Z',
+        is_crosscheck: true,
+      }),
+      author: STATIC_AUTHOR_3,
     },
   },
   {
@@ -191,8 +280,16 @@ const STATIC_CROSSCHECKS: CrossCheck[] = [
     answer: {
       slug: 'other-answer-3',
       url: '/homework/javascript-fundamentals?answerId=other-answer-3',
-      question: createQuestion({ slug: 'javascript-fundamentals' }),
-      author: createUserSafe(),
+      question: createQuestion({
+        created: '2024-01-01T10:00:00Z',
+        modified: '2024-01-15T10:00:00Z',
+        slug: 'javascript-fundamentals',
+        name: 'Основы JavaScript',
+        markdown_text: 'Выполните задания по основам JavaScript.',
+        deadline: '2024-02-01T23:59:00Z',
+        is_crosscheck: true,
+      }),
+      author: STATIC_AUTHOR_4,
     },
   },
 ];
@@ -256,17 +353,95 @@ export const Default = {
   },
 };
 
+const OTHER_USER_ANSWER = createAnswerTree({
+  created: '2024-01-20T15:00:00Z',
+  modified: '2024-01-20T15:00:00Z',
+  slug: 'answer-456',
+  question: 'javascript-fundamentals',
+  author: STATIC_AUTHOR_2,
+  parent: null,
+  legacy_text: '',
+  content: {
+    type: 'doc',
+    content: [
+      {
+        type: 'paragraph',
+        content: [
+          {
+            type: 'text',
+            text: 'Вот мое решение задания по JavaScript. Я создал приложение для управления списком задач с использованием базовых конструкций языка.',
+          },
+        ],
+      },
+    ],
+  },
+  has_descendants: true,
+  is_editable: false,
+  reactions: [],
+  descendants: [
+    createAnswerTree({
+      created: '2024-01-21T10:00:00Z',
+      modified: '2024-01-21T10:00:00Z',
+      slug: 'comment-3',
+      question: 'javascript-fundamentals',
+      author: STATIC_AUTHOR_3,
+      parent: 'answer-456',
+      legacy_text: '',
+      content: {
+        type: 'doc',
+        content: [
+          {
+            type: 'paragraph',
+            content: [
+              {
+                type: 'text',
+                text: 'Отличная работа! Код написан чисто и понятно.',
+              },
+            ],
+          },
+        ],
+      },
+      has_descendants: false,
+      is_editable: false,
+      reactions: [],
+      descendants: [],
+    }),
+    createAnswerTree({
+      created: '2024-01-21T11:00:00Z',
+      modified: '2024-01-21T11:00:00Z',
+      slug: 'comment-4',
+      question: 'javascript-fundamentals',
+      author: STATIC_AUTHOR_4,
+      parent: 'answer-456',
+      legacy_text: '',
+      content: {
+        type: 'doc',
+        content: [
+          {
+            type: 'paragraph',
+            content: [
+              {
+                type: 'text',
+                text: 'Согласен! Особенно понравился подход к организации кода.',
+              },
+            ],
+          },
+        ],
+      },
+      has_descendants: false,
+      is_editable: false,
+      reactions: [],
+      descendants: [],
+    }),
+  ],
+});
+
 export const OtherUserAnswer = {
   render: Template,
   args: {
     answerId: 'answer-456',
     question: STATIC_QUESTION,
-    answer: createAnswerTree({
-      ...STATIC_ANSWER,
-      slug: 'answer-456',
-      question: 'javascript-fundamentals',
-      author: createUserSafe(),
-    }),
+    answer: OTHER_USER_ANSWER,
     lesson: STATIC_LESSON,
     user: STATIC_AUTHOR_1,
     crosschecks: [],
