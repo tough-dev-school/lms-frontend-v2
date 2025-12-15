@@ -40,7 +40,7 @@ const STATIC_AUTHOR_1 = createUserSafe({
   first_name_en: 'Ivan',
   last_name_en: 'Ivanov',
   random_name: 'ivan_ivanov',
-  avatar: '',
+  avatar: null,
   rank: '1',
   rank_label_color: '#F7CA45',
 });
@@ -52,9 +52,9 @@ const STATIC_AUTHOR_2 = createUserSafe({
   first_name_en: 'Petr',
   last_name_en: 'Petrov',
   random_name: 'petr_petrov',
-  avatar: '',
-  rank: '2',
-  rank_label_color: '#9B59B6',
+  avatar: null,
+  rank: null,
+  rank_label_color: null,
 });
 
 const STATIC_AUTHOR_3 = createUserSafe({
