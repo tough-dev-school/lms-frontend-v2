@@ -10,6 +10,7 @@ import {
 } from '@/api/generated';
 import { useQueryClient } from '@tanstack/vue-query';
 import type { MaterialSerilizer } from '@/api/generated';
+import { mockNotionMaterial } from '@/mocks/mockNotionMaterial';
 
 export default {
   title: 'App/VMaterialView',
@@ -42,6 +43,7 @@ const STATIC_MATERIAL_DATA: MaterialSerilizer = createMaterialSerilizer({
     module: STATIC_MODULE,
     lesson: STATIC_LESSON,
   },
+  content: mockNotionMaterial(),
 });
 
 const Template: StoryFn = (args) => ({
