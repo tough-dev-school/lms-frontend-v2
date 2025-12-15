@@ -8,7 +8,13 @@ import { useQueryClient } from '@tanstack/vue-query';
 import { ref } from 'vue';
 
 vi.mock('@/composables/useAuth');
-vi.mock('@/api/generated');
+vi.mock('@/api/generated', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/api/generated')>();
+  return {
+    ...actual,
+    authAsRetrieve: vi.fn(),
+  };
+});
 vi.mock('@tanstack/vue-query');
 vi.mock('@/utils/useAuth');
 

@@ -8,7 +8,13 @@ import { ref } from 'vue';
 
 const defaultProps = {};
 
-vi.mock('@/api/generated');
+vi.mock('@/api/generated', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/api/generated')>();
+  return {
+    ...actual,
+    useAuthPasswordChangeCreate: vi.fn(),
+  };
+});
 vi.mock('@tanstack/vue-query');
 
 describe('VSettingsView', () => {

@@ -10,7 +10,13 @@ import type { VueQueryPluginOptions } from '@tanstack/vue-query';
 
 const defaultStudies = faker.helpers.multiple(createCourse, { count: 3 });
 
-vi.mock('@/api/generated');
+vi.mock('@/api/generated', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/api/generated')>();
+  return {
+    ...actual,
+    usePurchasedCoursesList: vi.fn(),
+  };
+});
 
 const createWrapper = (studies = defaultStudies) => {
   const queryClient = new QueryClient({

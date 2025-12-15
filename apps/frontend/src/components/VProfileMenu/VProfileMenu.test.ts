@@ -15,7 +15,13 @@ const routerPushMock = vi.fn();
 
 vi.mock('vue-router');
 
-vi.mock('@/api/generated');
+vi.mock('@/api/generated', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/api/generated')>();
+  return {
+    ...actual,
+    useUsersMeRetrieve: vi.fn(),
+  };
+});
 
 const createWrapper = () => {
   const queryClient = new QueryClient({

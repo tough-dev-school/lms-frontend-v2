@@ -16,7 +16,13 @@ const routerPushMock = vi.fn();
 
 vi.mock('vue-router');
 vi.mock('@/composables/useAuth');
-vi.mock('@/api/generated');
+vi.mock('@/api/generated', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/api/generated')>();
+  return {
+    ...actual,
+    useAuthPasswordResetCreate: vi.fn(),
+  };
+});
 vi.mock('@tanstack/vue-query');
 
 const email = faker.internet.email();

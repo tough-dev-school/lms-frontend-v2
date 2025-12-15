@@ -11,7 +11,13 @@ import { vi, describe, beforeEach, expect, test } from 'vitest';
 
 const defaultProps = {};
 
-vi.mock('@/api/generated');
+vi.mock('@/api/generated', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/api/generated')>();
+  return {
+    ...actual,
+    useDiplomasList: vi.fn(),
+  };
+});
 
 const createDiplomaSet = (payload: Diploma): Diploma[] => {
   return Object.values(LanguageEnum).map((locale) => {
