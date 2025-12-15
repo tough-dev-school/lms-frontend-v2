@@ -3,17 +3,14 @@
   import VCard from '@/components/VCard/VCard.vue';
   import VAvatar from '@/components/VAvatar/VAvatar.vue';
   import VButton from '@/components/VButton/VButton.vue';
-  import { useUserQuery, useUpdateUserAvatarMutation } from '@/query';
+  import { useUsersMeRetrieve, usersMeRetrieveQueryKey } from '@/api/generated';
   import { useQueryClient } from '@tanstack/vue-query';
+  import { createHttpClient } from '@/api/client';
   import VError from '@/components/VError/VError.vue';
+  import type { FormError } from '@/types/error';
 
   const queryClient = useQueryClient();
-  const { data: user } = useUserQuery();
-  const {
-    mutateAsync: updateAvatar,
-    error,
-    isPending,
-  } = useUpdateUserAvatarMutation(queryClient);
+  const { data: user } = useUsersMeRetrieve();
 
   const avatar = ref();
   const file = ref();
@@ -28,8 +25,39 @@
     file.value = undefined;
   };
 
+  const isPending = ref(false);
+
+  const error = ref<FormError | null>(null);
+
   const saveProfile = async () => {
-    await updateAvatar(file.value || null);
+    const avatarFile = file.value || null;
+    const formData = new FormData();
+
+    if (avatarFile) {
+      formData.append('avatar', avatarFile);
+    } else {
+      formData.append('avatar', '');
+    }
+
+    isPending.value = true;
+
+    // #FIXME this should be done with kubb when avatar will be marked as multipart/form-data
+    const httpClient = createHttpClient();
+
+    try {
+      await httpClient.patch('/api/v2/users/me/', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      queryClient.invalidateQueries({
+        queryKey: usersMeRetrieveQueryKey(),
+      });
+    } catch (caughtError) {
+      error.value = caughtError as unknown as FormError;
+    } finally {
+      isPending.value = false;
+    }
   };
 
   // #FIXME

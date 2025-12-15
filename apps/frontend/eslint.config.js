@@ -8,6 +8,9 @@ export default defineConfig(
     strict: false,
   },
   {
+    ignores: ['**/generated/**'],
+  },
+  {
     files: [GLOB_VUE],
     rules: {
       'vue/no-undef-components': [

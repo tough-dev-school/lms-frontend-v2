@@ -2,10 +2,12 @@
   import VCover from '@/components/VCover/VCover.vue';
   import { RouterLink } from 'vue-router';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
-  import { useStudiesQuery } from '@/query';
+  import { usePurchasedCoursesList } from '@/api/generated';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
+  import { computed } from 'vue';
 
-  const { data: studies, isLoading } = useStudiesQuery();
+  const { data, isLoading } = usePurchasedCoursesList({ page_size: 100 });
+  const studies = computed(() => data.value?.results);
 </script>
 
 <template>

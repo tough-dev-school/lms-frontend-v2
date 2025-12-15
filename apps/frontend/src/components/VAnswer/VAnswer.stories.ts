@@ -1,14 +1,14 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VAnswer from '@/components/VAnswer/VAnswer.vue';
-import { mockAnswer } from '@/mocks/mockAnswer';
-import { mockUserSafe, STATIC_AUTHOR_1 } from '@/mocks/mockUserSafe';
+import { createAnswerTree, createUserSafe } from '@/api/generated';
 
 export default {
   title: 'Answer/VAnswer',
   component: VAnswer,
 } as Meta;
 
-const answer = mockAnswer();
+const STATIC_AUTHOR_1 = createUserSafe();
+const answer = createAnswerTree();
 const ownAnswer = { ...answer, author: STATIC_AUTHOR_1 };
 
 const Template: StoryFn = (args) => ({
@@ -24,7 +24,7 @@ export const Default = {
 
   args: {
     answer,
-    user: mockUserSafe(),
+    user: createUserSafe(),
   },
 };
 
@@ -49,7 +49,7 @@ export const RankedAuthor = {
         rank_label_color: '#F7CA45',
       },
     },
-    user: mockUserSafe(),
+    user: createUserSafe(),
   },
 };
 

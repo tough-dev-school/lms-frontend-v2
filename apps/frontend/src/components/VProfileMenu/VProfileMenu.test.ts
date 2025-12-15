@@ -2,34 +2,26 @@ import { vi, describe, beforeEach, expect, test } from 'vitest';
 import { RouterLinkStub, mount, VueWrapper } from '@vue/test-utils';
 import VProfileMenu from '@/components/VProfileMenu/VProfileMenu.vue';
 import type VAvatar from '@/components/VAvatar/VAvatar.vue';
-import { faker } from '@faker-js/faker';
 import { VueQueryPlugin, QueryClient } from '@tanstack/vue-query';
 import type { VueQueryPluginOptions } from '@tanstack/vue-query';
 import { ref } from 'vue';
-import { useUserQuery } from '@/query';
-import type { UserSelf } from '@/api/generated/generated-api';
+import {
+  useUsersMeRetrieve,
+  createUsersMeRetrieveQueryResponse,
+} from '@/api/generated';
 import { useRouter } from 'vue-router';
-import { mockUserSafe } from '@/mocks/mockUserSafe';
 
 const routerPushMock = vi.fn();
 
 vi.mock('vue-router');
 
-vi.mock('@/query');
-
-const getDefaultData = (): UserSelf => {
-  faker.seed(1);
+vi.mock('@/api/generated', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/api/generated')>();
   return {
-    ...mockUserSafe(),
-    id: 1,
-    uuid: faker.string.uuid(),
-    username: faker.internet.email(),
-    first_name: faker.person.firstName(),
-    last_name: faker.person.lastName(),
-    avatar: faker.image.avatar(),
-    is_staff: false,
+    ...actual,
+    useUsersMeRetrieve: vi.fn(),
   };
-};
+});
 
 const createWrapper = () => {
   const queryClient = new QueryClient({
@@ -41,10 +33,13 @@ const createWrapper = () => {
     },
   });
 
-  queryClient.setQueryData(['base', 'user', 'me'], getDefaultData());
+  queryClient.setQueryData(
+    ['base', 'user', 'me'],
+    createUsersMeRetrieveQueryResponse(),
+  );
 
-  vi.mocked(useUserQuery).mockReturnValue({
-    data: ref(getDefaultData()),
+  vi.mocked(useUsersMeRetrieve).mockReturnValue({
+    data: ref(createUsersMeRetrieveQueryResponse()),
     isLoading: ref(false),
   } as any);
 
@@ -70,7 +65,7 @@ describe('VProfileMenu', () => {
     (useRouter as ReturnType<typeof vi.fn>).mockReturnValue({
       push: routerPushMock,
     });
-    vi.mocked(useUserQuery);
+    vi.mocked(useUsersMeRetrieve);
 
     wrapper = createWrapper();
   });
@@ -107,18 +102,24 @@ describe('VProfileMenu', () => {
   test('Avatar has correct props', () => {
     const avatar = getAvatar();
 
-    expect(avatar.props('userId')).toBe(getDefaultData().uuid);
-    expect(avatar.props('image')).toBe(getDefaultData().avatar);
+    expect(avatar.props('userId')).toBe(
+      createUsersMeRetrieveQueryResponse().uuid,
+    );
+    expect(avatar.props('image')).toBe(
+      createUsersMeRetrieveQueryResponse().avatar,
+    );
   });
 
   test('Name is displayed correctly', () => {
     expect(getName().text()).toBe(
-      `${getDefaultData().first_name} ${getDefaultData().last_name}`,
+      `${createUsersMeRetrieveQueryResponse().first_name} ${createUsersMeRetrieveQueryResponse().last_name}`,
     );
   });
 
   test('Username is displayed correctly', () => {
-    expect(getUsername().text()).toBe(getDefaultData().username);
+    expect(getUsername().text()).toBe(
+      createUsersMeRetrieveQueryResponse().username,
+    );
   });
 
   test('Home button redirects to home page', async () => {

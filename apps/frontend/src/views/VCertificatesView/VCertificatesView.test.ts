@@ -2,20 +2,41 @@ import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import VCertificatesView from './VCertificatesView.vue';
 import type VCertificateCard from '@/components/VCertificateCard/VCertificateCard.vue';
-import { mockDiplomaData, mockDiplomaSet } from '@/mocks/mockDiploma';
+import { createDiploma, LanguageEnum, useDiplomasList } from '@/api/generated';
+import type { Diploma } from '@/api/generated';
 import { uniq, flatten } from 'lodash-es';
 import { nextTick, ref } from 'vue';
 import { faker } from '@faker-js/faker';
 import { vi, describe, beforeEach, expect, test } from 'vitest';
-import { useDiplomasQuery } from '@/query';
 
 const defaultProps = {};
 
-vi.mock('@/query');
+vi.mock('@/api/generated', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/api/generated')>();
+  return {
+    ...actual,
+    useDiplomasList: vi.fn(),
+  };
+});
+
+const createDiplomaSet = (payload: Diploma): Diploma[] => {
+  return Object.values(LanguageEnum).map((locale) => {
+    return {
+      ...payload,
+      language: locale,
+      course: {
+        name: payload.course.name,
+        name_international: payload.course.name_international,
+        product_name: payload.course.product_name,
+        tariff_name: payload.course.tariff_name,
+      },
+    };
+  });
+};
 
 const mockDiplomas = () =>
   flatten(
-    faker.helpers.multiple(() => mockDiplomaSet(mockDiplomaData()), {
+    faker.helpers.multiple(() => createDiplomaSet(createDiploma()), {
       count: 5,
     }),
   );
@@ -27,8 +48,8 @@ describe('VCertificatesView', () => {
   beforeEach(() => {
     mockDiplomasData = mockDiplomas();
 
-    vi.mocked(useDiplomasQuery).mockReturnValue({
-      data: ref(mockDiplomasData),
+    vi.mocked(useDiplomasList).mockReturnValue({
+      data: ref({ results: mockDiplomasData }),
       isLoading: ref(false),
     } as any);
 
@@ -78,8 +99,8 @@ describe('VCertificatesView', () => {
   });
 
   test('has an empty message if no certififcates', async () => {
-    vi.mocked(useDiplomasQuery).mockReturnValue({
-      data: ref([]),
+    vi.mocked(useDiplomasList).mockReturnValue({
+      data: ref({ results: [] }),
       isLoading: ref(false),
     } as any);
 

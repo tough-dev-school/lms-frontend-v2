@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VCertificate from '@/components/VCertificate/VCertificate.vue';
-import { mockDiplomaData } from '@/mocks/mockDiploma';
+import { createDiploma } from '@/api/generated';
 
 export default {
   title: 'UI/VCertificate',
@@ -19,7 +19,7 @@ export const En = {
   render: Template,
 
   args: {
-    certificate: { ...mockDiplomaData(), language: 'EN' },
+    certificate: { ...createDiploma(), language: 'EN' },
   },
 };
 
@@ -27,6 +27,6 @@ export const Ru = {
   render: Template,
 
   args: {
-    certificate: { ...mockDiplomaData(), language: 'RU' },
+    certificate: { ...createDiploma(), language: 'RU' },
   },
 };

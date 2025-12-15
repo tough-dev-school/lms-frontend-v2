@@ -3,7 +3,7 @@
   import { onClickOutside } from '@vueuse/core';
   import VAvatar from '@/components/VAvatar/VAvatar.vue';
   import { useRouter } from 'vue-router';
-  import { useUserQuery } from '@/query';
+  import { useUsersMeRetrieve } from '@/api/generated';
   import { getName } from '@/utils/getName';
   import { LANDING_URL } from '@/constants';
 
@@ -17,7 +17,7 @@
   const isOpen = ref(false);
   const menu = useTemplateRef('menu');
   const router = useRouter();
-  const { data: user } = useUserQuery();
+  const { data: user } = useUsersMeRetrieve();
 
   onClickOutside(menu, () => (isOpen.value = false));
 

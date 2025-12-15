@@ -8,14 +8,16 @@
   import { useEditorAutosave } from '@/composables/useEditorAutosave';
   import VExistingAnswer from '@/components/VExistingAnswer';
   import {
-    useHomeworkCrosschecksQuery,
-    useHomeworkAnswerCreateMutation,
-    useHomeworkQuestionQuery,
-    useHomeworkAnswerQuery,
-    useUserQuery,
-    populateAnswersCacheFromDescendants,
-    useLessonQuery,
-  } from '@/query';
+    useHomeworkCrosschecksList,
+    useHomeworkAnswersCreate,
+    useHomeworkQuestionsRetrieve,
+    useHomeworkAnswersRetrieve,
+    useUsersMeRetrieve,
+    useLmsLessonsRetrieve,
+    homeworkAnswersRetrieveQueryKey,
+    homeworkCrosschecksListQueryKey,
+    lmsLessonsListQueryKey,
+  } from '@/api/generated';
   import { computed, watch } from 'vue';
   import { useRouter } from 'vue-router';
   import { useQueryClient } from '@tanstack/vue-query';
@@ -25,6 +27,7 @@
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
   import { getEmptyContent } from '@/utils/tiptap';
   import VMakrdownContent from '@/components/VMakrdownContent/VMakrdownContent.vue';
+  import { usePopulateAnswersCache } from '@/composables/usePopulateAnswersCache';
 
   const props = defineProps<{
     questionId: string;
@@ -35,22 +38,28 @@
 
   const { breadcrumbs } = useHomeworkBreadcrumbs(() => props.questionId);
   const { data: question, isLoading: isQuestionLoading } =
-    useHomeworkQuestionQuery(() => props.questionId);
-  const { data: answer, isLoading: isAnswerLoading } = useHomeworkAnswerQuery(
-    () => props.answerId,
+    useHomeworkQuestionsRetrieve(computed(() => props.questionId));
+  const { data: answer, isLoading: isAnswerLoading } =
+    useHomeworkAnswersRetrieve(computed(() => props.answerId));
+
+  const { data: lesson, isLoading: isLessonLoading } = useLmsLessonsRetrieve(
+    computed(() => question.value?.breadcrumbs.lesson?.id as number),
+    {
+      query: {
+        enabled: () => !!question.value?.breadcrumbs.lesson?.id,
+      },
+    },
   );
 
-  const { data: lesson, isLoading: isLessonLoading } = useLessonQuery(
-    () => question.value?.breadcrumbs.lesson?.id,
-  );
+  const { data: user, isLoading: isUserLoading } = useUsersMeRetrieve();
 
-  const { data: user, isLoading: isUserLoading } = useUserQuery();
+  const populateAnswersCache = usePopulateAnswersCache();
 
   watch(
     () => answer.value,
     () => {
       if (answer.value) {
-        populateAnswersCacheFromDescendants(queryClient, answer.value);
+        populateAnswersCache(answer.value);
       }
     },
   );
@@ -79,9 +88,11 @@
   const handleCreateComment = async () => {
     try {
       const createdAnswer = await createAnswerMutation({
-        content: content.value,
-        questionId: props.questionId,
-        parentId: props.answerId,
+        data: {
+          content: content.value,
+          question: props.questionId,
+          parent: props.answerId,
+        },
       });
 
       content.value = getEmptyContent();
@@ -95,8 +106,8 @@
     }
   };
 
-  const { data: crosschecks } = useHomeworkCrosschecksQuery(
-    () => props.questionId,
+  const { data: crosschecks } = useHomeworkCrosschecksList(
+    computed(() => ({ question: props.questionId })),
   );
 
   const isSent = computed(() => {
@@ -108,9 +119,25 @@
 
   const {
     mutateAsync: createAnswerMutation,
-    error,
     isPending,
-  } = useHomeworkAnswerCreateMutation(queryClient);
+    error,
+  } = useHomeworkAnswersCreate({
+    mutation: {
+      onSuccess: (data) => {
+        queryClient.invalidateQueries({
+          queryKey: homeworkAnswersRetrieveQueryKey(data.parent),
+        });
+        queryClient.invalidateQueries({
+          queryKey: homeworkCrosschecksListQueryKey({
+            question: props.questionId,
+          }),
+        });
+        queryClient.invalidateQueries({
+          queryKey: lmsLessonsListQueryKey(),
+        });
+      },
+    },
+  });
 
   const handleDeleteAnswer = () => {
     router.push({
@@ -175,11 +202,8 @@
         :lesson="lesson"
       />
     </template>
-    <section>
-      <VCrossChecks
-        v-if="isOwnAnswer && crosschecks?.length"
-        :crosschecks="crosschecks"
-      />
+    <section v-if="isOwnAnswer && crosschecks?.length">
+      <VCrossChecks :crosschecks="crosschecks" />
     </section>
     <section class="VHomeworkAnswerView__Section">
       <VHeading tag="h2"> Отправленная работа</VHeading>

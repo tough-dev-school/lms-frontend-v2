@@ -4,10 +4,14 @@
   import { useRouter } from 'vue-router';
   import { useQueryClient } from '@tanstack/vue-query';
   import {
-    useHomeworkAnswerCreateMutation,
-    useHomeworkQuestionQuery,
-    useLessonQuery,
-  } from '@/query';
+    useHomeworkAnswersCreate,
+    useHomeworkQuestionsRetrieve,
+    useLmsLessonsRetrieve,
+    homeworkAnswersRetrieveQueryKey,
+    homeworkCrosschecksListQueryKey,
+    lmsLessonsListQueryKey,
+  } from '@/api/generated';
+  import { computed } from 'vue';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import VPillHomework from '@/components/VPillHomework/VPillHomework.vue';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
@@ -24,10 +28,15 @@
   const { breadcrumbs } = useHomeworkBreadcrumbs(() => props.questionId);
 
   const { data: question, isLoading: isQuestionLoading } =
-    useHomeworkQuestionQuery(() => props.questionId);
+    useHomeworkQuestionsRetrieve(computed(() => props.questionId));
 
-  const { data: lesson, isLoading: isLessonLoading } = useLessonQuery(
-    () => question.value?.breadcrumbs.lesson?.id,
+  const { data: lesson, isLoading: isLessonLoading } = useLmsLessonsRetrieve(
+    computed(() => question.value?.breadcrumbs.lesson?.id as number),
+    {
+      query: {
+        enabled: () => !!question.value?.breadcrumbs.lesson?.id,
+      },
+    },
   );
 
   const { content } = useEditorAutosave(['draft', props.questionId]);
@@ -35,15 +44,33 @@
   const queryClient = useQueryClient();
   const {
     mutateAsync: createAnswerMutation,
-    error,
     isPending,
-  } = useHomeworkAnswerCreateMutation(queryClient);
+    error,
+  } = useHomeworkAnswersCreate({
+    mutation: {
+      onSuccess: (data) => {
+        queryClient.invalidateQueries({
+          queryKey: homeworkAnswersRetrieveQueryKey(data.parent),
+        });
+        queryClient.invalidateQueries({
+          queryKey: homeworkCrosschecksListQueryKey({
+            question: props.questionId,
+          }),
+        });
+        queryClient.invalidateQueries({
+          queryKey: lmsLessonsListQueryKey(),
+        });
+      },
+    },
+  });
 
   const handleCreateAnswer = async () => {
     const answer = await createAnswerMutation({
-      content: content.value,
-      questionId: props.questionId,
-      parentId: undefined,
+      data: {
+        content: content.value,
+        question: props.questionId,
+        parent: undefined,
+      },
     });
 
     router.push({

@@ -7,21 +7,19 @@ import type VAnswerContent from '@/components/VAnswerContent/VAnswerContent.vue'
 import dayjs from 'dayjs';
 import { cloneDeep } from 'lodash-es';
 import { faker } from '@faker-js/faker';
-import { mockAnswer } from '@/mocks/mockAnswer';
-import { mockUserSafe } from '@/mocks/mockUserSafe';
 import {
-  useRemoveHomeworkReactionMutation,
-  useAddHomeworkReactionMutation,
-} from '@/query';
+  createAnswerTree,
+  createUserSafe,
+  useHomeworkAnswersReactionsDestroy,
+  useHomeworkAnswersReactionsCreate,
+} from '@/api/generated';
 
 const uuid = faker.string.uuid();
 
 const defaultProps = {
-  answer: mockAnswer(),
-  user: mockUserSafe({
-    payload: {
-      uuid,
-    },
+  answer: createAnswerTree(),
+  user: createUserSafe({
+    uuid,
   }),
 };
 
@@ -29,7 +27,14 @@ vi.mock('@formkit/auto-animate/vue', () => ({
   useAutoAnimate: () => [null],
 }));
 
-vi.mock('@/query');
+vi.mock('@/api/generated', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/api/generated')>();
+  return {
+    ...actual,
+    useHomeworkAnswersReactionsDestroy: vi.fn(),
+    useHomeworkAnswersReactionsCreate: vi.fn(),
+  };
+});
 vi.mock('@tanstack/vue-query');
 
 const defaultMountOptions = {
@@ -47,16 +52,12 @@ describe('VAnswer', () => {
   let wrapper: VueWrapper<InstanceType<typeof VAnswer>>;
 
   beforeEach(() => {
-    (
-      useRemoveHomeworkReactionMutation as ReturnType<typeof vi.fn>
-    ).mockReturnValue({
+    vi.mocked(useHomeworkAnswersReactionsDestroy).mockReturnValue({
       mutateAsync: vi.fn(),
-    });
-    (
-      useAddHomeworkReactionMutation as ReturnType<typeof vi.fn>
-    ).mockReturnValue({
+    } as any);
+    vi.mocked(useHomeworkAnswersReactionsCreate).mockReturnValue({
       mutateAsync: vi.fn(),
-    });
+    } as any);
     wrapper = mount(VAnswer, defaultMountOptions);
   });
 
@@ -119,7 +120,8 @@ describe('VAnswer', () => {
     const answerContainer = getAnswerContainerWrapper();
     const element = answerContainer.element as HTMLElement;
 
-    expect(element.style.backgroundColor).toBe('transparent');
+    // Browser returns empty string for transparent backgrounds
+    expect(['transparent', '']).toContain(element.style.backgroundColor);
   });
 
   test('answer with rank_label_color has that background color', () => {

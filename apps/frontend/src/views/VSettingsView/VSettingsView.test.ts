@@ -3,19 +3,25 @@ import { mount, RouterLinkStub } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import VSettingsView from './VSettingsView.vue';
 import type { RouterLink } from 'vue-router';
-import { usePasswordChangeMutation } from '@/query';
+import { useAuthPasswordChangeCreate } from '@/api/generated';
 import { ref } from 'vue';
 
 const defaultProps = {};
 
-vi.mock('@/query');
+vi.mock('@/api/generated', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/api/generated')>();
+  return {
+    ...actual,
+    useAuthPasswordChangeCreate: vi.fn(),
+  };
+});
 vi.mock('@tanstack/vue-query');
 
 describe('VSettingsView', () => {
   let wrapper: VueWrapper<InstanceType<typeof VSettingsView>>;
 
   beforeEach(() => {
-    vi.mocked(usePasswordChangeMutation).mockReturnValue({
+    vi.mocked(useAuthPasswordChangeCreate).mockReturnValue({
       mutateAsync: vi.fn(),
       isPending: ref(false),
     } as any);

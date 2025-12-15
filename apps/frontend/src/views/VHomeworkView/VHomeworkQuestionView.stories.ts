@@ -1,11 +1,16 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VHomeworkQuestionView from './VHomeworkQuestionView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
-import { mockQuestion } from '@/mocks/mockQuestion';
-import { mockModule } from '@/mocks/mockModule';
-import { homeworkKeys, lmsKeys } from '@/query';
+import {
+  createQuestion,
+  createModule,
+  createQuestionCourse,
+  createBreadcrumbs,
+  homeworkQuestionsRetrieveQueryKey,
+  lmsLessonsRetrieveQueryKey,
+} from '@/api/generated';
 import { useQueryClient } from '@tanstack/vue-query';
-import type { QuestionDetail, Lesson } from '@/api/generated/generated-api';
+import type { QuestionDetail, Lesson } from '@/api/generated';
 
 export default {
   title: 'App/VHomeworkQuestionView',
@@ -19,6 +24,7 @@ export default {
 
 // Mock data using existing patterns
 const STATIC_QUESTION: QuestionDetail = {
+  ...createQuestion(),
   slug: 'react-components',
   name: 'Создание React компонентов',
   markdown_text: `# Задание: Создание React компонентов
@@ -33,7 +39,7 @@ const STATIC_QUESTION: QuestionDetail = {
     is_sent: false,
   },
   breadcrumbs: {
-    module: mockModule({
+    module: createModule({
       id: 2,
       name: 'React разработка',
     }),
@@ -41,6 +47,7 @@ const STATIC_QUESTION: QuestionDetail = {
       id: 2,
     },
     course: {
+      ...createBreadcrumbs().course,
       id: 1,
       name: 'Курс веб-разработки',
       slug: 'web-development',
@@ -53,9 +60,7 @@ const STATIC_QUESTION: QuestionDetail = {
     },
   },
   course: {
-    chat: 'https://t.me/test',
-    calendar_ios: 'https://calendar.apple.com/test',
-    calendar_google: 'https://calendar.google.com/test',
+    ...createQuestionCourse(),
     id: 1,
     name: 'Курс веб-разработки',
     slug: 'web-development',
@@ -66,7 +71,7 @@ const STATIC_QUESTION: QuestionDetail = {
 
 const STATIC_LESSON: Lesson = {
   id: 2,
-  question: mockQuestion({
+  question: createQuestion({
     slug: 'react-components',
     name: 'Создание React компонентов',
     markdown_text:
@@ -85,12 +90,15 @@ const Template: StoryFn = (args) => ({
 
     if (args.question) {
       queryClient.setQueryData(
-        homeworkKeys.question(args.questionId),
+        homeworkQuestionsRetrieveQueryKey(args.questionId),
         args.question,
       );
     }
     if (args.lesson) {
-      queryClient.setQueryData(lmsKeys.lesson(args.lesson.id), args.lesson);
+      queryClient.setQueryData(
+        lmsLessonsRetrieveQueryKey(args.lesson.id),
+        args.lesson,
+      );
     }
 
     return { args };

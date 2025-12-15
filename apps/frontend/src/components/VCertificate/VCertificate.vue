@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import type { Diploma } from '@/api/generated/generated-api';
+  import type { Diploma } from '@/api/generated';
   import { computed } from 'vue';
 
   const props = defineProps<{

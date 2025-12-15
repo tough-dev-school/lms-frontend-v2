@@ -2,10 +2,11 @@
   import VCard from '../VCard/VCard.vue';
   import VButton from '../VButton/VButton.vue';
   import {
-    useUpdateMaterialMutation,
-    useMaterialStatusQuery,
-    materialsKeys,
-  } from '@/query';
+    materialsRetrieveQueryKey,
+    useMaterialsStatusRetrieve,
+    materialsStatusRetrieveQueryKey,
+    useMaterialsUpdateUpdate,
+  } from '@/api/generated';
   import { useQueryClient } from '@tanstack/vue-query';
   import { useIntervalFn } from '@vueuse/core';
   import { DATE_TIME_SECONDS_FORMAT, formatDate, isBefore } from '@/utils/date';
@@ -18,10 +19,17 @@
 
   const queryClient = useQueryClient();
 
-  const { mutateAsync: updateMaterial, error } =
-    useUpdateMaterialMutation(queryClient);
+  const { mutateAsync: updateMaterial, error } = useMaterialsUpdateUpdate({
+    mutation: {
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: materialsRetrieveQueryKey(props.materialId),
+        });
+      },
+    },
+  });
 
-  const { data: materialStatus } = useMaterialStatusQuery(
+  const { data: materialStatus } = useMaterialsStatusRetrieve(
     () => props.materialId,
   );
 
@@ -64,7 +72,7 @@
     if (!inProgress.value) return;
 
     queryClient.invalidateQueries({
-      queryKey: materialsKeys.status(props.materialId),
+      queryKey: materialsStatusRetrieveQueryKey(props.materialId),
     });
   }, 1000);
 </script>
@@ -77,7 +85,7 @@
     <p>Материал актуален: {{ fetchComplete }}</p>
     <VError :error="error" />
     <template #footer>
-      <VButton @click="() => updateMaterial(props.materialId)">
+      <VButton @click="() => updateMaterial({ page_id: props.materialId })">
         <template v-if="inProgress">Обновление в процессе</template>
         <template v-else>Запросить обновление</template>
       </VButton>

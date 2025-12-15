@@ -1,6 +1,10 @@
 <script lang="ts" setup>
   import VExistingAnswer from './VExistingAnswer.vue';
-  import { useHomeworkAnswerQuery, useUserQuery } from '@/query';
+  import {
+    useHomeworkAnswersRetrieve,
+    useUsersMeRetrieve,
+  } from '@/api/generated';
+  import { computed } from 'vue';
 
   const props = defineProps<{
     answerId: string;
@@ -10,8 +14,10 @@
     'after-create': [slug: string];
   }>();
 
-  const { data: answer } = useHomeworkAnswerQuery(() => props.answerId);
-  const { data: user } = useUserQuery();
+  const { data: answer } = useHomeworkAnswersRetrieve(
+    computed(() => props.answerId),
+  );
+  const { data: user } = useUsersMeRetrieve();
 </script>
 
 <template>
@@ -19,6 +25,7 @@
     v-if="answer && user"
     :answer="answer"
     :user="user"
-    @after-create="(slug) => emit('after-create', slug)" />
+    @after-create="(slug) => emit('after-create', slug)"
+  />
   <div v-else>Loading...</div>
 </template>

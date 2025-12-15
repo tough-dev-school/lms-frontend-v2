@@ -1,9 +1,12 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VCourseView from './VCourseView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
-import { mockCourse } from '@/mocks/mockCourse';
-import { mockModule } from '@/mocks/mockModule';
-import { studiesKeys, lmsKeys } from '@/query';
+import {
+  createCourse,
+  createModule,
+  purchasedCoursesListQueryKey,
+  lmsModulesListQueryKey,
+} from '@/api/generated';
 import { useQueryClient } from '@tanstack/vue-query';
 
 export default {
@@ -16,7 +19,7 @@ export default {
   },
 } as Meta;
 
-const STATIC_COURSE = mockCourse({
+const STATIC_COURSE = createCourse({
   id: 1,
   name: 'Асинхронная архитектура',
   chat: 'https://t.me/test',
@@ -29,7 +32,7 @@ const STATIC_COURSE = mockCourse({
 });
 
 const STATIC_MODULES = [
-  mockModule({
+  createModule({
     id: 1,
     name: 'Введение в асинхронную архитектуру',
     description: 'Основные принципы и подходы',
@@ -37,7 +40,7 @@ const STATIC_MODULES = [
     start_date: '2024-01-15T00:00:00Z',
     has_started: true,
   }),
-  mockModule({
+  createModule({
     id: 2,
     name: 'Паттерны асинхронного программирования',
     description: 'Event-driven architecture, CQRS, Event Sourcing',
@@ -45,7 +48,7 @@ const STATIC_MODULES = [
     start_date: '2024-02-01T00:00:00Z',
     has_started: true,
   }),
-  mockModule({
+  createModule({
     id: 3,
     name: 'Практическая реализация',
     description: 'Реализация асинхронных систем на практике',
@@ -61,12 +64,15 @@ const Template: StoryFn = (args) => ({
     const queryClient = useQueryClient();
 
     if (args.studies) {
-      queryClient.setQueryData(studiesKeys.lists(), args.studies);
+      queryClient.setQueryData(
+        purchasedCoursesListQueryKey({ page_size: 100 }),
+        { results: args.studies },
+      );
     }
     if (args.modules !== undefined) {
       queryClient.setQueryData(
-        lmsKeys.courseModules(args.courseId),
-        args.modules,
+        lmsModulesListQueryKey({ course: args.courseId, page_size: 100 }),
+        { results: args.modules },
       );
     }
 
@@ -95,7 +101,7 @@ export const WithoutExtraInfo = {
   render: Template,
   args: {
     studies: [
-      mockCourse({
+      createCourse({
         id: 1,
         name: 'Простой курс',
         chat: null,

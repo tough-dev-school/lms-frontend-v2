@@ -5,7 +5,7 @@
   import { ref, computed } from 'vue';
   import { useAuth } from '@/composables/useAuth';
   import { useRouter } from 'vue-router';
-  import { useLoginWithCredentialsMutation } from '@/query';
+  import { useAuthTokenCreate } from '@/api/generated';
   import { useQueryClient } from '@tanstack/vue-query';
   import VError from '@/components/VError/VError.vue';
 
@@ -17,7 +17,13 @@
     mutateAsync: loginWithCredentials,
     error,
     isPending,
-  } = useLoginWithCredentialsMutation(queryClient);
+  } = useAuthTokenCreate({
+    mutation: {
+      onSuccess: () => {
+        queryClient.invalidateQueries();
+      },
+    },
+  });
 
   const router = useRouter();
 
@@ -27,8 +33,10 @@
   const handleSubmit = async () => {
     try {
       const { token: newToken } = await loginWithCredentials({
-        username: username.value,
-        password: password.value,
+        data: {
+          username: username.value,
+          password: password.value,
+        },
       });
 
       token.value = newToken;

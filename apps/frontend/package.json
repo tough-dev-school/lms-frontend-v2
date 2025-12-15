@@ -17,7 +17,7 @@
     "fix": "run-p fix:*",
     "storybook": "storybook dev -p 3001",
     "storybook:build": "storybook build",
-    "api:generate": "node --experimental-strip-types generate-sdk.ts; prettier --write src/api/generated/*.ts; tsx patch-api.ts"
+    "api:generate": "kubb generate; tsx patch-api.ts"
   },
   "dependencies": {
     "@brachkow/email-providers": "^1.2.0",
@@ -51,6 +51,13 @@
     "@ast-grep/napi": "^0.39.9",
     "@cloudflare/workers-types": "^4.20250724.0",
     "@faker-js/faker": "^8.4.1",
+    "@kubb/cli": "^4.5.9",
+    "@kubb/core": "^4.5.9",
+    "@kubb/plugin-client": "^4.5.9",
+    "@kubb/plugin-faker": "^4.5.9",
+    "@kubb/plugin-oas": "^4.5.9",
+    "@kubb/plugin-ts": "^4.5.9",
+    "@kubb/plugin-vue-query": "^4.5.9",
     "@storybook/addon-docs": "^10.0.7",
     "@storybook/vue3-vite": "^10.0.7",
     "@tailwindcss/typography": "^0.5.10",
@@ -75,7 +82,6 @@
     "postcss": "^8.5.6",
     "prettier": "^3.6.2",
     "storybook": "^10.0.7",
-    "swagger-typescript-api": "^13.2.7",
     "tailwindcss": "^3.4.17",
     "typescript": "~5.8.3",
     "vite": "^7.2.2",

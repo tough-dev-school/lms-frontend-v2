@@ -9,11 +9,12 @@
   import { useAutoAnimate } from '@formkit/auto-animate/vue';
   import VButton from '@/components/VButton/VButton.vue';
   import {
-    useRemoveHomeworkReactionMutation,
-    useAddHomeworkReactionMutation,
-  } from '@/query';
+    useHomeworkAnswersReactionsDestroy,
+    useHomeworkAnswersReactionsCreate,
+    homeworkAnswersRetrieveQueryKey,
+  } from '@/api/generated';
   import { useQueryClient } from '@tanstack/vue-query';
-  import type { AnswerTree, UserSafe } from '@/api/generated/generated-api';
+  import type { AnswerTree, UserSafe } from '@/api/generated';
 
   const props = defineProps<{
     answer: AnswerTree;
@@ -28,11 +29,26 @@
 
   const queryClient = useQueryClient();
 
-  const { mutateAsync: sendAddReaction } =
-    useAddHomeworkReactionMutation(queryClient);
+  const { mutateAsync: sendAddReaction } = useHomeworkAnswersReactionsCreate({
+    mutation: {
+      onSuccess: (_, variables) => {
+        queryClient.invalidateQueries({
+          queryKey: homeworkAnswersRetrieveQueryKey(variables.answer_slug),
+        });
+      },
+    },
+  });
 
   const { mutateAsync: sendRemoveReaction } =
-    useRemoveHomeworkReactionMutation(queryClient);
+    useHomeworkAnswersReactionsDestroy({
+      mutation: {
+        onSuccess: (_, variables) => {
+          queryClient.invalidateQueries({
+            queryKey: homeworkAnswersRetrieveQueryKey(variables.slug),
+          });
+        },
+      },
+    });
 
   const togglePalette = () => (isPaletteOpen.value = !isPaletteOpen.value);
   const closePalette = () => (isPaletteOpen.value = false);
@@ -106,11 +122,14 @@
           @close="closePalette"
           @add="
             (emoji) =>
-              sendAddReaction({ answerId: answer.slug, reaction: emoji })
+              sendAddReaction({
+                answer_slug: answer.slug,
+                data: { emoji },
+              })
           "
           @remove="
             (reactionId) =>
-              sendRemoveReaction({ answerId: answer.slug, reactionId })
+              sendRemoveReaction({ answer_slug: answer.slug, slug: reactionId })
           "
         />
       </div>

@@ -3,10 +3,26 @@ import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import VCertificateCard from './VCertificateCard.vue';
 import type VCertificate from '@/components/VCertificate/VCertificate.vue';
-import { mockDiplomaData, mockDiplomaSet } from '@/mocks/mockDiploma';
+import { createDiploma, LanguageEnum } from '@/api/generated';
+import type { Diploma } from '@/api/generated';
 import VCard from '@/components/VCard/VCard.vue';
 
-const diplomas = mockDiplomaSet(mockDiplomaData());
+const createDiplomaSet = (payload: Diploma): Diploma[] => {
+  return Object.values(LanguageEnum).map((locale) => {
+    return {
+      ...payload,
+      language: locale,
+      course: {
+        name: payload.course.name,
+        name_international: payload.course.name_international,
+        product_name: payload.course.product_name,
+        tariff_name: payload.course.tariff_name,
+      },
+    };
+  });
+};
+
+const diplomas = createDiplomaSet(createDiploma());
 
 const defaultProps = {
   course: diplomas[0].course.product_name,

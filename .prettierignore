@@ -9,3 +9,4 @@ docker-compose.yml
 *.svg
 *.jpg
 .*
+**/src/api/generated/

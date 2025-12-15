@@ -4,26 +4,23 @@
   import VTextInput from '@/components/VTextInput/VTextInput.vue';
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
-  import { useQueryClient } from '@tanstack/vue-query';
-  import { useLoginWithLinkMutation } from '@/query';
+  import { authPasswordlessTokenRequestRetrieve } from '@/api/generated';
   import VError from '@/components/VError/VError.vue';
+  import type { FormError } from '@/types/error';
 
   const router = useRouter();
-  const queryClient = useQueryClient();
   const email = ref('');
   const isPending = ref(false);
-
-  const { mutateAsync: loginWithLink, error } =
-    useLoginWithLinkMutation(queryClient);
+  const error = ref<FormError | null>(null);
 
   const handleLogin = async () => {
     try {
       isPending.value = true;
-      await loginWithLink({ email: email.value });
+      await authPasswordlessTokenRequestRetrieve(email.value);
 
       router.push({ name: 'mail-sent', query: { email: email.value } });
-    } catch {
-      console.error('Failed to login with email');
+    } catch (caughtError) {
+      error.value = caughtError as unknown as FormError;
     }
     isPending.value = false;
   };

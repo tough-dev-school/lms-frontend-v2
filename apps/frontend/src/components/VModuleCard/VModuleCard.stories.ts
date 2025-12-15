@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VModuleCard from './VModuleCard.vue';
-import { mockModule } from '@/mocks/mockModule';
+import { createModule } from '@/api/generated';
 
 export default {
   title: 'UI/VModuleCard',
@@ -24,7 +24,7 @@ const Template: StoryFn = (args) => ({
 export const Default = {
   render: Template,
   args: {
-    module: mockModule(),
+    module: createModule(),
     index: 0,
   },
 };
@@ -32,7 +32,7 @@ export const Default = {
 export const WithLongTitle = {
   render: Template,
   args: {
-    module: mockModule({
+    module: createModule({
       name: 'Introduction to Advanced Web Development with Modern JavaScript Frameworks and Best Practices',
       start_date: null,
     }),
@@ -43,7 +43,7 @@ export const WithLongTitle = {
 export const WithoutDescription = {
   render: Template,
   args: {
-    module: mockModule({
+    module: createModule({
       description: null,
       start_date: null,
     }),
@@ -54,7 +54,7 @@ export const WithoutDescription = {
 export const WithoutText = {
   render: Template,
   args: {
-    module: mockModule({
+    module: createModule({
       text: null,
     }),
     index: 3,
@@ -64,7 +64,7 @@ export const WithoutText = {
 export const WithStartDate = {
   render: Template,
   args: {
-    module: mockModule({
+    module: createModule({
       start_date: '2025-01-01',
     }),
     index: 4,
@@ -74,7 +74,7 @@ export const WithStartDate = {
 export const MinimalContent = {
   render: Template,
   args: {
-    module: mockModule({
+    module: createModule({
       description: null,
       text: null,
       start_date: null,
@@ -88,7 +88,7 @@ export const ColorVariations = {
     components: { VModuleCard },
     setup() {
       const modules = Array.from({ length: 8 }, (_, index) => ({
-        module: mockModule({
+        module: createModule({
           name: `Module ${index + 1}`,
           text: `This is module ${index + 1} with color variation`,
           start_date: null,
@@ -113,7 +113,7 @@ export const ColorVariations = {
 export const WithRichDescription = {
   render: Template,
   args: {
-    module: mockModule({
+    module: createModule({
       description: `
         <p>This module covers <strong>advanced topics</strong> in web development:</p>
         <ul>

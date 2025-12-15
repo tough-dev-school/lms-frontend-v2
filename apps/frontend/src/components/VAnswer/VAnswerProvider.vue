@@ -1,16 +1,26 @@
 <script lang="ts" setup>
-  import { useHomeworkAnswerQuery, useUserQuery } from '@/query';
+  import {
+    useHomeworkAnswersRetrieve,
+    useUsersMeRetrieve,
+  } from '@/api/generated';
   import VAnswer from './VAnswer.vue';
+  import { computed } from 'vue';
 
   const props = defineProps<{
     answerId: string;
   }>();
 
-  const { data: user } = useUserQuery();
-  const { data: answer } = useHomeworkAnswerQuery(() => props.answerId);
+  const { data: user } = useUsersMeRetrieve();
+  const { data: answer } = useHomeworkAnswersRetrieve(
+    computed(() => props.answerId),
+  );
 </script>
 
 <template>
-  <VAnswer v-if="answer && user" :user="user" :answer="answer" />
+  <VAnswer
+    v-if="answer && user"
+    :user="user"
+    :answer="answer"
+  />
   <div v-else>Loading...</div>
 </template>

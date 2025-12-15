@@ -6,7 +6,7 @@ import VPasswordSettings from '@/components/VPasswordResetForm/VPasswordResetFor
 import { faker } from '@faker-js/faker';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
-import { useConfirmPasswordResetMutation } from '@/query';
+import { useAuthPasswordResetConfirmCreate } from '@/api/generated';
 
 const uid = faker.string.uuid();
 const token = faker.string.uuid();
@@ -19,7 +19,13 @@ const defaultProps = {
 const routerPushMock = vi.fn();
 
 vi.mock('vue-router');
-vi.mock('@/query');
+vi.mock('@/api/generated', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/api/generated')>();
+  return {
+    ...actual,
+    useAuthPasswordResetConfirmCreate: vi.fn(),
+  };
+});
 vi.mock('@tanstack/vue-query');
 
 describe('VLoginChangeView', () => {
@@ -33,7 +39,7 @@ describe('VLoginChangeView', () => {
       push: routerPushMock,
     } as any);
 
-    vi.mocked(useConfirmPasswordResetMutation).mockReturnValue({
+    vi.mocked(useAuthPasswordResetConfirmCreate).mockReturnValue({
       mutateAsync: confirmPasswordReset,
       isPending: ref(false),
     } as any);
@@ -57,10 +63,12 @@ describe('VLoginChangeView', () => {
 
     expect(confirmPasswordReset).toHaveBeenCalled();
     expect(confirmPasswordReset).toHaveBeenCalledWith({
-      new_password1: password,
-      new_password2: password,
-      uid,
-      token,
+      data: {
+        new_password1: password,
+        new_password2: password,
+        uid,
+        token,
+      },
     });
   });
 

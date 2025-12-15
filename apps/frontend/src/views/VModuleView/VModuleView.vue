@@ -1,6 +1,10 @@
 <script lang="ts" setup>
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
-  import { useLessonsQuery, useStudiesQuery, useModuleQuery } from '@/query';
+  import {
+    useLmsLessonsList,
+    usePurchasedCoursesList,
+    useLmsModulesRetrieve,
+  } from '@/api/generated';
   import { computed } from 'vue';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import VLessonCard from '@/components/VLessonCard/VLessonCard.vue';
@@ -12,10 +16,14 @@
     moduleId: number;
   }>();
 
-  const { data: studies, isLoading: isStudiesLoading } = useStudiesQuery();
-  const { data: lessons, isLoading: isLessonsLoading } = useLessonsQuery(
-    props.moduleId,
+  const { data: studiesData, isLoading: isStudiesLoading } =
+    usePurchasedCoursesList({ page_size: 100 });
+  const studies = computed(() => studiesData.value?.results);
+
+  const { data: lessonsData, isLoading: isLessonsLoading } = useLmsLessonsList(
+    computed(() => ({ module: props.moduleId, page_size: 1000 })),
   );
+  const lessons = computed(() => lessonsData.value?.results);
 
   const courseName = computed(
     () =>
@@ -41,8 +49,8 @@
     ];
   });
 
-  const { data: module, isLoading: isModuleLoading } = useModuleQuery(
-    props.moduleId,
+  const { data: module, isLoading: isModuleLoading } = useLmsModulesRetrieve(
+    computed(() => props.moduleId),
   );
 
   const moduleName = computed(() => module.value?.name);

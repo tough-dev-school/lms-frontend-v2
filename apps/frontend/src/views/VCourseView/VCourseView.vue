@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import { computed } from 'vue';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
-  import { useModulesQuery, useStudiesQuery } from '@/query';
+  import { useLmsModulesList, usePurchasedCoursesList } from '@/api/generated';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import VPill from '@/components/VPill/VPill.vue';
   import VPillItem from '@/components/VPill/VPillItem.vue';
@@ -12,7 +12,11 @@
     courseId: number;
   }>();
 
-  const { data: studies, isLoading } = useStudiesQuery();
+  const { data: studiesData, isLoading } = usePurchasedCoursesList({
+    page_size: 100,
+  });
+
+  const studies = computed(() => studiesData.value?.results);
 
   const study = computed(() =>
     (studies.value || []).find((s) => s.id === props.courseId),
@@ -20,7 +24,11 @@
 
   const courseName = computed(() => study.value?.name);
 
-  const { data: modules } = useModulesQuery(() => props.courseId);
+  const { data: modulesData } = useLmsModulesList(
+    computed(() => ({ course: props.courseId, page_size: 100 })),
+  );
+
+  const modules = computed(() => modulesData.value?.results);
 
   const breadcrumbs = computed<Breadcrumb[]>(() => [
     { name: 'Мои курсы', to: { name: 'courses' } },
