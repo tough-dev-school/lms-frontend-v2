@@ -19,7 +19,7 @@ const defaultProps = {
 const routerPushMock = vi.fn();
 
 vi.mock('vue-router');
-vi.mock('@/api/generated/hooks');
+vi.mock('@/api');
 vi.mock('@tanstack/vue-query');
 
 describe('VLoginChangeView', () => {

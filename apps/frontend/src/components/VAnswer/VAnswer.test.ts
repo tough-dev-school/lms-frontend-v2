@@ -26,7 +26,7 @@ vi.mock('@formkit/auto-animate/vue', () => ({
   useAutoAnimate: () => [null],
 }));
 
-vi.mock('@/api/generated/hooks');
+vi.mock('@/api');
 vi.mock('@tanstack/vue-query');
 
 const defaultMountOptions = {

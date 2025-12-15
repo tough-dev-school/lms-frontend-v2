@@ -8,7 +8,7 @@ import { ref } from 'vue';
 
 const defaultProps = {};
 
-vi.mock('@/api/generated/hooks');
+vi.mock('@/api');
 vi.mock('@tanstack/vue-query');
 
 describe('VSettingsView', () => {

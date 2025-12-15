@@ -8,7 +8,7 @@ import { useQueryClient } from '@tanstack/vue-query';
 import { ref } from 'vue';
 
 vi.mock('@/composables/useAuth');
-vi.mock('@/api/generated/hooks');
+vi.mock('@/api');
 vi.mock('@tanstack/vue-query');
 
 const mockMutateAsync = vi.fn();
