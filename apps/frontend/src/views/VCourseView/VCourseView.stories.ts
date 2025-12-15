@@ -6,7 +6,7 @@ import {
   createModule,
   purchasedCoursesListQueryKey,
   lmsModulesListQueryKey,
-} from '@/api';
+} from '@/api/generated';
 import { useQueryClient } from '@tanstack/vue-query';
 
 export default {

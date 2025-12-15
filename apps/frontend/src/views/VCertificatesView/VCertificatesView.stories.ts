@@ -6,10 +6,10 @@ import {
   createUserSafe,
   LanguageEnum,
   diplomasListQueryKey,
-} from '@/api';
+} from '@/api/generated';
 import { flatten } from 'lodash-es';
 import { useQueryClient } from '@tanstack/vue-query';
-import type { Diploma } from '@/api';
+import type { Diploma } from '@/api/generated';
 
 const STATIC_AUTHOR_1 = createUserSafe();
 

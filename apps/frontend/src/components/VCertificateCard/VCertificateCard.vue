@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import VCard from '@/components/VCard/VCard.vue';
-  import type { Diploma } from '@/api';
+  import type { Diploma } from '@/api/generated';
   import VCertificate from '@/components/VCertificate/VCertificate.vue';
 
   export interface Props {

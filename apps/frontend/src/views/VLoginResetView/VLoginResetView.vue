@@ -5,7 +5,7 @@
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
   import VPublicLayout from '@/layouts/VPublicLayout/VPublicLayout.vue';
-  import { useAuthPasswordResetCreate } from '@/api';
+  import { useAuthPasswordResetCreate } from '@/api/generated';
   import { useQueryClient } from '@tanstack/vue-query';
   import VError from '@/components/VError/VError.vue';
 

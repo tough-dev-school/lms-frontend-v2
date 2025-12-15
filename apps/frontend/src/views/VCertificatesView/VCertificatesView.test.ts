@@ -2,8 +2,8 @@ import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import VCertificatesView from './VCertificatesView.vue';
 import type VCertificateCard from '@/components/VCertificateCard/VCertificateCard.vue';
-import { createDiploma, LanguageEnum, useDiplomasList } from '@/api';
-import type { Diploma } from '@/api';
+import { createDiploma, LanguageEnum, useDiplomasList } from '@/api/generated';
+import type { Diploma } from '@/api/generated';
 import { uniq, flatten } from 'lodash-es';
 import { nextTick, ref } from 'vue';
 import { faker } from '@faker-js/faker';
@@ -11,7 +11,7 @@ import { vi, describe, beforeEach, expect, test } from 'vitest';
 
 const defaultProps = {};
 
-vi.mock('@/api');
+vi.mock('@/api/generated');
 
 const createDiplomaSet = (payload: Diploma): Diploma[] => {
   return Object.values(LanguageEnum).map((locale) => {

@@ -5,7 +5,7 @@
   import { ref, computed } from 'vue';
   import { useAuth } from '@/composables/useAuth';
   import { useRouter } from 'vue-router';
-  import { useAuthTokenCreate } from '@/api';
+  import { useAuthTokenCreate } from '@/api/generated';
   import { useQueryClient } from '@tanstack/vue-query';
   import VError from '@/components/VError/VError.vue';
 

@@ -9,8 +9,8 @@
     useHomeworkAnswersDestroy,
     homeworkAnswersRetrieveQueryKey,
     lmsLessonsListQueryKey,
-  } from '@/api';
-  import type { AnswerTree, UserSafe } from '@/api';
+  } from '@/api/generated';
+  import type { AnswerTree, UserSafe } from '@/api/generated';
 
   const props = defineProps<{
     answer: AnswerTree;

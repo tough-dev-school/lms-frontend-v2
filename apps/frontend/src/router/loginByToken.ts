@@ -1,7 +1,7 @@
 import type { RouteLocationNormalized } from 'vue-router';
 import { useQueryClient } from '@tanstack/vue-query';
 import { useAuth } from '@/composables/useAuth';
-import { authPasswordlessTokenRetrieve } from '@/api';
+import { authPasswordlessTokenRetrieve } from '@/api/generated';
 
 export const loginByToken = async (to: RouteLocationNormalized) => {
   const queryClient = useQueryClient();

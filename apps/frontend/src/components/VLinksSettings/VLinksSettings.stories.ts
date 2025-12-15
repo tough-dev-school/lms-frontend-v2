@@ -1,7 +1,7 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VLinksSettings from '@/components/VLinksSettings/VLinksSettings.vue';
 import { useQueryClient } from '@tanstack/vue-query';
-import { usersMeRetrieveQueryKey, createUserSafe } from '@/api';
+import { usersMeRetrieveQueryKey, createUserSafe } from '@/api/generated';
 
 export default {
   title: 'Settings/VLinksSettings',

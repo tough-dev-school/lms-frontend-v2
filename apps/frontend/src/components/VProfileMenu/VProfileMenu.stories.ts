@@ -1,7 +1,7 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VProfileMenu from '@/components/VProfileMenu/VProfileMenu.vue';
 import { faker } from '@faker-js/faker';
-import { usersMeRetrieveQueryKey } from '@/api';
+import { usersMeRetrieveQueryKey } from '@/api/generated';
 import { useQueryClient } from '@tanstack/vue-query';
 
 export default {

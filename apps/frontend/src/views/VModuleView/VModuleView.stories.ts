@@ -8,9 +8,9 @@ import {
   purchasedCoursesListQueryKey,
   lmsModulesRetrieveQueryKey,
   lmsLessonsListQueryKey,
-} from '@/api';
+} from '@/api/generated';
 import { useQueryClient } from '@tanstack/vue-query';
-import type { Lesson, RecommendedVideoProviderEnum } from '@/api';
+import type { Lesson, RecommendedVideoProviderEnum } from '@/api/generated';
 
 export default {
   title: 'App/VModuleView',

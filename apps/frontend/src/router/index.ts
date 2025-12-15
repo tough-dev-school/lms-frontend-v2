@@ -3,7 +3,7 @@ import type { RouteLocation, RouteLocationNormalized } from 'vue-router';
 import { useAuth } from '@/composables/useAuth';
 import { loginByToken } from '@/router/loginByToken';
 import { loginById } from '@/router/loginById';
-import { homeworkAnswersRetrieveQueryOptions } from '@/api';
+import { homeworkAnswersRetrieveQueryOptions } from '@/api/generated';
 import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
 import { AllowMeta } from '@/types';
 import { queryClient } from '@/queryClient';

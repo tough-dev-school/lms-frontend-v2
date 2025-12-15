@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VAnswer from '@/components/VAnswer/VAnswer.vue';
-import { createAnswerTree, createUserSafe } from '@/api';
+import { createAnswerTree, createUserSafe } from '@/api/generated';
 
 export default {
   title: 'Answer/VAnswer',

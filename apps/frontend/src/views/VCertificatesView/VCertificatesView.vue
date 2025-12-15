@@ -3,7 +3,7 @@
   import { computed } from 'vue';
   import { groupBy } from 'lodash-es';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
-  import { useDiplomasList } from '@/api';
+  import { useDiplomasList } from '@/api/generated';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
 
   const { data: diplomasData, isLoading } = useDiplomasList({ page_size: 100 });

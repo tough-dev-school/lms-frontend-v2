@@ -7,7 +7,7 @@
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import VPasswordResetForm from '@/components/VPasswordResetForm/VPasswordResetForm.vue';
   import { useQueryClient } from '@tanstack/vue-query';
-  import { useAuthPasswordChangeCreate } from '@/api';
+  import { useAuthPasswordChangeCreate } from '@/api/generated';
 
   const queryClient = useQueryClient();
 

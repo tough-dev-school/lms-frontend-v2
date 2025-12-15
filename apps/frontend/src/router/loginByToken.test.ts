@@ -3,12 +3,12 @@ import { loginByToken } from './loginByToken';
 import type { RouteLocationNormalized } from 'vue-router';
 import { faker } from '@faker-js/faker';
 import { useAuth } from '@/composables/useAuth';
-import { authPasswordlessTokenRetrieve } from '@/api';
+import { authPasswordlessTokenRetrieve } from '@/api/generated';
 import { useQueryClient } from '@tanstack/vue-query';
 import { ref } from 'vue';
 
 vi.mock('@/composables/useAuth');
-vi.mock('@/api');
+vi.mock('@/api/generated');
 vi.mock('@tanstack/vue-query');
 
 describe('loginByToken', () => {

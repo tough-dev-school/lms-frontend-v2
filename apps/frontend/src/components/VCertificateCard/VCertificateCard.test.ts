@@ -3,8 +3,8 @@ import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import VCertificateCard from './VCertificateCard.vue';
 import type VCertificate from '@/components/VCertificate/VCertificate.vue';
-import { createDiploma, LanguageEnum } from '@/api';
-import type { Diploma } from '@/api';
+import { createDiploma, LanguageEnum } from '@/api/generated';
+import type { Diploma } from '@/api/generated';
 import VCard from '@/components/VCard/VCard.vue';
 
 const createDiplomaSet = (payload: Diploma): Diploma[] => {

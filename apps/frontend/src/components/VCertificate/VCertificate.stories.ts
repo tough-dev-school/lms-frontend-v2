@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VCertificate from '@/components/VCertificate/VCertificate.vue';
-import { createDiploma } from '@/api';
+import { createDiploma } from '@/api/generated';
 
 export default {
   title: 'UI/VCertificate',

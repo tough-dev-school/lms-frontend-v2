@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VCertificateSettings from '@/components/VCertificateSettings/VCertificateSettings.vue';
-import { usersMeRetrieveQueryKey, createUserSafe } from '@/api';
+import { usersMeRetrieveQueryKey, createUserSafe } from '@/api/generated';
 import { useQueryClient } from '@tanstack/vue-query';
 
 export default {

@@ -13,9 +13,14 @@ import {
   usersMeRetrieveQueryKey,
   lmsLessonsRetrieveQueryKey,
   homeworkCrosschecksListQueryKey,
-} from '@/api';
+} from '@/api/generated';
 import { useQueryClient } from '@tanstack/vue-query';
-import type { QuestionDetail, Lesson, CrossCheck, AnswerTree } from '@/api';
+import type {
+  QuestionDetail,
+  Lesson,
+  CrossCheck,
+  AnswerTree,
+} from '@/api/generated';
 
 export default {
   title: 'App/VHomeworkAnswerView',

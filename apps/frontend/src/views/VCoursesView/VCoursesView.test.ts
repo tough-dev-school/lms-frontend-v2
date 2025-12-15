@@ -4,13 +4,13 @@ import VCoursesView from './VCoursesView.vue';
 import type { RouterLink } from 'vue-router';
 import { nextTick, ref } from 'vue';
 import { faker } from '@faker-js/faker';
-import { usePurchasedCoursesList, createCourse } from '@/api';
+import { usePurchasedCoursesList, createCourse } from '@/api/generated';
 import { VueQueryPlugin, QueryClient } from '@tanstack/vue-query';
 import type { VueQueryPluginOptions } from '@tanstack/vue-query';
 
 const defaultStudies = faker.helpers.multiple(createCourse, { count: 3 });
 
-vi.mock('@/api');
+vi.mock('@/api/generated');
 
 const createWrapper = (studies = defaultStudies) => {
   const queryClient = new QueryClient({

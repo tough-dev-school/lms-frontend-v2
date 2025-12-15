@@ -7,7 +7,7 @@
     useUsersMePartialUpdate,
     usersMeRetrieveQueryKey,
     usersMeRetrieveQueryOptions,
-  } from '@/api';
+  } from '@/api/generated';
   import { useQueryClient } from '@tanstack/vue-query';
   import VError from '@/components/VError/VError.vue';
 

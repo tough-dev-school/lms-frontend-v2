@@ -10,7 +10,7 @@
     homeworkAnswersRetrieveQueryKey,
     homeworkCrosschecksListQueryKey,
     lmsLessonsListQueryKey,
-  } from '@/api';
+  } from '@/api/generated';
   import { computed } from 'vue';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import VPillHomework from '@/components/VPillHomework/VPillHomework.vue';

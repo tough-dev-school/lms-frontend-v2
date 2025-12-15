@@ -6,7 +6,7 @@ import {
   usersMeRetrieveQueryOptions,
   homeworkAnswersRetrieveQueryOptions,
   homeworkAnswersListQueryOptions,
-} from '@/api';
+} from '@/api/generated';
 
 export function useHomeworkRedirect(
   questionId: Ref<string>,

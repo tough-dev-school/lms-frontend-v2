@@ -12,9 +12,9 @@
     useHomeworkAnswersReactionsDestroy,
     useHomeworkAnswersReactionsCreate,
     homeworkAnswersRetrieveQueryKey,
-  } from '@/api';
+  } from '@/api/generated';
   import { useQueryClient } from '@tanstack/vue-query';
-  import type { AnswerTree, UserSafe } from '@/api';
+  import type { AnswerTree, UserSafe } from '@/api/generated';
 
   const props = defineProps<{
     answer: AnswerTree;

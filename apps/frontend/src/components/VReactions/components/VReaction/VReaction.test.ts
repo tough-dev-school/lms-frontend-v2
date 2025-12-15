@@ -7,7 +7,7 @@ import { ALLOWED_REACTIONS } from '@/components/VReactions/VReactions.vue';
 import { getName } from '@/utils/getName';
 import type VAvatar from '@/components/VAvatar/VAvatar.vue';
 import { times } from 'lodash-es';
-import { createReactionDetailed } from '@/api';
+import { createReactionDetailed } from '@/api/generated';
 import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
 
 const emoji = faker.helpers.arrayElement(ALLOWED_REACTIONS);

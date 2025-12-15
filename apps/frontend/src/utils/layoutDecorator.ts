@@ -1,7 +1,7 @@
 import { mockUserId, USER_1 } from '@/mocks/mockUserId';
 import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
 import { useQueryClient } from '@tanstack/vue-query';
-import { usersMeRetrieveQueryKey, createUserSafe } from '@/api';
+import { usersMeRetrieveQueryKey, createUserSafe } from '@/api/generated';
 import type { Component } from 'vue';
 
 const layoutDecorator = (story: Component, layout: Component) => ({

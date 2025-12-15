@@ -2,7 +2,11 @@ import { describe, beforeEach, expect, test, vi } from 'vitest';
 import { mount, RouterLinkStub } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import VModuleCard from './VModuleCard.vue';
-import { createQuestion, createLesson, createModuleDetail } from '@/api';
+import {
+  createQuestion,
+  createLesson,
+  createModuleDetail,
+} from '@/api/generated';
 import { faker } from '@faker-js/faker';
 import dayjs from 'dayjs';
 import { nextTick } from 'vue';

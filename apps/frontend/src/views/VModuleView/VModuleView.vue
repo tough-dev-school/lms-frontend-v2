@@ -4,7 +4,7 @@
     useLmsLessonsList,
     usePurchasedCoursesList,
     useLmsModulesRetrieve,
-  } from '@/api';
+  } from '@/api/generated';
   import { computed } from 'vue';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import VLessonCard from '@/components/VLessonCard/VLessonCard.vue';

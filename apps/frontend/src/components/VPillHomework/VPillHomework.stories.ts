@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import VPillHomework from './VPillHomework.vue';
 import dayjs from 'dayjs';
-import { createQuestion } from '@/api';
+import { createQuestion } from '@/api/generated';
 
 const meta = {
   component: VPillHomework,

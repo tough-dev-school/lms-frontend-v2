@@ -3,7 +3,7 @@
   import VCard from '@/components/VCard/VCard.vue';
   import VAvatar from '@/components/VAvatar/VAvatar.vue';
   import VButton from '@/components/VButton/VButton.vue';
-  import { useUsersMeRetrieve, usersMeRetrieveQueryKey } from '@/api';
+  import { useUsersMeRetrieve, usersMeRetrieveQueryKey } from '@/api/generated';
   import { useQueryClient } from '@tanstack/vue-query';
   import { createHttpClient } from '@/api/client';
   import VError from '@/components/VError/VError.vue';

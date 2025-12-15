@@ -2,7 +2,7 @@
   import VHeading from '@/components/VHeading/VHeading.vue';
   import VTag from '@/components/VTag/VTag.vue';
   import VButton from '@/components/VButton/VButton.vue';
-  import type { Lesson } from '@/api';
+  import type { Lesson } from '@/api/generated';
   import { DATE_TIME_FORMAT, formatDate } from '@/utils/date';
 
   defineProps<{

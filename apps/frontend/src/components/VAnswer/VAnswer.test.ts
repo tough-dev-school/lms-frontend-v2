@@ -12,7 +12,7 @@ import {
   createUserSafe,
   useHomeworkAnswersReactionsDestroy,
   useHomeworkAnswersReactionsCreate,
-} from '@/api';
+} from '@/api/generated';
 
 const uuid = faker.string.uuid();
 
@@ -27,7 +27,7 @@ vi.mock('@formkit/auto-animate/vue', () => ({
   useAutoAnimate: () => [null],
 }));
 
-vi.mock('@/api');
+vi.mock('@/api/generated');
 vi.mock('@tanstack/vue-query');
 
 const defaultMountOptions = {

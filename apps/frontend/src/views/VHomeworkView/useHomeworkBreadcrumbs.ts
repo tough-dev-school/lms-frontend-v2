@@ -1,4 +1,4 @@
-import { homeworkQuestionsRetrieveQueryOptions } from '@/api';
+import { homeworkQuestionsRetrieveQueryOptions } from '@/api/generated';
 import { onMounted, ref, toValue } from 'vue';
 import type { MaybeRefOrGetter } from 'vue';
 import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';

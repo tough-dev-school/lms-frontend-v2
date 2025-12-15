@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ReactionDetailed } from '@/api';
+  import type { ReactionDetailed } from '@/api/generated';
   import { ReactionEmoji } from '@/components/VReactions/VReactions.vue';
 
   export interface VReactionProps {

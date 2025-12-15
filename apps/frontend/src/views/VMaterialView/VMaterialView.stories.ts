@@ -7,9 +7,9 @@ import {
   createModule,
   createLessonPlain,
   materialsRetrieveQueryKey,
-} from '@/api';
+} from '@/api/generated';
 import { useQueryClient } from '@tanstack/vue-query';
-import type { MaterialSerilizer } from '@/api';
+import type { MaterialSerilizer } from '@/api/generated';
 
 export default {
   title: 'App/VMaterialView',

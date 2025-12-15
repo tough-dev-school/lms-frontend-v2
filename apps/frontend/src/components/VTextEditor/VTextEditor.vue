@@ -27,7 +27,7 @@
   import { onBeforeUnmount, ref, useTemplateRef, watch, computed } from 'vue';
   import { onKeyDown, useKeyModifier, useFocusWithin } from '@vueuse/core';
   import VLoader from '@/components/VLoader/VLoader.vue';
-  import { homeworkAnswersImageCreate } from '@/api';
+  import { homeworkAnswersImageCreate } from '@/api/generated';
   import { isEqual } from 'lodash-es';
 
   const props = withDefaults(

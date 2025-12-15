@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VExistingAnswer from '@/components/VExistingAnswer/VExistingAnswer.vue';
-import { createAnswer, createUserSafe } from '@/api';
+import { createAnswer, createUserSafe } from '@/api/generated';
 
 export default {
   title: 'Answer/VExistingAnswer',

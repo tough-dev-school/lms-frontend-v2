@@ -10,8 +10,8 @@
     usersMeRetrieveQueryOptions,
     GenderEnum,
     BlankEnum,
-  } from '@/api';
-  import type { PatchedUserSelfUpdate } from '@/api';
+  } from '@/api/generated';
+  import type { PatchedUserSelfUpdate } from '@/api/generated';
   import VError from '@/components/VError/VError.vue';
 
   const queryClient = useQueryClient();
