@@ -202,11 +202,8 @@
         :lesson="lesson"
       />
     </template>
-    <section>
-      <VCrossChecks
-        v-if="isOwnAnswer && crosschecks?.length"
-        :crosschecks="crosschecks"
-      />
+    <section v-if="isOwnAnswer && crosschecks?.length">
+      <VCrossChecks :crosschecks="crosschecks" />
     </section>
     <section class="VHomeworkAnswerView__Section">
       <VHeading tag="h2"> Отправленная работа</VHeading>
