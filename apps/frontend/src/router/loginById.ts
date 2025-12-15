@@ -1,6 +1,6 @@
 import type { RouteLocationNormalized } from 'vue-router';
 import { useAuth } from '@/composables/useAuth';
-import { authAsRetrieve } from '@/api/generated';
+import { authAsRetrieve } from '@/api';
 import { useQueryClient } from '@tanstack/vue-query';
 
 export const loginById = async (to: RouteLocationNormalized) => {

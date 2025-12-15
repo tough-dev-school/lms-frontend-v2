@@ -7,18 +7,21 @@
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import VPasswordResetForm from '@/components/VPasswordResetForm/VPasswordResetForm.vue';
   import { useQueryClient } from '@tanstack/vue-query';
-  import { useAuthPasswordChangeCreate } from '@/api/generated/hooks';
+  import { useAuthPasswordChangeCreate } from '@/api';
 
   const queryClient = useQueryClient();
 
-  const { mutateAsync: changePassword, error, isPending: isPasswordChangePending } =
-    useAuthPasswordChangeCreate({
-      mutation: {
-        onSuccess: () => {
-          queryClient.invalidateQueries();
-        },
+  const {
+    mutateAsync: changePassword,
+    error,
+    isPending: isPasswordChangePending,
+  } = useAuthPasswordChangeCreate({
+    mutation: {
+      onSuccess: () => {
+        queryClient.invalidateQueries();
       },
-    });
+    },
+  });
 
   const handleSave = async (password: string) => {
     await changePassword({

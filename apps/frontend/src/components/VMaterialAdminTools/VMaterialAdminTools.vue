@@ -6,7 +6,7 @@
     useMaterialsStatusRetrieve,
     materialsStatusRetrieveQueryKey,
     useMaterialsUpdateUpdate,
-  } from '@/api/generated';
+  } from '@/api';
   import { useQueryClient } from '@tanstack/vue-query';
   import { useIntervalFn } from '@vueuse/core';
   import { DATE_TIME_SECONDS_FORMAT, formatDate, isBefore } from '@/utils/date';

@@ -1,12 +1,15 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VCertificatesView from './VCertificatesView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
-import { createDiploma, createUserSafe } from '@/api/generated/mocks';
-import { LanguageEnum } from '@/api/generated/types';
+import {
+  createDiploma,
+  createUserSafe,
+  LanguageEnum,
+  diplomasListQueryKey,
+} from '@/api';
 import { flatten } from 'lodash-es';
-import { diplomasListQueryKey } from '@/api/generated/hooks';
 import { useQueryClient } from '@tanstack/vue-query';
-import type { Diploma } from '@/api/generated/types';
+import type { Diploma } from '@/api';
 
 const STATIC_AUTHOR_1 = createUserSafe();
 

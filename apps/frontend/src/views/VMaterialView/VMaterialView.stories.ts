@@ -6,10 +6,10 @@ import {
   createLMSCourse,
   createModule,
   createLessonPlain,
-} from '@/api/generated/mocks';
-import { materialsRetrieveQueryKey } from '@/api/generated/hooks';
+  materialsRetrieveQueryKey,
+} from '@/api';
 import { useQueryClient } from '@tanstack/vue-query';
-import type { MaterialSerilizer } from '@/api/generated/types';
+import type { MaterialSerilizer } from '@/api';
 
 export default {
   title: 'App/VMaterialView',

@@ -1,10 +1,7 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VLessonCard from '@/components/VLessonCard/VLessonCard.vue';
-import type {
-  Lesson,
-  RecommendedVideoProviderEnum,
-} from '@/api/generated/types';
-import { createLesson } from '@/api/generated/mocks';
+import type { Lesson, RecommendedVideoProviderEnum } from '@/api';
+import { createLesson } from '@/api';
 
 export default {
   title: 'UI/VLessonCard',

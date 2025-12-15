@@ -3,12 +3,12 @@ import { mount, RouterLinkStub } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import VSettingsView from './VSettingsView.vue';
 import type { RouterLink } from 'vue-router';
-import { useAuthPasswordChangeCreate } from '@/api/generated/hooks';
+import { useAuthPasswordChangeCreate } from '@/api';
 import { ref } from 'vue';
 
 const defaultProps = {};
 
-vi.mock('@/api/generated/hooks');
+vi.mock('@/api');
 vi.mock('@tanstack/vue-query');
 
 describe('VSettingsView', () => {

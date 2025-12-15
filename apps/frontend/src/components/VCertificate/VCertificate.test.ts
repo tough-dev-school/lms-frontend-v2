@@ -3,7 +3,7 @@ import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import VCertificate from './VCertificate.vue';
 import { merge } from 'lodash-es';
-import { createDiploma } from '@/api/generated/mocks';
+import { createDiploma } from '@/api';
 
 const defaultProps = {
   certificate: createDiploma(),

@@ -4,7 +4,7 @@
   import VTextInput from '@/components/VTextInput/VTextInput.vue';
   import { ref } from 'vue';
   import { useRouter } from 'vue-router';
-  import { authPasswordlessTokenRequestRetrieve } from '@/api/generated';
+  import { authPasswordlessTokenRequestRetrieve } from '@/api';
   import VError from '@/components/VError/VError.vue';
   import type { FormError } from '@/types/error';
 

@@ -7,21 +7,24 @@
     useUsersMePartialUpdate,
     usersMeRetrieveQueryKey,
     usersMeRetrieveQueryOptions,
-  } from '@/api/generated/hooks';
+  } from '@/api';
   import { useQueryClient } from '@tanstack/vue-query';
   import VError from '@/components/VError/VError.vue';
 
   const queryClient = useQueryClient();
-  const { mutateAsync: updateUser, isPending, error } =
-    useUsersMePartialUpdate({
-      mutation: {
-        onSuccess: () => {
-          queryClient.invalidateQueries({
-            queryKey: usersMeRetrieveQueryKey(),
-          });
-        },
+  const {
+    mutateAsync: updateUser,
+    isPending,
+    error,
+  } = useUsersMePartialUpdate({
+    mutation: {
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: usersMeRetrieveQueryKey(),
+        });
       },
-    });
+    },
+  });
 
   const data = ref({
     linkedinUsername: '',

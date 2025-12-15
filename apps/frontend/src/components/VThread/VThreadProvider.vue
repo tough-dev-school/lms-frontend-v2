@@ -1,8 +1,5 @@
 <script lang="ts" setup>
-  import {
-    useUsersMeRetrieve,
-    useHomeworkAnswersRetrieve,
-  } from '@/api/generated/hooks';
+  import { useUsersMeRetrieve, useHomeworkAnswersRetrieve } from '@/api';
   import { computed, watch } from 'vue';
   import VThread from './VThread.vue';
   import { usePopulateAnswersCache } from '@/composables/usePopulateAnswersCache';

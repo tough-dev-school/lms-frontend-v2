@@ -7,11 +7,12 @@ import type VAnswerContent from '@/components/VAnswerContent/VAnswerContent.vue'
 import dayjs from 'dayjs';
 import { cloneDeep } from 'lodash-es';
 import { faker } from '@faker-js/faker';
-import { createAnswerTree, createUserSafe } from '@/api/generated/mocks';
 import {
+  createAnswerTree,
+  createUserSafe,
   useHomeworkAnswersReactionsDestroy,
   useHomeworkAnswersReactionsCreate,
-} from '@/api/generated/hooks';
+} from '@/api';
 
 const uuid = faker.string.uuid();
 
@@ -26,7 +27,7 @@ vi.mock('@formkit/auto-animate/vue', () => ({
   useAutoAnimate: () => [null],
 }));
 
-vi.mock('@/api/generated/hooks');
+vi.mock('@/api');
 vi.mock('@tanstack/vue-query');
 
 const defaultMountOptions = {

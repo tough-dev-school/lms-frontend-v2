@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import { useRouter } from 'vue-router';
   import VPublicLayout from '@/layouts/VPublicLayout/VPublicLayout.vue';
-  import { useAuthPasswordResetConfirmCreate } from '@/api/generated/hooks';
+  import { useAuthPasswordResetConfirmCreate } from '@/api';
   import { useQueryClient } from '@tanstack/vue-query';
   import VPasswordResetForm from '@/components/VPasswordResetForm/VPasswordResetForm.vue';
 
@@ -13,14 +13,17 @@
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const { mutateAsync: changePassword, error, isPending } =
-    useAuthPasswordResetConfirmCreate({
-      mutation: {
-        onSuccess: () => {
-          queryClient.invalidateQueries();
-        },
+  const {
+    mutateAsync: changePassword,
+    error,
+    isPending,
+  } = useAuthPasswordResetConfirmCreate({
+    mutation: {
+      onSuccess: () => {
+        queryClient.invalidateQueries();
       },
-    });
+    },
+  });
 
   const handleSave = async (password: string) => {
     try {

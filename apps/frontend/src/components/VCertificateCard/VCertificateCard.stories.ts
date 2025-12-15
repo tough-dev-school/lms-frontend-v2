@@ -1,8 +1,7 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VCertificateCard from '@/components/VCertificateCard/VCertificateCard.vue';
-import { createDiploma } from '@/api/generated/mocks';
-import { LanguageEnum } from '@/api/generated/types';
-import type { Diploma } from '@/api/generated/types';
+import { createDiploma, LanguageEnum } from '@/api';
+import type { Diploma } from '@/api';
 
 export default {
   title: 'UI/VCertificateCard',

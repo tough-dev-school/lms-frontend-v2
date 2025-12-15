@@ -6,10 +6,7 @@
   import getNotionTitle from '@/utils/getNotionTitle';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
-  import {
-    useMaterialsRetrieve,
-    useUsersMeRetrieve,
-  } from '@/api/generated/hooks';
+  import { useMaterialsRetrieve, useUsersMeRetrieve } from '@/api';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
   import { SUPPORT_EMAIL, SUPPORT_CHAT_URL } from '@/constants';
   import { useRouteQuery } from '@vueuse/router';

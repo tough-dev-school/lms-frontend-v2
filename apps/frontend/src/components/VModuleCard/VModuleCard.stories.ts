@@ -1,6 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VModuleCard from './VModuleCard.vue';
-import { createModule } from '@/api/generated/mocks';
+import { createModule } from '@/api';
 
 export default {
   title: 'UI/VModuleCard',

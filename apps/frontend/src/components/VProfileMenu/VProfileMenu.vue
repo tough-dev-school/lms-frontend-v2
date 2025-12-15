@@ -3,7 +3,7 @@
   import { onClickOutside } from '@vueuse/core';
   import VAvatar from '@/components/VAvatar/VAvatar.vue';
   import { useRouter } from 'vue-router';
-  import { useUsersMeRetrieve } from '@/api/generated/hooks';
+  import { useUsersMeRetrieve } from '@/api';
   import { getName } from '@/utils/getName';
   import { LANDING_URL } from '@/constants';
 

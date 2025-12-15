@@ -1,8 +1,5 @@
 <script lang="ts" setup>
-  import {
-    useHomeworkAnswersRetrieve,
-    useUsersMeRetrieve,
-  } from '@/api/generated/hooks';
+  import { useHomeworkAnswersRetrieve, useUsersMeRetrieve } from '@/api';
   import VAnswer from './VAnswer.vue';
   import { computed } from 'vue';
 

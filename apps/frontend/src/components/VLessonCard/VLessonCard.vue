@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import type { Lesson } from '@/api/generated';
+  import type { Lesson } from '@/api';
   import VLessonCardCall from './VLessonCardCall.vue';
   import VLessonCardMaterial from './VLessonCardMaterial.vue';
   import VLessonCardHomework from './VLessonCardHomework.vue';

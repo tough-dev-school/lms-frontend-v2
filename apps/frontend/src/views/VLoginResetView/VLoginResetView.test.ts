@@ -8,7 +8,7 @@ import { faker } from '@faker-js/faker';
 import { useAuth } from '@/composables/useAuth';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
-import { useAuthPasswordResetCreate } from '@/api/generated/hooks';
+import { useAuthPasswordResetCreate } from '@/api';
 
 const defaultProps = {};
 
@@ -16,7 +16,7 @@ const routerPushMock = vi.fn();
 
 vi.mock('vue-router');
 vi.mock('@/composables/useAuth');
-vi.mock('@/api/generated/hooks');
+vi.mock('@/api');
 vi.mock('@tanstack/vue-query');
 
 const email = faker.internet.email();

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ReactionDetailed } from '@/api/generated/types';
+  import type { ReactionDetailed } from '@/api';
 
   export enum ReactionEmoji {
     LIKE = '👍',
@@ -28,7 +28,7 @@
   import { computed, watch, ref, onMounted } from 'vue';
   import VReaction from './components/VReaction/VReaction.vue';
   import { groupBy, debounce } from 'lodash-es';
-  import { useUsersMeRetrieve } from '@/api/generated/hooks';
+  import { useUsersMeRetrieve } from '@/api';
   import { uuid } from '@/utils/uuid';
 
   const props = withDefaults(defineProps<VReactionsProps>(), {

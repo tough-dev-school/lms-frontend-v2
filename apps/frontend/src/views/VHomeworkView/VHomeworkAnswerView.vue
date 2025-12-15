@@ -17,7 +17,7 @@
     homeworkAnswersRetrieveQueryKey,
     homeworkCrosschecksListQueryKey,
     lmsLessonsListQueryKey,
-  } from '@/api/generated/hooks';
+  } from '@/api';
   import { computed, watch } from 'vue';
   import { useRouter } from 'vue-router';
   import { useQueryClient } from '@tanstack/vue-query';

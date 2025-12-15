@@ -3,12 +3,12 @@ import { loginById } from './loginById';
 import type { RouteLocationNormalized } from 'vue-router';
 import { faker } from '@faker-js/faker';
 import { useAuth } from '@/composables/useAuth';
-import { authAsRetrieve } from '@/api/generated';
+import { authAsRetrieve } from '@/api';
 import { useQueryClient } from '@tanstack/vue-query';
 import { ref } from 'vue';
 
 vi.mock('@/composables/useAuth');
-vi.mock('@/api/generated');
+vi.mock('@/api');
 vi.mock('@tanstack/vue-query');
 vi.mock('@/utils/useAuth');
 

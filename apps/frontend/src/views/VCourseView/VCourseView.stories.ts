@@ -1,11 +1,12 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VCourseView from './VCourseView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
-import { createCourse, createModule } from '@/api/generated/mocks';
 import {
+  createCourse,
+  createModule,
   purchasedCoursesListQueryKey,
   lmsModulesListQueryKey,
-} from '@/api/generated/hooks';
+} from '@/api';
 import { useQueryClient } from '@tanstack/vue-query';
 
 export default {

@@ -3,7 +3,7 @@
   import { computed } from 'vue';
   import { generateHTML } from '@tiptap/vue-3';
   import { getExtensions } from '@/utils/tiptap';
-  import type { Answer, AnswerTree } from '@/api/generated/types';
+  import type { Answer, AnswerTree } from '@/api';
 
   const props = defineProps<{
     answer: Answer | AnswerTree;

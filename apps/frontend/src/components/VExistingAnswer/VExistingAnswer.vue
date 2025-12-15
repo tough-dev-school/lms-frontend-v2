@@ -9,8 +9,8 @@
     useHomeworkAnswersDestroy,
     homeworkAnswersRetrieveQueryKey,
     lmsLessonsListQueryKey,
-  } from '@/api/generated/hooks';
-  import type { AnswerTree, UserSafe } from '@/api/generated/types';
+  } from '@/api';
+  import type { AnswerTree, UserSafe } from '@/api';
 
   const props = defineProps<{
     answer: AnswerTree;
@@ -26,33 +26,37 @@
 
   const isEdit = ref(false);
 
-  const { mutateAsync: updateAnswerMutation, error: updateError, isPending: isUpdatePending } =
-    useHomeworkAnswersPartialUpdate({
-      mutation: {
-        onSuccess: (_, variables) => {
-          queryClient.invalidateQueries({
-            queryKey: homeworkAnswersRetrieveQueryKey(variables.slug),
-          });
-          queryClient.invalidateQueries({
-            queryKey: lmsLessonsListQueryKey(),
-          });
-        },
-      },
-    });
-  const { mutateAsync: deleteAnswerMutation, error: deleteError } = useHomeworkAnswersDestroy({
+  const {
+    mutateAsync: updateAnswerMutation,
+    error: updateError,
+    isPending: isUpdatePending,
+  } = useHomeworkAnswersPartialUpdate({
     mutation: {
-      onSuccess: () => {
-        if (props.answer.parent) {
-          queryClient.invalidateQueries({
-            queryKey: homeworkAnswersRetrieveQueryKey(props.answer.parent),
-          });
-        }
+      onSuccess: (_, variables) => {
+        queryClient.invalidateQueries({
+          queryKey: homeworkAnswersRetrieveQueryKey(variables.slug),
+        });
         queryClient.invalidateQueries({
           queryKey: lmsLessonsListQueryKey(),
         });
       },
     },
   });
+  const { mutateAsync: deleteAnswerMutation, error: deleteError } =
+    useHomeworkAnswersDestroy({
+      mutation: {
+        onSuccess: () => {
+          if (props.answer.parent) {
+            queryClient.invalidateQueries({
+              queryKey: homeworkAnswersRetrieveQueryKey(props.answer.parent),
+            });
+          }
+          queryClient.invalidateQueries({
+            queryKey: lmsLessonsListQueryKey(),
+          });
+        },
+      },
+    });
 
   const handleDelete = async () => {
     if (!confirm('Вы уверены, что хотите удалить этот ответ?')) return;

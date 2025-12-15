@@ -1,11 +1,11 @@
 <script lang="ts" setup>
   import VHeading from '@/components/VHeading/VHeading.vue';
-  import type { Lesson, ModuleDetail } from '@/api/generated/types';
+  import type { Lesson, ModuleDetail } from '@/api';
   import VTag from '../VTag/VTag.vue';
   import { formatDate } from '@/utils/date';
   import { RouterLink } from 'vue-router';
   import { computed, onBeforeMount, ref } from 'vue';
-  import { lmsLessonsRetrieveQueryOptions } from '@/api/generated/hooks';
+  import { lmsLessonsRetrieveQueryOptions } from '@/api';
   import { useQueryClient } from '@tanstack/vue-query';
 
   const props = defineProps<{

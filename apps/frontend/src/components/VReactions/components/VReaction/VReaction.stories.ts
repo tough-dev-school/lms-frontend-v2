@@ -3,7 +3,7 @@ import VReaction from './VReaction.vue';
 import VCard from '@/components/VCard/VCard.vue';
 import { faker } from '@faker-js/faker';
 import { ALLOWED_REACTIONS } from '@/components/VReactions/VReactions.vue';
-import { createReactionDetailed, createUserSafe } from '@/api/generated/mocks';
+import { createReactionDetailed, createUserSafe } from '@/api';
 import { times } from 'lodash-es';
 
 const userId = faker.string.uuid();

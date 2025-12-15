@@ -5,15 +5,14 @@ import type VAvatar from '@/components/VAvatar/VAvatar.vue';
 import { VueQueryPlugin, QueryClient } from '@tanstack/vue-query';
 import type { VueQueryPluginOptions } from '@tanstack/vue-query';
 import { ref } from 'vue';
-import { useUsersMeRetrieve } from '@/api/generated/hooks';
+import { useUsersMeRetrieve, createUsersMeRetrieveQueryResponse } from '@/api';
 import { useRouter } from 'vue-router';
-import { createUsersMeRetrieveQueryResponse } from '@/api/generated';
 
 const routerPushMock = vi.fn();
 
 vi.mock('vue-router');
 
-vi.mock('@/api/generated/hooks');
+vi.mock('@/api');
 
 const createWrapper = () => {
   const queryClient = new QueryClient({

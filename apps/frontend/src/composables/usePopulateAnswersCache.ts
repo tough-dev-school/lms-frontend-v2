@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/vue-query';
-import { homeworkAnswersRetrieveQueryKey } from '@/api/generated/hooks';
-import type { Answer, AnswerTree } from '@/api/generated/types';
+import { homeworkAnswersRetrieveQueryKey } from '@/api';
+import type { Answer, AnswerTree } from '@/api';
 
 export const usePopulateAnswersCache = () => {
   const queryClient = useQueryClient();

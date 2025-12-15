@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { getName } from '@/utils/getName';
-  import type { CrossCheck } from '@/api/generated/types';
+  import type { CrossCheck } from '@/api';
 
   defineProps<{
     crosschecks: CrossCheck[];

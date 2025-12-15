@@ -2,7 +2,7 @@ import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VReactions from './VReactions.vue';
 import VCard from '@/components/VCard/VCard.vue';
 import { faker } from '@faker-js/faker';
-import { createReactionDetailed } from '@/api/generated/mocks';
+import { createReactionDetailed } from '@/api';
 
 export default {
   title: 'Reactions/VReactions',

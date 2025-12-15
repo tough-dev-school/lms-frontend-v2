@@ -6,13 +6,11 @@ import {
   createModule,
   createQuestionCourse,
   createBreadcrumbs,
-} from '@/api/generated/mocks';
-import {
   homeworkQuestionsRetrieveQueryKey,
   lmsLessonsRetrieveQueryKey,
-} from '@/api/generated/hooks';
+} from '@/api';
 import { useQueryClient } from '@tanstack/vue-query';
-import type { QuestionDetail, Lesson } from '@/api/generated/types';
+import type { QuestionDetail, Lesson } from '@/api';
 
 export default {
   title: 'App/VHomeworkQuestionView',

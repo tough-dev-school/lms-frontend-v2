@@ -2,18 +2,16 @@ import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import VCertificatesView from './VCertificatesView.vue';
 import type VCertificateCard from '@/components/VCertificateCard/VCertificateCard.vue';
-import { createDiploma } from '@/api/generated/mocks';
-import { LanguageEnum } from '@/api/generated/types';
-import type { Diploma } from '@/api/generated/types';
+import { createDiploma, LanguageEnum, useDiplomasList } from '@/api';
+import type { Diploma } from '@/api';
 import { uniq, flatten } from 'lodash-es';
 import { nextTick, ref } from 'vue';
 import { faker } from '@faker-js/faker';
 import { vi, describe, beforeEach, expect, test } from 'vitest';
-import { useDiplomasList } from '@/api/generated/hooks';
 
 const defaultProps = {};
 
-vi.mock('@/api/generated/hooks');
+vi.mock('@/api');
 
 const createDiplomaSet = (payload: Diploma): Diploma[] => {
   return Object.values(LanguageEnum).map((locale) => {

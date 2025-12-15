@@ -2,7 +2,7 @@
   import VCover from '@/components/VCover/VCover.vue';
   import { RouterLink } from 'vue-router';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
-  import { usePurchasedCoursesList } from '@/api/generated/hooks';
+  import { usePurchasedCoursesList } from '@/api';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
   import { computed } from 'vue';
 

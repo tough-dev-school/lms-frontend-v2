@@ -1,9 +1,6 @@
 <script lang="ts" setup>
   import VExistingAnswer from './VExistingAnswer.vue';
-  import {
-    useHomeworkAnswersRetrieve,
-    useUsersMeRetrieve,
-  } from '@/api/generated/hooks';
+  import { useHomeworkAnswersRetrieve, useUsersMeRetrieve } from '@/api';
   import { computed } from 'vue';
 
   const props = defineProps<{

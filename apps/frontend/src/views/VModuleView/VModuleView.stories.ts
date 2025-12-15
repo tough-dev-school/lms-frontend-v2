@@ -5,17 +5,12 @@ import {
   createCourse,
   createModule,
   createQuestion,
-} from '@/api/generated/mocks';
-import {
   purchasedCoursesListQueryKey,
   lmsModulesRetrieveQueryKey,
   lmsLessonsListQueryKey,
-} from '@/api/generated/hooks';
+} from '@/api';
 import { useQueryClient } from '@tanstack/vue-query';
-import type {
-  Lesson,
-  RecommendedVideoProviderEnum,
-} from '@/api/generated/types';
+import type { Lesson, RecommendedVideoProviderEnum } from '@/api';
 
 export default {
   title: 'App/VModuleView',

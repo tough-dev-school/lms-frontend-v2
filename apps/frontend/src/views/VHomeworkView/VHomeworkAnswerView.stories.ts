@@ -8,21 +8,14 @@ import {
   createModule,
   createQuestionCourse,
   createLMSCourse,
-} from '@/api/generated/mocks';
-import {
   homeworkQuestionsRetrieveQueryKey,
   homeworkAnswersRetrieveQueryKey,
   usersMeRetrieveQueryKey,
   lmsLessonsRetrieveQueryKey,
   homeworkCrosschecksListQueryKey,
-} from '@/api/generated/hooks';
+} from '@/api';
 import { useQueryClient } from '@tanstack/vue-query';
-import type {
-  QuestionDetail,
-  Lesson,
-  CrossCheck,
-  AnswerTree,
-} from '@/api/generated/types';
+import type { QuestionDetail, Lesson, CrossCheck, AnswerTree } from '@/api';
 
 export default {
   title: 'App/VHomeworkAnswerView',

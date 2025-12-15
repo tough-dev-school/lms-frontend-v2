@@ -6,7 +6,7 @@
     Lesson,
     RecommendedVideoProviderEnum,
     VideoProvider,
-  } from '@/api/generated';
+  } from '@/api';
   import { DATE_TIME_FORMAT, formatDate } from '@/utils/date';
 
   defineProps<{
