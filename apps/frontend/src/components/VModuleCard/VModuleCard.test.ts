@@ -14,11 +14,15 @@ import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
 
 const mockFetchQuery = vi.fn();
 
-vi.mock('@tanstack/vue-query', () => ({
-  useQueryClient: () => ({
-    fetchQuery: mockFetchQuery,
-  }),
-}));
+vi.mock('@tanstack/vue-query', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@tanstack/vue-query')>();
+  return {
+    ...actual,
+    useQueryClient: () => ({
+      fetchQuery: mockFetchQuery,
+    }),
+  };
+});
 
 const defaultProps = {
   module: createModuleDetail({ lesson_count: 5 }),

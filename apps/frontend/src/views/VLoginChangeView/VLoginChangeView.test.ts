@@ -19,7 +19,7 @@ const defaultProps = {
 const routerPushMock = vi.fn();
 
 vi.mock('vue-router');
-vi.mock('@/api');
+vi.mock('@/api/generated/hooks');
 vi.mock('@tanstack/vue-query');
 
 describe('VLoginChangeView', () => {
@@ -57,10 +57,12 @@ describe('VLoginChangeView', () => {
 
     expect(confirmPasswordReset).toHaveBeenCalled();
     expect(confirmPasswordReset).toHaveBeenCalledWith({
-      new_password1: password,
-      new_password2: password,
-      uid,
-      token,
+      data: {
+        new_password1: password,
+        new_password2: password,
+        uid,
+        token,
+      },
     });
   });
 

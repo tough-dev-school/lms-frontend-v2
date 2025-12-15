@@ -11,7 +11,7 @@ import { createCourse } from '@/api/generated';
 
 const defaultStudies = faker.helpers.multiple(createCourse, { count: 3 });
 
-vi.mock('@/api');
+vi.mock('@/api/generated/hooks');
 
 const createWrapper = (studies = defaultStudies) => {
   const queryClient = new QueryClient({

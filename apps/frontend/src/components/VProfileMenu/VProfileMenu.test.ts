@@ -13,7 +13,7 @@ const routerPushMock = vi.fn();
 
 vi.mock('vue-router');
 
-vi.mock('@/api');
+vi.mock('@/api/generated/hooks');
 
 const createWrapper = () => {
   const queryClient = new QueryClient({

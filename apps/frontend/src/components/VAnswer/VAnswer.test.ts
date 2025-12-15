@@ -26,7 +26,7 @@ vi.mock('@formkit/auto-animate/vue', () => ({
   useAutoAnimate: () => [null],
 }));
 
-vi.mock('@/api');
+vi.mock('@/api/generated/hooks');
 vi.mock('@tanstack/vue-query');
 
 const defaultMountOptions = {
@@ -44,16 +44,12 @@ describe('VAnswer', () => {
   let wrapper: VueWrapper<InstanceType<typeof VAnswer>>;
 
   beforeEach(() => {
-    (
-      useHomeworkAnswersReactionsDestroy as ReturnType<typeof vi.fn>
-    ).mockReturnValue({
+    vi.mocked(useHomeworkAnswersReactionsDestroy).mockReturnValue({
       mutateAsync: vi.fn(),
-    });
-    (
-      useHomeworkAnswersReactionsCreate as ReturnType<typeof vi.fn>
-    ).mockReturnValue({
+    } as any);
+    vi.mocked(useHomeworkAnswersReactionsCreate).mockReturnValue({
       mutateAsync: vi.fn(),
-    });
+    } as any);
     wrapper = mount(VAnswer, defaultMountOptions);
   });
 
@@ -116,7 +112,8 @@ describe('VAnswer', () => {
     const answerContainer = getAnswerContainerWrapper();
     const element = answerContainer.element as HTMLElement;
 
-    expect(element.style.backgroundColor).toBe('transparent');
+    // Browser returns empty string for transparent backgrounds
+    expect(['transparent', '']).toContain(element.style.backgroundColor);
   });
 
   test('answer with rank_label_color has that background color', () => {

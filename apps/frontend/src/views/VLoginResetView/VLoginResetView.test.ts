@@ -16,7 +16,7 @@ const routerPushMock = vi.fn();
 
 vi.mock('vue-router');
 vi.mock('@/composables/useAuth');
-vi.mock('@/api');
+vi.mock('@/api/generated/hooks');
 vi.mock('@tanstack/vue-query');
 
 const email = faker.internet.email();
@@ -67,7 +67,7 @@ describe('VLoginResetView', () => {
     await getSendWrapper().trigger('submit');
 
     expect(requestResetMock).toHaveBeenCalledTimes(1);
-    expect(requestResetMock).toHaveBeenCalledWith({ email });
+    expect(requestResetMock).toHaveBeenCalledWith({ data: { email } });
   });
 
   test('click on send redirects to mail-sent', async () => {

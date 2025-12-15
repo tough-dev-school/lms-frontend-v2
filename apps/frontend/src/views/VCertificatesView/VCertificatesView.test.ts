@@ -13,7 +13,7 @@ import { useDiplomasList } from '@/api/generated/hooks';
 
 const defaultProps = {};
 
-vi.mock('@/api');
+vi.mock('@/api/generated/hooks');
 
 const createDiplomaSet = (payload: Diploma): Diploma[] => {
   return Object.values(LanguageEnum).map((locale) => {

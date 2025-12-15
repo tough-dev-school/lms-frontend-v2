@@ -3,16 +3,14 @@ import { loginById } from './loginById';
 import type { RouteLocationNormalized } from 'vue-router';
 import { faker } from '@faker-js/faker';
 import { useAuth } from '@/composables/useAuth';
-import { useAuthAsRetrieve } from '@/api/generated/hooks';
+import { authAsRetrieve } from '@/api/generated';
 import { useQueryClient } from '@tanstack/vue-query';
 import { ref } from 'vue';
 
 vi.mock('@/composables/useAuth');
-vi.mock('@/api');
+vi.mock('@/api/generated');
 vi.mock('@tanstack/vue-query');
 vi.mock('@/utils/useAuth');
-
-const mockMutateAsync = vi.fn();
 
 describe('loginById', () => {
   beforeEach(() => {
@@ -20,19 +18,16 @@ describe('loginById', () => {
       token: ref(undefined),
     } as any);
 
-    vi.mocked(useAuthAsRetrieve).mockReturnValue({
-      mutateAsync: mockMutateAsync,
-      isPending: ref(false),
+    vi.mocked(useQueryClient).mockReturnValue({
+      invalidateQueries: vi.fn(),
     } as any);
-
-    vi.mocked(useQueryClient).mockReturnValue({} as any);
   });
 
   test('successfully logs in user and returns home route', async () => {
     const userId = faker.number.int({ min: 1, max: 1000 });
     const tokenValue = faker.string.uuid();
 
-    mockMutateAsync.mockResolvedValue({ token: tokenValue });
+    vi.mocked(authAsRetrieve).mockResolvedValue({ token: tokenValue } as any);
 
     const mockRoute = {
       params: { userId: userId.toString() },
@@ -42,7 +37,7 @@ describe('loginById', () => {
 
     const { token } = useAuth();
 
-    expect(mockMutateAsync).toHaveBeenCalledWith(userId);
+    expect(authAsRetrieve).toHaveBeenCalledWith(userId);
     expect(token.value).toEqual(tokenValue);
     expect(result).toEqual({ name: 'courses' });
   });
@@ -51,7 +46,7 @@ describe('loginById', () => {
     const userId = 42;
     const tokenValue = faker.string.uuid();
 
-    mockMutateAsync.mockResolvedValue({ token: tokenValue });
+    vi.mocked(authAsRetrieve).mockResolvedValue({ token: tokenValue } as any);
 
     const mockRoute = {
       params: { userId: userId.toString() },
@@ -61,7 +56,7 @@ describe('loginById', () => {
 
     const { token } = useAuth();
 
-    expect(mockMutateAsync).toHaveBeenCalledWith(userId);
+    expect(authAsRetrieve).toHaveBeenCalledWith(userId);
     expect(token.value).toEqual(tokenValue);
   });
 
@@ -69,7 +64,7 @@ describe('loginById', () => {
     const userId = faker.number.int({ min: 1, max: 1000 });
     const tokenValue = faker.string.uuid();
 
-    mockMutateAsync.mockResolvedValue({ token: tokenValue });
+    vi.mocked(authAsRetrieve).mockResolvedValue({ token: tokenValue } as any);
 
     const mockRoute = {
       params: { userId: userId.toString() },

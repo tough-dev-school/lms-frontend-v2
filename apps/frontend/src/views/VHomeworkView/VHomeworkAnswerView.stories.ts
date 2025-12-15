@@ -6,7 +6,8 @@ import {
   createAnswerTree,
   createQuestion,
   createModule,
-  createCourse,
+  createQuestionCourse,
+  createLMSCourse,
 } from '@/api/generated/mocks';
 import {
   homeworkQuestionsRetrieveQueryKey,
@@ -84,13 +85,10 @@ const STATIC_AUTHOR_4 = createUserSafe({
 
 const STATIC_QUESTION: QuestionDetail = {
   ...createQuestion({
-    created: '2024-01-01T10:00:00Z',
-    modified: '2024-01-15T10:00:00Z',
     slug: 'javascript-fundamentals',
     name: 'Основы JavaScript',
     markdown_text: `Выполните задания по основам JavaScript. Создайте простое приложение, которое демонстрирует работу с переменными, функциями и объектами.`,
     deadline: '2024-02-01T23:59:00Z',
-    is_crosscheck: true,
   }),
   homework: {
     is_sent: true,
@@ -103,13 +101,11 @@ const STATIC_QUESTION: QuestionDetail = {
     module: createModule({
       id: 1,
       name: 'Основы программирования',
-      slug: 'basics',
-      order: 1,
     }),
     lesson: {
       id: 1,
     },
-    course: createCourse({
+    course: createLMSCourse({
       id: 1,
       name: 'Курс веб-разработки',
       slug: 'web-development',
@@ -121,7 +117,7 @@ const STATIC_QUESTION: QuestionDetail = {
         'При проверке домашних заданий обратите внимание на чистоту кода, правильность реализации алгоритмов и соответствие требованиям.',
     }),
   },
-  course: createCourse({
+  course: createQuestionCourse({
     id: 1,
     name: 'Курс веб-разработки',
     slug: 'web-development',
@@ -137,13 +133,10 @@ const STATIC_QUESTION: QuestionDetail = {
 const STATIC_LESSON: Lesson = {
   id: 1,
   question: createQuestion({
-    created: '2024-01-01T10:00:00Z',
-    modified: '2024-01-15T10:00:00Z',
     slug: 'javascript-fundamentals',
     name: 'Основы JavaScript',
     markdown_text: 'Выполните задания по основам JavaScript.',
     deadline: '2024-02-01T23:59:00Z',
-    is_crosscheck: true,
   }),
   homework: {
     is_sent: true,
@@ -160,7 +153,7 @@ const STATIC_ANSWER = createAnswerTree({
   slug: 'answer-123',
   question: 'javascript-fundamentals',
   author: STATIC_AUTHOR_1,
-  parent: null,
+  parent: undefined,
   legacy_text: '',
   content: {
     type: 'doc',
@@ -245,13 +238,10 @@ const STATIC_CROSSCHECKS: CrossCheck[] = [
       slug: 'other-answer-1',
       url: '/homework/javascript-fundamentals?answerId=other-answer-1',
       question: createQuestion({
-        created: '2024-01-01T10:00:00Z',
-        modified: '2024-01-15T10:00:00Z',
         slug: 'javascript-fundamentals',
         name: 'Основы JavaScript',
         markdown_text: 'Выполните задания по основам JavaScript.',
         deadline: '2024-02-01T23:59:00Z',
-        is_crosscheck: true,
       }),
       author: STATIC_AUTHOR_2,
     },
@@ -263,13 +253,10 @@ const STATIC_CROSSCHECKS: CrossCheck[] = [
       slug: 'other-answer-2',
       url: '/homework/javascript-fundamentals?answerId=other-answer-2',
       question: createQuestion({
-        created: '2024-01-01T10:00:00Z',
-        modified: '2024-01-15T10:00:00Z',
         slug: 'javascript-fundamentals',
         name: 'Основы JavaScript',
         markdown_text: 'Выполните задания по основам JavaScript.',
         deadline: '2024-02-01T23:59:00Z',
-        is_crosscheck: true,
       }),
       author: STATIC_AUTHOR_3,
     },
@@ -281,13 +268,10 @@ const STATIC_CROSSCHECKS: CrossCheck[] = [
       slug: 'other-answer-3',
       url: '/homework/javascript-fundamentals?answerId=other-answer-3',
       question: createQuestion({
-        created: '2024-01-01T10:00:00Z',
-        modified: '2024-01-15T10:00:00Z',
         slug: 'javascript-fundamentals',
         name: 'Основы JavaScript',
         markdown_text: 'Выполните задания по основам JavaScript.',
         deadline: '2024-02-01T23:59:00Z',
-        is_crosscheck: true,
       }),
       author: STATIC_AUTHOR_4,
     },
@@ -359,7 +343,7 @@ const OTHER_USER_ANSWER = createAnswerTree({
   slug: 'answer-456',
   question: 'javascript-fundamentals',
   author: STATIC_AUTHOR_2,
-  parent: null,
+  parent: undefined,
   legacy_text: '',
   content: {
     type: 'doc',
