@@ -41,8 +41,8 @@ const STATIC_AUTHOR_1 = createUserSafe({
   last_name_en: 'Ivanov',
   random_name: 'ivan_ivanov',
   avatar: null,
-  rank: '1',
-  rank_label_color: '#F7CA45',
+  rank: null,
+  rank_label_color: null,
 });
 
 const STATIC_AUTHOR_2 = createUserSafe({
@@ -53,8 +53,8 @@ const STATIC_AUTHOR_2 = createUserSafe({
   last_name_en: 'Petrov',
   random_name: 'petr_petrov',
   avatar: null,
-  rank: null,
-  rank_label_color: null,
+  rank: '1',
+  rank_label_color: '#F7CA45',
 });
 
 const STATIC_AUTHOR_3 = createUserSafe({
@@ -64,9 +64,9 @@ const STATIC_AUTHOR_3 = createUserSafe({
   first_name_en: 'Maria',
   last_name_en: 'Sidorova',
   random_name: 'maria_sidorova',
-  avatar: '',
-  rank: '3',
-  rank_label_color: '#3498DB',
+  avatar: null,
+  rank: null,
+  rank_label_color: null,
 });
 
 const STATIC_AUTHOR_4 = createUserSafe({
@@ -76,9 +76,9 @@ const STATIC_AUTHOR_4 = createUserSafe({
   first_name_en: 'Alexey',
   last_name_en: 'Smirnov',
   random_name: 'alexey_smirnov',
-  avatar: '',
-  rank: '1',
-  rank_label_color: '#F7CA45',
+  avatar: null,
+  rank: null,
+  rank_label_color: null,
 });
 
 const STATIC_QUESTION: QuestionDetail = {
