@@ -80,7 +80,13 @@
         :key="author.uuid"
         class="relative -mr-[12px] transition-all hover:z-50 hover:scale-125"
         data-testid="author"
-        :title="getName(author.first_name, author.last_name)"
+        :title="
+          getName({
+            firstName: author.first_name,
+            lastName: author.last_name,
+            randomName: author.random_name,
+          })
+        "
       >
         <VAvatar
           class="!h-24 !w-24"

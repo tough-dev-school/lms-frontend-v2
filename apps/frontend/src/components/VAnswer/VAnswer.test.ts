@@ -87,9 +87,15 @@ describe('VAnswer', () => {
   });
 
   test('answer has author name', () => {
-    const { first_name, last_name } = defaultProps.answer.author;
+    const { first_name, last_name, random_name } = defaultProps.answer.author;
 
-    expect(getNameWrapper().text()).toBe(getName(first_name, last_name));
+    expect(getNameWrapper().text()).toBe(
+      getName({
+        firstName: first_name,
+        lastName: last_name,
+        randomName: random_name,
+      }),
+    );
   });
 
   test('answer has relative date', () => {

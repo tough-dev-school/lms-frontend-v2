@@ -81,7 +81,11 @@
   ]);
 
   const fullName = computed(() =>
-    getName(user.value?.first_name, user.value?.last_name),
+    getName({
+      firstName: user.value?.first_name,
+      lastName: user.value?.last_name,
+      randomName: user.value?.random_name,
+    }),
   );
 </script>
 

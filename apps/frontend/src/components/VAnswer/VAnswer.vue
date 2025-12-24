@@ -80,7 +80,13 @@
           class="font-bold"
           data-testid="name"
         >
-          {{ getName(answer.author.first_name, answer.author.last_name) }}
+          {{
+            getName({
+              firstName: answer.author.first_name,
+              lastName: answer.author.last_name,
+              randomName: answer.author.random_name,
+            })
+          }}
         </div>
       </div>
       <div class="flex-grow" />
