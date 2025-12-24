@@ -17,17 +17,16 @@
   const getStudentName = ({
     firstName,
     lastName,
+    randomName,
     index,
   }: {
-    firstName?: string;
-    lastName?: string;
+    firstName?: string | null;
+    lastName?: string | null;
+    randomName?: string | null;
     index: number;
   }) => {
-    if (firstName || lastName) {
-      return getName(firstName, lastName);
-    }
-
-    return `Коллега ${index + 1}`;
+    const name = getName({ firstName, lastName, randomName });
+    return name || `Коллега ${index + 1}`;
   };
 </script>
 
@@ -49,6 +48,7 @@
             getStudentName({
               firstName: crosscheck.answer.author.first_name,
               lastName: crosscheck.answer.author.last_name,
+              randomName: crosscheck.answer.author.random_name,
               index,
             })
           }}

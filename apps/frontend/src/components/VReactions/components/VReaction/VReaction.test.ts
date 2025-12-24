@@ -94,10 +94,11 @@ describe('VReaction', () => {
 
   test('displays tooltip on hover', () => {
     expect(getAuthorWrapper().attributes('title')).toBe(
-      getName(
-        defaultProps.reactions[0].author.first_name,
-        defaultProps.reactions[0].author.last_name,
-      ),
+      getName({
+        firstName: defaultProps.reactions[0].author.first_name,
+        lastName: defaultProps.reactions[0].author.last_name,
+        randomName: defaultProps.reactions[0].author.random_name,
+      }),
     );
   });
 
