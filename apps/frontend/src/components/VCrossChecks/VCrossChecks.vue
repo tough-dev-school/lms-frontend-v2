@@ -5,29 +5,6 @@
   defineProps<{
     crosschecks: CrossCheck[];
   }>();
-
-  const getCrossCheckState = (isChecked: CrossCheck['is_checked']) => {
-    if (isChecked) {
-      return 'проверено';
-    }
-
-    return 'не проверено';
-  };
-
-  const getStudentName = ({
-    firstName,
-    lastName,
-    randomName,
-    index,
-  }: {
-    firstName?: string | null;
-    lastName?: string | null;
-    randomName?: string | null;
-    index: number;
-  }) => {
-    const name = getName({ firstName, lastName, randomName });
-    return name || `Коллега ${index + 1}`;
-  };
 </script>
 
 <template>
@@ -37,7 +14,7 @@
     <p class="mb-8 font-bold">Выберите работу коллеги по курсу для проверки:</p>
     <ol class="mb-16 list-inside list-decimal">
       <li
-        v-for="(crosscheck, index) in crosschecks"
+        v-for="crosscheck in crosschecks"
         :key="crosscheck.answer.url"
         data-testid="crosscheck"
       >
@@ -45,14 +22,13 @@
           class="link"
           :href="crosscheck.answer.url"
           >{{
-            getStudentName({
+            getName({
               firstName: crosscheck.answer.author.first_name,
               lastName: crosscheck.answer.author.last_name,
               randomName: crosscheck.answer.author.random_name,
-              index,
             })
           }}
-          ({{ getCrossCheckState(crosscheck.is_checked) }})</a
+          ({{ crosscheck.is_checked ? 'проверено' : 'не проверено' }})</a
         >
       </li>
     </ol>

@@ -3,10 +3,10 @@ export const getName = ({
   lastName,
   randomName,
 }: {
-  firstName?: string | null;
-  lastName?: string | null;
+  firstName?: string;
+  lastName?: string;
   randomName?: string | null;
 }) => {
   const fullName = [firstName, lastName].filter(Boolean).join(' ').trim();
-  return fullName || randomName || '';
+  return fullName || randomName || 'No name';
 };
