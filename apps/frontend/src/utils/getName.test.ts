@@ -37,7 +37,7 @@ describe('getName', () => {
     );
   });
 
-  test('returns empty string when all parameters are empty', () => {
-    expect(getName({ firstName: '', lastName: '', randomName: '' })).toBe('');
+  test('returns placeholder string when all parameters are empty', () => {
+    expect(getName({ randomName: null })).toBe('No name');
   });
 });
