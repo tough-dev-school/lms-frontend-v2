@@ -10,6 +10,7 @@
     HEART = '❤️',
     ROCKET = '🚀',
     SEEN = '👀',
+    FIRE = '🔥',
   }
 
   export interface VReactionsProps {
