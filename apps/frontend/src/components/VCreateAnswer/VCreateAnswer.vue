@@ -11,11 +11,11 @@
     error: FormError;
   }>();
 
+  const content = defineModel<Record<string, unknown>>({ required: true });
+
   const emit = defineEmits<{
     send: [];
   }>();
-
-  const content = defineModel<Record<string, unknown>>({ required: true });
 
   const editor = useTemplateRef<InstanceType<typeof VTextEditor>>('editor');
 

@@ -1,11 +1,17 @@
+// @ts-check
 import { defineConfig, GLOB_VUE } from 'eslint-config-fans';
 
 export default defineConfig(
   {
-    typescript: true,
+    typescript: {
+      // TODO: Enable typeAware when we have a way to fix the issues
+      typeAware: false,
+    },
     vue: true,
-    prettier: true,
-    strict: false,
+    formatter: 'prettier',
+    opinionated: false,
+    // TODO: Enable e18e when we have a way to fix the issues
+    e18e: false,
   },
   {
     ignores: ['**/generated/**'],
@@ -28,12 +34,11 @@ export default defineConfig(
   },
   {
     rules: {
-      'no-alert': 'off',
-      // Disabled due to legacy code patterns
-      'unicorn/filename-case': 'off',
+      // TODO: Careful review is required
       'unicorn/prefer-string-replace-all': 'off',
-      // Disabled because the config cannot detect the node version for some reason
-      'n/no-unsupported-features/es-syntax': 'off',
+      // TODO: Enable after updating to latest TypeScript version
+      'preserve-caught-error': 'off',
+      'unicorn/no-array-sort': 'off',
     },
   },
 );

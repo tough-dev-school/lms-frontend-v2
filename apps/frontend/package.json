@@ -19,6 +19,9 @@
     "storybook:build": "storybook build",
     "api:generate": "kubb generate; tsx patch-api.ts"
   },
+  "engines": {
+    "node": "22.16.0"
+  },
   "dependencies": {
     "@brachkow/email-providers": "^1.2.0",
     "@formkit/auto-animate": "^0.8.1",
@@ -73,8 +76,8 @@
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.4.0",
     "autoprefixer": "^10.4.21",
-    "eslint": "^9.31.0",
-    "eslint-config-fans": "^1.2.0",
+    "eslint": "^10.2.1",
+    "eslint-config-fans": "^1.10.0",
     "jest-image-snapshot": "^6.2.0",
     "jsdom": "^22.1.0",
     "npm-run-all": "^4.1.5",

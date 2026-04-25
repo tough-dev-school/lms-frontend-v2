@@ -58,6 +58,10 @@
 
   const content = defineModel<Record<string, unknown>>({ required: true });
 
+  const emit = defineEmits<{
+    send: [];
+  }>();
+
   const contentOrLegacyText = computed({
     get() {
       if (Object.keys(content.value).length === 0 && props.legacyText) {
@@ -74,10 +78,6 @@
   const currentEditor = useTemplateRef('currentEditor');
   const isImageLoading = ref(false);
   const { focused } = useFocusWithin(currentEditor);
-
-  const emit = defineEmits<{
-    send: [];
-  }>();
 
   const isMetaPressed = useKeyModifier('Meta');
 
@@ -303,12 +303,12 @@
 
   const isEmpty = computed(() => isEditorEmpty.value);
 
-  defineExpose({
-    isEmpty,
-  });
-
   onBeforeUnmount(() => {
     editor.destroy();
+  });
+
+  defineExpose({
+    isEmpty,
   });
 </script>
 

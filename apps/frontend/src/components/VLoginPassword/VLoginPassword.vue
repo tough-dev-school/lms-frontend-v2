@@ -9,6 +9,10 @@
   import { useQueryClient } from '@tanstack/vue-query';
   import VError from '@/components/VError/VError.vue';
 
+  const emit = defineEmits<{
+    change: [];
+  }>();
+
   const queryClient = useQueryClient();
 
   const { token } = useAuth();
@@ -58,10 +62,6 @@
   const isEmail = computed(() => {
     return username.value.includes('@');
   });
-
-  const emit = defineEmits<{
-    change: [];
-  }>();
 </script>
 
 <template>
