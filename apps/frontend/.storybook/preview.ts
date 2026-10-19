@@ -7,6 +7,7 @@ import { routes } from '../src/router';
 import type { Preview } from '@storybook/vue3-vite';
 import { i18n, isLocale, DEFAULT_LOCALE } from '../src/i18n';
 import { useLocale } from '../src/composables/useLocale';
+import { applyOverrides } from '../src/i18n/overrides';
 
 const preview: Preview = {
   parameters: {
@@ -75,6 +76,9 @@ const preview: Preview = {
     },
   ],
 };
+
+// Translations uploaded on the Tools/Translations page
+applyOverrides();
 
 setup((app) => {
   app.use(VueQueryPlugin, {

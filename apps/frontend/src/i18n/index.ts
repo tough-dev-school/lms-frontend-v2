@@ -20,11 +20,13 @@ export const russianPluralRule = (choice: number) =>
     russianPluralRules.select(choice)
   ];
 
+export const messages: Record<Locale, MessageSchema> = { ru, en };
+
 export const i18n = createI18n<[MessageSchema], Locale, false>({
   legacy: false,
   locale: DEFAULT_LOCALE,
   fallbackLocale: DEFAULT_LOCALE,
-  messages: { ru, en },
+  messages,
   pluralRules: { ru: russianPluralRule },
 });
 

@@ -53,6 +53,7 @@
     "@cloudflare/workers-types": "^4.20250724.0",
     "@faker-js/faker": "^8.4.1",
     "@intlify/eslint-plugin-vue-i18n": "^4.5.1",
+    "@intlify/message-compiler": "11.4.16",
     "@intlify/unplugin-vue-i18n": "^11.2.7",
     "@kubb/cli": "^4.5.9",
     "@kubb/core": "^4.5.9",

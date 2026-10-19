@@ -22,6 +22,9 @@ export default defineConfig({
     }),
     vueI18n({
       include: [fileURLToPath(new URL('src/locales/**', import.meta.url))],
+      // The app ships the runtime-only build, Storybook needs the message compiler
+      // to render translations uploaded on the Tools/Translations page
+      runtimeOnly: process.env.VUE_I18N_FULL_BUILD !== 'true',
     }),
   ],
   resolve: {

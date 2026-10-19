@@ -1,7 +1,11 @@
 import { describe, expect, test } from 'vitest';
 import { isLocale, russianPluralRule } from '@/i18n';
-import ru from '@/locales/ru.json';
-import en from '@/locales/en.json';
+// Plain JSON, the regular import returns messages precompiled by the i18n plugin
+import ruSource from '@/locales/ru.json?raw';
+import enSource from '@/locales/en.json?raw';
+
+const ru = JSON.parse(ruSource) as object;
+const en = JSON.parse(enSource) as object;
 
 const getKeys = (messages: object, prefix = ''): string[] =>
   Object.entries(messages).flatMap(([key, value]) =>
