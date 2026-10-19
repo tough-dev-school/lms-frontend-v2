@@ -16,7 +16,7 @@ jobs:
           install: true
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
         working-directory: apps/frontend
 
       - name: Install playwright browsers

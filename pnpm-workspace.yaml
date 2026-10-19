@@ -1,7 +1,12 @@
 packages:
   - apps/*
   - packages/*
-onlyBuiltDependencies:
-  - '@apollo/protobufjs'
-  - esbuild
-  - vue-demi
+
+autoInstallPeers: true
+strictPeerDependencies: false
+
+allowBuilds:
+  esbuild: true
+  vue-demi: true
+  unrs-resolver: true
+  es5-ext: false
