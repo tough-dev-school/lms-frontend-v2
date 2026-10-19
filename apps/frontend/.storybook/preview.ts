@@ -5,6 +5,8 @@ import { queryClient } from '../src/queryClient';
 import { createRouter, createWebHistory } from 'vue-router';
 import { routes } from '../src/router';
 import type { Preview } from '@storybook/vue3-vite';
+import { i18n, isLocale, DEFAULT_LOCALE } from '../src/i18n';
+import { useLocale } from '../src/composables/useLocale';
 
 const preview: Preview = {
   parameters: {
@@ -41,12 +43,37 @@ const preview: Preview = {
     },
   },
 
+  globalTypes: {
+    locale: {
+      description: 'Interface language',
+      toolbar: {
+        icon: 'globe',
+        items: [
+          { value: 'ru', title: 'Русский' },
+          { value: 'en', title: 'English' },
+        ],
+        dynamicTitle: true,
+      },
+    },
+  },
+
   initialGlobals: {
     viewport: {
       value: 'fluid',
       isRotated: false,
     },
+    // Regression screenshots are taken in Russian
+    locale: DEFAULT_LOCALE,
   },
+
+  decorators: [
+    (story, context) => {
+      const locale: unknown = context.globals.locale;
+      // Goes through useLocale, otherwise the language switcher in stories would override the toolbar with the browser language
+      useLocale().locale.value = isLocale(locale) ? locale : DEFAULT_LOCALE;
+      return story();
+    },
+  ],
 };
 
 setup((app) => {
@@ -61,6 +88,7 @@ setup((app) => {
   });
 
   app.use(router);
+  app.use(i18n);
 });
 
 export default preview;

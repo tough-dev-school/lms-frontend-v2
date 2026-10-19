@@ -7,6 +7,7 @@ import { homeworkAnswersRetrieveQueryOptions } from '@/api/generated';
 import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
 import { AllowMeta } from '@/types';
 import { queryClient } from '@/queryClient';
+import { i18n } from '@/i18n';
 import { isMaterialBookmarkUpdate } from '@/views/VMaterialView/VMaterialView';
 
 export const routes = [
@@ -237,7 +238,7 @@ router.beforeEach(
   (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
     // Reset title after navigation (except hash change)
     if (from.path !== to.path) {
-      document.title = 'Школа Сильных Программистов';
+      document.title = i18n.global.t('common.schoolName');
     }
 
     const { token } = useAuth();

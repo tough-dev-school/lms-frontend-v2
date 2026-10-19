@@ -10,8 +10,10 @@
   } from '@/api/generated';
   import { useQueryClient } from '@tanstack/vue-query';
   import VError from '@/components/VError/VError.vue';
+  import { useI18n } from 'vue-i18n';
 
   const queryClient = useQueryClient();
+  const { t } = useI18n();
   const {
     mutateAsync: updateUser,
     isPending,
@@ -54,25 +56,25 @@
 </script>
 
 <template>
-  <VCard title="Ссылки">
+  <VCard :title="t('settings.links')">
     <div class="flex flex-col items-start gap-16 tablet:gap-24">
       <VTextInput
         v-model="data.githubUsername"
-        label="Ссылка на GitHub"
+        :label="t('linksSettings.github')"
         data-testid="github"
         name="github_username"
         :error="error"
       />
       <VTextInput
         v-model="data.linkedinUsername"
-        label="Ссылка на LinkedIn"
+        :label="t('linksSettings.linkedin')"
         data-testid="linkedin"
         name="linkedin_username"
         :error="error"
       />
       <VTextInput
         v-model="data.telegramUsername"
-        label="Ссылка на Telegram"
+        :label="t('linksSettings.telegram')"
         data-testid="telegram"
         name="telegram_username"
         :error="error"
@@ -88,7 +90,7 @@
         :loading="isPending"
         @click="saveProfile"
       >
-        {{ isPending ? 'Сохраняется...' : 'Сохранить' }}
+        {{ isPending ? t('common.saving') : t('common.save') }}
       </VButton>
     </template>
   </VCard>

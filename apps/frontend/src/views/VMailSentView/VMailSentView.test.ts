@@ -26,6 +26,7 @@ describe('VMailSentView', () => {
         renderStubDefaultSlot: true,
         stubs: {
           VCard: false,
+          I18nT: false,
         },
       },
     });

@@ -3,17 +3,19 @@ import { onMounted, ref, toValue } from 'vue';
 import type { MaybeRefOrGetter } from 'vue';
 import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
 import { useQueryClient } from '@tanstack/vue-query';
+import { useI18n } from 'vue-i18n';
 
 export const useHomeworkBreadcrumbs = (
   questionId: MaybeRefOrGetter<string>,
 ) => {
   const queryClient = useQueryClient();
+  const { t } = useI18n();
 
   const breadcrumbs = ref<Breadcrumb[]>();
 
   onMounted(async () => {
     const result: Breadcrumb[] = [
-      { name: 'Мои курсы', to: { name: 'courses' } },
+      { name: t('common.myCourses'), to: { name: 'courses' } },
     ];
 
     const question = await queryClient.fetchQuery(

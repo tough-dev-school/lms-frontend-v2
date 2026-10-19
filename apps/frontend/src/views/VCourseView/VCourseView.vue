@@ -7,10 +7,13 @@
   import VPillItem from '@/components/VPill/VPillItem.vue';
   import VModuleCard from '@/components/VModuleCard/VModuleCard.vue';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
+  import { useI18n } from 'vue-i18n';
 
   const props = defineProps<{
     courseId: number;
   }>();
+
+  const { t } = useI18n();
 
   const { data: studiesData, isLoading } = usePurchasedCoursesList({
     page_size: 100,
@@ -31,9 +34,9 @@
   const modules = computed(() => modulesData.value?.results);
 
   const breadcrumbs = computed<Breadcrumb[]>(() => [
-    { name: 'Мои курсы', to: { name: 'courses' } },
+    { name: t('common.myCourses'), to: { name: 'courses' } },
     {
-      name: courseName.value ?? 'Материалы курса',
+      name: courseName.value ?? t('common.courseMaterials'),
       to: { name: 'course', params: { courseId: props.courseId } },
     },
   ]);
@@ -66,7 +69,7 @@
             <div
               class="flex flex-col items-center justify-center text-center font-medium"
             >
-              <div>Календарь событий</div>
+              <div>{{ t('course.calendar') }}</div>
               <div class="flex gap-16">
                 <a
                   v-if="study?.calendar_google"
@@ -90,7 +93,7 @@
           v-if="study?.chat"
           :to="study.chat"
         >
-          Чат
+          {{ t('course.chat') }}
         </VPillItem>
         <template v-if="study?.links?.length">
           <VPillItem
@@ -121,7 +124,7 @@
       data-testid="empty"
       class="mb-16 text-center"
     >
-      Нет доступных модулей.
+      {{ t('course.empty') }}
     </p>
   </VLoggedLayout>
   <VLoadingView v-else />

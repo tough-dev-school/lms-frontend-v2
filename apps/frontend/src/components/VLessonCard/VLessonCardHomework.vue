@@ -4,19 +4,25 @@
   import VButton from '@/components/VButton/VButton.vue';
   import type { Lesson } from '@/api/generated';
   import { DATE_TIME_FORMAT, formatDate } from '@/utils/date';
+  import { useI18n } from 'vue-i18n';
 
   defineProps<{
     homework: NonNullable<Lesson['homework']>;
     question: NonNullable<Lesson['question']>;
   }>();
+
+  const { t } = useI18n();
 </script>
 
 <template>
   <div class="flex flex-col gap-16">
     <div class="flex flex-wrap gap-8 empty:hidden">
       <VTag v-if="question.deadline">
-        Дедлайн
-        {{ formatDate(question.deadline, DATE_TIME_FORMAT) }}
+        {{
+          t('lesson.deadline', {
+            date: formatDate(question.deadline, DATE_TIME_FORMAT),
+          })
+        }}
       </VTag>
     </div>
     <VHeading
@@ -31,16 +37,24 @@
     <table class="w-full">
       <tbody>
         <tr>
-          <td class="font-bold">Статус</td>
+          <td class="font-bold">{{ t('lesson.status') }}</td>
           <td class="whitespace-nowrap text-right">
-            {{ homework.is_sent ? 'Отправлена' : 'Не отправлена' }}
+            {{
+              homework.is_sent
+                ? t('common.homeworkSent')
+                : t('common.homeworkNotSent')
+            }}
           </td>
         </tr>
         <tr v-if="homework.crosschecks">
-          <td class="font-bold">Проверенные домашки коллег</td>
+          <td class="font-bold">{{ t('lesson.checkedCrosschecks') }}</td>
           <td class="text-right">
-            {{ homework.crosschecks.checked }} из
-            {{ homework.crosschecks.total }}
+            {{
+              t('lesson.checkedOf', {
+                checked: homework.crosschecks.checked,
+                total: homework.crosschecks.total,
+              })
+            }}
           </td>
         </tr>
       </tbody>
@@ -55,6 +69,6 @@
       params: { questionId: question.slug },
     }"
   >
-    <VButton class="VLessonCard__Button"> Открыть </VButton>
+    <VButton class="VLessonCard__Button"> {{ t('lesson.open') }} </VButton>
   </RouterLink>
 </template>

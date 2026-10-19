@@ -28,6 +28,7 @@
   import { getEmptyContent } from '@/utils/tiptap';
   import VMakrdownContent from '@/components/VMakrdownContent/VMakrdownContent.vue';
   import { usePopulateAnswersCache } from '@/composables/usePopulateAnswersCache';
+  import { useI18n } from 'vue-i18n';
 
   const props = defineProps<{
     questionId: string;
@@ -35,6 +36,7 @@
   }>();
   const router = useRouter();
   const queryClient = useQueryClient();
+  const { t } = useI18n();
 
   const { breadcrumbs } = useHomeworkBreadcrumbs(() => props.questionId);
   const { data: question, isLoading: isQuestionLoading } =
@@ -168,11 +170,11 @@
     );
 
     if (completedCrosschecks.length === 0) {
-      return 'Вы увидите комментарии ваших однокурсников после того, как прокомментируете три домашки. Одна проверка — один открытый комментарий.';
+      return t('homework.commentsLocked');
     }
 
     if (completedCrosschecks.length < 3) {
-      return 'Часть ответов ваших однокурсников скрыта. Чтобы открыть их — проверьте ещё чужих домашек';
+      return t('homework.commentsPartiallyHidden');
     }
 
     return null;
@@ -206,7 +208,7 @@
       <VCrossChecks :crosschecks="crosschecks" />
     </section>
     <section class="VHomeworkAnswerView__Section">
-      <VHeading tag="h2"> Отправленная работа</VHeading>
+      <VHeading tag="h2">{{ t('homework.sentWork') }}</VHeading>
       <VExistingAnswer
         :answer-id="answer.slug"
         @after-delete="handleDeleteAnswer"
@@ -218,14 +220,12 @@
         class="card mb-16 flex flex-col gap-8 bg-accent-green"
       >
         <VHeading tag="h3">
-          Поделитесь ссылкой на свою домашку в чате учеников
+          {{ t('homework.shareTitle') }}
         </VHeading>
         <p class="text-sub">
-          В течение курса коллеги по курсу будут присылать вам обратную связь на
-          вашу домашку, но если ее недостаточно или хочется больше фидбэка —
-          поделитесь ссылкой в чатике курса.
+          {{ t('homework.shareText') }}
         </p>
-        <p class="text-sub">Так повысите вероятность, что это случится.</p>
+        <p class="text-sub">{{ t('homework.shareHint') }}</p>
         <div
           v-if="answerLink"
           class="select-all break-all rounded-8 bg-white/50 px-8 py-8 text-sub"
@@ -235,7 +235,7 @@
         </div>
       </div>
       <VDetails>
-        <template #summary> Текст задания </template>
+        <template #summary> {{ t('homework.taskText') }} </template>
         <VMakrdownContent
           :markdown="question.markdown_text"
           :enable-lightbox="true"
@@ -245,7 +245,9 @@
     </section>
     <section class="VHomeworkAnswerView__Section">
       <VHeading tag="h2">
-        {{ isOwnAnswer ? 'Комментарии вашей работы' : 'Комментарии' }}
+        {{
+          isOwnAnswer ? t('homework.ownAnswerComments') : t('homework.comments')
+        }}
       </VHeading>
       <p v-if="isOwnAnswer && feedbackMessage">
         {{ feedbackMessage }}
@@ -272,11 +274,11 @@
         v-if="isSent"
         class="card"
       >
-        Ответ отправлен!
+        {{ t('homework.answerSent') }}
         <a
           class="link"
           :href="ownAnswerHref"
-          >Вернуться к своему ответу</a
+          >{{ t('homework.backToOwnAnswer') }}</a
         >
       </div>
     </section>

@@ -5,7 +5,6 @@ import 'dayjs/locale/ru';
 
 dayjs.extend(relativeTimePlugin);
 dayjs.extend(utcPlugin);
-dayjs.locale('ru');
 
 export const relativeDate = (date: dayjs.ConfigType) => {
   return dayjs().to(date);

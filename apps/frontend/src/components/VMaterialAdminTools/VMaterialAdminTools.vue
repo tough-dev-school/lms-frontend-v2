@@ -12,12 +12,14 @@
   import { DATE_TIME_SECONDS_FORMAT, formatDate, isBefore } from '@/utils/date';
   import { computed } from 'vue';
   import VError from '@/components/VError/VError.vue';
+  import { useI18n } from 'vue-i18n';
 
   const props = defineProps<{
     materialId: string;
   }>();
 
   const queryClient = useQueryClient();
+  const { t } = useI18n();
 
   const { mutateAsync: updateMaterial, error } = useMaterialsUpdateUpdate({
     mutation: {
@@ -81,13 +83,15 @@
   <VCard
     class="flex flex-col gap-8 rounded-16 bg-white p-8 dark:bg-dark-black phone:p-24"
   >
-    <p>Последнее обновление: {{ fetchStarted }}</p>
-    <p>Материал актуален: {{ fetchComplete }}</p>
+    <p>{{ t('material.lastUpdate', { date: fetchStarted }) }}</p>
+    <p>{{ t('material.upToDate', { date: fetchComplete }) }}</p>
     <VError :error="error" />
     <template #footer>
       <VButton @click="() => updateMaterial({ page_id: props.materialId })">
-        <template v-if="inProgress">Обновление в процессе</template>
-        <template v-else>Запросить обновление</template>
+        <template v-if="inProgress">
+          {{ t('material.updateInProgress') }}
+        </template>
+        <template v-else>{{ t('material.requestUpdate') }}</template>
       </VButton>
     </template>
   </VCard>

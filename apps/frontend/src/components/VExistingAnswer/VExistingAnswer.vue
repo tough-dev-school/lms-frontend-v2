@@ -11,6 +11,7 @@
     lmsLessonsListQueryKey,
   } from '@/api/generated';
   import type { AnswerTree, UserSafe } from '@/api/generated';
+  import { useI18n } from 'vue-i18n';
 
   const props = defineProps<{
     answer: AnswerTree;
@@ -23,6 +24,7 @@
   }>();
 
   const queryClient = useQueryClient();
+  const { t } = useI18n();
 
   const isEdit = ref(false);
 
@@ -59,7 +61,7 @@
     });
 
   const handleDelete = async () => {
-    if (!confirm('Вы уверены, что хотите удалить этот ответ?')) return;
+    if (!confirm(t('answer.deleteConfirm'))) return;
     try {
       await deleteAnswerMutation({
         slug: props.answer.slug,

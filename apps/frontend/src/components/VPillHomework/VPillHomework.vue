@@ -5,10 +5,13 @@
   import { computed } from 'vue';
   import { DATE_TIME_FORMAT, formatDate } from '@/utils/date';
   import dayjs from 'dayjs';
+  import { useI18n } from 'vue-i18n';
 
   const props = defineProps<{
     lesson: { question: Lesson['question']; homework: Lesson['homework'] };
   }>();
+
+  const { t } = useI18n();
 
   const isOverdue = computed(() => {
     return (
@@ -36,8 +39,13 @@
 <template>
   <VPill>
     <VPillItem>
-      Домашка:
-      {{ lesson.homework.is_sent ? 'Отправлена' : 'Не отправлена' }}
+      {{
+        t('homeworkPill.homework', {
+          status: lesson.homework.is_sent
+            ? t('common.homeworkSent')
+            : t('common.homeworkNotSent'),
+        })
+      }}
     </VPillItem>
     <VPillItem
       v-if="lesson.homework.is_sent && lesson.homework.crosschecks"
@@ -45,13 +53,19 @@
     >
       <div>
         <div>
-          Работы на проверку:
-          {{ lesson.homework.crosschecks?.checked }} /
-          {{ lesson.homework.crosschecks?.total }}
+          {{
+            t('homeworkPill.toCheck', {
+              checked: lesson.homework.crosschecks?.checked,
+              total: lesson.homework.crosschecks?.total,
+            })
+          }}
         </div>
         <div v-if="crossCheckDate && !isOverCrossCheckDate">
-          отправим
-          {{ formatDate(crossCheckDate, DATE_TIME_FORMAT) }}
+          {{
+            t('homeworkPill.willSend', {
+              date: formatDate(crossCheckDate, DATE_TIME_FORMAT),
+            })
+          }}
         </div>
       </div>
     </VPillItem>
@@ -61,9 +75,13 @@
     >
       <div>
         <div>
-          Дедлайн: {{ formatDate(lesson.question?.deadline, DATE_TIME_FORMAT) }}
+          {{
+            t('homeworkPill.deadline', {
+              date: formatDate(lesson.question?.deadline, DATE_TIME_FORMAT),
+            })
+          }}
         </div>
-        <div v-if="isOverdue">Просрочен</div>
+        <div v-if="isOverdue">{{ t('homeworkPill.overdue') }}</div>
       </div>
     </VPillItem>
   </VPill>

@@ -26,6 +26,7 @@
   import { useEditorAutosave } from '@/composables/useEditorAutosave';
   import { getEmptyContent } from '@/utils/tiptap';
   import VThreadProvider from '.';
+  import { useI18n } from 'vue-i18n';
 
   const props = defineProps<{
     answer: AnswerTree;
@@ -34,6 +35,7 @@
 
   const route = useRoute();
   const router = useRouter();
+  const { t } = useI18n();
   const queryClient = useQueryClient();
 
   const replyMode = ref(false);
@@ -135,7 +137,7 @@
         class="text-sm link"
         @click="replyMode = !replyMode"
       >
-        {{ replyMode ? 'Отменить' : 'Ответить' }}
+        {{ replyMode ? t('common.cancel') : t('answer.reply') }}
       </button>
     </div>
     <div
