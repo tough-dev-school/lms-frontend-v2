@@ -9,6 +9,10 @@ set -euo pipefail
 
 cd "$(git rev-parse --show-toplevel)"
 
+# The build image keeps its own .tool-versions above the repo (in $HOME), with tools
+# mise can't install. Stop mise from reading configs outside the repo.
+export MISE_CEILING_PATHS="$(dirname "$PWD")"
+
 curl -fsSL https://mise.run | sh
 export PATH="$HOME/.local/bin:$HOME/.local/share/mise/shims:$PATH"
 
