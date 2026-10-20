@@ -274,9 +274,12 @@ describe(SUITE_NAME, () => {
         testExpect(image).toMatchImageSnapshot({
           customSnapshotIdentifier: getSnapshotIdentifier(name),
           comparisonMethod: 'blazediff',
-          // Vitest toMatchScreenshot's default
           customDiffConfig: {
+            // Vitest toMatchScreenshot's default
             threshold: 0.1,
+            // Rounded corners are mostly anti-aliased pixels, so a corner radius
+            // change stays under the pixel limit when they are skipped
+            includeAA: true,
           },
           failureThreshold: 16 ** 2,
           failureThresholdType: 'pixel',
