@@ -263,7 +263,12 @@ describe(SUITE_NAME, () => {
 
         await scenario.action?.(page);
         await waitForStablePage(page);
-        const image = await page.screenshot({ fullPage: true });
+        // Transitions can start after the stability checks (e.g. transition-all on cards
+        // reacting to the viewport change), so finish them instead of waiting
+        const image = await page.screenshot({
+          fullPage: true,
+          animations: 'disabled',
+        });
 
         testExpect(image).toMatchImageSnapshot({
           customSnapshotIdentifier: getSnapshotIdentifier(name),
