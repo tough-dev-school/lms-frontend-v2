@@ -38,6 +38,10 @@ const getColorSchemes = (): ColorScheme[] => {
 
 const COLOR_SCHEMES: ColorScheme[] = getColorSchemes();
 
+// Stories use fixed dates and render them relative to now ("2 года назад"),
+// so without a fixed clock snapshots break as time passes
+const FIXED_TIME = new Date('2026-01-01T00:00:00Z');
+
 describe('visual regression test for', () => {
   let browser: playwright.Browser;
   let page: playwright.Page;
@@ -155,6 +159,7 @@ describe('visual regression test for', () => {
 
   beforeEach(async () => {
     page = await browser.newPage();
+    await page.clock.setFixedTime(FIXED_TIME);
   });
 
   afterEach(async () => {
