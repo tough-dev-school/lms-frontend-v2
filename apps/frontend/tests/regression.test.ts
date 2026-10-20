@@ -1,8 +1,9 @@
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';
-import { toMatchImageSnapshot } from '@brachkow/vitest-image-snapshot';
+import { toMatchImageSnapshotAsync } from '@brachkow/vitest-image-snapshot';
+import { Buffer } from 'node:buffer';
 import playwright from 'playwright';
 import { kebabCase } from 'lodash-es';
-expect.extend({ toMatchImageSnapshot });
+expect.extend({ toMatchImageSnapshotAsync });
 
 interface Scenario {
   name: string;
@@ -242,6 +243,7 @@ describe(SUITE_NAME, () => {
     // Concurrent tests must assert with their own expect to keep snapshot state apart
     test.concurrent(name, async ({ expect: testExpect }) => {
       const page = await pool.acquire();
+      let image: Buffer;
       try {
         // eslint-disable-next-line no-console
         console.log(`Running test ${++testIndex} of ${tests.length}: ${name}`);
@@ -265,29 +267,32 @@ describe(SUITE_NAME, () => {
         await waitForStablePage(page);
         // Transitions can start after the stability checks (e.g. transition-all on cards
         // reacting to the viewport change), so finish them instead of waiting
-        const image = await page.screenshot({
+        image = await page.screenshot({
           fullPage: true,
           animations: 'disabled',
         });
-
-        testExpect(image).toMatchImageSnapshot({
-          customSnapshotIdentifier: getSnapshotIdentifier(name),
-          comparisonMethod: 'blazediff',
-          customDiffConfig: {
-            // Vitest toMatchScreenshot's default
-            threshold: 0.1,
-            // Rounded corners are mostly anti-aliased pixels, so a corner radius
-            // change stays under the pixel limit when they are skipped
-            includeAA: true,
-          },
-          failureThreshold: 16 ** 2,
-          failureThresholdType: 'pixel',
-          storeReceivedOnFailure: true,
-          customReceivedPostfix: '',
-        });
       } finally {
+        // The page is free once the screenshot is taken, so the next test renders on it
+        // while this one compares
         pool.release(page);
       }
+
+      // Diffs in a worker pool, so other tests keep driving their pages meanwhile
+      await testExpect(image).toMatchImageSnapshotAsync({
+        customSnapshotIdentifier: getSnapshotIdentifier(name),
+        comparisonMethod: 'blazediff',
+        customDiffConfig: {
+          // Vitest toMatchScreenshot's default
+          threshold: 0.1,
+          // Rounded corners are mostly anti-aliased pixels, so a corner radius
+          // change stays under the pixel limit when they are skipped
+          includeAA: true,
+        },
+        failureThreshold: 16 ** 2,
+        failureThresholdType: 'pixel',
+        storeReceivedOnFailure: true,
+        customReceivedPostfix: '',
+      });
     });
   });
 });
