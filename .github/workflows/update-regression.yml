@@ -23,12 +23,18 @@ jobs:
         run: pnpm playwright install chromium
         working-directory: apps/frontend
 
-      - name: Run storybook
-        run: pnpm run storybook &
+      - name: Build storybook
+        run: pnpm run storybook:build --quiet
+        working-directory: apps/frontend
+
+      - name: Serve storybook
+        run: |
+          pnpm run storybook:serve &
+          timeout 30 bash -c 'until curl -sf http://localhost:3001/iframe.html > /dev/null; do sleep 1; done'
         working-directory: apps/frontend
 
       - name: Run regression tests
-        run: pnpm run test:regression:update
+        run: pnpm run test:regression:update --run
         working-directory: apps/frontend
 
       - name: Saving screenshots 📥

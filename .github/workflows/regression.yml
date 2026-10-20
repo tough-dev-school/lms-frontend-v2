@@ -5,6 +5,11 @@ jobs:
   regression:
     runs-on: ubuntu-24.04
 
+    strategy:
+      fail-fast: false
+      matrix:
+        color-scheme: [light, dark]
+
     steps:
       - name: Checkout 🛎
         uses: actions/checkout@v4
@@ -23,24 +28,26 @@ jobs:
         run: pnpm playwright install chromium
         working-directory: apps/frontend
 
-      - name: Run storybook
-        run: pnpm run storybook &
+      # A built Storybook serves bundled files, the dev server compiles every module on first load
+      - name: Build storybook
+        run: pnpm run storybook:build --quiet
         working-directory: apps/frontend
 
-      - name: Run light mode visual regression tests
-        run: COLOR_SCHEME=light pnpm run test:regression
+      - name: Serve storybook
+        run: |
+          pnpm run storybook:serve &
+          timeout 30 bash -c 'until curl -sf http://localhost:3001/iframe.html > /dev/null; do sleep 1; done'
         working-directory: apps/frontend
 
-      - name: Run dark mode visual regression tests
-        if: success()
-        run: COLOR_SCHEME=dark pnpm run test:regression
+      - name: Run ${{ matrix.color-scheme }} mode visual regression tests
+        run: COLOR_SCHEME=${{ matrix.color-scheme }} pnpm run test:regression --run
         working-directory: apps/frontend
 
       - name: Saving diffs 📥
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: diff
+          name: diff-${{ matrix.color-scheme }}
           path: apps/frontend/tests/__image_snapshots__/__diff_output__
           retention-days: 14
 
@@ -48,6 +55,6 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: received
+          name: received-${{ matrix.color-scheme }}
           path: apps/frontend/tests/__image_snapshots__/__received_output__
           retention-days: 14

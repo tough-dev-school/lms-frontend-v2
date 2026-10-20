@@ -17,6 +17,7 @@
     "fix": "run-p fix:*",
     "storybook": "storybook dev -p 3001",
     "storybook:build": "storybook build",
+    "storybook:serve": "vite preview --outDir storybook-static --port 3001 --strictPort",
     "api:generate": "kubb generate; tsx patch-api.ts"
   },
   "dependencies": {
