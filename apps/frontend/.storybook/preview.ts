@@ -67,6 +67,12 @@ const preview: Preview = {
     locale: DEFAULT_LOCALE,
   },
 
+  // Stories seed the shared query client, and switching stories without a reload
+  // (Storybook UI, regression tests) would show data left from the previous one
+  beforeEach: () => {
+    queryClient.clear();
+  },
+
   decorators: [
     (story, context) => {
       const locale: unknown = context.globals.locale;
