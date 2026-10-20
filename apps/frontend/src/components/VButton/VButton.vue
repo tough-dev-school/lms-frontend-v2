@@ -44,7 +44,7 @@
   /* We dont use scoped here because we want to have the button class in the global style */
 
   .Button {
-    @apply rounded-none text-center font-medium leading-[1.5] transition-colors;
+    @apply rounded-[0px] text-center font-medium leading-[1.5] transition-colors;
     &_Size {
       &_Big {
         @apply h-module min-w-[280px] p-module;
