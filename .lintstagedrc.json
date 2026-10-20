@@ -1,4 +1,5 @@
 {
   "*": ["prettier --write --ignore-unknown"],
-  "apps/frontend/**/*.{vue,js,jsx,cjs,mjs,ts,tsx,cts,mts}": ["cd apps/frontend && eslint --fix"]
+  "apps/frontend/**/*.{vue,js,jsx,cjs,mjs,ts,tsx,cts,mts}": ["cd apps/frontend && eslint --fix"],
+  "packages/vue-notion/**/*.{vue,js,ts}": ["cd packages/vue-notion && eslint --fix"]
 }

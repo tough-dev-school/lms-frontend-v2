@@ -1,15 +1,47 @@
+<script setup lang="ts">
+  import { computed } from 'vue';
+  import { blockPropsDefaults } from '../lib/blockProps';
+  import type { BlockProps } from '../lib/blockProps';
+  import { useBlock } from '../lib/useBlock';
+  import NotionFigure from './NotionFigure.vue';
+  import NotionRenderer from './NotionRenderer.vue';
+  import NotionTextRenderer from './NotionTextRenderer.vue';
+
+  const props = withDefaults(defineProps<BlockProps>(), blockPropsDefaults);
+  const { pass, value, properties, title } = useBlock(props);
+
+  // An image as the first child is shown right under the todo text
+  const imageBlock = computed(() => {
+    const imageId = value.value?.content?.[0];
+    return imageId ? props.blockMap[imageId] : undefined;
+  });
+
+  const imageUrl = computed(
+    () => imageBlock.value?.value.properties?.source?.[0]?.[0] || null,
+  );
+
+  const filteredContent = computed(() => {
+    const content = value.value?.content ?? [];
+    if (imageBlock.value?.value.type === 'image' && imageUrl.value) {
+      return content.slice(1);
+    }
+    return content;
+  });
+</script>
+
 <template>
   <div class="notion-todo-item-wrapper">
     <label class="notion-to-do-item">
       <span class="notion-checkbox-wrapper">
+        <!-- The app enables the checkbox and stores its state -->
         <input
           type="checkbox"
-          :value="properties.checked"
-          :checked="properties.checked"
-          disabled="true"
+          :value="properties?.checked"
+          :checked="!!properties?.checked"
+          disabled
         />
       </span>
-      <div :class="{ 'notion-to-do-checked': properties.checked }">
+      <div :class="{ 'notion-to-do-checked': properties?.checked }">
         <NotionTextRenderer
           :text="title"
           v-bind="pass"
@@ -19,59 +51,18 @@
     <div v-if="imageBlock && imageUrl">
       <NotionFigure
         v-bind="pass"
-        :block="imageBlock"
-        :content-id="block.value.content[0]"
+        :content-id="imageBlock.value.id"
       />
     </div>
-    <div v-if="block.value.content">
+    <div v-if="value?.content">
       <NotionRenderer
-        v-for="(contentId, contentIndex) in filteredContent"
+        v-for="(childId, childIndex) in filteredContent"
         v-bind="pass"
-        :key="contentId"
-        :level="pass.level + 1"
-        :content-id="contentId"
-        :content-index="contentIndex"
+        :key="childId"
+        :level="level + 1"
+        :content-id="childId"
+        :content-index="childIndex"
       />
     </div>
   </div>
 </template>
-
-<script>
-  import { Blockable } from '../lib/blockable';
-  import NotionTextRenderer from './NotionTextRenderer.vue';
-  import NotionFigure from './NotionFigure.vue';
-  import { defineAsyncComponent } from 'vue';
-
-  export default {
-    name: 'NotionTodo',
-    components: {
-      NotionTextRenderer,
-      NotionFigure,
-      NotionRenderer: defineAsyncComponent(
-        () => import('./NotionRenderer.vue'),
-      ),
-    },
-    extends: Blockable,
-    computed: {
-      imageBlock() {
-        const imageId = this.block.value.content?.[0];
-        return imageId ? this.pass.blockMap[imageId] : null;
-      },
-      imageUrl() {
-        if (!this.imageBlock) return null;
-        return this.imageBlock.value.properties?.source?.[0]?.[0] || null;
-      },
-      filteredContent() {
-        if (!this.block.value.content) return [];
-        const firstChildId = this.block.value.content[0];
-        const firstChild = firstChildId
-          ? this.pass.blockMap[firstChildId]
-          : null;
-        if (firstChild?.value.type === 'image' && this.imageUrl) {
-          return this.block.value.content.slice(1);
-        }
-        return this.block.value.content;
-      },
-    },
-  };
-</script>
