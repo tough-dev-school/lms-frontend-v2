@@ -1,6 +1,7 @@
 import { useAuth } from '@/composables/useAuth';
 import type { InternalAxiosRequestConfig } from 'axios';
 import { cloneDeep } from 'lodash-es';
+import { i18n } from '@/i18n';
 
 const onRequestFulfilled = (requestConfig: InternalAxiosRequestConfig) => {
   // Django admin may pass tokens as url param
@@ -11,6 +12,9 @@ const onRequestFulfilled = (requestConfig: InternalAxiosRequestConfig) => {
   const config = cloneDeep(requestConfig);
 
   config.headers = config.headers || {};
+
+  // Lets backend error messages follow the interface language
+  config.headers['Accept-Language'] = i18n.global.locale.value;
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;

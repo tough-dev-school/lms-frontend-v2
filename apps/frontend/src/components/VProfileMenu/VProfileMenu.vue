@@ -6,6 +6,7 @@
   import { useUsersMeRetrieve } from '@/api/generated';
   import { getName } from '@/utils/getName';
   import { LANDING_URL } from '@/constants';
+  import { useI18n } from 'vue-i18n';
 
   export interface ProfileMenuItem {
     label: string;
@@ -17,6 +18,7 @@
   const isOpen = ref(false);
   const menu = useTemplateRef('menu');
   const router = useRouter();
+  const { t } = useI18n();
   const { data: user } = useUsersMeRetrieve();
 
   onClickOutside(menu, () => (isOpen.value = false));
@@ -36,35 +38,35 @@
 
   const menuItems = computed<ProfileMenuItem[]>(() => [
     {
-      label: 'На главную',
+      label: t('profileMenu.home'),
       action: () => {
         router.push({ name: 'courses' });
       },
       id: 'home',
     },
     {
-      label: 'На сайт',
+      label: t('profileMenu.website'),
       action: () => {
         window.open(LANDING_URL, '_blank');
       },
       id: 'website',
     },
     {
-      label: 'Сертификаты',
+      label: t('profileMenu.certificates'),
       action: () => {
         router.push({ name: 'certificates' });
       },
       id: 'certificates',
     },
     {
-      label: 'Настройки',
+      label: t('profileMenu.settings'),
       action: () => {
         router.push({ name: 'settings' });
       },
       id: 'settings',
     },
     {
-      label: 'Добавьте данные для диплома',
+      label: t('profileMenu.addCertificateData'),
       action: () => {
         router.push({ name: 'settings', hash: '#certificate' });
       },
@@ -72,7 +74,7 @@
       id: 'certificate',
     },
     {
-      label: 'Выйти',
+      label: t('profileMenu.logout'),
       action: () => {
         router.push({ name: 'logout' });
       },

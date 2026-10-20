@@ -8,8 +8,10 @@
   import { useAuthPasswordResetCreate } from '@/api/generated';
   import { useQueryClient } from '@tanstack/vue-query';
   import VError from '@/components/VError/VError.vue';
+  import { useI18n } from 'vue-i18n';
 
   const router = useRouter();
+  const { t } = useI18n();
   const queryClient = useQueryClient();
   const email = ref('');
 
@@ -39,13 +41,13 @@
   <VPublicLayout>
     <VCard
       tag="form"
-      title="Сброс пароля"
+      :title="t('loginReset.title')"
       @submit.prevent="handleResetRequest"
     >
       <VTextInput
         v-model="email"
-        label="Почта, на которую купили курс"
-        tip="Мы отправим ссылку для сброса пароля по этому адресу"
+        :label="t('common.emailPurchased')"
+        :tip="t('loginReset.tip')"
         type="email"
         autocomplete="username"
         data-testid="email"
@@ -63,7 +65,7 @@
           data-testid="send"
           :loading="isPending"
         >
-          {{ isPending ? 'Отправляем письмо...' : 'Отправить письмо' }}
+          {{ isPending ? t('common.sendingEmail') : t('loginReset.sendEmail') }}
         </VButton>
         <VButton
           appearance="link"
@@ -71,7 +73,7 @@
           data-testid="password"
           @click="router.push({ name: 'login' })"
         >
-          Войти по паролю
+          {{ t('loginReset.withPassword') }}
         </VButton>
       </template>
     </VCard>

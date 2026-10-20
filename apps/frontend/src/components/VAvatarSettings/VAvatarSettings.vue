@@ -8,6 +8,9 @@
   import { createHttpClient } from '@/api/client';
   import VError from '@/components/VError/VError.vue';
   import type { FormError } from '@/types/error';
+  import { useI18n } from 'vue-i18n';
+
+  const { t } = useI18n();
 
   const queryClient = useQueryClient();
   const { data: user } = useUsersMeRetrieve();
@@ -78,11 +81,11 @@
 </script>
 
 <template>
-  <VCard title="Аватар">
+  <VCard :title="t('settings.avatar')">
     <template v-if="user">
       <avatar-cropper
         v-model="showCropper"
-        :labels="{ cancel: 'Отменить', submit: 'Сохранить' }"
+        :labels="{ cancel: t('common.cancel'), submit: t('common.save') }"
         :upload-handler="showPreview"
       />
       <div class="flex gap-16">
@@ -96,7 +99,7 @@
           class="link p-6"
           @click="showCropper = true"
         >
-          Загрузить
+          {{ t('avatarSettings.upload') }}
         </button>
         <button
           v-if="avatar"
@@ -104,7 +107,7 @@
           class="p-6 hover:text-red"
           @click="deleteAvatar"
         >
-          Удалить
+          {{ t('avatarSettings.delete') }}
         </button>
       </div>
       <VError :error="error" />
@@ -116,7 +119,7 @@
         :loading="isPending"
         @click="saveProfile"
       >
-        {{ isPending ? 'Сохраняется...' : 'Сохранить' }}
+        {{ isPending ? t('common.saving') : t('common.save') }}
       </VButton>
     </template>
   </VCard>

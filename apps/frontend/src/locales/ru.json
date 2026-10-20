@@ -1,0 +1,169 @@
+{
+  "common": {
+    "schoolName": "Школа Сильных Программистов",
+    "save": "Сохранить",
+    "saving": "Сохраняется...",
+    "send": "Отправить",
+    "sending": "Отправляется...",
+    "sendingEmail": "Отправляем письмо...",
+    "cancel": "Отменить",
+    "loading": "Загрузка",
+    "myCourses": "Мои курсы",
+    "courseMaterials": "Материалы курса",
+    "toHome": "На главную",
+    "emailPurchased": "Почта, на которую купили курс",
+    "homeworkSent": "Отправлена",
+    "homeworkNotSent": "Не отправлена"
+  },
+  "login": {
+    "title": "Вход",
+    "linkTip": "Мы отправим ссылку для входа по этому адресу",
+    "getAccess": "Получить доступ",
+    "withPassword": "Войти через пароль",
+    "username": "Логин",
+    "password": "Пароль",
+    "forgotPassword": "Не помню пароль",
+    "submit": "Войти",
+    "withLink": "Войти по ссылке"
+  },
+  "loginReset": {
+    "title": "Сброс пароля",
+    "tip": "Мы отправим ссылку для сброса пароля по этому адресу",
+    "sendEmail": "Отправить письмо",
+    "withPassword": "Войти по паролю"
+  },
+  "mailSent": {
+    "title": "Ссылка отправлена",
+    "message": "Мы отправили ссылку по адресу {email}. Если письма долго нет — посмотрите пожалуйста в спаме. Если и там нет — {contactUs}.",
+    "contactUs": "напишите нам",
+    "openProvider": "Открыть {provider}"
+  },
+  "passwordReset": {
+    "newPassword": "Новый пароль",
+    "repeatPassword": "Повторите пароль",
+    "enterNewPassword": "Введите новый пароль",
+    "passwordsDoNotMatch": "Пароли не совпадают"
+  },
+  "courses": {
+    "empty": "Нет доступных курсов.",
+    "buyAccess": "Доступ к курсам можно купить на {link}."
+  },
+  "course": {
+    "calendar": "Календарь событий",
+    "chat": "Чат",
+    "empty": "Нет доступных модулей."
+  },
+  "module": {
+    "empty": "Нет доступных уроков."
+  },
+  "lesson": {
+    "watchRecording": "Смотреть запись",
+    "join": "Подключиться",
+    "deadline": "Дедлайн {date}",
+    "status": "Статус",
+    "checkedCrosschecks": "Проверенные домашки коллег",
+    "checkedOf": "{checked} из {total}",
+    "open": "Открыть",
+    "read": "Читать"
+  },
+  "homeworkPill": {
+    "homework": "Домашка: {status}",
+    "toCheck": "Работы на проверку: {checked} / {total}",
+    "willSend": "отправим {date}",
+    "deadline": "Дедлайн: {date}",
+    "overdue": "Просрочен"
+  },
+  "homework": {
+    "sentWork": "Отправленная работа",
+    "shareTitle": "Поделитесь ссылкой на свою домашку в чате учеников",
+    "shareText": "В течение курса коллеги по курсу будут присылать вам обратную связь на вашу домашку, но если ее недостаточно или хочется больше фидбэка — поделитесь ссылкой в чатике курса.",
+    "shareHint": "Так повысите вероятность, что это случится.",
+    "taskText": "Текст задания",
+    "ownAnswerComments": "Комментарии вашей работы",
+    "comments": "Комментарии",
+    "commentsLocked": "Вы увидите комментарии ваших однокурсников после того, как прокомментируете три домашки. Одна проверка — один открытый комментарий.",
+    "commentsPartiallyHidden": "Часть ответов ваших однокурсников скрыта. Чтобы открыть их — проверьте ещё чужих домашек",
+    "answerSent": "Ответ отправлен!",
+    "backToOwnAnswer": "Вернуться к своему ответу"
+  },
+  "crossChecks": {
+    "choose": "Выберите работу коллеги по курсу для проверки:",
+    "checked": "проверено",
+    "notChecked": "не проверено",
+    "reminderTitle": "Напоминаем:",
+    "reminder": "ответы на вашу домашку от других студентов будут доступны после того, как вы проверите работы коллег из списка выше."
+  },
+  "answer": {
+    "reply": "Ответить",
+    "deleteConfirm": "Вы уверены, что хотите удалить этот ответ?"
+  },
+  "feedbackGuide": {
+    "title": "Как давать обратную связь?"
+  },
+  "textEditor": {
+    "enterUrl": "Введите ссылку",
+    "forTable": "Для таблицы:"
+  },
+  "material": {
+    "backToLesson": "Вернуться к содержанию урока",
+    "notFound": "Материал не найден :(",
+    "supportText": "Если кажется что здесь какая-то ошибка напишите в поддержку {chat} или на {email}",
+    "supportChat": "в чат в углу экрана",
+    "lastUpdate": "Последнее обновление: {date}",
+    "upToDate": "Материал актуален: {date}",
+    "updateInProgress": "Обновление в процессе",
+    "requestUpdate": "Запросить обновление",
+    "tableScrolls": "Таблица прокручивается →"
+  },
+  "certificates": {
+    "title": "Мои сертификаты",
+    "empty": "Нет сертификатов",
+    "course": "Курс «{course}»",
+    "inRussian": "На русском",
+    "inEnglish": "На английском",
+    "download": "Скачать",
+    "linkedin": "Ссылка для LinkedIn"
+  },
+  "profileMenu": {
+    "home": "На главную",
+    "website": "На сайт",
+    "certificates": "Сертификаты",
+    "settings": "Настройки",
+    "addCertificateData": "Добавьте данные для диплома",
+    "logout": "Выйти"
+  },
+  "settings": {
+    "title": "Настройки",
+    "links": "Ссылки",
+    "password": "Пароль",
+    "certificate": "Данные для диплома",
+    "avatar": "Аватар",
+    "preferences": "Интерфейс"
+  },
+  "linksSettings": {
+    "github": "Ссылка на GitHub",
+    "linkedin": "Ссылка на LinkedIn",
+    "telegram": "Ссылка на Telegram"
+  },
+  "certificateSettings": {
+    "warning": "Будьте внимательнее, когда заполняете поля имени и фамилии на двух языках. Именно в таком виде они отобразятся в сертификате.",
+    "firstName": "Имя",
+    "lastName": "Фамилия",
+    "firstNameEn": "Имя (на английском)",
+    "lastNameEn": "Фамилия (на английском)",
+    "gender": "Пол",
+    "male": "Мужской",
+    "female": "Женский"
+  },
+  "avatarSettings": {
+    "upload": "Загрузить",
+    "delete": "Удалить"
+  },
+  "preferences": {
+    "theme": "Тема",
+    "themeAuto": "Как в системе",
+    "themeLight": "Светлая",
+    "themeDark": "Темная",
+    "language": "Язык"
+  }
+}

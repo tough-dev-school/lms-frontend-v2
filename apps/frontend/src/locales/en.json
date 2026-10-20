@@ -1,0 +1,169 @@
+{
+  "common": {
+    "schoolName": "Tough Dev School",
+    "save": "Save",
+    "saving": "Saving...",
+    "send": "Send",
+    "sending": "Sending...",
+    "sendingEmail": "Sending email...",
+    "cancel": "Cancel",
+    "loading": "Loading",
+    "myCourses": "My courses",
+    "courseMaterials": "Course materials",
+    "toHome": "Home",
+    "emailPurchased": "Email you used to buy the course",
+    "homeworkSent": "Sent",
+    "homeworkNotSent": "Not sent"
+  },
+  "login": {
+    "title": "Log in",
+    "linkTip": "We'll send a login link to this address",
+    "getAccess": "Get access",
+    "withPassword": "Log in with password",
+    "username": "Username",
+    "password": "Password",
+    "forgotPassword": "Forgot password",
+    "submit": "Log in",
+    "withLink": "Log in with a link"
+  },
+  "loginReset": {
+    "title": "Reset password",
+    "tip": "We'll send a password reset link to this address",
+    "sendEmail": "Send email",
+    "withPassword": "Log in with password"
+  },
+  "mailSent": {
+    "title": "Link sent",
+    "message": "We've sent a link to {email}. If the email doesn't arrive soon, please check your spam folder. If it's not there either, {contactUs}.",
+    "contactUs": "contact us",
+    "openProvider": "Open {provider}"
+  },
+  "passwordReset": {
+    "newPassword": "New password",
+    "repeatPassword": "Repeat password",
+    "enterNewPassword": "Enter a new password",
+    "passwordsDoNotMatch": "Passwords don't match"
+  },
+  "courses": {
+    "empty": "No courses available.",
+    "buyAccess": "You can buy access to courses at {link}."
+  },
+  "course": {
+    "calendar": "Event calendar",
+    "chat": "Chat",
+    "empty": "No modules available."
+  },
+  "module": {
+    "empty": "No lessons available."
+  },
+  "lesson": {
+    "watchRecording": "Watch recording",
+    "join": "Join",
+    "deadline": "Deadline {date}",
+    "status": "Status",
+    "checkedCrosschecks": "Peers' homework checked",
+    "checkedOf": "{checked} of {total}",
+    "open": "Open",
+    "read": "Read"
+  },
+  "homeworkPill": {
+    "homework": "Homework: {status}",
+    "toCheck": "Works to check: {checked} / {total}",
+    "willSend": "we'll send them {date}",
+    "deadline": "Deadline: {date}",
+    "overdue": "Overdue"
+  },
+  "homework": {
+    "sentWork": "Submitted work",
+    "shareTitle": "Share a link to your homework in the student chat",
+    "shareText": "During the course, your peers will send you feedback on your homework. If that's not enough, or you want more feedback, share the link in the course chat.",
+    "shareHint": "This makes it more likely to happen.",
+    "taskText": "Assignment",
+    "ownAnswerComments": "Comments on your work",
+    "comments": "Comments",
+    "commentsLocked": "You'll see your peers' comments after you comment on three homework submissions. One review unlocks one comment.",
+    "commentsPartiallyHidden": "Some of your peers' answers are hidden. To unlock them, review more of their homework",
+    "answerSent": "Answer sent!",
+    "backToOwnAnswer": "Back to your answer"
+  },
+  "crossChecks": {
+    "choose": "Pick a peer's work to review:",
+    "checked": "reviewed",
+    "notChecked": "not reviewed",
+    "reminderTitle": "Reminder:",
+    "reminder": "other students' answers to your homework will become available after you review your peers' work from the list above."
+  },
+  "answer": {
+    "reply": "Reply",
+    "deleteConfirm": "Are you sure you want to delete this answer?"
+  },
+  "feedbackGuide": {
+    "title": "How to give feedback?"
+  },
+  "textEditor": {
+    "enterUrl": "Enter URL",
+    "forTable": "Table:"
+  },
+  "material": {
+    "backToLesson": "Back to lesson contents",
+    "notFound": "Material not found :(",
+    "supportText": "If you think this is a mistake, contact support {chat} or at {email}",
+    "supportChat": "in the chat in the corner of the screen",
+    "lastUpdate": "Last update: {date}",
+    "upToDate": "Material is up to date as of: {date}",
+    "updateInProgress": "Update in progress",
+    "requestUpdate": "Request update",
+    "tableScrolls": "Table scrolls →"
+  },
+  "certificates": {
+    "title": "My certificates",
+    "empty": "No certificates",
+    "course": "Course \"{course}\"",
+    "inRussian": "In Russian",
+    "inEnglish": "In English",
+    "download": "Download",
+    "linkedin": "Link for LinkedIn"
+  },
+  "profileMenu": {
+    "home": "Home",
+    "website": "Website",
+    "certificates": "Certificates",
+    "settings": "Settings",
+    "addCertificateData": "Add your certificate details",
+    "logout": "Log out"
+  },
+  "settings": {
+    "title": "Settings",
+    "links": "Links",
+    "password": "Password",
+    "certificate": "Certificate details",
+    "avatar": "Avatar",
+    "preferences": "Interface"
+  },
+  "linksSettings": {
+    "github": "GitHub link",
+    "linkedin": "LinkedIn link",
+    "telegram": "Telegram link"
+  },
+  "certificateSettings": {
+    "warning": "Be careful when filling in your first and last name in both languages. They will appear on the certificate exactly as entered.",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "firstNameEn": "First name (in English)",
+    "lastNameEn": "Last name (in English)",
+    "gender": "Gender",
+    "male": "Male",
+    "female": "Female"
+  },
+  "avatarSettings": {
+    "upload": "Upload",
+    "delete": "Delete"
+  },
+  "preferences": {
+    "theme": "Theme",
+    "themeAuto": "System",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "language": "Language"
+  }
+}

@@ -9,6 +9,7 @@ export default mergeConfig(
       globals: true,
       mockReset: true,
       environment: 'jsdom',
+      setupFiles: ['./tests/unit.setup.ts'],
       exclude: [...configDefaults.exclude, './tests/regression.test.ts'],
       coverage: {
         provider: 'istanbul',

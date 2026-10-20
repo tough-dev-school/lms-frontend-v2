@@ -7,11 +7,14 @@
     RecommendedVideoProviderEnum,
     VideoProvider,
   } from '@/api/generated';
-  import { DATE_TIME_FORMAT, formatDate } from '@/utils/date';
+  import { formatDate } from '@/utils/date';
+  import { useI18n } from 'vue-i18n';
 
   defineProps<{
     call: NonNullable<Lesson['call']>;
   }>();
+
+  const { t } = useI18n();
 
   const getRecommendedVideo = (
     videos: VideoProvider[],
@@ -29,7 +32,7 @@
   <div class="flex flex-col gap-16">
     <div class="flex flex-wrap gap-8 empty:hidden">
       <VTag v-if="call.datetime">
-        {{ formatDate(call.datetime, DATE_TIME_FORMAT) }}
+        {{ formatDate(call.datetime, 'dateTime') }}
       </VTag>
     </div>
     <VHeading
@@ -53,7 +56,9 @@
       "
       target="_blank"
     >
-      <VButton class="VLessonCard__Button"> Смотреть запись </VButton>
+      <VButton class="VLessonCard__Button">
+        {{ t('lesson.watchRecording') }}
+      </VButton>
     </a>
   </template>
   <template v-else-if="call.url">
@@ -65,7 +70,7 @@
         class="VLessonCard__Button"
         appearance="secondary"
       >
-        Подключиться
+        {{ t('lesson.join') }}
       </VButton>
     </a>
   </template>

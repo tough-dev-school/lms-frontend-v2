@@ -5,6 +5,9 @@
   import { usePurchasedCoursesList } from '@/api/generated';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
   import { computed } from 'vue';
+  import { useI18n } from 'vue-i18n';
+
+  const { t } = useI18n();
 
   const { data, isLoading } = usePurchasedCoursesList({ page_size: 100 });
   const studies = computed(() => data.value?.results);
@@ -13,7 +16,7 @@
 <template>
   <VLoggedLayout
     v-if="!isLoading"
-    title="Мои курсы"
+    :title="t('common.myCourses')"
   >
     <ul
       v-if="studies && studies.length > 0"
@@ -44,16 +47,22 @@
       data-testid="empty"
       class="text-center"
     >
-      Нет доступных курсов.
+      {{ t('courses.empty') }}
     </p>
-    <p class="text-center">
-      Доступ к курсам можно купить на
-      <a
-        href="https://tough-dev.school/?utm_source=lms&utm_campaign=footer"
-        class="link"
-        >tough-dev.school</a
-      >.
-    </p>
+    <i18n-t
+      keypath="courses.buyAccess"
+      tag="p"
+      class="text-center"
+      scope="global"
+    >
+      <template #link>
+        <a
+          href="https://tough-dev.school/?utm_source=lms&utm_campaign=footer"
+          class="link"
+          >tough-dev.school</a
+        >
+      </template>
+    </i18n-t>
   </VLoggedLayout>
   <VLoadingView v-else />
 </template>

@@ -20,7 +20,7 @@
       v-if="isScrollable"
       class="scroll-tip"
     >
-      Таблица прокручивается →
+      {{ labels.tableScrolls }}
     </div>
   </div>
 </template>
@@ -30,6 +30,13 @@
 
   export default {
     extends: Blockable,
+    // The host app provides translated labels, so the renderer doesn't depend on an i18n library
+    inject: {
+      labels: {
+        from: 'notionLabels',
+        default: () => ({ tableScrolls: 'Таблица прокручивается →' }),
+      },
+    },
     data() {
       return {
         isScrollable: false,

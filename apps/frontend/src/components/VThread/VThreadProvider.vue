@@ -39,5 +39,5 @@
     :user="user"
     @update="(slug: string) => emit('update', slug)"
   />
-  <div v-else>Loading...</div>
+  <div v-else>{{ $t('common.loading') }}</div>
 </template>

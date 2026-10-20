@@ -46,7 +46,7 @@
 <template>
   <VPublicLayout>
     <VPasswordResetForm
-      title="Сброс пароля"
+      :title="$t('loginReset.title')"
       :is-pending="isPending"
       :error="error"
       @save="handleSave"

@@ -6,6 +6,7 @@
   import VProfileMenu from '@/components/VProfileMenu/VProfileMenu.vue';
   import { useTitle } from '@vueuse/core';
   import { computed } from 'vue';
+  import { useI18n } from 'vue-i18n';
 
   const props = withDefaults(
     defineProps<{
@@ -20,10 +21,10 @@
     },
   );
 
+  const { t } = useI18n();
+
   const formattedTitle = computed(() => {
-    return [props.title, 'Школа Сильных Программистов']
-      .filter(Boolean)
-      .join(' | ');
+    return [props.title, t('common.schoolName')].filter(Boolean).join(' | ');
   });
 
   useTitle(formattedTitle);
@@ -36,10 +37,19 @@
     </template>
     <div
       v-if="title || breadcrumbs || $slots.pill"
-      class="flex flex-col gap-32">
-      <VBreadcrumbs v-if="breadcrumbs" :items="breadcrumbs" />
+      class="flex flex-col gap-32"
+    >
+      <VBreadcrumbs
+        v-if="breadcrumbs"
+        :items="breadcrumbs"
+      />
       <slot name="pill" />
-      <VHeading v-if="title && showTitle" tag="h1">{{ title }}</VHeading>
+      <VHeading
+        v-if="title && showTitle"
+        tag="h1"
+      >
+        {{ title }}
+      </VHeading>
     </div>
     <slot />
   </VPublicLayout>
