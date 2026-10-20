@@ -8,6 +8,8 @@
   import VError from '@/components/VError/VError.vue';
   import type { FormError } from '@/types/error';
 
+  const emit = defineEmits<{ change: [] }>();
+
   const router = useRouter();
   const email = ref('');
   const isPending = ref(false);
@@ -24,8 +26,6 @@
     }
     isPending.value = false;
   };
-
-  const emit = defineEmits<{ change: [] }>();
 </script>
 
 <template>

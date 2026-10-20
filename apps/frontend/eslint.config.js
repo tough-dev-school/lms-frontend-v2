@@ -1,39 +1,34 @@
-import { defineConfig, GLOB_VUE } from 'eslint-config-fans';
+// @ts-check
+import { defineConfig } from 'eslint-config-fans';
 
 export default defineConfig(
   {
-    typescript: true,
-    vue: true,
-    prettier: true,
-    strict: false,
-  },
-  {
     ignores: ['**/generated/**'],
-  },
-  {
-    files: [GLOB_VUE],
-    rules: {
-      'vue/no-undef-components': [
-        'error',
-        {
-          ignorePatterns: [
-            'RouterView',
-            'RouterLink',
-            'avatar-cropper',
-            'VDropdown',
-          ],
-        },
+    typescript: {
+      // TODO: Enable typeAware when we have a way to fix the issues
+      typeAware: false,
+    },
+    vue: {
+      extendUndefComponents: [
+        'RouterView',
+        'RouterLink',
+        'avatar-cropper',
+        'VDropdown',
       ],
     },
+    formatter: 'prettier',
+    opinionated: false,
+    // TODO: Enable e18e when we have a way to fix the issues
+    e18e: false,
   },
   {
+    name: 'overrides',
     rules: {
-      'no-alert': 'off',
-      // Disabled due to legacy code patterns
-      'unicorn/filename-case': 'off',
+      // TODO: Careful review is required
       'unicorn/prefer-string-replace-all': 'off',
-      // Disabled because the config cannot detect the node version for some reason
-      'n/no-unsupported-features/es-syntax': 'off',
+      // TODO: Enable after updating to latest TypeScript version
+      'preserve-caught-error': 'off',
+      'unicorn/no-array-sort': 'off',
     },
   },
 );
