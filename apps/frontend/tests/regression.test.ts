@@ -1,5 +1,5 @@
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';
-import { toMatchImageSnapshot } from 'jest-image-snapshot';
+import { toMatchImageSnapshot } from '@brachkow/vitest-image-snapshot';
 import playwright from 'playwright';
 import { kebabCase } from 'lodash-es';
 expect.extend({ toMatchImageSnapshot });
@@ -202,9 +202,10 @@ const createPagePool = (pages: playwright.Page[]) => {
 
 const SUITE_NAME = 'visual regression test for';
 
-// jest-image-snapshot names files after the current test, but with concurrent tests
-// it reads the name of whichever test ran last. This rebuilds its default identifier
-// (lodash kebabCase of file, test name and call counter) for the test that actually runs
+// The matcher names files after the current test, but on Vitest 3 concurrent tests get
+// the name of whichever test started last. This rebuilds the default identifier
+// (lodash kebabCase of file, test name and call counter) for the test that actually runs.
+// Vitest 4 and newer pass the right name, so this can go after an upgrade.
 const getSnapshotIdentifier = (name: string) =>
   `${kebabCase(`regression.test.ts-${SUITE_NAME} ${name}-1`)}-snap`;
 
@@ -272,9 +273,12 @@ describe(SUITE_NAME, () => {
 
         testExpect(image).toMatchImageSnapshot({
           customSnapshotIdentifier: getSnapshotIdentifier(name),
-          comparisonMethod: 'ssim',
+          // Same comparator and defaults as Vitest's toMatchScreenshot
+          comparisonMethod: 'blazediff',
           customDiffConfig: {
-            ssim: 'fast',
+            // Rounded corners are mostly anti-aliased pixels, so a corner radius
+            // change stays under the pixel limit when they are skipped
+            includeAA: true,
           },
           failureThreshold: 16 ** 2,
           failureThresholdType: 'pixel',
