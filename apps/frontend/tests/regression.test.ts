@@ -2,7 +2,7 @@ import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 import { toMatchImageSnapshot } from '@brachkow/vitest-image-snapshot';
 import playwright from 'playwright';
 import { kebabCase } from 'lodash-es';
-// @ts-expect-error vitest-image-snapshot 0.1.0 types snapshotState._counters as public, Vitest 3 has it private. Remove once the library types are fixed
+// @ts-expect-error vitest-image-snapshot 0.2.0 types snapshotState._counters as public, Vitest 3 has it private. Remove once the library types are fixed
 expect.extend({ toMatchImageSnapshot });
 
 interface Scenario {

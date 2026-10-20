@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "@ast-grep/napi": "^0.39.9",
-    "@brachkow/vitest-image-snapshot": "^0.1.0",
+    "@brachkow/vitest-image-snapshot": "^0.2.0",
     "@cloudflare/workers-types": "^4.20250724.0",
     "@faker-js/faker": "^8.4.1",
     "@intlify/eslint-plugin-vue-i18n": "^4.5.1",
