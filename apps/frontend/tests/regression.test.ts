@@ -273,9 +273,10 @@ describe(SUITE_NAME, () => {
 
         testExpect(image).toMatchImageSnapshot({
           customSnapshotIdentifier: getSnapshotIdentifier(name),
-          comparisonMethod: 'ssim',
+          comparisonMethod: 'blazediff',
+          // Vitest toMatchScreenshot's default
           customDiffConfig: {
-            ssim: 'fast',
+            threshold: 0.1,
           },
           failureThreshold: 16 ** 2,
           failureThresholdType: 'pixel',
