@@ -37,6 +37,58 @@ jobs:
           name: dist
           path: apps/frontend/dist
 
+  regression:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@v4
+
+      - name: Install mise
+        uses: jdx/mise-action@v2
+        with:
+          cache: true
+          install: true
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+        working-directory: apps/frontend
+
+      - name: Install playwright browsers
+        run: pnpm playwright install chromium
+        working-directory: apps/frontend
+
+      # A built Storybook serves bundled files, the dev server compiles every module on first load
+      - name: Build storybook
+        run: pnpm run storybook:build --quiet
+        working-directory: apps/frontend
+
+      - name: Serve storybook
+        run: |
+          pnpm run storybook:serve &
+          timeout 30 bash -c 'until curl -sf http://localhost:3001/iframe.html > /dev/null; do sleep 1; done'
+        working-directory: apps/frontend
+
+      - name: Run visual regression tests 📸
+        run: pnpm run test:regression --run
+        working-directory: apps/frontend
+
+      - name: Saving diffs 📥
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: diff
+          path: apps/frontend/tests/__image_snapshots__/__diff_output__
+          retention-days: 14
+
+      - name: Saving failure 📥
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: received
+          path: apps/frontend/tests/__image_snapshots__/__received_output__
+          retention-days: 14
+
   build-docker-image:
     needs: check
     runs-on: ubuntu-latest
