@@ -1,9 +1,12 @@
 import type { MatchImageSnapshotOptions } from '@brachkow/vitest-image-snapshot';
 
-// Vitest 3 picks up custom matchers through Assertion, see the package README
+// Vitest 5 declaration, see the package README
 declare module 'vitest' {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars -- must match Vitest's own declaration
-  interface Assertion<T = any> {
-    toMatchImageSnapshot: (options?: MatchImageSnapshotOptions) => void;
+  interface Matchers<
+    R extends void | Promise<void> = void | Promise<void>,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars -- merging requires Vitest's exact type parameters
+    T = unknown,
+  > {
+    toMatchImageSnapshot: (options?: MatchImageSnapshotOptions) => R;
   }
 }

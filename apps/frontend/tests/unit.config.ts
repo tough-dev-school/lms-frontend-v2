@@ -13,10 +13,8 @@ export default mergeConfig(
       exclude: [...configDefaults.exclude, './tests/regression.test.ts'],
       coverage: {
         provider: 'istanbul',
-        extension: ['.ts', '.js', '.vue'],
         include: ['**/*.ts', '**/*.vue'],
         exclude: ['**/*.stories.ts'],
-        all: true,
         reporter: 'lcov',
       },
     },

@@ -1,7 +1,6 @@
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';
 import { toMatchImageSnapshot } from '@brachkow/vitest-image-snapshot';
 import playwright from 'playwright';
-import { kebabCase } from 'lodash-es';
 expect.extend({ toMatchImageSnapshot });
 
 interface Scenario {
@@ -200,16 +199,7 @@ const createPagePool = (pages: playwright.Page[]) => {
   return { acquire, release };
 };
 
-const SUITE_NAME = 'visual regression test for';
-
-// The matcher names files after the current test, but on Vitest 3 concurrent tests get
-// the name of whichever test started last. This rebuilds the default identifier
-// (lodash kebabCase of file, test name and call counter) for the test that actually runs.
-// Vitest 4 and newer pass the right name, so this can go after an upgrade.
-const getSnapshotIdentifier = (name: string) =>
-  `${kebabCase(`regression.test.ts-${SUITE_NAME} ${name}-1`)}-snap`;
-
-describe(SUITE_NAME, () => {
+describe('visual regression test for', () => {
   let browser: playwright.Browser;
   let pool: ReturnType<typeof createPagePool>;
 
@@ -240,7 +230,7 @@ describe(SUITE_NAME, () => {
 
   // A plain loop, because test.each wraps $name in quotes and that would rename snapshots
   tests.forEach(({ name, scenario, width, height, colorScheme }) => {
-    // Concurrent tests must assert with their own expect to keep snapshot state apart
+    // Concurrent tests must assert with their own expect, so the matcher gets this test's name
     test.concurrent(name, async ({ expect: testExpect }) => {
       const page = await pool.acquire();
       try {
@@ -272,7 +262,6 @@ describe(SUITE_NAME, () => {
         });
 
         testExpect(image).toMatchImageSnapshot({
-          customSnapshotIdentifier: getSnapshotIdentifier(name),
           // Same comparator and defaults as Vitest's toMatchScreenshot
           comparisonMethod: 'blazediff',
           customDiffConfig: {
