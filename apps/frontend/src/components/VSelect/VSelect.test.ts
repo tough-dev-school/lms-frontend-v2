@@ -114,7 +114,9 @@ describe('VSelect', () => {
   });
 
   test('highlights the select on error', () => {
-    const wrapper = mountWrapper({ error: true });
+    const wrapper = mountWrapper({
+      error: createValidationError({ language: 'This is an error' }),
+    });
 
     expect(getSelect(wrapper).classes()).toContain('border-red');
     expect(getSelect(wrapper).classes()).not.toContain('border-white');
