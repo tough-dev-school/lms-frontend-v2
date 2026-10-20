@@ -7,7 +7,7 @@
     RecommendedVideoProviderEnum,
     VideoProvider,
   } from '@/api/generated';
-  import { DATE_TIME_FORMAT, formatDate } from '@/utils/date';
+  import { formatDate } from '@/utils/date';
   import { useI18n } from 'vue-i18n';
 
   defineProps<{
@@ -32,7 +32,7 @@
   <div class="flex flex-col gap-16">
     <div class="flex flex-wrap gap-8 empty:hidden">
       <VTag v-if="call.datetime">
-        {{ formatDate(call.datetime, DATE_TIME_FORMAT) }}
+        {{ formatDate(call.datetime, 'dateTime') }}
       </VTag>
     </div>
     <VHeading

@@ -2,25 +2,47 @@ import dayjs from 'dayjs';
 import relativeTimePlugin from 'dayjs/plugin/relativeTime';
 import utcPlugin from 'dayjs/plugin/utc';
 import 'dayjs/locale/ru';
+import { i18n } from '@/i18n';
+import type { Locale } from '@/i18n';
 
 dayjs.extend(relativeTimePlugin);
 dayjs.extend(utcPlugin);
 
-export const relativeDate = (date: dayjs.ConfigType) => {
-  return dayjs().to(date);
+export type DateFormat = 'date' | 'dayMonth' | 'dateTime' | 'dateTimeSeconds';
+
+// English uses month names, because 02.03 means 2 March in Europe and February 3 in the US
+const DATE_FORMATS: Record<Locale, Record<DateFormat, string>> = {
+  ru: {
+    date: 'DD.MM.YYYY',
+    dayMonth: 'DD.MM',
+    dateTime: 'DD.MM.YYYY HH:mm',
+    dateTimeSeconds: 'DD.MM.YYYY HH:mm:ss',
+  },
+  en: {
+    date: 'D MMM YYYY',
+    dayMonth: 'D MMM',
+    dateTime: 'D MMM YYYY, HH:mm',
+    dateTimeSeconds: 'D MMM YYYY, HH:mm:ss',
+  },
 };
 
-export const DATE_FORMAT = 'DD.MM.YYYY';
-export const DATE_TIME_FORMAT = `${DATE_FORMAT} HH:mm`;
-export const DATE_TIME_SECONDS_FORMAT = `${DATE_TIME_FORMAT}:ss`;
+// Reading the locale ref here makes templates re-render dates when the language changes
+const getLocale = () => i18n.global.locale.value;
+
+export const relativeDate = (date: dayjs.ConfigType) => {
+  return dayjs().locale(getLocale()).to(date);
+};
 
 export const formatDate = (
   date: dayjs.ConfigType,
-  format: string = DATE_FORMAT,
+  format: DateFormat = 'date',
   localTime = true,
 ) => {
-  const dayjsDate = localTime ? dayjs(date) : dayjs(date).utc();
-  const formatted = dayjsDate.format(format);
+  const locale = getLocale();
+  const dayjsDate = (localTime ? dayjs(date) : dayjs(date).utc()).locale(
+    locale,
+  );
+  const formatted = dayjsDate.format(DATE_FORMATS[locale][format]);
   return localTime ? formatted : `${formatted} UTC`;
 };
 

@@ -3,7 +3,7 @@
   import VTag from '@/components/VTag/VTag.vue';
   import VButton from '@/components/VButton/VButton.vue';
   import type { Lesson } from '@/api/generated';
-  import { DATE_TIME_FORMAT, formatDate } from '@/utils/date';
+  import { formatDate } from '@/utils/date';
   import { useI18n } from 'vue-i18n';
 
   defineProps<{
@@ -20,7 +20,7 @@
       <VTag v-if="question.deadline">
         {{
           t('lesson.deadline', {
-            date: formatDate(question.deadline, DATE_TIME_FORMAT),
+            date: formatDate(question.deadline, 'dateTime'),
           })
         }}
       </VTag>

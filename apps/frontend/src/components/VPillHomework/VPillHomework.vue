@@ -3,7 +3,7 @@
   import VPillItem from '@/components/VPill/VPillItem.vue';
   import type { Lesson } from '@/api/generated';
   import { computed } from 'vue';
-  import { DATE_TIME_FORMAT, formatDate } from '@/utils/date';
+  import { formatDate } from '@/utils/date';
   import dayjs from 'dayjs';
   import { useI18n } from 'vue-i18n';
 
@@ -63,7 +63,7 @@
         <div v-if="crossCheckDate && !isOverCrossCheckDate">
           {{
             t('homeworkPill.willSend', {
-              date: formatDate(crossCheckDate, DATE_TIME_FORMAT),
+              date: formatDate(crossCheckDate, 'dateTime'),
             })
           }}
         </div>
@@ -77,7 +77,7 @@
         <div>
           {{
             t('homeworkPill.deadline', {
-              date: formatDate(lesson.question?.deadline, DATE_TIME_FORMAT),
+              date: formatDate(lesson.question?.deadline, 'dateTime'),
             })
           }}
         </div>

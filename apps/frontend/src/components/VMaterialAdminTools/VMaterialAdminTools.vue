@@ -9,7 +9,7 @@
   } from '@/api/generated';
   import { useQueryClient } from '@tanstack/vue-query';
   import { useIntervalFn } from '@vueuse/core';
-  import { DATE_TIME_SECONDS_FORMAT, formatDate, isBefore } from '@/utils/date';
+  import { formatDate, isBefore } from '@/utils/date';
   import { computed } from 'vue';
   import VError from '@/components/VError/VError.vue';
   import { useI18n } from 'vue-i18n';
@@ -52,21 +52,13 @@
 
   const fetchStarted = computed(() => {
     return materialStatus.value?.fetch_started
-      ? formatDate(
-          materialStatus.value.fetch_started,
-          DATE_TIME_SECONDS_FORMAT,
-          true,
-        )
+      ? formatDate(materialStatus.value.fetch_started, 'dateTimeSeconds', true)
       : '-';
   });
 
   const fetchComplete = computed(() => {
     return materialStatus.value?.fetch_complete
-      ? formatDate(
-          materialStatus.value.fetch_complete,
-          DATE_TIME_SECONDS_FORMAT,
-          true,
-        )
+      ? formatDate(materialStatus.value.fetch_complete, 'dateTimeSeconds', true)
       : '-';
   });
 
