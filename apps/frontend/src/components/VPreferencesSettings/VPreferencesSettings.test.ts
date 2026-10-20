@@ -6,34 +6,42 @@ import { useLocale } from '@/composables/useLocale';
 describe('VPreferencesSettings', () => {
   const mountWrapper = () => mount(VPreferencesSettings);
 
-  const getLanguageOption = (
-    wrapper: ReturnType<typeof mountWrapper>,
-    label: string,
-  ) =>
-    wrapper
-      .find('[data-testid="language"]')
-      .findAll('label')
-      .find((option) => option.text() === label);
+  const getLanguageSelect = (wrapper: ReturnType<typeof mountWrapper>) =>
+    wrapper.find('[data-testid="language"] select');
 
   afterEach(() => {
     useLocale().locale.value = 'ru';
     localStorage.clear();
   });
 
+  test('shows the current language', () => {
+    useLocale().locale.value = 'en';
+
+    const wrapper = mountWrapper();
+
+    expect(
+      (getLanguageSelect(wrapper).element as HTMLSelectElement).value,
+    ).toBe('en');
+  });
+
   test('switches the interface to English', async () => {
     const wrapper = mountWrapper();
 
-    await getLanguageOption(wrapper, 'English')?.find('input').trigger('click');
+    await getLanguageSelect(wrapper).setValue('en');
 
     expect(useLocale().locale.value).toBe('en');
     expect(wrapper.text()).toContain('Language');
   });
 
-  test('shows language names in their own language', async () => {
+  test('shows language names with flags in their own language', async () => {
     const wrapper = mountWrapper();
     useLocale().locale.value = 'en';
     await wrapper.vm.$nextTick();
 
-    expect(getLanguageOption(wrapper, 'Русский')?.exists()).toBe(true);
+    const options = getLanguageSelect(wrapper)
+      .findAll('option')
+      .map((option) => option.text());
+
+    expect(options).toEqual(['🇷🇺 Русский', '🇬🇧 English']);
   });
 });
