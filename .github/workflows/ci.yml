@@ -90,7 +90,7 @@ jobs:
           retention-days: 14
 
   build-docker-image:
-    needs: check
+    needs: [check, regression]
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' }}
     steps:
