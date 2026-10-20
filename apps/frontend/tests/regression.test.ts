@@ -1,7 +1,8 @@
 import { afterAll, beforeAll, describe, expect, test } from 'vitest';
-import { toMatchImageSnapshot } from 'jest-image-snapshot';
+import { toMatchImageSnapshot } from '@brachkow/vitest-image-snapshot';
 import playwright from 'playwright';
 import { kebabCase } from 'lodash-es';
+// @ts-expect-error vitest-image-snapshot 0.1.0 types snapshotState._counters as public, Vitest 3 has it private. Remove once the library types are fixed
 expect.extend({ toMatchImageSnapshot });
 
 interface Scenario {
@@ -202,7 +203,7 @@ const createPagePool = (pages: playwright.Page[]) => {
 
 const SUITE_NAME = 'visual regression test for';
 
-// jest-image-snapshot names files after the current test, but with concurrent tests
+// The matcher names files after the current test, but with concurrent tests
 // it reads the name of whichever test ran last. This rebuilds its default identifier
 // (lodash kebabCase of file, test name and call counter) for the test that actually runs
 const getSnapshotIdentifier = (name: string) =>

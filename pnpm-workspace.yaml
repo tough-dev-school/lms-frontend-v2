@@ -10,3 +10,5 @@ allowBuilds:
   vue-demi: true
   unrs-resolver: true
   es5-ext: false
+minimumReleaseAgeExclude:
+  - '@brachkow/*'
