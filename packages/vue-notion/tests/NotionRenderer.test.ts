@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { render, screen } from '@testing-library/vue';
+import { cleanup, render, screen } from '@testing-library/vue';
 import { flushPromises } from '@vue/test-utils';
 import GLightbox from 'glightbox';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -497,6 +497,86 @@ describe('NotionRenderer', () => {
         cells[0].querySelector('.notion-simple-table-header'),
       ).not.toBeNull();
       expect(cells[1].querySelector('.notion-simple-table-header')).toBeNull();
+    });
+
+    describe('full table dialog', () => {
+      const createTable = () => {
+        const table = createBlock('table', {
+          format: { table_block_column_order: ['a'] },
+        });
+        const row = createBlock('table_row', {
+          parent_id: table.id,
+          properties: { a: [['Cell']] },
+        });
+        table.content = [row.id];
+        return createBlockMap([table, row]).blockMap;
+      };
+
+      // jsdom has no layout, so widths are 0 unless faked
+      const fakeTableWidth = (scrollWidth: number) => {
+        vi.spyOn(HTMLElement.prototype, 'scrollWidth', 'get').mockReturnValue(
+          scrollWidth,
+        );
+        vi.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockReturnValue(
+          500,
+        );
+      };
+
+      // jsdom doesn't implement modal dialogs
+      beforeEach(() => {
+        HTMLDialogElement.prototype.showModal = function () {
+          this.setAttribute('open', '');
+        };
+        HTMLDialogElement.prototype.close = function () {
+          this.removeAttribute('open');
+          this.dispatchEvent(new Event('close'));
+        };
+      });
+
+      afterEach(() => {
+        // Vitest globals are off, so testing-library won't unmount on its own
+        cleanup();
+        vi.restoreAllMocks();
+      });
+
+      type Queries = Awaited<ReturnType<typeof renderNotion>>;
+      const getOpenButton = (queries: Queries) =>
+        queries.queryByRole('button', { name: 'Открыть таблицу целиком' });
+      // Hidden from the a11y tree because jsdom's dialog stub has no top layer
+      const getCloseButton = (queries: Queries) =>
+        queries.getByRole('button', { name: 'Закрыть', hidden: true });
+
+      it('hides the open button when the table fits', async () => {
+        fakeTableWidth(500);
+
+        const queries = await renderNotion({ blockMap: createTable() });
+
+        expect(getOpenButton(queries)).toBeNull();
+      });
+
+      it('opens the table in a modal dialog', async () => {
+        fakeTableWidth(1000);
+        const queries = await renderNotion({ blockMap: createTable() });
+
+        getOpenButton(queries)?.click();
+        await flushPromises();
+
+        const dialog = queries.container.querySelector('dialog');
+        expect(dialog?.open).toBe(true);
+        expect(dialog?.querySelector('td')?.textContent).toBe('Cell');
+      });
+
+      it('removes the dialog after closing', async () => {
+        fakeTableWidth(1000);
+        const queries = await renderNotion({ blockMap: createTable() });
+        getOpenButton(queries)?.click();
+        await flushPromises();
+
+        getCloseButton(queries).click();
+        await flushPromises();
+
+        expect(queries.container.querySelector('dialog')).toBeNull();
+      });
     });
   });
 

@@ -113,7 +113,9 @@
     "upToDate": "Material is up to date as of: {date}",
     "updateInProgress": "Update in progress",
     "requestUpdate": "Request update",
-    "tableScrolls": "Table scrolls →"
+    "tableScrolls": "Table scrolls →",
+    "openTable": "Open full table",
+    "closeTable": "Close"
   },
   "certificates": {
     "title": "My certificates",
