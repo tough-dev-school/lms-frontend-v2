@@ -8,8 +8,10 @@
   import VPasswordResetForm from '@/components/VPasswordResetForm/VPasswordResetForm.vue';
   import { useQueryClient } from '@tanstack/vue-query';
   import { useAuthPasswordChangeCreate } from '@/api/generated';
+  import { useI18n } from 'vue-i18n';
 
   const queryClient = useQueryClient();
+  const { t } = useI18n();
 
   const {
     mutateAsync: changePassword,
@@ -34,7 +36,7 @@
 </script>
 
 <template>
-  <VLoggedLayout title="Настройки">
+  <VLoggedLayout :title="t('settings.title')">
     <VCard>
       <ul>
         <li>
@@ -43,7 +45,7 @@
             :to="{ name: 'settings', hash: '#links' }"
             data-testid="links-link"
           >
-            Ссылки
+            {{ t('settings.links') }}
           </RouterLink>
         </li>
         <li>
@@ -52,7 +54,7 @@
             data-testid="password-link"
             :to="{ name: 'settings', hash: '#password' }"
           >
-            Пароль
+            {{ t('settings.password') }}
           </RouterLink>
         </li>
         <li>
@@ -61,7 +63,7 @@
             :to="{ name: 'settings', hash: '#certificate' }"
             data-testid="certificate-link"
           >
-            Данные для диплома
+            {{ t('settings.certificate') }}
           </RouterLink>
         </li>
         <li>
@@ -70,7 +72,7 @@
             :to="{ name: 'settings', hash: '#avatar' }"
             data-testid="avatar-link"
           >
-            Аватар
+            {{ t('settings.avatar') }}
           </RouterLink>
         </li>
         <li>
@@ -79,7 +81,7 @@
             :to="{ name: 'settings', hash: '#preferences' }"
             data-testid="preferences-link"
           >
-            Настройки темы
+            {{ t('settings.preferences') }}
           </RouterLink>
         </li>
       </ul>
@@ -90,7 +92,7 @@
     />
     <VPasswordResetForm
       id="password"
-      title="Пароль"
+      :title="t('settings.password')"
       data-testid="password-settings"
       :is-pending="isPasswordChangePending"
       :error="error"

@@ -2,6 +2,7 @@
   import VCard from '@/components/VCard/VCard.vue';
   import type { Diploma } from '@/api/generated';
   import VCertificate from '@/components/VCertificate/VCertificate.vue';
+  import { useI18n } from 'vue-i18n';
 
   export interface Props {
     course: string;
@@ -9,6 +10,8 @@
   }
 
   defineProps<Props>();
+
+  const { t } = useI18n();
 </script>
 
 <template>
@@ -16,7 +19,7 @@
     tag="section"
     data-testid="container"
     class="grid gap-16"
-    :title="`Курс «${course}»`"
+    :title="t('certificates.course', { course })"
   >
     <ul class="grid gap-32 phone:grid-cols-2">
       <VCertificate

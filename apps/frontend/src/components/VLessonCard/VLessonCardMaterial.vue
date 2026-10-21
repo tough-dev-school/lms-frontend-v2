@@ -2,10 +2,13 @@
   import VHeading from '@/components/VHeading/VHeading.vue';
   import VButton from '@/components/VButton/VButton.vue';
   import type { Lesson } from '@/api/generated';
+  import { useI18n } from 'vue-i18n';
 
   defineProps<{
     material: NonNullable<Lesson['material']>;
   }>();
+
+  const { t } = useI18n();
 </script>
 
 <template>
@@ -26,6 +29,6 @@
       params: { materialId: material.id },
     }"
   >
-    <VButton class="VLessonCard__Button"> Читать </VButton>
+    <VButton class="VLessonCard__Button"> {{ t('lesson.read') }} </VButton>
   </RouterLink>
 </template>

@@ -22,5 +22,5 @@
     :user="user"
     :answer="answer"
   />
-  <div v-else>Loading...</div>
+  <div v-else>{{ $t('common.loading') }}</div>
 </template>

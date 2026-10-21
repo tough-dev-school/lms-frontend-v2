@@ -5,6 +5,9 @@
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import { useDiplomasList } from '@/api/generated';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
+  import { useI18n } from 'vue-i18n';
+
+  const { t } = useI18n();
 
   const { data: diplomasData, isLoading } = useDiplomasList({ page_size: 100 });
 
@@ -26,7 +29,7 @@
 <template>
   <VLoggedLayout
     v-if="!isLoading"
-    title="Мои сертификаты"
+    :title="t('certificates.title')"
   >
     <VCertificateCard
       v-for="group in groupedDiplomas"
@@ -40,7 +43,7 @@
       data-testid="empty"
       class="flex h-128 flex-grow items-center justify-center rounded border border-dashed border-gray text-center text-gray"
     >
-      Нет сертификатов
+      {{ t('certificates.empty') }}
     </li>
   </VLoggedLayout>
   <VLoadingView v-else />

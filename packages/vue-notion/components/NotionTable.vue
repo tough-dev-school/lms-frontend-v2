@@ -1,11 +1,18 @@
 <script setup lang="ts">
   import { useEventListener } from '@vueuse/core';
-  import { onMounted, ref, useTemplateRef } from 'vue';
+  import { inject, onMounted, ref, useTemplateRef } from 'vue';
   import { blockPropsDefaults } from '../lib/blockProps';
   import type { BlockProps } from '../lib/blockProps';
 
   // Declared so renderer props don't land on the root element as attributes
   withDefaults(defineProps<BlockProps>(), blockPropsDefaults);
+
+  // The host app provides translated labels, so the renderer doesn't depend on an i18n library
+  const labels = inject<{ tableScrolls: string }>(
+    'notionLabels',
+    () => ({ tableScrolls: 'Таблица прокручивается →' }),
+    true,
+  );
 
   const wrapper = useTemplateRef('wrapper');
   const isScrollable = ref(false);
@@ -50,7 +57,7 @@
       v-if="isScrollable"
       class="scroll-tip"
     >
-      Таблица прокручивается →
+      {{ labels.tableScrolls }}
     </div>
   </div>
 </template>

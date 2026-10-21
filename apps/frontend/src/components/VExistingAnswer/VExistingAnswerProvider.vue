@@ -27,5 +27,5 @@
     :user="user"
     @after-create="(slug) => emit('after-create', slug)"
   />
-  <div v-else>Loading...</div>
+  <div v-else>{{ $t('common.loading') }}</div>
 </template>

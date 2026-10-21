@@ -6,6 +6,7 @@
   import VError from '@/components/VError/VError.vue';
   import type { FormError } from '@/types/error';
   import { createValidationError, mergeErrors } from '@/types/error';
+  import { useI18n } from 'vue-i18n';
 
   export interface Props {
     title: string;
@@ -16,6 +17,8 @@
   const props = defineProps<Props>();
 
   const emit = defineEmits<{ save: [password: string] }>();
+
+  const { t } = useI18n();
 
   const newPassword1 = ref('');
   const newPassword2 = ref('');
@@ -30,21 +33,21 @@
 
     if (!newPassword1.value) {
       validationError.value = createValidationError({
-        new_password1: 'Введите новый пароль',
+        new_password1: t('passwordReset.enterNewPassword'),
       });
       return;
     }
 
     if (!newPassword2.value) {
       validationError.value = createValidationError({
-        new_password2: 'Повторите пароль',
+        new_password2: t('passwordReset.repeatPassword'),
       });
       return;
     }
 
     if (newPassword1.value !== newPassword2.value) {
       validationError.value = createValidationError({
-        non_field_errors: 'Пароли не совпадают',
+        non_field_errors: t('passwordReset.passwordsDoNotMatch'),
       });
       return;
     }
@@ -63,7 +66,7 @@
       <VTextInput
         v-model="newPassword1"
         type="password"
-        label="Новый пароль"
+        :label="t('passwordReset.newPassword')"
         data-testid="password1"
         name="new_password1"
         :error="displayError"
@@ -71,7 +74,7 @@
       <VTextInput
         v-model="newPassword2"
         type="password"
-        label="Повторите пароль"
+        :label="t('passwordReset.repeatPassword')"
         data-testid="password2"
         name="new_password2"
         :error="displayError"
@@ -87,7 +90,7 @@
         data-testid="save"
         type="submit"
       >
-        {{ isPending ? 'Сохраняется...' : 'Сохранить' }}
+        {{ isPending ? t('common.saving') : t('common.save') }}
       </VButton>
     </template>
   </VCard>

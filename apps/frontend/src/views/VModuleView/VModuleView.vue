@@ -10,11 +10,14 @@
   import VLessonCard from '@/components/VLessonCard/VLessonCard.vue';
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
+  import { useI18n } from 'vue-i18n';
 
   const props = defineProps<{
     courseId: number;
     moduleId: number;
   }>();
+
+  const { t } = useI18n();
 
   const { data: studiesData, isLoading: isStudiesLoading } =
     usePurchasedCoursesList({ page_size: 100 });
@@ -34,9 +37,9 @@
     if (!courseName.value || !moduleName.value) return [];
 
     return [
-      { name: 'Мои курсы', to: { name: 'courses' } },
+      { name: t('common.myCourses'), to: { name: 'courses' } },
       {
-        name: courseName.value ?? 'Материалы курса',
+        name: courseName.value ?? t('common.courseMaterials'),
         to: { name: 'course', params: { courseId: props.courseId } },
       },
       {
@@ -85,7 +88,7 @@
         data-testid="empty"
         class="mb-16 text-center"
       >
-        Нет доступных уроков.
+        {{ t('module.empty') }}
       </p>
     </div>
   </VLoggedLayout>

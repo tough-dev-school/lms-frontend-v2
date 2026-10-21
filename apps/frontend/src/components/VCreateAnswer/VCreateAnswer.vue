@@ -4,6 +4,7 @@
   import { computed, useTemplateRef } from 'vue';
   import VError from '@/components/VError/VError.vue';
   import type { FormError } from '@/types/error';
+  import { useI18n } from 'vue-i18n';
 
   const props = defineProps<{
     legacyText?: string;
@@ -14,6 +15,8 @@
   const emit = defineEmits<{
     send: [];
   }>();
+
+  const { t } = useI18n();
 
   const content = defineModel<Record<string, unknown>>({ required: true });
 
@@ -41,7 +44,7 @@
         class="h-32"
         @click="emit('send')"
       >
-        {{ isPending ? 'Отправляется...' : 'Отправить' }}
+        {{ isPending ? t('common.sending') : t('common.send') }}
       </VButton>
     </div>
   </div>
