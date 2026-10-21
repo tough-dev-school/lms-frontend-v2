@@ -1,10 +1,12 @@
 name: CI
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   check:
     runs-on: ubuntu-latest
+    # Branches of this repo already run on push, so pull_request only covers forks
+    if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository }}
 
     steps:
       - name: Checkout 🛎
@@ -39,6 +41,8 @@ jobs:
 
   regression:
     runs-on: ubuntu-24.04
+    # Branches of this repo already run on push, so pull_request only covers forks
+    if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository }}
 
     steps:
       - name: Checkout 🛎
