@@ -25,7 +25,11 @@
 
   provide(
     'notionLabels',
-    reactive({ tableScrolls: computed(() => t('material.tableScrolls')) }),
+    reactive({
+      tableScrolls: computed(() => t('material.tableScrolls')),
+      openTable: computed(() => t('material.openTable')),
+      closeTable: computed(() => t('material.closeTable')),
+    }),
   );
   const { data: user } = useUsersMeRetrieve();
 
@@ -1166,5 +1170,9 @@
 
   .notion-simple-table-container.is-at-end::after {
     opacity: 0;
+  }
+
+  .notion-simple-table-dialog-body {
+    @apply bg-white text-black dark:bg-dark-black dark:text-white;
   }
 </style>
