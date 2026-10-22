@@ -1,5 +1,6 @@
-// A decoration is a key with an optional value, e.g. ['b'] or ['a', url]
-export type Decoration = [key: string, value?: string];
+// A decoration is a key with an optional value, e.g. ['b'] or ['a', url].
+// Page mentions also carry a workspace id: ['p', pageId, workspaceId]
+export type Decoration = [key: string, value?: string, workspaceId?: string];
 
 export type TextChunk = [text: string, decorations?: Decoration[]];
 
