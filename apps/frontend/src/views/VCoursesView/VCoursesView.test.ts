@@ -1,4 +1,4 @@
-import { vi, describe, beforeEach, expect, test } from 'vitest';
+import { vi, describe, beforeEach, afterEach, expect, test } from 'vitest';
 import { RouterLinkStub, mount, VueWrapper } from '@vue/test-utils';
 import VCoursesView from './VCoursesView.vue';
 import type { RouterLink } from 'vue-router';
@@ -7,6 +7,7 @@ import { faker } from '@faker-js/faker';
 import { usePurchasedCoursesList, createCourse } from '@/api/generated';
 import { VueQueryPlugin, QueryClient } from '@tanstack/vue-query';
 import type { VueQueryPluginOptions } from '@tanstack/vue-query';
+import { i18n } from '@/i18n';
 
 const defaultStudies = faker.helpers.multiple(createCourse, { count: 3 });
 
@@ -44,6 +45,7 @@ const createWrapper = (studies = defaultStudies) => {
       plugins: [[VueQueryPlugin, options]],
       stubs: {
         RouterLink: RouterLinkStub,
+        'i18n-t': false,
       },
     },
   });
@@ -64,6 +66,9 @@ describe('VCoursesView', () => {
   };
   const getEmptyWrapper = () => {
     return wrapper.find(`[data-testid="empty"]`);
+  };
+  const getLandingLink = () => {
+    return wrapper.find(`[data-testid="landing-link"]`);
   };
 
   test('has correct number of studies', () => {
@@ -87,5 +92,28 @@ describe('VCoursesView', () => {
     await nextTick();
 
     expect(getEmptyWrapper().exists()).toBe(true);
+  });
+
+  describe('landing link', () => {
+    afterEach(() => {
+      i18n.global.locale.value = 'ru';
+    });
+
+    test('leads to tough-dev.school in Russian', () => {
+      expect(getLandingLink().attributes('href')).toBe(
+        'https://tough-dev.school/?utm_source=lms&utm_campaign=footer',
+      );
+      expect(getLandingLink().text()).toBe('tough-dev.school');
+    });
+
+    test('leads to codenest.school in English', async () => {
+      i18n.global.locale.value = 'en';
+      await nextTick();
+
+      expect(getLandingLink().attributes('href')).toBe(
+        'https://codenest.school/?utm_source=lms&utm_campaign=footer',
+      );
+      expect(getLandingLink().text()).toBe('codenest.school');
+    });
   });
 });
