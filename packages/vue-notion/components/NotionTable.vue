@@ -1,3 +1,40 @@
+<script setup lang="ts">
+  import { useEventListener } from '@vueuse/core';
+  import { inject, onMounted, ref, useTemplateRef } from 'vue';
+  import { blockPropsDefaults } from '../lib/blockProps';
+  import type { BlockProps } from '../lib/blockProps';
+
+  // Declared so renderer props don't land on the root element as attributes
+  withDefaults(defineProps<BlockProps>(), blockPropsDefaults);
+
+  // The host app provides translated labels, so the renderer doesn't depend on an i18n library
+  const labels = inject<{ tableScrolls: string }>(
+    'notionLabels',
+    () => ({ tableScrolls: 'Таблица прокручивается →' }),
+    true,
+  );
+
+  const wrapper = useTemplateRef('wrapper');
+  const isScrollable = ref(false);
+  const isAtEnd = ref(false);
+
+  const checkScrollPosition = () => {
+    if (!wrapper.value) return;
+    const { scrollLeft, scrollWidth, clientWidth } = wrapper.value;
+    // 1px slack for subpixel rounding
+    isAtEnd.value = scrollLeft + clientWidth >= scrollWidth - 1;
+  };
+
+  const checkScrollable = () => {
+    if (!wrapper.value) return;
+    isScrollable.value = wrapper.value.scrollWidth > wrapper.value.clientWidth;
+    checkScrollPosition();
+  };
+
+  onMounted(checkScrollable);
+  useEventListener(window, 'resize', checkScrollable);
+</script>
+
 <template>
   <div>
     <div
@@ -7,7 +44,7 @@
       <div
         ref="wrapper"
         class="notion-simple-table-wrapper"
-        @scroll="handleScroll"
+        @scroll="checkScrollPosition"
       >
         <table class="notion-simple-table">
           <tbody>
@@ -24,55 +61,6 @@
     </div>
   </div>
 </template>
-
-<script>
-  import { Blockable } from '../lib/blockable';
-
-  export default {
-    extends: Blockable,
-    // The host app provides translated labels, so the renderer doesn't depend on an i18n library
-    inject: {
-      labels: {
-        from: 'notionLabels',
-        default: () => ({ tableScrolls: 'Таблица прокручивается →' }),
-      },
-    },
-    data() {
-      return {
-        isScrollable: false,
-        isAtEnd: false,
-      };
-    },
-    mounted() {
-      this.checkScrollable();
-      window.addEventListener('resize', this.checkScrollable);
-    },
-    beforeUnmount() {
-      window.removeEventListener('resize', this.checkScrollable);
-    },
-    methods: {
-      checkScrollable() {
-        const wrapper = this.$refs.wrapper;
-        if (wrapper) {
-          this.isScrollable = wrapper.scrollWidth > wrapper.clientWidth;
-          this.checkScrollPosition();
-        }
-      },
-      handleScroll() {
-        this.checkScrollPosition();
-      },
-      checkScrollPosition() {
-        const wrapper = this.$refs.wrapper;
-        if (wrapper) {
-          const scrollLeft = wrapper.scrollLeft;
-          const scrollWidth = wrapper.scrollWidth;
-          const clientWidth = wrapper.clientWidth;
-          this.isAtEnd = scrollLeft + clientWidth >= scrollWidth - 1;
-        }
-      },
-    },
-  };
-</script>
 
 <style scoped>
   .scroll-tip {

@@ -10,7 +10,6 @@
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
   import { SUPPORT_EMAIL, SUPPORT_CHAT_URL } from '@/constants';
   import { useRouteQuery } from '@vueuse/router';
-  // @ts-expect-error no types for vue-notion
   import { NotionRenderer } from 'vue-notion';
   import { useNotionCheckboxHack } from './useNotionCheckboxHack';
   import VMaterialAdminTools from '@/components/VMaterialAdminTools/VMaterialAdminTools.vue';
