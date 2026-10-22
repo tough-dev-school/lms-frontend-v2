@@ -27,8 +27,8 @@ export const Default = {
 
   args: {
     name: 'language',
-    label: 'Language',
-    tip: 'This is a tooltip for select',
+    label: 'Язык интерфейса',
+    tip: 'Язык писем и сертификатов не изменится',
     options,
   },
 };
@@ -46,15 +46,15 @@ export const LongLabels = {
   render: Template,
 
   args: {
-    name: 'long',
-    label: 'Option with a long label',
+    name: 'course',
+    label: 'Курс',
     options: [
       {
-        value: 'long',
+        value: 'web-services-1',
         label:
-          'A very long option label that does not fit into the select and has to be cut off at the end',
+          'Разработка веб-сервисов: от первого эндпоинта до стабильной работы под нагрузкой',
       },
-      { value: 'short', label: 'Short' },
+      { value: 'rest-api-3', label: 'Проектирование REST API' },
     ],
   },
 };
@@ -63,11 +63,11 @@ export const ManyOptions = {
   render: Template,
 
   args: {
-    name: 'many',
-    label: 'Many options',
+    name: 'stream',
+    label: 'Поток',
     options: Array.from({ length: 30 }, (_, index) => ({
       value: String(index + 1),
-      label: `Option ${index + 1}`,
+      label: `Поток ${index + 1}`,
     })),
   },
 };
@@ -77,9 +77,11 @@ export const ErrorWithMessage = {
 
   args: {
     name: 'language',
-    label: 'Language',
+    label: 'Язык интерфейса',
     options,
-    error: createValidationError({ language: 'This is error' }),
+    error: createValidationError({
+      language: 'Выберите язык из списка',
+    }),
   },
 };
 
@@ -88,7 +90,7 @@ export const ErrorWithoutMessage = {
 
   args: {
     name: 'language',
-    label: 'Language',
+    label: 'Язык интерфейса',
     options,
     error: true,
   },

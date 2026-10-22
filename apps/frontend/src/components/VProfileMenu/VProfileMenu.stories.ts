@@ -1,8 +1,8 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VProfileMenu from '@/components/VProfileMenu/VProfileMenu.vue';
-import { faker } from '@faker-js/faker';
 import { usersMeRetrieveQueryKey } from '@/api/generated';
 import { useQueryClient } from '@tanstack/vue-query';
+import { NEW_STUDENT, STUDENT } from '@/mocks/users';
 
 export default {
   title: 'UI/VProfileMenu',
@@ -17,19 +17,23 @@ export default {
 const Template: StoryFn = (args) => ({
   components: { VProfileMenu },
   setup() {
-    const queryClient = useQueryClient();
-    queryClient.setQueryData(usersMeRetrieveQueryKey(), {
-      username: faker.internet.email(),
-      firstName: faker.person.firstName(),
-      lastName: faker.person.lastName(),
-      uuid: faker.string.uuid(),
-    });
+    useQueryClient().setQueryData(usersMeRetrieveQueryKey(), args.user);
     return { args };
   },
-  template: '<VProfileMenu v-bind="args" />',
+  template: '<VProfileMenu />',
 });
 
 export const Default = {
   render: Template,
-  args: {},
+  args: {
+    user: STUDENT,
+  },
+};
+
+// Without certificate names the menu offers to fill them in and shows the random name
+export const WithoutCertificateData = {
+  render: Template,
+  args: {
+    user: NEW_STUDENT,
+  },
 };

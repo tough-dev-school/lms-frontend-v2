@@ -1,7 +1,7 @@
-import { mockUserId, USER_1 } from '@/mocks/mockUserId';
 import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
 import { useQueryClient } from '@tanstack/vue-query';
-import { usersMeRetrieveQueryKey, createUserSafe } from '@/api/generated';
+import { usersMeRetrieveQueryKey } from '@/api/generated';
+import { STUDENT } from '@/mocks/users';
 import type { Component } from 'vue';
 
 const layoutDecorator = (story: Component, layout: Component) => ({
@@ -9,16 +9,7 @@ const layoutDecorator = (story: Component, layout: Component) => ({
   template: '<layout><story /></layout>',
   setup() {
     const queryClient = useQueryClient();
-    queryClient.setQueryData(
-      usersMeRetrieveQueryKey(),
-      createUserSafe({
-        uuid: mockUserId(USER_1),
-        first_name: 'Иван',
-        last_name: 'Иванов',
-        first_name_en: 'John',
-        last_name_en: 'Doe',
-      }),
-    );
+    queryClient.setQueryData(usersMeRetrieveQueryKey(), STUDENT);
   },
 });
 

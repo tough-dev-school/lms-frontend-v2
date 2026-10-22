@@ -1,17 +1,28 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VReaction from './VReaction.vue';
 import VCard from '@/components/VCard/VCard.vue';
-import { faker } from '@faker-js/faker';
-import { ALLOWED_REACTIONS } from '@/components/VReactions/VReactions.vue';
-import { createReactionDetailed, createUserSafe } from '@/api/generated';
-import { times } from 'lodash-es';
+import { ReactionEmoji } from '@/components/VReactions/VReactions.vue';
+import { createReactions } from '@/mocks/homework';
+import {
+  ANONYMOUS_CLASSMATE,
+  CLASSMATE_1,
+  CLASSMATE_2,
+  CLASSMATE_3,
+  MENTOR,
+  STUDENT,
+  STUDENT_SAFE,
+} from '@/mocks/users';
 
-const userId = faker.string.uuid();
-const emoji = faker.helpers.arrayElement(ALLOWED_REACTIONS);
+const ANSWER_SLUG = 'e0b4f5a7-8c9d-4e1f-2a3b-4c5d6e7f8091';
 
 export default {
   title: 'Reactions/VReaction',
   component: VReaction,
+  args: {
+    userId: STUDENT.uuid,
+    emoji: ReactionEmoji.FIRE,
+    disabled: false,
+  },
 } as Meta;
 
 const Template: StoryFn = (args) => ({
@@ -25,40 +36,53 @@ const Template: StoryFn = (args) => ({
 export const Default = {
   render: Template,
   args: {
-    userId,
-    emoji,
-    reactions: times(faker.number.int({ min: 1, max: 10 }), () =>
-      createReactionDetailed(),
-    ),
+    reactions: createReactions(ANSWER_SLUG, [
+      [ReactionEmoji.FIRE, CLASSMATE_1],
+      [ReactionEmoji.FIRE, CLASSMATE_2],
+      [ReactionEmoji.FIRE, MENTOR],
+    ]),
+  },
+};
+
+export const Empty = {
+  render: Template,
+  args: {
+    reactions: [],
   },
 };
 
 export const Own = {
   render: Template,
   args: {
-    userId,
-    emoji,
-    reactions: [
-      ...times(1, () =>
-        createReactionDetailed({
-          author: createUserSafe({
-            uuid: userId,
-          }),
-        }),
-      ),
-      ...times(3, () => createReactionDetailed()),
-    ],
+    reactions: createReactions(ANSWER_SLUG, [
+      [ReactionEmoji.FIRE, STUDENT_SAFE],
+      [ReactionEmoji.FIRE, CLASSMATE_1],
+      [ReactionEmoji.FIRE, CLASSMATE_3],
+    ]),
+  },
+};
+
+export const ManyAuthors = {
+  render: Template,
+  args: {
+    reactions: createReactions(ANSWER_SLUG, [
+      [ReactionEmoji.FIRE, CLASSMATE_1],
+      [ReactionEmoji.FIRE, CLASSMATE_2],
+      [ReactionEmoji.FIRE, CLASSMATE_3],
+      [ReactionEmoji.FIRE, ANONYMOUS_CLASSMATE],
+      [ReactionEmoji.FIRE, MENTOR],
+      [ReactionEmoji.FIRE, STUDENT_SAFE],
+    ]),
   },
 };
 
 export const Disabled = {
   render: Template,
   args: {
-    userId,
-    emoji,
-    reactions: times(faker.number.int({ min: 1, max: 10 }), () =>
-      createReactionDetailed(),
-    ),
+    reactions: createReactions(ANSWER_SLUG, [
+      [ReactionEmoji.FIRE, CLASSMATE_1],
+      [ReactionEmoji.FIRE, CLASSMATE_2],
+    ]),
     disabled: true,
   },
 };

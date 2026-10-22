@@ -11,7 +11,7 @@ const Template: StoryFn = (args) => ({
   setup() {
     return { args };
   },
-  template: '<VHeading v-bind="args">VHeading</VHeading>',
+  template: '<VHeading v-bind="args">Ресурсы и эндпоинты</VHeading>',
 });
 
 export const Default = {
