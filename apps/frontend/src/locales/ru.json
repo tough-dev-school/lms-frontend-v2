@@ -113,7 +113,9 @@
     "upToDate": "Материал актуален: {date}",
     "updateInProgress": "Обновление в процессе",
     "requestUpdate": "Запросить обновление",
-    "tableScrolls": "Таблица прокручивается →"
+    "tableScrolls": "Таблица прокручивается →",
+    "openTable": "Открыть таблицу целиком",
+    "closeTable": "Закрыть"
   },
   "certificates": {
     "title": "Мои сертификаты",

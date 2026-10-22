@@ -113,7 +113,9 @@
     "upToDate": "Up to date as of {date}",
     "updateInProgress": "Update in progress",
     "requestUpdate": "Request update",
-    "tableScrolls": "Scroll for more →"
+    "tableScrolls": "Scroll for more →",
+    "openTable": "Open full table",
+    "closeTable": "Close"
   },
   "certificates": {
     "title": "My certificates",
