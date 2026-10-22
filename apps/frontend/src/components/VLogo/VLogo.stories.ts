@@ -18,3 +18,9 @@ export const Default = {
   render: Template,
   args: {},
 };
+
+export const English = {
+  render: Template,
+  args: {},
+  globals: { locale: 'en' },
+};
