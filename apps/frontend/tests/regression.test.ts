@@ -53,6 +53,11 @@ const STORYBOOK_URL = process.env.STORYBOOK_URL ?? 'http://localhost:3001';
 // Each page renders one story at a time, so this is also the test concurrency
 const PAGE_COUNT = Number(process.env.REGRESSION_PAGES ?? 4);
 
+// The support chat button is fixed to the viewport, so it lands on top of
+// whatever content a story renders at the bottom of the screen
+const HIDDEN_ELEMENTS_STYLE =
+  '[data-testid="support-chat"] { display: none !important; }';
+
 const scenarios: Scenario[] = [
   { name: 'Login — email login', storyId: 'app-vloginview--default' },
   {
@@ -259,6 +264,7 @@ describe('visual regression test for', () => {
         const image = await page.screenshot({
           fullPage: true,
           animations: 'disabled',
+          style: HIDDEN_ELEMENTS_STYLE,
         });
 
         testExpect(image).toMatchImageSnapshot({

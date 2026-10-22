@@ -5,8 +5,10 @@
 
 <template>
   <a
-    class="z-50 fixed aspect-square w-48 items-center justify-center flex shadow-sm bottom-16 right-24 rounded-full bg-blue text-white"
-    :href="SUPPORT_CHAT_URL">
+    data-testid="support-chat"
+    class="fixed bottom-16 right-24 z-50 flex aspect-square w-48 items-center justify-center rounded-full bg-blue text-white shadow-sm"
+    :href="SUPPORT_CHAT_URL"
+  >
     <IconBrandTelegram />
   </a>
 </template>

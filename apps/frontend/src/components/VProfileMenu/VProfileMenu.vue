@@ -5,7 +5,7 @@
   import { useRouter } from 'vue-router';
   import { useUsersMeRetrieve } from '@/api/generated';
   import { getName } from '@/utils/getName';
-  import { LANDING_URL } from '@/constants';
+  import { useLandingUrl } from '@/composables/useLandingUrl';
   import { useI18n } from 'vue-i18n';
 
   export interface ProfileMenuItem {
@@ -20,6 +20,7 @@
   const router = useRouter();
   const { t } = useI18n();
   const { data: user } = useUsersMeRetrieve();
+  const landingUrl = useLandingUrl();
 
   onClickOutside(menu, () => (isOpen.value = false));
 
@@ -47,7 +48,7 @@
     {
       label: t('profileMenu.website'),
       action: () => {
-        window.open(LANDING_URL, '_blank');
+        window.open(landingUrl.value, '_blank');
       },
       id: 'website',
     },
