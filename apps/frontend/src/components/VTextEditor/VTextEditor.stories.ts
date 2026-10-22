@@ -1,5 +1,8 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
+import { ref } from 'vue';
 import VTextEditor from '@/components/VTextEditor/VTextEditor.vue';
+import { getEmptyContent } from '@/utils/tiptap';
+import { LEGACY_ANSWER, SOLUTION_HTML, htmlToContent } from '@/mocks/homework';
 
 export default {
   title: 'Forms/VTextEditor',
@@ -9,9 +12,10 @@ export default {
 const Template: StoryFn = (args) => ({
   components: { VTextEditor },
   setup() {
-    return { args };
+    const content = ref(args.modelValue ?? getEmptyContent());
+    return { args, content };
   },
-  template: '<VTextEditor v-bind="args" />',
+  template: '<VTextEditor v-bind="args" v-model="content" />',
 });
 
 export const Default = {
@@ -23,6 +27,24 @@ export const Placeholder = {
   render: Template,
 
   args: {
-    placeholder: 'You can change placeholder text',
+    placeholder: 'Напишите, что получилось хорошо, и задайте вопросы автору',
+  },
+};
+
+export const WithContent = {
+  render: Template,
+
+  args: {
+    modelValue: htmlToContent(SOLUTION_HTML),
+  },
+};
+
+// Old answers are edited from their HTML until the first save
+export const LegacyText = {
+  render: Template,
+
+  args: {
+    modelValue: {},
+    legacyText: LEGACY_ANSWER.legacy_text,
   },
 };

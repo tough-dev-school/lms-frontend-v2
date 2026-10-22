@@ -1,10 +1,20 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VModuleCard from './VModuleCard.vue';
-import { createModule } from '@/api/generated';
+import {
+  COURSE,
+  MODULE_ANALYTICS,
+  MODULE_BONUS,
+  MODULE_COMMUNICATION,
+  MODULE_EVENT_STORMING,
+  MODULES,
+} from '@/mocks/courses';
 
 export default {
   title: 'UI/VModuleCard',
   component: VModuleCard,
+  args: {
+    courseId: COURSE.id,
+  },
   argTypes: {
     index: {
       control: { type: 'number', min: 0, max: 10 },
@@ -24,106 +34,63 @@ const Template: StoryFn = (args) => ({
 export const Default = {
   render: Template,
   args: {
-    module: createModule(),
+    module: MODULE_EVENT_STORMING,
     index: 0,
+  },
+};
+
+export const NotStarted = {
+  render: Template,
+  args: {
+    module: MODULE_ANALYTICS,
+    index: 1,
   },
 };
 
 export const WithLongTitle = {
   render: Template,
   args: {
-    module: createModule({
-      name: 'Introduction to Advanced Web Development with Modern JavaScript Frameworks and Best Practices',
+    module: {
+      ...MODULE_COMMUNICATION,
+      name: 'Коммуникации между сервисами: синхронные вызовы, брокеры сообщений, CUD- и бизнес-события и что делать, когда брокер лежит',
       start_date: null,
-    }),
-    index: 1,
+    },
+    index: 2,
   },
 };
 
 export const WithoutDescription = {
   render: Template,
   args: {
-    module: createModule({
-      description: null,
-      start_date: null,
-    }),
-    index: 2,
-  },
-};
-
-export const WithoutText = {
-  render: Template,
-  args: {
-    module: createModule({
-      text: null,
-    }),
+    module: { ...MODULE_COMMUNICATION, description: null, start_date: null },
     index: 3,
-  },
-};
-
-export const WithStartDate = {
-  render: Template,
-  args: {
-    module: createModule({
-      start_date: '2025-01-01',
-    }),
-    index: 4,
   },
 };
 
 export const MinimalContent = {
   render: Template,
   args: {
-    module: createModule({
-      description: null,
-      text: null,
-      start_date: null,
-    }),
+    module: MODULE_BONUS,
     index: 0,
   },
 };
 
-export const ColorVariations = {
+export const CourseModules = {
   render: () => ({
     components: { VModuleCard },
     setup() {
-      const modules = Array.from({ length: 8 }, (_, index) => ({
-        module: createModule({
-          name: `Module ${index + 1}`,
-          text: `This is module ${index + 1} with color variation`,
-          start_date: null,
-        }),
-        index,
-      }));
-      return { modules };
+      return { modules: MODULES, courseId: COURSE.id };
     },
     template: `
       <div class="grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-4 gap-16">
-        <VModuleCard 
-          v-for="({ module, index }, i) in modules" 
-          :key="i"
-          :module="module" 
-          :index="index" 
+        <VModuleCard
+          v-for="(module, index) in modules"
+          :key="module.id"
+          :module="module"
+          :course-id="courseId"
+          :index="index"
         />
       </div>
     `,
   }),
-};
-
-export const WithRichDescription = {
-  render: Template,
-  args: {
-    module: createModule({
-      description: `
-        <p>This module covers <strong>advanced topics</strong> in web development:</p>
-        <ul>
-          <li>Component architecture</li>
-          <li>State management</li>
-          <li>Performance optimization</li>
-        </ul>
-        <p>You'll learn practical skills that can be applied immediately in real-world projects.</p>
-      `,
-    }),
-    index: 1,
-  },
 };

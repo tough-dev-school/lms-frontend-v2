@@ -1,7 +1,7 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VCertificateCard from '@/components/VCertificateCard/VCertificateCard.vue';
-import { createDiploma, LanguageEnum } from '@/api/generated';
-import type { Diploma } from '@/api/generated';
+import { DIPLOMAS_ASYNC_ARCH } from '@/mocks/certificates';
+import { LanguageEnum } from '@/api/generated';
 
 export default {
   title: 'UI/VCertificateCard',
@@ -13,34 +13,25 @@ const Template: StoryFn = (args) => ({
   setup() {
     return { args };
   },
-  template: '<VCertificateCard v-bind="args">This is card</VCertificateCard>',
+  template: '<VCertificateCard v-bind="args" />',
 });
-
-const createDiplomaSet = (payload: Diploma): Diploma[] => {
-  return Object.values(LanguageEnum).map((locale) => {
-    return {
-      ...payload,
-      language: locale,
-      course: {
-        name: payload.course.name,
-        product_name: payload.course.product_name,
-        name_international: payload.course.name_international,
-        tariff_name: payload.course.tariff_name,
-      },
-    };
-  });
-};
-
-const diplomas = createDiplomaSet(createDiploma());
 
 export const Default = {
   render: Template,
 
   args: {
-    course: diplomas[0].course.product_name,
-    certificates: diplomas.map((diploma) => {
-      diploma.image = 'https://picsum.photos/1480/1048';
-      return diploma;
-    }),
+    course: DIPLOMAS_ASYNC_ARCH[0].course.product_name,
+    certificates: DIPLOMAS_ASYNC_ARCH,
+  },
+};
+
+export const SingleLanguage = {
+  render: Template,
+
+  args: {
+    course: DIPLOMAS_ASYNC_ARCH[0].course.product_name,
+    certificates: DIPLOMAS_ASYNC_ARCH.filter(
+      (diploma) => diploma.language === LanguageEnum.RU,
+    ),
   },
 };

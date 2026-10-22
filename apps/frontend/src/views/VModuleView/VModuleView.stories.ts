@@ -2,140 +2,62 @@ import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VModuleView from './VModuleView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import {
-  createCourse,
-  createModule,
-  createQuestion,
   purchasedCoursesListQueryKey,
   lmsModulesRetrieveQueryKey,
   lmsLessonsListQueryKey,
 } from '@/api/generated';
 import { useQueryClient } from '@tanstack/vue-query';
-import type { Lesson, RecommendedVideoProviderEnum } from '@/api/generated';
+import {
+  COURSE,
+  LESSONS,
+  MODULE_EVENT_STORMING,
+  MODULE_SCHEMA_EVOLUTION,
+} from '@/mocks/courses';
 
 export default {
   title: 'App/VModuleView',
   component: VModuleView,
   decorators: [defaultLayoutDecorator],
   parameters: { layout: 'fullscreen' },
-  args: {
-    courseId: 1,
-    moduleId: 1,
-  },
 } as Meta;
-
-const STATIC_COURSE = createCourse({
-  id: 1,
-  name: 'Асинхронная архитектура',
-});
-
-const STATIC_MODULE = createModule({
-  id: 1,
-  name: 'Введение в асинхронную архитектуру',
-  text: '<p>Добро пожаловать в модуль по асинхронной архитектуре. В этом модуле мы изучим основные принципы и паттерны асинхронного программирования.</p>',
-});
-
-const STATIC_LESSONS: Lesson[] = [
-  {
-    id: 1,
-    homework: {
-      is_sent: false,
-    },
-    question: createQuestion({
-      slug: 'intro-async-arch',
-      name: 'Введение в асинхронную архитектуру',
-      markdown_text: '## Введение\n\nВопросы по материалу лекции.',
-      deadline: '2024-01-20T23:59:00Z',
-    }),
-    call: {
-      name: 'Введение в асинхронную архитектуру',
-      description: 'Обзор основных принципов и подходов',
-      url: 'https://example.com/call-1',
-      datetime: '2024-01-15T10:00:00Z',
-      video: [
-        {
-          provider: 'youtube',
-          embed: 'https://www.youtube.com/embed/abc123',
-          src: 'https://www.youtube.com/watch?v=abc123',
-        },
-      ],
-      recommended_video_provider:
-        'youtube' as RecommendedVideoProviderEnum.youtube,
-    },
-  },
-  {
-    id: 2,
-    homework: {
-      is_sent: false,
-    },
-    question: createQuestion({
-      slug: 'async-patterns',
-      name: 'Паттерны асинхронного программирования',
-      markdown_text:
-        '## Паттерны асинхронного программирования\n\nИзучение основных паттернов.',
-      deadline: '2024-01-30T23:59:00Z',
-    }),
-    material: {
-      id: 'material-async-patterns',
-      title: 'Паттерны асинхронного программирования',
-    },
-  },
-  {
-    id: 3,
-    homework: {
-      is_sent: false,
-    },
-    question: createQuestion({
-      name: 'Event Sourcing',
-      slug: 'event-sourcing',
-      markdown_text: '## Event Sourcing\n\nРеализуйте паттерн Event Sourcing.',
-      deadline: '2024-02-01T23:59:00Z',
-    }),
-  },
-];
 
 const Template: StoryFn = (args) => ({
   components: { VModuleView },
   setup() {
     const queryClient = useQueryClient();
 
-    if (args.studies) {
-      queryClient.setQueryData(
-        purchasedCoursesListQueryKey({ page_size: 100 }),
-        { results: args.studies },
-      );
-    }
-    if (args.module) {
-      queryClient.setQueryData(
-        lmsModulesRetrieveQueryKey(args.moduleId),
-        args.module,
-      );
-    }
-    if (args.lessons !== undefined) {
-      queryClient.setQueryData(
-        lmsLessonsListQueryKey({ module: args.moduleId, page_size: 1000 }),
-        { results: args.lessons },
-      );
-    }
+    queryClient.setQueryData(purchasedCoursesListQueryKey({ page_size: 100 }), {
+      results: [COURSE],
+    });
+    queryClient.setQueryData(
+      lmsModulesRetrieveQueryKey(args.module.id),
+      args.module,
+    );
+    queryClient.setQueryData(
+      lmsLessonsListQueryKey({ module: args.module.id, page_size: 1000 }),
+      { results: args.lessons },
+    );
 
     return { args };
   },
-  template: '<VModuleView v-bind="args" />',
+  template:
+    '<VModuleView :course-id="args.courseId" :module-id="args.module.id" />',
 });
 
 export const Default = {
   render: Template,
   args: {
-    studies: [STATIC_COURSE],
-    module: STATIC_MODULE,
-    lessons: STATIC_LESSONS,
+    courseId: COURSE.id,
+    module: MODULE_EVENT_STORMING,
+    lessons: LESSONS,
   },
 };
 
 export const Empty = {
   render: Template,
   args: {
-    studies: [STATIC_COURSE],
-    module: STATIC_MODULE,
+    courseId: COURSE.id,
+    module: MODULE_EVENT_STORMING,
     lessons: [],
   },
 };
@@ -143,12 +65,8 @@ export const Empty = {
 export const WithoutModuleText = {
   render: Template,
   args: {
-    studies: [STATIC_COURSE],
-    module: createModule({
-      id: 1,
-      name: 'Модуль без описания',
-      text: null,
-    }),
-    lessons: STATIC_LESSONS,
+    courseId: COURSE.id,
+    module: MODULE_SCHEMA_EVOLUTION,
+    lessons: LESSONS,
   },
 };

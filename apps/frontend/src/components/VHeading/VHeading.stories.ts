@@ -11,7 +11,8 @@ const Template: StoryFn = (args) => ({
   setup() {
     return { args };
   },
-  template: '<VHeading v-bind="args">VHeading</VHeading>',
+  template:
+    '<VHeading v-bind="args">Event Storming и моделирование домена</VHeading>',
 });
 
 export const Default = {
