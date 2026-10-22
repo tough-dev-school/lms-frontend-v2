@@ -1,6 +1,8 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
-import { mockContent } from '@/mocks/mockContent';
+import { MODULE_RESOURCES } from '@/mocks/courses';
+import { SOLUTION_HTML } from '@/mocks/homework';
+import { HTML_CONTENT } from '@/mocks/mockContent';
 
 export default {
   title: 'Answer/VHtmlContent',
@@ -19,6 +21,24 @@ export const Default = {
   render: Template,
 
   args: {
-    html: mockContent(),
+    html: SOLUTION_HTML,
+  },
+};
+
+export const ModuleText = {
+  render: Template,
+
+  args: {
+    html: MODULE_RESOURCES.text,
+    enableLightbox: false,
+  },
+};
+
+// Every element the editor can produce, to check typography in one place
+export const AllElements = {
+  render: Template,
+
+  args: {
+    html: HTML_CONTENT,
   },
 };

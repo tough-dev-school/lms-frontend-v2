@@ -1,10 +1,20 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VModuleCard from './VModuleCard.vue';
-import { createModule } from '@/api/generated';
+import {
+  COURSE,
+  MODULE_BONUS,
+  MODULE_DOCUMENTATION,
+  MODULE_ERRORS,
+  MODULE_RESOURCES,
+  MODULES,
+} from '@/mocks/courses';
 
 export default {
   title: 'UI/VModuleCard',
   component: VModuleCard,
+  args: {
+    courseId: COURSE.id,
+  },
   argTypes: {
     index: {
       control: { type: 'number', min: 0, max: 10 },
@@ -24,18 +34,27 @@ const Template: StoryFn = (args) => ({
 export const Default = {
   render: Template,
   args: {
-    module: createModule(),
+    module: MODULE_RESOURCES,
     index: 0,
+  },
+};
+
+export const NotStarted = {
+  render: Template,
+  args: {
+    module: MODULE_DOCUMENTATION,
+    index: 1,
   },
 };
 
 export const WithLongTitle = {
   render: Template,
   args: {
-    module: createModule({
-      name: 'Introduction to Advanced Web Development with Modern JavaScript Frameworks and Best Practices',
+    module: {
+      ...MODULE_ERRORS,
+      name: 'Ошибки и коды ответов: что возвращать клиенту, когда запрос неправильный, ресурс занят или сервер не справляется',
       start_date: null,
-    }),
+    },
     index: 1,
   },
 };
@@ -43,10 +62,7 @@ export const WithLongTitle = {
 export const WithoutDescription = {
   render: Template,
   args: {
-    module: createModule({
-      description: null,
-      start_date: null,
-    }),
+    module: { ...MODULE_ERRORS, description: null, start_date: null },
     index: 2,
   },
 };
@@ -54,9 +70,7 @@ export const WithoutDescription = {
 export const WithoutText = {
   render: Template,
   args: {
-    module: createModule({
-      text: null,
-    }),
+    module: { ...MODULE_RESOURCES, text: null },
     index: 3,
   },
 };
@@ -64,9 +78,7 @@ export const WithoutText = {
 export const WithStartDate = {
   render: Template,
   args: {
-    module: createModule({
-      start_date: '2025-01-01',
-    }),
+    module: { ...MODULE_ERRORS, start_date: '2025-01-01' },
     index: 4,
   },
 };
@@ -74,56 +86,77 @@ export const WithStartDate = {
 export const MinimalContent = {
   render: Template,
   args: {
-    module: createModule({
-      description: null,
-      text: null,
-      start_date: null,
-    }),
+    module: MODULE_BONUS,
     index: 0,
   },
 };
 
+// Colors cycle through four accents, eight cards show the cycle twice
 export const ColorVariations = {
   render: () => ({
     components: { VModuleCard },
     setup() {
-      const modules = Array.from({ length: 8 }, (_, index) => ({
-        module: createModule({
-          name: `Module ${index + 1}`,
-          text: `This is module ${index + 1} with color variation`,
-          start_date: null,
-        }),
-        index,
-      }));
-      return { modules };
+      const modules = [...MODULES, ...MODULES.slice(0, 3)]
+        .slice(0, 8)
+        .map((module, index) => ({
+          ...module,
+          id: index + 1,
+          has_started: true,
+          // A started module with one lesson loads that lesson to link to it directly
+          lesson_count: 2,
+        }));
+      return { modules, courseId: COURSE.id };
     },
     template: `
       <div class="grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-4 gap-16">
-        <VModuleCard 
-          v-for="({ module, index }, i) in modules" 
-          :key="i"
-          :module="module" 
-          :index="index" 
+        <VModuleCard
+          v-for="(module, index) in modules"
+          :key="module.id"
+          :module="module"
+          :course-id="courseId"
+          :index="index"
         />
       </div>
     `,
   }),
 };
 
+export const CourseModules = {
+  render: () => ({
+    components: { VModuleCard },
+    setup() {
+      return { modules: MODULES, courseId: COURSE.id };
+    },
+    template: `
+      <div class="grid grid-cols-1 tablet:grid-cols-2 desktop:grid-cols-4 gap-16">
+        <VModuleCard
+          v-for="(module, index) in modules"
+          :key="module.id"
+          :module="module"
+          :course-id="courseId"
+          :index="index"
+        />
+      </div>
+    `,
+  }),
+};
+
+// The description is plain text, HTML in it shows as is
 export const WithRichDescription = {
   render: Template,
   args: {
-    module: createModule({
+    module: {
+      ...MODULE_RESOURCES,
       description: `
-        <p>This module covers <strong>advanced topics</strong> in web development:</p>
+        <p>В этом модуле <strong>три темы</strong>:</p>
         <ul>
-          <li>Component architecture</li>
-          <li>State management</li>
-          <li>Performance optimization</li>
+          <li>Ресурсы и их поля</li>
+          <li>Эндпоинты и методы</li>
+          <li>Поиск и фильтры</li>
         </ul>
-        <p>You'll learn practical skills that can be applied immediately in real-world projects.</p>
+        <p>Всё разбираем на примере сервиса выдачи книг.</p>
       `,
-    }),
+    },
     index: 1,
   },
 };

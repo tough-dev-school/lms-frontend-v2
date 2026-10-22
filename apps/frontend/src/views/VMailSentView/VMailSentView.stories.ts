@@ -20,6 +20,6 @@ const Template: StoryFn = (args) => ({
 export const Default = {
   render: Template,
   args: {
-    email: 'test@test.com',
+    email: 'anna.kovaleva@example.com',
   },
 };

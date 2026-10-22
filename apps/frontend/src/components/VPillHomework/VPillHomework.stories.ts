@@ -1,9 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import VPillHomework from './VPillHomework.vue';
 import dayjs from 'dayjs';
-import { createQuestion } from '@/api/generated';
+import { QUESTION } from '@/mocks/courses';
 
+// Status depends on the current time, so dates are relative to today
 const meta = {
+  title: 'UI/VPillHomework',
   component: VPillHomework,
   tags: ['autodocs'],
 } satisfies Meta<typeof VPillHomework>;
@@ -27,9 +29,7 @@ export const NotSent: Story = {
         },
       },
       question: {
-        ...createQuestion(),
-        name: 'Homework 1',
-        slug: 'homework-1',
+        ...QUESTION,
         deadline: tomorrow.toISOString(),
       },
     },
@@ -47,9 +47,7 @@ export const NotSentOverdue: Story = {
         },
       },
       question: {
-        ...createQuestion(),
-        name: 'Homework 1',
-        slug: 'homework-1',
+        ...QUESTION,
         deadline: yesterday.toISOString(),
       },
     },
@@ -71,9 +69,7 @@ export const Sent: Story = {
         },
       },
       question: {
-        ...createQuestion(),
-        name: 'Homework 1',
-        slug: 'homework-1',
+        ...QUESTION,
         deadline: tomorrow.toISOString(),
       },
     },
@@ -95,9 +91,7 @@ export const SentWithPendingCrosscheck: Story = {
         },
       },
       question: {
-        ...createQuestion(),
-        name: 'Homework 1',
-        slug: 'homework-1',
+        ...QUESTION,
         deadline: today.toISOString(),
       },
     },
@@ -119,9 +113,7 @@ export const SentWithFutureCrosscheck: Story = {
         },
       },
       question: {
-        ...createQuestion(),
-        name: 'Homework 1',
-        slug: 'homework-1',
+        ...QUESTION,
         deadline: twoDaysAgo.toISOString(),
       },
     },

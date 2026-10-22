@@ -1,8 +1,9 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VCoursesView from './VCoursesView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
-import { createCourse, purchasedCoursesListQueryKey } from '@/api/generated';
+import { purchasedCoursesListQueryKey } from '@/api/generated';
 import { useQueryClient } from '@tanstack/vue-query';
+import { COURSE, COURSES, COURSE_WITH_LONG_NAME } from '@/mocks/courses';
 
 export default {
   title: 'App/VCoursesView',
@@ -14,39 +15,39 @@ export default {
 const Template: StoryFn = (args) => ({
   components: { VCoursesView },
   setup() {
+    useQueryClient().setQueryData(
+      purchasedCoursesListQueryKey({ page_size: 100 }),
+      { results: args.studies },
+    );
     return { args };
   },
-  template: '<VCoursesView v-bind="args" />',
+  template: '<VCoursesView />',
 });
 
 export const Default = {
   render: Template,
-  decorators: [
-    () => ({
-      setup() {
-        const queryClient = useQueryClient();
-        queryClient.setQueryData(
-          purchasedCoursesListQueryKey({ page_size: 100 }),
-          { results: [createCourse()] },
-        );
-      },
-      template: '<story />',
-    }),
-  ],
+  args: {
+    studies: COURSES,
+  },
+};
+
+export const SingleCourse = {
+  render: Template,
+  args: {
+    studies: [COURSE],
+  },
+};
+
+export const LongCourseName = {
+  render: Template,
+  args: {
+    studies: [COURSE_WITH_LONG_NAME],
+  },
 };
 
 export const Empty = {
   render: Template,
-  decorators: [
-    () => ({
-      setup() {
-        const queryClient = useQueryClient();
-        queryClient.setQueryData(
-          purchasedCoursesListQueryKey({ page_size: 100 }),
-          { results: [] },
-        );
-      },
-      template: '<story />',
-    }),
-  ],
+  args: {
+    studies: [],
+  },
 };

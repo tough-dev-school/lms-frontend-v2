@@ -9,7 +9,7 @@ export default {
       control: 'select',
       options: ['primary', 'secondary', 'link'],
     },
-    type: {
+    size: {
       control: 'select',
       options: ['big', 'inline'],
     },
@@ -19,16 +19,18 @@ export default {
 const Template: StoryFn = (args) => ({
   components: { VButton },
   setup() {
-    return { args };
+    const { label, ...props } = args;
+    return { label, props };
   },
-  template: '<VButton v-bind="args">Press me</VButton>',
+  template: '<VButton v-bind="props">{{ label }}</VButton>',
 });
 
 export const Primary = {
   render: Template,
   args: {
     appearance: 'primary',
-    type: 'big',
+    size: 'big',
+    label: 'Отправить домашку',
   },
 };
 
@@ -36,7 +38,8 @@ export const Secondary = {
   render: Template,
   args: {
     appearance: 'secondary',
-    type: 'big',
+    size: 'big',
+    label: 'Редактировать',
   },
 };
 
@@ -44,7 +47,8 @@ export const Link = {
   render: Template,
   args: {
     appearance: 'link',
-    type: 'big',
+    size: 'big',
+    label: 'Войти по паролю',
   },
 };
 
@@ -52,6 +56,37 @@ export const Inline = {
   render: Template,
   args: {
     appearance: 'primary',
-    type: 'inline',
+    size: 'inline',
+    label: 'Ответить',
+  },
+};
+
+export const Loading = {
+  render: Template,
+  args: {
+    appearance: 'primary',
+    size: 'big',
+    loading: true,
+    label: 'Отправляем…',
+  },
+};
+
+export const Disabled = {
+  render: Template,
+  args: {
+    appearance: 'primary',
+    size: 'big',
+    disabled: true,
+    label: 'Отправить домашку',
+  },
+};
+
+export const LongLabel = {
+  render: Template,
+  args: {
+    appearance: 'primary',
+    size: 'big',
+    label:
+      'Отправить домашку на проверку однокурсникам и получить обратную связь от экспертов',
   },
 };
