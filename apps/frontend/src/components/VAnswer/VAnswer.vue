@@ -3,6 +3,7 @@
   import { relativeDate } from '@/utils/date';
   import { getName } from '@/utils/getName';
   import VAnswerContent from '@/components/VAnswerContent/VAnswerContent.vue';
+  import VAnswerAttachments from '@/components/VAnswerAttachments/VAnswerAttachments.vue';
   import { computed, ref } from 'vue';
   import VReactions from '@/components/VReactions/VReactions.vue';
   import { IconMoodHappy } from '@tabler/icons-vue';
@@ -102,6 +103,10 @@
     <VAnswerContent
       :answer="answer"
       data-testid="content"
+    />
+    <VAnswerAttachments
+      :attachments="answer.attachments"
+      data-testid="attachments"
     />
     <div class="mt-8 flex flex-wrap items-center justify-start gap-8">
       <slot name="footer" />

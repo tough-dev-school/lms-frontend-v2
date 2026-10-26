@@ -8,6 +8,7 @@ import {
   LEGACY_ANSWER,
   MENTOR_ANSWER,
   STUDENT_ANSWER,
+  STUDENT_ANSWER_WITH_ATTACHMENTS,
   createAnswerFixture,
 } from '@/mocks/homework';
 import {
@@ -135,6 +136,15 @@ export const LongUnbrokenText = {
       created: '2025-11-17T09:00:00Z',
       html: '<p>Ссылка на решение: https://example.com/docs/library-api-final-version-really-final-v3-do-not-edit?section=reservations&amp;revision=3458764612345678901</p>',
     }),
+    user: STUDENT_SAFE,
+  },
+};
+
+export const WithAttachments = {
+  render: Template,
+
+  args: {
+    answer: STUDENT_ANSWER_WITH_ATTACHMENTS,
     user: STUDENT_SAFE,
   },
 };

@@ -494,6 +494,12 @@
       class="TextEditor__Content prose flex-grow"
       @click="editor.chain().focus().run()"
     />
+    <div
+      v-if="$slots.footer"
+      class="border-t border-lightgray dark:border-darkmode-border dark:text-white"
+    >
+      <slot name="footer" />
+    </div>
   </div>
 </template>
 

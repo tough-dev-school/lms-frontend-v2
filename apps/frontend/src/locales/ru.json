@@ -167,5 +167,10 @@
     "themeLight": "Светлая",
     "themeDark": "Темная",
     "language": "Язык"
+  },
+  "attachments": {
+    "add": "Прикрепить файл",
+    "remove": "Удалить файл",
+    "file": "Файл {number}.pdf"
   }
 }

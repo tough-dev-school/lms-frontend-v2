@@ -3,14 +3,26 @@
   import VButton from '@/components/VButton/VButton.vue';
   import { computed, useTemplateRef } from 'vue';
   import VError from '@/components/VError/VError.vue';
+  import VAnswerAttachments from '@/components/VAnswerAttachments/VAnswerAttachments.vue';
+  import VAttachmentsInput from '@/components/VAttachmentsInput/VAttachmentsInput.vue';
   import type { FormError } from '@/types/error';
+  import type { AnswerAttachment } from '@/api/generated';
   import { useI18n } from 'vue-i18n';
 
-  const props = defineProps<{
-    legacyText?: string;
-    isPending: boolean;
-    error: FormError;
-  }>();
+  const props = withDefaults(
+    defineProps<{
+      legacyText?: string;
+      isPending: boolean;
+      error: FormError;
+      allowAttachments?: boolean;
+      existingAttachments?: AnswerAttachment[];
+    }>(),
+    {
+      legacyText: undefined,
+      allowAttachments: false,
+      existingAttachments: () => [],
+    },
+  );
 
   const emit = defineEmits<{
     send: [];
@@ -19,6 +31,7 @@
   const { t } = useI18n();
 
   const content = defineModel<Record<string, unknown>>({ required: true });
+  const files = defineModel<File[]>('files', { default: () => [] });
 
   const editor = useTemplateRef<InstanceType<typeof VTextEditor>>('editor');
 
@@ -35,7 +48,23 @@
       :legacy-text="legacyText"
       class="SendOwnAnswer__Editor"
       @send="emit('send')"
-    />
+    >
+      <template
+        v-if="allowAttachments"
+        #footer
+      >
+        <VAttachmentsInput
+          v-model="files"
+          :disabled="isPending"
+          data-testid="attachments-input"
+        >
+          <VAnswerAttachments
+            :attachments="existingAttachments"
+            data-testid="existing-attachments"
+          />
+        </VAttachmentsInput>
+      </template>
+    </VTextEditor>
     <div class="SendOwnAnswer__Footer">
       <VError :error="error" />
       <VButton

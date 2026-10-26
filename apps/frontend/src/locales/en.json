@@ -167,5 +167,10 @@
     "themeLight": "Light",
     "themeDark": "Dark",
     "language": "Language"
+  },
+  "attachments": {
+    "add": "Attach file",
+    "remove": "Remove file",
+    "file": "File {number}.pdf"
   }
 }
