@@ -16,7 +16,7 @@ const getKeys = (messages: object, prefix = ''): string[] =>
 
 describe('locale messages', () => {
   test('en has the same keys as ru', () => {
-    expect(getKeys(en).sort()).toEqual(getKeys(ru).sort());
+    expect(getKeys(en).toSorted()).toEqual(getKeys(ru).toSorted());
   });
 
   test.each([

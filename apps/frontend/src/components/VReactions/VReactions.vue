@@ -26,11 +26,10 @@
 
 <script lang="ts" setup>
   /* eslint-disable import-x/first */
-  import { computed, watch, ref, onMounted } from 'vue';
+  import { computed, watch, ref } from 'vue';
   import VReaction from './components/VReaction/VReaction.vue';
-  import { groupBy, debounce } from 'lodash-es';
-  import { useUsersMeRetrieve } from '@/api/generated';
-  import { uuid } from '@/utils/uuid';
+  import { groupBy, debounce } from 'es-toolkit/compat';
+  import { usePage } from '@inertiajs/vue3';
 
   const props = withDefaults(defineProps<VReactionsProps>(), {
     open: false,
@@ -42,9 +41,11 @@
     remove: [reactionId: string];
   }>();
 
-  const { data: user } = useUsersMeRetrieve();
+  const page = usePage();
+  const user = computed(() => page.props.user);
 
-  const localReactions = ref<ReactionDetailed[]>([]);
+  // Seeded right away so the server renders the reactions too
+  const localReactions = ref<ReactionDetailed[]>(props.reactions);
 
   const actualizeReactions = () => (localReactions.value = props.reactions);
   const actualizeReactionsDebounced = debounce(actualizeReactions, 1500);
@@ -58,10 +59,6 @@
       }
     },
   );
-
-  onMounted(() => {
-    actualizeReactions();
-  });
 
   const isDisabled = (reactions: ReactionDetailed[] = []) => {
     // Reaction that is set can't be disabled
@@ -89,7 +86,7 @@
   });
 
   const handleAdd = (emoji: ReactionEmoji) => {
-    const reactionId = uuid();
+    const reactionId = crypto.randomUUID();
     // Optimistically add the reaction
     if (user.value) {
       localReactions.value = [

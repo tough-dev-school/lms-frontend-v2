@@ -1,5 +1,6 @@
 <script lang="ts" setup>
   import VTextEditor from '@/components/VTextEditor/VTextEditor.vue';
+  import ClientOnly from '@/components/ClientOnly/ClientOnly.vue';
   import VButton from '@/components/VButton/VButton.vue';
   import { computed, useTemplateRef } from 'vue';
   import VError from '@/components/VError/VError.vue';
@@ -9,16 +10,16 @@
   const props = defineProps<{
     legacyText?: string;
     isPending: boolean;
-    error: FormError;
+    error?: FormError;
   }>();
+
+  const content = defineModel<Record<string, unknown>>({ required: true });
 
   const emit = defineEmits<{
     send: [];
   }>();
 
   const { t } = useI18n();
-
-  const content = defineModel<Record<string, unknown>>({ required: true });
 
   const editor = useTemplateRef<InstanceType<typeof VTextEditor>>('editor');
 
@@ -29,13 +30,21 @@
 
 <template>
   <div class="SendOwnAnswer__Container">
-    <VTextEditor
-      ref="editor"
-      v-model="content"
-      :legacy-text="legacyText"
-      class="SendOwnAnswer__Editor"
-      @send="emit('send')"
-    />
+    <!-- TipTap needs a DOM, so the server renders an empty box of the same size -->
+    <ClientOnly>
+      <VTextEditor
+        ref="editor"
+        v-model="content"
+        :legacy-text="legacyText"
+        class="SendOwnAnswer__Editor"
+        @send="emit('send')"
+      />
+      <template #fallback>
+        <div
+          class="SendOwnAnswer__Editor min-h-240 rounded bg-white dark:bg-darkmode-layer2"
+        />
+      </template>
+    </ClientOnly>
     <div class="SendOwnAnswer__Footer">
       <VError :error="error" />
       <VButton

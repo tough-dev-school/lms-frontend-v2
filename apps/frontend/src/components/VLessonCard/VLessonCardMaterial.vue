@@ -2,7 +2,9 @@
   import VHeading from '@/components/VHeading/VHeading.vue';
   import VButton from '@/components/VButton/VButton.vue';
   import type { Lesson } from '@/api/generated';
+  import { Link } from '@inertiajs/vue3';
   import { useI18n } from 'vue-i18n';
+  import { urls } from '@/urls';
 
   defineProps<{
     material: NonNullable<Lesson['material']>;
@@ -23,12 +25,7 @@
 
   <div class="flex-grow"></div>
 
-  <RouterLink
-    :to="{
-      name: 'materials',
-      params: { materialId: material.id },
-    }"
-  >
+  <Link :href="urls.material(material.id)">
     <VButton class="VLessonCard__Button"> {{ t('lesson.read') }} </VButton>
-  </RouterLink>
+  </Link>
 </template>

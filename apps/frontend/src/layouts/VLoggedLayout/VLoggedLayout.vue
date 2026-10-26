@@ -4,7 +4,6 @@
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
   import VHeading from '@/components/VHeading/VHeading.vue';
   import VProfileMenu from '@/components/VProfileMenu/VProfileMenu.vue';
-  import { useTitle } from '@vueuse/core';
   import { computed } from 'vue';
   import { useI18n } from 'vue-i18n';
 
@@ -26,12 +25,10 @@
   const formattedTitle = computed(() => {
     return [props.title, t('common.schoolName')].filter(Boolean).join(' | ');
   });
-
-  useTitle(formattedTitle);
 </script>
 
 <template>
-  <VPublicLayout>
+  <VPublicLayout :title="formattedTitle">
     <template #header>
       <VProfileMenu data-testid="profile" />
     </template>

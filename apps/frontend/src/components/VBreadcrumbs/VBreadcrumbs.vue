@@ -1,11 +1,9 @@
 <script lang="ts" setup>
-  import { RouterLink } from 'vue-router';
+  import { Link } from '@inertiajs/vue3';
 
   export interface Breadcrumb {
     name: string;
-    // #FIXME
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    to?: any;
+    href?: string;
   }
 
   interface Props {
@@ -17,20 +15,22 @@
 
 <template>
   <nav>
-    <ol class="flex items-center flex-wrap gap-4">
+    <ol class="flex flex-wrap items-center gap-4">
       <li
         v-for="(item, index) in props.items"
         :key="index"
-        class="flex items-center gap-4">
+        class="flex items-center gap-4"
+      >
         <template v-if="index > 0">
           <span class="mx-2 text-gray-400">/</span>
         </template>
-        <RouterLink
-          v-if="item.to"
+        <Link
+          v-if="item.href"
           :class="index === props.items.length - 1 ? 'font-bold' : ''"
-          :to="item.to">
+          :href="item.href"
+        >
           {{ item.name }}
-        </RouterLink>
+        </Link>
       </li>
     </ol>
   </nav>

@@ -1,12 +1,16 @@
 <script lang="ts" setup>
   import VCover from '@/components/VCover/VCover.vue';
-  import { RouterLink } from 'vue-router';
+  import { Link } from '@inertiajs/vue3';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
-  import { usePurchasedCoursesList } from '@/api/generated';
-  import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
+  import type { Course } from '@/api/generated';
   import { computed } from 'vue';
+  import { urls } from '@/urls';
   import { useI18n } from 'vue-i18n';
   import { useLandingUrl } from '@/composables/useLandingUrl';
+
+  defineProps<{
+    studies: Course[];
+  }>();
 
   const { t } = useI18n();
   const landingUrl = useLandingUrl();
@@ -18,38 +22,29 @@
     return url.href;
   });
   const landingHostname = computed(() => new URL(landingUrl.value).hostname);
-
-  const { data, isLoading } = usePurchasedCoursesList({ page_size: 100 });
-  const studies = computed(() => data.value?.results);
 </script>
 
 <template>
-  <VLoggedLayout
-    v-if="!isLoading"
-    :title="t('common.myCourses')"
-  >
+  <VLoggedLayout :title="t('common.myCourses')">
     <ul
-      v-if="studies && studies.length > 0"
+      v-if="studies.length > 0"
       class="grid gap-16 phone:gap-24 tablet:gap-32"
     >
       <li
         v-for="(study, index) in studies"
         :key="index"
       >
-        <RouterLink
+        <Link
           class="link"
           data-testid="study"
-          :to="{
-            name: 'course',
-            params: { courseId: study.id },
-          }"
+          :href="urls.course(study.id)"
         >
           <VCover
             :name="study.name"
             :image="study.cover ?? undefined"
             class="overflow-hidden rounded-16"
           />
-        </RouterLink>
+        </Link>
       </li>
     </ul>
     <p
@@ -75,5 +70,4 @@
       </template>
     </i18n-t>
   </VLoggedLayout>
-  <VLoadingView v-else />
 </template>

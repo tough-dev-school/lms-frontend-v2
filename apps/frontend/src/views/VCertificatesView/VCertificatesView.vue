@@ -1,21 +1,20 @@
 <script lang="ts" setup>
   import VCertificateCard from '@/components/VCertificateCard/VCertificateCard.vue';
   import { computed } from 'vue';
-  import { groupBy } from 'lodash-es';
+  import { groupBy } from 'es-toolkit/compat';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
-  import { useDiplomasList } from '@/api/generated';
-  import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
+  import type { Diploma } from '@/api/generated';
   import { useI18n } from 'vue-i18n';
+
+  const props = defineProps<{
+    diplomas: Diploma[];
+  }>();
 
   const { t } = useI18n();
 
-  const { data: diplomasData, isLoading } = useDiplomasList({ page_size: 100 });
-
-  const diplomas = computed(() => diplomasData.value?.results);
-
   const groupedDiplomas = computed(() => {
     const groups = groupBy(
-      diplomas.value,
+      props.diplomas,
       (diploma) => diploma.course.product_name,
     );
 
@@ -27,10 +26,7 @@
 </script>
 
 <template>
-  <VLoggedLayout
-    v-if="!isLoading"
-    :title="t('certificates.title')"
-  >
+  <VLoggedLayout :title="t('certificates.title')">
     <VCertificateCard
       v-for="group in groupedDiplomas"
       :key="group.course"
@@ -46,5 +42,4 @@
       {{ t('certificates.empty') }}
     </li>
   </VLoggedLayout>
-  <VLoadingView v-else />
 </template>

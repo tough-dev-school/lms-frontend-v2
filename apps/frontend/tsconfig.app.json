@@ -7,10 +7,10 @@
     "tests/**/*",
     "vue-avatar-cropper.d.ts"
   ],
-  "exclude": ["functions/**/*"],
   "compilerOptions": {
     "composite": true,
-    "baseUrl": ".",
+    // Server code shares the folder with the client and uses node:fs and process
+    "types": ["node"],
     "paths": {
       "@/*": ["./src/*"]
     }

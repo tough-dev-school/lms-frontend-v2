@@ -2,21 +2,20 @@
   import VHeading from '@/components/VHeading/VHeading.vue';
   import type { Lesson, ModuleDetail } from '@/api/generated';
   import VTag from '../VTag/VTag.vue';
-  import { formatDate } from '@/utils/date';
-  import { RouterLink } from 'vue-router';
-  import { computed, onBeforeMount, ref } from 'vue';
-  import { lmsLessonsRetrieveQueryOptions } from '@/api/generated';
-  import { useQueryClient } from '@tanstack/vue-query';
+  import { useDate } from '@/composables/useDate';
+  import { Link } from '@inertiajs/vue3';
+  import { computed } from 'vue';
+  import { urls } from '@/urls';
 
   const props = defineProps<{
     module: ModuleDetail;
     courseId: number;
     index: number;
+    // The server loads it for started modules with a single lesson
+    onlyLesson?: Lesson | null;
   }>();
 
-  const onlyLesson = ref<Lesson>();
-
-  const queryClient = useQueryClient();
+  const { formatDate } = useDate();
 
   const cardClass = (number: number) => {
     const colors = [
@@ -29,54 +28,29 @@
     return colors[number % colors.length];
   };
 
-  const to = computed(() => {
+  const href = computed(() => {
     if (!props.module.has_started) return undefined;
 
     if (props.module.lesson_count === 1) {
-      if (!onlyLesson.value) return undefined;
+      if (!props.onlyLesson) return undefined;
 
-      if (onlyLesson.value.material) {
-        return {
-          name: 'materials',
-          params: {
-            materialId: onlyLesson.value.material.id,
-          },
-        };
-      } else if (onlyLesson.value.question) {
-        return {
-          name: 'homework',
-          params: { questionId: onlyLesson.value.question.slug },
-        };
-      } else if (onlyLesson.value.call) {
+      if (props.onlyLesson.material) {
+        return urls.material(props.onlyLesson.material.id);
+      } else if (props.onlyLesson.question) {
+        return urls.homework(props.onlyLesson.question.slug);
+      } else if (props.onlyLesson.call) {
         // Do nothing, as users may want to see the call details
       }
     }
 
-    return {
-      name: 'module',
-      params: { courseId: props.courseId, moduleId: props.module.id },
-    };
-  });
-
-  onBeforeMount(async () => {
-    if (props.module.lesson_count === 1 && props.module.has_started) {
-      onlyLesson.value = await queryClient.fetchQuery(
-        lmsLessonsRetrieveQueryOptions(props.module.single_lesson_id),
-      );
-    }
-  });
-
-  const componentVariant = computed(() => {
-    if (typeof to.value === 'string') return 'a';
-    if (to.value && props.module.has_started) return RouterLink;
-    return 'div';
+    return urls.module(props.courseId, props.module.id);
   });
 </script>
 
 <template>
   <component
-    :is="componentVariant"
-    v-bind="componentVariant === 'a' ? { href: to } : { to }"
+    :is="href ? Link : 'div'"
+    v-bind="href ? { href } : {}"
     class="VModuleCard flex min-h-120 flex-col gap-8 rounded-16 p-16 text-black tablet:p-24"
     :class="[
       cardClass(index),

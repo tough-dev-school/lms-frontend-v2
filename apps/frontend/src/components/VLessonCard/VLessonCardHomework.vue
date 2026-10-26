@@ -3,8 +3,10 @@
   import VTag from '@/components/VTag/VTag.vue';
   import VButton from '@/components/VButton/VButton.vue';
   import type { Lesson } from '@/api/generated';
-  import { formatDate } from '@/utils/date';
+  import { useDate } from '@/composables/useDate';
+  import { Link } from '@inertiajs/vue3';
   import { useI18n } from 'vue-i18n';
+  import { urls } from '@/urls';
 
   defineProps<{
     homework: NonNullable<Lesson['homework']>;
@@ -12,6 +14,7 @@
   }>();
 
   const { t } = useI18n();
+  const { formatDate } = useDate();
 </script>
 
 <template>
@@ -63,12 +66,7 @@
 
   <div class="flex-grow"></div>
 
-  <RouterLink
-    :to="{
-      name: 'homework',
-      params: { questionId: question.slug },
-    }"
-  >
+  <Link :href="urls.homework(question.slug)">
     <VButton class="VLessonCard__Button"> {{ t('lesson.open') }} </VButton>
-  </RouterLink>
+  </Link>
 </template>

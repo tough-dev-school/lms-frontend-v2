@@ -8,7 +8,7 @@
   import { useI18n } from 'vue-i18n';
 
   const props = defineProps<{
-    email?: string;
+    email: string | null;
   }>();
 
   const { t } = useI18n();

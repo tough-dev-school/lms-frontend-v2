@@ -1,6 +1,7 @@
 <template>
   <div
-    class="flex flex-col phone:flex-wrap phone:flex-row phone:min-h-72 rounded-8 text-black bg-white overflow-hidden">
+    class="flex flex-col overflow-hidden rounded-8 bg-white text-black phone:min-h-72 phone:flex-row phone:flex-wrap"
+  >
     <slot />
   </div>
 </template>

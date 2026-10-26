@@ -1,41 +1,20 @@
 import { vi, describe, beforeEach, expect, test } from 'vitest';
-import { VueWrapper, mount, RouterLinkStub } from '@vue/test-utils';
+import { VueWrapper, mount } from '@vue/test-utils';
 import VAnswer from '@/components/VAnswer/VAnswer.vue';
 import { getName } from '@/utils/getName';
 import type VAvatar from '@/components/VAvatar/VAvatar.vue';
 import type VAnswerContent from '@/components/VAnswerContent/VAnswerContent.vue';
 import dayjs from 'dayjs';
-import { cloneDeep } from 'lodash-es';
-import { faker } from '@faker-js/faker';
-import {
-  createAnswerTree,
-  createUserSafe,
-  useHomeworkAnswersReactionsDestroy,
-  useHomeworkAnswersReactionsCreate,
-} from '@/api/generated';
-
-const uuid = faker.string.uuid();
+import { cloneDeep } from 'es-toolkit/compat';
+import { createAnswerTree } from '@/api/generated';
 
 const defaultProps = {
   answer: createAnswerTree(),
-  user: createUserSafe({
-    uuid,
-  }),
 };
 
 vi.mock('@formkit/auto-animate/vue', () => ({
   useAutoAnimate: () => [null],
 }));
-
-vi.mock('@/api/generated', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@/api/generated')>();
-  return {
-    ...actual,
-    useHomeworkAnswersReactionsDestroy: vi.fn(),
-    useHomeworkAnswersReactionsCreate: vi.fn(),
-  };
-});
-vi.mock('@tanstack/vue-query');
 
 const defaultMountOptions = {
   props: defaultProps,
@@ -43,7 +22,6 @@ const defaultMountOptions = {
   global: {
     stubs: {
       VCard: false,
-      RouterLink: RouterLinkStub,
     },
   },
 };
@@ -52,12 +30,6 @@ describe('VAnswer', () => {
   let wrapper: VueWrapper<InstanceType<typeof VAnswer>>;
 
   beforeEach(() => {
-    vi.mocked(useHomeworkAnswersReactionsDestroy).mockReturnValue({
-      mutateAsync: vi.fn(),
-    } as any);
-    vi.mocked(useHomeworkAnswersReactionsCreate).mockReturnValue({
-      mutateAsync: vi.fn(),
-    } as any);
     wrapper = mount(VAnswer, defaultMountOptions);
   });
 

@@ -2,7 +2,7 @@ import { describe, beforeEach, expect, test } from 'vitest';
 import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import VCertificate from './VCertificate.vue';
-import { merge } from 'lodash-es';
+import { merge } from 'es-toolkit/compat';
 import { createDiploma } from '@/api/generated';
 
 const defaultProps = {

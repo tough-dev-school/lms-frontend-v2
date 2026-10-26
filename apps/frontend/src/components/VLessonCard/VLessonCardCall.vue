@@ -7,7 +7,7 @@
     RecommendedVideoProviderEnum,
     VideoProvider,
   } from '@/api/generated';
-  import { formatDate } from '@/utils/date';
+  import { useDate } from '@/composables/useDate';
   import { useI18n } from 'vue-i18n';
 
   defineProps<{
@@ -15,6 +15,7 @@
   }>();
 
   const { t } = useI18n();
+  const { formatDate } = useDate();
 
   const getRecommendedVideo = (
     videos: VideoProvider[],

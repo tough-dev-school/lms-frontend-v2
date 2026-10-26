@@ -166,7 +166,7 @@ const waitForStablePage = (page: playwright.Page) =>
 
     await document.fonts.ready;
     await Promise.all(
-      [...document.images].map((image) => image.decode().catch(() => {})),
+      Array.from(document.images, (image) => image.decode().catch(() => {})),
     );
     await Promise.all(
       document

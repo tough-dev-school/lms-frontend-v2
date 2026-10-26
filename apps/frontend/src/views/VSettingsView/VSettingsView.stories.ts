@@ -1,34 +1,19 @@
-import type { Meta, StoryFn } from '@storybook/vue3-vite';
+import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import VSettingsView from './VSettingsView.vue';
-import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
-import { usersMeRetrieveQueryKey } from '@/api/generated';
-import { useQueryClient } from '@tanstack/vue-query';
 import { NEW_STUDENT } from '@/mocks/users';
 
-export default {
+const meta = {
   title: 'App/VSettingsView',
   component: VSettingsView,
-  decorators: [defaultLayoutDecorator],
   parameters: { layout: 'fullscreen' },
-} as Meta;
+} satisfies Meta<typeof VSettingsView>;
 
-const Template: StoryFn = () => ({
-  components: { VSettingsView },
-  template: '<VSettingsView />',
-});
+export default meta;
 
-export const Default = {
-  render: Template,
-};
+type Story = StoryObj<typeof meta>;
 
-export const EmptyProfile = {
-  render: Template,
-  decorators: [
-    () => ({
-      setup() {
-        useQueryClient().setQueryData(usersMeRetrieveQueryKey(), NEW_STUDENT);
-      },
-      template: '<story />',
-    }),
-  ],
+export const Default: Story = {};
+
+export const EmptyProfile: Story = {
+  parameters: { inertia: { props: { user: NEW_STUDENT } } },
 };

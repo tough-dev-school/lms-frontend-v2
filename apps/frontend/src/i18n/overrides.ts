@@ -1,10 +1,12 @@
 import { baseCompile, CompileErrorCodes } from '@intlify/message-compiler';
-import { merge } from 'lodash-es';
+import { merge } from 'es-toolkit/compat';
 import { i18n, messages, LOCALES } from '@/i18n';
 import type { Locale } from '@/i18n';
 // Raw sources, because the bundled messages are precompiled and can't be turned back into JSON
 import ruSource from '@/locales/ru.json?raw';
 import enSource from '@/locales/en.json?raw';
+
+const HTML_TAG = /<[/a-z]/i;
 
 // Lets translators try their own message files in Storybook without touching the repo
 
@@ -78,7 +80,7 @@ const getCompileError = (message: string) => {
 
 const getMessageError = (value: unknown) => {
   if (typeof value !== 'string') return 'Message must be a string';
-  if (/<[/a-z]/i.test(value)) return 'HTML tags are not allowed';
+  if (HTML_TAG.test(value)) return 'HTML tags are not allowed';
   return getCompileError(value);
 };
 

@@ -1,79 +1,52 @@
 <script lang="ts" setup>
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
-  import {
-    useLmsLessonsList,
-    usePurchasedCoursesList,
-    useLmsModulesRetrieve,
-  } from '@/api/generated';
+  import type { Lesson, ModuleDetail } from '@/api/generated';
   import { computed } from 'vue';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import VLessonCard from '@/components/VLessonCard/VLessonCard.vue';
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
-  import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
   import { useI18n } from 'vue-i18n';
+  import { urls } from '@/urls';
 
   const props = defineProps<{
     courseId: number;
-    moduleId: number;
+    courseName: string | null;
+    module: ModuleDetail;
+    lessons: Lesson[];
   }>();
 
   const { t } = useI18n();
 
-  const { data: studiesData, isLoading: isStudiesLoading } =
-    usePurchasedCoursesList({ page_size: 100 });
-  const studies = computed(() => studiesData.value?.results);
-
-  const { data: lessonsData, isLoading: isLessonsLoading } = useLmsLessonsList(
-    computed(() => ({ module: props.moduleId, page_size: 1000 })),
-  );
-  const lessons = computed(() => lessonsData.value?.results);
-
-  const courseName = computed(
-    () =>
-      (studies.value ?? []).find((study) => study.id === props.courseId)?.name,
-  );
-
   const breadcrumbs = computed<Breadcrumb[]>(() => {
-    if (!courseName.value || !moduleName.value) return [];
+    if (!props.courseName) return [];
 
     return [
-      { name: t('common.myCourses'), to: { name: 'courses' } },
+      { name: t('common.myCourses'), href: urls.courses() },
       {
-        name: courseName.value ?? t('common.courseMaterials'),
-        to: { name: 'course', params: { courseId: props.courseId } },
+        name: props.courseName,
+        href: urls.course(props.courseId),
       },
       {
-        name: moduleName.value,
-        to: {
-          name: 'module',
-          params: { courseId: props.courseId, moduleId: props.moduleId },
-        },
+        name: props.module.name,
+        href: urls.module(props.courseId, props.module.id),
       },
     ];
   });
-
-  const { data: module, isLoading: isModuleLoading } = useLmsModulesRetrieve(
-    computed(() => props.moduleId),
-  );
-
-  const moduleName = computed(() => module.value?.name);
-  const moduleText = computed(() => module.value?.text);
 </script>
 
 <template>
   <VLoggedLayout
-    v-if="!(isStudiesLoading || isModuleLoading || isLessonsLoading)"
-    :title="moduleName"
+    :title="module.name"
     :breadcrumbs="breadcrumbs"
   >
     <VHtmlContent
-      v-if="moduleText"
-      :html="moduleText"
+      v-if="module.text"
+      :html="module.text"
       :enable-lightbox="false"
     />
     <div class="VLessonsView flex flex-col gap-32">
       <div
-        v-if="lessons && lessons.length > 0"
+        v-if="lessons.length > 0"
         class="VLessonsView__Layout"
       >
         <VLessonCard
@@ -92,7 +65,6 @@
       </p>
     </div>
   </VLoggedLayout>
-  <VLoadingView v-else />
 </template>
 
 <style>

@@ -1,25 +1,18 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
-import VThreadProvider from '@/components/VThread/VThreadProvider.vue';
-import { usersMeRetrieveQueryKey } from '@/api/generated';
-import { useQueryClient } from '@tanstack/vue-query';
-import { usePopulateAnswersCache } from '@/composables/usePopulateAnswersCache';
+import VThread from '@/components/VThread/VThread.vue';
 import { CLASSMATE_ANSWER, STUDENT_ANSWER } from '@/mocks/homework';
-import { STUDENT } from '@/mocks/users';
 
-// Every answer in a thread loads itself by slug, so the whole tree goes into the cache
 export default {
   title: 'Answer/VThread',
-  component: VThreadProvider,
+  component: VThread,
 } as Meta;
 
 const Template: StoryFn = (args) => ({
-  components: { VThreadProvider },
+  components: { VThread },
   setup() {
-    useQueryClient().setQueryData(usersMeRetrieveQueryKey(), STUDENT);
-    usePopulateAnswersCache()(args.answer);
     return { args };
   },
-  template: '<VThreadProvider :answer-id="args.answer.slug" />',
+  template: '<VThread :answer="args.answer" />',
 });
 
 export const OwnAnswer = {

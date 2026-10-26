@@ -22,13 +22,24 @@ export const russianPluralRule = (choice: number) =>
 
 export const messages: Record<Locale, MessageSchema> = { ru, en };
 
-export const i18n = createI18n<[MessageSchema], Locale, false>({
-  legacy: false,
-  locale: DEFAULT_LOCALE,
-  fallbackLocale: DEFAULT_LOCALE,
-  messages,
-  pluralRules: { ru: russianPluralRule },
-});
+// The server renders pages for many users at once, so every render gets its own instance
+export const createAppI18n = (locale: Locale = DEFAULT_LOCALE) =>
+  createI18n<[MessageSchema], Locale, false>({
+    legacy: false,
+    locale,
+    fallbackLocale: DEFAULT_LOCALE,
+    messages,
+    pluralRules: { ru: russianPluralRule },
+  });
+
+// Tests and Storybook render one tree at a time and share this instance
+export const i18n = createAppI18n();
+
+// Russian is the main audience, so anyone with Russian anywhere in their languages gets it
+export const detectLocale = (languages: readonly string[]): Locale =>
+  languages.some((language) => language.toLowerCase().startsWith('ru'))
+    ? 'ru'
+    : 'en';
 
 declare module 'vue-i18n' {
   // Makes `t()` keys type-checked against ru.json

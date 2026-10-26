@@ -19,4 +19,5 @@ const Template: StoryFn = (args) => ({
 
 export const Default = {
   render: Template,
+  args: { uid: 'MTA0MzI', token: 'c8k2v4-3f9a1b7e2d6c5a8f0e4b' },
 };

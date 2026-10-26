@@ -1,82 +1,55 @@
-import { describe, beforeEach, expect, test, vi } from 'vitest';
-import { mount, RouterLinkStub } from '@vue/test-utils';
-import type { VueWrapper } from '@vue/test-utils';
+import { describe, expect, test } from 'vitest';
+import { mount } from '@vue/test-utils';
 import VSettingsView from './VSettingsView.vue';
-import type { RouterLink } from 'vue-router';
-import { useAuthPasswordChangeCreate } from '@/api/generated';
-import { ref } from 'vue';
+import VPasswordResetForm from '@/components/VPasswordResetForm/VPasswordResetForm.vue';
+import { forms } from '@/mocks/inertia';
 
-const defaultProps = {};
-
-vi.mock('@/api/generated', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@/api/generated')>();
-  return {
-    ...actual,
-    useAuthPasswordChangeCreate: vi.fn(),
-  };
-});
-vi.mock('@tanstack/vue-query');
-
-describe('VSettingsView', () => {
-  let wrapper: VueWrapper<InstanceType<typeof VSettingsView>>;
-
-  beforeEach(() => {
-    vi.mocked(useAuthPasswordChangeCreate).mockReturnValue({
-      mutateAsync: vi.fn(),
-      isPending: ref(false),
-    } as any);
-
-    wrapper = mount(VSettingsView, {
-      shallow: true,
-      props: defaultProps,
-      global: {
-        renderStubDefaultSlot: true,
-        stubs: {
-          VCard: false,
-          RouterLink: RouterLinkStub,
-        },
-      },
-    });
+const mountWrapper = () =>
+  mount(VSettingsView, {
+    shallow: true,
+    global: {
+      renderStubDefaultSlot: true,
+      stubs: { VCard: false },
+    },
   });
 
-  const getLinksLink = () => {
-    return wrapper.findComponent<typeof RouterLink>(
-      '[data-testid="links-link"]',
-    );
-  };
-  const getPasswordLink = () => {
-    return wrapper.findComponent<typeof RouterLink>(
-      '[data-testid="password-link"]',
-    );
-  };
-  const getCertificateLink = () => {
-    return wrapper.findComponent<typeof RouterLink>(
-      '[data-testid="certificate-link"]',
-    );
-  };
+describe('VSettingsView', () => {
+  test.each(['links', 'password', 'certificate', 'avatar', 'preferences'])(
+    'table of contents points to the %s section',
+    (section) => {
+      const wrapper = mountWrapper();
 
-  const getLinksSettings = () => {
-    return wrapper.find('[data-testid="links-settings"]');
-  };
-  const getPasswordSettings = () => {
-    return wrapper.find('[data-testid="password-settings"]');
-  };
-  const getCertificateSettings = () => {
-    return wrapper.find('[data-testid="certificate-settings"]');
-  };
+      const link = wrapper.find(`[data-testid="${section}-link"]`);
+      const target = wrapper.find(`[data-testid="${section}-settings"]`);
 
-  test('has table of contents', () => {
-    expect(getLinksLink().props().to).toEqual({
-      name: 'settings',
-      hash: `#${getLinksSettings().element.id}`,
-    });
-    expect(getPasswordLink().props().to).toEqual({
-      name: 'settings',
-      hash: `#${getPasswordSettings().element.id}`,
-    });
-    expect(getCertificateLink().props().to).toEqual({
-      name: 'settings',
-      hash: `#${getCertificateSettings().element.id}`,
-    });
+      expect(link.attributes('href')).toBe(
+        `/settings#${target.attributes('id')}`,
+      );
+    },
+  );
+
+  test('sends the new password twice, the backend checks they match', () => {
+    const wrapper = mountWrapper();
+
+    wrapper.findComponent(VPasswordResetForm).vm.$emit('save', 'correct-horse');
+
+    expect(forms[0].submissions).toEqual([
+      {
+        method: 'post',
+        url: '/settings/password',
+        data: {
+          new_password1: 'correct-horse',
+          new_password2: 'correct-horse',
+        },
+      },
+    ]);
+  });
+
+  test('clears the password fields after saving', () => {
+    const wrapper = mountWrapper();
+
+    wrapper.findComponent(VPasswordResetForm).vm.$emit('save', 'correct-horse');
+
+    expect(forms[0].data()).toEqual({ new_password1: '', new_password2: '' });
   });
 });

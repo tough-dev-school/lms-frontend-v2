@@ -1,7 +1,6 @@
 <script lang="ts" setup>
   import { onMounted, onUnmounted, useTemplateRef, watch } from 'vue';
-  import GLightbox from 'glightbox';
-  import 'glightbox/dist/css/glightbox.css';
+  import type GLightbox from 'glightbox';
 
   const props = withDefaults(
     defineProps<{
@@ -16,15 +15,18 @@
   );
 
   const articleRef = useTemplateRef<HTMLElement>('articleRef');
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let lightbox: any = null;
+  let lightbox: ReturnType<typeof GLightbox> | null = null;
 
-  const initLightbox = () => {
+  const initLightbox = async () => {
     if (!props.enableLightbox) return;
 
-    if (lightbox) {
-      lightbox.destroy();
-    }
+    // glightbox touches document as soon as it loads, so it can't be imported on the server
+    const [{ default: createLightbox }] = await Promise.all([
+      import('glightbox'),
+      import('glightbox/dist/css/glightbox.css'),
+    ]);
+
+    lightbox?.destroy();
 
     if (!articleRef.value) return;
 
@@ -41,8 +43,7 @@
       }
     });
 
-    // eslint-disable-next-line new-cap
-    lightbox = GLightbox({
+    lightbox = createLightbox({
       selector: `[data-lightbox="${props.group}"]`,
       openEffect: 'none',
       closeEffect: 'none',
@@ -50,20 +51,18 @@
   };
 
   onMounted(() => {
-    initLightbox();
+    void initLightbox();
   });
 
   onUnmounted(() => {
-    if (lightbox) {
-      lightbox.destroy();
-    }
+    lightbox?.destroy();
   });
 
   watch(
     () => props.html,
     () => {
       setTimeout(() => {
-        initLightbox();
+        void initLightbox();
       }, 0);
     },
   );
@@ -78,5 +77,3 @@
     v-html="html"
   />
 </template>
-
-<style></style>

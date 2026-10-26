@@ -1,51 +1,38 @@
 <script lang="ts" setup>
   import { computed } from 'vue';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
-  import { useLmsModulesList, usePurchasedCoursesList } from '@/api/generated';
+  import type { Course } from '@/api/generated';
+  import type { ModuleWithLesson } from '@/types';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import VPill from '@/components/VPill/VPill.vue';
   import VPillItem from '@/components/VPill/VPillItem.vue';
   import VModuleCard from '@/components/VModuleCard/VModuleCard.vue';
-  import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
+  import { urls } from '@/urls';
   import { useI18n } from 'vue-i18n';
 
   const props = defineProps<{
     courseId: number;
+    study: Course | null;
+    modules: ModuleWithLesson[];
   }>();
 
   const { t } = useI18n();
 
-  const { data: studiesData, isLoading } = usePurchasedCoursesList({
-    page_size: 100,
-  });
-
-  const studies = computed(() => studiesData.value?.results);
-
-  const study = computed(() =>
-    (studies.value || []).find((s) => s.id === props.courseId),
-  );
-
-  const courseName = computed(() => study.value?.name);
-
-  const { data: modulesData } = useLmsModulesList(
-    computed(() => ({ course: props.courseId, page_size: 100 })),
-  );
-
-  const modules = computed(() => modulesData.value?.results);
+  const courseName = computed(() => props.study?.name);
 
   const breadcrumbs = computed<Breadcrumb[]>(() => [
-    { name: t('common.myCourses'), to: { name: 'courses' } },
+    { name: t('common.myCourses'), href: urls.courses() },
     {
       name: courseName.value ?? t('common.courseMaterials'),
-      to: { name: 'course', params: { courseId: props.courseId } },
+      href: urls.course(props.courseId),
     },
   ]);
 
   const courseInfo = computed(() => {
     if (
-      !study.value?.calendar_google &&
-      !study.value?.calendar_ios &&
-      !study.value?.chat
+      !props.study?.calendar_google &&
+      !props.study?.calendar_ios &&
+      !props.study?.chat
     ) {
       return [];
     }
@@ -55,7 +42,6 @@
 
 <template>
   <VLoggedLayout
-    v-if="!isLoading"
     :title="courseName"
     :breadcrumbs="breadcrumbs"
   >
@@ -107,7 +93,7 @@
       </VPill>
     </template>
     <div
-      v-if="modules && modules.length > 0"
+      v-if="modules.length > 0"
       class="grid gap-16 phone:gap-24 tablet:gap-32"
     >
       <VModuleCard
@@ -115,6 +101,7 @@
         :key="module.id"
         :course-id="courseId"
         :module="module"
+        :only-lesson="module.onlyLesson"
         :index="index"
       />
     </div>
@@ -127,5 +114,4 @@
       {{ t('course.empty') }}
     </p>
   </VLoggedLayout>
-  <VLoadingView v-else />
 </template>

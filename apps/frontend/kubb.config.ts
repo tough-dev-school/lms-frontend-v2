@@ -2,7 +2,6 @@ import { defineConfig } from '@kubb/core';
 import { pluginOas } from '@kubb/plugin-oas';
 import { pluginTs } from '@kubb/plugin-ts';
 import { pluginClient } from '@kubb/plugin-client';
-import { pluginVueQuery } from '@kubb/plugin-vue-query';
 import { pluginFaker } from '@kubb/plugin-faker';
 
 const banner = '/* eslint-disable */\n// @ts-nocheck';
@@ -44,15 +43,6 @@ export default defineConfig({
         banner,
       },
       seed: 1337,
-    }),
-    pluginVueQuery({
-      client: {
-        importPath: '../../client',
-      },
-      output: {
-        path: './hooks',
-        banner,
-      },
     }),
   ],
 }) as ReturnType<typeof defineConfig>;

@@ -1,13 +1,10 @@
 import '../src/style.css';
 import { setup } from '@storybook/vue3-vite';
-import { VueQueryPlugin } from '@tanstack/vue-query';
-import { queryClient } from '../src/queryClient';
-import { createRouter, createWebHistory } from 'vue-router';
-import { routes } from '../src/router';
 import type { Preview } from '@storybook/vue3-vite';
 import { i18n, isLocale, DEFAULT_LOCALE } from '../src/i18n';
-import { useLocale } from '../src/composables/useLocale';
 import { applyOverrides } from '../src/i18n/overrides';
+import type { InertiaParameters } from '../src/mocks/inertia';
+import { resetPage, setPage } from '../src/mocks/inertia';
 
 const preview: Preview = {
   parameters: {
@@ -67,17 +64,20 @@ const preview: Preview = {
     locale: DEFAULT_LOCALE,
   },
 
-  // Stories seed the shared query client, and switching stories without a reload
-  // (Storybook UI, regression tests) would show data left from the previous one
-  beforeEach: () => {
-    queryClient.clear();
+  // The page mock is shared, and switching stories without a reload
+  // (Storybook UI, regression tests) would show props left from the previous one
+  beforeEach: ({ parameters }) => {
+    resetPage();
+    setPage((parameters.inertia ?? {}) as InertiaParameters);
   },
 
   decorators: [
     (story, context) => {
-      const locale: unknown = context.globals.locale;
-      // Goes through useLocale, otherwise the language switcher in stories would override the toolbar with the browser language
-      useLocale().locale.value = isLocale(locale) ? locale : DEFAULT_LOCALE;
+      const globalLocale: unknown = context.globals.locale;
+      const locale = isLocale(globalLocale) ? globalLocale : DEFAULT_LOCALE;
+      i18n.global.locale.value = locale;
+      document.documentElement.lang = locale;
+      setPage({ props: { locale } });
       return story();
     },
   ],
@@ -87,17 +87,6 @@ const preview: Preview = {
 applyOverrides();
 
 setup((app) => {
-  app.use(VueQueryPlugin, {
-    queryClient,
-  });
-
-  // Create a router instance for Storybook without navigation guards
-  const router = createRouter({
-    history: createWebHistory(),
-    routes,
-  });
-
-  app.use(router);
   app.use(i18n);
 });
 

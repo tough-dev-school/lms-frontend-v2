@@ -1,7 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VAnswer from '@/components/VAnswer/VAnswer.vue';
-import { usersMeRetrieveQueryKey } from '@/api/generated';
-import { useQueryClient } from '@tanstack/vue-query';
 import {
   ANONYMOUS_ANSWER,
   CLASSMATE_ANSWER,
@@ -10,12 +8,7 @@ import {
   STUDENT_ANSWER,
   createAnswerFixture,
 } from '@/mocks/homework';
-import {
-  LONG_NAME_CLASSMATE,
-  MENTOR,
-  STUDENT,
-  STUDENT_SAFE,
-} from '@/mocks/users';
+import { LONG_NAME_CLASSMATE, MENTOR, STAFF } from '@/mocks/users';
 
 export default {
   title: 'Answer/VAnswer',
@@ -25,8 +18,6 @@ export default {
 const Template: StoryFn = (args) => ({
   components: { VAnswer },
   setup() {
-    // Reactions read the current user to highlight own reactions
-    useQueryClient().setQueryData(usersMeRetrieveQueryKey(), STUDENT);
     return { args };
   },
   template: '<VAnswer v-bind="args" />',
@@ -37,7 +28,6 @@ export const Default = {
 
   args: {
     answer: CLASSMATE_ANSWER,
-    user: STUDENT_SAFE,
   },
 };
 
@@ -46,7 +36,6 @@ export const Own = {
 
   args: {
     answer: STUDENT_ANSWER,
-    user: STUDENT_SAFE,
   },
 };
 
@@ -55,7 +44,6 @@ export const RankedAuthor = {
 
   args: {
     answer: MENTOR_ANSWER,
-    user: STUDENT_SAFE,
   },
 };
 
@@ -64,7 +52,10 @@ export const RankedAuthorOwn = {
 
   args: {
     answer: MENTOR_ANSWER,
-    user: MENTOR,
+  },
+  // The signed-in user is the mentor who wrote the answer
+  parameters: {
+    inertia: { props: { user: { ...STAFF, ...MENTOR } } },
   },
 };
 
@@ -73,7 +64,6 @@ export const AnonymousAuthor = {
 
   args: {
     answer: ANONYMOUS_ANSWER,
-    user: STUDENT_SAFE,
   },
 };
 
@@ -82,7 +72,6 @@ export const LongAuthorName = {
 
   args: {
     answer: { ...CLASSMATE_ANSWER, author: LONG_NAME_CLASSMATE },
-    user: STUDENT_SAFE,
   },
 };
 
@@ -91,7 +80,6 @@ export const LegacyText = {
 
   args: {
     answer: LEGACY_ANSWER,
-    user: STUDENT_SAFE,
   },
 };
 
@@ -105,6 +93,5 @@ export const LongUnbrokenText = {
       created: '2025-11-17T09:00:00Z',
       html: '<p>Ссылка на решение: https://example.com/docs/library-api-final-version-really-final-v3-do-not-edit?section=reservations&amp;revision=3458764612345678901</p>',
     }),
-    user: STUDENT_SAFE,
   },
 };

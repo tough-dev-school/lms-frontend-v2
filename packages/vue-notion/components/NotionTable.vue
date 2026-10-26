@@ -46,7 +46,8 @@
   };
 
   onMounted(checkScrollable);
-  useEventListener(window, 'resize', checkScrollable);
+  // Without a target vueuse uses the window when there is one, a bare `window` throws during SSR
+  useEventListener('resize', checkScrollable);
 
   const open = async () => {
     isOpen.value = true;

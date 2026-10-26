@@ -1,15 +1,15 @@
 import { defineConfig, GLOB_VUE } from 'eslint-config-fans';
 import vueI18n from '@intlify/eslint-plugin-vue-i18n';
-import jsoncParser from 'jsonc-eslint-parser';
+import * as jsoncParser from 'jsonc-eslint-parser';
 
 const LOCALE_FILES = ['src/locales/*.json'];
 
 export default defineConfig(
   {
-    typescript: true,
+    typescript: { typeAware: false },
     vue: true,
-    prettier: true,
-    strict: false,
+    formatter: 'prettier',
+    opinionated: false,
   },
   {
     ignores: ['**/generated/**'],
@@ -20,13 +20,7 @@ export default defineConfig(
       'vue/no-undef-components': [
         'error',
         {
-          ignorePatterns: [
-            'RouterView',
-            'RouterLink',
-            'avatar-cropper',
-            'VDropdown',
-            'i18n-t',
-          ],
+          ignorePatterns: ['avatar-cropper', 'VDropdown', 'i18n-t'],
         },
       ],
     },

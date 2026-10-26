@@ -1,55 +1,28 @@
-import { vi, describe, beforeEach, afterEach, expect, test } from 'vitest';
-import { RouterLinkStub, mount, VueWrapper } from '@vue/test-utils';
+import { describe, beforeEach, expect, test } from 'vitest';
+import { mount, VueWrapper } from '@vue/test-utils';
 import VCoursesView from './VCoursesView.vue';
-import type { RouterLink } from 'vue-router';
-import { nextTick, ref } from 'vue';
+import { nextTick } from 'vue';
 import { faker } from '@faker-js/faker';
-import { usePurchasedCoursesList, createCourse } from '@/api/generated';
-import { VueQueryPlugin, QueryClient } from '@tanstack/vue-query';
-import type { VueQueryPluginOptions } from '@tanstack/vue-query';
+import { createCourse } from '@/api/generated';
+import type { Course } from '@/api/generated';
 import { i18n } from '@/i18n';
+import { Link } from '@/mocks/inertia';
 
-const defaultStudies = faker.helpers.multiple(createCourse, { count: 3 });
-
-vi.mock('@/api/generated', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@/api/generated')>();
-  return {
-    ...actual,
-    usePurchasedCoursesList: vi.fn(),
-  };
+const defaultStudies = faker.helpers.multiple(() => createCourse(), {
+  count: 3,
 });
 
-const createWrapper = (studies = defaultStudies) => {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: false,
-        staleTime: Infinity,
-      },
-    },
-  });
-
-  vi.mocked(usePurchasedCoursesList).mockReturnValue({
-    data: ref({ results: studies }),
-    isLoading: ref(false),
-  } as any);
-
-  const options: VueQueryPluginOptions = {
-    queryClient,
-  };
-
-  return mount(VCoursesView, {
+const createWrapper = (studies: Course[] = defaultStudies) =>
+  mount(VCoursesView, {
     shallow: true,
+    props: { studies },
     global: {
       renderStubDefaultSlot: true,
-      plugins: [[VueQueryPlugin, options]],
       stubs: {
-        RouterLink: RouterLinkStub,
         'i18n-t': false,
       },
     },
   });
-};
 
 describe('VCoursesView', () => {
   let wrapper: VueWrapper<InstanceType<typeof VCoursesView>>;
@@ -59,7 +32,7 @@ describe('VCoursesView', () => {
   });
 
   const getStudyWrapper = () => {
-    return wrapper.findComponent<typeof RouterLink>(`[data-testid="study"]`);
+    return wrapper.findComponent(Link);
   };
   const getStudiesWrapper = () => {
     return wrapper.findAll(`[data-testid="study"]`);
@@ -75,30 +48,23 @@ describe('VCoursesView', () => {
     expect(getStudiesWrapper()).toHaveLength(defaultStudies.length);
   });
 
-  test('click on studies redirects to material', async () => {
-    expect(getStudyWrapper().props().to).toStrictEqual({
-      name: 'course',
-      params: { courseId: defaultStudies[0].id },
-    });
+  test('click on studies leads to the course', () => {
+    expect(getStudyWrapper().props('href')).toBe(
+      `/courses/${defaultStudies[0].id}`,
+    );
   });
 
   test('if has studies — empty message is not shown', () => {
     expect(getEmptyWrapper().exists()).toBe(false);
   });
 
-  test('if no studies — empty message is shown', async () => {
+  test('if no studies — empty message is shown', () => {
     wrapper = createWrapper([]);
-
-    await nextTick();
 
     expect(getEmptyWrapper().exists()).toBe(true);
   });
 
   describe('landing link', () => {
-    afterEach(() => {
-      i18n.global.locale.value = 'ru';
-    });
-
     test('leads to tough-dev.school in Russian', () => {
       expect(getLandingLink().attributes('href')).toBe(
         'https://tough-dev.school/?utm_source=lms&utm_campaign=footer',

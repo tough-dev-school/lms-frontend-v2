@@ -2,38 +2,17 @@
   import VButton from '@/components/VButton/VButton.vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VTextInput from '@/components/VTextInput/VTextInput.vue';
-  import { ref } from 'vue';
-  import { useRouter } from 'vue-router';
+  import { Link, useForm } from '@inertiajs/vue3';
   import VPublicLayout from '@/layouts/VPublicLayout/VPublicLayout.vue';
-  import { useAuthPasswordResetCreate } from '@/api/generated';
-  import { useQueryClient } from '@tanstack/vue-query';
   import VError from '@/components/VError/VError.vue';
   import { useI18n } from 'vue-i18n';
+  import { urls } from '@/urls';
 
-  const router = useRouter();
   const { t } = useI18n();
-  const queryClient = useQueryClient();
-  const email = ref('');
+  const form = useForm({ email: '' });
 
-  const {
-    mutateAsync: requestReset,
-    error,
-    isPending,
-  } = useAuthPasswordResetCreate({
-    mutation: {
-      onSuccess: () => {
-        queryClient.invalidateQueries();
-      },
-    },
-  });
-
-  const handleResetRequest = async () => {
-    try {
-      await requestReset({ data: { email: email.value } });
-      router.push({ name: 'mail-sent', query: { email: email.value } });
-    } catch {
-      console.error('Failed to request reset');
-    }
+  const handleResetRequest = () => {
+    form.post(urls.loginReset());
   };
 </script>
 
@@ -45,17 +24,17 @@
       @submit.prevent="handleResetRequest"
     >
       <VTextInput
-        v-model="email"
+        v-model="form.email"
         :label="t('common.emailPurchased')"
         :tip="t('loginReset.tip')"
         type="email"
         autocomplete="username"
         data-testid="email"
         name="email"
-        :error="error"
+        :error="form.errors"
       />
       <VError
-        :error="error"
+        :error="form.errors"
         :whitelist="['non_field_errors']"
       />
       <template #footer>
@@ -63,15 +42,20 @@
           class="flex-grow"
           type="submit"
           data-testid="send"
-          :loading="isPending"
+          :loading="form.processing"
         >
-          {{ isPending ? t('common.sendingEmail') : t('loginReset.sendEmail') }}
+          {{
+            form.processing
+              ? t('common.sendingEmail')
+              : t('loginReset.sendEmail')
+          }}
         </VButton>
         <VButton
           appearance="link"
           class="flex-grow"
           data-testid="password"
-          @click="router.push({ name: 'login' })"
+          :tag="Link"
+          :href="urls.login()"
         >
           {{ t('loginReset.withPassword') }}
         </VButton>

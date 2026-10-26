@@ -1,3 +1,13 @@
-FROM ghcr.io/tough-dev-school/frontend-static:0.0.2
+# The server bundle includes its dependencies (ssr.noExternal in vite.config.ts), so dist/ is all it needs
+FROM node:24-alpine
 
-ADD dist /dist
+ENV NODE_ENV=production
+ENV PORT=3000
+
+WORKDIR /app
+COPY dist ./dist
+
+USER node
+EXPOSE 3000
+
+CMD ["node", "dist/server/main.js"]

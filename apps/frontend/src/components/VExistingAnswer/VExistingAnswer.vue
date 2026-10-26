@@ -2,102 +2,43 @@
   import VAnswer from '@/components/VAnswer/VAnswer.vue';
   import VAnswerActions from '@/components/VAnswerActions/VAnswerActions.vue';
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
-  import { ref, onMounted } from 'vue';
-  import { useQueryClient } from '@tanstack/vue-query';
-  import {
-    useHomeworkAnswersPartialUpdate,
-    useHomeworkAnswersDestroy,
-    homeworkAnswersRetrieveQueryKey,
-    lmsLessonsListQueryKey,
-  } from '@/api/generated';
-  import type { AnswerTree, UserSafe } from '@/api/generated';
+  import { ref } from 'vue';
+  import { router, useForm } from '@inertiajs/vue3';
+  import type { AnswerTree } from '@/api/generated';
   import { useI18n } from 'vue-i18n';
 
   const props = defineProps<{
     answer: AnswerTree;
-    user: UserSafe;
   }>();
 
-  const emit = defineEmits<{
-    'after-delete': [];
-    'after-create': [slug: string];
-  }>();
-
-  const queryClient = useQueryClient();
   const { t } = useI18n();
 
   const isEdit = ref(false);
 
-  const {
-    mutateAsync: updateAnswerMutation,
-    error: updateError,
-    isPending: isUpdatePending,
-  } = useHomeworkAnswersPartialUpdate({
-    mutation: {
-      onSuccess: (_, variables) => {
-        queryClient.invalidateQueries({
-          queryKey: homeworkAnswersRetrieveQueryKey(variables.slug),
-        });
-        queryClient.invalidateQueries({
-          queryKey: lmsLessonsListQueryKey(),
-        });
-      },
-    },
-  });
-  const { mutateAsync: deleteAnswerMutation, error: deleteError } =
-    useHomeworkAnswersDestroy({
-      mutation: {
-        onSuccess: () => {
-          if (props.answer.parent) {
-            queryClient.invalidateQueries({
-              queryKey: homeworkAnswersRetrieveQueryKey(props.answer.parent),
-            });
-          }
-          queryClient.invalidateQueries({
-            queryKey: lmsLessonsListQueryKey(),
-          });
-        },
+  const form = useForm({ content: props.answer.content });
+
+  // Deleting the answer the page is about lands on the question, the server handles that redirect
+  const handleDelete = () => {
+    if (!confirm(t('answer.deleteConfirm'))) return;
+    router.delete(`/homework/answers/${props.answer.slug}`, {
+      preserveScroll: true,
+    });
+  };
+
+  const handleUpdate = () => {
+    form.patch(`/homework/answers/${props.answer.slug}`, {
+      preserveScroll: true,
+      onSuccess: () => {
+        isEdit.value = false;
       },
     });
-
-  const handleDelete = async () => {
-    if (!confirm(t('answer.deleteConfirm'))) return;
-    try {
-      await deleteAnswerMutation({
-        slug: props.answer.slug,
-      });
-      emit('after-delete');
-    } catch (error) {
-      console.error(error);
-    }
   };
-
-  const content = ref<Record<string, unknown>>(props.answer.content);
-
-  const handleUpdate = async () => {
-    try {
-      await updateAnswerMutation({
-        slug: props.answer.slug,
-        data: {
-          content: content.value,
-        },
-      });
-      isEdit.value = false;
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  onMounted(() => {
-    emit('after-create', props.answer.slug);
-  });
 </script>
 
 <template>
   <VAnswer
     v-if="!isEdit"
     :answer="answer"
-    :user="user"
   >
     <template #header>
       <VAnswerActions
@@ -112,10 +53,10 @@
   </VAnswer>
   <VCreateAnswer
     v-else-if="isEdit"
-    v-model="content"
+    v-model="form.content"
     :legacy-text="answer.legacy_text"
-    :is-pending="isUpdatePending"
-    :error="updateError || deleteError"
+    :is-pending="form.processing"
+    :error="form.errors"
     @send="handleUpdate"
   />
 </template>

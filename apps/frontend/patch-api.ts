@@ -2,6 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { parse, SgNode, Lang } from '@ast-grep/napi';
 
+const NULLABLE_TYPE = /\w+ \| null/;
+
 const typesDirectory = 'src/api/generated/types';
 const files = fs.readdirSync(typesDirectory);
 
@@ -107,7 +109,7 @@ const fixOptionalProperties: ApplyPatch = (ast) => {
       }
 
       // nullable fields (string | null) can't be undefined
-      if (/\w+ \| null/.test(typeText)) {
+      if (NULLABLE_TYPE.test(typeText)) {
         const newText = text.replace('?:', ':');
         edits.push({
           start: node.range().start.index,

@@ -12,7 +12,6 @@
     ".storybook/main.ts",
     ".storybook/preview.ts",
     "kubb.config.ts",
-    "src/queryClient.ts",
     "patch-api.ts"
   ],
   "compilerOptions": {

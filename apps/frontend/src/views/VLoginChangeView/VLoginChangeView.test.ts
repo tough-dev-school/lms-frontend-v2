@@ -1,84 +1,50 @@
-import { vi, describe, beforeEach, expect, test } from 'vitest';
-import { flushPromises, mount } from '@vue/test-utils';
+import { describe, beforeEach, expect, test } from 'vitest';
+import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import VLoginChangeView from './VLoginChangeView.vue';
-import VPasswordSettings from '@/components/VPasswordResetForm/VPasswordResetForm.vue';
+import VPasswordResetForm from '@/components/VPasswordResetForm/VPasswordResetForm.vue';
 import { faker } from '@faker-js/faker';
-import { useRouter } from 'vue-router';
-import { ref } from 'vue';
-import { useAuthPasswordResetConfirmCreate } from '@/api/generated';
+import { forms } from '@/mocks/inertia';
 
 const uid = faker.string.uuid();
 const token = faker.string.uuid();
 
-const defaultProps = {
-  uid,
-  token,
-};
-
-const routerPushMock = vi.fn();
-
-vi.mock('vue-router');
-vi.mock('@/api/generated', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@/api/generated')>();
-  return {
-    ...actual,
-    useAuthPasswordResetConfirmCreate: vi.fn(),
-  };
-});
-vi.mock('@tanstack/vue-query');
-
 describe('VLoginChangeView', () => {
   let wrapper: VueWrapper<InstanceType<typeof VLoginChangeView>>;
-  let confirmPasswordReset: ReturnType<typeof vi.fn>;
 
   beforeEach(() => {
-    confirmPasswordReset = vi.fn();
-
-    vi.mocked(useRouter).mockReturnValue({
-      push: routerPushMock,
-    } as any);
-
-    vi.mocked(useAuthPasswordResetConfirmCreate).mockReturnValue({
-      mutateAsync: confirmPasswordReset,
-      isPending: ref(false),
-    } as any);
-
     wrapper = mount(VLoginChangeView, {
       shallow: true,
-      props: defaultProps,
+      props: { uid, token },
       global: {
         renderStubDefaultSlot: true,
       },
     });
   });
 
-  const getPasswordSettingsWrapper = () =>
-    wrapper.findComponent(VPasswordSettings);
+  const getPasswordResetFormWrapper = () =>
+    wrapper.findComponent(VPasswordResetForm);
 
-  test('calls confirmPasswordResetMutation', () => {
+  test('posts the new password to the link from the email', () => {
     const password = faker.internet.password();
 
-    getPasswordSettingsWrapper().vm.$emit('save', password);
+    getPasswordResetFormWrapper().vm.$emit('save', password);
 
-    expect(confirmPasswordReset).toHaveBeenCalled();
-    expect(confirmPasswordReset).toHaveBeenCalledWith({
-      data: {
-        new_password1: password,
-        new_password2: password,
-        uid,
-        token,
+    expect(forms[0].submissions).toEqual([
+      {
+        method: 'post',
+        url: `/auth/password/reset/${uid}/${token}/`,
+        data: { new_password1: password, new_password2: password },
       },
-    });
+    ]);
   });
 
-  test('navigates to /login on save', async () => {
-    getPasswordSettingsWrapper().vm.$emit('save');
+  test('passes server errors to the form', async () => {
+    forms[0].setError('new_password1', 'Too short');
+    await wrapper.vm.$nextTick();
 
-    // wait for the mutation to complete
-    await flushPromises();
-
-    expect(routerPushMock).toHaveBeenCalledTimes(1);
-    expect(routerPushMock).toHaveBeenCalledWith({ name: 'login' });
+    expect(getPasswordResetFormWrapper().props('error')).toEqual({
+      new_password1: 'Too short',
+    });
   });
 });

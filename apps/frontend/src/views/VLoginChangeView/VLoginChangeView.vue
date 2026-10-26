@@ -1,8 +1,6 @@
 <script lang="ts" setup>
-  import { useRouter } from 'vue-router';
+  import { useForm } from '@inertiajs/vue3';
   import VPublicLayout from '@/layouts/VPublicLayout/VPublicLayout.vue';
-  import { useAuthPasswordResetConfirmCreate } from '@/api/generated';
-  import { useQueryClient } from '@tanstack/vue-query';
   import VPasswordResetForm from '@/components/VPasswordResetForm/VPasswordResetForm.vue';
 
   const props = defineProps<{
@@ -10,36 +8,12 @@
     token: string;
   }>();
 
-  const router = useRouter();
-  const queryClient = useQueryClient();
+  const form = useForm({ new_password1: '', new_password2: '' });
 
-  const {
-    mutateAsync: changePassword,
-    error,
-    isPending,
-  } = useAuthPasswordResetConfirmCreate({
-    mutation: {
-      onSuccess: () => {
-        queryClient.invalidateQueries();
-      },
-    },
-  });
-
-  const handleSave = async (password: string) => {
-    try {
-      await changePassword({
-        data: {
-          new_password1: password,
-          new_password2: password,
-          uid: props.uid,
-          token: props.token,
-        },
-      });
-      router.push({ name: 'login' });
-    } catch (error_) {
-      console.error('Failed to change password', error_);
-      // handled in the mutation
-    }
+  const handleSave = (password: string) => {
+    form.new_password1 = password;
+    form.new_password2 = password;
+    form.post(`/auth/password/reset/${props.uid}/${props.token}/`);
   };
 </script>
 
@@ -47,8 +21,8 @@
   <VPublicLayout>
     <VPasswordResetForm
       :title="$t('loginReset.title')"
-      :is-pending="isPending"
-      :error="error"
+      :is-pending="form.processing"
+      :error="form.errors"
       @save="handleSave"
     />
   </VPublicLayout>

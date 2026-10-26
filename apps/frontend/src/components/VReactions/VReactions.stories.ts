@@ -1,8 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VReactions, { ReactionEmoji } from './VReactions.vue';
 import VCard from '@/components/VCard/VCard.vue';
-import { usersMeRetrieveQueryKey } from '@/api/generated';
-import { useQueryClient } from '@tanstack/vue-query';
 import { createReactions } from '@/mocks/homework';
 import {
   ANONYMOUS_CLASSMATE,
@@ -10,7 +8,6 @@ import {
   CLASSMATE_2,
   CLASSMATE_3,
   MENTOR,
-  STUDENT,
   STUDENT_SAFE,
 } from '@/mocks/users';
 
@@ -50,7 +47,6 @@ export default {
 const Template: StoryFn = (args) => ({
   components: { VReactions, VCard },
   setup() {
-    useQueryClient().setQueryData(usersMeRetrieveQueryKey(), STUDENT);
     return { args };
   },
   template:

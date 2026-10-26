@@ -1,21 +1,21 @@
-import type { Meta, StoryFn } from '@storybook/vue3-vite';
+import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import VPreferencesSettings from '@/components/VPreferencesSettings/VPreferencesSettings.vue';
 
-export default {
+const meta = {
   title: 'Settings/VPreferencesSettings',
   component: VPreferencesSettings,
-} as Meta;
+} satisfies Meta<typeof VPreferencesSettings>;
 
-const Template: StoryFn = () => ({
-  components: { VPreferencesSettings },
-  template: '<VPreferencesSettings />',
-});
+export default meta;
 
-export const Default = {
-  render: Template,
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};
+
+export const English: Story = {
+  globals: { locale: 'en' },
 };
 
-export const English = {
-  render: Template,
-  globals: { locale: 'en' },
+export const DarkTheme: Story = {
+  parameters: { inertia: { props: { theme: 'dark' } } },
 };

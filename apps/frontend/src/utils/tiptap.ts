@@ -1,3 +1,4 @@
+import type { DOMOutputSpec } from '@tiptap/pm/model';
 import StarterKit from '@tiptap/starter-kit';
 import { Placeholder } from '@tiptap/extensions';
 import Image from '@tiptap/extension-image';
@@ -10,7 +11,8 @@ import {
 } from '@tiptap/extension-table';
 
 export const getExtensions = ({ placeholder }: { placeholder: string }) => [
-  StarterKit,
+  // StarterKit bundles its own Link, ours below is configured for answers
+  StarterKit.configure({ link: false }),
   Link.configure({
     openOnClick: false,
     autolink: true,
@@ -34,10 +36,11 @@ export const getExtensions = ({ placeholder }: { placeholder: string }) => [
       class: 'border-collapse table-auto w-full',
     },
   }).extend({
-    renderHTML({ node, HTMLAttributes }) {
+    renderHTML({ node, HTMLAttributes }): DOMOutputSpec {
       const originalRender = this.parent?.({ node, HTMLAttributes });
-      const wrapper = ['div', { class: 'tableWrapper' }, originalRender];
-      return wrapper;
+      return originalRender
+        ? ['div', { class: 'tableWrapper' }, originalRender]
+        : ['div', { class: 'tableWrapper' }];
     },
   }),
 ];

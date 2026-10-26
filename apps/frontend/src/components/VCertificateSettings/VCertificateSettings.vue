@@ -1,72 +1,27 @@
 <script lang="ts" setup>
+  import { useForm, usePage } from '@inertiajs/vue3';
   import VTextInput from '@/components/VTextInput/VTextInput.vue';
   import VButton from '@/components/VButton/VButton.vue';
   import VCard from '@/components/VCard/VCard.vue';
-  import { ref, onMounted } from 'vue';
-  import { useQueryClient } from '@tanstack/vue-query';
-  import {
-    useUsersMePartialUpdate,
-    usersMeRetrieveQueryKey,
-    usersMeRetrieveQueryOptions,
-    GenderEnum,
-    BlankEnum,
-  } from '@/api/generated';
-  import type { PatchedUserSelfUpdate } from '@/api/generated';
+  import { GenderEnum } from '@/api/generated';
   import VError from '@/components/VError/VError.vue';
   import { useI18n } from 'vue-i18n';
 
   const { t } = useI18n();
+  const page = usePage();
+  const user = page.props.user;
 
-  const queryClient = useQueryClient();
-  const {
-    mutateAsync: updateUser,
-    isPending,
-    error,
-  } = useUsersMePartialUpdate({
-    mutation: {
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: usersMeRetrieveQueryKey() });
-      },
-    },
+  const form = useForm({
+    first_name: user?.first_name ?? '',
+    last_name: user?.last_name ?? '',
+    first_name_en: user?.first_name_en ?? '',
+    last_name_en: user?.last_name_en ?? '',
+    gender: user?.gender ?? GenderEnum.male,
   });
 
-  const data = ref<{
-    firstName: Required<PatchedUserSelfUpdate>['first_name'];
-    lastName: Required<PatchedUserSelfUpdate>['last_name'];
-    firstNameEn: Required<PatchedUserSelfUpdate>['first_name_en'];
-    lastNameEn: Required<PatchedUserSelfUpdate>['last_name_en'];
-    gender: Required<PatchedUserSelfUpdate>['gender'];
-  }>({
-    firstName: '',
-    lastName: '',
-    firstNameEn: '',
-    lastNameEn: '',
-    gender: '' as unknown as BlankEnum,
-  });
-
-  const saveCertificate = async () => {
-    await updateUser({
-      data: {
-        first_name: data.value.firstName,
-        last_name: data.value.lastName,
-        first_name_en: data.value.firstNameEn,
-        last_name_en: data.value.lastNameEn,
-        gender: data.value.gender,
-      },
-    });
+  const saveCertificate = () => {
+    form.patch('/settings/profile', { preserveScroll: true });
   };
-
-  onMounted(async () => {
-    const user = await queryClient.fetchQuery(usersMeRetrieveQueryOptions());
-
-    data.value = {
-      firstName: user.first_name ?? '',
-      lastName: user.last_name ?? '',
-      firstNameEn: user.first_name_en ?? '',
-      lastNameEn: user.last_name_en ?? '',
-      gender: user.gender ?? GenderEnum.male,
-    };
-  });
 </script>
 
 <template>
@@ -76,28 +31,32 @@
     </div>
     <div class="flex flex-col items-start gap-16 tablet:gap-24">
       <VTextInput
-        v-model="data.firstName"
+        v-model="form.first_name"
         name="first_name"
+        :error="form.errors"
         data-testid="firstName"
         :label="t('certificateSettings.firstName')"
       />
       <VTextInput
-        v-model="data.lastName"
+        v-model="form.last_name"
         data-testid="lastName"
         :label="t('certificateSettings.lastName')"
         name="last_name"
+        :error="form.errors"
       />
       <VTextInput
-        v-model="data.firstNameEn"
+        v-model="form.first_name_en"
         data-testid="firstNameEn"
         :label="t('certificateSettings.firstNameEn')"
         name="first_name_en"
+        :error="form.errors"
       />
       <VTextInput
-        v-model="data.lastNameEn"
+        v-model="form.last_name_en"
         data-testid="lastNameEn"
         :label="t('certificateSettings.lastNameEn')"
         name="last_name_en"
+        :error="form.errors"
       />
       <fieldset class="flex flex-wrap gap-16">
         <legend class="Label">{{ t('certificateSettings.gender') }}</legend>
@@ -106,8 +65,8 @@
             type="radio"
             name="gender"
             data-testid="gender-male"
-            :checked="data.gender === GenderEnum.male"
-            @click="data.gender = GenderEnum.male"
+            :checked="form.gender === GenderEnum.male"
+            @click="form.gender = GenderEnum.male"
           />
           {{ t('certificateSettings.male') }}</label
         >
@@ -116,28 +75,28 @@
             type="radio"
             name="gender"
             data-testid="gender-female"
-            :checked="data.gender === GenderEnum.female"
-            @click="data.gender = GenderEnum.female"
+            :checked="form.gender === GenderEnum.female"
+            @click="form.gender = GenderEnum.female"
           />
           {{ t('certificateSettings.female') }}</label
         >
       </fieldset>
       <VError
-        :error="error"
+        :error="form.errors"
         :whitelist="['gender']"
       />
       <VError
-        :error="error"
+        :error="form.errors"
         :whitelist="['non_field_errors']"
       />
     </div>
     <template #footer>
       <VButton
         data-testid="save"
-        :loading="isPending"
+        :loading="form.processing"
         @click="saveCertificate"
       >
-        {{ isPending ? t('common.saving') : t('common.save') }}
+        {{ form.processing ? t('common.saving') : t('common.save') }}
       </VButton>
     </template>
   </VCard>

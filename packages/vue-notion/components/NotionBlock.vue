@@ -25,6 +25,8 @@
   import NotionTodo from './NotionTodo.vue';
   import NotionToggle from './NotionToggle.vue';
 
+  const props = withDefaults(defineProps<BlockProps>(), blockPropsDefaults);
+
   const BLOCK_COMPONENTS = new Map<string, Component>([
     ['page', NotionPage],
     ['header', NotionHeader],
@@ -55,7 +57,6 @@
     ['transclusion_reference', NotionSyncPointer],
   ]);
 
-  const props = withDefaults(defineProps<BlockProps>(), blockPropsDefaults);
   const { pass, type, visible } = useBlock(props);
 
   // Hidden types fall through to the "not implemented" placeholder

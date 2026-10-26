@@ -3,7 +3,7 @@
   import VPillItem from '@/components/VPill/VPillItem.vue';
   import type { Lesson } from '@/api/generated';
   import { computed } from 'vue';
-  import { formatDate } from '@/utils/date';
+  import { useDate } from '@/composables/useDate';
   import dayjs from 'dayjs';
   import { useI18n } from 'vue-i18n';
 
@@ -12,6 +12,7 @@
   }>();
 
   const { t } = useI18n();
+  const { formatDate } = useDate();
 
   const isOverdue = computed(() => {
     return (

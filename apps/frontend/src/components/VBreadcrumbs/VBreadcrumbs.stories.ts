@@ -7,6 +7,7 @@ import {
   MODULE_RESOURCES,
   QUESTION,
 } from '@/mocks/courses';
+import { urls } from '@/urls';
 
 export default {
   title: 'UI/VBreadcrumbs',
@@ -21,7 +22,7 @@ const Template: StoryFn = (args) => ({
   template: '<VBreadcrumbs v-bind="args" />',
 });
 
-const MY_COURSES: Breadcrumb = { name: 'Мои курсы', to: { name: 'courses' } };
+const MY_COURSES: Breadcrumb = { name: 'Мои курсы', href: urls.courses() };
 
 export const Default = {
   render: Template,
@@ -30,18 +31,15 @@ export const Default = {
       MY_COURSES,
       {
         name: COURSE.name,
-        to: { name: 'course', params: { courseId: COURSE.id } },
+        href: urls.course(COURSE.id),
       },
       {
         name: MODULE_RESOURCES.name,
-        to: {
-          name: 'module',
-          params: { courseId: COURSE.id, moduleId: MODULE_RESOURCES.id },
-        },
+        href: urls.module(COURSE.id, MODULE_RESOURCES.id),
       },
       {
         name: QUESTION.name,
-        to: { name: 'homework', params: { questionId: QUESTION.slug } },
+        href: urls.homework(QUESTION.slug),
       },
     ] satisfies Breadcrumb[],
   },
@@ -61,14 +59,11 @@ export const LongNames = {
       MY_COURSES,
       {
         name: COURSE_WITH_LONG_NAME.name,
-        to: { name: 'course', params: { courseId: COURSE_WITH_LONG_NAME.id } },
+        href: urls.course(COURSE_WITH_LONG_NAME.id),
       },
       {
         name: 'Найм: как написать вакансию, на которую откликнутся сильные разработчики, а не только рекрутёры',
-        to: {
-          name: 'module',
-          params: { courseId: COURSE_WITH_LONG_NAME.id, moduleId: 41 },
-        },
+        href: urls.module(COURSE_WITH_LONG_NAME.id, 41),
       },
     ] satisfies Breadcrumb[],
   },

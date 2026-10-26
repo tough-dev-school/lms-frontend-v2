@@ -272,7 +272,10 @@ describe('NotionRenderer', () => {
       await flushPromises();
 
       expect(
-        [...container.querySelectorAll('.katex')].map((el) => el.textContent),
+        Array.from(
+          container.querySelectorAll('.katex'),
+          (el) => el.textContent,
+        ),
       ).toEqual(['x^2', 'E=mc^2']);
     });
 
@@ -492,7 +495,7 @@ describe('NotionRenderer', () => {
       const { container } = await renderNotion({ blockMap });
 
       const cells = container.querySelectorAll('td');
-      expect([...cells].map((c) => c.textContent)).toEqual(['B', 'A']);
+      expect(Array.from(cells, (c) => c.textContent)).toEqual(['B', 'A']);
       expect(
         cells[0].querySelector('.notion-simple-table-header'),
       ).not.toBeNull();

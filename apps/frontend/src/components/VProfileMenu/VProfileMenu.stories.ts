@@ -1,7 +1,5 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VProfileMenu from '@/components/VProfileMenu/VProfileMenu.vue';
-import { usersMeRetrieveQueryKey } from '@/api/generated';
-import { useQueryClient } from '@tanstack/vue-query';
 import { NEW_STUDENT, STUDENT } from '@/mocks/users';
 
 export default {
@@ -14,26 +12,18 @@ export default {
   ],
 } as Meta;
 
-const Template: StoryFn = (args) => ({
+const Template: StoryFn = () => ({
   components: { VProfileMenu },
-  setup() {
-    useQueryClient().setQueryData(usersMeRetrieveQueryKey(), args.user);
-    return { args };
-  },
   template: '<VProfileMenu />',
 });
 
 export const Default = {
   render: Template,
-  args: {
-    user: STUDENT,
-  },
+  parameters: { inertia: { props: { user: STUDENT } } },
 };
 
 // Without certificate names the menu offers to fill them in and shows the random name
 export const WithoutCertificateData = {
   render: Template,
-  args: {
-    user: NEW_STUDENT,
-  },
+  parameters: { inertia: { props: { user: NEW_STUDENT } } },
 };

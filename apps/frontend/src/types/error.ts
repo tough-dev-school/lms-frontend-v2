@@ -1,48 +1,16 @@
-export interface BackendErrorResponse {
-  response: {
-    data: Record<string, string | string[]>;
-    status: number;
-    statusText: string;
-  };
-  message?: string;
-}
-
-export type FormError = Error | BackendErrorResponse | null;
-
-export function isBackendError(error: unknown): error is BackendErrorResponse {
-  if (typeof error !== 'object' || error === null) {
-    return false;
-  }
-
-  if (!('response' in error)) {
-    return false;
-  }
-
-  const errorWithResponse = error as { response: unknown };
-
-  if (
-    typeof errorWithResponse.response !== 'object' ||
-    errorWithResponse.response === null
-  ) {
-    return false;
-  }
-
-  const response = errorWithResponse.response as Record<string, unknown>;
-
-  return (
-    'data' in response &&
-    typeof response.data === 'object' &&
-    response.data !== null
-  );
-}
+// Field name to message(s). Server errors come from Inertia's form.errors, client checks use the same shape.
+export type FormError = Partial<Record<string, string | string[]>> | null;
 
 export function getErrorData(
-  error: FormError,
+  error: FormError | undefined,
 ): Record<string, string | string[]> {
-  if (!error || !isBackendError(error)) {
-    return {};
-  }
-  return error.response.data;
+  if (!error) return {};
+
+  return Object.fromEntries(
+    Object.entries(error).filter(
+      (entry): entry is [string, string | string[]] => entry[1] !== undefined,
+    ),
+  );
 }
 
 /**
@@ -53,13 +21,7 @@ export function getErrorData(
 export function createValidationError(
   errors: Record<string, string | string[]>,
 ): FormError {
-  return {
-    response: {
-      data: errors,
-      status: 400,
-      statusText: 'Validation Error',
-    },
-  } as BackendErrorResponse;
+  return errors;
 }
 
 /**
@@ -67,17 +29,17 @@ export function createValidationError(
  * Backend errors take precedence over validation errors for the same field
  */
 export function mergeErrors(
-  backendError: FormError,
-  validationError: FormError,
+  backendError: FormError | undefined,
+  validationError: FormError | undefined,
 ): FormError {
-  const backendData = getErrorData(backendError);
-  const validationData = getErrorData(validationError);
-
-  const mergedData = { ...validationData, ...backendData };
+  const mergedData = {
+    ...getErrorData(validationError),
+    ...getErrorData(backendError),
+  };
 
   if (Object.keys(mergedData).length === 0) {
     return null;
   }
 
-  return createValidationError(mergedData);
+  return mergedData;
 }

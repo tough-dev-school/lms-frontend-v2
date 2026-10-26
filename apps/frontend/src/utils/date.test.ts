@@ -1,16 +1,14 @@
-import { afterEach, describe, expect, test } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import dayjs from 'dayjs';
-import { i18n } from '@/i18n';
 import { formatDate, relativeDate } from './date';
+import type { DateOptions } from './date';
 
-// Local time without a zone, so the tests don't depend on the machine's timezone
-const DATE = '2026-03-02T14:05:09';
+const RU: DateOptions = { locale: 'ru', timezone: 'UTC' };
+const EN: DateOptions = { locale: 'en', timezone: 'UTC' };
+
+const DATE = '2026-03-02T14:05:09Z';
 
 describe('formatDate', () => {
-  afterEach(() => {
-    i18n.global.locale.value = 'ru';
-  });
-
   describe('in Russian', () => {
     test.each([
       ['date', '02.03.2026'],
@@ -18,7 +16,7 @@ describe('formatDate', () => {
       ['dateTime', '02.03.2026 14:05'],
       ['dateTimeSeconds', '02.03.2026 14:05:09'],
     ] as const)('%s', (format, expected) => {
-      expect(formatDate(DATE, format)).toBe(expected);
+      expect(formatDate(DATE, RU, format)).toBe(expected);
     });
   });
 
@@ -29,35 +27,48 @@ describe('formatDate', () => {
       ['dateTime', '2 Mar 2026, 14:05'],
       ['dateTimeSeconds', '2 Mar 2026, 14:05:09'],
     ] as const)('%s', (format, expected) => {
-      i18n.global.locale.value = 'en';
-
-      expect(formatDate(DATE, format)).toBe(expected);
+      expect(formatDate(DATE, EN, format)).toBe(expected);
     });
   });
 
   test('uses the date format by default', () => {
-    expect(formatDate(DATE)).toBe('02.03.2026');
+    expect(formatDate(DATE, RU)).toBe('02.03.2026');
   });
 
-  test('marks UTC time', () => {
-    expect(formatDate('2026-03-02T14:05:09Z', 'dateTime', false)).toBe(
-      '02.03.2026 14:05 UTC',
-    );
+  test('shows local time in the given timezone', () => {
+    expect(
+      formatDate(DATE, { locale: 'ru', timezone: 'Europe/Moscow' }, 'dateTime'),
+    ).toBe('02.03.2026 17:05');
+  });
+
+  test('moves to the next day across midnight', () => {
+    expect(
+      formatDate(
+        '2026-03-02T22:30:00Z',
+        { locale: 'ru', timezone: 'Asia/Tokyo' },
+        'date',
+      ),
+    ).toBe('03.03.2026');
+  });
+
+  test('marks UTC time and ignores the timezone', () => {
+    expect(
+      formatDate(
+        DATE,
+        { locale: 'ru', timezone: 'Europe/Moscow' },
+        'dateTime',
+        false,
+      ),
+    ).toBe('02.03.2026 14:05 UTC');
   });
 });
 
 describe('relativeDate', () => {
-  afterEach(() => {
-    i18n.global.locale.value = 'ru';
-  });
-
   test('is in Russian', () => {
-    expect(relativeDate(dayjs().subtract(3, 'day'))).toBe('3 дня назад');
+    expect(relativeDate(dayjs().subtract(3, 'day'), RU)).toBe('3 дня назад');
   });
 
   test('is in English', () => {
-    i18n.global.locale.value = 'en';
-
-    expect(relativeDate(dayjs().subtract(3, 'day'))).toBe('3 days ago');
+    expect(relativeDate(dayjs().subtract(3, 'day'), EN)).toBe('3 days ago');
   });
 });

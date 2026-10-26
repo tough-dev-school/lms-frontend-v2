@@ -1,6 +1,8 @@
 <script lang="ts" setup>
   import VError from '@/components/VError/VError.vue';
+  import { computed } from 'vue';
   import type { FormError } from '@/types/error';
+  import { getErrorData } from '@/types/error';
 
   export type AllowedTags =
     | 'text'
@@ -24,7 +26,7 @@
     name: string;
   }
 
-  withDefaults(defineProps<Props>(), {
+  const props = withDefaults(defineProps<Props>(), {
     modelValue: '',
     type: 'text',
     error: undefined,
@@ -35,6 +37,9 @@
   const emit = defineEmits<{
     'update:modelValue': [value: string];
   }>();
+
+  // Inertia always passes an errors object, so only this field's message counts
+  const hasError = computed(() => !!getErrorData(props.error)[props.name]);
 
   const handleInput = (event: Event) => {
     const value = (event.target as HTMLInputElement).value;
@@ -58,14 +63,14 @@
       v-bind="$attrs"
       class="leading-1.5 block h-module w-full rounded-8 border border-white bg-white p-module text-black placeholder:text-gray focus:border-blue focus:outline-none"
       :class="{
-        'border-red': error,
+        'border-red': hasError,
       }"
       data-testid="input"
       :value="modelValue"
       @input="handleInput"
     />
     <div
-      v-if="tip || error"
+      v-if="tip || hasError"
       class="mt-4"
     >
       <p

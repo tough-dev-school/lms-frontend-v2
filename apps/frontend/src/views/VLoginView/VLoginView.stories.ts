@@ -1,12 +1,11 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VLoginView from './VLoginView.vue';
-import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 
 export default {
   title: 'App/VLoginView',
   component: VLoginView,
-  decorators: [defaultLayoutDecorator],
-  parameters: { layout: 'fullscreen' },
+  parameters: { layout: 'fullscreen', inertia: { props: { user: null } } },
+  args: { redirectTo: null },
 } as Meta;
 
 const Template: StoryFn = (args) => ({
@@ -19,4 +18,17 @@ const Template: StoryFn = (args) => ({
 
 export const Default = {
   render: Template,
+};
+
+// An expired magic link brings the student back here with the reason
+export const ExpiredLink = {
+  render: Template,
+  parameters: {
+    inertia: {
+      props: {
+        user: null,
+        errors: { link: 'expired' },
+      },
+    },
+  },
 };

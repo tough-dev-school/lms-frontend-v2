@@ -1,73 +1,46 @@
-import type { Meta, StoryFn } from '@storybook/vue3-vite';
+import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import VMaterialView from './VMaterialView.vue';
-import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
-import {
-  materialsRetrieveQueryKey,
-  materialsStatusRetrieveQueryKey,
-  usersMeRetrieveQueryKey,
-} from '@/api/generated';
-import { useQueryClient } from '@tanstack/vue-query';
 import type { MaterialSerilizer } from '@/api/generated';
 import { mockNotionMaterial } from '@/mocks/mockNotionMaterial';
 import { BREADCRUMBS, MATERIAL } from '@/mocks/courses';
 import { STAFF } from '@/mocks/users';
-
-export default {
-  title: 'App/VMaterialView',
-  component: VMaterialView,
-  decorators: [defaultLayoutDecorator],
-  parameters: { layout: 'fullscreen' },
-} as Meta;
 
 const MATERIAL_DATA: MaterialSerilizer = {
   breadcrumbs: BREADCRUMBS,
   content: mockNotionMaterial(),
 };
 
-const Template: StoryFn = (args) => ({
-  components: { VMaterialView },
-  setup() {
-    useQueryClient().setQueryData(
-      materialsRetrieveQueryKey(args.materialId),
-      args.material,
-    );
-    return { args };
-  },
-  template: '<VMaterialView :material-id="args.materialId" />',
-});
-
-export const Default = {
-  render: Template,
+const meta = {
+  title: 'App/VMaterialView',
+  component: VMaterialView,
+  parameters: { layout: 'fullscreen' },
   args: {
     materialId: MATERIAL.id,
     material: MATERIAL_DATA,
+    materialStatus: null,
   },
-};
+} satisfies Meta<typeof VMaterialView>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {};
 
 // Staff can request a fresh copy of the page from Notion
-export const AsStaff = {
-  render: Template,
+export const AsStaff: Story = {
   args: {
-    materialId: MATERIAL.id,
-    material: MATERIAL_DATA,
+    materialStatus: {
+      fetch_started: '2025-11-12T08:30:12Z',
+      fetch_complete: '2025-11-12T08:30:19Z',
+    },
   },
-  decorators: [
-    () => ({
-      setup() {
-        const queryClient = useQueryClient();
-        queryClient.setQueryData(usersMeRetrieveQueryKey(), STAFF);
-        queryClient.setQueryData(materialsStatusRetrieveQueryKey(MATERIAL.id), {
-          fetch_started: '2025-11-12T08:30:12Z',
-          fetch_complete: '2025-11-12T08:30:19Z',
-        });
-      },
-      template: '<story />',
-    }),
-  ],
+  parameters: {
+    inertia: { props: { user: STAFF } },
+  },
 };
 
-export const Empty = {
-  render: Template,
+export const Empty: Story = {
   args: {
     materialId: 'not-found-material-id',
     material: null,

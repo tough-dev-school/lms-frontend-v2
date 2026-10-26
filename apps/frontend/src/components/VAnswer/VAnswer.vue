@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import VAvatar from '@/components/VAvatar/VAvatar.vue';
-  import { relativeDate } from '@/utils/date';
+  import { useDate } from '@/composables/useDate';
   import { getName } from '@/utils/getName';
   import VAnswerContent from '@/components/VAnswerContent/VAnswerContent.vue';
   import { computed, ref } from 'vue';
@@ -8,47 +8,39 @@
   import { IconMoodHappy } from '@tabler/icons-vue';
   import { useAutoAnimate } from '@formkit/auto-animate/vue';
   import VButton from '@/components/VButton/VButton.vue';
+  import { router, usePage } from '@inertiajs/vue3';
   import {
-    useHomeworkAnswersReactionsDestroy,
-    useHomeworkAnswersReactionsCreate,
-    homeworkAnswersRetrieveQueryKey,
+    homeworkAnswersReactionsCreate,
+    homeworkAnswersReactionsDestroy,
   } from '@/api/generated';
-  import { useQueryClient } from '@tanstack/vue-query';
-  import type { AnswerTree, UserSafe } from '@/api/generated';
+  import type { AnswerTree } from '@/api/generated';
+  import type { ReactionEmoji } from '@/components/VReactions/VReactions.vue';
 
   const props = defineProps<{
     answer: AnswerTree;
-    user: UserSafe;
   }>();
 
+  const page = usePage();
+  const { relativeDate } = useDate();
+
   const isOwn = computed(() => {
-    return props.answer.author.uuid === props.user.uuid;
+    return props.answer.author.uuid === page.props.user?.uuid;
   });
 
   const isPaletteOpen = ref(false);
 
-  const queryClient = useQueryClient();
+  // Reactions go straight to the API, the page only needs the fresh tree to learn their real ids
+  const refreshAnswer = () => router.reload({ only: ['answer'] });
 
-  const { mutateAsync: sendAddReaction } = useHomeworkAnswersReactionsCreate({
-    mutation: {
-      onSuccess: (_, variables) => {
-        queryClient.invalidateQueries({
-          queryKey: homeworkAnswersRetrieveQueryKey(variables.answer_slug),
-        });
-      },
-    },
-  });
+  const addReaction = async (emoji: ReactionEmoji) => {
+    await homeworkAnswersReactionsCreate(props.answer.slug, { emoji });
+    refreshAnswer();
+  };
 
-  const { mutateAsync: sendRemoveReaction } =
-    useHomeworkAnswersReactionsDestroy({
-      mutation: {
-        onSuccess: (_, variables) => {
-          queryClient.invalidateQueries({
-            queryKey: homeworkAnswersRetrieveQueryKey(variables.slug),
-          });
-        },
-      },
-    });
+  const removeReaction = async (reactionId: string) => {
+    await homeworkAnswersReactionsDestroy(props.answer.slug, reactionId);
+    refreshAnswer();
+  };
 
   const togglePalette = () => (isPaletteOpen.value = !isPaletteOpen.value);
   const closePalette = () => (isPaletteOpen.value = false);
@@ -126,17 +118,8 @@
           :open="isPaletteOpen"
           :disabled="isOwn"
           @close="closePalette"
-          @add="
-            (emoji) =>
-              sendAddReaction({
-                answer_slug: answer.slug,
-                data: { emoji },
-              })
-          "
-          @remove="
-            (reactionId) =>
-              sendRemoveReaction({ answer_slug: answer.slug, slug: reactionId })
-          "
+          @add="addReaction"
+          @remove="removeReaction"
         />
       </div>
     </div>

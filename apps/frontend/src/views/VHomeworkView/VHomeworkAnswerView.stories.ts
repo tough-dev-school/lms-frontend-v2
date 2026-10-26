@@ -1,13 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VHomeworkAnswerView from './VHomeworkAnswerView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
-import {
-  homeworkQuestionsRetrieveQueryKey,
-  lmsLessonsRetrieveQueryKey,
-  homeworkCrosschecksListQueryKey,
-} from '@/api/generated';
-import { useQueryClient } from '@tanstack/vue-query';
-import { usePopulateAnswersCache } from '@/composables/usePopulateAnswersCache';
 import type { Lesson } from '@/api/generated';
 import { LESSON_HOMEWORK } from '@/mocks/courses';
 import {
@@ -24,6 +17,7 @@ export default {
   decorators: [defaultLayoutDecorator],
   parameters: { layout: 'fullscreen' },
   args: {
+    questionId: QUESTION_DETAIL.slug,
     question: QUESTION_DETAIL,
     lesson: LESSON_HOMEWORK,
     crosschecks: CROSSCHECKS,
@@ -33,27 +27,9 @@ export default {
 const Template: StoryFn = (args) => ({
   components: { VHomeworkAnswerView },
   setup() {
-    const queryClient = useQueryClient();
-
-    queryClient.setQueryData(
-      homeworkQuestionsRetrieveQueryKey(args.question.slug),
-      args.question,
-    );
-    // The view caches replies only after the answer loads, a seeded answer never triggers that
-    usePopulateAnswersCache()(args.answer);
-    queryClient.setQueryData(
-      lmsLessonsRetrieveQueryKey(args.lesson.id),
-      args.lesson,
-    );
-    queryClient.setQueryData(
-      homeworkCrosschecksListQueryKey({ question: args.question.slug }),
-      args.crosschecks,
-    );
-
     return { args };
   },
-  template:
-    '<VHomeworkAnswerView :question-id="args.question.slug" :answer-id="args.answer.slug" />',
+  template: '<VHomeworkAnswerView v-bind="args" />',
 });
 
 export const Default = {

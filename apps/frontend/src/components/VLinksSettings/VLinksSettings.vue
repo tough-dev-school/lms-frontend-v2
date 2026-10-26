@@ -1,96 +1,61 @@
 <script lang="ts" setup>
-  import { ref, onBeforeMount } from 'vue';
+  import { useForm, usePage } from '@inertiajs/vue3';
   import VTextInput from '@/components/VTextInput/VTextInput.vue';
   import VButton from '@/components/VButton/VButton.vue';
   import VCard from '@/components/VCard/VCard.vue';
-  import {
-    useUsersMePartialUpdate,
-    usersMeRetrieveQueryKey,
-    usersMeRetrieveQueryOptions,
-  } from '@/api/generated';
-  import { useQueryClient } from '@tanstack/vue-query';
   import VError from '@/components/VError/VError.vue';
   import { useI18n } from 'vue-i18n';
 
-  const queryClient = useQueryClient();
   const { t } = useI18n();
-  const {
-    mutateAsync: updateUser,
-    isPending,
-    error,
-  } = useUsersMePartialUpdate({
-    mutation: {
-      onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: usersMeRetrieveQueryKey(),
-        });
-      },
-    },
+  const page = usePage();
+
+  const form = useForm({
+    github_username: page.props.user?.github_username ?? '',
+    linkedin_username: page.props.user?.linkedin_username ?? '',
+    telegram_username: page.props.user?.telegram_username ?? '',
   });
 
-  const data = ref({
-    linkedinUsername: '',
-    githubUsername: '',
-    telegramUsername: '',
-  });
-
-  const saveProfile = async () => {
-    await updateUser({
-      data: {
-        linkedin_username: data.value.linkedinUsername,
-        github_username: data.value.githubUsername,
-        telegram_username: data.value.telegramUsername,
-      },
-    });
+  const saveProfile = () => {
+    form.patch('/settings/profile', { preserveScroll: true });
   };
-
-  onBeforeMount(async () => {
-    const user = await queryClient.fetchQuery(usersMeRetrieveQueryOptions());
-
-    data.value = {
-      linkedinUsername: user.linkedin_username ?? '',
-      githubUsername: user.github_username ?? '',
-      telegramUsername: user.telegram_username ?? '',
-    };
-  });
 </script>
 
 <template>
   <VCard :title="t('settings.links')">
     <div class="flex flex-col items-start gap-16 tablet:gap-24">
       <VTextInput
-        v-model="data.githubUsername"
+        v-model="form.github_username"
         :label="t('linksSettings.github')"
         data-testid="github"
         name="github_username"
-        :error="error"
+        :error="form.errors"
       />
       <VTextInput
-        v-model="data.linkedinUsername"
+        v-model="form.linkedin_username"
         :label="t('linksSettings.linkedin')"
         data-testid="linkedin"
         name="linkedin_username"
-        :error="error"
+        :error="form.errors"
       />
       <VTextInput
-        v-model="data.telegramUsername"
+        v-model="form.telegram_username"
         :label="t('linksSettings.telegram')"
         data-testid="telegram"
         name="telegram_username"
-        :error="error"
+        :error="form.errors"
       />
     </div>
     <VError
-      :error="error"
+      :error="form.errors"
       :whitelist="['non_field_errors']"
     />
     <template #footer>
       <VButton
         data-testid="save"
-        :loading="isPending"
+        :loading="form.processing"
         @click="saveProfile"
       >
-        {{ isPending ? t('common.saving') : t('common.save') }}
+        {{ form.processing ? t('common.saving') : t('common.save') }}
       </VButton>
     </template>
   </VCard>

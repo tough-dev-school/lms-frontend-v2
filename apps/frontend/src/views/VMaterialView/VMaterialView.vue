@@ -1,27 +1,32 @@
 <script lang="ts" setup>
-  import { useRouter } from 'vue-router';
-  import { computed, provide, reactive } from 'vue';
+  import { Link, usePage } from '@inertiajs/vue3';
+  import { computed, onMounted, provide, reactive } from 'vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VButton from '@/components/VButton/VButton.vue';
   import getNotionTitle from '@/utils/getNotionTitle';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
-  import { useMaterialsRetrieve, useUsersMeRetrieve } from '@/api/generated';
-  import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
+  import type {
+    MaterialSerilizer,
+    NotionCacheEntryStatus,
+  } from '@/api/generated';
   import { SUPPORT_EMAIL, SUPPORT_CHAT_URL } from '@/constants';
-  import { useRouteQuery } from '@vueuse/router';
   import { NotionRenderer } from 'vue-notion';
   import { useNotionCheckboxHack } from './useNotionCheckboxHack';
   import VMaterialAdminTools from '@/components/VMaterialAdminTools/VMaterialAdminTools.vue';
-  import { useStorage } from '@vueuse/core';
   import { useI18n } from 'vue-i18n';
+  import { urls } from '@/urls';
 
   const props = defineProps<{
     materialId: string;
+    material: MaterialSerilizer | null;
+    // Sent for staff only
+    materialStatus: NotionCacheEntryStatus | null;
   }>();
 
-  const router = useRouter();
   const { t } = useI18n();
+  const page = usePage();
+  const user = computed(() => page.props.user);
 
   provide(
     'notionLabels',
@@ -31,57 +36,39 @@
       closeTable: computed(() => t('material.closeTable')),
     }),
   );
-  const { data: user } = useUsersMeRetrieve();
 
-  const { data: materialData, isLoading } = useMaterialsRetrieve(
-    () => props.materialId,
-  );
-
-  const material = computed(() => {
-    if (!materialData.value) return undefined;
-    return materialData.value.content;
-  });
+  const content = computed(() => props.material?.content);
 
   const notionTitle = computed(() => {
-    if (material.value) {
-      return getNotionTitle(props.materialId, material.value);
+    if (content.value) {
+      return getNotionTitle(props.materialId, content.value);
     }
     return undefined;
   });
 
-  const mapPageUrl = (materialId: string) => `/materials/${materialId}`;
+  const mapPageUrl = (materialId: string) => urls.material(materialId);
+
+  const pageLinkOptions = { component: Link, href: 'href' };
 
   const breadcrumbs = computed(() => {
     const result: Breadcrumb[] = [
-      { name: t('common.myCourses'), to: { name: 'courses' } },
+      { name: t('common.myCourses'), href: urls.courses() },
     ];
 
-    if (!materialData.value) return undefined;
+    if (!props.material) return undefined;
 
-    if (materialData.value.breadcrumbs.course) {
-      result.push({
-        name: materialData.value.breadcrumbs.course.name,
-        to: {
-          name: 'course',
-          params: {
-            courseId: materialData.value.breadcrumbs.course.id,
-          },
-        },
-      });
+    const { course, module } = props.material.breadcrumbs;
+
+    if (course) {
+      result.push({ name: course.name, href: urls.course(course.id) });
     } else {
       return undefined;
     }
 
-    if (materialData.value.breadcrumbs.module) {
+    if (module) {
       result.push({
-        name: materialData.value.breadcrumbs.module.name,
-        to: {
-          name: 'module',
-          params: {
-            courseId: materialData.value.breadcrumbs.course.id,
-            moduleId: materialData.value.breadcrumbs.module.id,
-          },
-        },
+        name: module.name,
+        href: urls.module(course.id, module.id),
       });
     } else {
       return undefined;
@@ -89,118 +76,107 @@
 
     result.push({
       name: notionTitle.value ?? '',
-      to: {
-        name: 'materials',
-        params: {
-          materialId: props.materialId,
-        },
-      },
+      href: urls.material(props.materialId),
     });
 
     return result;
   });
 
-  const bookmarkInUrl = useRouteQuery<string | undefined>('bookmark');
-  const bookmarkInLocalStorage = useStorage<string | undefined>(
-    `bookmark-${props.materialId}`,
-    undefined,
-    localStorage,
-  );
+  const bookmarkStorageKey = computed(() => `bookmark-${props.materialId}`);
 
   const setBookmark = (blockId: string) => {
-    history.replaceState(null, '', `#${blockId}`);
-    bookmarkInLocalStorage.value = blockId;
+    history.replaceState(history.state, '', `#${blockId}`);
+    localStorage.setItem(bookmarkStorageKey.value, blockId);
   };
 
-  const bookmarkToRestore = computed(() => {
-    return bookmarkInUrl.value || bookmarkInLocalStorage.value;
-  });
-
+  // A ?bookmark link from the backend wins over the place the student left off
   const restoreBookmark = () => {
-    if (!material.value) return;
-    if (!bookmarkToRestore.value) return;
+    if (!content.value) return;
+
+    const bookmark =
+      new URLSearchParams(window.location.search).get('bookmark') ||
+      localStorage.getItem(bookmarkStorageKey.value);
+    if (!bookmark) return;
 
     document
-      .querySelector(`#${CSS.escape(bookmarkToRestore.value)}`)
+      .querySelector(`#${CSS.escape(bookmark)}`)
       ?.scrollIntoView({ behavior: 'instant' });
   };
+
+  // Inertia scrolls a freshly visited page to the top right after mounting it, so the bookmark waits a tick
+  onMounted(() => setTimeout(restoreBookmark));
 
   useNotionCheckboxHack(props.materialId);
 </script>
 
 <template>
-  <template v-if="!isLoading">
-    <VLoggedLayout
-      :title="notionTitle"
-      :show-title="false"
-      :breadcrumbs="breadcrumbs"
-    >
-      <template v-if="material">
-        <VMaterialAdminTools
-          v-if="user?.is_staff"
-          :material-id="props.materialId"
-        />
-        <VCard
-          class="rounded-16 bg-white p-8 pt-32 shadow dark:bg-dark-black phone:p-24"
-        >
-          <NotionRenderer
-            :block-map="material"
-            :map-page-url="mapPageUrl"
-            :page-link-options="{
-              component: 'RouterLink',
-              href: 'to',
-            }"
-            :full-page="true"
-            @mounted="restoreBookmark"
-            @bookmark="setBookmark"
-          />
-        </VCard>
-        <footer class="flex justify-center">
-          <RouterLink
-            v-if="breadcrumbs && breadcrumbs[2]"
-            :to="breadcrumbs[2].to"
-          >
-            <VButton>{{ t('material.backToLesson') }}</VButton>
-          </RouterLink>
-        </footer>
-      </template>
-      <div
-        v-else-if="!material"
-        class="center flex max-w-[400px] flex-col text-center"
+  <VLoggedLayout
+    :title="notionTitle"
+    :show-title="false"
+    :breadcrumbs="breadcrumbs"
+  >
+    <template v-if="content">
+      <VMaterialAdminTools
+        v-if="user?.is_staff"
+        :material-id="materialId"
+        :initial-status="materialStatus"
+      />
+      <VCard
+        class="rounded-16 bg-white p-8 pt-32 shadow dark:bg-dark-black phone:p-24"
       >
-        <p>{{ t('material.notFound') }}</p>
-        <i18n-t
-          keypath="material.supportText"
-          tag="p"
-          scope="global"
+        <NotionRenderer
+          :block-map="content"
+          :map-page-url="mapPageUrl"
+          :page-link-options="pageLinkOptions"
+          :full-page="true"
+          @bookmark="setBookmark"
+        />
+      </VCard>
+      <footer class="flex justify-center">
+        <Link
+          v-if="breadcrumbs && breadcrumbs[2]"
+          :href="breadcrumbs[2].href"
         >
-          <template #chat>
-            <a
-              class="link"
-              :href="SUPPORT_CHAT_URL"
-            >
-              {{ t('material.supportChat') }}
-            </a>
-          </template>
-          <template #email>
-            <a
-              class="link"
-              :href="`mailto:${SUPPORT_EMAIL}`"
-            >
-              {{ SUPPORT_EMAIL }}
-            </a>
-          </template>
-        </i18n-t>
-        <VButton
-          appearance="link"
-          @click="router.push({ name: 'courses' })"
-        >
-          {{ t('common.toHome') }}
-        </VButton>
-      </div>
-    </VLoggedLayout>
-  </template>
-  <VLoadingView v-else />
+          <VButton>{{ t('material.backToLesson') }}</VButton>
+        </Link>
+      </footer>
+    </template>
+    <div
+      v-else
+      class="center flex max-w-[400px] flex-col text-center"
+    >
+      <p>{{ t('material.notFound') }}</p>
+      <i18n-t
+        keypath="material.supportText"
+        tag="p"
+        scope="global"
+      >
+        <template #chat>
+          <a
+            class="link"
+            :href="SUPPORT_CHAT_URL"
+          >
+            {{ t('material.supportChat') }}
+          </a>
+        </template>
+        <template #email>
+          <a
+            class="link"
+            :href="`mailto:${SUPPORT_EMAIL}`"
+          >
+            {{ SUPPORT_EMAIL }}
+          </a>
+        </template>
+      </i18n-t>
+      <VButton
+        appearance="link"
+        :tag="Link"
+        :href="urls.courses()"
+      >
+        {{ t('common.toHome') }}
+      </VButton>
+    </div>
+  </VLoggedLayout>
 </template>
 
 <style>

@@ -10,8 +10,8 @@
   },
   "devDependencies": {
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.6",
-    "prettier": "^3.6.2",
+    "lint-staged": "^17.6.0",
+    "prettier": "^3.9.10",
     "prettier-plugin-tailwindcss": "^0.7.1"
   }
 }

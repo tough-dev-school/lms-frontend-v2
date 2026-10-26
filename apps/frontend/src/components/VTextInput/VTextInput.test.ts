@@ -194,15 +194,9 @@ describe('VTextInput', () => {
     expect(wrapper.emitted('update:modelValue')).toStrictEqual([[string]]);
   });
 
-  test('handles backend error response format', () => {
+  test('handles server errors from an Inertia form', () => {
     const backendError: FormError = {
-      response: {
-        data: {
-          test_field: 'Backend validation failed',
-        },
-        status: 400,
-        statusText: 'Bad Request',
-      },
+      test_field: 'Backend validation failed',
     };
 
     wrapper = mount(VTextInput, {

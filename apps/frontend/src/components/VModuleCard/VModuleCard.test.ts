@@ -1,5 +1,5 @@
-import { describe, beforeEach, expect, test, vi } from 'vitest';
-import { mount, RouterLinkStub } from '@vue/test-utils';
+import { describe, beforeEach, expect, test } from 'vitest';
+import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import VModuleCard from './VModuleCard.vue';
 import {
@@ -11,18 +11,7 @@ import { faker } from '@faker-js/faker';
 import dayjs from 'dayjs';
 import { nextTick } from 'vue';
 import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
-
-const mockFetchQuery = vi.fn();
-
-vi.mock('@tanstack/vue-query', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@tanstack/vue-query')>();
-  return {
-    ...actual,
-    useQueryClient: () => ({
-      fetchQuery: mockFetchQuery,
-    }),
-  };
-});
+import { Link } from '@/mocks/inertia';
 
 const defaultProps = {
   module: createModuleDetail({ lesson_count: 5 }),
@@ -33,11 +22,8 @@ const defaultProps = {
 const defaultMountOptions = {
   props: defaultProps,
   shallow: true,
-  global: {
-    stubs: {
-      RouterLink: RouterLinkStub,
-    },
-  },
+  // A started module renders as a Link, its content is in the default slot
+  global: { renderStubDefaultSlot: true },
 };
 
 const getModuleCard = (wrapper: VueWrapper) =>
@@ -53,8 +39,6 @@ describe('VModuleCard', () => {
   let wrapper: VueWrapper<InstanceType<typeof VModuleCard>>;
 
   beforeEach(() => {
-    vi.clearAllMocks();
-    mockFetchQuery.mockReset();
     wrapper = mount(VModuleCard, defaultMountOptions);
   });
 
@@ -67,8 +51,8 @@ describe('VModuleCard', () => {
         shallow: true,
         props: { module, courseId, index: 0 },
         global: {
+          renderStubDefaultSlot: true,
           stubs: {
-            RouterLink: RouterLinkStub,
             VHeading: VTransparentComponent,
           },
         },
@@ -231,7 +215,7 @@ describe('VModuleCard', () => {
       expect(wrapper.find('div.VModuleCard').exists()).toBe(true);
     });
 
-    test('renders as RouterLink when module has started', async () => {
+    test('renders as a link when module has started', async () => {
       const module = createModuleDetail({
         has_started: true,
         start_date: dayjs().subtract(1, 'day').toISOString(),
@@ -242,16 +226,11 @@ describe('VModuleCard', () => {
       wrapper = mount(VModuleCard, {
         shallow: false,
         props: { module, courseId, index: 0 },
-        global: {
-          stubs: {
-            RouterLink: RouterLinkStub,
-          },
-        },
       });
 
       await wrapper.vm.$nextTick();
 
-      expect(wrapper.findComponent(RouterLinkStub).exists()).toBe(true);
+      expect(wrapper.findComponent(Link).exists()).toBe(true);
     });
   });
 
@@ -267,20 +246,13 @@ describe('VModuleCard', () => {
       wrapper = mount(VModuleCard, {
         shallow: false,
         props: { module, courseId, index: 0 },
-        global: {
-          stubs: {
-            RouterLink: RouterLinkStub,
-          },
-        },
       });
 
       await nextTick();
 
-      const routerLink = wrapper.findComponent(RouterLinkStub);
-      expect(routerLink.props('to')).toEqual({
-        name: 'module',
-        params: { courseId, moduleId: module.id },
-      });
+      expect(wrapper.findComponent(Link).props('href')).toBe(
+        `/courses/${courseId}/modules/${module.id}`,
+      );
     });
 
     test('navigates to materials when single lesson has material', async () => {
@@ -300,25 +272,16 @@ describe('VModuleCard', () => {
       });
       const courseId = faker.number.int();
 
-      mockFetchQuery.mockResolvedValue(lesson);
-
       wrapper = mount(VModuleCard, {
         shallow: false,
-        props: { module, courseId, index: 0 },
-        global: {
-          stubs: {
-            RouterLink: RouterLinkStub,
-          },
-        },
+        props: { module, courseId, index: 0, onlyLesson: lesson },
       });
 
       await nextTick();
 
-      const routerLink = wrapper.findComponent(RouterLinkStub);
-      expect(routerLink.props('to')).toEqual({
-        name: 'materials',
-        params: { materialId: lesson.material!.id },
-      });
+      expect(wrapper.findComponent(Link).props('href')).toBe(
+        `/materials/${lesson.material!.id}`,
+      );
     });
 
     test('navigates to homework when single lesson has question', async () => {
@@ -335,25 +298,16 @@ describe('VModuleCard', () => {
       });
       const courseId = faker.number.int();
 
-      mockFetchQuery.mockResolvedValue(lesson);
-
       wrapper = mount(VModuleCard, {
         shallow: false,
-        props: { module, courseId, index: 0 },
-        global: {
-          stubs: {
-            RouterLink: RouterLinkStub,
-          },
-        },
+        props: { module, courseId, index: 0, onlyLesson: lesson },
       });
 
       await nextTick();
 
-      const routerLink = wrapper.findComponent(RouterLinkStub);
-      expect(routerLink.props('to')).toEqual({
-        name: 'homework',
-        params: { questionId: lesson.question.slug },
-      });
+      expect(wrapper.findComponent(Link).props('href')).toBe(
+        `/homework/${lesson.question.slug}`,
+      );
     });
 
     test('uses default module navigation when single lesson has call', async () => {
@@ -377,74 +331,33 @@ describe('VModuleCard', () => {
       });
       const courseId = faker.number.int();
 
-      mockFetchQuery.mockResolvedValue(lesson);
-
       wrapper = mount(VModuleCard, {
         shallow: false,
-        props: { module, courseId, index: 0 },
-        global: {
-          stubs: {
-            RouterLink: RouterLinkStub,
-          },
-        },
+        props: { module, courseId, index: 0, onlyLesson: lesson },
       });
 
       await nextTick();
 
-      const routerLink = wrapper.findComponent(RouterLinkStub);
-      expect(routerLink.props('to')).toEqual({
-        name: 'module',
-        params: { courseId, moduleId: module.id },
-      });
+      expect(wrapper.findComponent(Link).props('href')).toBe(
+        `/courses/${courseId}/modules/${module.id}`,
+      );
     });
   });
 
-  describe('lesson fetching', () => {
-    test('fetches lesson data when lesson count is 1', async () => {
+  describe('single lesson', () => {
+    test('is not a link until the server sends the lesson', () => {
       const module = createModuleDetail({
         has_started: true,
         lesson_count: 1,
         single_lesson_id: faker.number.int(),
       });
-      const courseId = faker.number.int();
-      const lesson = createLesson();
-
-      mockFetchQuery.mockResolvedValue(lesson);
 
       wrapper = mount(VModuleCard, {
-        ...defaultMountOptions,
-        props: { module, courseId, index: 0 },
+        shallow: false,
+        props: { module, courseId: faker.number.int(), index: 0 },
       });
 
-      await nextTick();
-
-      expect(mockFetchQuery).toHaveBeenCalledWith(
-        expect.objectContaining({
-          queryKey: [
-            {
-              url: '/api/v2/lms/lessons/:id/',
-              params: { id: module.single_lesson_id },
-            },
-          ],
-        }),
-      );
-    });
-
-    test('does not fetch lesson data when lesson count is not 1', async () => {
-      const module = createModuleDetail({
-        has_started: true,
-        lesson_count: 5,
-      });
-      const courseId = faker.number.int();
-
-      wrapper = mount(VModuleCard, {
-        ...defaultMountOptions,
-        props: { module, courseId, index: 0 },
-      });
-
-      await nextTick();
-
-      expect(mockFetchQuery).not.toHaveBeenCalled();
+      expect(wrapper.findComponent(Link).exists()).toBe(false);
     });
   });
 });

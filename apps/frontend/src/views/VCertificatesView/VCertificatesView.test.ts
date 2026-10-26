@@ -2,22 +2,20 @@ import { mount } from '@vue/test-utils';
 import type { VueWrapper } from '@vue/test-utils';
 import VCertificatesView from './VCertificatesView.vue';
 import type VCertificateCard from '@/components/VCertificateCard/VCertificateCard.vue';
-import { createDiploma, LanguageEnum, useDiplomasList } from '@/api/generated';
+import { createDiploma, LanguageEnum } from '@/api/generated';
 import type { Diploma } from '@/api/generated';
-import { uniq, flatten } from 'lodash-es';
-import { nextTick, ref } from 'vue';
+import { uniq, flatten } from 'es-toolkit/compat';
 import { faker } from '@faker-js/faker';
-import { vi, describe, beforeEach, expect, test } from 'vitest';
+import { describe, beforeEach, expect, test } from 'vitest';
 
-const defaultProps = {};
-
-vi.mock('@/api/generated', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@/api/generated')>();
-  return {
-    ...actual,
-    useDiplomasList: vi.fn(),
-  };
-});
+const mountView = (diplomas: Diploma[]) =>
+  mount(VCertificatesView, {
+    shallow: true,
+    props: { diplomas },
+    global: {
+      renderStubDefaultSlot: true,
+    },
+  });
 
 const createDiplomaSet = (payload: Diploma): Diploma[] => {
   return Object.values(LanguageEnum).map((locale) => {
@@ -47,19 +45,7 @@ describe('VCertificatesView', () => {
 
   beforeEach(() => {
     mockDiplomasData = mockDiplomas();
-
-    vi.mocked(useDiplomasList).mockReturnValue({
-      data: ref({ results: mockDiplomasData }),
-      isLoading: ref(false),
-    } as any);
-
-    wrapper = mount(VCertificatesView, {
-      shallow: true,
-      props: defaultProps,
-      global: {
-        renderStubDefaultSlot: true,
-      },
-    });
+    wrapper = mountView(mockDiplomasData);
   });
 
   const getCertificateCardsWrappers = () => {
@@ -98,21 +84,8 @@ describe('VCertificatesView', () => {
     expect(getEmptyMessageWrapper().exists()).toBe(false);
   });
 
-  test('has an empty message if no certififcates', async () => {
-    vi.mocked(useDiplomasList).mockReturnValue({
-      data: ref({ results: [] }),
-      isLoading: ref(false),
-    } as any);
-
-    wrapper = mount(VCertificatesView, {
-      shallow: true,
-      props: defaultProps,
-      global: {
-        renderStubDefaultSlot: true,
-      },
-    });
-
-    await nextTick();
+  test('has an empty message if no certififcates', () => {
+    wrapper = mountView([]);
 
     expect(getEmptyMessageWrapper().exists()).toBe(true);
   });

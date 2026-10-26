@@ -1,93 +1,41 @@
 <script lang="ts" setup>
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
   import { useEditorAutosave } from '@/composables/useEditorAutosave';
-  import { useRouter } from 'vue-router';
-  import { useQueryClient } from '@tanstack/vue-query';
-  import {
-    useHomeworkAnswersCreate,
-    useHomeworkQuestionsRetrieve,
-    useLmsLessonsRetrieve,
-    homeworkAnswersRetrieveQueryKey,
-    homeworkCrosschecksListQueryKey,
-    lmsLessonsListQueryKey,
-  } from '@/api/generated';
+  import { useForm } from '@inertiajs/vue3';
+  import type { Lesson, QuestionDetail } from '@/api/generated';
   import { computed } from 'vue';
+  import { useI18n } from 'vue-i18n';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import VPillHomework from '@/components/VPillHomework/VPillHomework.vue';
-  import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
-  import { useHomeworkBreadcrumbs } from './useHomeworkBreadcrumbs';
   import VMakrdownContent from '@/components/VMakrdownContent/VMakrdownContent.vue';
+  import { getHomeworkBreadcrumbs } from './homeworkBreadcrumbs';
 
-  interface Props {
+  const props = defineProps<{
     questionId: string;
-  }
+    question: QuestionDetail;
+    lesson: Lesson | null;
+  }>();
 
-  const props = defineProps<Props>();
-  const router = useRouter();
+  const { t } = useI18n();
 
-  const { breadcrumbs } = useHomeworkBreadcrumbs(() => props.questionId);
-
-  const { data: question, isLoading: isQuestionLoading } =
-    useHomeworkQuestionsRetrieve(computed(() => props.questionId));
-
-  const { data: lesson, isLoading: isLessonLoading } = useLmsLessonsRetrieve(
-    computed(() => question.value?.breadcrumbs.lesson?.id as number),
-    {
-      query: {
-        enabled: () => !!question.value?.breadcrumbs.lesson?.id,
-      },
-    },
+  const breadcrumbs = computed(() =>
+    getHomeworkBreadcrumbs(props.question, t('common.myCourses')),
   );
 
-  const { content } = useEditorAutosave(['draft', props.questionId]);
+  const { content, clear } = useEditorAutosave(['draft', props.questionId]);
 
-  const queryClient = useQueryClient();
-  const {
-    mutateAsync: createAnswerMutation,
-    isPending,
-    error,
-  } = useHomeworkAnswersCreate({
-    mutation: {
-      onSuccess: (data) => {
-        queryClient.invalidateQueries({
-          queryKey: homeworkAnswersRetrieveQueryKey(data.parent),
-        });
-        queryClient.invalidateQueries({
-          queryKey: homeworkCrosschecksListQueryKey({
-            question: props.questionId,
-          }),
-        });
-        queryClient.invalidateQueries({
-          queryKey: lmsLessonsListQueryKey(),
-        });
-      },
-    },
-  });
+  const form = useForm({});
 
-  const handleCreateAnswer = async () => {
-    const answer = await createAnswerMutation({
-      data: {
-        content: content.value,
-        question: props.questionId,
-        parent: undefined,
-      },
-    });
-
-    router.push({
-      name: 'homework',
-      params: {
-        questionId: props.questionId,
-      },
-      query: {
-        answerId: answer.slug,
-      },
-    });
+  // The server answers with a redirect to the created answer
+  const handleCreateAnswer = () => {
+    form
+      .transform(() => ({ content: content.value }))
+      .post(`/homework/${props.questionId}/answers`, { onSuccess: clear });
   };
 </script>
 
 <template>
   <VLoggedLayout
-    v-if="!(isQuestionLoading && isLessonLoading) && question && lesson"
     :breadcrumbs="breadcrumbs"
     :title="question.name"
   >
@@ -105,11 +53,10 @@
       />
       <VCreateAnswer
         v-model="content"
-        :is-pending="isPending"
-        :error="error"
+        :is-pending="form.processing"
+        :error="form.errors"
         @send="handleCreateAnswer"
       />
     </section>
   </VLoggedLayout>
-  <VLoadingView v-else />
 </template>

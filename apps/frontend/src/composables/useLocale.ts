@@ -1,35 +1,22 @@
-import { computed, watch } from 'vue';
-import { createGlobalState, useStorage } from '@vueuse/core';
-import dayjs from 'dayjs';
-import { i18n, isLocale } from '@/i18n';
+import { computed } from 'vue';
+import { router } from '@inertiajs/vue3';
+import { useI18n } from 'vue-i18n';
 import type { Locale } from '@/i18n';
+import { LOCALE_COOKIE, writePreferenceCookie } from '@/preferences';
 
-// Russian is the main audience, so anyone with Russian anywhere in their browser languages gets it
-export const detectLocale = (): Locale =>
-  navigator.languages.some((language) =>
-    language.toLowerCase().startsWith('ru'),
-  )
-    ? 'ru'
-    : 'en';
-
-export const applyLocale = (locale: Locale) => {
-  i18n.global.locale.value = locale;
-  dayjs.locale(locale);
-  document.documentElement.lang = locale;
-};
-
-export const useLocale = createGlobalState(() => {
-  const storedLocale = useStorage<string>('locale', detectLocale());
+export const useLocale = () => {
+  const { locale: i18nLocale } = useI18n();
 
   const locale = computed<Locale>({
-    get: () =>
-      isLocale(storedLocale.value) ? storedLocale.value : detectLocale(),
+    get: () => i18nLocale.value as Locale,
     set: (value) => {
-      storedLocale.value = value;
+      i18nLocale.value = value;
+      document.documentElement.lang = value;
+      writePreferenceCookie(LOCALE_COOKIE, value);
+      // Backend texts like error messages follow Accept-Language, so the props need a refetch
+      router.reload();
     },
   });
 
-  watch(locale, applyLocale, { immediate: true });
-
   return { locale };
-});
+};

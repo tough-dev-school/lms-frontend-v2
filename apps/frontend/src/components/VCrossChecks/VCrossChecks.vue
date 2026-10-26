@@ -1,4 +1,5 @@
 <script setup lang="ts">
+  import { Link } from '@inertiajs/vue3';
   import { getName } from '@/utils/getName';
   import type { CrossCheck } from '@/api/generated';
   import { useI18n } from 'vue-i18n';
@@ -21,10 +22,11 @@
         :key="crosscheck.answer.url"
         data-testid="crosscheck"
       >
-        <a
+        <Link
           class="link"
           :href="crosscheck.answer.url"
-          >{{
+        >
+          {{
             getName({
               firstName: crosscheck.answer.author.first_name,
               lastName: crosscheck.answer.author.last_name,
@@ -35,8 +37,8 @@
             crosscheck.is_checked
               ? t('crossChecks.checked')
               : t('crossChecks.notChecked')
-          }})</a
-        >
+          }})
+        </Link>
       </li>
     </ol>
     <p>

@@ -2,10 +2,10 @@ import { defineConfig } from 'eslint-config-fans';
 
 export default defineConfig(
   {
-    typescript: true,
+    typescript: { typeAware: false },
     vue: true,
-    prettier: true,
-    strict: false,
+    formatter: 'prettier',
+    opinionated: false,
   },
   {
     rules: {

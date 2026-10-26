@@ -9,11 +9,12 @@
     :is="to ? 'a' : 'div'"
     data-testid="pill-item"
     :style="{ flexBasis: 'calc(100% / 3)' }"
-    class="py-16 phone:min-h-72 w-full flex-grow flex justify-center items-center text-center font-medium border-b phone:border-r border-none phone:last-of-type:border-r-0"
+    class="flex w-full flex-grow items-center justify-center border-b border-none py-16 text-center font-medium phone:min-h-72 phone:border-r phone:last-of-type:border-r-0"
     :class="{
-      'hover:bg-lightgray hover:bg-opacity-20 cursor-pointer link-bright': to,
+      'link-bright cursor-pointer hover:bg-lightgray hover:bg-opacity-20': to,
     }"
-    :href="to">
+    :href="to"
+  >
     <slot />
   </component>
 </template>

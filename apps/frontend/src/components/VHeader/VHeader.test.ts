@@ -1,30 +1,20 @@
 import { describe, beforeEach, expect, test } from 'vitest';
-import { mount, RouterLinkStub, VueWrapper } from '@vue/test-utils';
+import { mount, VueWrapper } from '@vue/test-utils';
 import VHeader from './VHeader.vue';
+import { Link } from '@/mocks/inertia';
 
 describe('VHeader', () => {
   let wrapper: VueWrapper<InstanceType<typeof VHeader>>;
 
-  const mountComponent = () => {
-    wrapper = mount(VHeader, {
-      shallow: true,
-      global: {
-        stubs: {
-          RouterLink: RouterLinkStub,
-        },
-      },
-    });
-  };
-
   beforeEach(() => {
-    mountComponent();
+    wrapper = mount(VHeader, { shallow: true });
   });
 
-  const getLogoWrapper = () => wrapper.findComponent(RouterLinkStub);
+  const getLogoWrapper = () => wrapper.findComponent(Link);
 
   test('has logo that leads to home page', () => {
     expect(getLogoWrapper().exists()).toBe(true);
-    expect(getLogoWrapper().props().to).toBe('/');
+    expect(getLogoWrapper().props('href')).toBe('/');
   });
 
   test('renders slot content', () => {
@@ -33,11 +23,6 @@ describe('VHeader', () => {
       shallow: true,
       slots: {
         default: slotContent,
-      },
-      global: {
-        stubs: {
-          RouterLink: RouterLinkStub,
-        },
       },
     });
 

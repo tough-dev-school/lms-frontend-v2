@@ -6,7 +6,7 @@ import type { VReactionProps } from './VReaction.vue';
 import { ALLOWED_REACTIONS } from '@/components/VReactions/VReactions.vue';
 import { getName } from '@/utils/getName';
 import type VAvatar from '@/components/VAvatar/VAvatar.vue';
-import { times } from 'lodash-es';
+import { times } from 'es-toolkit/compat';
 import { createReactionDetailed } from '@/api/generated';
 import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
 

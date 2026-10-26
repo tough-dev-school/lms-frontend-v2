@@ -9,33 +9,28 @@
     IconDevices,
     IconSunFilled,
   } from '@tabler/icons-vue';
-  import { useColorMode } from '@vueuse/core';
   import { computed } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { useLocale } from '@/composables/useLocale';
+  import { useTheme } from '@/composables/useTheme';
   import { isLocale } from '@/i18n';
-
-  enum DarkMode {
-    Auto = 'auto',
-    Light = 'light',
-    Dark = 'dark',
-  }
+  import { isTheme } from '@/preferences';
 
   const { t } = useI18n();
 
   const darkModeOptions = computed<RadioOption[]>(() => [
     {
-      value: DarkMode.Auto,
+      value: 'auto',
       label: t('preferences.themeAuto'),
       icon: IconDevices,
     },
     {
-      value: DarkMode.Light,
+      value: 'light',
       label: t('preferences.themeLight'),
       icon: IconSunFilled,
     },
     {
-      value: DarkMode.Dark,
+      value: 'dark',
       label: t('preferences.themeDark'),
       icon: IconMoonFilled,
     },
@@ -48,8 +43,12 @@
     { value: 'en', label: '🇬🇧 English' },
   ];
 
-  const { store } = useColorMode();
+  const { theme } = useTheme();
   const { locale } = useLocale();
+
+  const setTheme = (value: string) => {
+    if (isTheme(value)) theme.value = value;
+  };
 
   const setLocale = (value: string) => {
     if (isLocale(value)) locale.value = value;
@@ -63,9 +62,10 @@
         <span>{{ t('preferences.theme') }}</span>
         <div class="flex flex-wrap gap-16">
           <VRadioSwitch
-            v-model="store"
+            :model-value="theme"
             data-testid="theme"
             :options="darkModeOptions"
+            @update:model-value="setTheme"
           />
         </div>
       </div>

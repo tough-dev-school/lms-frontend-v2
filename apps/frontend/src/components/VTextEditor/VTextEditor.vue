@@ -28,7 +28,7 @@
   import { onKeyDown, useKeyModifier, useFocusWithin } from '@vueuse/core';
   import VLoader from '@/components/VLoader/VLoader.vue';
   import { homeworkAnswersImageCreate } from '@/api/generated';
-  import { isEqual } from 'lodash-es';
+  import { isEqual } from 'es-toolkit/compat';
   import { useI18n } from 'vue-i18n';
 
   const props = withDefaults(
@@ -59,6 +59,12 @@
 
   const content = defineModel<Record<string, unknown>>({ required: true });
 
+  const emit = defineEmits<{
+    send: [];
+  }>();
+
+  const MARKDOWN_HEADING = /^\s{0,3}#{1,6}\s/m;
+
   const contentOrLegacyText = computed({
     get() {
       if (Object.keys(content.value).length === 0 && props.legacyText) {
@@ -76,10 +82,6 @@
   const currentEditor = useTemplateRef('currentEditor');
   const isImageLoading = ref(false);
   const { focused } = useFocusWithin(currentEditor);
-
-  const emit = defineEmits<{
-    send: [];
-  }>();
 
   const isMetaPressed = useKeyModifier('Meta');
 
@@ -153,7 +155,7 @@
         if (!candidate) return false;
 
         const looksLikeMarkdown =
-          !!markdownFromClipboard || /^\s{0,3}#{1,6}\s/m.test(candidate);
+          !!markdownFromClipboard || MARKDOWN_HEADING.test(candidate);
 
         // Only convert markdown if it actually looks like markdown
         // Otherwise, let TipTap handle HTML paste natively to preserve styles
@@ -305,12 +307,12 @@
 
   const isEmpty = computed(() => isEditorEmpty.value);
 
-  defineExpose({
-    isEmpty,
-  });
-
   onBeforeUnmount(() => {
     editor.destroy();
+  });
+
+  defineExpose({
+    isEmpty,
   });
 </script>
 

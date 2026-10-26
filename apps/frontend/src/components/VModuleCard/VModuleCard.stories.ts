@@ -2,6 +2,7 @@ import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VModuleCard from './VModuleCard.vue';
 import {
   COURSE,
+  LESSON_MATERIAL,
   MODULE_BONUS,
   MODULE_DOCUMENTATION,
   MODULE_ERRORS,
@@ -83,6 +84,20 @@ export const WithStartDate = {
   },
 };
 
+// A started module with one lesson links straight to that lesson
+export const SingleLesson = {
+  render: Template,
+  args: {
+    module: {
+      ...MODULE_RESOURCES,
+      has_started: true,
+      lesson_count: 1,
+    },
+    onlyLesson: LESSON_MATERIAL,
+    index: 2,
+  },
+};
+
 export const MinimalContent = {
   render: Template,
   args: {
@@ -102,7 +117,7 @@ export const ColorVariations = {
           ...module,
           id: index + 1,
           has_started: true,
-          // A started module with one lesson loads that lesson to link to it directly
+          // A started module with one lesson needs that lesson to link anywhere
           lesson_count: 2,
         }));
       return { modules, courseId: COURSE.id };

@@ -1,8 +1,7 @@
 <script setup lang="ts">
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
   import { computed } from 'vue';
-  import { generateHTML } from '@tiptap/vue-3';
-  import { getExtensions } from '@/utils/tiptap';
+  import { tiptapToHtml } from '@/utils/tiptapHtml';
   import type { Answer, AnswerTree } from '@/api/generated';
 
   const props = defineProps<{
@@ -15,10 +14,7 @@
       props.answer.content &&
       Object.keys(props.answer.content).length > 0
     ) {
-      return generateHTML(
-        props.answer.content,
-        getExtensions({ placeholder: '' }),
-      );
+      return tiptapToHtml(props.answer.content);
     } else if ('legacy_text' in props.answer && props.answer.legacy_text) {
       return props.answer.legacy_text;
     }

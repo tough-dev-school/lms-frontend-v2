@@ -1,171 +1,82 @@
 <script lang="ts" setup>
   import VHeading from '@/components/VHeading/VHeading.vue';
-  import VThread from '@/components/VThread';
+  import VThread from '@/components/VThread/VThread.vue';
   import VFeedbackGuide from '@/components/VFeedbackGuide/VFeedbackGuide.vue';
   import VCrossChecks from '@/components/VCrossChecks/VCrossChecks.vue';
   import VDetails from '@/components/VDetails/VDetails.vue';
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
+  import VExistingAnswer from '@/components/VExistingAnswer/VExistingAnswer.vue';
   import { useEditorAutosave } from '@/composables/useEditorAutosave';
-  import VExistingAnswer from '@/components/VExistingAnswer';
-  import {
-    useHomeworkCrosschecksList,
-    useHomeworkAnswersCreate,
-    useHomeworkQuestionsRetrieve,
-    useHomeworkAnswersRetrieve,
-    useUsersMeRetrieve,
-    useLmsLessonsRetrieve,
-    homeworkAnswersRetrieveQueryKey,
-    homeworkCrosschecksListQueryKey,
-    lmsLessonsListQueryKey,
+  import type {
+    AnswerTree,
+    CrossCheck,
+    Lesson,
+    QuestionDetail,
   } from '@/api/generated';
-  import { computed, watch } from 'vue';
-  import { useRouter } from 'vue-router';
-  import { useQueryClient } from '@tanstack/vue-query';
+  import { computed } from 'vue';
+  import { Link, useForm, usePage } from '@inertiajs/vue3';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import VPillHomework from '@/components/VPillHomework/VPillHomework.vue';
-  import { useHomeworkBreadcrumbs } from './useHomeworkBreadcrumbs';
-  import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
-  import { getEmptyContent } from '@/utils/tiptap';
   import VMakrdownContent from '@/components/VMakrdownContent/VMakrdownContent.vue';
-  import { usePopulateAnswersCache } from '@/composables/usePopulateAnswersCache';
   import { useI18n } from 'vue-i18n';
+  import { urls } from '@/urls';
+  import { getHomeworkBreadcrumbs } from './homeworkBreadcrumbs';
+  import { useScrollToCreatedAnswer } from './useScrollToCreatedAnswer';
 
   const props = defineProps<{
     questionId: string;
-    answerId: string;
+    question: QuestionDetail;
+    answer: AnswerTree;
+    lesson: Lesson | null;
+    crosschecks: CrossCheck[];
   }>();
-  const router = useRouter();
-  const queryClient = useQueryClient();
+
   const { t } = useI18n();
+  const page = usePage();
 
-  const { breadcrumbs } = useHomeworkBreadcrumbs(() => props.questionId);
-  const { data: question, isLoading: isQuestionLoading } =
-    useHomeworkQuestionsRetrieve(computed(() => props.questionId));
-  const { data: answer, isLoading: isAnswerLoading } =
-    useHomeworkAnswersRetrieve(computed(() => props.answerId));
+  useScrollToCreatedAnswer();
 
-  const { data: lesson, isLoading: isLessonLoading } = useLmsLessonsRetrieve(
-    computed(() => question.value?.breadcrumbs.lesson?.id as number),
-    {
-      query: {
-        enabled: () => !!question.value?.breadcrumbs.lesson?.id,
-      },
-    },
-  );
-
-  const { data: user, isLoading: isUserLoading } = useUsersMeRetrieve();
-
-  const populateAnswersCache = usePopulateAnswersCache();
-
-  watch(
-    () => answer.value,
-    () => {
-      if (answer.value) {
-        populateAnswersCache(answer.value);
-      }
-    },
+  const breadcrumbs = computed(() =>
+    getHomeworkBreadcrumbs(props.question, t('common.myCourses')),
   );
 
   const isOwnAnswer = computed(() => {
-    return answer.value?.author.uuid === user.value?.uuid;
+    return props.answer.author.uuid === page.props.user?.uuid;
   });
 
-  const answerLink = computed(() => {
-    if (props.answerId) {
-      const url = new URL(
-        `${window.location.origin}/homework/${props.questionId}`,
-      );
-      url.searchParams.set('answerId', props.answerId);
-      return url.toString();
-    }
-    return undefined;
-  });
-
-  const { content } = useEditorAutosave([
-    'commentText',
-    props.questionId,
-    props.answerId,
-  ]);
-
-  const handleCreateComment = async () => {
-    try {
-      const createdAnswer = await createAnswerMutation({
-        data: {
-          content: content.value,
-          question: props.questionId,
-          parent: props.answerId,
-        },
-      });
-
-      content.value = getEmptyContent();
-
-      router.push({
-        ...router.currentRoute.value,
-        hash: `#${createdAnswer.slug}`,
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const { data: crosschecks } = useHomeworkCrosschecksList(
-    computed(() => ({ question: props.questionId })),
+  const answerLink = computed(
+    () =>
+      `${page.props.origin}${urls.homework(props.questionId, props.answer.slug)}`,
   );
 
-  const isSent = computed(() => {
-    return crosschecks.value?.some(
-      (crosscheck) =>
-        crosscheck.answer.slug === props.answerId && crosscheck.is_checked,
-    );
-  });
+  const { content, clear } = useEditorAutosave([
+    'commentText',
+    props.questionId,
+    props.answer.slug,
+  ]);
 
-  const {
-    mutateAsync: createAnswerMutation,
-    isPending,
-    error,
-  } = useHomeworkAnswersCreate({
-    mutation: {
-      onSuccess: (data) => {
-        queryClient.invalidateQueries({
-          queryKey: homeworkAnswersRetrieveQueryKey(data.parent),
-        });
-        queryClient.invalidateQueries({
-          queryKey: homeworkCrosschecksListQueryKey({
-            question: props.questionId,
-          }),
-        });
-        queryClient.invalidateQueries({
-          queryKey: lmsLessonsListQueryKey(),
-        });
-      },
-    },
-  });
+  const form = useForm({});
 
-  const handleDeleteAnswer = () => {
-    router.push({
-      name: 'homework',
-      params: {
-        questionId: props.questionId,
-      },
-    });
+  const handleCreateComment = () => {
+    form
+      .transform(() => ({ content: content.value, parent: props.answer.slug }))
+      .post(`/homework/${props.questionId}/answers`, {
+        preserveScroll: true,
+        onSuccess: clear,
+      });
   };
 
-  const ownAnswerHref = computed(() => {
-    return (
-      window.location.origin +
-      router.resolve({
-        name: 'homework',
-        params: {
-          questionId: props.questionId,
-        },
-      }).fullPath
+  const isSent = computed(() => {
+    return props.crosschecks.some(
+      (crosscheck) =>
+        crosscheck.answer.slug === props.answer.slug && crosscheck.is_checked,
     );
   });
 
   const feedbackMessage = computed(() => {
-    if (!crosschecks.value?.length) return;
+    if (!props.crosschecks.length) return;
 
-    const completedCrosschecks = crosschecks.value.filter(
+    const completedCrosschecks = props.crosschecks.filter(
       (check) => check.is_checked,
     );
 
@@ -183,36 +94,21 @@
 
 <template>
   <VLoggedLayout
-    v-if="
-      !(
-        isQuestionLoading &&
-        isAnswerLoading &&
-        isLessonLoading &&
-        isUserLoading
-      ) &&
-      question &&
-      answer &&
-      user &&
-      lesson
-    "
     :breadcrumbs="breadcrumbs"
     :title="question.name"
   >
     <template #pill>
       <VPillHomework
-        v-if="lesson.homework && lesson.question"
+        v-if="lesson?.homework && lesson.question"
         :lesson="lesson"
       />
     </template>
-    <section v-if="isOwnAnswer && crosschecks?.length">
+    <section v-if="isOwnAnswer && crosschecks.length">
       <VCrossChecks :crosschecks="crosschecks" />
     </section>
     <section class="VHomeworkAnswerView__Section">
       <VHeading tag="h2">{{ t('homework.sentWork') }}</VHeading>
-      <VExistingAnswer
-        :answer-id="answer.slug"
-        @after-delete="handleDeleteAnswer"
-      />
+      <VExistingAnswer :answer="answer" />
     </section>
     <section class="VHomeworkAnswerView__Section -mt-16">
       <div
@@ -227,9 +123,9 @@
         </p>
         <p class="text-sub">{{ t('homework.shareHint') }}</p>
         <div
-          v-if="answerLink"
           class="select-all break-all rounded-8 bg-white/50 px-8 py-8 text-sub"
           style="font-family: monospace"
+          data-testid="answer-link"
         >
           {{ answerLink }}
         </div>
@@ -252,13 +148,11 @@
       <p v-if="isOwnAnswer && feedbackMessage">
         {{ feedbackMessage }}
       </p>
-      <template v-if="answer.descendants">
-        <VThread
-          v-for="comment in answer.descendants"
-          :key="comment.slug"
-          :answer-id="comment.slug"
-        />
-      </template>
+      <VThread
+        v-for="comment in answer.descendants"
+        :key="comment.slug"
+        :answer="comment"
+      />
       <VFeedbackGuide
         v-if="question.course?.homework_check_recommendations"
         :guide="question.course.homework_check_recommendations"
@@ -266,8 +160,8 @@
 
       <VCreateAnswer
         v-model="content"
-        :error="error"
-        :is-pending="isPending"
+        :error="form.errors"
+        :is-pending="form.processing"
         @send="handleCreateComment"
       />
       <div
@@ -275,15 +169,15 @@
         class="card"
       >
         {{ t('homework.answerSent') }}
-        <a
+        <Link
           class="link"
-          :href="ownAnswerHref"
-          >{{ t('homework.backToOwnAnswer') }}</a
+          :href="urls.homework(questionId)"
         >
+          {{ t('homework.backToOwnAnswer') }}
+        </Link>
       </div>
     </section>
   </VLoggedLayout>
-  <VLoadingView v-else />
 </template>
 
 <style scoped>

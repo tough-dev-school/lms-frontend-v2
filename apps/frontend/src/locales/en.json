@@ -16,6 +16,7 @@
     "homeworkNotSent": "Not submitted"
   },
   "login": {
+    "linkExpired": "This login link has expired or was already used. Request a new one below",
     "title": "Log in",
     "linkTip": "We'll send a login link to this email",
     "getAccess": "Get access",

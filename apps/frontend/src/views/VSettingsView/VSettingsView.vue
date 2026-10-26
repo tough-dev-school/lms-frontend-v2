@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+  import { Link, useForm } from '@inertiajs/vue3';
   import VCard from '@/components/VCard/VCard.vue';
   import VLinksSettings from '@/components/VLinksSettings/VLinksSettings.vue';
   import VCertificateSettings from '@/components/VCertificateSettings/VCertificateSettings.vue';
@@ -6,83 +7,49 @@
   import VPreferencesSettings from '@/components/VPreferencesSettings/VPreferencesSettings.vue';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import VPasswordResetForm from '@/components/VPasswordResetForm/VPasswordResetForm.vue';
-  import { useQueryClient } from '@tanstack/vue-query';
-  import { useAuthPasswordChangeCreate } from '@/api/generated';
   import { useI18n } from 'vue-i18n';
+  import { urls } from '@/urls';
 
-  const queryClient = useQueryClient();
   const { t } = useI18n();
 
-  const {
-    mutateAsync: changePassword,
-    error,
-    isPending: isPasswordChangePending,
-  } = useAuthPasswordChangeCreate({
-    mutation: {
-      onSuccess: () => {
-        queryClient.invalidateQueries();
-      },
-    },
-  });
+  const passwordForm = useForm({ new_password1: '', new_password2: '' });
 
-  const handleSave = async (password: string) => {
-    await changePassword({
-      data: {
-        new_password1: password,
-        new_password2: password,
-      },
+  const handleSave = (password: string) => {
+    passwordForm.new_password1 = password;
+    passwordForm.new_password2 = password;
+    passwordForm.post('/settings/password', {
+      preserveScroll: true,
+      onFinish: () => passwordForm.reset(),
     });
   };
+
+  // Plain anchors, the sections are on this page and jumping to them needs no visit
+  const sections = [
+    { id: 'links', label: 'settings.links' },
+    { id: 'password', label: 'settings.password' },
+    { id: 'certificate', label: 'settings.certificate' },
+    { id: 'avatar', label: 'settings.avatar' },
+    { id: 'preferences', label: 'settings.preferences' },
+  ] as const;
 </script>
 
 <template>
   <VLoggedLayout :title="t('settings.title')">
     <VCard>
       <ul>
-        <li>
-          <RouterLink
+        <li
+          v-for="section in sections"
+          :key="section.id"
+        >
+          <!-- preserve-state keeps what the student typed in the forms below -->
+          <Link
             class="link"
-            :to="{ name: 'settings', hash: '#links' }"
-            data-testid="links-link"
+            :href="urls.settings(section.id)"
+            :data-testid="`${section.id}-link`"
+            preserve-state
           >
-            {{ t('settings.links') }}
-          </RouterLink>
-        </li>
-        <li>
-          <RouterLink
-            class="link"
-            data-testid="password-link"
-            :to="{ name: 'settings', hash: '#password' }"
-          >
-            {{ t('settings.password') }}
-          </RouterLink>
-        </li>
-        <li>
-          <RouterLink
-            class="link"
-            :to="{ name: 'settings', hash: '#certificate' }"
-            data-testid="certificate-link"
-          >
-            {{ t('settings.certificate') }}
-          </RouterLink>
-        </li>
-        <li>
-          <RouterLink
-            class="link"
-            :to="{ name: 'settings', hash: '#avatar' }"
-            data-testid="avatar-link"
-          >
-            {{ t('settings.avatar') }}
-          </RouterLink>
-        </li>
-        <li>
-          <RouterLink
-            class="link"
-            :to="{ name: 'settings', hash: '#preferences' }"
-            data-testid="preferences-link"
-          >
-            {{ t('settings.preferences') }}
-          </RouterLink>
+            {{ t(section.label) }}
+          </Link>
         </li>
       </ul>
     </VCard>
@@ -94,8 +61,8 @@
       id="password"
       :title="t('settings.password')"
       data-testid="password-settings"
-      :is-pending="isPasswordChangePending"
-      :error="error"
+      :is-pending="passwordForm.processing"
+      :error="passwordForm.errors"
       @save="handleSave"
     />
     <VCertificateSettings

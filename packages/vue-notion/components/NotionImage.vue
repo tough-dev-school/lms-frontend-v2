@@ -1,6 +1,5 @@
 <script setup lang="ts">
-  import GLightbox from 'glightbox';
-  import 'glightbox/dist/css/glightbox.css';
+  import type GLightbox from 'glightbox';
   import { computed, onBeforeUnmount, onMounted } from 'vue';
   import { blockPropsDefaults } from '../lib/blockProps';
   import type { BlockProps } from '../lib/blockProps';
@@ -42,9 +41,17 @@
 
   let lightbox: ReturnType<typeof GLightbox> | undefined;
 
-  onMounted(() => {
-    // eslint-disable-next-line new-cap -- GLightbox is a factory, not a class
-    lightbox = GLightbox({
+  let isUnmounted = false;
+
+  // glightbox reads `document` as soon as it loads, so it can't be imported during SSR
+  onMounted(async () => {
+    const [{ default: createLightbox }] = await Promise.all([
+      import('glightbox'),
+      import('glightbox/dist/css/glightbox.css'),
+    ]);
+    if (isUnmounted) return;
+
+    lightbox = createLightbox({
       selector: `[data-lightbox="${props.contentId}"]`,
       openEffect: 'zoom',
       closeEffect: 'none',
@@ -52,6 +59,7 @@
   });
 
   onBeforeUnmount(() => {
+    isUnmounted = true;
     lightbox?.destroy();
   });
 </script>

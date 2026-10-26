@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { computed } from 'vue';
-  import { pick } from 'lodash-es';
+  import { pick } from 'es-toolkit/compat';
   import type { FormError } from '@/types/error';
   import { getErrorData } from '@/types/error';
 

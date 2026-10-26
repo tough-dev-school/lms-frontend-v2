@@ -1,55 +1,28 @@
-<script lang="ts">
-  export interface ThreadAction {
-    name?: string;
-    handle: (() => void) | (() => Promise<void>) | null;
-    show: boolean;
-    disabled?: boolean;
-  }
-</script>
-
 <script lang="ts" setup>
-  /* eslint-disable import-x/first */
-  import VAnswer from '@/components/VAnswer';
-  import { ref, useTemplateRef } from 'vue';
+  import VAnswer from '@/components/VAnswer/VAnswer.vue';
+  import { computed, ref, useTemplateRef } from 'vue';
   import { onClickOutside } from '@vueuse/core';
-  import { useRoute, useRouter } from 'vue-router';
-  import {
-    useHomeworkAnswersCreate,
-    homeworkAnswersRetrieveQueryKey,
-    homeworkCrosschecksListQueryKey,
-    lmsLessonsListQueryKey,
-  } from '@/api/generated';
-  import { useQueryClient } from '@tanstack/vue-query';
+  import { useForm, usePage } from '@inertiajs/vue3';
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
-  import VExistingAnswer from '@/components/VExistingAnswer';
-  import type { AnswerTree, User } from '@/api/generated';
+  import VExistingAnswer from '@/components/VExistingAnswer/VExistingAnswer.vue';
+  import type { AnswerTree } from '@/api/generated';
   import { useEditorAutosave } from '@/composables/useEditorAutosave';
-  import { getEmptyContent } from '@/utils/tiptap';
-  import VThreadProvider from '.';
   import { useI18n } from 'vue-i18n';
+
+  defineOptions({ name: 'VThread' });
 
   const props = defineProps<{
     answer: AnswerTree;
-    user: User;
   }>();
 
-  const route = useRoute();
-  const router = useRouter();
   const { t } = useI18n();
-  const queryClient = useQueryClient();
+  const page = usePage();
+
+  const isOwn = computed(
+    () => props.answer.author.uuid === page.props.user?.uuid,
+  );
 
   const replyMode = ref(false);
-
-  const prepareForScroll = (slug: string) => {
-    if (route.name) {
-      router.push({ name: route.name, hash: `#${slug}` });
-    }
-  };
-
-  const handleUpdate = async (slug: string) => {
-    replyMode.value = false;
-    prepareForScroll(slug);
-  };
 
   const target = useTemplateRef('target');
 
@@ -57,84 +30,47 @@
     replyMode.value = false;
   });
 
-  const {
-    mutateAsync: createComment,
-    isPending,
-    error,
-  } = useHomeworkAnswersCreate({
-    mutation: {
-      onSuccess: (data) => {
-        queryClient.invalidateQueries({
-          queryKey: homeworkAnswersRetrieveQueryKey(data.parent),
-        });
-        queryClient.invalidateQueries({
-          queryKey: homeworkCrosschecksListQueryKey({
-            question: props.answer.question,
-          }),
-        });
-        queryClient.invalidateQueries({
-          queryKey: lmsLessonsListQueryKey(),
-        });
-      },
-    },
-  });
-
-  const { content } = useEditorAutosave([
+  const { content, clear } = useEditorAutosave([
     'commentText',
     props.answer.question,
     props.answer.slug,
     props.answer.parent,
   ]);
 
-  const handleCreateComment = async () => {
-    if (!props.answer) throw new Error('Answer not found');
+  const form = useForm({});
 
-    try {
-      const newComment = await createComment({
-        data: {
-          question: props.answer.question,
-          parent: props.answer.slug,
-          content: content.value,
+  // The page scrolls to the new reply, it knows the slug from the flash data
+  const handleCreateComment = () => {
+    form
+      .transform(() => ({ content: content.value, parent: props.answer.slug }))
+      .post(`/homework/${props.answer.question}/answers`, {
+        preserveScroll: true,
+        onSuccess: () => {
+          clear();
+          replyMode.value = false;
         },
       });
-
-      content.value = getEmptyContent();
-
-      replyMode.value = false;
-
-      router.push({
-        ...router.currentRoute.value,
-        hash: `#${newComment.slug}`,
-      });
-    } catch (error) {
-      console.warn(error);
-    }
-  };
-
-  const handleMounted = (slug: string) => {
-    if (router.currentRoute.value.hash.includes(slug)) {
-      target.value?.scrollIntoView({ behavior: 'smooth' });
-    }
   };
 </script>
 
 <template>
   <div
+    :id="answer.slug"
     ref="target"
     class="group"
   >
     <VAnswer
-      v-if="answer.author.uuid !== user.uuid"
-      :answer-id="answer.slug"
+      v-if="!isOwn"
+      :answer="answer"
     />
     <VExistingAnswer
       v-else
-      :answer-id="answer.slug"
-      @after-create="handleMounted"
+      :answer="answer"
     />
     <div class="mt-4 px-8 tablet:px-16">
       <button
         class="text-sm link"
+        data-testid="reply"
         @click="replyMode = !replyMode"
       >
         {{ replyMode ? t('common.cancel') : t('answer.reply') }}
@@ -147,8 +83,8 @@
       <VCreateAnswer
         v-show="replyMode"
         v-model="content"
-        :is-pending="isPending"
-        :error="error"
+        :is-pending="form.processing"
+        :error="form.errors"
         @send="handleCreateComment"
       />
     </div>
@@ -157,11 +93,10 @@
     v-if="answer.descendants.length > 0"
     class="thread-ruler mt-32"
   >
-    <VThreadProvider
+    <VThread
       v-for="descendant in answer.descendants"
       :key="descendant.slug"
-      :answer-id="descendant.slug"
-      @update="(slug) => handleUpdate(slug)"
+      :answer="descendant"
     />
   </div>
 </template>

@@ -2,8 +2,8 @@
   import { ref, computed, useTemplateRef } from 'vue';
   import { onClickOutside } from '@vueuse/core';
   import VAvatar from '@/components/VAvatar/VAvatar.vue';
-  import { useRouter } from 'vue-router';
-  import { useUsersMeRetrieve } from '@/api/generated';
+  import { router, usePage } from '@inertiajs/vue3';
+  import { urls } from '@/urls';
   import { getName } from '@/utils/getName';
   import { useLandingUrl } from '@/composables/useLandingUrl';
   import { useI18n } from 'vue-i18n';
@@ -17,9 +17,9 @@
 
   const isOpen = ref(false);
   const menu = useTemplateRef('menu');
-  const router = useRouter();
   const { t } = useI18n();
-  const { data: user } = useUsersMeRetrieve();
+  const page = usePage();
+  const user = computed(() => page.props.user);
   const landingUrl = useLandingUrl();
 
   onClickOutside(menu, () => (isOpen.value = false));
@@ -41,7 +41,7 @@
     {
       label: t('profileMenu.home'),
       action: () => {
-        router.push({ name: 'courses' });
+        router.visit(urls.courses());
       },
       id: 'home',
     },
@@ -55,21 +55,21 @@
     {
       label: t('profileMenu.certificates'),
       action: () => {
-        router.push({ name: 'certificates' });
+        router.visit(urls.certificates());
       },
       id: 'certificates',
     },
     {
       label: t('profileMenu.settings'),
       action: () => {
-        router.push({ name: 'settings' });
+        router.visit(urls.settings());
       },
       id: 'settings',
     },
     {
       label: t('profileMenu.addCertificateData'),
       action: () => {
-        router.push({ name: 'settings', hash: '#certificate' });
+        router.visit(urls.settings('certificate'));
       },
       isHidden: hasCertificateData.value,
       id: 'certificate',
@@ -77,7 +77,7 @@
     {
       label: t('profileMenu.logout'),
       action: () => {
-        router.push({ name: 'logout' });
+        router.post(urls.logout());
       },
       id: 'logout',
     },
