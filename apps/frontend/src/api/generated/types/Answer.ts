@@ -5,6 +5,7 @@
 * Do not edit manually.
 */
 
+import type { AnswerAttachment } from "./AnswerAttachment";
 import type { ReactionDetailed } from "./ReactionDetailed";
 import type { UserSafe } from "./UserSafe";
 
@@ -55,4 +56,8 @@ export type Answer = {
      * @type array
     */
     reactions: ReactionDetailed[];
+    /**
+     * @type array
+    */
+    attachments: AnswerAttachment[];
 };

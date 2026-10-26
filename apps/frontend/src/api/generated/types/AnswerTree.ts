@@ -6,6 +6,7 @@
 */
 
 import type { Answer } from "./Answer";
+import type { AnswerAttachment } from "./AnswerAttachment";
 import type { ReactionDetailed } from "./ReactionDetailed";
 import type { UserSafe } from "./UserSafe";
 
@@ -56,6 +57,10 @@ export type AnswerTree = {
      * @type array
     */
     reactions: ReactionDetailed[];
+    /**
+     * @type array
+    */
+    attachments: AnswerAttachment[];
     /**
      * @type array
     */

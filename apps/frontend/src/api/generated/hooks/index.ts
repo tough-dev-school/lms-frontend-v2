@@ -15,6 +15,7 @@ export type { DiplomasPartialUpdateMutationKey } from "./useDiplomasPartialUpdat
 export type { DiplomasRetrieveQueryKey } from "./useDiplomasRetrieve";
 export type { DiplomasUpdateMutationKey } from "./useDiplomasUpdate";
 export type { DocsSchemaRetrieveQueryKey } from "./useDocsSchemaRetrieve";
+export type { HomeworkAnswersAttachmentCreateMutationKey } from "./useHomeworkAnswersAttachmentCreate";
 export type { HomeworkAnswersCreateMutationKey } from "./useHomeworkAnswersCreate";
 export type { HomeworkAnswersDestroyMutationKey } from "./useHomeworkAnswersDestroy";
 export type { HomeworkAnswersImageCreateMutationKey } from "./useHomeworkAnswersImageCreate";
@@ -83,6 +84,8 @@ export { useDiplomasUpdate } from "./useDiplomasUpdate";
 export { docsSchemaRetrieveQueryKey } from "./useDocsSchemaRetrieve";
 export { docsSchemaRetrieveQueryOptions } from "./useDocsSchemaRetrieve";
 export { useDocsSchemaRetrieve } from "./useDocsSchemaRetrieve";
+export { homeworkAnswersAttachmentCreateMutationKey } from "./useHomeworkAnswersAttachmentCreate";
+export { useHomeworkAnswersAttachmentCreate } from "./useHomeworkAnswersAttachmentCreate";
 export { homeworkAnswersCreateMutationKey } from "./useHomeworkAnswersCreate";
 export { useHomeworkAnswersCreate } from "./useHomeworkAnswersCreate";
 export { homeworkAnswersDestroyMutationKey } from "./useHomeworkAnswersDestroy";

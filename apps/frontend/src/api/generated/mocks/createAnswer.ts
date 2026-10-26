@@ -6,6 +6,7 @@
 */
 
 import type { Answer } from "../types/Answer";
+import { createAnswerAttachment } from "./createAnswerAttachment";
 import { createReactionDetailed } from "./createReactionDetailed";
 import { createUserSafe } from "./createUserSafe";
 import { faker } from "@faker-js/faker";
@@ -13,7 +14,7 @@ import { faker } from "@faker-js/faker";
 export function createAnswer(data?: Partial<Answer>): Answer {
   faker.seed(1337)  
   return {
-  ...{"created": faker.date.anytime().toISOString(),"modified": faker.date.anytime().toISOString(),"slug": faker.string.uuid(),"question": faker.string.alpha(),"author": createUserSafe(),"parent": faker.string.uuid(),"legacy_text": faker.string.alpha(),"content": {},"has_descendants": faker.datatype.boolean(),"is_editable": faker.datatype.boolean(),"reactions": faker.helpers.multiple(() => (createReactionDetailed()))},
+  ...{"created": faker.date.anytime().toISOString(),"modified": faker.date.anytime().toISOString(),"slug": faker.string.uuid(),"question": faker.string.alpha(),"author": createUserSafe(),"parent": faker.string.uuid(),"legacy_text": faker.string.alpha(),"content": {},"has_descendants": faker.datatype.boolean(),"is_editable": faker.datatype.boolean(),"reactions": faker.helpers.multiple(() => (createReactionDetailed())),"attachments": faker.helpers.multiple(() => (createAnswerAttachment()))},
   ...data || {}
   }
 }

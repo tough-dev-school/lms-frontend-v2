@@ -15,6 +15,7 @@ export { diplomasPartialUpdate } from "./diplomasPartialUpdate";
 export { diplomasRetrieve } from "./diplomasRetrieve";
 export { diplomasUpdate } from "./diplomasUpdate";
 export { docsSchemaRetrieve } from "./docsSchemaRetrieve";
+export { homeworkAnswersAttachmentCreate } from "./homeworkAnswersAttachmentCreate";
 export { homeworkAnswersCreate } from "./homeworkAnswersCreate";
 export { homeworkAnswersDestroy } from "./homeworkAnswersDestroy";
 export { homeworkAnswersImageCreate } from "./homeworkAnswersImageCreate";
