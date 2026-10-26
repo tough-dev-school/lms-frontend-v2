@@ -134,7 +134,7 @@ export const MENTOR: UserSafe = {
   last_name_en: 'Ermakova',
   random_name: 'Опытная Сорока',
   avatar: null,
-  rank: '1',
+  rank: 'Эксперт курса',
   rank_label_color: '#F7CA45',
 };
 

@@ -88,6 +88,13 @@
             })
           }}
         </div>
+        <div
+          v-if="answer.author.rank"
+          class="text-sub leading-tight opacity-70"
+          data-testid="rank"
+        >
+          {{ answer.author.rank }}
+        </div>
       </div>
       <div class="flex-grow" />
       <slot name="header" />

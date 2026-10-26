@@ -64,6 +64,9 @@ describe('VAnswer', () => {
   const getNameWrapper = () => {
     return wrapper.find('[data-testid="name"]');
   };
+  const getRankWrapper = () => {
+    return wrapper.find('[data-testid="rank"]');
+  };
   const getDateWrapper = () => {
     return wrapper.find('[data-testid="date"]');
   };
@@ -96,6 +99,22 @@ describe('VAnswer', () => {
         randomName: random_name,
       }),
     );
+  });
+
+  test('answer shows author rank', () => {
+    const props = cloneDeep(defaultProps);
+    props.answer.author.rank = 'Эксперт курса';
+    wrapper = mount(VAnswer, { ...defaultMountOptions, props });
+
+    expect(getRankWrapper().text()).toBe('Эксперт курса');
+  });
+
+  test('answer without author rank has no rank label', () => {
+    const props = cloneDeep(defaultProps);
+    props.answer.author.rank = null;
+    wrapper = mount(VAnswer, { ...defaultMountOptions, props });
+
+    expect(getRankWrapper().exists()).toBe(false);
   });
 
   test('answer has relative date', () => {

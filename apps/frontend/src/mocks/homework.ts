@@ -163,6 +163,15 @@ const CLASSMATE_REPLY_FROM_STUDENT = createAnswerFixture({
   isEditable: true,
 });
 
+const CLASSMATE_REPLY_FROM_MENTOR = createAnswerFixture({
+  slug: '4d8f9a1b-2c3d-4e5f-7a8b-9c0d1e2f3a41',
+  author: MENTOR,
+  parent: 'e0b4f5a7-8c9d-4e1f-2a3b-4c5d6e7f8091',
+  created: '2025-11-18T14:30:00Z',
+  html: `<p>409 для гонки за последнюю книгу хороший выбор. Добавьте в тело ошибки id брони, которая победила, клиенту будет проще показать понятное сообщение.</p>`,
+  reactions: [[ReactionEmoji.LIKE, CLASSMATE_1]],
+});
+
 export const CLASSMATE_ANSWER = createAnswerFixture({
   slug: 'e0b4f5a7-8c9d-4e1f-2a3b-4c5d6e7f8091',
   author: CLASSMATE_1,
@@ -176,7 +185,7 @@ export const CLASSMATE_ANSWER = createAnswerFixture({
     [ReactionEmoji.LIKE, CLASSMATE_2],
     [ReactionEmoji.LIKE, ANONYMOUS_CLASSMATE],
   ],
-  descendants: [CLASSMATE_REPLY_FROM_STUDENT],
+  descendants: [CLASSMATE_REPLY_FROM_MENTOR, CLASSMATE_REPLY_FROM_STUDENT],
 });
 
 export const MENTOR_ANSWER = createAnswerFixture({
