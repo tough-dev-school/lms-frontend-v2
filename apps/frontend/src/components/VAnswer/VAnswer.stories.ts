@@ -68,6 +68,36 @@ export const RankedAuthorOwn = {
   },
 };
 
+// Admins can set a rank without picking a label color
+export const RankWithoutColor = {
+  render: Template,
+
+  args: {
+    answer: {
+      ...MENTOR_ANSWER,
+      author: { ...MENTOR, rank_label_color: null },
+    },
+    user: STUDENT_SAFE,
+  },
+};
+
+// The API limits rank to 32 characters
+export const LongRankAndName = {
+  render: Template,
+
+  args: {
+    answer: {
+      ...MENTOR_ANSWER,
+      author: {
+        ...LONG_NAME_CLASSMATE,
+        rank: 'Старший эксперт курса по бэкенду',
+        rank_label_color: MENTOR.rank_label_color,
+      },
+    },
+    user: STUDENT_SAFE,
+  },
+};
+
 export const AnonymousAuthor = {
   render: Template,
 
