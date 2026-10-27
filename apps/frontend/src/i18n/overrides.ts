@@ -1,5 +1,5 @@
 import { baseCompile, CompileErrorCodes } from '@intlify/message-compiler';
-import { merge } from 'lodash-es';
+import { merge } from 'es-toolkit/compat';
 import { i18n, messages, LOCALES } from '@/i18n';
 import type { Locale } from '@/i18n';
 // Raw sources, because the bundled messages are precompiled and can't be turned back into JSON

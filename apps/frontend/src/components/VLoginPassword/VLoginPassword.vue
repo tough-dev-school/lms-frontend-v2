@@ -10,6 +10,10 @@
   import VError from '@/components/VError/VError.vue';
   import { useI18n } from 'vue-i18n';
 
+  const emit = defineEmits<{
+    change: [];
+  }>();
+
   const queryClient = useQueryClient();
   const { t } = useI18n();
 
@@ -60,10 +64,6 @@
   const isEmail = computed(() => {
     return username.value.includes('@');
   });
-
-  const emit = defineEmits<{
-    change: [];
-  }>();
 </script>
 
 <template>

@@ -1,7 +1,7 @@
 import { useAuth } from '@/composables/useAuth';
 import { vi, describe, beforeEach, expect, test } from 'vitest';
 import onResponseRejected from './onResponseRejected';
-import { cloneDeep } from 'lodash-es';
+import { cloneDeep } from 'es-toolkit/compat';
 import type { AxiosError } from 'axios';
 import { faker } from '@faker-js/faker';
 import { ref } from 'vue';

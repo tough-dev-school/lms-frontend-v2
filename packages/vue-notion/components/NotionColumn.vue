@@ -8,9 +8,10 @@
   // binding them now would add ids that the bookmark observer picks up.
   defineOptions({ inheritAttrs: false });
 
+  const props = withDefaults(defineProps<BlockProps>(), blockPropsDefaults);
+
   const SPACER_WIDTH = 20;
 
-  const props = withDefaults(defineProps<BlockProps>(), blockPropsDefaults);
   const { format } = useBlock(props);
 
   const columnStyle = computed(() => {

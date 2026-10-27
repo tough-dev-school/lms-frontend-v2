@@ -12,13 +12,13 @@
     error: FormError;
   }>();
 
+  const content = defineModel<Record<string, unknown>>({ required: true });
+
   const emit = defineEmits<{
     send: [];
   }>();
 
   const { t } = useI18n();
-
-  const content = defineModel<Record<string, unknown>>({ required: true });
 
   const editor = useTemplateRef<InstanceType<typeof VTextEditor>>('editor');
 

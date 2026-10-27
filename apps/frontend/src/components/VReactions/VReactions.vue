@@ -28,7 +28,7 @@
   /* eslint-disable import-x/first */
   import { computed, watch, ref, onMounted } from 'vue';
   import VReaction from './components/VReaction/VReaction.vue';
-  import { groupBy, debounce } from 'lodash-es';
+  import { groupBy, debounce } from 'es-toolkit/compat';
   import { useUsersMeRetrieve } from '@/api/generated';
   import { uuid } from '@/utils/uuid';
 

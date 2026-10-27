@@ -1,6 +1,6 @@
 const idToUuid = (id: string) => {
   return id
-    .replace(/-/g, '')
+    .replaceAll('-', '')
     .replace(/(.{8})(.{4})(.{4})(.{4})(.{12})/, '$1-$2-$3-$4-$5');
 };
 

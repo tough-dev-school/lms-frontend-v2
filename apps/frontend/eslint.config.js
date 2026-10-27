@@ -1,3 +1,4 @@
+// @ts-check
 import { defineConfig, GLOB_VUE } from 'eslint-config-fans';
 import vueI18n from '@intlify/eslint-plugin-vue-i18n';
 import jsoncParser from 'jsonc-eslint-parser';
@@ -6,30 +7,24 @@ const LOCALE_FILES = ['src/locales/*.json'];
 
 export default defineConfig(
   {
-    typescript: true,
-    vue: true,
-    prettier: true,
-    strict: false,
-  },
-  {
     ignores: ['**/generated/**'],
-  },
-  {
-    files: [GLOB_VUE],
-    rules: {
-      'vue/no-undef-components': [
-        'error',
-        {
-          ignorePatterns: [
-            'RouterView',
-            'RouterLink',
-            'avatar-cropper',
-            'VDropdown',
-            'i18n-t',
-          ],
-        },
+    typescript: {
+      // TODO: Enable typeAware when we have a way to fix the issues
+      typeAware: false,
+    },
+    vue: {
+      extendUndefComponents: [
+        'RouterView',
+        'RouterLink',
+        'avatar-cropper',
+        'VDropdown',
+        'i18n-t',
       ],
     },
+    formatter: 'prettier',
+    opinionated: false,
+    // TODO: Enable e18e when we have a way to fix the issues
+    e18e: false,
   },
   {
     plugins: { '@intlify/vue-i18n': vueI18n },
@@ -69,12 +64,11 @@ export default defineConfig(
     },
   },
   {
+    name: 'overrides',
     rules: {
-      'no-alert': 'off',
-      // Disabled due to legacy code patterns
-      'unicorn/filename-case': 'off',
-      'unicorn/prefer-string-replace-all': 'off',
-      // Disabled because the config cannot detect the node version for some reason
+      // TODO: Careful review is required
+      // TODO: Enable after updating to latest TypeScript version
+      // Disabled because the config cannot detect the node version
       'n/no-unsupported-features/es-syntax': 'off',
     },
   },

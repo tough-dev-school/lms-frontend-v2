@@ -9,6 +9,8 @@
   import type { FormError } from '@/types/error';
   import { useI18n } from 'vue-i18n';
 
+  const emit = defineEmits<{ change: [] }>();
+
   const router = useRouter();
   const { t } = useI18n();
   const email = ref('');
@@ -26,8 +28,6 @@
     }
     isPending.value = false;
   };
-
-  const emit = defineEmits<{ change: [] }>();
 </script>
 
 <template>

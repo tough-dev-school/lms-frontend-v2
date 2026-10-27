@@ -1,13 +1,19 @@
+// @ts-check
 import { defineConfig } from 'eslint-config-fans';
 
 export default defineConfig(
   {
-    typescript: true,
+    typescript: {
+      // TODO: Enable typeAware when we have a way to fix the issues
+      typeAware: false,
+    },
     vue: true,
-    prettier: true,
-    strict: false,
+    formatter: 'prettier',
+    opinionated: false,
+    e18e: false,
   },
   {
+    name: 'overrides',
     rules: {
       // Component files are PascalCase, like in the app
       'unicorn/filename-case': 'off',
