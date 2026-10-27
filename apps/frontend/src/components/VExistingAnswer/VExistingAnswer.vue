@@ -2,7 +2,7 @@
   import VAnswer from '@/components/VAnswer/VAnswer.vue';
   import VAnswerActions from '@/components/VAnswerActions/VAnswerActions.vue';
   import VCreateAnswer from '@/components/VCreateAnswer/VCreateAnswer.vue';
-  import { ref, onMounted } from 'vue';
+  import { computed, ref, onMounted } from 'vue';
   import { useQueryClient } from '@tanstack/vue-query';
   import {
     useHomeworkAnswersPartialUpdate,
@@ -12,6 +12,7 @@
   } from '@/api/generated';
   import type { AnswerTree, UserSafe } from '@/api/generated';
   import { useI18n } from 'vue-i18n';
+  import { useAnswerAttachmentsUpload } from '@/composables/useAnswerAttachmentsUpload';
 
   const props = defineProps<{
     answer: AnswerTree;
@@ -73,6 +74,16 @@
   };
 
   const content = ref<Record<string, unknown>>(props.answer.content);
+  const files = ref<File[]>([]);
+
+  // Attachments belong to the homework answer itself, comments stay text only
+  const allowAttachments = computed(() => !props.answer.parent);
+
+  const {
+    upload: uploadAttachments,
+    isPending: isUploadPending,
+    error: uploadError,
+  } = useAnswerAttachmentsUpload();
 
   const handleUpdate = async () => {
     try {
@@ -82,6 +93,7 @@
           content: content.value,
         },
       });
+      await uploadAttachments(props.answer.slug, files);
       isEdit.value = false;
     } catch (error) {
       console.error(error);
@@ -113,9 +125,12 @@
   <VCreateAnswer
     v-else-if="isEdit"
     v-model="content"
+    v-model:files="files"
     :legacy-text="answer.legacy_text"
-    :is-pending="isUpdatePending"
-    :error="updateError || deleteError"
+    :is-pending="isUpdatePending || isUploadPending"
+    :error="updateError || deleteError || uploadError"
+    :allow-attachments="allowAttachments"
+    :existing-attachments="answer.attachments"
     @send="handleUpdate"
   />
 </template>

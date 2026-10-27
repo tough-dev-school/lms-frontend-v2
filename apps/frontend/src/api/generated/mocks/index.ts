@@ -1,4 +1,7 @@
 export { createAnswer } from "./createAnswer";
+export { createAnswerAttachment } from "./createAnswerAttachment";
+export { createAnswerAttachmentRequest } from "./createAnswerAttachmentRequest";
+export { createAnswerAttachmentUpload } from "./createAnswerAttachmentUpload";
 export { createAnswerCreate } from "./createAnswerCreate";
 export { createAnswerImage } from "./createAnswerImage";
 export { createAnswerImageRequest } from "./createAnswerImageRequest";
@@ -37,6 +40,7 @@ export { createDiplomasRetrievePathParams, createDiplomasRetrieve200, createDipl
 export { createDiplomasUpdatePathParams, createDiplomasUpdate200, createDiplomasUpdateMutationRequest, createDiplomasUpdateMutationResponse } from "./createDiplomasUpdate";
 export { createDocsSchemaRetrieveQueryParams, createDocsSchemaRetrieve200, createDocsSchemaRetrieveQueryResponse } from "./createDocsSchemaRetrieve";
 export { createGenderEnum } from "./createGenderEnum";
+export { createHomeworkAnswersAttachmentCreatePathParams, createHomeworkAnswersAttachmentCreate201, createHomeworkAnswersAttachmentCreateMutationRequest, createHomeworkAnswersAttachmentCreateMutationResponse } from "./createHomeworkAnswersAttachmentCreate";
 export { createHomeworkAnswersCreate201, createHomeworkAnswersCreateMutationRequest, createHomeworkAnswersCreateMutationResponse } from "./createHomeworkAnswersCreate";
 export { createHomeworkAnswersDestroyPathParams, createHomeworkAnswersDestroy204, createHomeworkAnswersDestroyMutationResponse } from "./createHomeworkAnswersDestroy";
 export { createHomeworkAnswersImageCreate201, createHomeworkAnswersImageCreateMutationRequest, createHomeworkAnswersImageCreateMutationResponse } from "./createHomeworkAnswersImageCreate";

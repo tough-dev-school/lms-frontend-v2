@@ -1,4 +1,7 @@
 export type { Answer } from "./Answer";
+export type { AnswerAttachment } from "./AnswerAttachment";
+export type { AnswerAttachmentRequest } from "./AnswerAttachmentRequest";
+export type { AnswerAttachmentUpload } from "./AnswerAttachmentUpload";
 export type { AnswerCreate } from "./AnswerCreate";
 export type { AnswerImage } from "./AnswerImage";
 export type { AnswerImageRequest } from "./AnswerImageRequest";
@@ -34,6 +37,7 @@ export type { DiplomasPartialUpdatePathParams, DiplomasPartialUpdate200, Diploma
 export type { DiplomasRetrievePathParams, DiplomasRetrieve200, DiplomasRetrieveQueryResponse, DiplomasRetrieveQuery } from "./DiplomasRetrieve";
 export type { DiplomasUpdatePathParams, DiplomasUpdate200, DiplomasUpdateMutationRequest, DiplomasUpdateMutationResponse, DiplomasUpdateMutation } from "./DiplomasUpdate";
 export type { DocsSchemaRetrieveQueryParams, DocsSchemaRetrieve200, DocsSchemaRetrieveQueryResponse, DocsSchemaRetrieveQuery } from "./DocsSchemaRetrieve";
+export type { HomeworkAnswersAttachmentCreatePathParams, HomeworkAnswersAttachmentCreate201, HomeworkAnswersAttachmentCreateMutationRequest, HomeworkAnswersAttachmentCreateMutationResponse, HomeworkAnswersAttachmentCreateMutation } from "./HomeworkAnswersAttachmentCreate";
 export type { HomeworkAnswersCreate201, HomeworkAnswersCreateMutationRequest, HomeworkAnswersCreateMutationResponse, HomeworkAnswersCreateMutation } from "./HomeworkAnswersCreate";
 export type { HomeworkAnswersDestroyPathParams, HomeworkAnswersDestroy204, HomeworkAnswersDestroyMutationResponse, HomeworkAnswersDestroyMutation } from "./HomeworkAnswersDestroy";
 export type { HomeworkAnswersImageCreate201, HomeworkAnswersImageCreateMutationRequest, HomeworkAnswersImageCreateMutationResponse, HomeworkAnswersImageCreateMutation } from "./HomeworkAnswersImageCreate";

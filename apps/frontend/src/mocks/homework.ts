@@ -2,6 +2,7 @@ import { generateJSON } from '@tiptap/vue-3';
 import { getExtensions } from '@/utils/tiptap';
 import { ReactionEmoji } from '@/components/VReactions/VReactions.vue';
 import type {
+  AnswerAttachment,
   AnswerTree,
   CrossCheck,
   QuestionDetail,
@@ -61,6 +62,7 @@ interface AnswerFixture {
   reactions?: [ReactionEmoji, UserSafe][];
   descendants?: AnswerTree[];
   isEditable?: boolean;
+  attachments?: AnswerAttachment[];
 }
 
 export const createAnswerFixture = ({
@@ -72,6 +74,7 @@ export const createAnswerFixture = ({
   reactions = [],
   descendants = [],
   isEditable = false,
+  attachments = [],
 }: AnswerFixture): AnswerTree => ({
   slug,
   author,
@@ -84,6 +87,7 @@ export const createAnswerFixture = ({
   has_descendants: descendants.length > 0,
   is_editable: isEditable,
   reactions: createReactions(slug, reactions),
+  attachments,
   descendants,
 });
 
@@ -258,3 +262,21 @@ export const CROSSCHECKS: CrossCheck[] = [
   crossCheck(2, CLASSMATE_2, '6f0a1b3c-4d5e-4f6a-8b9c-0d1e2f304152', true),
   crossCheck(3, ANONYMOUS_CLASSMATE, ANONYMOUS_ANSWER.slug, false),
 ];
+
+export const ATTACHMENTS: AnswerAttachment[] = [
+  {
+    id: 1,
+    file: 'https://example.com/homework/attachments/3f1c2b7a.pdf',
+    created: '2025-11-16T19:48:00Z',
+  },
+  {
+    id: 2,
+    file: 'https://example.com/homework/attachments/8d4e6a0c.pdf',
+    created: '2025-11-16T19:48:30Z',
+  },
+];
+
+export const STUDENT_ANSWER_WITH_ATTACHMENTS: AnswerTree = {
+  ...STUDENT_ANSWER,
+  attachments: ATTACHMENTS,
+};

@@ -11,12 +11,13 @@
     homeworkCrosschecksListQueryKey,
     lmsLessonsListQueryKey,
   } from '@/api/generated';
-  import { computed } from 'vue';
+  import { computed, ref } from 'vue';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import VPillHomework from '@/components/VPillHomework/VPillHomework.vue';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
   import { useHomeworkBreadcrumbs } from './useHomeworkBreadcrumbs';
   import VMakrdownContent from '@/components/VMakrdownContent/VMakrdownContent.vue';
+  import { useAnswerAttachmentsUpload } from '@/composables/useAnswerAttachmentsUpload';
 
   interface Props {
     questionId: string;
@@ -64,6 +65,14 @@
     },
   });
 
+  const files = ref<File[]>([]);
+
+  const {
+    upload: uploadAttachments,
+    isPending: isUploadPending,
+    error: uploadError,
+  } = useAnswerAttachmentsUpload();
+
   const handleCreateAnswer = async () => {
     const answer = await createAnswerMutation({
       data: {
@@ -72,6 +81,13 @@
         parent: undefined,
       },
     });
+
+    try {
+      await uploadAttachments(answer.slug, files);
+    } catch (error_) {
+      // The answer is already saved, staying here would invite a duplicate. Missing files can be added by editing the answer
+      console.error(error_);
+    }
 
     router.push({
       name: 'homework',
@@ -105,8 +121,10 @@
       />
       <VCreateAnswer
         v-model="content"
-        :is-pending="isPending"
-        :error="error"
+        v-model:files="files"
+        :is-pending="isPending || isUploadPending"
+        :error="error || uploadError"
+        allow-attachments
         @send="handleCreateAnswer"
       />
     </section>
