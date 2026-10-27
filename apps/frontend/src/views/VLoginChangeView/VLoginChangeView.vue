@@ -20,7 +20,7 @@
   } = useAuthPasswordResetConfirmCreate({
     mutation: {
       onSuccess: () => {
-        queryClient.invalidateQueries();
+        void queryClient.invalidateQueries();
       },
     },
   });
@@ -35,7 +35,7 @@
           token: props.token,
         },
       });
-      router.push({ name: 'login' });
+      void router.push({ name: 'login' });
     } catch (error_) {
       console.error('Failed to change password', error_);
       // handled in the mutation

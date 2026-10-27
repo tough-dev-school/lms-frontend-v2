@@ -9,8 +9,7 @@ export default defineConfig(
   {
     ignores: ['**/generated/**'],
     typescript: {
-      // TODO: Enable typeAware when we have a way to fix the issues
-      typeAware: false,
+      typeAware: true,
     },
     vue: {
       extendUndefComponents: [

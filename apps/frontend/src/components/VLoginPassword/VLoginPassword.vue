@@ -26,7 +26,7 @@
   } = useAuthTokenCreate({
     mutation: {
       onSuccess: () => {
-        queryClient.invalidateQueries();
+        void queryClient.invalidateQueries();
       },
     },
   });
@@ -48,13 +48,13 @@
       token.value = newToken;
 
       if (router.currentRoute.value.query.redirectTo) {
-        router.push(
+        void router.push(
           decodeURIComponent(
             router.currentRoute.value.query.redirectTo as string,
           ),
         );
       } else {
-        router.push({ name: 'courses' });
+        void router.push({ name: 'courses' });
       }
     } catch {
       console.error('Failed to login');

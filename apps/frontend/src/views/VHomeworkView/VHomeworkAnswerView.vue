@@ -45,7 +45,8 @@
     useHomeworkAnswersRetrieve(computed(() => props.answerId));
 
   const { data: lesson, isLoading: isLessonLoading } = useLmsLessonsRetrieve(
-    computed(() => question.value?.breadcrumbs.lesson?.id as number),
+    // The query stays disabled until the lesson id is known
+    computed(() => question.value?.breadcrumbs.lesson?.id ?? 0),
     {
       query: {
         enabled: () => !!question.value?.breadcrumbs.lesson?.id,
@@ -99,7 +100,7 @@
 
       content.value = getEmptyContent();
 
-      router.push({
+      void router.push({
         ...router.currentRoute.value,
         hash: `#${createdAnswer.slug}`,
       });
@@ -126,15 +127,15 @@
   } = useHomeworkAnswersCreate({
     mutation: {
       onSuccess: (data) => {
-        queryClient.invalidateQueries({
+        void queryClient.invalidateQueries({
           queryKey: homeworkAnswersRetrieveQueryKey(data.parent),
         });
-        queryClient.invalidateQueries({
+        void queryClient.invalidateQueries({
           queryKey: homeworkCrosschecksListQueryKey({
             question: props.questionId,
           }),
         });
-        queryClient.invalidateQueries({
+        void queryClient.invalidateQueries({
           queryKey: lmsLessonsListQueryKey(),
         });
       },
@@ -142,7 +143,7 @@
   });
 
   const handleDeleteAnswer = () => {
-    router.push({
+    void router.push({
       name: 'homework',
       params: {
         questionId: props.questionId,
