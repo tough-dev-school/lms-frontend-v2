@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import { useRouter } from 'vue-router';
-  import { computed } from 'vue';
+  import { computed, provide, reactive } from 'vue';
   import VCard from '@/components/VCard/VCard.vue';
   import VButton from '@/components/VButton/VButton.vue';
   import getNotionTitle from '@/utils/getNotionTitle';
@@ -10,17 +10,27 @@
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
   import { SUPPORT_EMAIL, SUPPORT_CHAT_URL } from '@/constants';
   import { useRouteQuery } from '@vueuse/router';
-  // @ts-expect-error no types for vue-notion
   import { NotionRenderer } from 'vue-notion';
   import { useNotionCheckboxHack } from './useNotionCheckboxHack';
   import VMaterialAdminTools from '@/components/VMaterialAdminTools/VMaterialAdminTools.vue';
   import { useStorage } from '@vueuse/core';
+  import { useI18n } from 'vue-i18n';
 
   const props = defineProps<{
     materialId: string;
   }>();
 
   const router = useRouter();
+  const { t } = useI18n();
+
+  provide(
+    'notionLabels',
+    reactive({
+      tableScrolls: computed(() => t('material.tableScrolls')),
+      openTable: computed(() => t('material.openTable')),
+      closeTable: computed(() => t('material.closeTable')),
+    }),
+  );
   const { data: user } = useUsersMeRetrieve();
 
   const { data: materialData, isLoading } = useMaterialsRetrieve(
@@ -43,7 +53,7 @@
 
   const breadcrumbs = computed(() => {
     const result: Breadcrumb[] = [
-      { name: 'Мои курсы', to: { name: 'courses' } },
+      { name: t('common.myCourses'), to: { name: 'courses' } },
     ];
 
     if (!materialData.value) return undefined;
@@ -150,7 +160,7 @@
             v-if="breadcrumbs && breadcrumbs[2]"
             :to="breadcrumbs[2].to"
           >
-            <VButton>Вернуться к содержанию урока</VButton>
+            <VButton>{{ t('material.backToLesson') }}</VButton>
           </RouterLink>
         </footer>
       </template>
@@ -158,28 +168,34 @@
         v-else-if="!material"
         class="center flex max-w-[400px] flex-col text-center"
       >
-        <p>Материал не найден :(</p>
-        <p>
-          Если кажется что здесь какая-то ошибка напишите в поддержку
-          <a
-            class="link"
-            :href="SUPPORT_CHAT_URL"
-          >
-            в чат в углу экрана
-          </a>
-          или на
-          <a
-            class="link"
-            href="mailto:{{ SUPPORT_EMAIL }}"
-          >
-            {{ SUPPORT_EMAIL }}
-          </a>
-        </p>
+        <p>{{ t('material.notFound') }}</p>
+        <i18n-t
+          keypath="material.supportText"
+          tag="p"
+          scope="global"
+        >
+          <template #chat>
+            <a
+              class="link"
+              :href="SUPPORT_CHAT_URL"
+            >
+              {{ t('material.supportChat') }}
+            </a>
+          </template>
+          <template #email>
+            <a
+              class="link"
+              :href="`mailto:${SUPPORT_EMAIL}`"
+            >
+              {{ SUPPORT_EMAIL }}
+            </a>
+          </template>
+        </i18n-t>
         <VButton
           appearance="link"
           @click="router.push({ name: 'courses' })"
         >
-          На главную
+          {{ t('common.toHome') }}
         </VButton>
       </div>
     </VLoggedLayout>
@@ -1154,5 +1170,9 @@
 
   .notion-simple-table-container.is-at-end::after {
     opacity: 0;
+  }
+
+  .notion-simple-table-dialog-body {
+    @apply bg-white text-black dark:bg-dark-black dark:text-white;
   }
 </style>

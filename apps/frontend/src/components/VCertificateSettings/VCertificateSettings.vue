@@ -13,6 +13,9 @@
   } from '@/api/generated';
   import type { PatchedUserSelfUpdate } from '@/api/generated';
   import VError from '@/components/VError/VError.vue';
+  import { useI18n } from 'vue-i18n';
+
+  const { t } = useI18n();
 
   const queryClient = useQueryClient();
   const {
@@ -67,38 +70,37 @@
 </script>
 
 <template>
-  <VCard title="Данные для диплома">
+  <VCard :title="t('settings.certificate')">
     <div class="mb-16 rounded bg-yellow bg-opacity-30 p-16">
-      Будьте внимательнее, когда заполняете поля имени и фамилии на двух языках.
-      Именно в таком виде они отобразятся в сертификате.
+      {{ t('certificateSettings.warning') }}
     </div>
     <div class="flex flex-col items-start gap-16 tablet:gap-24">
       <VTextInput
         v-model="data.firstName"
         name="first_name"
         data-testid="firstName"
-        label="Имя"
+        :label="t('certificateSettings.firstName')"
       />
       <VTextInput
         v-model="data.lastName"
         data-testid="lastName"
-        label="Фамилия"
+        :label="t('certificateSettings.lastName')"
         name="last_name"
       />
       <VTextInput
         v-model="data.firstNameEn"
         data-testid="firstNameEn"
-        label="Имя (на английском)"
+        :label="t('certificateSettings.firstNameEn')"
         name="first_name_en"
       />
       <VTextInput
         v-model="data.lastNameEn"
         data-testid="lastNameEn"
-        label="Фамилия (на английском)"
+        :label="t('certificateSettings.lastNameEn')"
         name="last_name_en"
       />
       <fieldset class="flex flex-wrap gap-16">
-        <legend class="Label">Пол</legend>
+        <legend class="Label">{{ t('certificateSettings.gender') }}</legend>
         <label class="cursor-pointer"
           ><input
             type="radio"
@@ -107,7 +109,7 @@
             :checked="data.gender === GenderEnum.male"
             @click="data.gender = GenderEnum.male"
           />
-          Мужской</label
+          {{ t('certificateSettings.male') }}</label
         >
         <label class="cursor-pointer"
           ><input
@@ -117,7 +119,7 @@
             :checked="data.gender === GenderEnum.female"
             @click="data.gender = GenderEnum.female"
           />
-          Женский</label
+          {{ t('certificateSettings.female') }}</label
         >
       </fieldset>
       <VError
@@ -135,7 +137,7 @@
         :loading="isPending"
         @click="saveCertificate"
       >
-        {{ isPending ? 'Сохраняется...' : 'Сохранить' }}
+        {{ isPending ? t('common.saving') : t('common.save') }}
       </VButton>
     </template>
   </VCard>

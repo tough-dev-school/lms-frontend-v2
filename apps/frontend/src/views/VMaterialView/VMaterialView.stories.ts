@@ -2,15 +2,15 @@ import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VMaterialView from './VMaterialView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import {
-  createMaterialSerilizer,
-  createLMSCourse,
-  createModule,
-  createLessonPlain,
   materialsRetrieveQueryKey,
+  materialsStatusRetrieveQueryKey,
+  usersMeRetrieveQueryKey,
 } from '@/api/generated';
 import { useQueryClient } from '@tanstack/vue-query';
 import type { MaterialSerilizer } from '@/api/generated';
 import { mockNotionMaterial } from '@/mocks/mockNotionMaterial';
+import { BREADCRUMBS, MATERIAL } from '@/mocks/courses';
+import { STAFF } from '@/mocks/users';
 
 export default {
   title: 'App/VMaterialView',
@@ -19,65 +19,57 @@ export default {
   parameters: { layout: 'fullscreen' },
 } as Meta;
 
-const MOCK_MATERIAL_ID = 'cf1379bf-bf5a-41f9-942f-31dd4253c178';
-const NOT_FOUND_MATERIAL_ID = 'not-found-material-id';
-
-// Static breadcrumbs data for consistent display
-const STATIC_COURSE = createLMSCourse({
-  id: 1,
-  name: 'Асинхронная архитектура',
-});
-
-const STATIC_MODULE = createModule({
-  id: 1,
-  name: 'Введение в асинхронную архитектуру',
-});
-
-const STATIC_LESSON = createLessonPlain({
-  id: 1,
-});
-
-const STATIC_MATERIAL_DATA: MaterialSerilizer = createMaterialSerilizer({
-  breadcrumbs: {
-    course: STATIC_COURSE,
-    module: STATIC_MODULE,
-    lesson: STATIC_LESSON,
-  },
+const MATERIAL_DATA: MaterialSerilizer = {
+  breadcrumbs: BREADCRUMBS,
   content: mockNotionMaterial(),
-});
+};
 
 const Template: StoryFn = (args) => ({
   components: { VMaterialView },
   setup() {
-    const queryClient = useQueryClient();
-
-    if (args.materialId === MOCK_MATERIAL_ID) {
-      queryClient.setQueryData(
-        materialsRetrieveQueryKey(MOCK_MATERIAL_ID),
-        STATIC_MATERIAL_DATA,
-      );
-    } else {
-      queryClient.setQueryData(
-        materialsRetrieveQueryKey(args.materialId),
-        null,
-      );
-    }
-
+    useQueryClient().setQueryData(
+      materialsRetrieveQueryKey(args.materialId),
+      args.material,
+    );
     return { args };
   },
-  template: '<VMaterialView v-bind="args" />',
+  template: '<VMaterialView :material-id="args.materialId" />',
 });
 
 export const Default = {
   render: Template,
   args: {
-    materialId: MOCK_MATERIAL_ID,
+    materialId: MATERIAL.id,
+    material: MATERIAL_DATA,
   },
+};
+
+// Staff can request a fresh copy of the page from Notion
+export const AsStaff = {
+  render: Template,
+  args: {
+    materialId: MATERIAL.id,
+    material: MATERIAL_DATA,
+  },
+  decorators: [
+    () => ({
+      setup() {
+        const queryClient = useQueryClient();
+        queryClient.setQueryData(usersMeRetrieveQueryKey(), STAFF);
+        queryClient.setQueryData(materialsStatusRetrieveQueryKey(MATERIAL.id), {
+          fetch_started: '2025-11-12T08:30:12Z',
+          fetch_complete: '2025-11-12T08:30:19Z',
+        });
+      },
+      template: '<story />',
+    }),
+  ],
 };
 
 export const Empty = {
   render: Template,
   args: {
-    materialId: NOT_FOUND_MATERIAL_ID,
+    materialId: 'not-found-material-id',
+    material: null,
   },
 };

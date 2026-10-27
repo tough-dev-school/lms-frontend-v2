@@ -1,6 +1,15 @@
-export const HTML_CONTENT =
-  '<h1>Heading 1</h1><h2>Heading 2</h2><h3>Heading 3</h3><p> <strong>Lorem</strong> <em>ipsum</em> <s>dolor</s> <u>sit</u> <a target="_blank" rel="noopener noreferrer nofollow" href="https://example.com">amet</a>, consectetur adipiscing elit. Suspendisse ut varius justo, vitae accumsan ipsum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Curabitur felis metus, laoreet in scelerisque ac, faucibus at nulla. Sed sit amet vulputate urna. Praesent euismod non diam in luctus. Duis volutpat massa sed est auctor, at tincidunt odio facilisis. Integer placerat libero sit amet consectetur consectetur. Suspendisse ultrices nec erat eu porta. Pellentesque sed augue congue, tempus erat vitae, feugiat orci. Ut faucibus massa sollicitudin diam scelerisque efficitur. Suspendisse eget sapien vel purus scelerisque varius nec non sem. Ut ornare lobortis ultricies. Morbi ut iaculis orci. Phasellus sed massa vitae massa tincidunt mattis. Ut posuere facilisis lorem, rhoncus varius orci malesuada eu.</p><blockquote><p>Suspendisse eget sapien vel purus scelerisque varius nec non sem. Ut ornare lobortis ultricies. Morbi ut iaculis orci. Phasellus sed massa vitae massa tincidunt mattis. Ut posuere facilisis lorem, rhoncus varius orci malesuada eu.</p></blockquote><ol><li><p>Option 1</p></li><li><p>Option 2</p></li><li><p>Option 3</p></li></ol><ul><li><p>Option 1</p></li><li><p>Option 2</p></li><li><p>Option 3</p></li></ul>';
-export const LOREM_CONTENT =
-  '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>';
-
-export const mockContent = (payload?: string) => payload || LOREM_CONTENT;
+// Every element the answer editor can produce
+export const HTML_CONTENT = `<h1>Разбор домашки: API библиотеки</h1>
+<h2>Что получилось хорошо</h2>
+<h3>Ресурсы</h3>
+<p><strong>Бронь</strong> и <em>выдача</em> разделены, потому что живут по разным правилам. <s>Отдельный ресурс для уведомлений</s> <u>пока не нужен</u>: требований к нему нет. Подробнее про выбор ресурсов в <a target="_blank" rel="noopener noreferrer nofollow" href="https://example.com/docs/api-resources">статье про ресурсы</a>. Обратите внимание на ответ <code>409 Conflict</code>: его получает читатель, если книгу забронировали раньше него, и клиент показывает ближайшую дату, когда книга освободится. Каталог отдаётся страницами по двадцать книг, потому что в библиотеке несколько тысяч изданий, и мобильному приложению незачем загружать их все сразу. Поиск работает по названию и автору без учёта регистра, а пустой запрос возвращает весь каталог в порядке поступления. Бронь живёт три дня, после этого книга снова становится свободной, и её может забронировать следующий читатель. Если читатель отменяет бронь сам, книга освобождается сразу. Библиотекарь видит все активные брони на своём экране и отмечает выдачу, когда читатель приходит за книгой. Возврат отмечается отдельным действием, чтобы в истории было видно, кто и когда принял книгу, и чтобы спорные случаи можно было разобрать без догадок.</p>
+<blockquote><p>Хороший ресурс отвечает на вопрос «что это», а не «что с этим делают». Если в названии эндпоинта глагол, скорее всего, ресурс ещё не найден.</p></blockquote>
+<h2>Что стоит доработать</h2>
+<ol><li><p>Опишите тело ответа для каждой ошибки</p></li><li><p>Решите, кто снимает просроченные брони</p></li><li><p>Добавьте пагинацию в каталог книг</p></li></ol>
+<ul><li><p>Ресурсы</p></li><li><p>Эндпоинты</p></li><li><p>Ошибки</p></li></ul>
+<pre><code>{
+  "id": "4f2a…",
+  "book_id": "9b1c…",
+  "expires_at": "2025-11-20T18:00:00Z"
+}</code></pre>
+<div class="tableWrapper"><table class="border-collapse table-auto w-full"><tbody><tr><th><p>Эндпоинт</p></th><th><p>Метод</p></th><th><p>Коды ответа</p></th></tr><tr><td><p>/reservations</p></td><td><p>POST</p></td><td><p>201, 409</p></td></tr><tr><td><p>/loans/{id}/return</p></td><td><p>POST</p></td><td><p>200, 404</p></td></tr></tbody></table></div>`;

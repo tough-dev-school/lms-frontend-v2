@@ -6,6 +6,8 @@ import * as Sentry from '@sentry/vue';
 import AvatarCropper from 'vue-avatar-cropper';
 import { VueQueryPlugin } from '@tanstack/vue-query';
 import { queryClient } from './queryClient';
+import { i18n } from './i18n';
+import { useLocale } from './composables/useLocale';
 
 const app = createApp(App);
 
@@ -29,6 +31,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use(VueQueryPlugin, { queryClient });
+app.use(i18n);
+useLocale();
 app.use(AvatarCropper);
 
 app.use(router);

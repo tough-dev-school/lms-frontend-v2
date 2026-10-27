@@ -91,7 +91,7 @@
       class="flex justify-start"
       data-testid="module-start-date"
     >
-      <VTag>{{ formatDate(module.start_date, 'DD.MM') }}</VTag>
+      <VTag>{{ formatDate(module.start_date, 'dayMonth') }}</VTag>
     </div>
     <VHeading
       tag="h3"

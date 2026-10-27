@@ -1,26 +1,36 @@
+<script setup lang="ts">
+  import { computed } from 'vue';
+  import { blockPropsDefaults } from '../lib/blockProps';
+  import type { BlockProps } from '../lib/blockProps';
+  import { useBlock } from '../lib/useBlock';
+
+  // Two root elements can't inherit attrs. Columns never got them, and
+  // binding them now would add ids that the bookmark observer picks up.
+  defineOptions({ inheritAttrs: false });
+
+  const props = withDefaults(defineProps<BlockProps>(), blockPropsDefaults);
+
+  const SPACER_WIDTH = 20;
+
+  const { format } = useBlock(props);
+
+  const columnStyle = computed(() => {
+    const ratio = format.value?.column_ratio ?? 1;
+    const columns = Number((1 / ratio).toFixed(0));
+    const totalWidth = (columns - 1) * SPACER_WIDTH;
+    return { width: `calc((100% - ${totalWidth}px) * ${ratio})` };
+  });
+</script>
+
 <template>
-  <div class="notion-column" :style="columnStyle">
+  <div
+    class="notion-column"
+    :style="columnStyle"
+  >
     <slot />
   </div>
-  <div class="notion-spacer" :style="spacerStyle" />
+  <div
+    class="notion-spacer"
+    :style="{ width: `${SPACER_WIDTH}px` }"
+  />
 </template>
-
-<script>
-  const baseWidth = 20; // todo: add magic numbers to a config json
-
-  export default {
-    props: ['format'],
-    computed: {
-      columnStyle() {
-        const columns = Number((1 / this.format.column_ratio).toFixed(0));
-        const totalWidth = (columns - 1) * baseWidth;
-        return {
-          width: `calc((100% - ${totalWidth}px) * ${this.format.column_ratio})`,
-        };
-      },
-      spacerStyle() {
-        return { width: `${baseWidth}px` };
-      },
-    },
-  };
-</script>

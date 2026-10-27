@@ -1,4 +1,6 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
+import { ref } from 'vue';
+import { IconDevices, IconMoonFilled, IconSunFilled } from '@tabler/icons-vue';
 import VRadioSwitch from './VRadioSwitch.vue';
 
 export default {
@@ -9,18 +11,20 @@ export default {
 const Template: StoryFn = (args) => ({
   components: { VRadioSwitch },
   setup() {
-    return { args };
+    const value = ref(args.modelValue);
+    return { args, value };
   },
-  template: '<VRadioSwitch v-bind="args" />',
+  template: '<VRadioSwitch v-bind="args" v-model="value" />',
 });
 
 export const Default = {
   render: Template,
   args: {
     options: [
-      { value: 'option1', label: 'Option 1', icon: 'IconComponent1' },
-      { value: 'option2', label: 'Option 2', icon: 'IconComponent2' },
+      { value: 'auto', label: 'Как в системе', icon: IconDevices },
+      { value: 'light', label: 'Светлая', icon: IconSunFilled },
+      { value: 'dark', label: 'Тёмная', icon: IconMoonFilled },
     ],
-    modelValue: 'option1',
+    modelValue: 'auto',
   },
 };

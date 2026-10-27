@@ -8,12 +8,14 @@
   import { useAuthTokenCreate } from '@/api/generated';
   import { useQueryClient } from '@tanstack/vue-query';
   import VError from '@/components/VError/VError.vue';
+  import { useI18n } from 'vue-i18n';
 
   const emit = defineEmits<{
     change: [];
   }>();
 
   const queryClient = useQueryClient();
+  const { t } = useI18n();
 
   const { token } = useAuth();
 
@@ -67,14 +69,14 @@
 <template>
   <VCard
     tag="form"
-    title="Вход"
+    :title="t('login.title')"
     @submit.prevent="handleSubmit"
   >
     <div class="flex flex-col gap-16">
       <VTextInput
         v-model="username"
         autocomplete="username"
-        label="Логин"
+        :label="t('login.username')"
         :type="isEmail ? 'email' : 'text'"
         name="username"
         :error="error"
@@ -87,7 +89,7 @@
         :error="error"
       >
         <template #label>
-          Пароль
+          {{ t('login.password') }}
           <span class="text-sub">
             (<button
               class="underline"
@@ -95,7 +97,7 @@
               tabindex="-1"
               @click="router.push({ name: 'login-reset' })"
             >
-              Не помню пароль</button
+              {{ t('login.forgotPassword') }}</button
             >)
           </span>
         </template>
@@ -111,14 +113,14 @@
         class="flex-grow"
         type="submit"
       >
-        Войти
+        {{ t('login.submit') }}
       </VButton>
       <VButton
         appearance="link"
         class="flex-grow"
         @click="emit('change')"
       >
-        Войти по ссылке
+        {{ t('login.withLink') }}
       </VButton>
     </template>
   </VCard>

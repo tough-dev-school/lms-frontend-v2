@@ -1,11 +1,11 @@
+<script setup lang="ts">
+  import { blockPropsDefaults } from '../lib/blockProps';
+  import type { BlockProps } from '../lib/blockProps';
+
+  // Declared so renderer props don't land on the root element as attributes
+  withDefaults(defineProps<BlockProps>(), blockPropsDefaults);
+</script>
+
 <template>
   <hr class="notion-hr" />
 </template>
-
-<script>
-  import { Blockable } from '../lib/blockable';
-
-  export default {
-    extends: Blockable,
-  };
-</script>

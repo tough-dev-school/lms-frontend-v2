@@ -29,6 +29,7 @@
   import VLoader from '@/components/VLoader/VLoader.vue';
   import { homeworkAnswersImageCreate } from '@/api/generated';
   import { isEqual } from 'lodash-es';
+  import { useI18n } from 'vue-i18n';
 
   const props = withDefaults(
     defineProps<{
@@ -75,6 +76,7 @@
     },
   });
 
+  const { t } = useI18n();
   const currentEditor = useTemplateRef('currentEditor');
   const isImageLoading = ref(false);
   const { focused } = useFocusWithin(currentEditor);
@@ -91,7 +93,7 @@
   const editLink = () => {
     const previousUrl = (editor.getAttributes('link')?.href as string) || '';
 
-    const url = window.prompt('Enter URL', previousUrl);
+    const url = window.prompt(t('textEditor.enterUrl'), previousUrl);
     if (url === null) return;
     if (url === '') {
       editor.chain().focus().extendMarkRange('link').unsetLink().run();
@@ -434,7 +436,7 @@
         v-if="editor.isActive('table')"
         class="flex items-center"
       >
-        <div>Для таблицы:</div>
+        <div>{{ t('textEditor.forTable') }}</div>
         <button
           class="TextEditor__Button"
           @click="addColumnBefore"

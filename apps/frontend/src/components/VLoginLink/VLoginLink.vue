@@ -7,10 +7,12 @@
   import { authPasswordlessTokenRequestRetrieve } from '@/api/generated';
   import VError from '@/components/VError/VError.vue';
   import type { FormError } from '@/types/error';
+  import { useI18n } from 'vue-i18n';
 
   const emit = defineEmits<{ change: [] }>();
 
   const router = useRouter();
+  const { t } = useI18n();
   const email = ref('');
   const isPending = ref(false);
   const error = ref<FormError | null>(null);
@@ -31,13 +33,13 @@
 <template>
   <VCard
     tag="form"
-    title="Вход"
+    :title="t('login.title')"
     @submit.prevent="handleLogin"
   >
     <VTextInput
       v-model="email"
-      label="Почта, на которую купили курс"
-      tip="Мы отправим ссылку для входа по этому адресу"
+      :label="t('common.emailPurchased')"
+      :tip="t('login.linkTip')"
       type="email"
       autocomplete="username"
       name="email"
@@ -53,7 +55,7 @@
         class="flex-grow"
         :loading="isPending"
       >
-        {{ isPending ? 'Отправляем письмо...' : 'Получить доступ' }}
+        {{ isPending ? t('common.sendingEmail') : t('login.getAccess') }}
       </VButton>
       <VButton
         appearance="link"
@@ -61,7 +63,7 @@
         class="flex-grow"
         @click="emit('change')"
       >
-        Войти через пароль
+        {{ t('login.withPassword') }}
       </VButton>
     </template>
   </VCard>
