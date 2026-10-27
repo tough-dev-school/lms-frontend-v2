@@ -28,7 +28,7 @@
   import { onKeyDown, useKeyModifier, useFocusWithin } from '@vueuse/core';
   import VLoader from '@/components/VLoader/VLoader.vue';
   import { homeworkAnswersImageCreate } from '@/api/generated';
-  import { isEqual } from 'lodash-es';
+  import { isEqual } from 'es-toolkit/compat';
   import { useI18n } from 'vue-i18n';
 
   const props = withDefaults(

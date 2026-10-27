@@ -4,7 +4,7 @@ import VCertificatesView from './VCertificatesView.vue';
 import type VCertificateCard from '@/components/VCertificateCard/VCertificateCard.vue';
 import { createDiploma, LanguageEnum, useDiplomasList } from '@/api/generated';
 import type { Diploma } from '@/api/generated';
-import { uniq, flatten } from 'lodash-es';
+import { uniq, flatten } from 'es-toolkit/compat';
 import { nextTick, ref } from 'vue';
 import { faker } from '@faker-js/faker';
 import { vi, describe, beforeEach, expect, test } from 'vitest';

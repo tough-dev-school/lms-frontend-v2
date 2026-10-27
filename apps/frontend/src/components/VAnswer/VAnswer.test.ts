@@ -5,7 +5,7 @@ import { getName } from '@/utils/getName';
 import type VAvatar from '@/components/VAvatar/VAvatar.vue';
 import type VAnswerContent from '@/components/VAnswerContent/VAnswerContent.vue';
 import dayjs from 'dayjs';
-import { cloneDeep } from 'lodash-es';
+import { cloneDeep } from 'es-toolkit/compat';
 import { faker } from '@faker-js/faker';
 import {
   createAnswerTree,

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
   import VCertificateCard from '@/components/VCertificateCard/VCertificateCard.vue';
   import { computed } from 'vue';
-  import { groupBy } from 'lodash-es';
+  import { groupBy } from 'es-toolkit/compat';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import { useDiplomasList } from '@/api/generated';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';

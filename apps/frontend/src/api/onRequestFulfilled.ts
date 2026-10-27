@@ -1,6 +1,6 @@
 import { useAuth } from '@/composables/useAuth';
 import type { InternalAxiosRequestConfig } from 'axios';
-import { cloneDeep } from 'lodash-es';
+import { cloneDeep } from 'es-toolkit/compat';
 import { i18n } from '@/i18n';
 
 const onRequestFulfilled = (requestConfig: InternalAxiosRequestConfig) => {
