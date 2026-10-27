@@ -56,8 +56,16 @@ export const normalizeContent = (
 ) => {
   const schema = getSchema(extensions);
 
+  let document;
   try {
-    schema.nodeFromJSON(content).check();
+    document = schema.nodeFromJSON(content);
+  } catch {
+    // Not a document at all, like `{}` of a new answer. The editor handles it
+    return content;
+  }
+
+  try {
+    document.check();
     return content;
   } catch {
     return generateJSON(generateHTML(content, extensions), extensions);

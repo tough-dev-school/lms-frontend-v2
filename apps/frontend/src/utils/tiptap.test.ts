@@ -28,6 +28,12 @@ describe('normalizeContent', () => {
     expect(normalizeContent(content, extensions)).toBe(content);
   });
 
+  test('keeps empty content of a new answer untouched', () => {
+    const content = {};
+
+    expect(normalizeContent(content, extensions)).toBe(content);
+  });
+
   test('moves an inline image out of a paragraph into its own block', () => {
     const content = {
       type: 'doc',
