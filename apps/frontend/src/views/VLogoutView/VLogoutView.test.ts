@@ -21,11 +21,11 @@ describe('VLogoutView', () => {
 
     vi.mocked(useAuth).mockReturnValue({
       token,
-    } as any);
+    } as unknown as ReturnType<typeof useAuth>);
 
     vi.mocked(useRouter).mockReturnValue({
       push: routerPushMock,
-    } as any);
+    } as unknown as ReturnType<typeof useRouter>);
 
     wrapper = mount(VLogoutView, {
       shallow: true,

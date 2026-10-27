@@ -41,7 +41,7 @@ const createWrapper = () => {
   vi.mocked(useUsersMeRetrieve).mockReturnValue({
     data: ref(createUsersMeRetrieveQueryResponse()),
     isLoading: ref(false),
-  } as any);
+  } as unknown as ReturnType<typeof useUsersMeRetrieve>);
 
   const options: VueQueryPluginOptions = {
     queryClient,

@@ -3,10 +3,9 @@ import { mount, VueWrapper } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
 import VMailSentView from './VMailSentView.vue';
 import { getProviderById } from '@brachkow/email-providers';
-import type { Provider } from '@brachkow/email-providers';
 
-const GMAIL = getProviderById('GMAIL') as Provider;
-const MAILRU = getProviderById('MAILRU') as Provider;
+const GMAIL = getProviderById('GMAIL')!;
+const MAILRU = getProviderById('MAILRU')!;
 
 const email = faker.internet.email({ provider: 'foobar.baz' });
 const mailRuEmail = faker.internet.email({ provider: 'mail.ru' });
@@ -55,7 +54,7 @@ describe('VMailSentView', () => {
     expect(getOpenWrapper().exists()).toBe(false);
   });
 
-  test('button is shown if email service is recognized', async () => {
+  test('button is shown if email service is recognized', () => {
     mountWrapper({
       email: faker.helpers.arrayElement([mailRuEmail, gmailEmail]),
     });
@@ -63,7 +62,7 @@ describe('VMailSentView', () => {
     expect(getOpenWrapper().exists()).toBe(true);
   });
 
-  test('button has correct attributes for gmail', async () => {
+  test('button has correct attributes for gmail', () => {
     mountWrapper({
       email: gmailEmail,
     });
@@ -73,7 +72,7 @@ describe('VMailSentView', () => {
     expect(getOpenWrapper().text()).toContain(GMAIL.label);
   });
 
-  test('button has correct attributes for mailru', async () => {
+  test('button has correct attributes for mailru', () => {
     mountWrapper({
       email: mailRuEmail,
     });

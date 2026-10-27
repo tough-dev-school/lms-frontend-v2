@@ -24,7 +24,7 @@ describe('VSettingsView', () => {
     vi.mocked(useAuthPasswordChangeCreate).mockReturnValue({
       mutateAsync: vi.fn(),
       isPending: ref(false),
-    } as any);
+    } as unknown as ReturnType<typeof useAuthPasswordChangeCreate>);
 
     wrapper = mount(VSettingsView, {
       shallow: true,

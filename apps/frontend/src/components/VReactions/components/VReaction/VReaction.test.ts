@@ -3,13 +3,15 @@ import { mount, VueWrapper } from '@vue/test-utils';
 import { faker } from '@faker-js/faker';
 import VReaction from './VReaction.vue';
 import type { VReactionProps } from './VReaction.vue';
-import { ALLOWED_REACTIONS } from '@/components/VReactions/VReactions.vue';
 import { getName } from '@/utils/getName';
 import type VAvatar from '@/components/VAvatar/VAvatar.vue';
 import { times } from 'es-toolkit/compat';
 import { createReactionDetailed } from '@/api/generated';
+import { ALLOWED_REACTIONS } from '@/components/VReactions/VReactions.vue';
 import VTransparentComponent from '@/mocks/VTransparentComponent.vue';
 
+// The type-aware parser cannot resolve named exports of .vue files
+// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 const emoji = faker.helpers.arrayElement(ALLOWED_REACTIONS);
 const userId = faker.string.uuid();
 
@@ -62,27 +64,27 @@ describe('VReaction', () => {
 
   const getLastAvatar = () => getAvatarWrappers().at(-1);
 
-  test('emit add on click if not already sent', () => {
-    wrapper.trigger('click');
+  test('emit add on click if not already sent', async () => {
+    await wrapper.trigger('click');
 
     expect(wrapper.emitted('add')).toStrictEqual([[defaultProps.emoji]]);
   });
 
-  test('emit remove on click if already sent', () => {
+  test('emit remove on click if already sent', async () => {
     wrapper = mountWithOwn();
     const targetSlug = withOwnProps.reactions.find(
       (reaction) => reaction.author.uuid === userId,
     )?.slug;
 
-    wrapper.trigger('click');
+    await wrapper.trigger('click');
 
     expect(wrapper.emitted('remove')).toStrictEqual([[targetSlug]]);
   });
 
-  test('dont emit anything if disabled', () => {
+  test('dont emit anything if disabled', async () => {
     wrapper = mountComponent({ ...defaultProps, disabled: true });
 
-    wrapper.trigger('click');
+    await wrapper.trigger('click');
 
     expect(wrapper.emitted('add')).toBe(undefined);
     expect(wrapper.emitted('remove')).toBe(undefined);
