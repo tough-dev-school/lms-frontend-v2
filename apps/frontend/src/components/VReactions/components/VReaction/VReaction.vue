@@ -44,7 +44,7 @@
   const orderedAuthors = computed(() => {
     return props.reactions
       .map((reaction) => reaction.author)
-      .sort((a, b) => {
+      .toSorted((a, b) => {
         if (a.uuid === props.userId) return 1;
         if (b.uuid === props.userId) return -1;
         return 0;

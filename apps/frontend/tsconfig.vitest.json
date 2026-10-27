@@ -4,7 +4,7 @@
   "compilerOptions": {
     "composite": true,
     // Tests run in jsdom on Node 24. Without this, the libs came only from @types/node references
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
     "types": ["node", "jsdom"]
   }
 }

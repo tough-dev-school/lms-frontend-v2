@@ -67,10 +67,7 @@ export default defineConfig(
     name: 'overrides',
     rules: {
       // TODO: Careful review is required
-      'unicorn/prefer-string-replace-all': 'off',
       // TODO: Enable after updating to latest TypeScript version
-      'preserve-caught-error': 'off',
-      'unicorn/no-array-sort': 'off',
       // Disabled because the config cannot detect the node version
       'n/no-unsupported-features/es-syntax': 'off',
     },
