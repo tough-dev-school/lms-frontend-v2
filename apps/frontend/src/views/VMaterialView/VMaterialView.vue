@@ -198,54 +198,75 @@
             @bookmark="setBookmark"
           />
         </VCard>
-        <footer
-          class="flex flex-wrap items-center justify-center gap-16 tablet:flex-nowrap tablet:items-start"
-        >
-          <div class="flex tablet:flex-1">
+        <footer class="flex flex-col items-center gap-16">
+          <div class="flex w-full items-center justify-center gap-16">
             <RouterLink
               v-if="previousMaterial"
               :to="{
                 name: 'materials',
                 params: { materialId: previousMaterial.id },
               }"
+              :aria-label="t('material.previous')"
+              class="shrink-0"
             >
-              <VButton appearance="secondary">
-                {{ t('material.previous') }}
+              <VButton
+                appearance="secondary"
+                size="inline"
+                class="aspect-square h-module"
+              >
+                ←
               </VButton>
             </RouterLink>
-          </div>
-          <div class="flex flex-wrap justify-center gap-16">
+            <!-- Keeps table of contents button centered when there is no neighbour -->
+            <div
+              v-else
+              class="aspect-square h-module shrink-0"
+            />
             <RouterLink
               v-if="breadcrumbs && breadcrumbs[2]"
               :to="breadcrumbs[2].to"
+              class="min-w-0 flex-1 phone:min-w-[280px] phone:flex-none"
             >
-              <VButton>{{ t('material.backToLesson') }}</VButton>
-            </RouterLink>
-            <RouterLink
-              v-if="homeworkQuestion"
-              :to="{
-                name: 'homework',
-                params: { questionId: homeworkQuestion.slug },
-              }"
-            >
-              <VButton appearance="secondary">
-                {{ t('material.toHomework') }}
+              <VButton
+                size="inline"
+                class="h-module w-full p-module"
+              >
+                {{ t('material.tableOfContents') }}
               </VButton>
             </RouterLink>
-          </div>
-          <div class="flex tablet:flex-1 tablet:justify-end">
             <RouterLink
               v-if="nextMaterial"
               :to="{
                 name: 'materials',
                 params: { materialId: nextMaterial.id },
               }"
+              :aria-label="t('material.next')"
+              class="shrink-0"
             >
-              <VButton appearance="secondary">
-                {{ t('material.next') }}
+              <VButton
+                appearance="secondary"
+                size="inline"
+                class="aspect-square h-module"
+              >
+                →
               </VButton>
             </RouterLink>
+            <div
+              v-else
+              class="aspect-square h-module shrink-0"
+            />
           </div>
+          <RouterLink
+            v-if="homeworkQuestion"
+            :to="{
+              name: 'homework',
+              params: { questionId: homeworkQuestion.slug },
+            }"
+          >
+            <VButton appearance="secondary">
+              {{ t('material.toHomework') }}
+            </VButton>
+          </RouterLink>
         </footer>
       </template>
       <div

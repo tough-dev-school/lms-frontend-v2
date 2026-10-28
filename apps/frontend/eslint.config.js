@@ -43,7 +43,7 @@ export default defineConfig(
         'error',
         {
           // Punctuation around interpolations and brand names stay the same in every language
-          ignorePattern: String.raw`^[-–—:;,.!?/()|→×+…\s]+$`,
+          ignorePattern: String.raw`^[-–—:;,.!?/()|←→×+…\s]+$`,
           ignoreText: ['Google', 'iOS', 'tough-dev.school'],
         },
       ],
