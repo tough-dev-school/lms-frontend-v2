@@ -22,11 +22,11 @@ export type Lesson = {
      * @type object | undefined
     */
     material?: NotionMaterial;
-    homework: HomeworkStats;
+    homework?: HomeworkStats;
     /**
      * @type object
     */
-    question: Question;
+    question?: Question;
     /**
      * @type object | undefined
     */

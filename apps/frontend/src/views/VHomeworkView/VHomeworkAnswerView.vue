@@ -201,7 +201,7 @@
     <template #pill>
       <VPillHomework
         v-if="lesson.homework && lesson.question"
-        :lesson="lesson"
+        :lesson="{ homework: lesson.homework, question: lesson.question }"
       />
     </template>
     <section v-if="isOwnAnswer && crosschecks?.length">

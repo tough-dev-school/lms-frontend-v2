@@ -8,7 +8,7 @@
   import { useI18n } from 'vue-i18n';
 
   const props = defineProps<{
-    lesson: { question: Lesson['question']; homework: Lesson['homework'] };
+    lesson: Required<Pick<Lesson, 'question' | 'homework'>>;
   }>();
 
   const { t } = useI18n();
