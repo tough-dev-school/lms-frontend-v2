@@ -6,7 +6,11 @@
   import getNotionTitle from '@/utils/getNotionTitle';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
-  import { useMaterialsRetrieve, useUsersMeRetrieve } from '@/api/generated';
+  import {
+    useLmsLessonsList,
+    useMaterialsRetrieve,
+    useUsersMeRetrieve,
+  } from '@/api/generated';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
   import { SUPPORT_EMAIL, SUPPORT_CHAT_URL } from '@/constants';
   import { useRouteQuery } from '@vueuse/router';
@@ -36,6 +40,45 @@
   const { data: materialData, isLoading } = useMaterialsRetrieve(
     () => props.materialId,
   );
+
+  const moduleId = computed(() => materialData.value?.breadcrumbs.module?.id);
+
+  // Same query as module page, so it is usually already cached
+  const { data: lessonsData } = useLmsLessonsList(
+    computed(() => ({ module: moduleId.value, page_size: 1000 })),
+    { query: { enabled: () => !!moduleId.value } },
+  );
+
+  // Module should have exactly one homework, with several we can't tell which one is related
+  const homeworkQuestion = computed(() => {
+    const questions = (lessonsData.value?.results ?? []).flatMap((lesson) =>
+      lesson.question ? [lesson.question] : [],
+    );
+    return questions.length === 1 ? questions[0] : undefined;
+  });
+
+  // Calls have no page and homework has own button, so only materials are navigated
+  const moduleMaterials = computed(() =>
+    (lessonsData.value?.results ?? []).flatMap((lesson) =>
+      lesson.material ? [lesson.material] : [],
+    ),
+  );
+
+  const currentMaterialIndex = computed(() =>
+    moduleMaterials.value.findIndex(
+      (moduleMaterial) => moduleMaterial.id === props.materialId,
+    ),
+  );
+
+  const previousMaterial = computed(() => {
+    if (currentMaterialIndex.value < 1) return undefined;
+    return moduleMaterials.value[currentMaterialIndex.value - 1];
+  });
+
+  const nextMaterial = computed(() => {
+    if (currentMaterialIndex.value === -1) return undefined;
+    return moduleMaterials.value[currentMaterialIndex.value + 1];
+  });
 
   const material = computed(() => {
     if (!materialData.value) return undefined;
@@ -155,13 +198,54 @@
             @bookmark="setBookmark"
           />
         </VCard>
-        <footer class="flex justify-center">
-          <RouterLink
-            v-if="breadcrumbs && breadcrumbs[2]"
-            :to="breadcrumbs[2].to"
-          >
-            <VButton>{{ t('material.backToLesson') }}</VButton>
-          </RouterLink>
+        <footer
+          class="flex flex-wrap items-center justify-center gap-16 tablet:flex-nowrap tablet:items-start"
+        >
+          <div class="flex tablet:flex-1">
+            <RouterLink
+              v-if="previousMaterial"
+              :to="{
+                name: 'materials',
+                params: { materialId: previousMaterial.id },
+              }"
+            >
+              <VButton appearance="secondary">
+                {{ t('material.previous') }}
+              </VButton>
+            </RouterLink>
+          </div>
+          <div class="flex flex-wrap justify-center gap-16">
+            <RouterLink
+              v-if="breadcrumbs && breadcrumbs[2]"
+              :to="breadcrumbs[2].to"
+            >
+              <VButton>{{ t('material.backToLesson') }}</VButton>
+            </RouterLink>
+            <RouterLink
+              v-if="homeworkQuestion"
+              :to="{
+                name: 'homework',
+                params: { questionId: homeworkQuestion.slug },
+              }"
+            >
+              <VButton appearance="secondary">
+                {{ t('material.toHomework') }}
+              </VButton>
+            </RouterLink>
+          </div>
+          <div class="flex tablet:flex-1 tablet:justify-end">
+            <RouterLink
+              v-if="nextMaterial"
+              :to="{
+                name: 'materials',
+                params: { materialId: nextMaterial.id },
+              }"
+            >
+              <VButton appearance="secondary">
+                {{ t('material.next') }}
+              </VButton>
+            </RouterLink>
+          </div>
         </footer>
       </template>
       <div
