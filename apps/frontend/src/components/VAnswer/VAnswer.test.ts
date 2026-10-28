@@ -54,10 +54,10 @@ describe('VAnswer', () => {
   beforeEach(() => {
     vi.mocked(useHomeworkAnswersReactionsDestroy).mockReturnValue({
       mutateAsync: vi.fn(),
-    } as any);
+    } as unknown as ReturnType<typeof useHomeworkAnswersReactionsDestroy>);
     vi.mocked(useHomeworkAnswersReactionsCreate).mockReturnValue({
       mutateAsync: vi.fn(),
-    } as any);
+    } as unknown as ReturnType<typeof useHomeworkAnswersReactionsCreate>);
     wrapper = mount(VAnswer, defaultMountOptions);
   });
 

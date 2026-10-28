@@ -32,7 +32,7 @@ const createWrapper = (studies = defaultStudies) => {
   vi.mocked(usePurchasedCoursesList).mockReturnValue({
     data: ref({ results: studies }),
     isLoading: ref(false),
-  } as any);
+  } as unknown as ReturnType<typeof usePurchasedCoursesList>);
 
   const options: VueQueryPluginOptions = {
     queryClient,
@@ -75,7 +75,7 @@ describe('VCoursesView', () => {
     expect(getStudiesWrapper()).toHaveLength(defaultStudies.length);
   });
 
-  test('click on studies redirects to material', async () => {
+  test('click on studies redirects to material', () => {
     expect(getStudyWrapper().props().to).toStrictEqual({
       name: 'course',
       params: { courseId: defaultStudies[0].id },

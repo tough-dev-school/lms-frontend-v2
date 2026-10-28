@@ -42,11 +42,11 @@
 
   const prepareForScroll = (slug: string) => {
     if (route.name) {
-      router.push({ name: route.name, hash: `#${slug}` });
+      void router.push({ name: route.name, hash: `#${slug}` });
     }
   };
 
-  const handleUpdate = async (slug: string) => {
+  const handleUpdate = (slug: string) => {
     replyMode.value = false;
     prepareForScroll(slug);
   };
@@ -64,15 +64,15 @@
   } = useHomeworkAnswersCreate({
     mutation: {
       onSuccess: (data) => {
-        queryClient.invalidateQueries({
+        void queryClient.invalidateQueries({
           queryKey: homeworkAnswersRetrieveQueryKey(data.parent),
         });
-        queryClient.invalidateQueries({
+        void queryClient.invalidateQueries({
           queryKey: homeworkCrosschecksListQueryKey({
             question: props.answer.question,
           }),
         });
-        queryClient.invalidateQueries({
+        void queryClient.invalidateQueries({
           queryKey: lmsLessonsListQueryKey(),
         });
       },
@@ -102,7 +102,7 @@
 
       replyMode.value = false;
 
-      router.push({
+      void router.push({
         ...router.currentRoute.value,
         hash: `#${newComment.slug}`,
       });

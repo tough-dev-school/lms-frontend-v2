@@ -169,19 +169,13 @@
         return false;
       },
       handleDrop: (view, event, slice, moved) => {
-        if (
-          !moved &&
-          event.dataTransfer &&
-          event.dataTransfer.files &&
-          event.dataTransfer.files[0]
-        ) {
+        if (!moved && event.dataTransfer?.files[0]) {
           const loaderFieldHeightInPx = 104;
 
           isImageLoading.value = true;
           const file = event.dataTransfer.files[0];
 
-          // eslint-disable-next-line promise/catch-or-return
-          homeworkAnswersImageCreate({ image: file }).then(({ image }) => {
+          void homeworkAnswersImageCreate({ image: file }).then(({ image }) => {
             const { schema } = view.state;
             const coordinates = view.posAtCoords({
               left: event.clientX,

@@ -7,7 +7,7 @@ import type VTextInput from '@/components/VTextInput/VTextInput.vue';
 import { faker } from '@faker-js/faker';
 import { useAuth } from '@/composables/useAuth';
 import { useRouter } from 'vue-router';
-import { ref } from 'vue';
+import { nextTick, ref } from 'vue';
 import { useAuthPasswordResetCreate } from '@/api/generated';
 
 const defaultProps = {};
@@ -34,15 +34,15 @@ describe('VLoginResetView', () => {
   beforeEach(() => {
     vi.mocked(useAuth).mockReturnValue({
       requestReset: requestResetMock,
-    } as any);
+    } as unknown as ReturnType<typeof useAuth>);
     vi.mocked(useRouter).mockReturnValue({
       push: routerPushMock,
-    } as any);
+    } as unknown as ReturnType<typeof useRouter>);
 
     vi.mocked(useAuthPasswordResetCreate).mockReturnValue({
       mutateAsync: requestResetMock,
       isPending: ref(false),
-    } as any);
+    } as unknown as ReturnType<typeof useAuthPasswordResetCreate>);
 
     wrapper = mount(VLoginResetView, {
       shallow: true,
@@ -64,7 +64,8 @@ describe('VLoginResetView', () => {
     wrapper.findComponent<typeof VButton>('[data-testid="password"]');
 
   const typeInEmail = async () => {
-    await getEmailWrapper().vm.$emit('update:modelValue', email);
+    getEmailWrapper().vm.$emit('update:modelValue', email);
+    await nextTick();
   };
 
   test('click on send calls requestReset', async () => {
@@ -95,7 +96,8 @@ describe('VLoginResetView', () => {
   });
 
   test('click on password button returns to login', async () => {
-    await getPasswordWrapper().vm.$emit('click');
+    getPasswordWrapper().vm.$emit('click');
+    await nextTick();
 
     expect(routerPushMock).toHaveBeenCalledWith({ name: 'login' });
   });

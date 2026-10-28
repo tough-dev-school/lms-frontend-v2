@@ -10,7 +10,7 @@ export const loginById = async (to: RouteLocationNormalized) => {
   const loginWithUserId = async (userId: number) => {
     try {
       const response = await authAsRetrieve(userId);
-      queryClient.invalidateQueries();
+      void queryClient.invalidateQueries();
       return response;
     } catch (error) {
       console.error(error);

@@ -31,7 +31,8 @@
     useHomeworkQuestionsRetrieve(computed(() => props.questionId));
 
   const { data: lesson, isLoading: isLessonLoading } = useLmsLessonsRetrieve(
-    computed(() => question.value?.breadcrumbs.lesson?.id as number),
+    // The query stays disabled until the lesson id is known
+    computed(() => question.value?.breadcrumbs.lesson?.id ?? 0),
     {
       query: {
         enabled: () => !!question.value?.breadcrumbs.lesson?.id,
@@ -49,15 +50,15 @@
   } = useHomeworkAnswersCreate({
     mutation: {
       onSuccess: (data) => {
-        queryClient.invalidateQueries({
+        void queryClient.invalidateQueries({
           queryKey: homeworkAnswersRetrieveQueryKey(data.parent),
         });
-        queryClient.invalidateQueries({
+        void queryClient.invalidateQueries({
           queryKey: homeworkCrosschecksListQueryKey({
             question: props.questionId,
           }),
         });
-        queryClient.invalidateQueries({
+        void queryClient.invalidateQueries({
           queryKey: lmsLessonsListQueryKey(),
         });
       },
@@ -73,7 +74,7 @@
       },
     });
 
-    router.push({
+    void router.push({
       name: 'homework',
       params: {
         questionId: props.questionId,

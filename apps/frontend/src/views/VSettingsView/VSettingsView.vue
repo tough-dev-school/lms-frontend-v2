@@ -20,7 +20,7 @@
   } = useAuthPasswordChangeCreate({
     mutation: {
       onSuccess: () => {
-        queryClient.invalidateQueries();
+        void queryClient.invalidateQueries();
       },
     },
   });
