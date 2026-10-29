@@ -1,3 +1,5 @@
+import { generateHTML, generateJSON, getSchema } from '@tiptap/vue-3';
+import type { Extensions } from '@tiptap/vue-3';
 import StarterKit from '@tiptap/starter-kit';
 import { Placeholder } from '@tiptap/extensions';
 import Image from '@tiptap/extension-image';
@@ -23,7 +25,8 @@ export const getExtensions = ({ placeholder }: { placeholder: string }) => [
   Placeholder.configure({
     placeholder,
   }),
-  Image.configure({ inline: true }),
+  // Block images, because inline ones get dropped in the middle of a paragraph and split it
+  Image.configure({ inline: false }),
   TableCell,
   TableHeader,
   TableRow,
@@ -41,6 +44,33 @@ export const getExtensions = ({ placeholder }: { placeholder: string }) => [
     },
   }),
 ];
+
+/**
+ * Answers saved while images were inline keep images inside paragraphs, which
+ * the current schema forbids. Reparsing them through HTML lifts images out
+ * into their own blocks and keeps the surrounding text.
+ */
+export const normalizeContent = (
+  content: Record<string, unknown>,
+  extensions: Extensions,
+) => {
+  const schema = getSchema(extensions);
+
+  let document;
+  try {
+    document = schema.nodeFromJSON(content);
+  } catch {
+    // Not a document at all, like `{}` of a new answer. The editor handles it
+    return content;
+  }
+
+  try {
+    document.check();
+    return content;
+  } catch {
+    return generateJSON(generateHTML(content, extensions), extensions);
+  }
+};
 
 export const getEmptyContent = () => ({
   type: 'doc',

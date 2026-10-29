@@ -1,6 +1,9 @@
 <script setup lang="ts">
   import { Editor, EditorContent } from '@tiptap/vue-3';
-  import { getExtensions } from '@/utils/tiptap';
+  import { getExtensions, normalizeContent } from '@/utils/tiptap';
+  import { dropPoint } from '@tiptap/pm/transform';
+  import { Fragment, Slice } from '@tiptap/pm/model';
+  import type { Transaction } from '@tiptap/pm/state';
   import { marked } from 'marked';
   import {
     IconBold,
@@ -111,8 +114,14 @@
 
   const extensions = getExtensions({ placeholder: props.placeholder });
 
+  const getInitialContent = () => {
+    const initialContent = contentOrLegacyText.value;
+    if (typeof initialContent === 'string') return initialContent;
+    return normalizeContent(initialContent, extensions);
+  };
+
   const editor = new Editor({
-    content: contentOrLegacyText.value,
+    content: getInitialContent(),
     extensions,
     editorProps: {
       handlePaste: (_view, event) => {
@@ -168,30 +177,59 @@
         // Let TipTap handle styled HTML paste natively
         return false;
       },
-      handleDrop: (view, event, slice, moved) => {
-        if (!moved && event.dataTransfer?.files[0]) {
-          const loaderFieldHeightInPx = 104;
+      handleDrop: (view, event, _slice, moved) => {
+        const file = event.dataTransfer?.files[0];
+        if (moved || !file) return false;
 
-          isImageLoading.value = true;
-          const file = event.dataTransfer.files[0];
+        event.preventDefault();
 
-          void homeworkAnswersImageCreate({ image: file }).then(({ image }) => {
-            const { schema } = view.state;
-            const coordinates = view.posAtCoords({
-              left: event.clientX,
-              top: event.clientY + loaderFieldHeightInPx,
-            });
-            if (coordinates) {
-              const node = schema.nodes.image.create({ src: image });
-              const transaction = view.state.tr.insert(coordinates.pos, node);
-              view.dispatch(transaction);
-            }
+        // Resolve the drop position before the upload starts. The loader
+        // shifts the content down, so coordinates read later point lower
+        const coordinates = view.posAtCoords({
+          left: event.clientX,
+          top: event.clientY,
+        });
+        if (!coordinates) return true;
+
+        // Same rule ProseMirror uses for its own drops, the nearest gap between blocks
+        const imagePlaceholder = view.state.schema.nodes.image.create();
+        let position =
+          dropPoint(
+            view.state.doc,
+            coordinates.pos,
+            new Slice(Fragment.from(imagePlaceholder), 0, 0),
+          ) ?? coordinates.pos;
+
+        // Keep the position in place while the user edits during upload
+        const trackPosition = ({
+          transaction,
+        }: {
+          transaction: Transaction;
+        }) => {
+          position = transaction.mapping.map(position);
+        };
+        editor.on('transaction', trackPosition);
+
+        isImageLoading.value = true;
+        void homeworkAnswersImageCreate({ image: file })
+          .then(({ image }) => {
+            editor
+              .chain()
+              .insertContentAt(position, {
+                type: 'image',
+                attrs: { src: image },
+              })
+              .run();
+          })
+          .catch((error) => {
+            console.error('Failed to upload dropped image:', error);
+          })
+          .finally(() => {
+            editor.off('transaction', trackPosition);
             isImageLoading.value = false;
           });
 
-          return true;
-        }
-        return false;
+        return true;
       },
     },
     onUpdate: () => {
@@ -211,7 +249,9 @@
 
       if (isSame) return;
 
-      editor.commands.setContent(newContent, { emitUpdate: false });
+      editor.commands.setContent(normalizeContent(newContent, extensions), {
+        emitUpdate: false,
+      });
     },
     { deep: true },
   );
