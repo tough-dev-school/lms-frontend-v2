@@ -10,7 +10,7 @@
 <script lang="ts" setup>
   /* eslint-disable import-x/first */
   import VAnswer from '@/components/VAnswer';
-  import { ref, useTemplateRef } from 'vue';
+  import { computed, useTemplateRef } from 'vue';
   import { onClickOutside } from '@vueuse/core';
   import { useRoute, useRouter } from 'vue-router';
   import {
@@ -26,6 +26,7 @@
   import { useEditorAutosave } from '@/composables/useEditorAutosave';
   import { getEmptyContent } from '@/utils/tiptap';
   import VThreadProvider from '.';
+  import { useActiveReply } from './activeReply';
   import { useI18n } from 'vue-i18n';
 
   const props = defineProps<{
@@ -38,7 +39,18 @@
   const { t } = useI18n();
   const queryClient = useQueryClient();
 
-  const replyMode = ref(false);
+  const activeReply = useActiveReply();
+
+  const replyMode = computed(() => activeReply.value === props.answer.slug);
+
+  const closeReply = () => {
+    // Another thread may have already taken over the active reply
+    if (replyMode.value) activeReply.value = null;
+  };
+
+  const toggleReply = () => {
+    activeReply.value = replyMode.value ? null : props.answer.slug;
+  };
 
   const prepareForScroll = (slug: string) => {
     if (route.name) {
@@ -47,15 +59,13 @@
   };
 
   const handleUpdate = (slug: string) => {
-    replyMode.value = false;
+    closeReply();
     prepareForScroll(slug);
   };
 
   const target = useTemplateRef('target');
 
-  onClickOutside(target, () => {
-    replyMode.value = false;
-  });
+  onClickOutside(target, closeReply);
 
   const {
     mutateAsync: createComment,
@@ -100,7 +110,7 @@
 
       content.value = getEmptyContent();
 
-      replyMode.value = false;
+      closeReply();
 
       void router.push({
         ...router.currentRoute.value,
@@ -134,8 +144,9 @@
     />
     <div class="mt-4 px-8 tablet:px-16">
       <button
+        data-testid="reply-toggle"
         class="text-sm link"
-        @click="replyMode = !replyMode"
+        @click="toggleReply"
       >
         {{ replyMode ? t('common.cancel') : t('answer.reply') }}
       </button>
@@ -147,6 +158,7 @@
       <VCreateAnswer
         v-show="replyMode"
         v-model="content"
+        data-testid="reply-form"
         :is-pending="isPending"
         :error="error"
         @send="handleCreateComment"

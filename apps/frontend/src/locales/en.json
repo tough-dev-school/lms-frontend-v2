@@ -84,7 +84,8 @@
     "commentsLocked": "You'll see your peers' comments once you've reviewed three assignments. Each review unlocks one comment.",
     "commentsPartiallyHidden": "Some of your peers' comments are hidden. Review more assignments to unlock them.",
     "answerSent": "Answer submitted!",
-    "backToOwnAnswer": "Back to your answer"
+    "backToOwnAnswer": "Back to your answer",
+    "commentOnAnswer": "Comment on the answer"
   },
   "crossChecks": {
     "choose": "Choose a peer's assignment to review:",
