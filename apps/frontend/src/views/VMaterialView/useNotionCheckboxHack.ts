@@ -26,8 +26,7 @@ export const useNotionCheckboxHack = (materialId: MaybeRefOrGetter<string>) => {
     useEventListener(document, 'change', (event) => {
       const target = event.target as HTMLInputElement | null;
       if (
-        target &&
-        target.parentElement?.classList.contains('notion-checkbox-wrapper')
+        target?.parentElement?.classList.contains('notion-checkbox-wrapper')
       ) {
         // label element id
         const id = target.parentElement.parentElement?.id;

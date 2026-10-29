@@ -55,4 +55,4 @@ export default defineConfig({
       },
     }),
   ],
-}) as ReturnType<typeof defineConfig>;
+});

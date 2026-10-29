@@ -22,18 +22,18 @@ describe('loginById', () => {
   beforeEach(() => {
     vi.mocked(useAuth).mockReturnValue({
       token: ref(undefined),
-    } as any);
+    } as unknown as ReturnType<typeof useAuth>);
 
     vi.mocked(useQueryClient).mockReturnValue({
       invalidateQueries: vi.fn(),
-    } as any);
+    } as unknown as ReturnType<typeof useQueryClient>);
   });
 
   test('successfully logs in user and returns home route', async () => {
     const userId = faker.number.int({ min: 1, max: 1000 });
     const tokenValue = faker.string.uuid();
 
-    vi.mocked(authAsRetrieve).mockResolvedValue({ token: tokenValue } as any);
+    vi.mocked(authAsRetrieve).mockResolvedValue({ token: tokenValue });
 
     const mockRoute = {
       params: { userId: userId.toString() },
@@ -52,7 +52,7 @@ describe('loginById', () => {
     const userId = 42;
     const tokenValue = faker.string.uuid();
 
-    vi.mocked(authAsRetrieve).mockResolvedValue({ token: tokenValue } as any);
+    vi.mocked(authAsRetrieve).mockResolvedValue({ token: tokenValue });
 
     const mockRoute = {
       params: { userId: userId.toString() },
@@ -70,7 +70,7 @@ describe('loginById', () => {
     const userId = faker.number.int({ min: 1, max: 1000 });
     const tokenValue = faker.string.uuid();
 
-    vi.mocked(authAsRetrieve).mockResolvedValue({ token: tokenValue } as any);
+    vi.mocked(authAsRetrieve).mockResolvedValue({ token: tokenValue });
 
     const mockRoute = {
       params: { userId: userId.toString() },

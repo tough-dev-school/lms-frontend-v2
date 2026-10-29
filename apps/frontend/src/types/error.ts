@@ -18,7 +18,7 @@ export function isBackendError(error: unknown): error is BackendErrorResponse {
     return false;
   }
 
-  const errorWithResponse = error as { response: unknown };
+  const errorWithResponse = error;
 
   if (
     typeof errorWithResponse.response !== 'object' ||
@@ -59,7 +59,7 @@ export function createValidationError(
       status: 400,
       statusText: 'Validation Error',
     },
-  } as BackendErrorResponse;
+  };
 }
 
 /**

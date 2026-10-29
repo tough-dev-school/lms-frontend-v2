@@ -12,7 +12,7 @@ export default {
   },
 } as Meta;
 
-const Template: StoryFn = (args) => ({
+const Template: StoryFn<{ materialId: string; status: unknown }> = (args) => ({
   components: { VMaterialAdminTools },
   setup() {
     useQueryClient().setQueryData(

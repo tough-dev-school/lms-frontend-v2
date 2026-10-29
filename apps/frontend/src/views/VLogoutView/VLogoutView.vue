@@ -14,7 +14,7 @@
 
   onBeforeMount(() => {
     token.value = undefined;
-    router.push({ name: 'login' });
+    void router.push({ name: 'login' });
   });
 </script>
 

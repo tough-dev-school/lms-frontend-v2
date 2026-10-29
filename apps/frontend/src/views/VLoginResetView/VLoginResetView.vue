@@ -22,7 +22,7 @@
   } = useAuthPasswordResetCreate({
     mutation: {
       onSuccess: () => {
-        queryClient.invalidateQueries();
+        void queryClient.invalidateQueries();
       },
     },
   });
@@ -30,7 +30,7 @@
   const handleResetRequest = async () => {
     try {
       await requestReset({ data: { email: email.value } });
-      router.push({ name: 'mail-sent', query: { email: email.value } });
+      void router.push({ name: 'mail-sent', query: { email: email.value } });
     } catch {
       console.error('Failed to request reset');
     }

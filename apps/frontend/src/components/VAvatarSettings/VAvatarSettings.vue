@@ -15,15 +15,15 @@
   const queryClient = useQueryClient();
   const { data: user } = useUsersMeRetrieve();
 
-  const avatar = ref();
-  const file = ref();
+  const avatar = ref<string | null>();
+  const file = ref<File>();
   const showCropper = ref(false);
 
   const update = () => {
     avatar.value = user.value?.avatar;
   };
 
-  const deleteAvatar = async () => {
+  const deleteAvatar = () => {
     avatar.value = undefined;
     file.value = undefined;
   };
@@ -53,11 +53,11 @@
           'Content-Type': 'multipart/form-data',
         },
       });
-      queryClient.invalidateQueries({
+      void queryClient.invalidateQueries({
         queryKey: usersMeRetrieveQueryKey(),
       });
     } catch (caughtError) {
-      error.value = caughtError as unknown as FormError;
+      error.value = caughtError as FormError;
     } finally {
       isPending.value = false;
     }
@@ -66,11 +66,12 @@
   // #FIXME
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const showPreview = async (cropperInstance: any) => {
-    avatar.value = cropperInstance!.getCroppedCanvas()!.toDataURL();
+    const dataUrl: string = cropperInstance!.getCroppedCanvas()!.toDataURL();
+    avatar.value = dataUrl;
 
-    const response = await fetch(avatar.value);
-    const blob: Blob = await response.blob();
-    (file.value as File) = new File([blob], 'avatar.png');
+    const response = await fetch(dataUrl);
+    const blob = await response.blob();
+    file.value = new File([blob], 'avatar.png');
   };
 
   const isSaveButtonDisabled = computed(
