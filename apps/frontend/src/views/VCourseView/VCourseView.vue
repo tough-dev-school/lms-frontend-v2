@@ -8,6 +8,7 @@
   import VModuleCard from '@/components/VModuleCard/VModuleCard.vue';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
   import { useI18n } from 'vue-i18n';
+  import { useBreadcrumbSiblings } from '@/composables/useBreadcrumbSiblings';
 
   const props = defineProps<{
     courseId: number;
@@ -33,10 +34,15 @@
 
   const modules = computed(() => modulesData.value?.results);
 
+  const { courses } = useBreadcrumbSiblings({
+    courseId: () => props.courseId,
+  });
+
   const breadcrumbs = computed<Breadcrumb[]>(() => [
-    { name: t('common.myCourses'), to: { name: 'courses' } },
+    { name: t('common.myCourses'), label: '~', to: { name: 'courses' } },
     {
       name: courseName.value ?? t('common.courseMaterials'),
+      siblings: courses.value,
       to: { name: 'course', params: { courseId: props.courseId } },
     },
   ]);

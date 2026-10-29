@@ -21,7 +21,11 @@ const Template: StoryFn = (args) => ({
   template: '<VBreadcrumbs v-bind="args" />',
 });
 
-const MY_COURSES: Breadcrumb = { name: 'Мои курсы', to: { name: 'courses' } };
+const MY_COURSES: Breadcrumb = {
+  name: 'Мои курсы',
+  label: '~',
+  to: { name: 'courses' },
+};
 
 export const Default = {
   render: Template,
@@ -70,6 +74,30 @@ export const LongNames = {
           params: { courseId: COURSE_WITH_LONG_NAME.id, moduleId: 41 },
         },
       },
+    ] satisfies Breadcrumb[],
+  },
+};
+
+const MODULES: Breadcrumb[] = [
+  MODULE_RESOURCES,
+  { id: 42, name: 'Аутентификация и авторизация' },
+  { id: 43, name: 'Версионирование и обратная совместимость' },
+].map((module) => ({
+  name: module.name,
+  to: { name: 'module', params: { courseId: COURSE.id, moduleId: module.id } },
+}));
+
+// Chevron opens a native select with pages on the same level
+export const WithSiblings = {
+  render: Template,
+  args: {
+    items: [
+      MY_COURSES,
+      {
+        name: COURSE.name,
+        to: { name: 'course', params: { courseId: COURSE.id } },
+      },
+      { ...MODULES[0], siblings: MODULES },
     ] satisfies Breadcrumb[],
   },
 };
