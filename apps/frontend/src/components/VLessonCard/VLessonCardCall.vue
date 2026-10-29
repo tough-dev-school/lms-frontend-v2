@@ -23,7 +23,8 @@
     const fallback = videos[0];
     if (!recommendedVideoProvider) return fallback;
     return (
-      videos.find((v) => v.provider === recommendedVideoProvider) || fallback
+      videos.find((v) => v.provider === String(recommendedVideoProvider)) ||
+      fallback
     );
   };
 </script>
