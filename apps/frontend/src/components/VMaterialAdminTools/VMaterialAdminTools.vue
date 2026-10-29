@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-  import VCard from '../VCard/VCard.vue';
   import VButton from '../VButton/VButton.vue';
   import {
     materialsRetrieveQueryKey,
@@ -72,19 +71,22 @@
 </script>
 
 <template>
-  <VCard
-    class="flex flex-col gap-8 rounded-16 bg-white p-8 dark:bg-dark-black phone:p-24"
-  >
-    <p>{{ t('material.lastUpdate', { date: fetchStarted }) }}</p>
-    <p>{{ t('material.upToDate', { date: fetchComplete }) }}</p>
-    <VError :error="error" />
-    <template #footer>
-      <VButton @click="() => updateMaterial({ page_id: props.materialId })">
+  <div class="flex flex-col gap-4 text-sub text-gray">
+    <div class="flex flex-wrap items-baseline gap-x-16 gap-y-4">
+      <p>{{ t('material.lastUpdate', { date: fetchStarted }) }}</p>
+      <p>{{ t('material.upToDate', { date: fetchComplete }) }}</p>
+      <VButton
+        appearance="link"
+        size="inline"
+        :loading="inProgress"
+        @click="() => updateMaterial({ page_id: props.materialId })"
+      >
         <template v-if="inProgress">
           {{ t('material.updateInProgress') }}
         </template>
         <template v-else>{{ t('material.requestUpdate') }}</template>
       </VButton>
-    </template>
-  </VCard>
+    </div>
+    <VError :error="error" />
+  </div>
 </template>
