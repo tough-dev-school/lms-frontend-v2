@@ -1,9 +1,10 @@
 import { homeworkQuestionsRetrieveQueryOptions } from '@/api/generated';
-import { onMounted, ref, toValue } from 'vue';
+import { computed, onMounted, ref, toValue } from 'vue';
 import type { MaybeRefOrGetter } from 'vue';
 import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
 import { useQueryClient } from '@tanstack/vue-query';
 import { useI18n } from 'vue-i18n';
+import { useBreadcrumbSiblings } from '@/composables/useBreadcrumbSiblings';
 
 export const useHomeworkBreadcrumbs = (
   questionId: MaybeRefOrGetter<string>,
@@ -11,11 +12,18 @@ export const useHomeworkBreadcrumbs = (
   const queryClient = useQueryClient();
   const { t } = useI18n();
 
-  const breadcrumbs = ref<Breadcrumb[]>();
+  const baseBreadcrumbs = ref<Breadcrumb[]>();
+  const courseId = ref<number>();
+  const moduleId = ref<number>();
+
+  const { courses, modules, modulePages } = useBreadcrumbSiblings({
+    courseId,
+    moduleId,
+  });
 
   onMounted(async () => {
     const result: Breadcrumb[] = [
-      { name: t('common.myCourses'), to: { name: 'courses' } },
+      { name: t('common.myCourses'), label: '~', to: { name: 'courses' } },
     ];
 
     const question = await queryClient.fetchQuery(
@@ -63,7 +71,22 @@ export const useHomeworkBreadcrumbs = (
       },
     });
 
-    breadcrumbs.value = result;
+    courseId.value = question.breadcrumbs.course.id;
+    moduleId.value = question.breadcrumbs.module.id;
+    baseBreadcrumbs.value = result;
+  });
+
+  // Sibling lists load after the crumbs, so they are attached separately
+  const breadcrumbs = computed(() => {
+    if (!baseBreadcrumbs.value) return undefined;
+
+    const [myCourses, course, module, question] = baseBreadcrumbs.value;
+    return [
+      myCourses,
+      { ...course, siblings: courses.value },
+      { ...module, siblings: modules.value },
+      { ...question, siblings: modulePages.value },
+    ];
   });
 
   return {

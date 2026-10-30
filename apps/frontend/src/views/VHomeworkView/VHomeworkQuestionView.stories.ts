@@ -10,10 +10,10 @@ import type { Lesson, QuestionDetail } from '@/api/generated';
 import { LESSON_HOMEWORK } from '@/mocks/courses';
 import { QUESTION_DETAIL_NOT_SENT } from '@/mocks/homework';
 
-const LESSON_NOT_SENT: Lesson = {
+const LESSON_NOT_SENT = {
   ...LESSON_HOMEWORK,
   homework: { is_sent: false },
-};
+} satisfies Lesson;
 
 export default {
   title: 'App/VHomeworkQuestionView',

@@ -39,10 +39,13 @@
       v-if="title || breadcrumbs || $slots.pill"
       class="flex flex-col gap-32"
     >
-      <VBreadcrumbs
+      <div
         v-if="breadcrumbs"
-        :items="breadcrumbs"
-      />
+        class="flex items-start justify-between gap-16"
+      >
+        <VBreadcrumbs :items="breadcrumbs" />
+        <slot name="breadcrumbs-end" />
+      </div>
       <slot name="pill" />
       <VHeading
         v-if="title && showTitle"

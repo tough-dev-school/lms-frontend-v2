@@ -6,15 +6,22 @@
   import getNotionTitle from '@/utils/getNotionTitle';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
-  import { useMaterialsRetrieve, useUsersMeRetrieve } from '@/api/generated';
+  import {
+    useLmsLessonsList,
+    useMaterialsRetrieve,
+    useUsersMeRetrieve,
+  } from '@/api/generated';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
   import { SUPPORT_EMAIL, SUPPORT_CHAT_URL } from '@/constants';
   import { useRouteQuery } from '@vueuse/router';
   import { NotionRenderer } from 'vue-notion';
   import { useNotionCheckboxHack } from './useNotionCheckboxHack';
   import VMaterialAdminTools from '@/components/VMaterialAdminTools/VMaterialAdminTools.vue';
+  import VMaterialNavigation from '@/components/VMaterialNavigation/VMaterialNavigation.vue';
   import { useStorage } from '@vueuse/core';
   import { useI18n } from 'vue-i18n';
+  import { IconArrowLeft, IconArrowRight } from '@tabler/icons-vue';
+  import { useBreadcrumbSiblings } from '@/composables/useBreadcrumbSiblings';
 
   const props = defineProps<{
     materialId: string;
@@ -37,6 +44,50 @@
     () => props.materialId,
   );
 
+  const moduleId = computed(() => materialData.value?.breadcrumbs.module?.id);
+
+  const { courses, modules, modulePages } = useBreadcrumbSiblings({
+    courseId: () => materialData.value?.breadcrumbs.course?.id,
+    moduleId,
+  });
+
+  // Same query as module page, so it is usually already cached
+  const { data: lessonsData } = useLmsLessonsList(
+    computed(() => ({ module: moduleId.value, page_size: 1000 })),
+    { query: { enabled: () => !!moduleId.value } },
+  );
+
+  // Module should have exactly one homework, with several we can't tell which one is related
+  const homeworkQuestion = computed(() => {
+    const questions = (lessonsData.value?.results ?? []).flatMap((lesson) =>
+      lesson.question ? [lesson.question] : [],
+    );
+    return questions.length === 1 ? questions[0] : undefined;
+  });
+
+  // Calls have no page and homework has own button, so only materials are navigated
+  const moduleMaterials = computed(() =>
+    (lessonsData.value?.results ?? []).flatMap((lesson) =>
+      lesson.material ? [lesson.material] : [],
+    ),
+  );
+
+  const currentMaterialIndex = computed(() =>
+    moduleMaterials.value.findIndex(
+      (moduleMaterial) => moduleMaterial.id === props.materialId,
+    ),
+  );
+
+  const previousMaterial = computed(() => {
+    if (currentMaterialIndex.value < 1) return undefined;
+    return moduleMaterials.value[currentMaterialIndex.value - 1];
+  });
+
+  const nextMaterial = computed(() => {
+    if (currentMaterialIndex.value === -1) return undefined;
+    return moduleMaterials.value[currentMaterialIndex.value + 1];
+  });
+
   const material = computed(() => {
     if (!materialData.value) return undefined;
     return materialData.value.content;
@@ -53,7 +104,7 @@
 
   const breadcrumbs = computed(() => {
     const result: Breadcrumb[] = [
-      { name: t('common.myCourses'), to: { name: 'courses' } },
+      { name: t('common.myCourses'), label: '~', to: { name: 'courses' } },
     ];
 
     if (!materialData.value) return undefined;
@@ -61,6 +112,7 @@
     if (materialData.value.breadcrumbs.course) {
       result.push({
         name: materialData.value.breadcrumbs.course.name,
+        siblings: courses.value,
         to: {
           name: 'course',
           params: {
@@ -75,6 +127,7 @@
     if (materialData.value.breadcrumbs.module) {
       result.push({
         name: materialData.value.breadcrumbs.module.name,
+        siblings: modules.value,
         to: {
           name: 'module',
           params: {
@@ -89,6 +142,7 @@
 
     result.push({
       name: notionTitle.value ?? '',
+      siblings: modulePages.value,
       to: {
         name: 'materials',
         params: {
@@ -135,34 +189,75 @@
       :show-title="false"
       :breadcrumbs="breadcrumbs"
     >
-      <template v-if="material">
-        <VMaterialAdminTools
-          v-if="user?.is_staff"
-          :material-id="props.materialId"
-        />
-        <VCard
-          class="rounded-16 bg-white p-8 pt-32 shadow dark:bg-dark-black phone:p-24"
-        >
-          <NotionRenderer
-            :block-map="material"
-            :map-page-url="mapPageUrl"
-            :page-link-options="{
-              component: 'RouterLink',
-              href: 'to',
-            }"
-            :full-page="true"
-            @mounted="restoreBookmark"
-            @bookmark="setBookmark"
-          />
-        </VCard>
-        <footer class="flex justify-center">
+      <template
+        v-if="material"
+        #breadcrumbs-end
+      >
+        <nav class="flex shrink-0 items-center gap-8 text-gray">
           <RouterLink
-            v-if="breadcrumbs && breadcrumbs[2]"
-            :to="breadcrumbs[2].to"
+            v-if="previousMaterial"
+            :to="{
+              name: 'materials',
+              params: { materialId: previousMaterial.id },
+            }"
+            :aria-label="t('material.previous')"
+            class="transition-colors hover:text-black dark:hover:text-white"
           >
-            <VButton>{{ t('material.backToLesson') }}</VButton>
+            <IconArrowLeft :size="20" />
           </RouterLink>
-        </footer>
+          <!-- Dimmed instead of hidden so the other arrow doesn't jump between materials -->
+          <IconArrowLeft
+            v-else
+            :size="20"
+            class="opacity-25"
+          />
+          <RouterLink
+            v-if="nextMaterial"
+            :to="{
+              name: 'materials',
+              params: { materialId: nextMaterial.id },
+            }"
+            :aria-label="t('material.next')"
+            class="transition-colors hover:text-black dark:hover:text-white"
+          >
+            <IconArrowRight :size="20" />
+          </RouterLink>
+          <IconArrowRight
+            v-else
+            :size="20"
+            class="opacity-25"
+          />
+        </nav>
+      </template>
+      <template v-if="material">
+        <!-- Admin tools sit close to the card because they describe the material itself -->
+        <div class="flex flex-col gap-8">
+          <VMaterialAdminTools
+            v-if="user?.is_staff"
+            :material-id="props.materialId"
+          />
+          <VCard
+            class="rounded-16 bg-white p-8 pt-32 shadow dark:bg-dark-black phone:p-24"
+          >
+            <NotionRenderer
+              :block-map="material"
+              :map-page-url="mapPageUrl"
+              :page-link-options="{
+                component: 'RouterLink',
+                href: 'to',
+              }"
+              :full-page="true"
+              @mounted="restoreBookmark"
+              @bookmark="setBookmark"
+            />
+          </VCard>
+        </div>
+        <VMaterialNavigation
+          :previous-material-id="previousMaterial?.id"
+          :next-material-id="nextMaterial?.id"
+          :table-of-contents-to="breadcrumbs?.[2]?.to"
+          :homework-question-slug="homeworkQuestion?.slug"
+        />
       </template>
       <div
         v-else-if="!material"

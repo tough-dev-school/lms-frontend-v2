@@ -94,8 +94,8 @@
   >
     <template #pill>
       <VPillHomework
-        v-if="lesson?.homework"
-        :lesson="lesson"
+        v-if="lesson.homework && lesson.question"
+        :lesson="{ homework: lesson.homework, question: lesson.question }"
       />
     </template>
     <section class="flex flex-col gap-24">
