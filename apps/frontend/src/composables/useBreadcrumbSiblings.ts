@@ -34,14 +34,17 @@ export const useBreadcrumbSiblings = ({
     })),
   );
 
+  // Modules open by date, the course page doesn't link to unstarted ones either
   const modules = computed<Breadcrumb[]>(() =>
-    (modulesData.value?.results ?? []).map((module) => ({
-      name: module.name,
-      to: {
-        name: 'module',
-        params: { courseId: toValue(courseId), moduleId: module.id },
-      },
-    })),
+    (modulesData.value?.results ?? [])
+      .filter((module) => module.has_started)
+      .map((module) => ({
+        name: module.name,
+        to: {
+          name: 'module',
+          params: { courseId: toValue(courseId), moduleId: module.id },
+        },
+      })),
   );
 
   // Calls have no page of their own, so only materials and homeworks are listed
