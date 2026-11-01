@@ -21,7 +21,6 @@
   import { useStorage } from '@vueuse/core';
   import { useI18n } from 'vue-i18n';
   import { IconArrowLeft, IconArrowRight } from '@tabler/icons-vue';
-  import { useBreadcrumbSiblings } from '@/composables/useBreadcrumbSiblings';
 
   const props = defineProps<{
     materialId: string;
@@ -45,11 +44,6 @@
   );
 
   const moduleId = computed(() => materialData.value?.breadcrumbs.module?.id);
-
-  const { courses, modules, modulePages } = useBreadcrumbSiblings({
-    courseId: () => materialData.value?.breadcrumbs.course?.id,
-    moduleId,
-  });
 
   // Same query as module page, so it is usually already cached
   const { data: lessonsData } = useLmsLessonsList(
@@ -112,7 +106,6 @@
     if (materialData.value.breadcrumbs.course) {
       result.push({
         name: materialData.value.breadcrumbs.course.name,
-        siblings: courses.value,
         to: {
           name: 'course',
           params: {
@@ -127,7 +120,6 @@
     if (materialData.value.breadcrumbs.module) {
       result.push({
         name: materialData.value.breadcrumbs.module.name,
-        siblings: modules.value,
         to: {
           name: 'module',
           params: {
@@ -142,7 +134,6 @@
 
     result.push({
       name: notionTitle.value ?? '',
-      siblings: modulePages.value,
       to: {
         name: 'materials',
         params: {

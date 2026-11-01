@@ -11,7 +11,6 @@
   import VHtmlContent from '@/components/VHtmlContent/VHtmlContent.vue';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
   import { useI18n } from 'vue-i18n';
-  import { useBreadcrumbSiblings } from '@/composables/useBreadcrumbSiblings';
 
   const props = defineProps<{
     courseId: number;
@@ -34,10 +33,6 @@
       (studies.value ?? []).find((study) => study.id === props.courseId)?.name,
   );
 
-  const { courses, modules } = useBreadcrumbSiblings({
-    courseId: () => props.courseId,
-  });
-
   const breadcrumbs = computed<Breadcrumb[]>(() => {
     if (!courseName.value || !moduleName.value) return [];
 
@@ -45,12 +40,10 @@
       { name: t('common.myCourses'), label: '~', to: { name: 'courses' } },
       {
         name: courseName.value ?? t('common.courseMaterials'),
-        siblings: courses.value,
         to: { name: 'course', params: { courseId: props.courseId } },
       },
       {
         name: moduleName.value,
-        siblings: modules.value,
         to: {
           name: 'module',
           params: { courseId: props.courseId, moduleId: props.moduleId },
