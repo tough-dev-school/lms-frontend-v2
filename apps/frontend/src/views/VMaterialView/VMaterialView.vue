@@ -20,7 +20,8 @@
   import VMaterialNavigation from '@/components/VMaterialNavigation/VMaterialNavigation.vue';
   import { useStorage } from '@vueuse/core';
   import { useI18n } from 'vue-i18n';
-  import { IconArrowLeft, IconArrowRight } from '@tabler/icons-vue';
+  import VLessonArrows from '@/components/VLessonArrows/VLessonArrows.vue';
+  import { useLessonNavigation } from '@/composables/useLessonNavigation';
 
   const props = defineProps<{
     materialId: string;
@@ -59,27 +60,9 @@
     return questions.length === 1 ? questions[0] : undefined;
   });
 
-  // Calls have no page and homework has own button, so only materials are navigated
-  const moduleMaterials = computed(() =>
-    (lessonsData.value?.results ?? []).flatMap((lesson) =>
-      lesson.material ? [lesson.material] : [],
-    ),
-  );
-
-  const currentMaterialIndex = computed(() =>
-    moduleMaterials.value.findIndex(
-      (moduleMaterial) => moduleMaterial.id === props.materialId,
-    ),
-  );
-
-  const previousMaterial = computed(() => {
-    if (currentMaterialIndex.value < 1) return undefined;
-    return moduleMaterials.value[currentMaterialIndex.value - 1];
-  });
-
-  const nextMaterial = computed(() => {
-    if (currentMaterialIndex.value === -1) return undefined;
-    return moduleMaterials.value[currentMaterialIndex.value + 1];
+  const { previousTo, nextTo } = useLessonNavigation({
+    moduleId,
+    pageId: () => props.materialId,
   });
 
   const material = computed(() => {
@@ -184,41 +167,10 @@
         v-if="material"
         #breadcrumbs-end
       >
-        <nav class="flex shrink-0 items-center gap-8 text-gray">
-          <RouterLink
-            v-if="previousMaterial"
-            :to="{
-              name: 'materials',
-              params: { materialId: previousMaterial.id },
-            }"
-            :aria-label="t('material.previous')"
-            class="transition-colors hover:text-black dark:hover:text-white"
-          >
-            <IconArrowLeft :size="20" />
-          </RouterLink>
-          <!-- Dimmed instead of hidden so the other arrow doesn't jump between materials -->
-          <IconArrowLeft
-            v-else
-            :size="20"
-            class="opacity-25"
-          />
-          <RouterLink
-            v-if="nextMaterial"
-            :to="{
-              name: 'materials',
-              params: { materialId: nextMaterial.id },
-            }"
-            :aria-label="t('material.next')"
-            class="transition-colors hover:text-black dark:hover:text-white"
-          >
-            <IconArrowRight :size="20" />
-          </RouterLink>
-          <IconArrowRight
-            v-else
-            :size="20"
-            class="opacity-25"
-          />
-        </nav>
+        <VLessonArrows
+          :previous-to="previousTo"
+          :next-to="nextTo"
+        />
       </template>
       <template v-if="material">
         <!-- Admin tools sit close to the card because they describe the material itself -->
@@ -244,8 +196,8 @@
           </VCard>
         </div>
         <VMaterialNavigation
-          :previous-material-id="previousMaterial?.id"
-          :next-material-id="nextMaterial?.id"
+          :previous-to="previousTo"
+          :next-to="nextTo"
           :table-of-contents-to="breadcrumbs?.[2]?.to"
           :homework-question-slug="homeworkQuestion?.slug"
         />

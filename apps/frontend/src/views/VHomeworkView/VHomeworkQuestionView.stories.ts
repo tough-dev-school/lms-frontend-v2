@@ -3,11 +3,12 @@ import VHomeworkQuestionView from './VHomeworkQuestionView.vue';
 import { defaultLayoutDecorator } from '@/utils/layoutDecorator';
 import {
   homeworkQuestionsRetrieveQueryKey,
+  lmsLessonsListQueryKey,
   lmsLessonsRetrieveQueryKey,
 } from '@/api/generated';
 import { useQueryClient } from '@tanstack/vue-query';
 import type { Lesson } from '@/api/generated';
-import { LESSON_HOMEWORK } from '@/mocks/courses';
+import { LESSONS, LESSON_HOMEWORK, MODULE_RESOURCES } from '@/mocks/courses';
 import { QUESTION_DETAIL_NOT_SENT } from '@/mocks/homework';
 
 const LESSON_NOT_SENT = {
@@ -58,4 +59,32 @@ export const WithoutDeadline = {
       question: { ...LESSON_NOT_SENT.question, deadline: null },
     } satisfies Lesson,
   },
+};
+
+// Arrows lead to other lessons of the module, calls are skipped because they have no page
+export const InModule = {
+  render: Template,
+  args: {
+    question: QUESTION_DETAIL_NOT_SENT,
+    lesson: LESSON_NOT_SENT,
+  },
+  decorators: [
+    () => ({
+      setup() {
+        useQueryClient().setQueryData(
+          lmsLessonsListQueryKey({
+            module: MODULE_RESOURCES.id,
+            page_size: 1000,
+          }),
+          {
+            count: LESSONS.length,
+            next: null,
+            previous: null,
+            results: LESSONS,
+          },
+        );
+      },
+      template: '<story />',
+    }),
+  ],
 };

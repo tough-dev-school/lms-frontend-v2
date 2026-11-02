@@ -4,8 +4,8 @@
   import { useI18n } from 'vue-i18n';
 
   defineProps<{
-    previousMaterialId?: string;
-    nextMaterialId?: string;
+    previousTo?: RouteLocationRaw;
+    nextTo?: RouteLocationRaw;
     tableOfContentsTo?: RouteLocationRaw;
     homeworkQuestionSlug?: string;
   }>();
@@ -17,11 +17,8 @@
   <nav class="flex flex-col items-center gap-16">
     <div class="flex w-full items-center justify-center gap-16">
       <RouterLink
-        v-if="previousMaterialId"
-        :to="{
-          name: 'materials',
-          params: { materialId: previousMaterialId },
-        }"
+        v-if="previousTo"
+        :to="previousTo"
         :aria-label="t('material.previous')"
         class="shrink-0"
       >
@@ -51,11 +48,8 @@
         </VButton>
       </RouterLink>
       <RouterLink
-        v-if="nextMaterialId"
-        :to="{
-          name: 'materials',
-          params: { materialId: nextMaterialId },
-        }"
+        v-if="nextTo"
+        :to="nextTo"
         :aria-label="t('material.next')"
         class="shrink-0"
       >
