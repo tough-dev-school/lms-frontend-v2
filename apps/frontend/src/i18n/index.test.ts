@@ -10,7 +10,7 @@ const en = JSON.parse(enSource) as object;
 const getKeys = (messages: object, prefix = ''): string[] =>
   Object.entries(messages).flatMap(([key, value]) =>
     typeof value === 'object'
-      ? getKeys(value, `${prefix}${key}.`)
+      ? getKeys(value as object, `${prefix}${key}.`)
       : [`${prefix}${key}`],
   );
 

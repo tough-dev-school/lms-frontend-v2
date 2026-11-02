@@ -28,7 +28,7 @@
     return mergeErrors(props.error ?? null, validationError.value);
   });
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     validationError.value = null;
 
     if (!newPassword1.value) {

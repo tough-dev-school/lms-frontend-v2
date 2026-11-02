@@ -39,6 +39,46 @@ export const WithContent = {
   },
 };
 
+const IMAGE_SRC =
+  'https://cdn.tough-dev.school/assets/2a4930fa-0f57-4732-8629-ea4ad496f1b8.jpg';
+
+export const WithImages = {
+  render: Template,
+
+  args: {
+    modelValue: htmlToContent(`
+      <h2>Event storming</h2>
+      <p>Общая специфика расположения стикеров</p>
+      <img src="${IMAGE_SRC}">
+      <h3>Policy</h3>
+      <p>Тут тоже все супер, политики вынесены отдельно от команд</p>
+      <h3>Нотификации</h3>
+      <p>Нотификация это просто доставка информации о том, что что-то произошло с системой</p>
+    `),
+  },
+};
+
+// Answers saved while images were inline keep them inside paragraphs
+export const WithLegacyInlineImage = {
+  render: Template,
+
+  args: {
+    modelValue: {
+      type: 'doc',
+      content: [
+        {
+          type: 'paragraph',
+          content: [
+            { type: 'text', text: 'Текст до картинки ' },
+            { type: 'image', attrs: { src: IMAGE_SRC } },
+            { type: 'text', text: ' и текст после' },
+          ],
+        },
+      ],
+    },
+  },
+};
+
 // Old answers are edited from their HTML until the first save
 export const LegacyText = {
   render: Template,

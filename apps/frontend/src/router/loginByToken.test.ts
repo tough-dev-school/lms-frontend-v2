@@ -22,10 +22,10 @@ describe('loginByToken', () => {
   const passwordlessToken = faker.string.uuid();
   let mockRoute: RouteLocationNormalized;
 
-  beforeEach(async () => {
+  beforeEach(() => {
     vi.mocked(authPasswordlessTokenRetrieve).mockResolvedValue({
       token: tokenValue,
-    } as any);
+    });
 
     mockRoute = {
       params: { passwordlessToken },
@@ -33,11 +33,11 @@ describe('loginByToken', () => {
 
     vi.mocked(useAuth).mockReturnValue({
       token: ref(undefined),
-    } as any);
+    } as unknown as ReturnType<typeof useAuth>);
 
     vi.mocked(useQueryClient).mockReturnValue({
       invalidateQueries: vi.fn(),
-    } as any);
+    } as unknown as ReturnType<typeof useQueryClient>);
   });
 
   test('successfully exchanges token and returns home route', async () => {

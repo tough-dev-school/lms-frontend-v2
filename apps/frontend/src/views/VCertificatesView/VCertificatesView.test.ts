@@ -51,7 +51,7 @@ describe('VCertificatesView', () => {
     vi.mocked(useDiplomasList).mockReturnValue({
       data: ref({ results: mockDiplomasData }),
       isLoading: ref(false),
-    } as any);
+    } as unknown as ReturnType<typeof useDiplomasList>);
 
     wrapper = mount(VCertificatesView, {
       shallow: true,
@@ -83,7 +83,7 @@ describe('VCertificatesView', () => {
     );
   });
 
-  test('passes props to card', async () => {
+  test('passes props to card', () => {
     const courseName = mockDiplomasData[0].course.product_name;
 
     expect(getCertificateCardWrapper().props().course).toBe(courseName);
@@ -102,7 +102,7 @@ describe('VCertificatesView', () => {
     vi.mocked(useDiplomasList).mockReturnValue({
       data: ref({ results: [] }),
       isLoading: ref(false),
-    } as any);
+    } as unknown as ReturnType<typeof useDiplomasList>);
 
     wrapper = mount(VCertificatesView, {
       shallow: true,

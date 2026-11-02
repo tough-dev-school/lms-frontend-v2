@@ -4,8 +4,7 @@ import { defineConfig } from 'eslint-config-fans';
 export default defineConfig(
   {
     typescript: {
-      // TODO: Enable typeAware when we have a way to fix the issues
-      typeAware: false,
+      typeAware: true,
     },
     vue: true,
     formatter: 'prettier',

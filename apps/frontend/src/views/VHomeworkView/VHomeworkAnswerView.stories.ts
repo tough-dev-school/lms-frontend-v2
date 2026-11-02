@@ -8,7 +8,7 @@ import {
 } from '@/api/generated';
 import { useQueryClient } from '@tanstack/vue-query';
 import { usePopulateAnswersCache } from '@/composables/usePopulateAnswersCache';
-import type { Lesson } from '@/api/generated';
+import type { AnswerTree, Lesson, QuestionDetail } from '@/api/generated';
 import { LESSON_HOMEWORK } from '@/mocks/courses';
 import {
   CLASSMATE_ANSWER,
@@ -30,7 +30,12 @@ export default {
   },
 } as Meta;
 
-const Template: StoryFn = (args) => ({
+const Template: StoryFn<{
+  question: QuestionDetail;
+  lesson: Lesson;
+  answer: AnswerTree;
+  crosschecks: unknown;
+}> = (args) => ({
   components: { VHomeworkAnswerView },
   setup() {
     const queryClient = useQueryClient();

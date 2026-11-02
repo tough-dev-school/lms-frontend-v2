@@ -27,7 +27,7 @@ export const useAuth = createGlobalState(() => {
       value === undefined &&
       router.currentRoute.value.meta.allow === AllowMeta.Authorized
     ) {
-      router.push({ name: 'login' });
+      void router.push({ name: 'login' });
     }
   });
 

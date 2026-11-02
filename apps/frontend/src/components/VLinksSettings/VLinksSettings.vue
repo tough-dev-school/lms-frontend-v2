@@ -21,7 +21,7 @@
   } = useUsersMePartialUpdate({
     mutation: {
       onSuccess: () => {
-        queryClient.invalidateQueries({
+        void queryClient.invalidateQueries({
           queryKey: usersMeRetrieveQueryKey(),
         });
       },

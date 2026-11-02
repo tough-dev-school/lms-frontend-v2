@@ -22,9 +22,9 @@
       isPending.value = true;
       await authPasswordlessTokenRequestRetrieve(email.value);
 
-      router.push({ name: 'mail-sent', query: { email: email.value } });
+      void router.push({ name: 'mail-sent', query: { email: email.value } });
     } catch (caughtError) {
-      error.value = caughtError as unknown as FormError;
+      error.value = caughtError as FormError;
     }
     isPending.value = false;
   };

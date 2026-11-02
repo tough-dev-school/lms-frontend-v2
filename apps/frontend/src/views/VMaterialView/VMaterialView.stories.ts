@@ -34,7 +34,9 @@ const MATERIAL_DATA: MaterialSerilizer = {
   content: mockNotionMaterial(),
 };
 
-const Template: StoryFn = (args) => ({
+const Template: StoryFn<{ materialId: string; material: MaterialSerilizer }> = (
+  args,
+) => ({
   components: { VMaterialView },
   setup() {
     useQueryClient().setQueryData(

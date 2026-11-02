@@ -35,10 +35,10 @@
   } = useHomeworkAnswersPartialUpdate({
     mutation: {
       onSuccess: (_, variables) => {
-        queryClient.invalidateQueries({
+        void queryClient.invalidateQueries({
           queryKey: homeworkAnswersRetrieveQueryKey(variables.slug),
         });
-        queryClient.invalidateQueries({
+        void queryClient.invalidateQueries({
           queryKey: lmsLessonsListQueryKey(),
         });
       },
@@ -49,11 +49,11 @@
       mutation: {
         onSuccess: () => {
           if (props.answer.parent) {
-            queryClient.invalidateQueries({
+            void queryClient.invalidateQueries({
               queryKey: homeworkAnswersRetrieveQueryKey(props.answer.parent),
             });
           }
-          queryClient.invalidateQueries({
+          void queryClient.invalidateQueries({
             queryKey: lmsLessonsListQueryKey(),
           });
         },

@@ -22,12 +22,13 @@ const onRequestFulfilled = (requestConfig: InternalAxiosRequestConfig) => {
   }
 
   if (config.params !== undefined) {
-    Object.keys(config.params).forEach((paramName) => {
-      if (
-        Array.isArray(config.params[paramName]) &&
-        config.params[paramName].length > 0
-      ) {
-        config.params[paramName] = config.params[paramName].join(',');
+    const params: Record<string, unknown> = config.params;
+
+    Object.keys(params).forEach((paramName) => {
+      const value = params[paramName];
+
+      if (Array.isArray(value) && value.length > 0) {
+        params[paramName] = value.join(',');
       }
     });
   }

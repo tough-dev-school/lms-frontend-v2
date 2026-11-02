@@ -18,10 +18,7 @@
       }
 
       return props.whitelist && props.whitelist.length > 0
-        ? (pick(errorData, props.whitelist) as Record<
-            string,
-            string | string[]
-          >)
+        ? pick(errorData, props.whitelist)
         : errorData;
     } catch (error) {
       console.error('Error parsing error data:', error);

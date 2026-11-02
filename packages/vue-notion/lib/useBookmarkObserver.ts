@@ -72,7 +72,7 @@ export const useBookmarkObserver = (
       threshold: [0, 0.25, 0.5, 0.75, 1],
     });
 
-    nextTick(observeBlocks);
+    void nextTick(observeBlocks);
 
     if (typeof MutationObserver !== 'undefined') {
       mutationObserver = new MutationObserver(() => nextTick(observeBlocks));

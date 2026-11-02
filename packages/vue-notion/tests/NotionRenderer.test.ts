@@ -620,9 +620,9 @@ describe('NotionRenderer', () => {
       });
       const { blockMap } = createBlockMap([image]);
 
-      const { unmount } = await renderNotion({ blockMap });
+      const result = await renderNotion({ blockMap });
       const instance = vi.mocked(GLightbox).mock.results.at(-1)?.value;
-      unmount();
+      result.unmount();
 
       expect(GLightbox).toHaveBeenCalledWith(
         expect.objectContaining({ selector: `[data-lightbox="${image.id}"]` }),
@@ -670,9 +670,7 @@ describe('NotionRenderer', () => {
       const iframe = container.querySelector('iframe');
       expect(iframe?.getAttribute('src')).toBe('https://example.com/e');
       expect(iframe?.getAttribute('allow')).toBe('fullscreen');
-      expect((iframe?.parentElement as HTMLElement).style.paddingBottom).toBe(
-        '50%',
-      );
+      expect(iframe?.parentElement?.style.paddingBottom).toBe('50%');
     });
   });
 
@@ -753,9 +751,9 @@ describe('NotionRenderer', () => {
     it('emits mounted', async () => {
       const { blockMap } = createBlockMap([createText()]);
 
-      const { emitted } = await renderNotion({ blockMap, fullPage: true });
+      const result = await renderNotion({ blockMap, fullPage: true });
 
-      expect(emitted('mounted')).toBeDefined();
+      expect(result.emitted('mounted')).toBeDefined();
     });
 
     it('observes every block with an id', async () => {
@@ -772,7 +770,7 @@ describe('NotionRenderer', () => {
     it('emits bookmark with the topmost visible block after 300ms', async () => {
       const texts = [createText(), createText()];
       const { blockMap } = createBlockMap(texts);
-      const { container, emitted } = await renderNotion({
+      const { container, ...result } = await renderNotion({
         blockMap,
         fullPage: true,
       });
@@ -780,10 +778,10 @@ describe('NotionRenderer', () => {
       intersect(getBlock(container, texts[1].id)!, 200);
       intersect(getBlock(container, texts[0].id)!, 100);
       vi.advanceTimersByTime(299);
-      expect(emitted('bookmark')).toBeUndefined();
+      expect(result.emitted('bookmark')).toBeUndefined();
       vi.advanceTimersByTime(1);
 
-      expect(emitted('bookmark')).toEqual([[dashless(texts[0].id)]]);
+      expect(result.emitted('bookmark')).toEqual([[dashless(texts[0].id)]]);
     });
   });
 });

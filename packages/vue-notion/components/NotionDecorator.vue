@@ -24,7 +24,7 @@
   ]);
 
   const isPageLink = computed(() => text.value === '‣');
-  const isInlinePageLink = computed(() => decoratorValue.value[0] === '/');
+  const isInlinePageLink = computed(() => decoratorValue.value.startsWith('/'));
 
   const pageLinkTitle = computed(
     () =>

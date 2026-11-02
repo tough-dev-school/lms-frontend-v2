@@ -82,10 +82,7 @@
   };
 
   const groupedReactions = computed(() => {
-    return groupBy(localReactions.value, 'emoji') as Record<
-      ReactionEmoji,
-      ReactionDetailed[]
-    >;
+    return groupBy(localReactions.value, 'emoji');
   });
 
   const handleAdd = (emoji: ReactionEmoji) => {

@@ -41,7 +41,7 @@
     {
       label: t('profileMenu.home'),
       action: () => {
-        router.push({ name: 'courses' });
+        void router.push({ name: 'courses' });
       },
       id: 'home',
     },
@@ -55,21 +55,21 @@
     {
       label: t('profileMenu.certificates'),
       action: () => {
-        router.push({ name: 'certificates' });
+        void router.push({ name: 'certificates' });
       },
       id: 'certificates',
     },
     {
       label: t('profileMenu.settings'),
       action: () => {
-        router.push({ name: 'settings' });
+        void router.push({ name: 'settings' });
       },
       id: 'settings',
     },
     {
       label: t('profileMenu.addCertificateData'),
       action: () => {
-        router.push({ name: 'settings', hash: '#certificate' });
+        void router.push({ name: 'settings', hash: '#certificate' });
       },
       isHidden: hasCertificateData.value,
       id: 'certificate',
@@ -77,7 +77,7 @@
     {
       label: t('profileMenu.logout'),
       action: () => {
-        router.push({ name: 'logout' });
+        void router.push({ name: 'logout' });
       },
       id: 'logout',
     },

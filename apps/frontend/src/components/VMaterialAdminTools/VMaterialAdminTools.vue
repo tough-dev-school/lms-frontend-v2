@@ -23,7 +23,7 @@
   const { mutateAsync: updateMaterial, error } = useMaterialsUpdateUpdate({
     mutation: {
       onSuccess: () => {
-        queryClient.invalidateQueries({
+        void queryClient.invalidateQueries({
           queryKey: materialsRetrieveQueryKey(props.materialId),
         });
       },
@@ -64,7 +64,7 @@
   useIntervalFn(() => {
     if (!inProgress.value) return;
 
-    queryClient.invalidateQueries({
+    void queryClient.invalidateQueries({
       queryKey: materialsStatusRetrieveQueryKey(props.materialId),
     });
   }, 1000);

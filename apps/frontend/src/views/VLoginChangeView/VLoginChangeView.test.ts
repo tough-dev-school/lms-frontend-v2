@@ -37,12 +37,12 @@ describe('VLoginChangeView', () => {
 
     vi.mocked(useRouter).mockReturnValue({
       push: routerPushMock,
-    } as any);
+    } as unknown as ReturnType<typeof useRouter>);
 
     vi.mocked(useAuthPasswordResetConfirmCreate).mockReturnValue({
       mutateAsync: confirmPasswordReset,
       isPending: ref(false),
-    } as any);
+    } as unknown as ReturnType<typeof useAuthPasswordResetConfirmCreate>);
 
     wrapper = mount(VLoginChangeView, {
       shallow: true,

@@ -21,7 +21,9 @@ export default {
   parameters: { layout: 'fullscreen' },
 } as Meta;
 
-const Template: StoryFn = (args) => ({
+const Template: StoryFn<{ module: { id: number }; lessons: unknown }> = (
+  args,
+) => ({
   components: { VModuleView },
   setup() {
     const queryClient = useQueryClient();

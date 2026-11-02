@@ -7,7 +7,7 @@ import {
   lmsLessonsRetrieveQueryKey,
 } from '@/api/generated';
 import { useQueryClient } from '@tanstack/vue-query';
-import type { Lesson } from '@/api/generated';
+import type { Lesson, QuestionDetail } from '@/api/generated';
 import { LESSONS, LESSON_HOMEWORK, MODULE_RESOURCES } from '@/mocks/courses';
 import { QUESTION_DETAIL_NOT_SENT } from '@/mocks/homework';
 
@@ -23,7 +23,9 @@ export default {
   parameters: { layout: 'fullscreen' },
 } as Meta;
 
-const Template: StoryFn = (args) => ({
+const Template: StoryFn<{ question: QuestionDetail; lesson: Lesson }> = (
+  args,
+) => ({
   components: { VHomeworkQuestionView },
   setup() {
     const queryClient = useQueryClient();

@@ -246,7 +246,7 @@ router.beforeEach(
     const isHashChange = from.path === to.path && from.hash !== to.hash;
 
     if ([!isMaterialBookmarkUpdate(from, to), isHashChange].some(Boolean)) {
-      queryClient.invalidateQueries();
+      void queryClient.invalidateQueries();
     }
 
     // Redirect to existing route if route does not exist

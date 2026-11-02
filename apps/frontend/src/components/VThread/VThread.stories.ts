@@ -1,6 +1,7 @@
 import type { Meta, StoryFn } from '@storybook/vue3-vite';
 import VThreadProvider from '@/components/VThread/VThreadProvider.vue';
 import { usersMeRetrieveQueryKey } from '@/api/generated';
+import type { AnswerTree } from '@/api/generated';
 import { useQueryClient } from '@tanstack/vue-query';
 import { usePopulateAnswersCache } from '@/composables/usePopulateAnswersCache';
 import { CLASSMATE_ANSWER, STUDENT_ANSWER } from '@/mocks/homework';
@@ -12,7 +13,7 @@ export default {
   component: VThreadProvider,
 } as Meta;
 
-const Template: StoryFn = (args) => ({
+const Template: StoryFn<{ answer: AnswerTree }> = (args) => ({
   components: { VThreadProvider },
   setup() {
     useQueryClient().setQueryData(usersMeRetrieveQueryKey(), STUDENT);

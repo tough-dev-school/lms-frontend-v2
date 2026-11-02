@@ -32,7 +32,7 @@
   const { mutateAsync: sendAddReaction } = useHomeworkAnswersReactionsCreate({
     mutation: {
       onSuccess: (_, variables) => {
-        queryClient.invalidateQueries({
+        void queryClient.invalidateQueries({
           queryKey: homeworkAnswersRetrieveQueryKey(variables.answer_slug),
         });
       },
@@ -43,7 +43,7 @@
     useHomeworkAnswersReactionsDestroy({
       mutation: {
         onSuccess: (_, variables) => {
-          queryClient.invalidateQueries({
+          void queryClient.invalidateQueries({
             queryKey: homeworkAnswersRetrieveQueryKey(variables.slug),
           });
         },

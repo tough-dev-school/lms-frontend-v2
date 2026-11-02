@@ -10,7 +10,7 @@ export const loginByToken = async (to: RouteLocationNormalized) => {
   const exchangeTokens = async (passwordlessToken: string) => {
     try {
       const response = await authPasswordlessTokenRetrieve(passwordlessToken);
-      queryClient.invalidateQueries();
+      void queryClient.invalidateQueries();
       return response;
     } catch (error) {
       console.error(error);

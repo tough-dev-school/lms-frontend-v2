@@ -1,6 +1,7 @@
 import onResponseRejected from './onResponseRejected';
 import onRequestFulfilled from './onRequestFulfilled';
 import axios from 'axios';
+import type { AxiosError } from 'axios';
 
 export interface RequestConfig<TData = unknown> {
   url?: string;
@@ -31,7 +32,7 @@ export const createHttpClient = () => {
 
   httpClient.interceptors.response.use(
     (value) => value,
-    (value) => onResponseRejected(value),
+    (error: AxiosError) => onResponseRejected(error),
   );
 
   return httpClient;

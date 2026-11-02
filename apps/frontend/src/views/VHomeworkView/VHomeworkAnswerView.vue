@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import VHeading from '@/components/VHeading/VHeading.vue';
-  import VThread from '@/components/VThread';
+  import VThread, { provideActiveReply } from '@/components/VThread';
   import VFeedbackGuide from '@/components/VFeedbackGuide/VFeedbackGuide.vue';
   import VCrossChecks from '@/components/VCrossChecks/VCrossChecks.vue';
   import VDetails from '@/components/VDetails/VDetails.vue';
@@ -52,7 +52,8 @@
   });
 
   const { data: lesson, isLoading: isLessonLoading } = useLmsLessonsRetrieve(
-    computed(() => question.value?.breadcrumbs.lesson?.id as number),
+    // The query stays disabled until the lesson id is known
+    computed(() => question.value?.breadcrumbs.lesson?.id ?? 0),
     {
       query: {
         enabled: () => !!question.value?.breadcrumbs.lesson?.id,
@@ -63,6 +64,9 @@
   const { data: user, isLoading: isUserLoading } = useUsersMeRetrieve();
 
   const populateAnswersCache = usePopulateAnswersCache();
+
+  // Two open editors at once look confusing, so the bottom one hides while replying in a thread
+  const activeReply = provideActiveReply();
 
   watch(
     () => answer.value,
@@ -106,7 +110,7 @@
 
       content.value = getEmptyContent();
 
-      router.push({
+      void router.push({
         ...router.currentRoute.value,
         hash: `#${createdAnswer.slug}`,
       });
@@ -133,15 +137,15 @@
   } = useHomeworkAnswersCreate({
     mutation: {
       onSuccess: (data) => {
-        queryClient.invalidateQueries({
+        void queryClient.invalidateQueries({
           queryKey: homeworkAnswersRetrieveQueryKey(data.parent),
         });
-        queryClient.invalidateQueries({
+        void queryClient.invalidateQueries({
           queryKey: homeworkCrosschecksListQueryKey({
             question: props.questionId,
           }),
         });
-        queryClient.invalidateQueries({
+        void queryClient.invalidateQueries({
           queryKey: lmsLessonsListQueryKey(),
         });
       },
@@ -149,7 +153,7 @@
   });
 
   const handleDeleteAnswer = () => {
-    router.push({
+    void router.push({
       name: 'homework',
       params: {
         questionId: props.questionId,
@@ -277,7 +281,16 @@
         :guide="question.course.homework_check_recommendations"
       />
 
+      <button
+        v-if="activeReply"
+        data-testid="show-root-answer"
+        class="link self-start"
+        @click="activeReply = null"
+      >
+        {{ t('homework.commentOnAnswer') }}
+      </button>
       <VCreateAnswer
+        v-show="!activeReply"
         v-model="content"
         :error="error"
         :is-pending="isPending"
