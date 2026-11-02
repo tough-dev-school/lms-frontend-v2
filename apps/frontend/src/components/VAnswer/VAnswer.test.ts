@@ -90,12 +90,15 @@ describe('VAnswer', () => {
   });
 
   test('answer has author name', () => {
-    const { first_name, last_name, random_name } = defaultProps.answer.author;
+    const { first_name, last_name, first_name_en, last_name_en, random_name } =
+      defaultProps.answer.author;
 
     expect(getNameWrapper().text()).toBe(
       getName({
         firstName: first_name,
         lastName: last_name,
+        firstNameEn: first_name_en,
+        lastNameEn: last_name_en,
         randomName: random_name,
       }),
     );

@@ -99,6 +99,8 @@ describe('VReaction', () => {
       getName({
         firstName: defaultProps.reactions[0].author.first_name,
         lastName: defaultProps.reactions[0].author.last_name,
+        firstNameEn: defaultProps.reactions[0].author.first_name_en,
+        lastNameEn: defaultProps.reactions[0].author.last_name_en,
         randomName: defaultProps.reactions[0].author.random_name,
       }),
     );

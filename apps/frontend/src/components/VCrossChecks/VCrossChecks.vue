@@ -28,6 +28,8 @@
             getName({
               firstName: crosscheck.answer.author.first_name,
               lastName: crosscheck.answer.author.last_name,
+              firstNameEn: crosscheck.answer.author.first_name_en,
+              lastNameEn: crosscheck.answer.author.last_name_en,
               randomName: crosscheck.answer.author.random_name,
             })
           }}

@@ -87,6 +87,8 @@
     getName({
       firstName: user.value?.first_name,
       lastName: user.value?.last_name,
+      firstNameEn: user.value?.first_name_en,
+      lastNameEn: user.value?.last_name_en,
       randomName: user.value?.random_name,
     }),
   );

@@ -84,6 +84,8 @@
           getName({
             firstName: author.first_name,
             lastName: author.last_name,
+            firstNameEn: author.first_name_en,
+            lastNameEn: author.last_name_en,
             randomName: author.random_name,
           })
         "
