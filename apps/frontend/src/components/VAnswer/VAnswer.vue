@@ -84,6 +84,8 @@
             getName({
               firstName: answer.author.first_name,
               lastName: answer.author.last_name,
+              firstNameEn: answer.author.first_name_en,
+              lastNameEn: answer.author.last_name_en,
               randomName: answer.author.random_name,
             })
           }}
