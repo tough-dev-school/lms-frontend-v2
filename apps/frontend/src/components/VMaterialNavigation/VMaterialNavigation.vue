@@ -1,6 +1,6 @@
 <script lang="ts" setup>
   import type { RouteLocationRaw } from 'vue-router';
-  import VButton from '../VButton/VButton.vue';
+  import { IconArrowLeft, IconArrowRight } from '@tabler/icons-vue';
   import { useI18n } from 'vue-i18n';
 
   defineProps<{
@@ -14,68 +14,59 @@
 </script>
 
 <template>
-  <nav class="flex flex-col items-center gap-16">
-    <div class="flex w-full items-center justify-center gap-16">
+  <!-- Same muted style as breadcrumbs, so the footer doesn't compete with the material -->
+  <nav class="flex items-center gap-16 text-sub text-gray">
+    <!-- Equal flex-1 sides keep the middle links centered when a neighbour is missing -->
+    <div class="flex flex-1">
       <RouterLink
         v-if="previousTo"
         :to="previousTo"
         :aria-label="t('material.previous')"
-        class="shrink-0"
+        class="flex items-center gap-4 transition-colors hover:text-black dark:hover:text-white"
       >
-        <VButton
-          appearance="secondary"
-          size="inline"
-          class="aspect-square h-module"
-        >
-          ←
-        </VButton>
+        <IconArrowLeft :size="16" />
+        <span class="hidden phone:inline">{{ t('material.previous') }}</span>
       </RouterLink>
-      <!-- Keeps table of contents button centered when there is no neighbour -->
-      <div
+      <IconArrowLeft
         v-else
-        class="aspect-square h-module shrink-0"
+        :size="16"
+        class="opacity-25"
       />
+    </div>
+    <div class="flex flex-wrap justify-center gap-x-16 gap-y-4">
       <RouterLink
         v-if="tableOfContentsTo"
         :to="tableOfContentsTo"
-        class="min-w-0 flex-1 phone:min-w-[280px] phone:flex-none"
+        class="transition-colors hover:text-black dark:hover:text-white"
       >
-        <VButton
-          size="inline"
-          class="h-module w-full p-module"
-        >
-          {{ t('material.tableOfContents') }}
-        </VButton>
+        {{ t('material.tableOfContents') }}
       </RouterLink>
+      <RouterLink
+        v-if="homeworkQuestionSlug"
+        :to="{
+          name: 'homework',
+          params: { questionId: homeworkQuestionSlug },
+        }"
+        class="transition-colors hover:text-black dark:hover:text-white"
+      >
+        {{ t('material.toHomework') }}
+      </RouterLink>
+    </div>
+    <div class="flex flex-1 justify-end">
       <RouterLink
         v-if="nextTo"
         :to="nextTo"
         :aria-label="t('material.next')"
-        class="shrink-0"
+        class="flex items-center gap-4 transition-colors hover:text-black dark:hover:text-white"
       >
-        <VButton
-          appearance="secondary"
-          size="inline"
-          class="aspect-square h-module"
-        >
-          →
-        </VButton>
+        <span class="hidden phone:inline">{{ t('material.next') }}</span>
+        <IconArrowRight :size="16" />
       </RouterLink>
-      <div
+      <IconArrowRight
         v-else
-        class="aspect-square h-module shrink-0"
+        :size="16"
+        class="opacity-25"
       />
     </div>
-    <RouterLink
-      v-if="homeworkQuestionSlug"
-      :to="{
-        name: 'homework',
-        params: { questionId: homeworkQuestionSlug },
-      }"
-    >
-      <VButton appearance="secondary">
-        {{ t('material.toHomework') }}
-      </VButton>
-    </RouterLink>
   </nav>
 </template>

@@ -173,7 +173,7 @@
         />
       </template>
       <template v-if="material">
-        <!-- Admin tools sit close to the card because they describe the material itself -->
+        <!-- Admin tools and navigation sit close to the card because they belong to the material -->
         <div class="flex flex-col gap-8">
           <VMaterialAdminTools
             v-if="user?.is_staff"
@@ -194,13 +194,14 @@
               @bookmark="setBookmark"
             />
           </VCard>
+          <VMaterialNavigation
+            class="mt-8"
+            :previous-to="previousTo"
+            :next-to="nextTo"
+            :table-of-contents-to="breadcrumbs?.[2]?.to"
+            :homework-question-slug="homeworkQuestion?.slug"
+          />
         </div>
-        <VMaterialNavigation
-          :previous-to="previousTo"
-          :next-to="nextTo"
-          :table-of-contents-to="breadcrumbs?.[2]?.to"
-          :homework-question-slug="homeworkQuestion?.slug"
-        />
       </template>
       <div
         v-else-if="!material"
