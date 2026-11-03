@@ -43,9 +43,10 @@
       return true;
     }
 
+    // Update is running while the last start is newer than the last completion
     return isBefore(
-      materialStatus.value.fetch_started,
       materialStatus.value.fetch_complete,
+      materialStatus.value.fetch_started,
     );
   });
 
