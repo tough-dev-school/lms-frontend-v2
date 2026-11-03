@@ -3,6 +3,7 @@ import type { RouteLocation, RouteLocationNormalized } from 'vue-router';
 import { useAuth } from '@/composables/useAuth';
 import { loginByToken } from '@/router/loginByToken';
 import { loginById } from '@/router/loginById';
+import { scrollBehavior } from '@/router/scrollBehavior';
 import { homeworkAnswersRetrieveQueryOptions } from '@/api/generated';
 import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
 import { AllowMeta } from '@/types';
@@ -124,6 +125,8 @@ export const routes = [
     }),
     meta: {
       allow: AllowMeta.Authorized,
+      // Page restores reading position from bookmark after content renders
+      handlesScroll: true,
     },
   },
   {
@@ -227,11 +230,7 @@ export const routes = [
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
-  scrollBehavior(to) {
-    if (to.hash) {
-      return { el: to.hash, top: 32 };
-    }
-  },
+  scrollBehavior,
 });
 
 router.beforeEach(

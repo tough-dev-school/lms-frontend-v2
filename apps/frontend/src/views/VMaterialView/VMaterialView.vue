@@ -130,7 +130,7 @@
 
   const bookmarkInUrl = useRouteQuery<string | undefined>('bookmark');
   const bookmarkInLocalStorage = useStorage<string | undefined>(
-    `bookmark-${props.materialId}`,
+    () => `bookmark-${props.materialId}`,
     undefined,
     localStorage,
   );
@@ -144,16 +144,25 @@
     return bookmarkInUrl.value || bookmarkInLocalStorage.value;
   });
 
+  // Router leaves scroll to this page (see handlesScroll meta), so a material without bookmark starts from the top
   const restoreBookmark = () => {
     if (!material.value) return;
-    if (!bookmarkToRestore.value) return;
+    if (!bookmarkToRestore.value) {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      return;
+    }
 
     document
       .querySelector(`#${CSS.escape(bookmarkToRestore.value)}`)
       ?.scrollIntoView({ behavior: 'instant' });
   };
 
-  useNotionCheckboxHack(props.materialId);
+  const { restoreCheckboxes } = useNotionCheckboxHack(() => props.materialId);
+
+  const onRendered = () => {
+    restoreCheckboxes();
+    restoreBookmark();
+  };
 </script>
 
 <template>
@@ -182,7 +191,9 @@
           <VCard
             class="rounded-16 bg-white p-8 pt-32 shadow dark:bg-dark-black phone:p-24"
           >
+            <!-- Remount per material, so mounted event runs bookmark and checkbox restore for every material -->
             <NotionRenderer
+              :key="props.materialId"
               :block-map="material"
               :map-page-url="mapPageUrl"
               :page-link-options="{
@@ -190,7 +201,7 @@
                 href: 'to',
               }"
               :full-page="true"
-              @mounted="restoreBookmark"
+              @mounted="onRendered"
               @bookmark="setBookmark"
             />
           </VCard>
