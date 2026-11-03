@@ -234,18 +234,14 @@ export const MATERIAL: NotionMaterial = {
 export const LESSON_CALL: Lesson = {
   id: 101,
   call: CALL,
-  homework: { is_sent: false },
-  question: QUESTION,
 };
 
 export const LESSON_MATERIAL: Lesson = {
   id: 102,
   material: MATERIAL,
-  homework: { is_sent: false },
-  question: QUESTION,
 };
 
-export const LESSON_HOMEWORK: Lesson = {
+export const LESSON_HOMEWORK = {
   id: 103,
   homework: {
     is_sent: true,
@@ -253,16 +249,16 @@ export const LESSON_HOMEWORK: Lesson = {
     comments: { comments: 7, hidden_before_crosscheck_completed: 2 },
   },
   question: QUESTION,
-};
+} satisfies Lesson;
 
-export const LESSON_HOMEWORK_NOT_SENT: Lesson = {
+export const LESSON_HOMEWORK_NOT_SENT = {
   id: 104,
   homework: {
     is_sent: false,
     comments: { comments: 0, hidden_before_crosscheck_completed: 0 },
   },
   question: QUESTION_ERRORS,
-};
+} satisfies Lesson;
 
 export const LESSONS: Lesson[] = [
   LESSON_CALL,

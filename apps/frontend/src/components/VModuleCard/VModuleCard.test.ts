@@ -322,10 +322,11 @@ describe('VModuleCard', () => {
     });
 
     test('navigates to homework when single lesson has question', async () => {
+      const question = createQuestion();
       const lesson = createLesson({
         material: undefined,
         call: undefined,
-        question: createQuestion(),
+        question,
       });
       const module = createModuleDetail({
         has_started: true,
@@ -352,7 +353,7 @@ describe('VModuleCard', () => {
       const routerLink = wrapper.findComponent(RouterLinkStub);
       expect(routerLink.props('to')).toEqual({
         name: 'homework',
-        params: { questionId: lesson.question.slug },
+        params: { questionId: question.slug },
       });
     });
 

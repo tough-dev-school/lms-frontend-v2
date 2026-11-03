@@ -16,6 +16,8 @@
   import VPillHomework from '@/components/VPillHomework/VPillHomework.vue';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
   import { useHomeworkBreadcrumbs } from './useHomeworkBreadcrumbs';
+  import VLessonArrows from '@/components/VLessonArrows/VLessonArrows.vue';
+  import { useLessonNavigation } from '@/composables/useLessonNavigation';
   import VMakrdownContent from '@/components/VMakrdownContent/VMakrdownContent.vue';
 
   interface Props {
@@ -29,6 +31,11 @@
 
   const { data: question, isLoading: isQuestionLoading } =
     useHomeworkQuestionsRetrieve(computed(() => props.questionId));
+
+  const { previousTo, nextTo } = useLessonNavigation({
+    moduleId: () => question.value?.breadcrumbs.module?.id,
+    pageId: () => props.questionId,
+  });
 
   const { data: lesson, isLoading: isLessonLoading } = useLmsLessonsRetrieve(
     // The query stays disabled until the lesson id is known
@@ -92,10 +99,16 @@
     :breadcrumbs="breadcrumbs"
     :title="question.name"
   >
+    <template #breadcrumbs-end>
+      <VLessonArrows
+        :previous-to="previousTo"
+        :next-to="nextTo"
+      />
+    </template>
     <template #pill>
       <VPillHomework
-        v-if="lesson?.homework"
-        :lesson="lesson"
+        v-if="lesson.homework && lesson.question"
+        :lesson="{ homework: lesson.homework, question: lesson.question }"
       />
     </template>
     <section class="flex flex-col gap-24">

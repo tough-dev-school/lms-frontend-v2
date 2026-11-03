@@ -34,7 +34,7 @@
   const modules = computed(() => modulesData.value?.results);
 
   const breadcrumbs = computed<Breadcrumb[]>(() => [
-    { name: t('common.myCourses'), to: { name: 'courses' } },
+    { name: t('common.myCourses'), label: '~', to: { name: 'courses' } },
     {
       name: courseName.value ?? t('common.courseMaterials'),
       to: { name: 'course', params: { courseId: props.courseId } },

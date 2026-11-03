@@ -15,7 +15,7 @@ export const useHomeworkBreadcrumbs = (
 
   onMounted(async () => {
     const result: Breadcrumb[] = [
-      { name: t('common.myCourses'), to: { name: 'courses' } },
+      { name: t('common.myCourses'), label: '~', to: { name: 'courses' } },
     ];
 
     const question = await queryClient.fetchQuery(

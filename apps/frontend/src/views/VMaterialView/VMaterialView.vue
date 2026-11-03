@@ -6,15 +6,22 @@
   import getNotionTitle from '@/utils/getNotionTitle';
   import VLoggedLayout from '@/layouts/VLoggedLayout/VLoggedLayout.vue';
   import type { Breadcrumb } from '@/components/VBreadcrumbs/VBreadcrumbs.vue';
-  import { useMaterialsRetrieve, useUsersMeRetrieve } from '@/api/generated';
+  import {
+    useLmsLessonsList,
+    useMaterialsRetrieve,
+    useUsersMeRetrieve,
+  } from '@/api/generated';
   import VLoadingView from '@/views/VLoadingView/VLoadingView.vue';
   import { SUPPORT_EMAIL, SUPPORT_CHAT_URL } from '@/constants';
   import { useRouteQuery } from '@vueuse/router';
   import { NotionRenderer } from 'vue-notion';
   import { useNotionCheckboxHack } from './useNotionCheckboxHack';
   import VMaterialAdminTools from '@/components/VMaterialAdminTools/VMaterialAdminTools.vue';
+  import VMaterialNavigation from '@/components/VMaterialNavigation/VMaterialNavigation.vue';
   import { useStorage } from '@vueuse/core';
   import { useI18n } from 'vue-i18n';
+  import VLessonArrows from '@/components/VLessonArrows/VLessonArrows.vue';
+  import { useLessonNavigation } from '@/composables/useLessonNavigation';
 
   const props = defineProps<{
     materialId: string;
@@ -37,6 +44,27 @@
     () => props.materialId,
   );
 
+  const moduleId = computed(() => materialData.value?.breadcrumbs.module?.id);
+
+  // Same query as module page, so it is usually already cached
+  const { data: lessonsData } = useLmsLessonsList(
+    computed(() => ({ module: moduleId.value, page_size: 1000 })),
+    { query: { enabled: () => !!moduleId.value } },
+  );
+
+  // Module should have exactly one homework, with several we can't tell which one is related
+  const homeworkQuestion = computed(() => {
+    const questions = (lessonsData.value?.results ?? []).flatMap((lesson) =>
+      lesson.question ? [lesson.question] : [],
+    );
+    return questions.length === 1 ? questions[0] : undefined;
+  });
+
+  const { previousTo, nextTo } = useLessonNavigation({
+    moduleId,
+    pageId: () => props.materialId,
+  });
+
   const material = computed(() => {
     if (!materialData.value) return undefined;
     return materialData.value.content;
@@ -53,7 +81,7 @@
 
   const breadcrumbs = computed(() => {
     const result: Breadcrumb[] = [
-      { name: t('common.myCourses'), to: { name: 'courses' } },
+      { name: t('common.myCourses'), label: '~', to: { name: 'courses' } },
     ];
 
     if (!materialData.value) return undefined;
@@ -102,7 +130,7 @@
 
   const bookmarkInUrl = useRouteQuery<string | undefined>('bookmark');
   const bookmarkInLocalStorage = useStorage<string | undefined>(
-    `bookmark-${props.materialId}`,
+    () => `bookmark-${props.materialId}`,
     undefined,
     localStorage,
   );
@@ -116,16 +144,25 @@
     return bookmarkInUrl.value || bookmarkInLocalStorage.value;
   });
 
+  // Router leaves scroll to this page (see handlesScroll meta), so a material without bookmark starts from the top
   const restoreBookmark = () => {
     if (!material.value) return;
-    if (!bookmarkToRestore.value) return;
+    if (!bookmarkToRestore.value) {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+      return;
+    }
 
     document
       .querySelector(`#${CSS.escape(bookmarkToRestore.value)}`)
       ?.scrollIntoView({ behavior: 'instant' });
   };
 
-  useNotionCheckboxHack(props.materialId);
+  const { restoreCheckboxes } = useNotionCheckboxHack(() => props.materialId);
+
+  const onRendered = () => {
+    restoreCheckboxes();
+    restoreBookmark();
+  };
 </script>
 
 <template>
@@ -135,34 +172,47 @@
       :show-title="false"
       :breadcrumbs="breadcrumbs"
     >
-      <template v-if="material">
-        <VMaterialAdminTools
-          v-if="user?.is_staff"
-          :material-id="props.materialId"
+      <template
+        v-if="material"
+        #breadcrumbs-end
+      >
+        <VLessonArrows
+          :previous-to="previousTo"
+          :next-to="nextTo"
         />
-        <VCard
-          class="rounded-16 bg-white p-8 pt-32 shadow dark:bg-dark-black phone:p-24"
-        >
-          <NotionRenderer
-            :block-map="material"
-            :map-page-url="mapPageUrl"
-            :page-link-options="{
-              component: 'RouterLink',
-              href: 'to',
-            }"
-            :full-page="true"
-            @mounted="restoreBookmark"
-            @bookmark="setBookmark"
+      </template>
+      <template v-if="material">
+        <!-- Admin tools and navigation sit close to the card because they belong to the material -->
+        <div class="flex flex-col gap-8">
+          <VMaterialAdminTools
+            v-if="user?.is_staff"
+            :material-id="props.materialId"
           />
-        </VCard>
-        <footer class="flex justify-center">
-          <RouterLink
-            v-if="breadcrumbs && breadcrumbs[2]"
-            :to="breadcrumbs[2].to"
+          <VCard
+            class="rounded-16 bg-white p-8 pt-32 shadow dark:bg-dark-black phone:p-24"
           >
-            <VButton>{{ t('material.backToLesson') }}</VButton>
-          </RouterLink>
-        </footer>
+            <!-- Remount per material, so mounted event runs bookmark and checkbox restore for every material -->
+            <NotionRenderer
+              :key="props.materialId"
+              :block-map="material"
+              :map-page-url="mapPageUrl"
+              :page-link-options="{
+                component: 'RouterLink',
+                href: 'to',
+              }"
+              :full-page="true"
+              @mounted="onRendered"
+              @bookmark="setBookmark"
+            />
+          </VCard>
+          <VMaterialNavigation
+            class="mt-8"
+            :previous-to="previousTo"
+            :next-to="nextTo"
+            :table-of-contents-to="breadcrumbs?.[2]?.to"
+            :homework-question-slug="homeworkQuestion?.slug"
+          />
+        </div>
       </template>
       <div
         v-else-if="!material"

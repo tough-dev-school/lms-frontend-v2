@@ -21,7 +21,11 @@ const Template: StoryFn = (args) => ({
   template: '<VBreadcrumbs v-bind="args" />',
 });
 
-const MY_COURSES: Breadcrumb = { name: 'Мои курсы', to: { name: 'courses' } };
+const MY_COURSES: Breadcrumb = {
+  name: 'Мои курсы',
+  label: '~',
+  to: { name: 'courses' },
+};
 
 export const Default = {
   render: Template,

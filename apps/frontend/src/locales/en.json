@@ -107,7 +107,10 @@
     "forTable": "For tables:"
   },
   "material": {
-    "backToLesson": "Back to lesson contents",
+    "tableOfContents": "Table of Contents",
+    "toHomework": "Go to homework",
+    "previous": "Previous",
+    "next": "Next",
     "notFound": "Material not found :(",
     "supportText": "If you think something's wrong, message support {chat} or email {email}",
     "supportChat": "via the chat in the corner of the screen",

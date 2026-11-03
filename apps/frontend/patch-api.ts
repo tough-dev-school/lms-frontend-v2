@@ -296,6 +296,61 @@ const makeJWTTokenOptional: ApplyPatch = (ast) => {
   return edits;
 };
 
+// Lesson is either a call, a material or a homework, so backend omits
+// homework and question for non-homework lessons, but schema marks them required
+const makeLessonHomeworkOptional: ApplyPatch = (ast) => {
+  const edits: Edit[] = [];
+  const optionalFields = new Set(['homework', 'question']);
+
+  const interfaces = ast.findAll({
+    rule: {
+      any: [
+        { kind: 'interface_declaration' },
+        { kind: 'type_alias_declaration' },
+      ],
+    },
+  });
+
+  for (const interfaceNode of interfaces) {
+    const nameNode = interfaceNode.child(1);
+    const interfaceName = nameNode?.text();
+
+    if (interfaceName !== 'Lesson') continue;
+
+    // For type_alias_declaration, we need to find the object_type node
+    // For interface_declaration, body is at child(2)
+    let bodyNode = interfaceNode.find({ rule: { kind: 'object_type' } });
+    if (!bodyNode) {
+      bodyNode = interfaceNode.child(2);
+    }
+    if (!bodyNode) continue;
+
+    bodyNode.children().forEach((child: SgNode) => {
+      if (child.kind() !== 'property_signature') return;
+
+      const propertyName = child.child(0);
+      if (!propertyName) return;
+
+      const name = propertyName.text().replace('?', '');
+      if (!optionalFields.has(name)) return;
+
+      // Check if it's already optional
+      const text = child.text();
+      if (text.includes('?:')) return;
+
+      // Make it optional by replacing : with ?:
+      const newText = text.replace(`${name}:`, `${name}?:`);
+      edits.push({
+        start: child.range().start.index,
+        end: child.range().end.index,
+        replacement: newText,
+      });
+    });
+  }
+
+  return edits;
+};
+
 const removeSlugFromReactionCreate: ApplyPatch = (ast) => {
   const edits: Edit[] = [];
   const fullText = ast.text();
@@ -435,6 +490,7 @@ for (const file of files) {
     omitAnswerFields,
     fixAnswerTreeDescendants,
     makeJWTTokenOptional,
+    makeLessonHomeworkOptional,
     removeSlugFromReactionCreate,
     removeQuestionFromHomeworkStats,
   ];

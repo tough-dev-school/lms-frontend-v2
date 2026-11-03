@@ -37,7 +37,7 @@
     if (!courseName.value || !moduleName.value) return [];
 
     return [
-      { name: t('common.myCourses'), to: { name: 'courses' } },
+      { name: t('common.myCourses'), label: '~', to: { name: 'courses' } },
       {
         name: courseName.value ?? t('common.courseMaterials'),
         to: { name: 'course', params: { courseId: props.courseId } },
